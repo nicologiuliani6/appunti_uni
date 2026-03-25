@@ -1,0 +1,44 @@
+INTRODUZIONE
+
+matematica e logica sono basati sulla logica, studieremo la logica usando strumenti matematici 
+e informatici basati su un'altra logica (=meta-logica)
+
+ES. decomposizione dequenza 1,2,3,4,5,[]
+una sequenza o è vuota o è un numero seguito da una sequenza.
+
+ES:
+data da una sequenza "L" voglio trovare una sottosequenza crescente in "L" di lunghezza massimale possibile.
+1::7::2::3::9::1::[]
+la piu lunga è 2::3::9.
+
+ES. 
+f([]) = [] //sequenza vuota, la sua massimale crescente sara sempre vuota
+f(n::L) =
+	if length(initial(n,L)) > length(f(L)) then
+	initial(n,L) //initial è una funzione che restituisce la crescente iniziale di n::L
+else f(L)
+
+ 
+//qundi una sequenza è n:: L
+//dove "n" è il primo numero e "L" la sequenza dopo n.
+
+//Sotto-problemi:
+	1 scrivere una funzione length(L) che calcoli la lunghezza di L
+		- Sotto-problema: scrivere una funzione length(L) che calcoli la lunghezza di L
+		length([]) = 0 //la lunghezza di [] è pari a 0
+		length(n::L) = 1 + length(L) //la lunghezza di n::L è 1 + lunghezza di L
+	2 scrivere una funzione initial(n,L) che restituisca la sequenza crescente iniziale di n :: L
+		- Sotto-problema: scrivere una funzione initial(n,L) che restituisca la sequenza 
+			crescente iniziale di n :: L.
+		initial(n,[]) = n::[] //"n::[]" è una lista con un solo elemento n.
+		initial(n,m::L) = // 
+			if n < m then n::initial(m,L) //se n < m allora "n" viene aggiunto alla lista 							    // a partire da m attraverso 
+						      // la funzione initial(m,L)
+			else n::[] // se no prendi n::[]
+
+QUINDI PER RISOLVERE:
+	f(n::L) = //sarà uguale a:
+	1)	length(initial(n,L)) //solo se "length(initial(n,L)) > length(initial(n,L))" è Vero
+	2)	f(L) // se l'if di sopra è falso
+
+

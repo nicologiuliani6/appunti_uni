@@ -1,0 +1,458 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2cm]{geometry}
+
+% Pacchetti utili di base
+\usepackage[utf8]{inputenc}   % codifica dei caratteri
+\usepackage[T1]{fontenc}      % font encoding
+\usepackage[italian]{babel}   % lingua italiana
+\usepackage{graphicx}         % immagini
+\usepackage{hyperref}         % link cliccabili
+\usepackage{amsmath}          % align center
+\usepackage{listings}         %codice programmazione
+\usepackage{xcolor}           % per colori opzionali del codice
+
+% Informazioni sul documento
+\title{Riassunto per lo scritto di T.W.}
+\author{Nicolò Giuliani}
+\date{}
+
+\lstset{
+  language=HTML,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{gray},
+  breaklines=true
+}
+\begin{document}
+\maketitle
+\section{HTTP}
+La richiesta via HTTP e'composta:
+\begin{itemize}
+    \item \textit{Method}: azione del server che deve eseguire (che il client richiede)
+    \item \textit{URI}: risorsa locale del server
+    \item \textit{Version}
+    \item \textit{Header}: sono i metadati, divisi in \textbf{generali} (protocollo, timestamp, ecc), \textbf{entita'} (Content-Type, Content-Length, Content-Encoding, ...), \textbf{richiesta} (GET/POST)
+    \item \textit{Body}: messaggio MIME (plain text / HTML / Base64 / ...)
+\end{itemize}
+Vediamo i metodi di richiesta:
+\begin{itemize}
+    \item GET: ottenere una risorsa (link o ricerca nel browser)
+    \item HEAD: uguale a GET ma contiene solo header (senza body), serve solo per la validazione delle risorse
+    \item POST: trasmettere informazioni al server rispetto alla risorsa del URI
+    \item PUT: trasmettere informazioni al server creando o sostituendo la risorsa specificata (inverso del GET)
+    \item DELETE
+    \item PATCH: aggiornare parzialmente una risorsa
+    \item OPTIONS: verificare opzioni, requisiti e servizi
+\end{itemize}
+La relativa risposta e'divisa in:
+\begin{itemize}
+    \item \textit{Status code} della richiesta
+    \item Version
+    \item Header
+    \item Body: messaggio MIME
+\end{itemize}
+\section{HTTP/1.1}
+Prima miglioria di speedup:
+\begin{itemize}
+    \item \textit{pipeline}: invio di piu'richieste senza aspettare risposta, ma le risposte arrivano in ordine delle richieste
+\end{itemize}
+\section{HTTP/2}
+Migliorie delle performance tra cui
+\begin{itemize}
+    \item \textit{multiplexing} (parallelalizzazione delle richieste/risposte ora \textbf{compresse} (30\% di speedup))
+    \item \textit{push anticipato} del server per il client
+\end{itemize}
+\section{HTTP/3}
+Passaggio dal protoccollo viaggente su TCP/IP (HTML 1/2) ad QUIC (basato su UDP). \\
+Dato che HTTP/x e'stateless per il server (non mantiene info delle sessioni precedenti), il clienti memorizza delle infomazioni delle scorse sessioni (\textbf{cookies}). Questi sono composti:
+\begin{itemize}
+    \item nome
+    \item valori
+    \item \textit{domain}: il dominio nel quale e'valido
+    \item \textit{path}: il percorso del dominio nel quale e'valido
+    \item \textit{expire}: quando non e'piu'valido
+    \item \textit{secure}: se il client deve utilizzare \textbf{solo} HTTPS
+    \item \textit{version}
+\end{itemize}
+Come si utilizzano?
+\begin{itemize}
+    \item \textit{cookies persistenti}: validita'lunga o non scadono, tipo login
+    \item \textit{cookies sessione}: breve durata (cancellati alla chiusura del browser) per raggrupare operazioni in sessioni di lavoro
+    \item \textit{cookies di terze parti}: esterne al dominio della pagina, tipo banner pubblicitari
+\end{itemize}
+\section{URI}
+Sono la fusione degli URL (link) e URN (nome univoco come stringa, tipo isbn di un libro). \\
+Gli URI sono progettati per:
+\begin{itemize}
+    \item Trascrivibili: hanno un set di caratteri limitato (cosi possono essere scritti cartelloni, carta, ecc)
+    \item Identificazione: i protocolli non sono definiti dal URI
+\end{itemize}
+\begin{center}
+    URI = schema : [//authority] path [?query][\#fragment]
+\end{center}
+Analizziamo:
+\begin{itemize}
+    \item Schema: protocollo TCP
+    \item Authority: se presente indica gerarchia dei nomi ([userinfo @] host [: port])
+    \item Path: percorso della risorsa
+    \item Query: ulteriore specificazione della risorsa (generalmente per risposte dinamiche)
+    \item Fragment: individua risorsa secondaria (un frammento) rispetto alla primaria
+\end{itemize}
+\subsection{Route}
+Fatta una richesta di una risorsa il server restituisce in base ad:
+\begin{itemize}
+    \item Managed route: hardcoded ogni richiesta da una specifica risorsa (puo'essere anche dinamica)
+    \begin{lstlisting}
+    GET(http://www.example.com/name) --> Nicolo'Giuliani
+    GET(http://www.example.com/css/style.css) --> raw del file css/style.css
+    \end{lstlisting}
+    \item File-system route: la radice del server corrisponde alla radice dell'URI
+    \begin{lstlisting}
+    www/
+        index.html       --> http://www.example.com/
+        alice/
+            index.html   --> http://www.example.com/alice/
+        css/
+            style.css   --> http://www.example.com/css/style.css
+    \end{lstlisting}
+\end{itemize}
+\subsection{Protocolli morti}
+\begin{itemize}
+    \item File: file://host/path [\#fragment] (dal browser)
+    \item Data: data:[<media type>][;base64],<data> (non cerca ma CONTIENE la risorsa, puo'essere ANCHE codificata in Base64)
+    \item FTP: ftp://[user[:password]@]host[:port]/path
+\end{itemize}
+\section{API REST}
+Servizio basato su HTTP e URI come interfaccia per un'applicazione. \\
+Si dice RESTFULL (o anche REST) quando e'composta:
+\begin{itemize}
+    \item Route (URI): collezioni o singoli elementi
+    \item medoti HTTP (GET/POST/PUT/DELETE)
+    \item input/output
+    \item errori e relativi messaggi da restituire
+\end{itemize}
+La struttura moderna e'il \textbf{modello CRUD}:
+\begin{itemize}
+    \item Create
+    \item Read
+    \item Update
+    \item Delete
+\end{itemize}
+\subsection{HTTP Caching}
+Nelle applicazioni HTTP RESTFULL (API con molte richieste) possiamo avere una cache-server che velocizza la computazione del tempo di risposta delle richieste! NON riduce il traffico sulla rete, per quello c'e'altro. \\
+Per essere sicuri che un oggetto in cache sia ancora valido:
+\begin{itemize}
+    \item \textit{Server-specified expiration}: scadenza della risorsa
+    \item \textit{Heuristic expiration}: durata euristica del oggetto in base ad alcune info, tipo "Last-Modified time" 
+\end{itemize}
+\section{Base64}
+Server per spedire binario via protocolli che vogliono testo (ASCII o UTF-8). \\
+Metodo di codifica e decodifica (algoritmica banale) che permette di codificare a gruppi di 3byte in blocchi da 4 caratteri Base64.
+\begin{center}
+    3byte $\to$ 4 caratteri Base64 (4byte) \\
+    4byte $\to$ 8 caratteri Base64 (8byte) \\
+    5byte $\to$ 8 caratteri Base64 (8byte) \\
+    6byte $\to$ 8 caratteri Base64 (8byte) 
+\end{center}
+\section{JSON Web Token}
+Token leggero per autenticare client $\to$ server.
+\begin{center}
+    header.payload.signature
+\end{center}
+\begin{itemize}
+    \item \textit{header}: tipologia (JWT) e algoritmo (SHA256)
+    \item \textit{payload}: contiene le informazioni di scambio (claims)
+    \item \textit{signature}: garantisce che il token non e'stato modificato, cosi:
+    \begin{center}
+        base64(header) + "." + base64(payload)
+    \end{center}
+\end{itemize}
+\section{CORS}
+Se in un sito abbiamo un codice maligno che "sniffa" i dati e li rigira ad un altro sito, abbiamo un \textbf{cross‑domain request}. \\
+CORS e'un meccanismo HTTP che limita le richieste da solo determinati domini esterni! (Funziona per Ajax non per HTML classico).
+\section{HTML}
+Protoccollo client-server non solo per pagine Web ma anche per appliazioni con richiesta-risposta (API).
+\subsection{Attributi globali}
+\begin{itemize}
+    \item \textit{id}: identificati univoco del oggetto
+    \item \textit{class}: la classe del oggetto
+    \item \textit{style}: stile grafico del oggetto
+    \item \textit{title}: info extra per accessibilita'
+\end{itemize}
+\subsection{Lunghezze}
+\begin{itemize}
+    \item width = "150";
+    \begin{itemize}
+        \item valore assoluto di pixel
+    \end{itemize}
+    \item width = "100\%";
+    \begin{itemize}
+        \item valore proporzionale al contenitore
+    \end{itemize}
+    \item width = "150, 25\%, *, *";
+    \begin{itemize}
+        \item per le tabelle serve per distribuire le varie colonne come:
+        \begin{itemize}
+            \item 150px
+            \item 25\% della pagina
+            \item restante delle pagina / 2
+            \item restante delle pagina / 2
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\section{HTML5}
+Base del web moderno, con media audio/video nativi, API complesse e nuovi elementi semantici.
+\begin{itemize}
+    \item <video> / <audio>: controlli nativi, piu'sorgenti e sottotitoli. Non servono piu'plugin esterni!
+    \item <header> / <footer>: Intestazione, menu, logo, titolo, copyright, autori, ecc
+    \item <article: contenuto autonomo (blog)
+    \item <section>: contenuti raggrupati per argomento
+    \item <nav>: menu, link pagine, breadcrumb
+    \item <aside>: extra come sidebar, pubblicita, note
+    \item <canvas>: grafica 2D via javascript
+\end{itemize}
+Codice piu'leggeibile e \textbf{SEO-friendly}.
+\section{CSS}
+Sintassi:
+\begin{lstlisting}
+    //per un elemento di HTML
+    selettore { 
+        [proprieta']: [statement];
+    }
+    //per una classe da noi definita
+    .classe{
+
+    }
+    //per un oggetto UNICO
+    #id{
+
+    }
+    //per la prima riga di p
+    p:first-line{ }
+
+    //per solo il testo di p fra "<<...>>"
+    p{
+        color: red;
+    }
+    q::before { content :"<<";}
+    q::after { content:">>";}
+\end{lstlisting}
+HTML prevede l'uso di CSS in 3 modi:
+\begin{itemize}
+    \item presso il TAG di rifermento
+    \item nel <style> dell'head
+    \item via file esterno con <link>
+\end{itemize}
+E si assegna agli elementi con:
+\begin{itemize}
+    \item per tipo (nome elemento)
+    \item per categoria (class)
+    \item specifico elemento (id)
+\end{itemize}
+Gli attibuti vengono presi a \textbf{cascata} ovvero
+\begin{center}
+    \begin{lstlisting}
+            p { font-family: Arial; font-size: 12 pt; }
+            p { color: red; font-size: 11 pt; }
+            p { margin-left: 15 pt; color: green;}
+    \end{lstlisting} 
+    viene trasformato in \\
+    \begin{lstlisting}
+            p {
+                font-family: Arial;
+                font-size: 11 pt;
+                margin-left: 15 pt;
+                color: green;
+            }
+    \end{lstlisting}
+\end{center}
+\subsection{Priorita'CSS}
+\begin{itemize}
+    \item Caso normale:
+\begin{lstlisting}
+    p { color: red; }
+    p { color: green; }
+\end{lstlisting}
+avremo 
+\begin{lstlisting}
+    p{
+        color: green;
+    }
+\end{lstlisting}
+    \item Caso \textbf{!important}:
+\begin{lstlisting}
+    p { color: red; !important}
+    p { color: green; }
+\end{lstlisting}
+avremo 
+\begin{lstlisting}
+    p{
+        color: red;
+    }
+\end{lstlisting}
+\item In CSS, quando più regole si applicano allo stesso elemento, vince quella con \textbf{specificità maggiore}. I selettori sono ordinati per importanza in base a questo principio: selettori più specifici coprono quelli più generali.
+\begin{lstlisting}
+<style>
+    nav#main-nav li p { color:red; }
+    #main-nav .active p { color:yellow; }
+    body nav#main-nav li p { color:blue; }
+    nav ul li.active p { color:green; }
+</style>
+
+<nav id="main-nav">
+  <ul>
+    <li class="active">
+      <p style="color:black;">link</p>
+    </li>
+  </ul>
+</nav>
+\end{lstlisting}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Regola} & \textbf{Specificità} & \textbf{Commento} \\
+\hline
+nav\#main-nav li p & 0-1-0-3 & ID=1, classi=0, tag=3 \\
+\#main-nav .active p & 0-1-1-1 & ID=1, classi=1, tag=1 \\
+body nav\#main-nav li p & 0-1-0-4 & ID=1, classi=0, tag=4 \\
+nav ul li.active p & 0-0-1-4 & ID=0, classi=1, tag=4 \\
+\texttt{Inline} & \textbf{1-0-0-0} & Stile scritto direttamente nell'elemento, specificità massima \\
+\hline
+\end{tabular}
+\vspace{1em}\\
+$\to$ "color: black" 
+\caption{Confronto di specificità dei selettori CSS incluso lo stile inline}
+\end{table}
+Riassumendo:
+\begin{center}
+    Inline > ID > class > TAG (elemento HTML)
+\end{center}
+\end{itemize}
+\section{Javascript}
+Durante l'esecuzione dello script, il browser è \textbf{bloccato} e non reagisce agli input dell'utente. \\
+Come si esegue:
+\begin{itemize}
+    \item Sincrono:
+    \begin{itemize}
+        \item Appena lo script viene letto da <script> o da file
+    \end{itemize}
+    \item Asincrono:
+    \begin{itemize}
+        \item \textbf{event-oriented processing} (ad un evento, es. click bottone)
+        \item aspettando una operazione di rete
+        \item dopo un timeout il codice viene eseguito automaticamente
+    \end{itemize}
+\end{itemize}
+Abbiamo diverse opzioni di output
+\begin{itemize}
+    \item console.log();
+    \item alert();
+    \item document.write(); (scrive nel documento direttamente)
+    \item document.getElementById(id).innerHTML = string; (modificare il DOM visualizzato)
+\end{itemize}
+Tipi di dato:
+\begin{itemize}
+    \item bool
+    \item numeri (int e float)
+    \item string
+    \item null
+    \item undefined
+    \item \textbf{object} (strutture e array)
+    \begin{lstlisting}
+        oggetto = {
+            chiave: valore;
+            "altrachiave": altrovalore;
+        }
+    \end{lstlisting}
+    $\to$ tutte le chiavi sono trattate come stringhe!
+\end{itemize}
+\subsection{Accesso alle proprietà di un oggetto in JavaScript}
+\begin{lstlisting}
+const utente = {
+  "profilo": {
+    "info.personali": {
+      "data-nascita": "1990-01-01"
+    }
+  }
+};
+\end{lstlisting}
+Possiamo utilizzare la notazione \textit{punto} solo se non abbiamo caratteri come spazi, trattini o punti:
+\begin{center}
+    \begin{lstlisting}
+        utente.profilo
+    \end{lstlisting}
+\end{center}
+Mentre per le chiavi con simboli strani facciamo:
+\begin{center}
+    \begin{lstlisting}
+        utente.profilo.["info.personali"];
+    \end{lstlisting}
+\end{center}
+\section{Json}
+JSON (JavaScript Object Notation) è un formato dati derivato dalla notazione usata da JS per gli oggetti.
+\begin{lstlisting}
+{
+  "nome": [ "Giuseppe", "Andrea", "Federico" ],
+  "cognome": "Rossi",
+  "altezza": 180,
+  "nascita": "1995-04-11T22:00:00.000Z",
+  "indirizzo": {
+    "via": {
+      "strada": "Via Indipendenza",
+      "numero": "15"
+    },
+    "citta": "Bologna",
+    "nazione": "Italia"
+  },
+  "telefono": [
+    { "tipo": "casa", "numero": "051  123456" },
+    { "tipo": "cell", "numero": "335  987654" }
+  ]
+}
+\end{lstlisting}
+Oggigiorno ogni linguaggio di programmazione decente ha un modo per intefacciarsi con i json.
+\section{Il Document Object Model (DOM)}
+E'una API per i documetni HTML e XML. \\
+Ogni componente del documento puo essere
+\begin{itemize}
+    \item letto
+    \item modificato
+    \item cancellato
+\end{itemize}
+dal DOM. \\
+\vspace{5px}\\
+Javascript implementa i metodi standard per accedere al DOM del documento.
+\begin{lstlisting}
+    var c = document.getElementById('c35');
+    c.setAttribute('class','prova1');
+    c.removeAttribute('align');
+    var newP = document.createElement('p');
+    var text = document.createTextNode('Ciao Mamma.');
+    newP.appendChild(text);
+    c.appendChild(newP);
+\end{lstlisting}
+\subsection{Selettori base HTML in DOM}
+\begin{itemize}
+    \item getElementById
+    \item getElementsByName
+    \item getElementsByTagName 
+\end{itemize}
+\section{Typescript}
+E' un super-set di JavaScript, perciò ogni costrutto valido in JavaScript è valido in Typescript. \\
+Vengono aggiunti costrutti per l’annotazione dei tipi e un sistema di type-inference che consente di conoscere (staticamente) il tipo di una variabile.
+\section{Node.js}
+Node.js è un ambiente di esecuzione Javascript progettato per costruire applicazioni server-side efficienti. \\
+Invece di dedicare un thread ad ogni connessione ricevuta dalla rete, l'applicazione nodeJS utilizza un solo thread per le richieste (asincrone e non bloccanti) e tutte ricevono attenzione condivisa.
+\begin{itemize}
+    \item Mantenendo tutto in un unico stack, NodeJS può gestire decine o centinaia di migliaia di richieste concorrenti. (rispetto a poche migliaia)
+\end{itemize}
+\section{Express.js}
+Express è un modello di server web per node.js:
+\begin{itemize}
+    \item open-source
+    \item molto diffuso, ottima comunity e plugin
+\end{itemize}
+Express si dedica al routing, alla gestione delle sessioni, all'autenticazione degli utenti, e molti altri principi fondanti delle connessioni HTTP.
+\end{document}

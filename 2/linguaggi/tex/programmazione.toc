@@ -1,0 +1,114 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {section}{\numberline {1}Macchine astratte, interpreti e compilatori}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Interpretazione pura}{5}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Compilazione pura}{5}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Compilazione o interpretazione?}{6}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Descrivere un linguaggio di programmazione}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Notazioni}{7}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Operazioni sui linguaggi}{7}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Rappresentazione finite dei linguaggi}{8}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Definire un linguaggio}{8}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Come derivare una stringa?}{9}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Grammatiche}{10}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Derivazioni}{10}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Linguaggio generativo}{11}{subsection.2.8}%
+\contentsline {section}{\numberline {3}Derivazioni ed alberi}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Albero di Parsing}{13}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Ambiguità}{13}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Grammatica concreta}{14}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Variabili sintattici contestuali}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Come si fa a definire la semantica?}{16}{subsection.4.1}%
+\contentsline {paragraph}{Implementazione\\}{16}{section*.6}%
+\contentsline {subsection}{\numberline {4.2}Fasi di un compilatore}{17}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Semantica operazionale strutturale}{17}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Induzione strutturale}{20}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Semantica delle espressioni booleane}{21}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Semantica dei comandi}{22}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Errori dinamici (a runtime)}{22}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Nondeterminismo e Parallelismo}{23}{subsection.5.5}%
+\contentsline {section}{\numberline {6}Analisi Lessicale - linguaggi regolari}{24}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Espressioni regolari}{24}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Linguaggio denotato da una espressione regolare}{24}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Equivalenza tra espressioni regolari}{25}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Automi (a stati) finiti}{25}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Automi finiti nondeterministici}{27}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}Linguaggio riconosciuto / accettato}{28}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Automi finiti deterministici}{29}{subsection.6.7}%
+\contentsline {subsection}{\numberline {6.8}$\epsilon $-closure e mosse}{32}{subsection.6.8}%
+\contentsline {subsection}{\numberline {6.9}Algoritmo per calcolare la $\epsilon $-closure (P)}{32}{subsection.6.9}%
+\contentsline {subsection}{\numberline {6.10}Costruzione dei sottoinsimi}{32}{subsection.6.10}%
+\contentsline {subsection}{\numberline {6.11}Equivalenza NFA-DFA}{33}{subsection.6.11}%
+\contentsline {section}{\numberline {7}Da espressioni regolari a NFA equivalenti}{33}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Grammatiche regolari}{34}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Grammatiche regolari ed espressioni regolari}{35}{subsection.7.2}%
+\contentsline {section}{\numberline {8}Minimizzazione}{37}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Equivalenza / Instinguibilità}{37}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Algoritmo iterativo (Tabella a scala)}{41}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Automa minimo}{44}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Lex: Generatore di Scanner}{45}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Come è fatto un file di input \textit {lex.l}?}{45}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Utilizzo con YACC}{49}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Proprietà algoritmiche dei linguaggi regolari}{50}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Pumping Lemma}{50}{subsection.9.4}%
+\contentsline {section}{\numberline {10}Analisi sintattica: linguaggi liberi}{52}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Analisi sintattica}{52}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Linguaggio accettato}{54}{subsection.10.2}%
+\contentsline {section}{\numberline {11}Proprietà di chiusura}{57}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Applicazione del teorema}{58}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Pumping Theorem}{58}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Classificazione di Chomsky}{61}{subsection.11.3}%
+\contentsline {section}{\numberline {12}PDA e linguaggi deterministici}{63}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Proprieta' dei linguaggi liberi deterministici}{65}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Analizzatori sintattici (Parser)}{65}{subsection.12.2}%
+\contentsline {section}{\numberline {13}Semplificare le grammatiche}{71}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Eliminare le produzione $\epsilon $}{71}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Eliminare le produzioni unitarie}{73}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Rimuore i simboli inutili}{74}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Come calcolare i generatori?}{75}{subsection.13.4}%
+\contentsline {subsection}{\numberline {13.5}Come calcolare i raggiungibili?}{75}{subsection.13.5}%
+\contentsline {subsection}{\numberline {13.6}Come rimuovere i simboli inutili?}{76}{subsection.13.6}%
+\contentsline {subsection}{\numberline {13.7}Eliminare i simboli inutili}{76}{subsection.13.7}%
+\contentsline {subsection}{\numberline {13.8}Forme normali}{77}{subsection.13.8}%
+\contentsline {subsection}{\numberline {13.9}Eliminare la ricorsione sinistra}{78}{subsection.13.9}%
+\contentsline {section}{\numberline {14}Parser top-down}{81}{section.14}%
+\contentsline {subsection}{\numberline {14.1}First}{82}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Follow}{83}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Tabella di parsing LL(1)}{84}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Parser LL(1) non ricorsivo}{85}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Grammatiche LL($k$)}{86}{subsection.14.5}%
+\contentsline {section}{\numberline {15}Parser bottom-up}{88}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Parser shift-reduce nondetermismo}{88}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Come risolvere i conflitti?}{91}{subsection.15.2}%
+\contentsline {subsection}{\numberline {15.3}Come è fatto un parser LR?}{91}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Mosse del parser LR}{92}{subsection.15.4}%
+\contentsline {subsection}{\numberline {15.5}DFA dei prefissi viabili / Automa canonico LR(o)}{94}{subsection.15.5}%
+\contentsline {subsection}{\numberline {15.6}Prefisso viabile}{94}{subsection.15.6}%
+\contentsline {subsection}{\numberline {15.7}Come costruire l'NFA dei prefissi vaibili?}{95}{subsection.15.7}%
+\contentsline {subsection}{\numberline {15.8}Automa canonico LR(o)}{96}{subsection.15.8}%
+\contentsline {subsection}{\numberline {15.9}Costruizione diretta dell'automa canonico LR(o)}{96}{subsection.15.9}%
+\contentsline {subsection}{\numberline {15.10}Tabella di parsing LR}{98}{subsection.15.10}%
+\contentsline {subsection}{\numberline {15.11}Il generico Parser LR}{99}{subsection.15.11}%
+\contentsline {section}{\numberline {16}Tabella di Parsing SLR(1)}{102}{section.16}%
+\contentsline {subsection}{\numberline {16.1}NFA LR(1)}{104}{subsection.16.1}%
+\contentsline {subsection}{\numberline {16.2}Automa canonico LR(1)}{104}{subsection.16.2}%
+\contentsline {subsection}{\numberline {16.3}Come si deve riempire la tabella di parsing LR(1)?}{105}{subsection.16.3}%
+\contentsline {subsection}{\numberline {16.4}Parser LALR(1)}{108}{subsection.16.4}%
+\contentsline {subsection}{\numberline {16.5}Come si ottiene il parser LALR(1)?}{108}{subsection.16.5}%
+\contentsline {subsection}{\numberline {16.6}Passando da LR(1) a LALR(1)}{111}{subsection.16.6}%
+\contentsline {section}{\numberline {17}Grammatiche LR(k)}{113}{section.17}%
+\contentsline {subsection}{\numberline {17.1}Grammatiche SLR(k)}{113}{subsection.17.1}%
+\contentsline {subsection}{\numberline {17.2}Grammatiche LALR(k)}{114}{subsection.17.2}%
+\contentsline {subsection}{\numberline {17.3}Classificazione dei linguaggi}{116}{subsection.17.3}%
+\contentsline {subsection}{\numberline {17.4}Generatori di analizzatori sintattici}{118}{subsection.17.4}%
+\contentsline {subsection}{\numberline {17.5}Struttura di un file YACC}{119}{subsection.17.5}%
+\contentsline {subsection}{\numberline {17.6}L'azione semantica}{120}{subsection.17.6}%
+\contentsline {subsection}{\numberline {17.7}Generazione di un interprete per espressioni aritmetiche}{120}{subsection.17.7}%
+\contentsline {section}{\numberline {18}Fondamenti: cenni su calcolabilita'}{121}{section.18}%
+\contentsline {subsection}{\numberline {18.1}Procedura di decisione}{123}{subsection.18.1}%
+\contentsline {subsection}{\numberline {18.2}Procedura di semi-decisione}{123}{subsection.18.2}%
+\contentsline {subsection}{\numberline {18.3}Proprieta' indecidibili}{124}{subsection.18.3}%
+\contentsline {subsection}{\numberline {18.4}Macchina di Turing}{124}{subsection.18.4}%
+\contentsline {subsection}{\numberline {18.5}Argomento di Cantor}{125}{subsection.18.5}%
+\contentsline {subsection}{\numberline {18.6}Test di Church-Turing (1936-1937)}{126}{subsection.18.6}%
+\contentsline {subsection}{\numberline {18.7}Gerarchia di macchina}{127}{subsection.18.7}%

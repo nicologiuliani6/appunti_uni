@@ -1,0 +1,15 @@
+{
+  "promptDelete": false,
+  "livePreview": true,
+  "showLineNumber": false,
+  "rightToLeft": true,
+  "vimMode": false,
+  "pdfExportSettings": {
+    "includeName": true,
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "strictLineBreaks": false
+}

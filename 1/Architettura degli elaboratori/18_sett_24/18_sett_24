@@ -1,0 +1,13 @@
+STORIA DEI CALCOLATORI
+All’inizio capire come far svolgere cose, dopo riuscire a ridurre i tempi, aumentare l’efficienza e il costo.
+
+GENERAZIONE 0: (calcolatori meccanici per fare conti)
+1642 - Pascalina (somme e sottrazioni)
+1672 - (ora anche moltiplicazioni e divisioni)
+1834 - ipotesi di computer, memoria in sistema decimale, IO con schede perforate
+1936 - computer relè
+1945 - computer a valvole
+1952 - calcolatore con architettura moderna:
+MEMORIA (include dati e programmi), unità di controllo (manda segnali al resto del calcolatore in base ai segnali) unità di aritmetico-logica(AND, OR, NOT), [include l’accumulatore, una sorte di registro] [i registri sono a 64bit e l’AUR sa fare i conti a 64bit; i bit cambiano a seconda della architettura]
+1961 - PDP-1 computer a transistor, leggermente più lento della concorrenza ma 10 volte più economico 
+1964 - CDC 6600 la prima macchina parallela, creata per calcolare. i calcoli paralleli erano divisi in “pezzi” separati del calcolatore

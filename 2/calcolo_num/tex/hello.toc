@@ -1,0 +1,21 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {section}{\numberline {1}Zeri di funzione}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Metodo di bisezione}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Metodo di punto fisso}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Metodo di Newton}{3}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Ottimizzazione}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Metodo del gradiente}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Metodo di Newton puro}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Gradiente stocastico (SGD)}{7}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Approssimazione dei dati}{8}{section.3}%
+\contentsline {section}{\numberline {4}Algebra lineare numerica}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Norme vettoriali e matrici}{10}{subsection.4.1}%
+\contentsline {section}{\numberline {5}Sistemi lineari}{10}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Fattorizzazione Cholesky}{11}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Fattorizzazione LU}{11}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Condizionamento}{15}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Problema minimi quadrati e SVD}{16}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Imaging e problemi inversi}{22}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Compressione SVD}{22}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Deblur}{22}{subsection.6.2}%

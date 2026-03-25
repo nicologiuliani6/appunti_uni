@@ -1,0 +1,206 @@
+\documentclass[a4paper,12pt]{article}
+
+% Pacchetti comuni
+\usepackage[utf8]{inputenc}    % Codifica UTF-8
+\usepackage{amsmath}            % Simboli matematici
+\usepackage{amsfonts}           % Font matematici
+\usepackage{amssymb}            % Simboli matematici
+\usepackage{graphicx}           % Gestione delle immagini
+\usepackage{hyperref}           % Collegamenti ipertestuali
+
+\title{Appunti della lez}
+\author{Nicolo' Giuliani}
+\date{\today}
+
+\begin{document}
+\section{Ripasso}
+Il determinante e' una funzione $det \text{ : }M_{nn}(\mathbb{R}) \to \mathbb{R}$ che gode di 4 proprieta'.
+\\ovvero $a,b,c$ e che il det A = det $A^T$ (\textit{Transposta di A}).
+\\Nota: le proprieta vengono sostituendo la parola righa con la parola colonna.
+\subsection{Teorema di Binet}
+$det AB=detAdetB$
+\subsection{Calcolo del determinante}
+1) Gauss
+\\2) Laplace
+\\\subsection{Matrice inversa}
+Def: $A \in M_{mn}(\mathbb{R})$ si dice invertibile se esiste $B \in M_{nn}(\mathbb{R})$ tale che $AB=BA=I$.
+\\Proposizione: $A \in M_{nn}(\mathbb{R})$  e' invertibile $\iff det A \neq 0$
+\\Proposizione: Sia $A \in M_{nn}(\mathbb{R})$  e sia $B \in M_{nn}(\mathbb{R})$  tale che $AB=I$. Allora $B$ e' l'inversa di $A$, cioe' $BA=I$.
+\\Dim: $AB=I$ $= det(AB)=det(I)=1$ attraverso binet $\to det(A)det(B)=1 \to det(A)\neq 0$, quindi A e' invertibile e $A^{-1}$ l'inversa. 
+\\Moltiplichiamo entrambi i membri di $AB=I$ a sinistra per $A^{-1}$. Quindi $A^{-1}AB=A^{-1}I \to IB=A^{-1} \to B=A^{-1}$ in particolare $BA=I$.
+Proposizione (versione bis): $BA=I \to B=A^{-1}$
+\section{Calcolo dell'inversa}
+(Osservazione: $det(A) \neq 0$) \\
+1) Laplace: $b_{ij}=\frac{1}{detA}T_{ij}$
+\\2) Algoritmo di Gauss: \\
+Si scrive $A \mid I$ 
+\\ con le operazioni elementari di Gauss arriviamo a $I \mid B$ allora $B=A^{-1}$
+\\Esempio:
+\begin{align*}
+    A=\begin{pmatrix}
+        1&2&0\\-1&3&1\\0&1&-2
+    \end{pmatrix} \\
+    A\mid I=\begin{pmatrix}
+    1 & 2 & 0 & | & 1 & 0 & 0 \\
+    -1 & 3 & 1 & | & 0 & 1 & 0 \\
+    0 & 1 & -2 & | & 0 & 0 & 1
+    \end{pmatrix} \\
+    \text{la portimo a scala} \\
+    \begin{pmatrix}
+        1&2&0&|&1&0&0\\
+        0&1&-2&|&0&0&1\\
+        0&0&11&|&1&1&-5
+    \end{pmatrix}
+\end{align*}
+Quando la matrice e' a scala faccia comparire tutti gli "1" sulla diagonale principale.
+\begin{align*}
+    \begin{pmatrix}
+        1&2&0&|&1&0&0\\
+        0&1&-2&|&0&0&1\\
+        0&0&1&|&\frac{1}{11}&\frac{1}{11}&\frac{-5}{11}
+    \end{pmatrix}
+\end{align*}
+Ripartiamo con Gauss dal basso utilizzando il pivot in posizione "n,n" (in questo caso 3,3), per far apparire tutti gli "0" sopra di esso.
+\begin{align*}
+    (R_2+2R_3)
+    \begin{pmatrix}
+        1&2&0&|&1&0&0\\
+        0&1&0&|&\frac{2}{11}&\frac{2}{11}&\frac{1}{11}\\
+        0&0&1&|&\frac{1}{11}&\frac{1}{11}&\frac{-5}{11}
+    \end{pmatrix}
+\end{align*}
+Poi si utilizza il pivot "1" in posizione "n-1,n-1" e cosi' via.
+\begin{align*}
+    (R_1-2R_2)
+    \begin{pmatrix}
+        1&0&0&|&\frac{7}{11}&\frac{-4}{11}&\frac{-2}{11}\\
+        0&1&0&|&\frac{2}{11}&\frac{2}{11}&\frac{1}{11}\\
+        0&0&1&|&\frac{1}{11}&\frac{1}{11}&\frac{-5}{11}
+    \end{pmatrix}=I\mid B 
+    \\\to B=A^{-1}
+\end{align*}
+RICORDA:nella matrici 2x2 il determinante ha un significato geometrico, ovvero l'area.
+\\Se il det=0 vuol dire la matrice e' una trasformazione in uno spazio inferiore.
+\pagebreak
+Applicazione lineare $F : \mathbb{R}^n \to \mathbb{R}^n$, sia $F=L_A$. Supponiamo che $F$ sia isomorfismo (iniettiva e suriettiva), sia $G=F^{-1}$.
+$G : \mathbb{R}^n \to \mathbb{R}^n $. \\$FoG=$identita' $\mathbb{R}^n$. $GoF=$identita' $\mathbb{R}^n$.
+\begin{align*}
+    \mathbb{R}^n (F)\to \mathbb{R}^n (G=F^{-1})\to \mathbb{R}^n 
+\end{align*}
+Sia B la matrice associato a G, $G=L_A$. Osserviamo che la matrice associata ad $id_{\mathbb{R}^n}$ e':
+\begin{align*}
+    \begin{pmatrix}
+        1&0&0&0\\0&1&0&0\\\vdots\\0&0&0&1
+    \end{pmatrix}
+\end{align*}
+$L_I=id$
+\begin{align*}
+    e_1 \to e_1 \\
+    e_2 \to e_2 \\
+    e_n \to e_n
+\end{align*}
+\begin{align*}
+    \mathbb{R}^n (F)(A)\to \mathbb{R}^n (G=F^{-1})(B)\to \mathbb{R}^n 
+    \\GoF=id \iff BA=I
+\end{align*}
+$BA=I \to B$ e' l'inversa di A.
+\\Quindi alla funzione inversa di $F^{-1}$ di F e' associata la matrice inversa di $A^{-1}$ di A e viceversa.
+\section{Teorema 7.6.1 (teoremone)}
+Sia $F: \mathbb{R}^n \to \mathbb{R}^n$ applicazione lineare e sia A la matrice associata ad F rispetto alla base canonica in dominio e codominio.  (Cioe' $F=L_A$) 
+\\Sono equivalenti queste condizioni:
+\\1) F e' un insomorfismo
+\\2) F e' iniettiva
+\\3) F e' suriettiva
+\\4) dim(Im F)=n
+\\5) rk(A)=n
+\\6) le colonne di A sono linearmente indipendenti
+\\7) le righe di A sono linearmente indipendenti
+\\8) il sistema $Ax=0$ ha un unica soluzione
+\\9) $\forall b \in \mathbb{R}^n$ il sistema Ax=b ha un unica soluzione.
+\\10) A e' invertibile
+\\11) $det(A) \neq 0$
+\\RICORDA: \textit{10 $\iff$ 11}
+\\RICORDA: \textit{2 $\iff$ 1}
+Dim: 
+\begin{align*}
+    F : \mathbb{R}^n \to \mathbb{R}^n \\
+    F_{iniettiva}=Ker F = {0}  \to Ker F =0
+    \\ \to dim(Im F)=dim(\mathbb{R}^n)-dim(Ker F)=n
+    \\ \to F \text{ e' suriettiva} \to \text{ e' un isomorfismo}
+\end{align*}
+\\RICORDA: \textit{3 $\iff $ 1}
+\begin{align*}
+    F : \mathbb{R}^n \to \mathbb{R}^n \text{ e' suriettiva per ipotesi}\\ 
+    \to dim(Im F)=n \to dim(Ker F)=dim \mathbb{R}^n
+    \\ dim(Im F)=0 \to Ker F = {0} \to F \text{ e' iniettiva}
+\end{align*}
+Quindi $1 \to 3, 4 \to 2$ per def. di isomorfismo.
+\\ $3 \iff 4$:
+\begin{align*}
+    F \text{ e' suriettiva} \iff Im F = \mathbb{R}^n
+    \\ \iff (4.2.4) \text{  }dim(Im F)=dim(\mathbb{R}^n)
+\end{align*}
+$4 \iff 5$:
+\begin{align*}
+    Im F = \langle \text{colonne di A}\rangle \\
+    dim(Im F)=n \iff dim(\text{rk(A)})=n
+\end{align*}
+$5 \iff 6$:
+\begin{align*}
+    rk(A)=n \iff dim(\langle \text{colonne di A}\rangle)=n 
+    \\ \iff (GEL) \text{  le colonne di A sono linearmente indipendenti}
+\end{align*}
+$5 \iff 7$:
+\begin{align*}
+    rk(A)=n \iff dim(\langle \text{righe di A}\rangle) =n
+    \\ \iff(GEL) \text{  le righe di A sono linearmente indipendenti}.
+\end{align*}
+$2 \iff 8$:
+\begin{align*}
+    F \text{ e' iniettiva} \iff Ker F={0}
+    \\ \iff \text{ il sistema }Ax=0 \text{ ha unica soluzione. (quella nulla)}
+\end{align*}
+$1 \iff 9$:
+\begin{align*}
+    F \text{ e' suriettiva} \iff \forall b \in \mathbb{R}^n \mid F^{-1}(b) \text{ ha un solo elemento}
+    \\ \iff \text{ il sistema Ax=b ha un unica soluzione}
+\end{align*}
+$1 \iff 10$:
+\begin{align*}
+    F \text{ e' isomorfiso } \iff \exists F^{-1} \\
+    \iff \exists A^{-1} \iff A \text{ e' iniettiva}
+    \\ \text{dimostrati prima del teoremone}
+\end{align*}
+ESERCIZIO:
+\\stabilire per quali valori di k si ha che $F_K$ e' iniettiva
+\begin{align*}
+    F_K : \mathbb{R}^3 \to \mathbb{R}^3 \text{ e' appl. lin.}\\
+    F_K(e_1)=e_1+ke_3 \\
+    F_K(e_2)=ke_1+ke_2+6e_3 \\
+    F_K(e_3)=e_1+ke_2+2ke_3
+\end{align*}
+\begin{align*}
+    \begin{pmatrix}
+        1&k&1\\
+        0&k&k\\
+        k&6&2k
+    \end{pmatrix}
+\end{align*}
+2 modi per risolvere:
+\\1)Sauss
+\\2)Laplace
+\\Faremo il secondo, scegliamo la prima colonna.
+\begin{align*}
+    det(A_K)=1(-1)^{1+1}det\begin{pmatrix}
+        k&k\\6&2k
+    \end{pmatrix}+0+(-1)^{3+1}kdet\begin{pmatrix}
+        k&1\\k&k
+    \end{pmatrix}
+    \\ =2K^2-6K-K(K^2-K)
+    \\ = K(K^2+K-6)
+\end{align*}
+\begin{align*}
+    det(A)=0 \iff K=0 \text{ o } K^2+K-6=0 \to (K+3)(K-2) \to K=-3,K=2
+\end{align*}
+
+\end{document}

@@ -1,0 +1,63 @@
+\documentclass[9pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[a4paper, margin=0.7cm]{geometry}
+\title{Analisi \textit{riassuntino tattico}}
+\author{Nicolò Giuliani}
+\date{}
+
+
+
+\begin{document}
+\maketitle
+Sia data $f(x,y)$: \\
+\textbf{Gradiente}:
+\begin{align*}
+    \nabla f(x_0,y_0)=(\frac{\partial f(x_0,y_0)}{\partial x},\frac{\partial f(x_0,y_0)}{\partial y})
+\end{align*}
+\textbf{Norma/Modulo/Lunghezza}:
+\begin{align*}
+    |\nabla f(x_0,y_0)|=\sqrt{\frac{\partial f(x_0,y_0)}{\partial x}^2+\frac{\partial f(x_0,y_0)}{\partial y}^2}
+\end{align*}
+\textbf{Taylor al secondo grado nel punto $x_0,y_0$}:
+\begin{align*}
+    f(x,y) \approx f(x_0,y_0)+\frac{\partial f(x_0,y_0)}{\partial x}(x-x_0)+\frac{\partial f(x_0,y_0)}{\partial y}(y-y_0)+\frac{\frac{\partial f(x_0,y_0)}{\partial^2 x}}{2}(x-x_0)^2+\frac{\frac{\partial f(x_0,y_0)}{\partial^2 y}}{2}(y-y_0)^2+\frac{\partial f(x_0,y_0)}{\partial x \partial y}(x-x_0)(y-y_0)
+\end{align*}
+\textbf{Equazione del piano tangente in $(x_0,y_0,f(x_0,y_0))$}:
+\begin{align*}
+        z = f(x_0,y_0)+\frac{\partial f(x_0,y_0)}{\partial x}(x-x_0)+\frac{\partial f(x_0,y_0)}{\partial y}(y-y_0)
+\end{align*}
+\textbf{Equazione della curva} parametrica (o traiettoria nel tempo)
+\begin{align*}
+    \vec{r}(t) = (x(t), y(t))
+\end{align*}
+\textbf{Vettore velocità}:
+\begin{align*}
+    \vec{v}(t) = \frac{d\vec{r}}{dt} = \left(\frac{dx}{dt}, \frac{dy}{dt}\right)
+\end{align*}
+\textbf{Direzione di massima crescita in un punto}:
+\begin{align*}
+    \vec{v}_{max}=\nabla f(x_0,y_0)
+\end{align*}
+\textbf{Derivata di massima crescita in un punto}:
+\begin{align*}
+    D_{\vec{v}_{max}} f(x_0,y_0) =|\vec{v}_{max}| =|\nabla f(x_0,y_0)|
+\end{align*}
+\textbf{Derivata composta in un punto}:
+\begin{align*}
+\frac{d}{dt} f(x(t), y(t)) 
+= \frac{\partial f}{\partial x}(x(t), y(t)) \frac{dx}{dt} + \frac{\partial f}{\partial y}(x(t), y(t)) \frac{dy}{dt} 
+= \left\langle \nabla f(x(t), y(t)), \vec{v}(t) \right\rangle\end{align*}
+\textbf{Derivata direzionale}
+\begin{align*}
+D_{\vec{v}} f(x_0,y_0) = \nabla f(x_0,y_0) \cdot \vec{v}
+\end{align*}
+
+
+
+
+\end{document}

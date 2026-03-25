@@ -1,0 +1,94 @@
+// Initialization
+@256
+D=A
+@SP
+M=D
+// PUSH CONSTANT 111
+@111
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 333
+@333
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 888
+@888
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// POP STATIC 8
+@VMStaticTest.8
+D=A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+// POP STATIC 3
+@VMStaticTest.3
+D=A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+// POP STATIC 1
+@VMStaticTest.1
+D=A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+// PUSH STATIC 3
+@VMStaticTest.3
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH STATIC 1
+@VMStaticTest.1
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+// SUB
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+// PUSH STATIC 8
+@VMStaticTest.8
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+// ADD
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M+D

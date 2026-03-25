@@ -1,0 +1,18 @@
+DOMANDE:
+va.
+Domanda D
+
+(n. 41)
+In riferimento all’esercizio 35 (rotazione di π22π​), quali sono gli autovettori di Θ4Θ4?
+Domanda E
+
+(n. 42)
+Sfida! Sia ΞΞ un’applicazione che ruota un vettore di 220∘220∘.
+Per quali valori di nn ogni vettore è autovettore di ΞnΞn?
+RIOSPOSTE:
+
+A: La matrice sara (0 -1 \\ 1 0) e quindi gli autovalori sanranno \lambda=\sqrt(-1). Dato che stiamo lavorando in R2 non abbiamo soluzioni reali. 
+B: Una appl linerare e' sureittiva quando \forall w, w=f(v) per quialche v \to dim(Im)=2. Sappiamo dalla teoria della suriettivita che una funzion eper essere suriettivas deve essere della forma Rn \to Rn. Quindi non puo essere suriettiva.
+C: Se una matrice A^2=0 vuol dire che la matrice A^3=a_{ij}*a_{ij}^2 e dato che a_{ij}=0 allora a_{ij}^3=a_{ij}*0=0. QUindi si A^3=0.
+D: Riprendiamo la matrice [0 -1 \\ 1 0] elevata alla quarta fa [0 1 \\ 1 0] e quinbdi abbiamo come autovalori \lambda=\pm 1 e composta come autovettori di 1 (1,1) e per -1 (-1,1)
+E: dobiamo cercare una matrice tale che ci venga [1 0 \\ 0 1] dobbiamo cercare in valore di n tale che (cos(220)^n)*x=1 e (sin(220)^n)*x=0

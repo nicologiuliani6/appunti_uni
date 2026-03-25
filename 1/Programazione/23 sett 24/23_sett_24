@@ -1,0 +1,62 @@
+gli identificatori (o variabili) sono nomi simbolici creati dal programmatore ed associati ad un valore.
+un identificatore è il nome associato ad una cella di memoria utilizzata per contenere valori.
+le dichiarazioni servono ad allocare la memoria sufficiente a contenere i valori utilizzati dal programma 
+i tipi di dato servono a ottimizzare l’uso della memoria
+esempi di tipi di dato:
+i numeri interi (int) occupano 4 byte di memoria
+i numeri reali (double) occupano 8 byte di memoria
+i caratteri (char) occupano 1 byte di memoria
+i tipi di dato servono anche a ottimizzare l’uso del processore: le
+operazioni sono suddivise a secondo della collezione di valori a cui
+si applicano
+
+
+TIPI DI DATO/INT
+valori: sono il sottoinsieme degli interi che è possibile
+memorizzare in k byte
+( di solito k=4: compresi tra ± 2.147.483.647 )
+esempi: -16 0 3257 21
+operazioni:
+memorizzare un intero in una variabile di tipo int: x= 27;
+effettuare operazioni aritmetiche (somma, differenza,
+moltiplicazione, divisione, resto ...) tra due interi: 5+4 4/2 5%2
+4*7
+confrontare due interi: 5>4 5==4 5!=4 5>= 4
+valore assoluto abs(-3)
+
+
+COMMENTI SULL’OPERAZIONE %
+l'operatore di resto può essere applicato solo a numeri
+interi
+altrimenti si ottiene un errore di tipo
+l'operatore di resto può essere derivato: n % d
+coincide con n – (n/d * d)
+è comunque meglio usare l'operatore predefinito
+se uno dei due operandi è negativo il risultato dipende
+dall’implementazione
+se il secondo operando (divisore) è 0 si ha un errore
+
+TIPI DI DATO/DOUBLE
+valori: sono un’astrazione dei reali: alcuni reali sono troppo grandi
+o troppo piccoli, mentre altri non possono essere rappresentati in
+modo preciso
+operazioni:
+memorizzare un reale in una variabile di tipo double
+operazioni aritmetiche (somma, differenza,
+moltiplicazione, divisione, …)
+confronto
+operazioni di libreria (es. pow, log, sqrt,…):
+includere cmath
+esempi: 5.1+4.0 pow(3.0,2.0)
+ 3.1>=0.3 log(4.1)
+
+ TIPI DI DATO/DOUBLE/CAST
+conversione interi à reali:
+laddove può esserci un reale può comparire un intero
+ 4/2.3 à 4.0/2.3
+ log(4) à log(4.0)
+conversione reali à interi: il reale è troncato.
+4.6 à 4
+il cast può essere anche esplicito:
+ (int)4.6 à 4
+ (double)4 à 4.0

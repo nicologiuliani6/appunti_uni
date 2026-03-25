@@ -1,0 +1,141 @@
+\documentclass[a4paper,11pt]{article}
+
+% Pacchetti comuni
+\usepackage[utf8]{inputenc}    % Codifica UTF-8
+\usepackage{amsmath}           % Simboli matematici
+\usepackage{amsfonts}          % Font matematici
+\usepackage{amssymb}           % Simboli matematici
+\usepackage{graphicx}          % Gestione delle immagini
+\usepackage{hyperref}          % Collegamenti ipertestuali
+\usepackage{multicol}
+\usepackage[a4paper,landscape,margin=0.7cm]{geometry}  % <-- Aggiunta 'landscape' qui
+
+\title{Formulario di Algebra Lineare}
+\author{Nicolò Giuliani}
+\date{}
+
+
+\begin{document}
+%\maketitle
+\begin{multicols}{2} 
+\textbf{\\Vettori linearmente indipendenti}: $\alpha \vec{v}_1 + \beta \vec{v}_2 + \gamma \vec{v}_3 = \vec{0} \iff \alpha = \beta = \gamma = 0$ \\
+\(
+\iff \det([\vec{v}_1 \, \vec{v}_2 \, \vec{v}_3]) \neq 0  
+\iff A = [\vec{v}_1 \, \vec{v}_2 \, \vec{v}_3] \xrightarrow{\text{Gauss}} A' \text{ (forma a scala)}
+\)\\
+\vspace{1em} \\
+\textbf{Prodotto di matrici}: $A_{m \times n} \cdot B_{n \times p} = C_{m \times p}, \quad         c_{ij} = \sum_{k=1}^n a_{ik} b_{kj}$ \\
+\vspace{1em} \\
+\textbf{Sottospazi:} $W\subset R^n \iff W\neq0_v$ \\
+\textbf{Chiusura per somma:} $\vec{u}, \vec{v} \in W \Rightarrow \vec{u} + \vec{v} \in W$ \\[2pt]
+\textbf{Chiusura per prodotto scalare:} $\lambda \in \mathbb{R}, \vec{v} \in W \Rightarrow \lambda \vec{v} \in W$ \\
+\(
+\vec{v}\in W\subseteq \mathbb{R}^n \to A\lambda_i=\vec{v} \to \text{ il sistema ha soluzione}  \\
+\textbf{Eq. cartesiane di $W \subseteq \mathbb{R}^4$: } W \mid \vec{x}=\langle \vec{w_1}, \vec{w_2} \rangle \mid \vec{x} =\lambda(\vec{w_1})+\gamma(\vec{w_2})\mid\vec{x} \to A \mid \vec{x} \to \text{ sistema da semplificare}
+\) 
+\vspace{1em}\\
+\(
+A + B = B + A \quad \text{(addizione commutativa)} \\
+A(BC) = (AB)C \quad \text{(moltiplicazione associativa)} \\
+A(B + C) = AB + AC \quad \text{(distributiva)} \\
+AB \neq BA \quad \text{(non commutativa in generale)} \\
+AI = IA = A \quad \text{(matrice identità)} \\
+(A^T)^T = A, \quad (AB)^T = B^T A^T \quad \text{(trasposta)} \\
+\text{Se } A \text{ è invertibile: } AA^{-1} = A^{-1}A = I  \\
+(AB)^{-1} = B^{-1} A^{-1} \quad \text{(inversa del prodotto)} \\
+\det(AB) = \det(A)\det(B), \quad \det(A^T) = \det(A) \\
+\text{Matrice ortogonale: } Q^T Q = I \Rightarrow Q^{-1} = Q^T, \ \det(Q) = \pm 1  \\
+Q, R \text{ ortogonali } \Rightarrow QR \text{ ortogonale} 
+\)
+
+ 
+\(\\
+F_k : \mathbb{R}^n \to \mathbb{R}^m \\
+A \in M_{m\times n} (\mathbb{R}) \to F(\vec{v})=A\times [\vec{v}] \\
+\)
+\textbf{Iniettiva}: $Ker(F_k)=\{0\} \iff det(A_k)\neq 0 $ \\
+\textbf{Suriettiva}: $dim(Im)=dim(\mathbb{R}^{m})\iff det(A_k)\neq 0$ \\
+\textbf{Isomorfismo/Invertibile}: $\exists F^{-1}_k \iff det(A_k)\neq0$ \\
+\textbf{Teorema della dimensione}: $dim(Ker)=dim(\mathbb{R}^n)-dim(Im), \\dim(Ker)=\text{num. colonne} -rr(A')$ \\
+\(
+Ker(A)=span\{(\vec{v_3}),(\vec{v_4})\}=\{x_3(\vec{v_3}),x_4(\vec{v_4}) \mid x_3,x_4 \in \mathbb{R}\}\\ 
+\vec{v}\in Ker \iff A\vec{v}=\vec{0} \\
+\beta_{Ker(A)}=\{(\vec{v_3}),(\vec{v_4})\} \\
+\vec{v} \in Im(A) \iff A\vec{x}=\vec{v} \text{ (se non si sono contraddizioni!)} \iff rr(A)=rr(A\mid \vec{v}) \\
+\left[\vec{v}\right]_{\beta}=(\lambda_1,\lambda_2,\dots,\lambda_k), \quad      (\vec{v})=\lambda_1 (\beta_1)+\lambda_2 (\beta_2)+\dots+\lambda_k (\beta_k), \quad \beta=\{\beta_1,\beta_2,\dots,\beta_k\} \\
+\textbf{Equazioni cartesiane di } \ker(A): \quad A \vec{v} = \vec{0} \quad \Rightarrow \quad \text{sistema da risolvere} \\
+\textbf{Equazioni cartesiane di } \operatorname{Im}(A): \quad A\vec{x}=\vec{y} \rightarrow \quad \text{sistema da risolvere su $y_i$} \\
+\)
+\vspace{1em} \\
+\(
+T_k : \mathbb{R}^n \to \mathbb{R}^n\\
+C=\{e_1,\dots,e_n\} \\
+\)
+\(
+A_k=[T_k]_C^C = \begin{pmatrix}
+    [T_k(e_1)] & [T_k(e_2)] & \dots & [T_k(e_n)] \\
+    \vdots & \vdots & & \vdots
+\end{pmatrix} \\
+\)
+\(
+\textbf{Autovalore: } det(A-\lambda I)=0 \iff \exists \lambda_1,\lambda_2,\lambda_n \\
+T_k \textbf{ e' diagonalizzabile} \iff \exists \beta=\{atv_1,atv_2,\dots,atv_n\}, \text{ con } atv_i=span\{A-\lambda_i I\}  \iff MA \text{ (grado del polinomio $\lambda_i$)} = MG \text{ (dim(Ker($F_k$)))} \\
+\textbf{Autovettore: } F_k(\vec{v})=\lambda[\vec{v}]\\
+\left[M \right]_{\beta}^{\alpha} = P_{\beta}^{-1} \cdot A \cdot P_\alpha \\
+P_C = I_n \quad \text{(base canonica)} \Rightarrow A \cdot P_C = A \\
+\beta = \{ \vec{b}_1,\ \vec{b}_2,\ \vec{b}_3 \} \Rightarrow P_{\beta} = [\vec{b}_1\ \vec{b}_2\ \vec{b}_3]
+\) 
+
+\vspace{1em} 
+\(\\
+A_{ortg}\in \mathbb{M}_n(\mathbb{R}) \to A^T A = I_n \iff A^T=A^{-1} \\
+det(A_{ortg})=\pm 1  \\
+U =span\{\vec{u}_1, \vec{u}_2,\vec{u}_3\} \\
+\mathrm{proj}_{span\{\vec{n}, \vec{g}\}}(\vec{v}) = \frac{\langle \vec{v},n \rangle}{\langle n,n \rangle}n  + \frac{\langle \vec{v},g \rangle}{\langle g,g \rangle}g \\
+\vec{v_2}=u_2-\mathrm{proj}_{\vec{v_1}}(u_2) \\
+\vec{v}_\perp  = \vec{v} - \mathrm{proj}_{span\{\vec{n}, \vec{g}\}}(\vec{v}) \\
+\beta_{U} = \{\vec{v}_1, \vec{v}_2, \vec{v_3}\} = \left\{\vec{v}_1, \vec{u}_2 - \mathrm{proj}_{span\{\vec{v}_1\}}(\vec{u}_2), \vec{u}_3 - \mathrm{proj}_{span\{\vec{v}_1\}}(\vec{u}_3)- \mathrm{proj}_{\vec{v}_2}(\vec{u}_3) \right\} \\
+\tilde{\beta_{U^{\perp}}}=\{\vec{v}\} \to \begin{cases}
+    \langle \vec{v},v_1\rangle=0\\
+    \langle \vec{v},v_2\rangle=0\\
+\end{cases}, \quad \vec{v}=\begin{pmatrix}
+    x \\ y \\ z
+\end{pmatrix} \\
+\dim(\mathbb{R}^n) = \dim(\beta_U) + \dim(\tilde{\beta_{U^\perp}})
+\)\\
+\textbf{Appl. Lin. della proiezione ortogonale} su $\langle n \rangle$:  \\
+$F : \mathbb{R}^z \to \mathbb{R}^z, \, 
+A = \begin{pmatrix}
+\left[ \mathrm{proj}_{\langle n \rangle}(e_1) \right] \,
+\left[ \mathrm{proj}_{\langle n \rangle}(e_2) \right] \, 
+\dots  \,
+\left[ \mathrm{proj}_{\langle n \rangle}(e_z) \right]
+\end{pmatrix}$ \\
+Due vettori (o più) sono a \textbf{due a due ortogonali}:
+\(
+\forall i\neq j \to \mathbf{v}_i \cdot \mathbf{v}_j = 0
+\)
+
+
+\vspace{1em}
+\textbf{\\Congruenze}\\
+$ax \equiv_{n} b \iff (n)\mid(a-b) \iff a-b=n\cdot m, \, \exists m \in \mathbb{Z}$ \\
+\(
+\gcd(a, n)=1 \to \text{ una sola soluzione} \\
+b \,\%\, \gcd(a, n)==0 \to \text{ infinite soluzioni} \\
+b \,\%\, \gcd(a, n)!=0 \to \text{ nessuna} \\
+\)
+\(
+x=b \cdot a^{-1}+nk, \, k \in \mathbb{Z} \\
+\left[a\right]_n = \left[b \right]_n \iff a \equiv_{n} b \iff n \, \% \, (a-b)==0 \\
+\)
+\(
+[a]_m \subseteq [b]_n \iff m k + a \equiv_n b \Rightarrow mk \equiv_n b-a \to mk-(b-a)=n\cdot t \to k=\dots
+\)
+
+
+
+
+
+\end{multicols}
+\end{document}

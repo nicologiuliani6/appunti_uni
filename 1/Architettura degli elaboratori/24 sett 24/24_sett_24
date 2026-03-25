@@ -1,0 +1,51 @@
+1964 - IBM 360: famiglia di modelli di 4 calcolatori, in via prestazioni crescenti
+Un’innovazione molto
+importante fu la possibilità di avere più programmi in
+memoria (multiprogrammazione): mentre si aspettava il
+completamento dell’input/output, si poteva eseguire un
+altro programma.
+Attraverso la microprogrammazione poteva emulare calcolatori precedenti e quindi
+poteva far girare programmi precedenti.
+
+Generazione 4: Computer basati su VLSI (1980- ?)
+VLSI è una sigla che indica: Very Large Scale Integration. 
+Identifica la possibilità di inserire grandi quantità di transistor in un unico chip.
+Questa evoluzione ha seguito un andamento conosciuto come “legge di Moore”:
+la quantità di transistor che può essere inserita in un chip aumenta ogni anno del 60%
+
+1981 – IBM 5150: è il primo personal computer.
+Raggiungerà velocemente una diffusione enorme e sarà
+seguito da un’ampia famiglia di processori. IBM decide di
+pubblicare schemi e dettagli dell’architettura per
+semplificare il progetto di schede di espansione: questo
+diede il via all’industria dei cloni compatibili IBM.
+Anche il sistema operativo MS-DOS
+(Microsoft Disk Operating System)
+non venne realizzato da IBM, ma
+dalla Microsoft Corporation
+(allora piccolissima software house).
+
+################################################################################################
+
+-Un calcolatore è un sistema composto da processori,memorie e dispositivi di input/output (I/O)
+-Questa organizzazione (con l’unica differenza del bus) èuguale a quella della macchina di Von Neumann
+-Organizzazione “bus oriented”: Un bus è un insieme di connessioni elettriche (fili) parallele utilizzati per trasportare informazioni da un componente all’altro
+
+RAM:
+Usa la memoria non solo per i dati ma anche per i
+programmi. Quando fu proposta era rivoluzionaria:
+evitava complesse configurazioni con interruttori e cavi
+-Programmi e dati sono trasferiti entrambi attraverso il
+(sotto)bus dati. Il (sotto)bus indirizzi è utilizzato dalla
+CPU per indicare alla memoria le locazioni delle informazioni da trasferire.
+
+CPU:
+-Unità di controllo: legge e interpreta le istruzioni
+-ALU: esegue le operazioni (AND,OR, addizione, …)
+      prendi i dati dati registri 
+-Registri: memorizzano i risultati temporanei e le informazioni necessarie al funzionamento
+
+
+UNITÀ DI CONTROLLO: 
+guardare slide (sono poche)
+

@@ -1,0 +1,36 @@
+.inline-title, .HyperMD-header-1, h1 {
+    text-align: center;
+}
+.author {
+    text-align: center;
+    font-size: smaller; /* Testo più piccolo per Nicolò Giuliani */
+    font-style: italic; /* Corsivo */
+}
+
+.quote {
+    text-align: center;
+    font-size: 19px !important; /* Usa !important se necessario */
+}
+
+.indice {
+    text-align: left; /* Allineamento a sinistra */
+    font-weight: bold; /* Grassetto */
+    font-size: 20px; /* Dimensione del font di 20px */
+}
+.lista_indice{
+    text-align: left;
+    font-size: 15px;
+    float: left;
+}
+
+
+.medium_title{
+    text-align: center;
+    font-size: 18px;
+    color:red
+}
+.formule{
+    text-align: center;
+    border-radius: 20px;
+
+}

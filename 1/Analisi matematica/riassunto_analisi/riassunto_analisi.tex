@@ -1,0 +1,277 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}  % Aggiunto per simboli matematici migliorati
+\usepackage[a4paper, margin=2cm]{geometry}  % Riduzione dei margini
+\title{Analisi \textit{facile}}
+\author{Nicolò Giuliani}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Introduzione}
+Questo documento si propone di trattare alcuni dei principali concetti dell'analisi matematica, come la derivata, l'integrale, le matrici e le applicazioni lineari. Vengono presentati con la loro definizione formale, seguita da esempi pratici e concetti correlati. L'obiettivo è fornire una comprensione intuitiva e formale di ciascun concetto.
+
+\section{Derivata}
+La derivata di una funzione \( f(x) \) in un punto \( x_0 \) misura la \textbf{velocità di variazione} della funzione, ovvero quanto rapidamente cambia il valore di \( f \) al variare di \( x \). Si definisce come:
+
+\[
+f'(x_0) = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}
+\]
+
+Geometricamente, rappresenta il \textbf{coefficiente angolare della retta tangente} al grafico di \( f \) nel punto \( x_0 \).
+
+\section{Integrale}
+L'\textbf{integrale definito} di una funzione \( f(x) \) su un intervallo \([a, b]\) rappresenta l'\textbf{area sotto la curva} tra \( a \) e \( b \), tenendo conto del segno:
+
+\[
+\int_a^b f(x) \, dx
+\]
+
+L'\textbf{integrale indefinito} rappresenta invece l'\textbf{insieme delle primitive} di \( f \), cioè tutte le funzioni \( F(x) \) tali che:
+
+\[
+F'(x) = f(x)
+\]
+
+\section{Approssimazione di Taylor}
+Sia \( f \) una funzione derivabile \( n \) volte in un intorno di un punto \( x_0 \). Allora, per \( x \) vicino a \( x_0 \), si ha:
+\[
+f(x) = f(x_0) + f'(x_0)(x - x_0) + \frac{f''(x_0)}{2!}(x - x_0)^2 + \cdots + \frac{f^{(n)}(x_0)}{n!}(x - x_0)^n + o((x - x_0)^n)
+\]
+Ovvero:
+\[
+f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k + o((x - x_0)^n)
+\]
+
+dove \( o((x - x_0)^n) \) rappresenta un termine di errore che tende a zero più rapidamente di \( (x - x_0)^n \), ovvero:
+
+\[
+\lim_{x \to x_0} \frac{o((x - x_0)^n)}{(x - x_0)^n} = 0
+\]
+
+\subsection*{Sviluppo di Maclaurin}
+Consideriamo \( x_0 = 0 \):
+\[
+f(x) = \sum_{k=0}^{n} \frac{f^{(k)}(0)}{k!}x^k + o(x^n)
+\]
+con:
+\[
+\lim_{x \to 0} \frac{o(x^n)}{x^n} = 0
+\]
+
+\section{Matrici}
+Una \textbf{matrice} è una tabella di numeri disposti in righe e colonne. Una matrice \( A \in \mathbb{R}^{m \times n} \) ha \( m \) righe e \( n \) colonne:
+
+\[
+A = 
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}
+\]
+
+\subsection*{Somma di Matrici}
+La \textbf{somma} di due matrici \( A \) e \( B \) dello stesso formato \( m \times n \) è definita elemento per elemento:
+
+\[
+(A + B)_{ij} = a_{ij} + b_{ij}
+\]
+
+\subsection*{Prodotto tra Matrici}
+Il \textbf{prodotto} tra due matrici \( A \in \mathbb{R}^{m \times n} \) e \( B \in \mathbb{R}^{n \times p} \) è una matrice \( C \in \mathbb{R}^{m \times p} \), dove ogni elemento \( c_{ij} \) è dato da:
+
+\[
+c_{ij} = \sum_{k=1}^{n} a_{ik} b_{kj}
+\]
+
+cioè: riga di \( A \) per colonna di \( B \).
+
+\section{Applicazione Lineare}
+Un'\textbf{applicazione lineare} (o \textbf{trasformazione lineare}) è una funzione tra spazi vettoriali che preserva somma e moltiplicazione per scalare. Una funzione \( T: \mathbb{R}^n \to \mathbb{R}^m \) è lineare se:
+
+\[
+T(\vec{u} + \vec{v}) = T(\vec{u}) + T(\vec{v}), \qquad
+T(\lambda \vec{u}) = \lambda T(\vec{u})
+\]
+
+Ogni applicazione lineare può essere rappresentata da una matrice \( A \) tale che:
+
+\[
+T(\vec{x}) = A\vec{x}
+\]
+
+\section{Classificazione dei punti critici tramite la Hessiana}
+\subsection*{Matrice Hessiana}
+La \textbf{matrice Hessiana} di una funzione scalare \( f(x, y) \) è la matrice quadrata che contiene le derivate seconde parziali della funzione. Essa descrive la curvatura della funzione in un determinato punto e viene utilizzata, per esempio, nell'analisi dei punti di massimo, minimo o sella.
+
+La matrice Hessiana \( H(f) \) di una funzione di due variabili è definita come:
+
+\[
+H(f) = 
+\begin{bmatrix}
+\frac{\partial^2 f}{\partial x^2} & \frac{\partial^2 f}{\partial x \partial y} \\
+\frac{\partial^2 f}{\partial y \partial x} & \frac{\partial^2 f}{\partial y^2}
+\end{bmatrix}
+\]
+
+\subsection*{Determinante della Hessiana}
+Il \textbf{determinante} della matrice Hessiana \( H(f) \) di una funzione \( f(x, y) \) è dato da:
+
+\[
+\det(H(f)) = \frac{\partial^2 f}{\partial x^2} \cdot \frac{\partial^2 f}{\partial y^2} - \left( \frac{\partial^2 f}{\partial x \partial y} \right)^2
+\]
+
+\subsection*{Traccia della Hessiana}
+La \textbf{traccia} della matrice Hessiana di \( f(x, y) \) è la somma degli elementi sulla diagonale principale della matrice Hessiana:
+
+\[
+\text{Tr}(H(f)) = \frac{\partial^2 f}{\partial x^2} + \frac{\partial^2 f}{\partial y^2}
+\]
+
+
+Data una funzione \( f(x, y) \) sufficientemente regolare, sia \( (x_0, y_0) \) un punto critico, ovvero un punto in cui il gradiente di \( f \) si annulla:
+\[
+\nabla f(x_0, y_0) = \left( \frac{\partial f}{\partial x}(x_0, y_0), \frac{\partial f}{\partial y}(x_0, y_0) \right) = (0, 0)
+\]
+
+\subsection*{Classificazione dei punti critici con determinante e traccia}
+
+Siano \( \lambda_1, \lambda_2 \) gli autovalori della matrice Hessiana \( H(f)(x_0, y_0) \). Allora, usando determinante e traccia:
+
+\begin{itemize}
+    \item \textbf{Se \( \det(H) > 0 \) e \( \text{Tr}(H) > 0 \)}, entrambi gli autovalori sono positivi → \( f \) ha un \textbf{minimo locale} in \( (x_0, y_0) \).
+    
+    \item \textbf{Se \( \det(H) > 0 \) e \( \text{Tr}(H) < 0 \)}, entrambi negativi → \textbf{massimo locale}.
+    
+    \item \textbf{Se \( \det(H) < 0 \)}, gli autovalori hanno segno opposto → \textbf{punto di sella}.
+    
+    \item \textbf{Se \( \det(H) = 0 \)}, il test è \textbf{inconcludente}.
+\end{itemize}
+
+
+\section{Curve e Superfici di Livello}
+Sia \( f: \mathbb{R}^2 \to \mathbb{R} \). Le \textbf{curve di livello} sono le curve nel piano \( xy \) dove la funzione assume un valore costante \( c \):
+
+\[
+f(x, y) = c
+\]
+
+Analogamente, per \( f: \mathbb{R}^3 \to \mathbb{R} \), le \textbf{superfici di livello} sono superfici nello spazio tridimensionale definite da:
+
+\[
+f(x, y, z) = c
+\]
+\subsection*{Formula vettoriale del piano tangente}
+Il piano tangente al grafico di \( f(x,y) \) nel punto \( (x_0, y_0) \) si scrive:
+
+\[
+f(x_0, y_0) + \langle \nabla f(x_0, y_0), (x - x_0, y - y_0) \rangle
+\]
+
+Dove \( \nabla f(x_0, y_0) = (f_x(x_0, y_0), f_y(x_0, y_0)) \) è il gradiente e \( \langle \cdot, \cdot \rangle \) è il prodotto scalare tra due vettori in \( \mathbb{R}^2 \).
+
+\section{Formula di Taylor per Funzioni di Più Variabili}
+
+Sia \( f: \mathbb{R}^n \to \mathbb{R} \) una funzione sufficientemente regolare (cioè derivabile fino all'ordine desiderato), e sia \( \vec{x}_0 \in \mathbb{R}^n \) un punto fissato. Allora, per un vettore \( \vec{h} \in \mathbb{R}^n \) piccolo (cioè tale che \( \vec{x}_0 + \vec{h} \) è vicino a \( \vec{x}_0 \)), si ha lo sviluppo di Taylor:
+
+\subsection*{Sviluppo di Taylor al primo ordine}
+\[
+f(\vec{x}_0 + \vec{h}) \approx f(\vec{x}_0) + \nabla f(\vec{x}_0) \cdot \vec{h}
+\]
+
+dove \( \nabla f(\vec{x}_0) \) è il \textbf{gradiente} di \( f \) nel punto \( \vec{x}_0 \), e il prodotto è il prodotto scalare.
+
+\subsection*{Sviluppo di Taylor al secondo ordine}
+Se \( f \) è due volte derivabile, allora:
+\[
+f(\vec{x}_0 + \vec{h}) \approx f(\vec{x}_0) + \nabla f(\vec{x}_0) \cdot \vec{h} + \frac{1}{2} \vec{h}^\top H(f)(\vec{x}_0) \vec{h}
+\]
+
+dove:
+\begin{itemize}
+    \item \( H(f)(\vec{x}_0) \) è la \textbf{matrice Hessiana} di \( f \) calcolata in \( \vec{x}_0 \),
+    \item \( \vec{h}^\top \) è la trasposizione del vettore \( \vec{h} \),
+    \item il termine quadratico rappresenta la curvatura locale della funzione.
+\end{itemize}
+
+Questa formula è utile per approssimare funzioni non lineari tramite funzioni lineari o quadratiche, ed è alla base di molti algoritmi di ottimizzazione.
+\subsection*{Polinomio di Maclaurin}
+
+Il \textbf{polinomio di Maclaurin} è una versione particolare del polinomio di Taylor centrato in \( \vec{x}_0 = 0 \). La formula di Maclaurin per una funzione \( f: \mathbb{R}^n \to \mathbb{R} \) è:
+
+\subsubsection*{Polinomio di Maclaurin al primo ordine}
+Se \( f \) è derivabile, lo sviluppo di Taylor al primo ordine centrato in \( \vec{x}_0 = 0 \) è:
+
+\[
+f(\vec{h}) \approx f(0) + \nabla f(0) \cdot \vec{h}
+\]
+
+dove \( \nabla f(0) \) è il gradiente di \( f \) nel punto \( \vec{x}_0 = 0 \), e \( \vec{h} \) è un vettore piccolo.
+
+\subsubsection*{Polinomio di Maclaurin al secondo ordine}
+Se \( f \) è due volte derivabile, lo sviluppo di Taylor al secondo ordine centrato in \( \vec{x}_0 = 0 \) è:
+
+\[
+f(\vec{h}) \approx f(0) + \nabla f(0) \cdot \vec{h} + \frac{1}{2} \vec{h}^\top H(f)(0) \vec{h}
+\]
+
+dove \( H(f)(0) \) è la matrice Hessiana di \( f \) calcolata nel punto \( \vec{x}_0 = 0 \), e \( \vec{h}^\top \) è la trasposizione di \( \vec{h} \).
+
+Il termine quadratico, come nel caso generale di Taylor, fornisce informazioni sulla curvatura della funzione.
+
+
+
+
+\section{Teoremi Integrali del Calcolo Vettoriale}
+\subsection{Teorema di Stokes}
+Sia \( S \) una superficie orientata con bordo \( \partial S \), e \( \vec{F} \) un campo vettoriale sufficientemente regolare. Allora vale:
+
+\[
+\oint_{\partial S} \vec{F} \cdot d\vec{r} = \iint_S (\nabla \times \vec{F}) \cdot d\vec{S}
+\]
+
+Il teorema di Stokes collega il \textbf{rotore} di un campo su una superficie con la \textbf{circolazione} del campo lungo il bordo della superficie.
+
+\subsubsection*{Versione piana: Teorema di Green}
+Nel caso in cui la superficie \( S \) sia contenuta nel piano (ad esempio \( xy \)), il teorema di Stokes si riduce al \textbf{teorema di Green}, valido per un campo vettoriale \( \vec{F} = (F_1, F_2) \) in \( \mathbb{R}^2 \):
+
+\[
+\oint_{\partial D} \vec{F} \cdot d\vec{r} = \iint_D \left( \frac{\partial F_2}{\partial x} - \frac{\partial F_1}{\partial y} \right) dx\,dy
+\]
+
+Dove \( D \subset \mathbb{R}^2 \) è un dominio piano con bordo \( \partial D \) orientato positivamente. Questo teorema lega la \textbf{circolazione} del campo lungo il bordo alla \textbf{rotazione} interna.
+
+\subsection{Teorema della Divergenza}
+Sia \( V \subset \mathbb{R}^3 \) un dominio chiuso e limitato, con frontiera liscia \( \partial V \), e sia \( \vec{F} \) un campo vettoriale differenziabile. Allora:
+
+\[
+\iiint_V (\nabla \cdot \vec{F}) \, dV = \iint_{\partial V} \vec{F} \cdot d\vec{S}
+\]
+
+Il teorema afferma che il flusso totale uscente da una regione è uguale all'integrale della divergenza all'interno della regione.
+
+\subsubsection*{Versione piana del Teorema della Divergenza}
+Nel piano \( \mathbb{R}^2 \), il teorema della divergenza assume la forma:
+
+\[
+\iint_D (\nabla \cdot \vec{F}) \, dx\,dy = \oint_{\partial D} \vec{F} \cdot \vec{n} \, ds
+\]
+
+dove:
+\begin{itemize}
+    \item \( D \subset \mathbb{R}^2 \) è un dominio piano,
+    \item \( \partial D \) è il contorno orientato positivamente,
+    \item \( \vec{n} \) è il versore normale esterno al bordo.
+\end{itemize}
+
+Questo teorema collega il \textbf{flusso uscente} da un dominio piano alla \textbf{divergenza interna} del campo.
+
+
+\end{document}

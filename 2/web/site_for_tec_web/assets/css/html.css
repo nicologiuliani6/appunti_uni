@@ -1,0 +1,136 @@
+:root {
+  --brand: orangered;
+  --bg: #fafafa;
+  --text: #333;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* TIMELINE CONTAINER */
+.timeline {
+  position: relative;
+  margin: 60px auto;
+  padding: 40px 0;
+  width: min(90%, 900px);
+}
+
+/* Linea tratteggiata centrale */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--brand) 0 10px,
+    transparent 10px 20px
+  );
+  transform: translateX(-50%);
+  opacity: 0.4;
+}
+
+/* CARD BASE */
+.card {
+  position: relative;
+  width: 50%;
+  box-sizing: border-box;
+  margin-bottom: 40px;
+}
+
+/* Alternanza sinistra/destra */
+.card:nth-child(odd) {
+  /*padding: 30px 0 30px 40px;*/
+  left: 0;
+}
+
+/* Card pari: allineata a destra */
+.card:nth-child(even) {
+  /*padding: 30px 40px 30px 0; */
+  left: 50%;
+  box-sizing: border-box;
+}
+
+/* Contenuto card */
+.info {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.info::before {
+  content: "";
+  position: absolute;
+  top: 25px;
+  width: 16px;
+  height: 16px;
+  background: var(--brand);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px white;
+}
+
+/* Posizione dei “punti” */
+.card:nth-child(odd) .info::before {
+  right: -8px;
+}
+.card:nth-child(even) .info::before {
+  left: -8px;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--brand);
+  margin-bottom: 8px;
+}
+
+/* --- MOBILE VIEW: card verticali --- */
+@media (max-width: 768px) {
+  .timeline::before {
+    display: none; /* nasconde la linea */
+  }
+
+  .card {
+    width: 100%;
+    left: 0 !important; /* 🔹 resetta lo spostamento */
+    padding: 0 !important; /* 🔹 rimuove padding alternato */
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .info::before {
+    display: none; /* nessun punto */
+  }
+}
+/* Colori di sfondo per livello di difficoltà */
+.card.easy .info{
+  background-color: #e8f9e9; /* verde chiaro */
+}
+
+.card.semi .info{
+  background-color: #f4f9e6; /* verde-lime chiaro (intermedio) */
+}
+
+.card.medium .info{
+  background-color: #fff9e6; /* giallo chiaro */
+}
+
+.card.hard .info{
+  background-color: #fdeaea; /* rosso chiaro */
+}
+
+
+/* Stile testo difficoltà */
+.difficulty {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #444;
+  margin-bottom: 8px;
+}

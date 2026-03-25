@@ -1,0 +1,44 @@
+INTRODUZIONE
+
+utilizzeremo porte logiche NAND:
+
+------------    --------------
+A | B | out | 	| A | B | out |
+0 | 0 | 1   |	| F | F | V   |
+0 | 1 | 1   |	| F | V | V   |
+1 | 0 | 1   |	| V | F | V   |
+1 | 1 | 0   | 	| V | V | F   |
+------------    ---------------
+
+FUNZIONI LOGICHE BOOLEANE:
+      ______
+A ---|      \
+B ---| NAND |---> out  \\PRODOTTO FRA INGRESSI
+     |______
+
+     ____
+A --|    |----|> /A 	\\NEGA L'INGRESSO
+  --| NOT|	   	\\ SE METTO 0 ESCE 1
+    |____|
+
+     _______
+A ---|       \
+B ---|  OR   |----> A+B \\SOMMA GLI INGRESSI, 
+     |_______/		\\UNA PORTA FORMATA DA DUE PORTE
+		   
+
+0 -> AND -> 1 --> |AND| -> 0
+0 -> AND -> 1 --> |   |
+
+0 -> AND -> 1 --> |AND| -> 1
+1 -> AND -> 0 --> |   |
+
+1 -> AND -> 0 --> |AND| -> 1
+1 -> AND -> 0 --> |   |
+
+FACILE DA UTILIZZARE CON TRANSISTOR (0=no tensione, 1=tensione)
+	- un transistor in ingresso:
+		- senza tensione = resistenza infinita
+		- con tensione = condottore ideale
+
+

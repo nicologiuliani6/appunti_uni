@@ -1,0 +1,49 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {section}{\numberline {1}Spazi di probabilità}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Teoria degli insiemi}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Modello matematico di un esperimento aleatorio}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Assiomi della probabilità}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Conseguenze degli assiomi}{5}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Probabilità codizionata e indipidenza}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Regola della catena}{8}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Eventi indipendenti}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Formula delle probabilità totali}{9}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Formula di Bayes}{10}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Calcolo combinatorio}{10}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Cardinalità e corrispondenza biunivoca}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Fattoriale e coefficiente binomiale}{11}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Metodo delle scelte successive}{11}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Disposizioni e combinazioni}{12}{subsection.3.4}%
+\contentsline {section}{\numberline {3.5}Variabili aleatorie}{13}{section.3}%
+\contentsline {subsection}{\numberline {3.5.1}Distribuzione di una variabile aleatoria}{14}{subsection.3.1}%
+\contentsline {paragraph}{Variabili aleatorie costanti de delta di Dirac}{14}{section*.2}%
+\contentsline {paragraph}{Variabili aleatorie indicatrici}{15}{section*.3}%
+\contentsline {subsection}{\numberline {3.5.2}Funzione di ripartizione (CDF)}{15}{subsection.3.2}%
+\contentsline {paragraph}{Variabili aleatorie costanti}{15}{section*.4}%
+\contentsline {paragraph}{Variabili aleatorie indicatrici}{16}{section*.5}%
+\contentsline {section}{\numberline {4}Variabili aleatorie discrete}{16}{section.4}%
+\contentsline {paragraph}{Tabella della densità discreta}{17}{section*.6}%
+\contentsline {paragraph}{Variabili aleatorie costanti}{17}{section*.7}%
+\contentsline {paragraph}{Variabili aleatorie indicatrici}{17}{section*.8}%
+\contentsline {subsection}{\numberline {4.1}Caratterizzazione delle variabili aleatorie discrete}{18}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Indici di sintesi di una distribuzione: $\mu $ e $\sigma ^2$}{18}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Media o valore atteso}{18}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Varianza}{19}{subsubsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.3}Distribuzioni discrete notevoli}{19}{subsection.4.3}%
+\contentsline {paragraph}{Distribuzione uniforme discreta}{19}{section*.9}%
+\contentsline {paragraph}{Distribuzione di Bernoulli}{20}{section*.10}%
+\contentsline {paragraph}{Distribuzione binomiale}{20}{section*.11}%
+\contentsline {paragraph}{Distribuzione di Poisson}{21}{section*.12}%
+\contentsline {section}{\numberline {5}Variabili aleatorie continue}{21}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Definizioni di densita' continua e v.a. continua}{22}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Dalla funzione di ripartizione alla densit`a continua}{23}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}Funzioni di variabili aleatorie continue}{23}{subsubsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.2}Indici di sintesi di una distribuzione: $\mu $ e $\sigma ^2$}{23}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Media o valore atteso}{23}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Varianza}{24}{subsubsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.3}Distribuzioni continue notevoli}{24}{subsection.5.3}%
+\contentsline {paragraph}{Distribuzione uniforme (continua)}{24}{section*.13}%
+\contentsline {paragraph}{Distribuzione esponenziale}{25}{section*.14}%
+\contentsline {paragraph}{Distribuzione normale (o gaussiana)}{25}{section*.15}%
+\contentsline {section}{\numberline {6}Vettori aleatori}{26}{section.6}%

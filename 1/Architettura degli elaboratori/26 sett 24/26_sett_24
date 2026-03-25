@@ -1,0 +1,63 @@
+Memoria cache: (CPU->Cache->RAM)
+La cache è una memoria poco capiente ma molto veloce
+  - le parole di memoria usate più di frequente sono mantenute all'interno della cache
+Quando la CPU necessita di una parola, la cerca nella cache e se non è presente, la preleva dalla memoria
+  - In tal caso il contenuto della memoria centrale viene trasferito nella cache
+
+  PRINCIPIO LOCALITA':
+funzionamento base dei programmi: Riferimenti alla memoria eseguiti a breve distanza di tempo sono spesso anche in locazioni vicine
+Quindi si sfrutta il principio di località mettendo in cache blocchi di locazioni contigue.
+(l guadagno dato dal più veloce accesso a dati già in
+cache è solitamente superiore al tempo perso per
+trasferire i blocchi da memoria a cache, e viceversa)
+
+come quantificare l’impatto di una cache sulle prestazioni:
+c : sia il tempo di accesso alla memoria cache
+m : sia il tempo di accesso alla memoria centrale
+h : sia l’hit-ratio, cioé la frazione di riferimenti che può essere soddisfatta dalla cache
+c+(1-h)m=t //tempo medio di accesso di accesso se uno avesse una singola cache
+
+Quando h si avvicina a 1, il tempo medio t si avvicina a c, mentre quando h si avvicina a 0, t si avvicina a c+m
+
+HARD DISK:
+un HD è un dispositivo elettro-meccanico per la conservazione di informazioni sotto forma magnetica
+  - Testina: magnetizza e legge lo stato di magnetizzazione della superficie del disco
+  - Traccia: sequenza circolare di bit
+  - Settore: porzione di traccia che contiene una quantità prefissata di bit (uguale per tutti i settori)
+Memorie allo stato solido:
+- Si tratta di dispositivi completamente elettronici, senza nessuna parte in movimento.
+
+RAID (Redundant Array of Inexpensive Disks):
+Più veloce perché si leggono più dati contemporaneamente, più affidabile se si replicano i dati e si aggiungono bit di controllo per verificare/correggere errori
+
+I CD (Compact Disc):
+utilizzano un principio ottico
+
+Oltre le memorie, i calcolatori includono altri componenti quali, ad esempio:
+-Tastiera, mouse
+-Monitor: richiede una specifica scheda video che contiene un proprio processore detto GPU (Graphical Processing Unit)
+  - Solitamente basate su architetture multicore estremamente avanzate
+  - Programmabili (tramite specifici linguaggi, quali Cuda-C) per eseguire programmi non grafici
+-Stampanti
+-Schede di rete
+
+-------------------------------------------------------------------------------------------------
+Come abbiamo già visto le componenti del calcolatore sono fra loro collegate tramite bus
+  - I dispositivi si collegano al bus tramite un “controller”
+  - Alcuni controller accedono direttamente alla memoria 
+      Tecnica detta DMA (direct memory access)
+      Al termine della scrittura/lettura si invia un segnale (interrupt) alla CPU
+  - L’accesso al bus condiviso viene gestito da un “arbitro” del bus
+  - PCI-X, PCI, SCSI, ISA,… sono tipi di bus
+
+
+
+  -----------------------------------------------------------------------------------------------
+Porte Logiche e Circuiti Combinatori
+Algebra di Boole:
+Addizione (+ oppure OR): 0+0=0; 0+1=1; 1+0=1; 1+1=1
+Moltiplicazione (* oppure AND): 0*0=0; 0*1=0; 1*0=0; 1*1=1
+
+Tabelle di verità:
+(vedere slide "Introduction and Orientation: The World of Database Management")
+

@@ -1,0 +1,236 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[a4paper, margin=2cm]{geometry}  % <--- Aggiunto per ridurre i bordi
+\title{Formulario di Algebra Lineare}
+\author{Nicolò Giuliani}
+\date{}
+
+\begin{document}
+\maketitle
+\subsection*{Applicazioni Lineari}
+\begin{align}
+    F \to \mathbb{R}^n \to \mathbb{R}^m \\
+    F(\vec{v})=A\times\vec{v}
+\end{align}
+Domino: $\mathbb{R}^n$ \\
+Codominio: $\mathbb{R}^m$ \\
+Numero colonne: $n$, numero righe: $m$ \\
+\textbf{Iniettiva}: ovvero due elementi \( x_1, x_2 \) diversi non possono avere la stessa immagine.
+\begin{align*}
+    \ker(F) = \{0\} \iff \dim(\ker(F)) = 0 \iff \det(A) \neq 0 \iff \operatorname{rr}(A) = n
+\end{align*}
+
+\textbf{Suriettiva}: \( \operatorname{Im}(F) = \mathbb{R}^m \) (codominio)
+\begin{align*}
+    \dim(\operatorname{Im}(F)) = \dim(\mathbb{R}^m) = m \iff \operatorname{rr}(A) = m
+\end{align*}
+
+\textbf{Biettiva}: sia iniettiva che suriettiva
+\begin{align*}
+    \ker(F) = \{0\} \quad \text{e} \quad \operatorname{Im}(F) = \mathbb{R}^m \iff \operatorname{rr}(A) = n = m
+\end{align*}
+
+\textbf{Biettiva/Isomorfo}: $det(A)\neq0 \iff dim(\mathbb{R}^n)=dim(\mathbb{R}^m) \iff \exists F^{-1} $ \\
+\textbf{Teorema dimensione}: $dim(\mathbb{R}^m)=dim(Ker(F))+dim(Im(F))$ \\
+\textbf{Kernel}: $F(x)=0 \to \{(x_1,x_2,\dots,x_n)\} \iff \langle x_3 \begin{pmatrix}
+    num \\\vdots \\1 
+\end{pmatrix}\rangle \mid x_3\in \mathbb{R}=span\{\begin{pmatrix}
+    num \\\vdots \\1 
+\end{pmatrix}\}\, (\text{con }x_3=1)$ \\
+$dim(Ker(F))=dim(\mathbb{R}^n)-dim(Im)$ \\
+\textit{controllo se $\vec{v}\in Ker$}: $\iff Ker(F(v))=\{0\}$\\
+$F(v)=\begin{pmatrix}
+    \text{riga 1 con valori di v}\\
+    \text{riga 2 con valori di v}\\
+    \vdots
+\end{pmatrix}=\begin{pmatrix}
+    \dots\\ \dots
+\end{pmatrix}=0 \,(\top \text{ se } v\in Ker)\to (\text{se abbiamo il paramet. $k$})\begin{cases}
+    \dots =0 \\
+    \dots =0
+\end{cases} $\\
+\textit{metodo 2}: $F(e_2-2F(e_3)+F(e_4))=[F(e_2)-2[F(e_3)]+F(e_4)]=[\vdots]=[0]$\\
+\textbf{Immagine}: $Im(F)=\langle \begin{pmatrix}
+    \vec{c_1}\\\vdots
+\end{pmatrix},\dots\rangle$ \\
+\begin{align}
+    Im(F) \to A^T=\begin{pmatrix}
+        \vec{c_1} & \dots \\
+        \vec{c_2} & \dots \\
+        \vec{c_3} & \dots \\
+        \vdots \\
+        \vec{c_n} & \dots
+    \end{pmatrix}\to \begin{pmatrix}
+        c_1 & \dots \\
+        c_3 & \dots \\
+        0 & 0 & \dots & 0
+    \end{pmatrix} \to Im(F)=\langle \begin{pmatrix}
+    \vec{c_1}\\\vdots
+\end{pmatrix},\begin{pmatrix}
+    \vec{c_3}\\\vdots
+\end{pmatrix}\dots\rangle
+\end{align}
+SOLO SE SURIETTIVA: $dim(Im)=n$, IN GENERALE: $dim(Im)\leq dim(\mathbb{R}^m)$ \\
+\textbf{controllo se $\vec{v}\in Im$}
+\begin{align}
+    A \to A'=\vec{v} \to \begin{cases}
+        \dots=v_1 \\
+        \dots=v_2 \\
+        \vdots
+    \end{cases}
+    \to \boxed{\text{rimanente forse nullo}=v_4}
+\end{align}
+\textbf{Controimmagine}: $F^{-1}(w)=v \iff F(v)=w \mid w \in Im$
+\begin{align}
+    A\vec{v}=\vec{w} \to A\mid \vec{w} \to \begin{pmatrix}
+        \dots & \mid & w_1\\
+        \dots & \mid & w_2\\
+    \end{pmatrix} \\
+    \to \begin{pmatrix}
+        \vec{v} \\
+        \vdots
+    \end{pmatrix}=x_i\begin{pmatrix}
+        1 \\ 2 \\ 4
+    \end{pmatrix}+\begin{pmatrix}
+        3 \\ 3 \\ 3 
+    \end{pmatrix} \\
+    \vec{v}=\{4,5,7\} (\text{ con }x_i=1)
+\end{align}
+Se: $\exists F^{-1}\iff det(A)\neq0$
+\subsection*{Equazioni: }
+\textbf{Cord. vettore su base $\beta$}:\\
+$\beta=\{\beta_1,\beta_2,\dots,\beta_z\} \to\quad [v]_\beta=\lambda_1\begin{pmatrix}
+    \vec{\beta_1} \\
+    \vdots
+\end{pmatrix}+\lambda_2 \begin{pmatrix}
+    \vec{\beta_2} \\
+    \vdots
+\end{pmatrix}+\dots+\lambda_m\begin{pmatrix}
+    \vec{\beta_z}
+\end{pmatrix}$ \\
+$=(\lambda_1,\lambda_2,\dots,\lambda_z)$ \\
+\textbf{Eq. spazio}: $V=\{\vec{v_1},\vec{v_2},\vec{v_3}\}$ \\
+\begin{align}
+    \vec{y}=\lambda_1 v_1 + \lambda_2 v_2 + \lambda_3 v_3 \\
+    \begin{cases}
+        x_1= \dots \\
+        x_2= \dots \\
+        \vdots \\
+        x_m= \dots
+    \end{cases} \to     \begin{cases}
+        \lambda_1= \dots \\
+        \lambda_2= \dots \\
+        \vdots \\
+        x_m= \dots
+    \end{cases}
+    \text{sostituiamo con i $\lambda_i$} \to \begin{cases}
+        \boxed{x_3+\dots=0}\\
+        \boxed{x_4+\dots=0}
+    \end{cases}
+\end{align}
+\textbf{Eq. Kernel}: $Ax=\vec{y}$
+\begin{align}
+    \begin{cases}
+        y_1=x_1+x_3\\
+        y_2=x_2+x_3\\
+        \vdots
+    \end{cases} \to \begin{cases}
+        y_1=y_2+3y_3
+    \end{cases}
+\end{align}
+$=y_2+3y_3$ \\
+\textbf{Eq. Immagine:} 
+\begin{align}
+    A\vec{x}=\vec{y}
+    \to \begin{cases}
+        y_1=\dots\\
+        y_2=\dots\\
+        \vdots
+    \end{cases} \to \boxed{y_1+2y_3-4y_4=0}
+\end{align}
+\subsection*{Matrici}
+\textbf{associata tra dominio e codominio}:
+\begin{align}
+    \beta=\{e_2,-e_3,e_4\} \\
+    A_{\beta,C}=\begin{pmatrix}
+        F(e_2) & -F(e_3)& F(e_4)\\
+        \vdots & \vdots & \vdots 
+    \end{pmatrix} \\
+    \text{metodo 2:} \quad 
+    \lambda_{i1}\begin{pmatrix}
+        \vec{base_1} \\ \vdots
+    \end{pmatrix}+\lambda_{i2}\begin{pmatrix}
+        \vec{base_2} \\ \vdots
+    \end{pmatrix}+\lambda_{i3}\begin{pmatrix}
+        \vec{base_3} \\ \vdots
+    \end{pmatrix}=\begin{pmatrix}
+        F(canonica_i) \\ \vdots
+    \end{pmatrix}\\
+    \to \begin{cases}
+        \lambda_1=\dots \\
+        \lambda_2=\dots \\
+        \lambda_3=\dots
+    \end{cases} \to
+       A_{\beta,C}=\begin{pmatrix}
+        \lambda_{11} & \lambda_{21} & \lambda_{31} \\
+        \lambda_{12} & \lambda_{22} & \lambda_{32} \\
+        \lambda_{13} & \lambda_{23} & \lambda_{33}
+    \end{pmatrix}
+\end{align}
+\begin{align}
+    \beta=\{b_1,b_2,b_3\} \quad [A]_{\beta}=[v_1 \, v_2 \, v_3]\\
+    b_1=Av_1
+\end{align}
+\textbf{inversa}
+\begin{align}
+    A\mid I \to I\mid A^{-1}
+\end{align}
+
+
+\subsection*{Autovettori e Autovalori}
+\begin{align}
+    B=P^{-1}AP^1
+\end{align}
+\textbf{autovalori}: $\det(A-\lambda I)=0$ \\
+\textbf{autovettori}: $\lambda_i=n \mid n\in \mathbb{R}$
+\begin{align}
+    A-\lambda_i I \to \begin{cases}
+        x_1=\dots \\
+        x_2=5 \\
+        x_3 = \top 
+    \end{cases}\to x_4\begin{pmatrix}
+        3 \\ 0 \\1
+    \end{pmatrix}+\begin{pmatrix}
+        0\\5\\0
+    \end{pmatrix}=x_4\times [a_1]+ [a_2]
+\end{align}
+Se ho $k$ devo controllare che la $MA=MG$. \\
+$MA=n$ grado della $\lambda^n$ in $det(A-\lambda I)$ \\
+$MG=rr(A_k)=dim(Ker(A_k-\lambda_i I))$ con $k \in \mathbb{R}$\\
+\textbf{verificare se $\vec{v}$ e' autovettore di F}: \\
+1) Se conosco i $\lambda$: $F(v)=\lambda v$ \\
+\begin{align}
+    F(v)=\begin{pmatrix}
+        F(v_1)_1+F(v_2)_1+F(v_3)_1\\
+        F(v_1)_2+F(v_2)_2+F(v_3)_2\\
+        \vdots
+    \end{pmatrix}=\lambda\begin{pmatrix}
+        \vec{w} \\ \vdots
+    \end{pmatrix}
+\end{align}
+2) Se non conosco i $\lambda$: $A(\vec{v})=\lambda \vec{v}$ \\
+\textbf{matrice di autovettori:} $P^1=\begin{pmatrix}
+    \vec{a_1} & \vec{a_2} & \vec{a_3} \\
+    \vdots & \vdots & \vdots 
+\end{pmatrix}$ \\
+\textbf{matrice diagonale di autovalori}: $B=\begin{pmatrix}
+    \lambda_1 & 0 & 0 \\
+    0 & \lambda_2 & 0 \\
+    0&0& \lambda_3
+\end{pmatrix}$
+
+\end{document}

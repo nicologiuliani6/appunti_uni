@@ -1,0 +1,113 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\title{Riepilogo degli Argomenti \\ \large Algoritmi e Strutture Dati}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Esercizi su Analisi del Costo Computazionale}
+
+\begin{itemize}[itemsep=0.3em]
+  \item Risoluzione di relazioni di ricorrenza:
+  \begin{itemize}
+    \item Metodo dell’iterazione
+    \item Master Theorem
+  \end{itemize}
+  \item Algoritmi ricorsivi con chiamate multiple e funzioni ausiliarie
+  \item Algoritmi con cicli annidati e operazioni aritmetiche
+  \item Analisi di algoritmi su:
+  \begin{itemize}
+    \item Heap (es. \texttt{insert}, \texttt{deleteMax})
+    \item Union-Find (QuickFind, QuickUnion con euristiche)
+  \end{itemize}
+  \item Complessità nei casi: ottimo, pessimo, medio
+\end{itemize}
+
+\vspace{1em}
+\section*{2. Esercizi su Strutture di Dati}
+
+\begin{itemize}[itemsep=0.3em]
+  \item \textbf{Hash Table}: gestione collisioni con indirizzamento aperto
+  \item \textbf{Alberi binari}:
+  \begin{itemize}
+    \item Verifica uguaglianza strutturale
+    \item Profondità, foglie, livelli pari
+    \item Alberi perfetti
+  \end{itemize}
+  \item \textbf{Alberi n-ari}: conteggio nodi per livello
+  \item \textbf{BST}: ricerca del \textit{k-esimo} minimo
+  \item \textbf{Alberi AVL}: \texttt{insert}, \texttt{delete}, stato intermedio
+  \item \textbf{Minimax e Alpha-Beta pruning}: su alberi di gioco
+  \item \textbf{Liste concatenate}:
+  \begin{itemize}
+    \item Rimozione di valori da un’altra lista ordinata
+    \item Rimozione elemento centrale con una sola scansione
+  \end{itemize}
+\end{itemize}
+
+\vspace{1em}
+\section*{3. Esercizi su Tecniche Algoritmiche}
+
+\begin{itemize}[itemsep=0.3em]
+  \item \textbf{Programmazione dinamica}:
+  \begin{itemize}
+    \item Zaino (classico, variante fragile, valore minimo, borse multiple)
+    \item Subset sum
+    \item Massimizzazione numero di oggetti
+  \end{itemize}
+  \item \textbf{Greedy}:
+  \begin{itemize}
+    \item Interval scheduling
+    \item Riempimento contenitori
+    \item Selezione oggetti a valore massimo
+  \end{itemize}
+  \item \textbf{Altri problemi}:
+  \begin{itemize}
+    \item Matching minimo tra maschi/femmine
+    \item Vaccinazioni scolastiche ottimizzate
+    \item Combinazioni ottimali di scelte su array
+    \item Sequenze di indici decrescenti
+  \end{itemize}
+\end{itemize}
+
+\vspace{1em}
+\section*{4. Esercizi su Grafi}
+
+\begin{itemize}[itemsep=0.3em]
+  \item \textbf{Cammini}:
+  \begin{itemize}
+    \item Minimi tra insiemi o nodi
+    \item Massimi con pesi negativi
+    \item Cammini con costi composti (pedaggi + tasse)
+  \end{itemize}
+  \item \textbf{Cicli}:
+  \begin{itemize}
+    \item Verifica presenza cicli (anche negativi)
+    \item Ciclo minimo contenente un nodo
+  \end{itemize}
+  \item \textbf{Ordinamenti topologici}:
+  \begin{itemize}
+    \item Ordinamento in DAG con vincoli
+  \end{itemize}
+  \item \textbf{Problemi modellati}:
+  \begin{itemize}
+    \item Formicaio (stanze + gallerie)
+    \item Irrigazione ottimale
+    \item Passaparola con caramelle
+  \end{itemize}
+  \item \textbf{Struttura e distanza}:
+  \begin{itemize}
+    \item Raggio di un nodo
+    \item Verifica raggiungibilità e connettività
+  \end{itemize}
+\end{itemize}
+
+\end{document}

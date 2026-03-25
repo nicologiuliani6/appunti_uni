@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tecnologie Web — Chat</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- CSS personalizzati -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="bg-[var(--bg)] text-[var(--text)] font-sans">
+
+<header class="border-b border-gray-200 shadow-sm sticky top-0 bg-[var(--bg)] z-50">
+  <nav class="container mx-auto flex justify-between items-center py-3 px-4">
+
+    <!-- LOGO -->
+    <a href="index.html" class="text-[var(--brand)] text-xl font-bold no-underline hover:opacity-80 transition">
+      Tecnologie Web
+    </a>
+
+    <!-- Checkbox per il toggle mobile -->
+    <input type="checkbox" id="menu-toggle" class="hidden peer" />
+
+    <!-- HAMBURGER (solo mobile) -->
+    <label for="menu-toggle" class="hamburger cursor-pointer lg:hidden">
+      <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </label>
+
+    <!-- MENU -->
+    <ul
+      class="menu flex flex-col lg:flex-row lg:items-center lg:gap-6 list-none m-0 p-0
+             absolute lg:static top-full left-0 w-full lg:w-auto bg-[var(--bg)]
+             border-t border-gray-200 lg:border-0 shadow-md lg:shadow-none
+             max-h-0 peer-checked:max-h-96 overflow-hidden lg:overflow-visible
+             transition-all duration-300 ease-in-out
+             lg:max-h-none"> <!-- 👈 aggiunta fondamentale -->
+      <li><a href="index.html" class="block px-4 py-2 text-gray-700 hover:text-[var(--brand)] no-underline transition">Home</a></li>
+      <li><a href="risorse.html" class="block px-4 py-2 text-gray-700 hover:text-[var(--brand)] no-underline transition">Risorse</a></li>
+      <li><a href="about.html" class="block px-4 py-2 text-gray-700 hover:text-[var(--brand)] no-underline transition">About</a></li>
+      <li><a href="chat.html" class="block px-4 py-2 text-gray-700 hover:text-[var(--brand)] no-underline transition">Chat</a></li>
+    </ul>
+
+  </nav>
+</header>
+
+<!-- CHAT -->
+<main class="container mx-auto max-w-3xl mt-12 mb-24 px-4">
+  <h2 class="text-2xl font-bold text-[var(--brand)] mb-6 text-center">Chat di Tecnologie Web 💬</h2>
+
+  <div class="border border-gray-300 rounded-2xl shadow-sm bg-white/70 backdrop-blur-md flex flex-col h-[70vh]">
+    <!-- Area messaggi -->
+    <div class="flex-1 p-4 overflow-y-auto space-y-4">
+      <div class="flex justify-start">
+        <div class="bg-gray-100 px-4 py-2 rounded-2xl max-w-[75%]">
+          Ciao! 👋 Benvenuto nella chat del corso di Tecnologie Web.
+        </div>
+      </div>
+      <div class="flex justify-end">
+        <div class="bg-[var(--brand)] text-white px-4 py-2 rounded-2xl max-w-[75%]">
+          Ciao, sto solo testando l’interfaccia della chat!
+        </div>
+      </div>
+      <div class="flex justify-start">
+        <div class="bg-gray-100 px-4 py-2 rounded-2xl max-w-[75%]">
+          Perfetto! Questo è solo un esempio statico, ma puoi integrarlo con una API.
+        </div>
+      </div>
+        <div class="flex justify-end">
+        <div class="bg-[var(--brand)] text-white px-4 py-2 rounded-2xl max-w-[75%]">
+          Magari con l'API di ollama o openAI!
+        </div>
+      </div>
+    </div>
+
+    <!-- Input (non funzionale, puramente estetico) -->
+    <form class="flex items-center gap-2 border-t border-gray-200 p-3 bg-white rounded-b-2xl">
+      <input
+        type="text"
+        placeholder="Scrivi un messaggio..."
+        class="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-[var(--brand)] focus:outline-none"
+        disabled
+      />
+      <button
+        type="button"
+        class="bg-[var(--brand)] text-white px-4 py-2 rounded-xl opacity-60 cursor-not-allowed"
+      >
+        Invia
+      </button>
+    </form>
+  </div>
+</main>
+
+<footer class="text-center mt-12 py-6 border-t border-gray-200 text-sm text-gray-600">
+  <p>Sito realizzato per il laboratorio di Tecnologie Web — <strong>2025/2026</strong></p>
+  <p>Creato da <strong>Nicolo' Giuliani</strong></p>
+</footer>
+
+</body>
+</html>

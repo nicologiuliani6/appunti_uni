@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+<input type="number" id="num_input">
+<button id="submit">Invia</button>
+<script>
+  function fib(n) {
+    let arr = new Array(n-1);
+    for (let i = 0; i <= n; i++) {
+      if (i === 0 || i === 1) {
+        arr[i] = 1;
+      } else {
+        arr[i] = arr[i - 1] + arr[i - 2];
+      }
+      console.log(i + ": " + arr[i-1]);
+    }
+    return arr[n - 1];
+  }
+
+  document.getElementById("submit").addEventListener(
+    "click", 
+    () => {
+      let n = document.getElementById("num_input").value;
+      alert("Valore fib=" + n + ": " + fib(n));
+    }
+  );
+</script>
+
+</body>
+</html>
+

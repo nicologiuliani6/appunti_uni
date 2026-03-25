@@ -1,0 +1,290 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}  % Pacchetto per controllare le didascalie
+\usepackage{amsmath}
+\usepackage{amssymb} % Simboli matematici tipo R (ovvero numeri reali)
+\title{Algebra Lineare}
+\author{Nicolò Giuliani}
+\date{\today}
+
+\begin{document}
+\section*{Esercizio 1:}
+Sia $F_K : \mathbb{R}^4 \to \mathbb{R}^3$ applicazione lineare:
+\begin{equation*}
+    F_k(x_1,x_2,x_3,x_4)=(x_1+kx_3-2x_4, 3x_1+x_2-2x_3-6x_4, x_1+kx_2-4x_3-2x_4)
+\end{equation*}
+a)  Si stabilisca per quali valori di $k$ si ha che il nucleo di $F_k$ ha dimensione 2 e si scelga un tale valore s. \\
+\vspace{1em}
+\\Scriviamo la matrice $K$ associata ad $F_K$:
+\begin{align*}
+    K = \begin{pmatrix}
+        1 & 0 & k & -2 & | & 0 \\
+        3 & 1 & -2 & -6 & | & 0 \\
+        1 & k & -4 & -2 & | & 0 \\
+    \end{pmatrix}
+\end{align*}
+Applichiamo l'algoritmo di Gauss per ridurre a scala la matrice $K$:
+\begin{align*}
+    K'\mid 0= 
+    \begin{pmatrix}
+        1 & 0 & k & -2 & | & 0 \\
+        0 & 1 & -2-3k & 0 & | & 0 \\
+        0 & 0 & 1+3k-\frac{4}{k} & 0 & | & 0 \\
+    \end{pmatrix}
+\end{align*}
+Quindi $Ker(F)$ e' dato dalle soluzioni del sistema:
+\begin{align*}
+    \begin{cases}
+        x_1+kx_3-2x_4=0 \\
+        x_2+x_3(-2-3k)=0 \\
+        x_3(1+3k-\frac{4}{k})=0
+    \end{cases}
+\end{align*}
+Abbiamo 2 casi:
+\\1) $1+3k-\frac{4}{k}=0 \to x_3(1+3k-\frac{4}{k})=0$ 
+\\Calcoliamo i valori di $k$ tale che l'equazione sia uguale a 0:
+\begin{align*}
+    \\
+    1+3k-\frac{4}{k}=0 \to k( 1+3k-\frac{4}{k}=0 )=0(k)\to 3k^2+k-4=0
+    \\\to k_{1,2}=\frac{-1 \pm \sqrt{1^2 - 4(3)(-4)}}{6} \to k_{1,2}=\frac{-1 \pm 7}{6}
+    \\\to k_1=1, \, \, k_2=-\frac{4}{3}
+\end{align*}
+\\Quindi $x_3$ e' libera, calcoliamo $x_2$ e $x_1$:
+\begin{align*}
+    \begin{cases}
+        x_1+kx_3-2x_4=0 \\
+        x_2+x_3(-2-3k)=0 \\
+        0 = 0 \to \top
+    \end{cases}
+    \\
+    \begin{cases}
+        x_1=-kx_3+2x_4 \\
+        x_2=-x_3(-2-3k) 
+    \end{cases}
+    \\
+    \begin{cases}
+        x_1=-kx_3+2x_4 \\
+        x_2=2x_3+3kx_3 
+    \end{cases}
+    \\
+    Ker(F)=\{(-kx_3+2x_4, \, 2x_3+3kx_3) \mid x_3,x_4 \in \mathbb{R}\} \text{ se $k=1$ o $k=-\frac{4}{3}$}
+    \\ \to dim(Ker(F))=2
+\end{align*}
+\\2) $1+3k-\frac{4}{k}\neq0$
+\\Allora $x_3 = 0$.
+\begin{align*}
+    \begin{cases}
+        x_1+kx_3-2x_4=0 \\
+        x_2+x_3(-2-3k)=0 \\
+        x_3 = 0 
+    \end{cases}
+    \\
+    \begin{cases}
+        x_1=2x_4 \\
+        x_2=0 \\
+        x_3=0
+    \end{cases}
+    \\
+    Ker(F)=\{(2x_4, \, 0, \, 0) \mid x_4 \in \mathbb{R}\}
+    \\ \to dim(Ker(F))=1
+\end{align*}
+b) Si determini una base $\beta$ del nucleo di $F_s$ e la si completi ad una base di $\mathbb{R}^4$. Se possibile, si trovino 3 vettori di $\mathbb{R}^4$ linearmente indipendenti che non appartengono al nucleo di $F_s$.
+\\Segliamo $s=1$, cerchiamo una base del nucleo di $F_1$.
+\begin{align*}
+    Ker(F)=\{(-kx_3+2x_4, \, 2x_3+3kx_3) \mid x_3,x_4 \in \mathbb{R}\} \\
+    Ker(F_1)=\{(-x_3+2x_4, \, 2x_3+3x_3) \mid x_3,x_4 \in \mathbb{R}\} \\
+    = \{(-x_3+2x_4, \, 5x_3) \mid x_3,x_4 \in \mathbb{R}\} \\
+    = \{(-x_3+2x_4, \, 5x_3, \, x_3, \, x_4)\}
+    \\= x_3\begin{pmatrix}
+        -1 \\ 5 \\ 1 \\0
+    \end{pmatrix}
+    +x_4\begin{pmatrix}
+        2 \\ 0 \\ 0 \\1
+    \end{pmatrix}
+    \\ \beta=\{(-1,5,1,0),(2,0,0,1)\}
+\end{align*}
+Ora completiamola ad $\mathbb{R}^4$, ci mancano 2 vettori linearmenti indipendenti.
+\begin{align*}
+    v_3=(0,0,1,0) \\
+    v_4=(0,0,0,1)
+\end{align*}
+Ora controlliamo se non solo nel nucleo, se questo e' vero allora sono linermente indipendeti dai primi 2 vettori.
+\begin{align*}
+    v_3=\alpha(-1,5,1,0)+\gamma(2,0,0,1) \\
+    \to (0,0,1,0)=\alpha(-1,5,1,0)+\gamma(2,0,0,1) \\
+    \to (0,0,1,0)=(-\alpha,5\alpha,\alpha,0)+(2\gamma,0,0,\gamma) \\
+    \to (0,0,1,0)=(-\alpha+2\gamma,5\alpha+0,\alpha+0,0+\gamma) \\
+    \to (0,0,1,0)=(-\alpha+2\gamma,5\alpha,\alpha,\gamma) \\
+    \begin{cases}
+        -\alpha+2\gamma=0 \\
+        5\alpha=0 \\
+        \alpha=1 \\
+        \gamma=0
+    \end{cases} \to     \begin{cases}
+        -\alpha+2\gamma=0 \\
+        \alpha=0 \\
+        \alpha=1 \\
+        \gamma=0
+    \end{cases}
+    \\ \alpha=0\neq1=\alpha \to \bot
+\end{align*}
+Perfetto quindi non appartiene al nucleo e lo possiamo tenere.
+\\Controlliamo ora $v_4$:
+\begin{align*}
+    v_4=\alpha(-1,5,1,0)+\gamma(2,0,0,1) \\
+    (0,0,0,1)=(-\alpha+2\gamma,5\alpha,\alpha,\gamma) \\
+    \begin{cases}
+        -\alpha+2\gamma=0 \\
+        5\alpha=0 \\
+        \alpha=0 \\
+        \gamma=1
+    \end{cases}
+    \to     \begin{cases}
+        2\gamma=\alpha \\
+        \alpha=0 \\
+        \alpha=0 \\
+        \gamma=1
+    \end{cases}
+    \to \begin{cases}
+        \gamma=\frac{0}{2} \\
+        \alpha=0 \\
+        \alpha=0 \\
+        \gamma=1
+    \end{cases} \\
+    \gamma=0\neq 1=\gamma \to \bot
+\end{align*}
+Bene anche questo vettore non fa parte del nucleo.
+\\Quindi una base per $\mathbb{R}^4$ partendo da $Ker(F_1)$:
+\begin{align*}
+    \beta_{\mathbb{R}^4}=\{(-1,5,1,0),(2,0,0,1),(0,0,1,0),(0,0,0,1)\}
+\end{align*}
+Ora dobbiamo trovare 3 vettori linermente indipendenti di $\mathbb{R}^4$ che non appartengano ad $Ker(F_1)$:
+\begin{align*}
+    v_5=(0,1,0,0) \\
+    v_5=\alpha(-1,5,1,0)+\gamma(2,0,0,1) \\
+    (0,1,0,0)=(-\alpha+2\gamma,5\alpha,\alpha,\gamma) \\
+    \begin{cases}
+        -\alpha+2\gamma=0 \\
+        5\alpha=1 \\
+        \alpha=0 \\
+        \gamma=0
+    \end{cases}
+    \to    \begin{cases}
+        -\alpha+2\gamma=0 \\
+        \alpha=\frac{1}{5} \\
+        \alpha=0 \\
+        \gamma=0
+    \end{cases}\\
+    \alpha=\frac{1}{5}\neq 0 =\alpha \to \bot
+\end{align*}
+Quindi $v_5 \notin Ker(F_1)$.
+\\Allora: $v_3,v_4,v_5 \notin Ker(F_1)$.
+\vspace{1em}
+\\c) Si determini il vettore $v \in Ker (F)$ tale che le coordinate di $v$ rispetto alla base $\beta$ trovata nel punto precedente siano $(v)_\beta=(-3,1)$.
+\begin{align*}
+    \beta=\{(-1,5,1,0),(2,0,0,1)\}\\
+    = \{\beta_1,\beta_2\} \\
+    (v)_\beta=-3\beta_1+ 1\beta_2 \\
+    = -3(-1,5,1,0)+ (2,0,0,1) \\
+    = (3,-15,-3,0)+ (2,0,0,1) \\
+    \to v= (5,-15,-3,1)
+\end{align*}
+d) Si determinino le equazioni cartesiane dell’immagine di $F_s$.
+\\Teniamo sempre $s=1$, quindi cerchiamo le equazioni cartesiane dell'immagine di $F_1$.
+\begin{align*}
+    F_k(x_1,x_2,x_3,x_4)=(x_1+kx_3-2x_4, 3x_1+x_2-2x_3-6x_4, x_1+kx_2-4x_3-2x_4) \\
+    F_1(x_1,x_2,x_3,x_4)=(x_1+x_3-2x_4, 3x_1+x_2-2x_3-6x_4, x_1+x_2-4x_3-2x_4)
+\end{align*}
+Scriviamo la matrice associata ad $F_1$:
+\begin{align*}
+    A=\begin{pmatrix}
+        1 & 0 & 1 & -2 \\
+        3 & 1 & -2 & -6 \\
+        1 & 1 & -4 & -2
+    \end{pmatrix}
+\end{align*}
+Cerchiamo le equazioni dell'immagine, ovvero un sottospazio del codominio ($\mathbb{R}^3$).
+\begin{align*}
+    Im(F_1)=span\{colonna_1,colonna_2,colonna_3,colonna_4\}\subseteq \mathbb{R}^3
+\end{align*}
+Sapendo che $(y_1,y_2,y_3) \in \mathbb{R}^3$, le equazioni cartesiane sono date dal prodotto tra  $y_i$ e la transposta di $A$.
+\begin{align*}
+    A^T=\begin{pmatrix}
+        1 & 3 & 1\\
+        0 & 1 & 1\\
+        1 & -2 & -4 \\
+        -2 & -6 & -2
+    \end{pmatrix}
+\end{align*}
+Calcoliamo il sistema di $A^T\vec{y}=\vec{0}$:
+\begin{align*}
+    \begin{cases}
+        y_1+3y^2+y_3=0 \\
+        y_2+y_3=0 \\
+        y_1-2y^2-4y^3=0 \\
+        -2y^1-6y^2-4y^3=0
+    \end{cases}\\
+    \begin{cases}
+        y_1+3y^2+y_3=0 \\
+        y_2=-y_3 \\
+        y_1-2y^2-4y^3=0 \\
+        -2y^1-6y^2-4y^3=0
+    \end{cases}\\
+    \begin{cases}
+        y_1-3y^3+y_3=0 \\
+        y_2=-y_3 \\
+        y_1-2y^2-4y^3=0 \\
+        -2y^1-6y^2-4y^3=0
+    \end{cases}\\
+    \begin{cases}
+        y_1=2y^3 \\
+        y_2=-y_3 \\
+        2y^3+2y^3-4y^3=0 \\
+        -2y^1-6y^2-4y^3=0
+    \end{cases}\\
+    \begin{cases}
+        y_1=2y^3 \\
+        y_2=-y_3 \\
+        0=0 \to \top \\
+        -4y^3+6y^3-4y^3=0
+    \end{cases}\\
+    \begin{cases}
+        y_1=2y^3 \\
+        y_2=-y_3 \\
+       \top \to y_3=y_3\\
+        -2y^3=0
+    \end{cases}\\
+    \begin{cases}
+        y_1=2y^3 \\
+        y_2=-y_3 \\
+       \top \to y_3=y_3\\
+        y_3=0 
+    \end{cases}\\
+    \text{Nota: la quarta e' gia inclusa nella terza!}\\
+    \begin{cases}
+        y_1=2y^3 \\
+        y_2=-y_3 \\
+        y_3=y_3
+    \end{cases}\\
+    \vec{y}=\{(2y_3,-y_3,y_3) \mid \forall y_3 \in \mathbb{R}\}\\
+    =\{y_3(2,-1,1) \mid \forall y_3 \in \mathbb{R}\}\\
+    = \{(2,-1,1)\} 
+\end{align*}
+Quindi l’immagine di $F$ è il piano formato da tutti i vettori $(y_1,y_2,y_3)$ tali che:
+\begin{align*}
+    \vec{y}(y_1,y_2,y_3)=(2,-1,1)(y_1,y_2,y_3)=0\\
+    =2y_1-y_2+y_3=0\\
+    =span\{2,-1,1\}\\
+    Im(F)=\{(y_1,y_2,y_3) \in \mathbb{R}^3 \mid 2y_1-y_2+y_3=0\}
+\end{align*}
+
+
+
+
+
+
+
+
+
+\end{document}

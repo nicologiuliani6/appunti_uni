@@ -1,0 +1,20 @@
+// per testare un vostro programma VM, basta inserirlo nel corpo di questa
+// funzione di test, chiamata da Sys.init. (caricare nel VM emulator il file
+// test.tst e poi premere "play").
+
+// non dimenticare di fare il push dei parametri attuali giusti in Sys.vm
+// qui visibili nel segmento argument
+
+function Miocodice.test 2
+
+// scriviamo 14,15 in local[0] e local[1]: vedi global stack nell'interfaccia
+push constant 14
+pop local 0
+push constant 15
+pop local 1
+ 
+push argument 0
+push constant 1
+add
+
+return

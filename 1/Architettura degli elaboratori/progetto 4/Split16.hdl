@@ -1,0 +1,23 @@
+CHIP Split16 {
+    IN in[16];
+    OUT out0,out1,out2,out3,out4,out5,out6,out7,out8,out9,out10,out11,out12,out13,out14,out15;
+
+    PARTS:
+    Or(a=in[0],b=in[0],out=out0);
+    Or(a=in[1],b=in[1],out=out1);
+    Or(a=in[2],b=in[2],out=out2);
+    Or(a=in[3],b=in[3],out=out3);
+    Or(a=in[4],b=in[4],out=out4);
+    Or(a=in[5],b=in[5],out=out5);
+    Or(a=in[6],b=in[6],out=out6);
+    Or(a=in[7],b=in[7],out=out7);
+    Or(a=in[8],b=in[8],out=out8);
+    Or(a=in[9],b=in[9],out=out9);
+    Or(a=in[10],b=in[10],out=out10);
+    Or(a=in[11],b=in[11],out=out11);
+    Or(a=in[12],b=in[12],out=out12);
+    Or(a=in[13],b=in[13],out=out13);
+    Or(a=in[14],b=in[14],out=out14);
+    Or(a=in[15],b=in[15],out=out15);
+    
+}

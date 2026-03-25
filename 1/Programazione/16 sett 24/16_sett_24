@@ -1,0 +1,77 @@
+calcolatrici tascabili:
+	+
+	-
+	*
+	/
+calcolatore:
+	add
+	sub
+	mul
+	div
+
+- processore + memoria:
+	0 & 1
+	magnete nord/sud
+	(no qbit)
+	- blocchi da 8 bit con indirizzo definito
+
+5 componenti principali:
+	dispo. input
+	dispo. output
+	CPU
+	RAM
+	Disco rigido
+	
+
+LINGUAGGIO MACCHINA (basso livello)
+LINGUAGGIO ALTO LIVELLO
+
+i compilatori traducono i programmi in linaguaggio ad altro livello in porgrammi in codce macchina.
+source code: codice alto livello
+object code: codice linguaggio macchina
+
+C++ -> compilatore -> computer -> codice oggetto in C++ & codice oggetto librerie -> Linker -> computer -> codice macchina (.exe) -> computer -> (+dati programma C++) -> output
+
+un algoritmo è una sequenza di istruzioni, un linguaggio + un algoritmo in un linguaggio di programmazione. la programmazione è composta in 2 fasi: 1) Problem solving (un algoritmo che risolve un problema), 2) Implementazione (tradurre un algoritmo in un programma).
+FASE DI IMPLEMENTAZIONE:
+	1) tradurre un algoritmo in un linguaggio di programmazione
+	2) compilare il codice sorgente
+	3) eseguire il codice per test
+	4) risolvere errori (bug di sintassi / di run-time / errori logici)
+
+DIAGRAMMI DI FLUSSO:
+	- nodo comando (modifica mememoria/input/output) [quadrato]
+	- nodo condizione (if vero/falso) [rombo]
+	- nodo comando speciai (inizio/fine) [quadrato con solo 1 freccia]
+
+ES. algoritmo numero pari/dispari
+
+input m
+if m%2==0:
+	Vero -> Pari
+	Falso -> Dispari
+	
+ES. algoritmo somma numeri naturali
+
+input m, n
+
+i=0
+riporto=0
+max_cifre= //numero massimo cifre
+
+cifra_m=
+cifra_n=
+
+somma = cifra_m+cifra_n+riporto
+
+if somma >= 10:
+	Vero -> output: somma - 10
+		riporto = 1
+	Falso -> output: somma
+		riporto = 0
+i++
+
+if i <=  max_cifre:
+	Vero -> ritorna fra riporto e cifra_m
+	Falso -> Fine
+

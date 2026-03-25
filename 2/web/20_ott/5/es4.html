@@ -1,0 +1,290 @@
+<style>
+    /* --- Stili della pagina esercitazione (non fanno parte del compito) --- */
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1000px 600px at 10% -10%, #1f2937, transparent), var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .sheet {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .02), transparent), var(--card);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 18px;
+      padding: 28px 28px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: .2rem .55rem;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .86rem
+    }
+
+    h1 {
+      margin: .2rem 0 1rem;
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem)
+    }
+
+    h2 {
+      margin: 1.2rem 0 .4rem;
+      font-size: 1.05rem
+    }
+
+    p,
+    li {
+      color: var(--text)
+    }
+
+    code,
+    kbd,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace
+    }
+
+    .copy-button {
+      background: #374151;
+      color: #e5e7eb;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.2s;
+      margin-left: 10px;
+    }
+
+    .copy-button:hover {
+      background: #4b5563;
+    }
+
+    .copy-button:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .copy-button.copied {
+      background: #10b981;
+    }
+
+    .copy-button.error {
+      background: #ef4444;
+    }
+
+    .download-button {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, .1);
+      padding: .45rem .75rem;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #e5e7eb;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .download-button:hover {
+      border-color: rgba(255, 255, 255, .25)
+    }
+
+    .exercise-section {
+      margin: 30px 0;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .02);
+      position: relative;
+    }
+
+    .exercise-section h2 {
+      color: var(--accent);
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .exercise-description {
+      background: rgba(255, 255, 255, .05);
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent);
+      margin: 20px 0;
+    }
+
+    .demo-area {
+      background: rgba(255, 255, 255, .05);
+      padding: 20px;
+      border-radius: 8px;
+      border: 2px dashed rgba(255, 255, 255, .2);
+      margin: 20px 0;
+      min-height: 150px;
+    }
+
+    /* === Stili per le demo flexbox === */
+    .demo-section {
+      margin: 30px 0;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .flex-container {
+      background: rgba(14, 165, 233, 0.1);
+      border: 2px dashed rgba(14, 165, 233, 0.5);
+      padding: 15px;
+      margin: 15px 0;
+      min-height: 120px;
+    }
+
+    .flex-item {
+      background: var(--accent);
+      color: white;
+      padding: 15px;
+      margin: 5px;
+      border-radius: 6px;
+      font-weight: bold;
+      text-align: center;
+      min-width: 80px;
+    }
+
+    .flex-item.item-1 {
+      background: var(--accent);
+    }
+
+    .flex-item.item-2 {
+      background: var(--muted);
+    }
+
+    .flex-item.item-3 {
+      background: #f59e0b;
+    }
+
+    .flex-item.item-4 {
+      background: #10b981;
+    }
+
+    .flex-item.item-5 {
+      background: #ef4444;
+    }
+
+    /* Varianti per dimensioni diverse */
+    .flex-item.small {
+      min-width: 60px;
+      padding: 10px;
+    }
+
+    .flex-item.large {
+      min-width: 120px;
+      padding: 20px;
+    }
+
+    .flex-item.text-content {
+      min-width: 150px;
+      text-align: left;
+      line-height: 1.4;
+    }
+
+    /* Stili per elementi specifici */
+    .demo-text {
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .code-example {
+      font-family: monospace;
+      background: rgba(255, 255, 255, .1);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .important-note {
+      color: #ef4444;
+      font-weight: 600;
+    }
+
+    .instructions {
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .instructions h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    .task-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .task-list li {
+      background: rgba(255, 255, 255, .05);
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .task-list li strong {
+      color: var(--accent);
+    }
+
+    a, a:visited {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+  </style>
+
+<div id="esercizio-4" class="exercise-section" role="region" aria-labelledby="exercise4-heading">
+      <h2 id="exercise4-heading">Esercizio 4: Align Items
+        <button class="copy-button" onclick="copyExerciseHTML('esercizio-4')" aria-label="Copia codice esercizio 4">
+          Copia
+        </button>
+      </h2>
+      <div class="exercise-description">
+        <p><strong>Obiettivo:</strong> Allinea gli elementi lungo con <span class="code-example">align-items</span>.</p>
+        <p><strong>Compito:</strong> Centra gli elementi verticalmente nel contenitore.</p>
+        <p>prova gli attributi <span class="code-example">flex-start</span>, <span class="code-example">flex-end</span>, <span class="code-example">stretch</span>, <span class="code-example">baseline</span>.</p>
+      </div>
+      <div class="demo-area" id="align-items" role="region" aria-label="Dimostrazione align items">
+        <div class="flex-container" style="height: 150px;">
+          <div class="flex-item item-1 small" role="img" aria-label="Elemento piccolo">Piccolo</div>
+          <div class="flex-item item-2 large" role="img" aria-label="Elemento grande">Grande<br>Contenuto</div>
+          <div class="flex-item item-3 small" role="img" aria-label="Elemento piccolo">Piccolo</div>
+        </div>
+      </div>
+      <style>
+        /* ESERCIZIO-4: Allineamento verticale (per Esercizio 4: Align Items)
+           OBIETTIVO: Usa align-items: center sul contenitore per centrare
+           gli elementi verticalmente.
+           
+           Prova anche: flex-start, flex-end, stretch, baseline */
+           .flex-container{
+            display: flex;
+            align-items: flex-start;
+           }
+      </style>
+    </div>

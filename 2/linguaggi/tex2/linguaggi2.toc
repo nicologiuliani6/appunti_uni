@@ -1,0 +1,18 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {section}{\numberline {1}Nomi e ambiente}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Regole di scope}{3}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Memoria}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Implementazione delle regole di \hyperref [sec:scope]{scope}}{6}{subsection.2.1}%
+\contentsline {section}{\numberline {3}Controllo}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Espressioni}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Comandi}{7}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Iterazione}{9}{subsubsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.3}Ricorsione}{9}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Sottoprogrammi}{10}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Parametri}{10}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Downward funarg problem}{11}{subsection.4.2}%
+\contentsline {paragraph}{Passare una chiusura}{12}{section*.3}%
+\contentsline {subsection}{\numberline {4.3}Upward funarg problem}{12}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Eccezioni}{13}{subsection.4.4}%
+\contentsline {paragraph}{Come implementiamo le eccezioni?}{14}{section*.4}%

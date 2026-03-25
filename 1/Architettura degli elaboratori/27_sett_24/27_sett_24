@@ -1,0 +1,15 @@
+Esempio di rappresentazione canonica:
+Storiella: Ogni potenziale sospettato è contraddistinto dalla possibilità di
+avere oppure no un alibi (a), un motivo per commettere l’omicidio (m),
+ed una relazione con l’arma del delitto (w). La polizia decide di considerare
+come sospettati coloro che soddisfano l’espressione NOT(a) AND (m OR w)
+
+GPT spiegazione (giusta):
+Questa formula indica che un sospettato è considerato tale se non ha un alibi (¬a) e ha un motivo o una relazione con l'arma (m ∨ w).
+Per scrivere la formula in Forma Normale Disjuntiva (FND), dobbiamo selezionare le righe in cui la funzione.
+
+s(a,m,w) restituisce il valore 1, e scrivere ciascuna riga come una congiunzione dei letterali (o delle loro negazioni) corrispondenti.
+
+
+Tabella di verità della funzione "sospettato” s(a,m,w) = a^ * (m + w)
+Forma canonica: s(a,m,w) a^m^w + a^mw^ + amw

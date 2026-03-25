@@ -1,0 +1,980 @@
+\documentclass[10pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[a4paper, margin=1cm]{geometry}
+\title{Risposte alle domande teoriche di \textit{Algebra Lineare}}
+\author{Nicolò Giuliani}
+\date{}
+
+\begin{document}
+\maketitle
+\textbf{
+(1) Definizione di vettori linearmente indipendenti. Se possibile, fornire esempi dei seguenti
+vettori, o motivare perche' non esistono: \\
+1) 3 vettori linearmente indipendenti di $\mathbb{R}_3[x]$; \\
+2) 3 vettori linearmente dipendenti di $\mathbb{R}_3[x]$; \\
+3) 5 vettori linearmente dipendenti di $\mathbb{R}_3[x]$ che non generano $\mathbb{R}_3[x]$; \\
+4) 4 vettori linearmente indipendenti di $\mathbb{R}_3[x]$ che non generano $\mathbb{R}_3[x]$.} \\
+Un insieme di vettori $\{\vec{v}_1, \dots, \vec{v}_n\}$ è detto linearmente indipendente se:
+\begin{align*}
+    a_1\vec{v_1}+\dots+a_n\vec{v_n}=0, \quad a_i \in \mathbb{R} =0 \, \forall \, i=1,\dots,n 
+\end{align*}
+1)
+\begin{align*}
+    \vec{v_1}=1, \, \vec{v_2}=x, \, \vec{v_3}=x^2 \quad \in \mathbb{R}_3[x]
+\end{align*}
+2) 
+\begin{align*}
+    \vec{v_1}=1, \, \vec{v_2}=2, \, \vec{v_3}=3 \quad \in \mathbb{R}_3[x]
+\end{align*}
+3) 
+\begin{align*}
+    \vec{v_1}=1, \, \vec{v_2}=2, \, \vec{v_3}=3, \, \vec{v_4}=4, \, \vec{v_5}=5  \quad \in \mathbb{R}_3[x]
+\end{align*}
+4) Non esistono 4 vettori indipendenti di $\mathbb{R}_3[x]$ che non lo generano perche' se abbiamo 4 vettori linearmente indipendenti allora lo genererano per definizione:
+\begin{align*}
+    \mathbb{R}_3[x]=a_1+a_2x+a_3x^2+a_4x^3 \text{ con } a_i \in \mathbb{R}
+\end{align*}
+\vspace{1em} \\
+\textbf{(2) Definizione di vettori linearmente indipendenti e di combinazione lineare. Enunciare e dimostrare il seguente teorema: \\
+I vettori $\vec{v}_1,\dots,\vec{v}_n$ di uno spazio vettoriale $V$ sono linearmente dipendenti se e solo se...}
+
+Definizione di indipendenza lineare: \\
+Un insieme di vettori $\{\vec{v}_1, \dots, \vec{v}_n\} \subseteq V$ si dice \emph{linearmente indipendente} se:
+\[
+a_1 \vec{v}_1 + \dots + a_n \vec{v}_n = \vec{0} \quad \Rightarrow \quad a_1 = \dots = a_n = 0, \quad a_i \in \mathbb{R}
+\]
+
+Definizione di combinazione lineare: \\
+Dato un insieme di vettori $\vec{v}_1, \dots, \vec{v}_n \in V$ e scalari $a_1, \dots, a_n \in \mathbb{R}$, l'espressione:
+\[
+a_1 \vec{v}_1 + \dots + a_n \vec{v}_n
+\]
+si chiama \emph{combinazione lineare} dei vettori $\vec{v}_1, \dots, \vec{v}_n$.
+
+Teorema: \\
+I vettori $\vec{v}_1, \dots, \vec{v}_n$ di uno spazio vettoriale $V$ sono linearmente dipendenti \emph{se e solo se} almeno uno di essi è combinazione lineare degli altri.
+
+Dimostrazione:
+\begin{itemize}
+    \item[$\Rightarrow$] Se i vettori sono linearmente dipendenti, allora esistono scalari $a_1, \dots, a_n$, non tutti nulli, tali che:
+    \[
+    a_1 \vec{v}_1 + \dots + a_n \vec{v}_n = \vec{0}
+    \]
+    Supponiamo $a_k \neq 0$. Allora:
+    \[
+    \vec{v}_k = -\frac{1}{a_k} \sum_{i \neq k} a_i \vec{v}_i
+    \]
+    quindi $\vec{v}_k$ è combinazione lineare degli altri.
+
+    \item[$\Leftarrow$] Se un vettore, ad esempio $\vec{v}_k$, è combinazione lineare degli altri:
+    \[
+    \vec{v}_k = b_1 \vec{v}_1 + \dots + b_{k-1} \vec{v}_{k-1} + b_{k+1} \vec{v}_{k+1} + \dots + b_n \vec{v}_n
+    \]
+    allora:
+    \[
+    -\vec{v}_k + b_1 \vec{v}_1 + \dots + b_{k-1} \vec{v}_{k-1} + b_{k+1} \vec{v}_{k+1} + \dots + b_n \vec{v}_n = \vec{0}
+    \]
+    che è una combinazione lineare non banale che dà lo zero, quindi i vettori sono linearmente dipendenti.
+\end{itemize}
+\vspace{1em} 
+\textbf{(3) Definizione di $\langle \vec{v}_1, \dots, \vec{v}_n \rangle$. Dimostrare che $\langle \vec{v}_1, \dots, \vec{v}_n \rangle$ è un sottospazio.}
+
+Si definisce:
+\[
+\langle \vec{v}_1, \dots, \vec{v}_n \rangle = \left\{ a_1 \vec{v}_1 + \dots + a_n \vec{v}_n \mid a_i \in \mathbb{R} \right\}
+\]
+cioè l'insieme di tutte le combinazioni lineari dei vettori $\vec{v}_1, \dots, \vec{v}_n$. Questo insieme si chiama \emph{sottospazio generato} (o \emph{span}) dei vettori dati.
+
+Sia:
+\[
+W := \langle \vec{v}_1, \dots, \vec{v}_n \rangle
+\]
+e supponiamo che $\vec{v}_1, \dots, \vec{v}_n \in V$, dove $V$ è uno spazio vettoriale. Dimostriamo che $W$ è un sottospazio di $V$, verificando le seguenti proprietà:
+
+\begin{itemize}
+    \item Contiene il vettore nullo: \\
+    ponendo $a_1 = \dots = a_n = 0$, otteniamo $0 \cdot \vec{v}_1 + \dots + 0 \cdot \vec{v}_n = \vec{0} \in W$.
+
+    \item Chiusura rispetto alla somma: \\
+    siano $\vec{w} = a_1\vec{v}_1 + \dots + a_n\vec{v}_n$ e $\vec{w}' = b_1\vec{v}_1 + \dots + b_n\vec{v}_n$ due elementi di $W$. Allora:
+    \[
+    \vec{w} + \vec{w}' = (a_1 + b_1)\vec{v}_1 + \dots + (a_n + b_n)\vec{v}_n \in W
+    \]
+    perché è ancora una combinazione lineare dei vettori $\vec{v}_i$.
+
+    \item Chiusura rispetto al prodotto per uno scalare: \\
+    sia $\vec{w} = a_1\vec{v}_1 + \dots + a_n\vec{v}_n \in W$ e sia $\lambda \in \mathbb{R}$. Allora:
+    \[
+    \lambda \vec{w} = \lambda a_1 \vec{v}_1 + \dots + \lambda a_n \vec{v}_n \in W
+    \]
+\end{itemize}
+
+Poiché $W$ contiene il vettore nullo, ed è chiuso rispetto alla somma e al prodotto per uno scalare, segue che $W$ è un sottospazio di $V$. \\
+\vspace{1em}\\
+\textbf{(4) Definizione di base di un sottospazio. Esempio di una base di R3[x] diversa dalla base 
+canonica. Dimostrare che uno spazio vettoriale finitamente generato ha sempre una base}\\
+Definizione: Dato che i vettori $\vec{v_1},\dots,\vec{v_n}$ generano il sottospazio W, e dato che i vettori sono linearmente indipendenti allora definiamo base di W: $\{\vec{v_1},\dots,\vec{v_n}\}$. \\
+Una base di $\mathbb{R}_3[x]$ e': $\{1,2x,3x^2, 5x^3\}$. \\
+Dimostrazione: dato uno spazio $V = \langle\vec{v_1},\dots,\vec{v_n}\rangle$ dobbiamo dimostrare che esiste una base di $V$. \\
+Dalla definizione di $span$ sappiamo che:
+\begin{align*}
+    \langle \vec{v}_1, \dots, \vec{v}_n \rangle = \left\{ a_1 \vec{v}_1 + \dots + a_n \vec{v}_n \mid a_i \in \mathbb{R} \right\} \\
+\end{align*}
+\begin{align*}
+    \text{Ipotizziamo che siano linearmente indipendenti: } a_1=\dots=a_n=0 \\
+    \text{Quindi definiamo che } \{\vec{v_1},\dots,\vec{v_n}\} \text{ base di V}
+\end{align*}
+E quindi dato che questo vale per tutti gli insiemi generati da un numero definito di vettori, deduciamo che esiste sempre una combinazione lineare dei vettori che sia uguale al nullo solo quando gli scalari sono nulli e questo insieme lo chimiamo base. \\
+\vspace{1em} \\
+\textbf{(5) Definizione di dimensione di uno spazio vettoriale.} \\
+Definizione: si definisce diminesione di uno spazio vettoriale il numero di vettori che appartengono alla base di quello spazio vettoriale.
+\begin{align*}
+    dim(V)=n \iff \{{\vec{v_1},\dots,\vec{v_n}}\} \text{ e' base di } V
+\end{align*}
+Infatti dalla definizione di base sappiamo che i vettori $\vec{v_1},\dots,\vec{v_n}$ sono linearmente indipendenti. Quindi abbiamo $n$ vettori indipendenti, questo numero e' la dimensione. \\
+\vspace{1em} \\
+\textbf{(6) Coordinate di un vettore rispetto ad una base ordinata: definizione, esistenza e unicità} \\
+
+Sia $\beta = \{\vec{b}_1, \dots, \vec{b}_n\}$ una base ordinata di uno spazio vettoriale $V$. \\
+Per ogni vettore $\vec{v} \in V$ esistono in modo unico degli scalari $\lambda_1, \dots, \lambda_n \in \mathbb{R}$ tali che:
+\begin{align*}
+    \vec{v} = \lambda_1 \vec{b}_1 + \dots + \lambda_n \vec{b}_n
+\end{align*}
+La $n$-upla $(\lambda_1, \dots, \lambda_n)$ è detta il vettore delle coordinate di $\vec{v}$ rispetto alla base $\beta$, e si scrive:
+\begin{align*}
+    (\vec{v})_\beta = (\lambda_1, \dots, \lambda_n)
+\end{align*}
+
+\textit{Esistenza e unicità:} \\
+Poiché $\beta$ è una base, i vettori $\vec{b}_1, \dots, \vec{b}_n$ sono linearmente indipendenti e generano $V$. Pertanto, ogni vettore $\vec{v} \in V$ ammette una e una sola combinazione lineare in termini di questi vettori. \\
+\vspace{1em} \\
+\textbf{(7) Sia U = ⟨v1, . . . , vk⟩ $\subseteq$ Rn. Perche' l’uso dell’algoritmo di Gauss in modo diretto permette di trovare una base di U ?} \\
+Perche' attraverso Gauss otteniamo un sistema che ci da i vettori linermente indipendenti, e da come sappiamo se abbiamo $n$ vettori indipendenti di $U$ allora possiamo scrivere una base di $U$ con qui vettori indipendenti. E dato che lo spazio generato da vettori indipendenti e dipendenti e' lo stesso dei soli indipendenti quella base sara' sempre di $U$. \\
+\vspace{1em} \\
+\textbf{(8) Siano v1, . . . , vk $\in$ Rn. Perche' l’uso dell’algoritmo di Gauss in modo diretto permette stabilire se v1, . . . , vk generano Rn?}\\
+Attraverso Gauss si ottengono i vettori linermente indipendenti, quindi se otteniamo $n$ vettori allora $\vec{v_1},\dots,\vec{v_n}$ generano $\mathbb{R}^n$ mentre se ne abbiamo $k$ vettori allora i vettori $\vec{v_1},\dots,\vec{v_k}$ generano un sottospazio di $\mathbb{R}^n$. \\
+\vspace{1em}\\
+\textbf{(9) Equazioni cartesiane di un sottospazio W di Rn e motivazione teorica del loro calcolo a partire da un insieme di generatori di W .} \\
+Possiamo scrivere
+\[
+    W = \{a_1v_1+\dots+a_nv_n \mid a_i \in \mathbb{R}\}
+\]
+Definiamo vettori ortogonali se $u \cdot v = \vec{0}$, quindi definiamo complemento ortogonale W come:
+\begin{align*}
+    W^\bot = \{u \in \mathbb{R}^n \mid \forall i \, u \cdot v_i = \vec{0}\}
+\end{align*}
+Quindi per il teorema del doppio complemento ortogonale:
+\begin{align*}
+    W = (W^\bot)^\bot
+\end{align*}
+Possiamo definire:
+\begin{align*}
+    W = \{\vec{x} \in \mathbb{R}^n \mid \forall i \,\vec{x} \cdot u_i = \vec{0}\}
+\end{align*}
+o in forma matriciale:
+\begin{align*}
+    W = \{\vec{x} \in \mathbb{R}^n \mid U\vec{x}=\vec{0}\}
+\end{align*}
+con U la matrice che ha come righe $u_i$. \\
+La teoria che c'e' dietro e' che le equazioni cartesiane vengono definite dal vettore $\vec{x}$ e che dato il doppio complemento ortogonale di uno spazio vettoriale e' lo stesso spazio attraverso $U\vec{x}=\vec{0}$ si puo' trovare facilmente la soluzione.
+\vspace{1em}\\
+\textbf{(10) Definizione di applicazione lineare e di nucleo. Dimostrare che una applicazione lineare e'
+iniettiva se e solo se il suo nucleo contiene solo il vettore nullo.}\\
+Una applicazione lineare e' una funzione che si scrive:
+\begin{align*}
+    F : \mathbb{R}^n \to \mathbb{R}^m
+\end{align*}
+Quindi dato un elemento $u \in \mathbb{R}^n$ diremmo che $F(u) \in \mathbb{R}^m$. \\
+Una applicazione lineare e' una funzione che code delle seguenti proprieta':
+\begin{align*}
+    F(u+v)=F(u)+F(v) \\
+    F(\lambda u)=\lambda F(v), \quad \lambda \in \mathbb{R} \\
+    F(0)=0
+\end{align*}
+Con applicazione iniettiva intendiamo quando:
+\begin{align*}
+    A\vec{x}=\vec{0}, \, \exists! \vec{v}=\vec{0}
+\end{align*}
+Dalla definizione di kernel sappiamo $Ker=\{\vec{x} \in \mathbb{R}^n \mid F(\vec{x})=\vec{0}\}$.\\
+Dimostarzione: $Ker=\vec{0} \iff \exists! \vec{x}=0, \, A\vec{x}=\vec{0}$ \\
+\begin{itemize}
+    \item $\Rightarrow$ Dalla definizione di kernel possiamo scrivere:
+    \begin{align*}
+        Ker=\vec{0} \\
+        \to A\cdot\vec{0}=\vec{0} \text{ (e questo e' sempre vero)}\\
+        \to F(\vec{0})=\vec{0} \text{ sempre vero dalla definizione di appl. lin.}\\
+    \end{align*}
+    controlliamo se 
+    \begin{align*}
+       \text{1. } F(u+v)=\vec{0}\\
+       \to F(u)+F(v)=\vec{0} \\
+       \to F(u)=F(v)=\vec{0} \\
+       \text{2. } F(\lambda u)=\vec{0} \\
+       \to \lambda F(u) =\vec{0} \\
+       \to u=\vec{0} \\
+    \end{align*}
+    \item $\Leftarrow$ Dato $A\cdot \vec{0} = \vec{0}$:
+    \begin{align*}
+        \text{dalla definizione di appl. lin.: } F(\vec{0})=\vec{0} \\
+        \to Ker=\vec{0} \text{ dalla definizione di Ker}
+    \end{align*}
+\end{itemize}
+\vspace{1em} 
+\textbf{(11) Definizione di applicazione lineare e immagine. Completare e dimostrare il seguente enunciato: Se F : V → W e' un’applicazione lineare e B = {. . . } e' una base di ..., allora
+Im F = ⟨. . . ⟩.}\\
+Definizione di applicazione linerare: $\dots$ \\
+Definiamo immagine l'insieme dato dall'output della applicazione lineare:
+\begin{align*}
+    Im=\{F(\vec{v})\in \mathbb{R}^m \mid \vec{v}\in\mathbb{R}^n\}
+\end{align*} 
+Enunciato: Se $F : V \to W$ è un’applicazione lineare e $B = \{\vec{v}_1, \dots, \vec{v}_n\}$ è una base di $V$, allora 
+\[
+\text{Im}\, F = \langle F(\vec{v}_1), \dots, F(\vec{v}_n) \rangle.
+\]
+
+Dimostrazione: \\
+Dato che $B$ è una base di $V$, ogni vettore $\vec{v} \in V$ si scrive come combinazione lineare:
+\[
+\vec{v} = a_1 \vec{v}_1 + \dots + a_n \vec{v}_n
+\]
+Allora, per linearità dell'applicazione $F$:
+\[
+F(\vec{v}) = a_1 F(\vec{v}_1) + \dots + a_n F(\vec{v}_n)
+\]
+Quindi ogni vettore dell'immagine è combinazione lineare dei vettori $F(\vec{v}_1), \dots, F(\vec{v}_n)$, cioè:
+\[
+\text{Im}\, F \subseteq \langle F(\vec{v}_1), \dots, F(\vec{v}_n) \rangle
+\]
+Viceversa, ogni combinazione lineare dei $F(\vec{v}_i)$ è l'immagine di una combinazione lineare dei $\vec{v}_i$, e quindi appartiene a $\text{Im}\, F$:
+\[
+\langle F(\vec{v}_1), \dots, F(\vec{v}_n) \rangle \subseteq \text{Im}\, F
+\]
+Segue l'uguaglianza:
+\[
+\text{Im}\, F = \langle F(\vec{v}_1), \dots, F(\vec{v}_n) \rangle
+\]
+\vspace{1em}\\
+\textbf{(12) Data una matrice A $\in$ Mm,n(R), definire l’applicazione lineare $L_A$ ad essa associata e dare la motivazione teorica del calcolo del suo nucleo.}\\
+La applicazione lineare associata alla matrice $A$ si scrive:
+\begin{align*}
+    L_A(\vec{v})=A\cdot\vec{v}
+\end{align*}
+Questo viene dalla definizione di applicazione lineare. \\
+Il nucleo si calcola:
+\begin{align*}
+    Ker=\{\vec{x} \in \mathbb{R}^n \mid F(\vec{x})=\vec{0}\} \\
+    \to A\vec{x}=\vec{0}
+\end{align*}
+E quindi risolvendo il sistema otteniamo i vettori $\vec{x}$ che appartengono al Ker. \\
+\vspace{1em} \\
+\textbf{(13) Data una matrice $A \in M_{m,n}(\mathbb{R})$, definire l’applicazione lineare $L_A$ ad essa associata e dare la motivazione teorica del calcolo della sua immagine.} \\
+
+L'applicazione lineare associata alla matrice $A$ si definisce come:
+\begin{align*}
+    L_A : \mathbb{R}^n \to \mathbb{R}^m \quad \text{con} \quad L_A(\vec{v}) = A\cdot\vec{v}
+\end{align*}
+Questa definizione deriva dal fatto che ogni matrice rappresenta un'applicazione lineare da $\mathbb{R}^n$ a $\mathbb{R}^m$.
+
+L'immagine si calcola come:
+\begin{align*}
+    \text{Im}\, L_A = \{A\vec{v} \in \mathbb{R}^m \mid \vec{v} \in \mathbb{R}^n\}
+\end{align*}
+Cioè è l'insieme dei vettori colonna ottenuti moltiplicando $A$ per tutti i vettori $\vec{v}$ di $\mathbb{R}^n$.
+
+Motivazione teorica: l'immagine di $L_A$ è lo spazio generato (span) dalle colonne della matrice $A$, cioè:
+\begin{align*}
+    \text{Im}\, L_A = \langle \text{colonne di } A \rangle
+\end{align*}
+perché ogni prodotto $A\vec{v}$ è una combinazione lineare delle colonne di $A$. \\
+\vspace{1em}\\
+\textbf{(14) Dimostrare il seguente teorema: Siano V, W spazi vettoriali, sia B = \{v1, . . . , vn\} una base di V e siano w1, . . . , wn $\in$ W. Allora esiste una ed una sola applicazione lineare F : V → W tale che F (v1) = w1, . . . , F (vn) = wn} \\
+
+Teorema: Siano $V, W$ spazi vettoriali, sia $B = \{\vec{v}_1, \dots , \vec{v}_n\}$ una base di $V$ e siano $\vec{w}_1,\dots,\vec{w}_n \in W$. Allora esiste una ed una sola applicazione lineare $F : V \to W$ tale che:
+\[
+F(\vec{v}_1) = \vec{w}_1, \dots, F(\vec{v}_n) = \vec{w}_n.
+\] 
+
+Dimostrazione: \\
+
+Poiché $B$ è una base di $V$, ogni vettore $\vec{v} \in V$ si può scrivere in modo unico come combinazione lineare:
+\[
+\vec{v} = a_1 \vec{v}_1 + \dots + a_n \vec{v}_n.
+\]
+
+Definiamo allora l'applicazione $F : V \to W$ come:
+\[
+F(\vec{v}) = a_1 \vec{w}_1 + \dots + a_n \vec{w}_n.
+\]
+
+Questa definizione è ben posta perché la rappresentazione in base è unica. Mostriamo ora che $F$ è lineare:
+
+\begin{align*}
+F(\vec{v} + \vec{u}) &= F\left( \sum (a_i + b_i) \vec{v}_i \right) = \sum (a_i + b_i) \vec{w}_i = \sum a_i \vec{w}_i + \sum b_i \vec{w}_i \\
+&= F(\vec{v}) + F(\vec{u}) \\
+F(\lambda \vec{v}) &= F\left( \sum \lambda a_i \vec{v}_i \right) = \sum \lambda a_i \vec{w}_i = \lambda \sum a_i \vec{w}_i = \lambda F(\vec{v})
+\end{align*}
+
+Per costruzione, si ha anche:
+\[
+F(\vec{v}_i) = \vec{w}_i \quad \text{per ogni } i.
+\]
+
+Unicità: \\
+
+Supponiamo che esistano due applicazioni lineari $F, G : V \to W$ tali che:
+\[
+F(\vec{v}_i) = G(\vec{v}_i) = \vec{w}_i \quad \text{per ogni } i.
+\]
+
+Allora, per ogni $\vec{v} = a_1 \vec{v}_1 + \dots + a_n \vec{v}_n$ si ha:
+\[
+F(\vec{v}) = \sum a_i \vec{w}_i = G(\vec{v}).
+\]
+
+Quindi $F = G$. L'applicazione è unica. \hfill \\
+\vspace{1em} \\
+\textbf{(15) Enunciare e dimostrare il Teorema della Dimensione}\\
+
+Enunciazione:
+\begin{align*}
+    \dim(\text{Im}(F)) = \dim(V) - \dim(\ker(F)) \\
+    \to \dim(\ker(F)) = \dim(V) - \dim(\text{Im}(F))
+\end{align*}
+
+Dimostrazione: \\
+Data un'applicazione lineare $F : V \to W$ con $\dim(V) = n$ finito, e sia $\{ \vec{v}_1, \dots, \vec{v}_n \}$ una base di $V$. \\
+
+\begin{align*}
+    \text{1. Consideriamo il sottospazio } \ker(F) = \{ \vec{v} \in V \mid F(\vec{v}) = \vec{0} \} \\
+    \text{Sia } \{ \vec{v}_1, \dots, \vec{v}_k \} \text{ una base di } \ker(F) \Rightarrow \dim(\ker(F)) = k. \\
+    \text{2. Completiamo questa base a una base di tutto } V: \\
+    \text{cioè } \{ \vec{v}_1, \dots, \vec{v}_k, \vec{v}_{k+1}, \dots, \vec{v}_n \} \text{ è una base di } V. \\
+    \to \vec{v}_{k+1},\dots,\vec{v_n} \text{ sono lin. ind. da def. base} \\
+    \to F(\vec{v}_{k+1}),\dots,F(\vec{v}_n) \text{ sono lin. ind. } \\
+    \to F(\vec{v}_{k+1}),\dots,F(\vec{v}_n) \in Im \\
+    \text{dato che } v_1,\dots,v_k \in Ker \to F(v_1)=\dots=F(v_k)=\vec{0} \\
+    \to Im=\sum_{i=1}^n a_i F(v_i) = \vec{0} + \sum_{k+1}^n a_i F(v_i) \\
+    \to Im=span\{F(v_{k+1}),\dots,F(v_n)\} \\
+    \to dim(Im) = n - k \\
+    \to dim(Im) = \mathbb{R}^n - dim(Ker)
+\end{align*}
+\hfill 
+\vspace{1em} \\
+\textbf{(16) Definire il rango righe e il rango colonne di una matrice e dimostrare che sono uguali.}\\
+
+Definizione:\\
+Sia $A \in \text{M}_{m,n}(\mathbb{R})$ una matrice.\\
+
+\begin{itemize}
+    \item Il \textit{rango di riga} di $A$ è la dimensione dello spazio vettoriale generato dalle righe di $A$, cioè $\dim(\text{Span}\{\text{righe di } A\})$.
+    \item Il \textit{rango di colonna} di $A$ è la dimensione dello spazio vettoriale generato dalle colonne di $A$, cioè $\dim(\text{Span}\{\text{colonne di } A\})$.
+\end{itemize}
+
+Teorema: il rango righe e il rango colonne di una matrice coincidono.\\
+
+Dimostrazione:\\
+Sia $A \in \text{M}_{m,n}(\mathbb{R})$. Consideriamo due spazi:
+\begin{align*}
+    R(A) &= \text{spazio generato dalle righe di } A \subseteq \mathbb{R}^n \\
+    C(A) &= \text{spazio generato dalle colonne di } A \subseteq \mathbb{R}^m
+\end{align*}
+
+Sia $r$ il rango di riga e $c$ il rango di colonna.\\
+
+\textbf{Idea:} applichiamo operazioni elementari di riga e colonna per ridurre $A$ a forma semplificata, senza cambiare i rispettivi spazi generati.\\
+
+Procedimento:
+\begin{itemize}
+    \item Le operazioni elementari di riga non cambiano lo spazio generato dalle righe.
+    \item Possiamo portare $A$ a forma \textit{echelon per righe}: le righe non nulle formano una base di $R(A)$.
+    \item In questa forma, il numero di righe non nulle è $r = \dim(R(A))$.
+    \item Allo stesso tempo, le colonne che contengono i primi $1$ (pivot) sono linearmente indipendenti.
+    \item Esse generano lo spazio colonna: quindi $c = \dim(C(A)) = r$.
+\end{itemize}
+
+Conclusione:
+\[
+\dim(R(A)) = \dim(C(A)) \Rightarrow \text{il rango righe è uguale al rango colonne.}
+\]
+\vspace{1em} \\
+\textbf{(17) Definizione di isomorfismo tra spazi vettoriali e di spazi vettoriali isomorfi. Enunciare e possibilmente dimostrare il teorema che caratterizza gli spazi vettoriali isomorfi.}\\
+Definizione:\\
+Siano $V$ e $W$ due spazi vettoriali su $\mathbb{R}$.\\
+Un'applicazione $F : V \to W$ è detta un \textit{isomorfismo} se:
+\begin{itemize}
+    \item $F$ è lineare, cioè:
+    \begin{align*}
+        F(\vec{u} + \vec{v}) = F(\vec{u}) + F(\vec{v}) \\
+        F(\lambda \vec{v}) = \lambda F(\vec{v})
+    \end{align*}
+    \item $F$ è biettiva (cioè iniettiva e suriettiva).
+\end{itemize}
+
+Due spazi vettoriali $V$ e $W$ si dicono \textit{isomorfi} se esiste un isomorfismo $F: V \to W$. In tal caso si scrive:
+\[
+V \cong W
+\]
+
+Teorema:\\
+Siano $V$ e $W$ spazi vettoriali su $\mathbb{R}$, di dimensione finita.\\
+\textbf{$V$ e $W$ sono isomorfi se e solo se $\dim(V) = \dim(W)$.}
+
+Dimostrazione:\\
+
+$\Rightarrow$ Se $V \cong W$, allora esiste un'applicazione lineare biettiva $F : V \to W$.\\
+Poiché $F$ è iniettiva, allora:
+\[
+\dim(\ker(F)) = 0
+\]
+e poiché $F$ è suriettiva:
+\[
+\text{Im}(F) = W \Rightarrow \dim(\text{Im}(F)) = \dim(W)
+\]
+Dal Teorema della Dimensione:
+\[
+\dim(V) = \dim(\ker(F)) + \dim(\text{Im}(F)) = 0 + \dim(W) = \dim(W)
+\]
+
+$\Leftarrow$ Viceversa, supponiamo $\dim(V) = \dim(W) = n$.\\
+Sia $B = \{ \vec{v}_1, \dots, \vec{v}_n \}$ una base di $V$ e $C = \{ \vec{w}_1, \dots, \vec{w}_n \}$ una base di $W$.\\
+
+Definiamo l'applicazione $F: V \to W$ ponendo:
+\[
+F(\vec{v}_i) = \vec{w}_i \quad \text{per ogni } i = 1, \dots, n
+\]
+
+Questa applicazione si estende in modo unico a tutta $V$ per linearità, ed è un isomorfismo per costruzione (vedi Teorema dell’estensione di una app. lineare da base).\\
+
+Quindi $F$ è lineare, iniettiva e suriettiva $\Rightarrow$ $V \cong W$. \hfill \\
+\vspace{1em}\\
+\textbf{(18) Controimmagine (o preimmagine) di un vettore tramite una applicazione lineare: definizione e sua caratterizzazione}\\
+
+Definizione:\\
+Sia $F : V \to W$ un'applicazione lineare e sia $\vec{w} \in W$.\\
+La \textit{controimmagine} (o \textit{preimmagine}) di $\vec{w}$ tramite $F$ è l'insieme:
+\[
+F^{-1}(\vec{w}) = \{ \vec{v} \in V \mid F(\vec{v}) = \vec{w} \}
+\]
+
+In particolare:
+\begin{itemize}
+    \item Se $\vec{w} \notin \text{Im}(F)$, allora $F^{-1}(\vec{w}) = \emptyset$.
+    \item Se $\vec{w} \in \text{Im}(F)$, allora $F^{-1}(\vec{w})$ è un sottoinsieme affine di $V$.
+\end{itemize}
+
+Caratterizzazione:\\
+Supponiamo $\vec{w} \in \text{Im}(F)$ e sia $\vec{v}_0 \in V$ tale che $F(\vec{v}_0) = \vec{w}$.\\
+Allora:
+\[
+F^{-1}(\vec{w}) = \vec{v}_0 + \ker(F) = \{ \vec{v}_0 + \vec{u} \mid \vec{u} \in \ker(F) \}
+\]
+cioè la controimmagine è una \textit{traslazione} del nucleo (kernel) di $F$.\\
+
+Questo significa che tutte le soluzioni dell’equazione $F(\vec{v}) = \vec{w}$ si ottengono aggiungendo a una soluzione particolare $\vec{v}_0$ tutti gli elementi del nucleo.\\
+
+Esempio:\\
+Se $F : \mathbb{R}^3 \to \mathbb{R}^2$ e $\dim(\ker(F)) = 1$, allora ogni $\vec{w} \in \text{Im}(F)$ ha una controimmagine che è una retta in $\mathbb{R}^3$.\\
+\vspace{1em}\\
+\textbf{(19) Enunciare il teorema di Rouché-Capelli}\\
+
+Sia dato un sistema lineare $S$ associato alla matrice dei coefficienti $A$ e al vettore dei termini noti $\vec{b}$.\\
+Si definisce \textit{matrice completa} del sistema la matrice $A \mid \vec{b}$, ottenuta affiancando il vettore dei termini noti alla matrice dei coefficienti. \\
+Teorema di Rouché-Capelli:\\
+Il sistema $S$ è compatibile (cioè ammette almeno una soluzione) se e solo se:
+\[
+\text{rank}(A) = \text{rank}(A \mid \vec{b})
+\]
+
+In tal caso:
+\begin{itemize}
+    \item Se $\text{rank}(A) = \text{rank}(A \mid \vec{b}) = n$ (numero di incognite), allora il sistema ha un’unica soluzione (compatibile determinato).
+    \item Se $\text{rank}(A) = \text{rank}(A \mid \vec{b}) < n$, allora il sistema ha infinite soluzioni (compatibile indeterminato).
+\end{itemize}
+
+Se invece:
+\[
+\text{rank}(A) \ne \text{rank}(A \mid \vec{b})
+\]
+allora il sistema è \textbf{incompatibile}, ovvero non ha soluzioni. \\
+\vspace{1em}\\
+\textbf{(20) Determinante di una matrice: Definizione e proprietà}\\
+
+Definizione:\\
+Il \textit{determinante} è una funzione che associa a ogni matrice quadrata $A \in M_{n \times n}(\mathbb{R})$ un numero reale, indicato con $\det(A)$ o $|A|$.\\
+
+Per matrici $2 \times 2$:
+\[
+A = \begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix}
+\quad \Rightarrow \quad
+\det(A) = ad - bc
+\]
+
+Per matrici $3 \times 3$:
+\[
+A = \begin{pmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{pmatrix}
+\quad \Rightarrow \quad
+\det(A) = a_{11} \cdot \det(M_{11}) - a_{12} \cdot \det(M_{12}) + a_{13} \cdot \det(M_{13})
+\]
+dove $M_{1j}$ è il minore ottenuto cancellando la prima riga e la $j$-esima colonna.
+
+Proprietà:
+\begin{itemize}
+    \item $\det(I_n) = 1$ (identità).
+    \item $\det(A^T) = \det(A)$ (invarianza per trasposizione).
+    \item Se $A$ ha una riga (o colonna) nulla, allora $\det(A) = 0$.
+    \item Se due righe (o colonne) sono uguali, $\det(A) = 0$.
+    \item Se due righe (o colonne) vengono scambiate, il determinante cambia segno.
+    \item Se una riga (o colonna) viene moltiplicata per $\lambda$, allora $\det$ viene moltiplicato per $\lambda$.
+    \item Il determinante è lineare rispetto a una riga (o colonna) fissata.
+    \item Se $A$ è triangolare (superiore o inferiore), allora $\det(A)$ è il prodotto degli elementi sulla diagonale.
+    \item $\det(AB) = \det(A)\cdot\det(B)$.
+    \item $A$ è invertibile se e solo se $\det(A) \ne 0$.
+\end{itemize}
+\textbf{(21) Definizione di matrice quadrata invertibile. Se una matrice quadrata è invertibile allora il suo determinante è diverso da zero.}\\
+
+Definizione:\\
+Una matrice quadrata $A \in M_{n \times n}(\mathbb{R})$ si dice \textit{invertibile} (o \textit{non singolare}) se esiste un’altra matrice $B \in M_{n \times n}(\mathbb{R})$ tale che:
+\[
+AB = BA = I_n
+\]
+dove $I_n$ è la matrice identità di ordine $n$.\\
+In tal caso, $B$ è detta \textit{matrice inversa} di $A$ e si scrive $A^{-1}$.
+
+Proprietà fondamentale:\\
+Se $A$ è una matrice quadrata, allora:
+\[
+A \text{ è invertibile } \iff \det(A) \ne 0
+\]
+
+Questo significa che una matrice è invertibile se e solo se il suo determinante è diverso da zero.\\
+
+Viceversa:
+\[
+\det(A) = 0 \iff A \text{ non è invertibile (singolare)}
+\] \\
+\vspace{1em}\\
+\textbf{(22) Definizione di matrice quadrata invertibile. Se A, B sono matrici quadrate tali che AB = I, allora B è l’inversa di A.}\\
+
+Definizione:\\
+Una matrice quadrata $A \in M_{n \times n}(\mathbb{R})$ si dice \textit{invertibile} se esiste una matrice $B \in M_{n \times n}(\mathbb{R})$ tale che:
+\[
+AB = BA = I_n
+\]
+In tal caso, $B$ è detta \textit{matrice inversa} di $A$ e si scrive $A^{-1} = B$.
+
+Proprietà:\\
+Se $A$ e $B$ sono matrici quadrate $n \times n$ e vale:
+\[
+AB = I_n
+\]
+allora si ha anche $BA = I_n$ e dunque $B = A^{-1}$, cioè $B$ è l’inversa di $A$.
+
+Questa proprietà vale solo se $A$ e $B$ sono matrici quadrate dello stesso ordine. In tal caso, è sufficiente che $AB = I$ per concludere che $B = A^{-1}$. \\
+\vspace{1em} \\
+\textbf{(23) Enunciare il seguente teorema e dimostrare qualche implicazione (”teoremone”). Sia F =
+LA un endomorfismo di Rn: sono equivalenti:(a) F e' iniettiva, (b)....}\\
+Sia $F = L_A$ un endomorfismo di $\mathbb{R}_n$: 
+\begin{itemize}
+    \item $F$ e' iniettiva 
+    \item $F$ e' suriettiva 
+    \item $rk=n$ 
+    \item $F$ e' invertibile 
+    \item $det(A)\neq0$
+    \item $F$ e' isomorfismo 
+    \item abbiamo n vettori riga indipendenti 
+    \item abbiamo n vettori colonna indipendenti 
+    \item $A \mid \vec{b}$ ha 1 sola soluzione 
+\end{itemize}
+Dimostrazione:
+\begin{align*}
+    F : \mathbb{R}^n \to \mathbb{R}^n \\
+    \to rr=n=rc \to rk=n \\
+    \to \text{n vettori riga/colonna indipendenti} \\
+    \to A\mid \vec{b} \text{ 1 sola sol. (teorema rouche'-capelli)} \\
+    \to dim(Im)=n \to \text{F suriettiva} \\
+    \to \text{dato che F e' endomorfismo, se e' suriettiva allora e' iniettiva} \\
+    \to \text{dato che e' biettiva } \to det(A)\neq0 \\
+    \to F \text{ e' invertibile}
+\end{align*}
+\vspace{1em}\\
+\textbf{(24) Matrice associata ad una applicazione lineare rispetto a due basi fissate B del dominio e B' del codominio: come si costruisce e perche' permette di determinare l'immagine di un qualsiasi vettore. La matrice $I_{B,C} = M_B^C(id)$ associata all’identita' di Rn.}\\
+Data $F : V \to W$ e $B=\{b_1,\dots,b_n\}$ di V, e $B'=\{w_1,\dots,w_m\}$ di W. Esiste una matrice $[M]_B^{B'}$ tale che:
+\begin{align*}
+    [F(v)]_{B'}=[M]_{B}^{B'}\cdot [v]_B
+\end{align*}
+Per trovare $[M]_B ^{B'}$ facciamo:
+\begin{align*}
+    [M]_B^{B'}=[ \, [F(b_1)]_{B'} \, \dots \, [F(b_n)]_{B'}]
+\end{align*}
+La matrice $[M]_{B}^{B'}$ ci da direttamente le cordinate del vettori $F(v)$ rispetto ad $B'$ appena sappiamo $(v)_B$. \\
+Dato $id : \mathbb{R}^n \to \mathbb{R}^n$ allora:
+\begin{align*}
+    I_{B,C}=[M]_B^C(id) \\
+    (v)_C = I_{B,C} \cdot (v)_B
+\end{align*}
+In parole povere: $I_{B,C}$ dice come tradurre le coordinate di un vettore espresse in $B$, nelle coordinate espresse in $C$. \\
+\vspace{1em} \\
+\textbf{(25) Matrice associata ad una applicazione lineare rispetto a due basi fissate B del dominio e
+B' del codominio: come si costruisce e perche' permette di determinare l'immagine di un
+qualsiasi vettore. La matrice $I_{B,B} = M_B^B (id)$ associata all'identita' di Rn.} \\\
+Dato $F : V \to W$ e $B=\{b_1,\dots,b_n\}$ e $B'=\{w_1,\dots,w_n\}$, esiste una matrice $[M]_B^{B'}$ tale che:
+\begin{align*}
+    [F(v)]_{B'}=[M]_B^{B'} \cdot (v)_B \\
+    \to [M]_B^{B'}=[[F(b_1)]_{B'} \, \dots \, [F(b_v)]_{B'}]
+\end{align*}
+Grazie alla connessione di $[M]_B^{B'}$ con l'immagine di $F()$ appena sappiamo le cordinate $(v)_B$ possiamo fare il cambio di base per ottenere le cordinate $F(v)_{B'}$.\\
+Dato $id : \mathbb{R}^n \to \mathbb{R}^n$:
+\begin{align*}
+    I_{B,B}=[M]_B^B(id) \\
+    \to (v)_B = I_{B,B} \cdot (v)_b \\
+    \to I_{B,B}=I_n
+\end{align*} 
+\vspace{1em} 
+\textbf{(26) Dimostrare che \( I_{C,B} = I_{B,C}^{-1} \), cioè che \( M_B^C(\operatorname{id})^{-1} = M_C^B(\operatorname{id}) \)}
+
+Sia \( \operatorname{id} : \mathbb{R}^n \to \mathbb{R}^n \) l’identità. Allora:
+\[
+[v]_C = I_{B,C} \cdot [v]_B \quad \text{e} \quad [v]_B = I_{C,B} \cdot [v]_C
+\]
+Sostituendo:
+\begin{align*}
+    [v]_B = I_{C,B} \cdot (I_{B,C} \cdot [v]_B) = (I_{C,B} \cdot I_{B,C}) \cdot [v]_B \\
+\Rightarrow I_{C,B} \cdot I_{B,C} = I_n \\\Rightarrow I_{C,B} = I_{B,C}^{-1}
+\end{align*}
+\textbf{(27) Definizione di endomorfismo diagonalizzabile e di matrice diagonalizzabile. Dimostrare che \( F \) è diagonalizzabile se e solo se \( A \) è diagonalizzabile.}
+
+Sia \( F : \mathbb{R}^n \to \mathbb{R}^n \) un endomorfismo lineare, e sia \( A \in \mathbb{R}^{n \times n} \) la matrice associata a \( F \) rispetto alla base canonica di \( \mathbb{R}^n \).
+
+\textbf{Definizioni:}
+\begin{itemize}
+    \item Un endomorfismo \( F \) si dice \emph{diagonalizzabile} se esiste una base di \( \mathbb{R}^n \) formata da autovettori di \( F \), cioè se esiste una base nella quale la matrice associata a \( F \) è diagonale.
+    
+    \item Una matrice quadrata \( A \in \mathbb{R}^{n \times n} \) si dice \emph{diagonalizzabile} se esiste una matrice invertibile \( P \) tale che:
+    \[
+    D = P^{-1} A P
+    \]
+    con \( D \) diagonale.
+\end{itemize}
+
+\textbf{Osservazioni:}
+\begin{itemize}
+    \item Gli autovalori di \( A \) si trovano risolvendo \( \det(A - \lambda I) = 0 \).
+    \item Gli autovettori sono i vettori non nulli in \( \ker(A - \lambda I) \).
+    \item \( A \) (o \( F \)) è diagonalizzabile se e solo se la somma delle dimensioni dei nuclei associati agli autovalori è pari a \( n \):
+    \[
+    \sum_{\lambda} \dim\ker(A - \lambda I) = n
+    \]
+\end{itemize}
+
+\textbf{Dimostrazione:}
+
+Sia \( A = [F]_{C} \), con \( C \) base canonica.
+
+\vspace{0.2cm}
+\noindent
+\underline{\( \Rightarrow \)} Supponiamo che \( F \) sia diagonalizzabile. \\
+Allora esiste una base \( \mathcal{B} \) di \( \mathbb{R}^n \) formata da autovettori di \( F \), e la matrice associata a \( F \) in tale base è diagonale:
+\[
+[F]_{\mathcal{B}} = D
+\]
+Sia \( P \) la matrice del cambio di base da \( \mathcal{B} \) a \( C \) (cioè, le colonne di \( P \) sono gli autovettori). Allora:
+\[
+A = [F]_{C} = P D P^{-1}
+\]
+Quindi \( A \) è simile a una matrice diagonale, cioè \emph{diagonalizzabile}.
+
+\vspace{0.2cm}
+\noindent
+\underline{\( \Leftarrow \)} Supponiamo che \( A \) sia diagonalizzabile. \\
+Allora esiste una matrice invertibile \( P \) e una matrice diagonale \( D \) tali che:
+\[
+D = P^{-1} A P
+\]
+Sia \( \mathcal{B} \) la base di \( \mathbb{R}^n \) formata dai vettori colonna di \( P \). Allora:
+\[
+[F]_{\mathcal{B}} = D
+\]
+cioè la matrice associata a \( F \) rispetto alla base \( \mathcal{B} \) è diagonale. Quindi \( F \) è diagonalizzabile.
+
+\textbf{Conclusione:}
+\[
+F \text{ è diagonalizzabile } \iff A \text{ è diagonalizzabile}
+\]
+\vspace{1em}\\
+\textbf{(28) Definizione di endomorfismo diagonalizzabile e di autovettore di un endomorfismo. Dimostrare che se \( F \) è un endomorfismo di \( \mathbb{R}^n \) ed esiste una base di \( \mathbb{R}^n \) costituita da autovettori di \( F \), allora \( F \) è diagonalizzabile.}
+
+Sia \( F : \mathbb{R}^n \to \mathbb{R}^n \) un endomorfismo lineare.
+
+\textbf{Definizioni:}
+\begin{itemize}
+    \item Un \emph{autovettore} di \( F \) è un vettore non nullo \( v \in \mathbb{R}^n \) tale che:
+    \[
+    F(v) = \lambda v
+    \]
+    per qualche \( \lambda \in \mathbb{R} \), detto \emph{autovalore} associato.
+
+    \item Un endomorfismo \( F \) si dice \emph{diagonalizzabile} se esiste una base di \( \mathbb{R}^n \) formata da autovettori di \( F \), cioè se esiste una base in cui la matrice associata a \( F \) è diagonale.
+\end{itemize}
+
+\textbf{Dimostrazione:}
+
+Supponiamo che esista una base \( \mathcal{B} = \{v_1, \dots, v_n\} \) di \( \mathbb{R}^n \) formata da autovettori di \( F \), cioè:
+\[
+F(v_i) = \lambda_i v_i \quad \text{per ogni } i = 1, \dots, n
+\]
+Allora la matrice associata a \( F \) rispetto alla base \( \mathcal{B} \) è:
+\[
+[F]_{\mathcal{B}} = \begin{bmatrix}
+\lambda_1 & & \\
+& \ddots & \\
+& & \lambda_n
+\end{bmatrix}
+= D
+\]
+cioè è diagonale.
+
+Inoltre, se \([F]_{C} \) è la matrice associata a \( F \) rispetto alla base canonica \( C \), e \( P \) è la matrice che ha come colonne gli autovettori \( v_1, \dots, v_n \), allora vale:
+\[
+[F]_{\mathcal{B}} = P^{-1} \cdot [F]_{C} \cdot P
+\]
+cioè \( [F]_{C} \) è simile a una matrice diagonale.
+
+Quindi \( F \) è diagonalizzabile, poiché esiste una base di \( \mathbb{R}^n \) in cui la sua matrice associata è diagonale.
+
+\hfill \\
+\textbf{(29) Definizione di endomorfismo diagonalizzabile e di autovettore di un endomorfismo. Dimostrare che se un endomorfismo \( F \) di \( \mathbb{R}^n \) è diagonalizzabile allora esiste una base di \( \mathbb{R}^n \) costituita da autovettori di \( F \).}
+
+Sia \( F : \mathbb{R}^n \to \mathbb{R}^n \) un endomorfismo lineare.
+
+\textbf{Definizioni:}
+\begin{itemize}
+    \item Un \emph{autovettore} di \( F \) è un vettore non nullo \( v \in \mathbb{R}^n \) tale che:
+    \[
+    F(v) = \lambda v
+    \]
+    per qualche \( \lambda \in \mathbb{R} \), detto \emph{autovalore} associato.
+    
+    \item Un endomorfismo \( F \) si dice \emph{diagonalizzabile} se esiste una base di \( \mathbb{R}^n \) nella quale la matrice associata a \( F \) è diagonale.
+\end{itemize}
+
+\textbf{Dimostrazione:}
+
+Se \( F \) è diagonalizzabile, per definizione esiste una base \( \mathcal{B} \) di \( \mathbb{R}^n \) tale che la matrice associata a \( F \) in questa base è una matrice diagonale:
+\[
+[F]_{\mathcal{B}} = D = \begin{bmatrix}
+\lambda_1 & & \\
+& \ddots & \\
+& & \lambda_n
+\end{bmatrix}
+\]
+
+Sia \( \mathcal{B} = \{v_1, \dots, v_n\} \). Allora:
+\[
+F(v_i) = \lambda_i v_i \quad \text{per ogni } i = 1, \dots, n
+\]
+cioè ogni vettore della base \( \mathcal{B} \) è un autovettore di \( F \), associato all'autovalore \( \lambda_i \).
+
+Pertanto, la base \( \mathcal{B} \) è formata interamente da autovettori di \( F \).
+
+\hfill \\
+\textbf{(30) Il polinomio caratteristico di una matrice: definizione e sue proprieta`}\\
+Il polinomio caratteristico e' una funzione di una matrice che si calcola con 
+\begin{align*}
+    p(\lambda)=det(A-\lambda I)
+\end{align*}
+Caratteristiche:
+\begin{itemize}
+    \item Le radici del polinomio corrispondono agli autovalori di $F$.
+    \item Si puo' anche scrivere come: $p(\lambda)=\begin{pmatrix}
+        a_{11}-\lambda & a_{12} & \dots & a_{1n} \\
+        a_{21} & a_{22}-\lambda & \dots & a_{2n} \\
+        \vdots \\
+        a_{n1} & a_{n2} & \dots & a_{nn}-\lambda
+    \end{pmatrix}=(\lambda - \lambda_1)(\lambda - \lambda_2)\dots(\lambda - \lambda_n)$
+    \item \texttt{Teorema di Cayley-Hamilton}: se $p(\lambda)$ e' pol. carat. di $A$ allora $p(A)=(A-\lambda_1 I)(A-\lambda_2 I)\dots(A-\lambda_n I)=0$.
+\end{itemize}
+\vspace{1em}
+\textbf{(31) Relazione di similitudini tra matrici. Matrici simili hanno lo stesso determinante? E lo stesso polinomio caratteristico? Motivare con la dimostrazione (se fatta a lezione).} \\
+Sappiamo che due matrici simili sono in verita' entrambe matrici della stessa applicazione lineare ma su due basi diverse, una e' la base composta da autovettori. Quindi si avranno lo stesso determinante, perche' il determinante e' legato alla applicazione lineare, quindi non sara' sempre uguale a seconda della base.
+\begin{align*}
+    \text{Dato: } A=[F]_{canonica}, \quad  P=[v_1 \, \dots \, v_n] ,\quad B=\{v_1,\dots,v_n\}\\
+    D=P^{-1}\cdot A \cdot P=[F]_B \\
+\end{align*}
+Dimostriamo: $det(A)=det(D)$ 
+\begin{align*}
+    \to det(A)=det(P^{-1}AP)\\
+    \to det(A)=det(P^{-1})det(A)det(P) \\
+    \to det(A)=det(P^{-1}P)det(A) \\
+    \to det(A)=det(I)det(A)\\
+    \to det(A)=det(A)
+\end{align*}
+Dimostriamo: $p_A(\lambda)=p_D(\lambda)$
+\begin{align*}
+    p_A(\lambda)=(\lambda - \lambda_1)\dots(\lambda - \lambda_n) \\
+    \to p_A(\lambda)= det(A -\lambda I) \\
+    \to p_A(\lambda)= det(A -\lambda I)det(P^{-1}P) \\
+    \to p_A(\lambda)= det(P^{-1}AP -\lambda I) \\
+    \to p_A(\lambda)= det(D -\lambda I) \\
+    \to p_A(\lambda)=p_D(\lambda)
+\end{align*}
+\textbf{(32) Esempio di due matrici che hanno lo stesso polinomio caratteristico ma non sono simili (spiegando il motivo)} \\
+Prendiamo $A=\begin{pmatrix}
+    2 & 1 \\ 0 & 2
+\end{pmatrix}, \quad B=\begin{pmatrix}
+    2 & 0 \\ 0 & 2
+\end{pmatrix}$ allora:
+\begin{align*}
+    p_A(\lambda)=(2-\lambda)^2=p_B(\lambda)
+\end{align*}
+Ma $A$ non e' diagonalizzabile perche' la sua $MA=2\neq MG=1$, mentre $B$ e' diagonalizzabile perche' $MA=2=MG$.\\
+\vspace{1em}\\
+\textbf{(33) Definizione di autovalore di un endomorfismo, molteplicita' algebrica e geometrica. Proprieta' equivalenti al fatto che un endomorfismo o una matrice siano diagonalizzabili (solo enunciato).} \\
+Si intende autovettore $v$ un vettore non nullo tale che $F(v)=\lambda v$ per un $\lambda$. \\
+Si chiama \textit{Molteplicita' algebrica} ovvero $MA$ di un autovalore $\lambda_i$  ovvero la molteplicita' in $p(\lambda_i)$. \\
+Si chiama \textit{Molteplicita' geometrica} ovvero $MG$ di un $\lambda_i$ la dimensione del nucleo di $A-\lambda_i I$. \\
+Enunciato: \\
+Data la applicazione lineare $F : \mathbb{R}^n \to \mathbb{R}^n$ (o anche $[A]$) si dice diagonalizzabile $\iff$ esiste una base $B$ composta da $n$ autovettori. \\
+\vspace{1em}\\
+\textbf{(34) Definizione di autovalore di un endomorfismo. Se un endomorfismo ha 0 come autovalore, cosa possiamo dedurre e perche'?} \\
+Se $F: \mathbb{R}^n \to \mathbb{R}^n$ ha come autovalore 0 vuol dire che 
+\begin{align*}
+    det(A-0I)=0 \\
+    \to det(A)=0
+\end{align*}
+e quindi $F$ non e' invertibile e non e' isomorfismo. In piu' lo spazio generato da $Im(F)$ e' un sottospazio stretto (non uguale) ad $\mathbb{R}^n$ perche' $rk \leq n$. Sappiamo anche che $A\mid b$ ha infinite soluzioni/nessuna. \\
+\vspace{1em}\\
+\textbf{(35) Definizione di prodotto scalare euclideo in Rn e sue proprieta' .}
+Dati due vettori in $\mathbb{R}^n$:
+\begin{align*}
+    u \cdot v = \sum_{i=0}^n u_i v_i
+\end{align*}
+Proprieta':
+\begin{itemize}
+    \item $u\cdot v = v \cdot u$
+    \item $u \cdot (v+w)=u\cdot v+u\cdot w$
+    \item $\lambda u \cdot v= \lambda(u\cdot v) \quad (\lambda \in \mathbb{R})$ 
+    \item $u \cdot \vec{0}=\vec{0}$
+    \item Se $v\cdot u \geq 0 $, o $v \cdot v > 0$ lo si definisce \texttt{positivo}
+    \item Vettori ortogonali: $u \cdot v=\vec{0} \iff u \bot v$
+\end{itemize}
+\vspace{1em}
+\textbf{(36) Definizione di sottospazio ortogonale di un sottospazio dato W . Enunciare e dimostrare il seguente teorema: Se W `e un sottospazio di Rn di dimensione k allora $W ^\bot$ ha dimensione... e $W \cap W^\bot =...$} \\
+Dato $W \subseteq \mathbb{R}^n$:
+\begin{align*}
+    W^\bot=\{v \in \mathbb{R}^n \mid v \cdot u=0, \forall u \in W\} \subseteq \mathbb{R}^n
+\end{align*}
+Se W ‘e un sottospazio di $\mathbb{R}^n$ di dimensione $k$ allora $W^\bot$ ha dimensione $n-k$ e $W \cap W^\bot = \vec{0}$ \\
+Dimostrazione: 
+\begin{itemize}
+    \item $W^\bot$ e' chiuso per somma e prodotto
+    \item tutti gli elementi di $W^\bot$ appartengono anche a $\mathbb{R}^n$
+\end{itemize}
+quindi $W^\bot \subseteq \mathbb{R}^n$.\\
+Sia $B=\{w_1,\dots,w_k\}$ base di $W$, e anche da definizione di vettori ortogonali $\forall w_i \cdot v = 0$.\\
+Consideriamo la applicazione lineare $F : \mathbb{R}^n \to \mathbb{R}^k$
+\begin{align*}
+    F(v)=\begin{pmatrix}
+        w_1 \\
+        w_2 \\
+        \vdots \\
+        w_k
+    \end{pmatrix}v
+\end{align*}
+Quindi il $Ker=\{v \in \mathbb{R}^n \mid F(v)=\vec{0}\}$, notiamo come $W^\bot = Ker(F)$.\\
+Dalla definizione di base sappiamo che $w_1,\dots,w_k$ sono linearmente indipendenti quindi $rk(F)=k$.\\
+Allora $dim(F)=k$, dal teorema della dimensione $dim(Ker)=dim(\mathbb{R}^n)-dim(Im)$ ovvero 
+\begin{align*}
+    dim(Ker)=n-k \\
+    \text{Dato che: } W^\bot = Ker(F) \\
+    \to dim(W^\bot)=dim(Ker(F))=n-k
+\end{align*}
+\vspace{1em} 
+\textbf{(37) Proiezione ortogonale di un vettore su di un sottospazio di \( \mathbb{R}^n \).} \\
+
+Sia \( W \subseteq \mathbb{R}^n \) un sottospazio, e sia \( v \in \mathbb{R}^n \). \\
+Allora esiste e si può determinare unico vettore \( w \in W \) tale che:
+\[
+v = w + w^\perp, \quad \text{con } w^\perp \in W^\perp
+\]
+Il vettore \( w \in W \) si chiama \texttt{proiezione ortogonale} di \( v \) su \( W \) e si denota con:
+\[
+\text{proj}_W(v) = w
+\]
+
+Geometricamente, \( \text{proj}_W(v) \) è il punto di \( W \) più vicino a \( v \). \\
+\vspace{1em} \\
+\textbf{(38) Proprietà equivalenti affinché una matrice quadrata sia ortogonale.} \\
+
+Sia \( A \in M_{n \times n}(\mathbb{R}) \). Le seguenti affermazioni sono equivalenti:
+
+\begin{itemize}
+    \item \( A \) è \textbf{ortogonale} \( \iff A^T A = I \) (cioè \( A^{-1} = A^T \))
+    \item Le colonne (e anche le righe) di \( A \) formano una base \textbf{ortonormale} di \( \mathbb{R}^n \) (ovvero base di vettori ortogonali normalizzati di $\mathbb{R}^n$)
+    \item \( A \) preserva il prodotto scalare: \( A u \cdot A v = u \cdot v \) per ogni \( u, v \in \mathbb{R}^n \)
+    \item \( A \) preserva la norma: \( \|A v\| = \|v\| \) per ogni \( v \in \mathbb{R}^n \)
+    \item \( A \) preserva le distanze: \( \|A u - A v\| = \|u - v\| \)
+\end{itemize}
+\textbf{(39) Enunciare il teorema spettrale.} \\
+
+\textbf{Teorema spettrale:} \\
+Sia \( A \in M_{n \times n}(\mathbb{R}) \) una matrice simmetrica reale (cioè \( A^T = A \)). \\
+Allora:
+\begin{itemize}
+    \item Esiste una base ortonormale di \( \mathbb{R}^n \) formata da autovettori di \( A \);
+    \item \( A \) è diagonalizzabile tramite matrice ortogonale: esiste una matrice ortogonale \( P \) tale che
+    \[
+    P^T A P = D,
+    \]
+    con \( D \) matrice diagonale contenente gli autovalori di \( A \).
+\end{itemize}
+\vspace{1em}
+\textbf{(40) Definire le classi resto modulo n, a partire da un’opportuna relazione di equivalenza in Z. I particolare caratterizzare $[a]_n = {...}$.}
+Definiamo una relazione di equivalenza in $Z$ come:
+\begin{align*}
+    a \equiv_n b \iff n \mid (a-b)
+\end{align*}
+Cioe' due interi sono congruenti modulo n se la loro differenza e' multiplo di $n$.
+La classe resto modulo $n$ si scrive come
+\begin{align*}
+    [a]_n = \{x \in Z \mid x \equiv_n a\} \\
+    =\{a+kn \mid k \in Z\}
+\end{align*}
+\vspace{1em}
+\textbf{(41) Definire $Z_n$ e caratterizzarlo elencandone gli elementi} \\
+Definiamo $Z_n$ come l'insieme delle classi di modulo n:
+\begin{align*}
+    Z_n = \{[0]_n, [1]_n, \dots , [n-1]_n\}
+\end{align*}
+\vspace{1em}
+\textbf{(42) Enunciare e dimostrare il sesuente teorema: La classe [a]n `e invertibile in Zn se e solo se...} \\
+La classe $[a]_n$ e' invertibile in $Z_n$ se e solo se $mcd(n,a)=1$ \\
+Dimostrazione:
+\begin{itemize}
+    \item $\Rightarrow$
+    sappiamo che esiste un $[b]_n$ tale che $[a]_n \cdot [b]_n = [1]_n$ ovvero
+    \begin{align*}
+        ab \equiv_n 1 \\ 
+        \to ab-1 \equiv_n kn \quad \text{per qualche } k \in Z \\
+        \to ab -kn \equiv_n 1
+    \end{align*}
+    Notiamo che abbiamo una combinazione lineare di $a$ e $n$ quindi $mcd(n,a)=1$
+    \item $\Leftarrow$ abbiamo $mcd(n,a)=1$
+    \begin{align*}
+        \text{Sappiamo che esiste: } ax+ny \equiv_n 1 \\
+        \to ax \equiv_n 1 \\
+        \to x \equiv_n [a]_n^{-1}
+    \end{align*}
+\end{itemize}
+\end{document}

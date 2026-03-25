@@ -1,0 +1,506 @@
+\documentclass[10pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[a4paper, margin=1cm]{geometry}
+\title{Teoria di \textit{Algebra Lineare}}
+\author{Nicolò Giuliani}
+\date{28/05/2025}
+
+\begin{document}
+\maketitle
+\section{Matrici e sistemi lineari}
+\subsection{Proprieta' delle matrici}
+\begin{itemize}
+    \item proprieta' associativa : $(AB)C=A(BC)$
+    \item proprieta' distributiva: $A(B+C)=AB+AC$
+    \item proprieta' trasposta: $(AB)^T=A^TB^T$
+\end{itemize}
+Le \textbf{operazioni elementari} su una matrice sono:
+\begin{itemize}
+    \item $R_i \cdot \alpha, \quad \alpha \in \mathbb{R}\ \{0\}$
+    \item $R_i - R_j$
+    \item $R_i \overset{\text{Gauss}}{\iff} R_j$
+\end{itemize}
+\subsection{Risolvere un sistema lineare}
+Dato $A\vec{x}=\vec{b}$, con $x=(x_1,\dots,x_n)$:
+\begin{itemize}
+    \item $\exists! \text{ 1 soluzione } \iff rk(A \mid b)=rk(A)=n$
+    \item $\exists \, \infty \text{ soluzioni dipendenti da $n-rk(A)$ parametri (o incognite)} \iff rk(A \mid b) = rk (A) < n$
+\end{itemize}
+
+\section{Spazi vettoriali}
+E' un insieme ($V$) su un campo $\mathbb{R}$ che gode di queste proprieta': 
+\begin{align*}
+    \text{somma}: \, V \times V = V \\
+    \text{prodotto}: \, \mathbb{R} \times V = V
+\end{align*} 
+In tal modo porta le seguenti proprieta':
+\begin{itemize}
+    \item $\vec{u}+\vec{v}=\vec{v}+\vec{u} \quad (\vec{v},\vec{u} \in V)$
+    \item $(\vec{v}+\vec{w})+\vec{u}=(\vec{v}+\vec{u})+\vec{w}$
+    \item $\exists! \,\vec{0} \iff \vec{0} + \vec{v} = \vec{v}$
+    \item $\exists! \, (-\vec{v}) \to \vec{v}+(-\vec{v})=\vec{0}$
+    \item $1 \cdot \vec{v}=\vec{v}$
+    \item $(\lambda \gamma)\vec{u}=\lambda(\gamma \vec{u}), \quad \lambda,\gamma \in \mathbb{R}$
+    \item $\lambda(\vec{v}+\vec{u})=\lambda\vec{v}+\lambda\vec{u}, \quad \lambda \in \mathbb{R}$
+    \item $\vec{v}(\lambda+\gamma)=\lambda\vec{v}+\gamma\vec{v}, \quad \lambda,\gamma \in \mathbb{R}$
+\end{itemize}
+\subsection{Sottospazi vettoriali}
+Si dice sottospazio vettoriale $W \subset V$ se:
+\begin{align*}
+    \vec{v},\vec{u} \in W \to \vec{v}+\vec{u}\in W \\
+    \vec{v}\in W \to \lambda\vec{v}\in W, \, \forall \lambda \in \mathbb{R} \\
+    \vec{0_v} \in W
+\end{align*}
+
+\section{Combinazioni lineari}
+Per definizione di spazio vettoriale sappiano che se un vettore appartiene ad uno spazio vettoriale allora anche tutti i suoi multipli lo faranno. \\
+Infatti si definisce \textbf{combinazione lineare} il vettore $\vec{v}=\lambda_1 \vec{v_1}+\dots+\lambda_n \vec{v_n} \, \in V$. \\
+Quindi se $\vec{v} \in W$ vuol dire che il sottospazio $W$ e' generato dalle combinazioni lineare di $\vec{v}_i$. Ovvero $W=span\{\vec{v_1},\dots,\vec{v_n}\}$, quest'ultimi si dice che \textit{generano} $W$. \\
+
+\noindent\vspace{5px} 
+\textbf{Vettore linermente indipendente}: dei vettori $\vec{v_1},\dots,\vec{v_n}$ si dicono linearmente indipendenti solo se 
+\begin{align*}
+    \alpha\vec{v_1}+\beta\vec{v_2}+\dots+\gamma\vec{v_n}=\vec{0_v} \quad \to \alpha=\beta=\gamma=0
+\end{align*}
+Dimostrazione della contronominale: 
+\begin{align*}
+    \text{Ipotizzo: } \vec{v_2}=2\vec{v_1} \neq \vec{0_v}\\
+    \Rightarrow \alpha\vec{v_1}+2\beta\vec{v_1}=\vec{0_v} \\
+    \Rightarrow \vec{v_1}(\alpha+2\beta)=\vec{0_v} \iff \alpha=-2\beta\\
+   \text{Ipotizzo } \beta = 1 \Rightarrow \alpha = -2 \\
+    \Rightarrow (-2) \vec{v}_1 + 1 \cdot (2 \vec{v}_1) = \vec{0}
+\end{align*}
+Quindi esiste una soluzione non banale all’equazione, per cui \(\vec{v}_1, \vec{v}_2\) non sono linearmente indipendenti. 
+
+\section{Basi e dimensioni}
+Con base intendiamo un insieme minimo di vettori che generano un insieme $V$.
+\begin{align*}
+    \beta_{V}=\{\vec{v_1},\dots,\vec{v_n}\} \quad \neq \{\vec{0_v}\}
+\end{align*}
+Dimostrazione: \\
+\vspace{0.5em} Dividiamo la dimostrazione in due parti:
+\begin{itemize}
+    \item Caso banale: \(v_1,\dots,v_n \quad \neq \vec{0_v}\) e' gia' linearmente indipendente. \\
+    Quindi possiamo trovare una base: $\beta=\{\lambda_1\vec{v_1},\dots,\lambda_n\vec{v_n} \mid \lambda_1,\dots,\lambda_n \in \mathbb{R}\}$
+    \item Caso induttivo: \(\vec{v_1},\dots,\vec{v_n} \quad \neq \vec{0_v}\) sono linearmente dipendenti; ipotizzo che $\vec{v_n}=\lambda \vec{v}_{n-1}, \, \exists \lambda \in \mathbb{R}$. \\
+    Allora $span\{\vec{v_1},\dots,\vec{v}_{n-1}\}=span\{\vec{v_1},\dots,\vec{v}_{n}\}$. Quindi $\exists \beta=\{\lambda_1\vec{v_1},\dots,\lambda_{n-1}\vec{v}_{n-1} \mid \lambda_1,\dots,\lambda_{n-1} \in \mathbb{R}\}$.
+\end{itemize}
+\textbf{Teorema del completamento}: Per  generare uno spazio $\mathbb{R}^n$ servira' una base composta da precisamente $n$ vettori. Quindi se prendo i vettori linermente indipendenti $\vec{v_1},\dots,\vec{v_k}\in\mathbb{R}^n \, (k<n)$, e una base che GENERA $\mathbb{R}^n$ ovvero: $\beta_n=\{\vec{w_1},\dots,\vec{w_n}\}$; allora $\exists \, \beta_{n}'=\{\vec{v_1},\dots,\vec{v_n},\vec{w_1},\dots,\vec{w}_{n-k}\}$ che genera $\mathbb{R}^n$.\\
+\vspace{1em}\\ Quindi per definizione sappiamo che tutte le basi che generano uno spazio vettoriale avranno la stessa dimensione. Sappiamo anche che la dimensione di un sottoinsieme sara sempre $\leq$ del suo spazio vettoriale. \\
+\vspace{1em}\\\textbf{Teorema dell'unicità della rappresentazione di un vettore rispetto a una base}: Data la base ordinata generatrice $\beta_{\mathbb{R}^n}=\{\vec{v_1},\dots,\vec{v_n}\}$, allora 
+\begin{align*}
+    \exists! \text{ la tupla degli scalari } (\alpha_1,\dots,\alpha_n) \iff \vec{v}=\alpha \vec{v_1}+\dots +\alpha_n \vec{v_n} \quad \in \mathbb{R}^n
+\end{align*}
+Dimostrazione su $\mathbb{R}^2$:
+\begin{align*}
+    \beta_{\mathbb{R}^2}=\{(1,0),(0,1)\} \\
+    \vec{v}=\alpha(1,0)+\gamma(0,1) \quad \in \mathbb{R}^2\\
+    \text{Ipotizzo: $\alpha=2,\gamma=3$}\\
+    \Rightarrow \vec{v}=(2,3) \\
+    \exists! \text{ 2-upla ordinata: } (2,3)
+\end{align*}
+Precisazione: la $n-upla$ si chiama \textit{cordinate} di $\vec{v}\in \mathbb{R}^n$ sulla base $\beta_{\mathbb{R}^n}$; ovvero $[\vec{v}]_{\beta_V}=(\alpha_1,\dots,\alpha_n)$
+\vspace{2em}\subsection{Approfondimento delle matrici}
+Una matrice $A \in M_{m,n}(\mathbb{R})=\begin{pmatrix}
+    [\vec{v_1}] & \dots & [\vec{v_n}] \\
+    \vdots & & \vdots
+\end{pmatrix}$ genera un sottospazio di $\mathbb{R}^m$; la sua matrice derivata dall'algoritmo di Gauss genera sempre lo stesso sottospazio. Piu' precisamente i vettori NON NULLI a scala sono linearmente indipendenti, quindi saranno sempre questi in entrambe le due matrici ad generare il sottospazio di $\mathbb{R}^m$. 
+
+\section{Applicazioni Lineari}
+\begin{align*}
+    f \, : \mathbb{R}^n \to \mathbb{R}^m
+\end{align*}
+Una applicazioni lineare e' una funzione a $n$ variabili che gode delle seguenti proprieta':
+\begin{itemize}
+    \item $F(\vec{v}+\vec{u})=F(\vec{v})+F(\vec{u}), \quad \forall \vec{v},\vec{u} \in \mathbb{R}^n$ 
+    \item $F(\lambda\vec{v})=\lambda F(\vec{v}), \quad \forall \lambda \in \mathbb{R}, \, \forall \vec{v} \in \mathbb{R}^n $
+\end{itemize}
+\textbf{Teorema di esistenza e unicità dell'applicazione lineare su una base}: \\
+Dati due spazi vettoriale $\mathbb{R}^n$ e $\mathbb{R}^m$ e scegliamo $n$-vettori, anche uguali, di $\mathbb{R}^m$ allora
+\begin{align*}
+    \exists! \, F(\vec{v}_i)=\vec{w_i} \quad \vec{v_i}\in \mathbb{R}^n, \vec{w_i}\in\mathbb{R}^m \quad \mid \forall i=1,\dots,i=n
+\end{align*}
+Dimostrazione:
+\begin{align*}
+    \text{Definiamo: } F(\vec{v})=\lambda_1\vec{w_1}+\dots+\lambda_n\vec{w_n}\\
+   \text{Ipotizziamo: } \vec{v}=\lambda_1\vec{v_1}+\dots+\lambda_n\vec{v_n}, \, \vec{u}=\alpha_1\vec{v_1}+\dots+ \alpha_n\vec{v_n} \,(\in \mathbb{R}^n)\\
+   \Rightarrow_1 \text{Dimostriamo se e' chiuso rispetto la somma}: \\
+   F(\vec{v}+\vec{u})=F((\lambda_1\vec{v_1},\dots,\lambda_n\vec{v_n})+(\alpha_1\vec{v_1},\dots,\alpha_n\vec{v_n})) \\
+   =F(\vec{v_1}(\lambda_1+\alpha_1),\dots,\vec{v_n}(\lambda_n+\alpha_n))\\
+   =(\lambda_1+\alpha_1)F(\vec{v_1})+\dots+(\lambda_n+\alpha_n)F(\vec{v_n}) \\
+   =(\lambda_1+\alpha_1)\vec{w_1}+\dots+(\lambda_n+\alpha_n)\vec{w_n} \quad (\vec{w_1},\dots,\vec{w_n} \in \mathbb{R}^m)\\ 
+   \iff \lambda_1\vec{w_1}+\alpha_1\vec{w_1}+\dots+\lambda_n\vec{w_n}+\alpha_n\vec{w_n} \\
+   = F(\vec{v}) + F(\vec{u}) \\
+    \Rightarrow_2 \text{Dimostriamo se e' chiuso rispetto al prodotto}: \\
+    F(\gamma\vec{v})=F(\gamma\lambda_1\vec{v_1},\dots,\gamma\lambda_n \vec{v}_n)\\
+    =\gamma\lambda_1F(\vec{v_1})+\dots+\gamma\lambda_nF(\vec{v_n})\\
+    = \gamma\lambda_1\vec{w_1}+\dots+\gamma\lambda_n\vec{w_n} \\
+    = \gamma (\lambda_1\vec{w_1}+\dots+\lambda_n\vec{w_n}) \\
+    = \gamma F(\vec{v})
+\end{align*}
+\textbf{Teorema di rappresentazione delle applicazioni lineari}: possiamo rappresentare una applicazione linare con \\
+1) Come combinazione lineare delle incognite
+\begin{align*}
+    F(x_1,\dots,x_n)=\begin{cases}
+        \alpha_{11} x_{11}+\dots+\alpha_{1n}x_{1n}\\
+        \vdots \\
+        \alpha_{m1} x_{m1}+\dots+\alpha_{mn}
+    \end{cases}
+\end{align*}
+2) Rispetto ai vettori della base canonica
+\begin{align*}
+    F(e_1)=\dots \\
+    \vdots \\
+    F(e_n)=\dots
+\end{align*}
+3) Come prodotto tra matrice e vettore
+\begin{align*}
+    F(\vec{x})=A\vec{x} \\
+    \begin{pmatrix}
+        a_{11} & \dots & a_{1n} \\
+        \vdots \\
+        a_{m1} & \dots & a_{mn}
+    \end{pmatrix}\begin{pmatrix}
+        x_1 \\ \vdots \\ x_n
+    \end{pmatrix}
+\end{align*}
+\vspace{1em}
+\textbf{Applicazioni lineari composte}: dato $F : \mathbb{R}^n \to \mathbb{R}^m, \, G : \mathbb{R}^z \to \mathbb{R}^n$ allora $\exists! \, F \circ G :  \mathbb{R}^z \to \mathbb{R}^m$. La sua matrice sara' invece $[M]_{F \circ G}=[M]_F \times [M]_G$.
+\vspace{2em}
+\subsection{Kernel} 
+E' lo spazio generato dai vettori che hanno come immagine il vettore nullo.
+\begin{align*}
+    Kernel=span\{\vec{v} \in \mathbb{R}^n \mid F(\vec{v})={\vec{0_v}}\}
+\end{align*}
+Dimostrazione:
+\begin{align*}
+    \text{Dato: } Kernel=span\{\vec{v}+\vec{u}\}\neq\{\vec{0_v}\} \\
+    \Rightarrow_1 \text{Dimostriamo se esiste una appl. lin. chiusa rispetto la somma: } \\
+    F(\vec{v}+\vec{u})=F(\vec{v})+F(\vec{u})=\{0_v\}\\
+    \vec{0_v}+\vec{0_v}=\vec{0_v} \\
+    \Rightarrow_2 \text{Dimostriamo se esiste una appl. lin. chiusa rispetto il prodotto: } \\
+    F(\lambda\vec{v})=\vec{0_v} \\
+    \lambda F(\vec{v})=\vec{0_v} \\
+    \lambda \vec{0_v}=\vec{0_v}
+\end{align*}
+\subsection{Immagine}
+E' un sottoinsieme del codominio tale che
+\begin{align*}
+    Im(F)=span\{\vec{w}\in\mathbb{R}^m \mid \exists \, F(\vec{v})=\vec{w}\} \subseteq \mathbb{R}^m
+\end{align*}
+Dimostrazione:
+\begin{align*}
+    \text{Dato: } Im(F)=span\{\vec{c_1}+\vec{c_2}\}\neq\{\vec{0_v}\} \\
+    \Rightarrow_1 \text{Dimostriamo se esiste una appl. lin. chiusa rispetto la somma: } \\
+    \vec{c_1}+\vec{c_2}=F(\vec{v}_1)+F(\vec{v_2}) \\
+    F(\vec{v_1}+\vec{v_2}) \\
+    \Rightarrow_2 \text{Dimostriamo se esiste una appl. lin. chiusa rispetto il prodotto: } \\
+    \lambda\vec{c_1}=\lambda F(\vec{v_1}) \\
+    F(\lambda\vec{v_1})
+\end{align*}
+\textbf{Proposizione}: L'immagine puo essere generata dall'output della applicazione lineare che ha i vettori in input in diverse basi che generano sempre come spazio vettoriale il dominio.
+\begin{align*}
+    span\{\beta_{\mathbb{R}^n}\}=Im(F)
+\end{align*}
+Dimostrazione:
+\begin{itemize}
+    \item Sappiamo che il dominio puo' essere generato da qualsiasi base di $n$-vettori
+    \item Ad ogni base ordinata (che genera il dominio) avra una sua matrice composta dai vettori ordinati
+    \item Sappiamo anche che ogni matrice genera un sottospazio del codominio.
+    \item Quindi dato che i vettori della base sono per definizione linearmente indipendenti, allora tutti i vettori della applicazione lineare che appartengono al dominio apparteranno a tutte le basi di quella dimensione.
+    \item Quindi tutti i vettori generano lo stesso sottospazio nel codominio, quindi l'immagine sara' sempre uguale.
+\end{itemize}
+\begin{align*}
+    \text{Dato: } span\{\beta_{\mathbb{R}^n}\}=\mathbb{R}^n=span\{\beta_{\mathbb{R}^n}'\} \\
+    \text{Sappiamo: } \exists \, \vec{v_1},\dots,\vec{v_n}\in\mathbb{R}^n \\
+    \text{Sappiamo: } span\{[M]_{\beta_{\mathbb{R}^n}}\}=span\{[M]_{\beta_{\mathbb{R}^n}'}\}\subseteq \mathbb{R}^m \\
+    \to \vec{v_1},\dots,\vec{v_n}\in \mathbb{R}^n=span\{\beta_{\mathbb{R}^n}\}\\
+    span\{F(\vec{v_i})\}=Im(F) \iff \forall\vec{v_i} \in span\{\beta_{\mathbb{R}^n}^i\} 
+\end{align*}
+\vspace{1em}\\
+\subsection{Caratteristiche delle applicazioni lineari}
+\begin{itemize}
+    \item Iniettiva: $\forall \vec{v},\vec{u}, \, F(\vec{v})=F(\vec{u}) \iff \vec{v}=\vec{u}$ con $F : \mathbb{R}^n \to \mathbb{R}^m$
+    \begin{align*}
+        Kernel(F)=\{\vec{0_v}\}
+    \end{align*}
+Dimostrazione:\\
+\begin{align*}
+    \text{assumo F iniettiva} \\
+    \Rightarrow \quad \forall \, \vec{v}\neq\vec{u} \in \mathbb{R}^n \to F(\vec{v})\neq F(\vec{u}) \\
+    [A](\vec{v})\neq[A](\vec{u}) \\
+    \text{Sappiamo per definizione: } Kernel= \quad [A](\vec{x})=\{\vec{0_v}\} \\
+    \exists! \, \vec{x} \iff A\vec{x}=\{\vec{0_v}\} \\
+    A^{-1} \cdot A\vec{x}=\{\vec{0_v}\}\cdot A^{-1} \\
+    \to I\vec{x}=\{\vec{0_v}\} \\
+    \to \vec{x}=\{\vec{0_v}\} \\
+\end{align*}
+    \item Suriettiva: $\forall \vec{w}, \, \vec{w}=F(v) \to \exists \vec{v}$ con $F : \mathbb{R}^n \to \mathbb{R}^n$
+    \begin{align*}
+        Im(F)=\mathbb{R}^m
+    \end{align*}
+    Dimostrazione:
+    \begin{align*}
+        \text{assumo F suriettiva} \\
+        \forall \vec{w}, \, \vec{w}=F(\vec{v})\\
+        \exists \vec{v_i} \to F(v_i)\in\mathbb{R}^m \\
+        \mathbb{R}^m=F(v_1)+\dots+F(v_n)\\
+    \end{align*}
+    \item Invertibile: se biettiva e $\exists F^{-1}(\vec{w})=\vec{v} \iff F(\vec{v})=\vec{w}; \quad F : V \to W$ \\
+    \begin{align*}
+        \text{Si dicono isomorfi due spazi vettoriali se:} \\
+        dim(V)=dim(W) \\
+        \to V \equiv W
+    \end{align*}
+\end{itemize}
+Prima abbiamo definito che 
+\begin{align*}
+    \exists F^{-1}(\vec{w})=\vec{v} \to F(\vec{v})=\vec{w}
+\end{align*}
+questa si chiama \textit{contro-immagine}. \\
+\vspace{1em} \\
+Possiamo definire che la contro-immagine esiste se esiste almeno un vettore $\vec{w} \in Im(F)$. \\
+\vspace{15em}\\
+\subsection{Teorema della dimensione}
+\[
+\begin{array}{c}
+    \dim(\mathbb{R}^n) = \dim(\ker F) + \dim(\operatorname{Im} (F)) \\
+    \rotatebox{90}{$\iff$} \\
+    \dim(\ker (F)) = \dim(\mathbb{R}^n) - \dim(\operatorname{Im} (F))
+\end{array}
+\]
+Dimostrazione:
+\begin{align*}
+    n=dim(Ker) \, + \, dim(Im(F)) \\
+    \text{Sappiamo: } Ker=span\{\beta_{Ker}\} \\
+    \text{Definiamo: } \beta_{Ker}=\{\vec{v_1},\dots,\vec{v_k}\} \quad (k \leq n) \\
+    \text{Cerchiamo altri $n-k$ vettori in $\mathbb{R}^n$}: \vec{u_1},\dots,\vec{u}_{n-k} \\
+    \text{Sappiamo da definizione di Kernel: } dim(Im(F(\vec{v_i})))=0 \\
+    \text{Completiamo la base: } \beta=\{\vec{v_1},\dots,\vec{v_k},\vec{u_1},\dots,\vec{u}_{n-k}\} \\
+    \text{Allora: } dim(\beta)=n \\
+    \Rightarrow dim(\beta)=dim(Ker) \, + \, dim(Im(F)) \\
+    \to dim(\beta)=k-dim(Im(F)) \\ 
+    \text{Sappiamo: } span\{\beta\}=\mathbb{R}^n \\
+    \Rightarrow dim(Im(F))=dim(Im(F(\vec{v_i})))+dim(Im(F(\vec{u_i}))) \\
+    \to dim(Im(F))=dim(Im(F(\vec{u_i}))) \quad (=n-k)\\  
+    \to Im(F)=n-k \\
+    \text{Quindi: } \\
+    dim(\beta)=k-(n-k) \\ 
+    \to dim(\beta)=k-n+k \\ 
+    \to dim(\beta)=n \\
+    \to \top \\ 
+\end{align*}
+
+\section{Sistemi lineari}
+un sistema lineare e'
+\begin{align*}
+    [A](\vec{x})=(\vec{b})
+\end{align*}
+\subsection{Teorema di struttura di sistemi lineari}: le soluzioni di un sistema lineare sono definite da
+\begin{align*}
+    \text{sol.}=\{\vec{x_i}+\vec{z} \mid \vec{z}\in Ker(A)\}
+\end{align*}
+con $\vec{x_i}$ uguale ad una delle soluzioni di $\vec{x}$.
+\subsection{Teorema di Rouche'-Capelli}
+\begin{itemize}
+    \item $rk(A)=rk(A\mid \vec{b})=n \to \exists! $ sol. \\
+    Dimostrazione:
+    \begin{align*}
+        \text{Definiamo: } F : \mathbb{R}^n \to \mathbb{R}^n \\
+        A\vec{x}=\vec{b}\\
+        \to F(\vec{x})=\vec{b} \\
+        \to F^{-1}(\vec{b})=\vec{x} \\
+        \text{dato che e' invertibile vuol dire che e' anche biettiva, quindi: } \exists! \, \vec{x}
+    \end{align*}
+    \item $rk(A)=rk(A\mid \vec{b}) < n \to \infty $ sol. dipendenti da $n-rk(A)$ parametri (o incognite). \\
+    Dimostrazione: 
+    \begin{align*}
+            \text{Definiamo: } F : \mathbb{R}^n \to \mathbb{R}^m \\
+            F(\vec{x})=\vec{b}\\
+            \text{Dato che $\vec{b}\neq\{\vec{0_v}\}$ allora F non sara' iniettiva} \\
+            \exists \, \vec{x}=\vec{b}
+    \end{align*}
+\end{itemize}
+
+\section{Determinante e inversa di Matrice}
+Il determinante e' una funzione unica di ogni matrice quadrata. \\
+\vspace{1em} \\
+\textbf{Teorema di Binet}: $det(AB)=det(A)det(B)$
+\vspace{1em}
+\subsection{Teorema del criterio di invertibilità}
+\[
+\det(A) \neq 0 \iff \exists A^{-1} \text{ tale che } A A^{-1} = I
+\]
+
+\textbf{Dimostrazione:}
+\begin{itemize}
+    \item[$\Rightarrow$] Se $\det(A) \neq 0$, allora $A$ è invertibile. Infatti, l'algoritmo di Gauss-Jordan può trasformare $A$ nella matrice identità, quindi esiste $A^{-1}$.
+    \item[$\Leftarrow$] Se esiste $A^{-1}$, allora esiste una matrice tale che $A A^{-1} = I$. Poiché $\det(I) = 1$, allora:
+    \[
+    \det(A A^{-1}) = \det(A) \cdot \det(A^{-1}) = 1 \Rightarrow \det(A) \neq 0
+    \]
+\end{itemize}
+\vspace{1em} 
+\subsection{Teorema fondamentale dell'algebra lineare}
+Ricapitolando per $F : \mathbb{R}^n \to \mathbb{R}^n$:
+\begin{itemize}
+    \item $det(A)\neq0$
+    \item $\exists \, A^{-1}$
+    \item $F \text{ e' isomorfismo}$
+    \item $F\text{ e' biettiva}$
+    \item $Ker=\{\vec{0_v}\}$
+    \item $dim(Im)=n$
+    \item $A\vec{x}=\vec{b} \to \exists! \, \text{sol.}$
+    \item $rk(A)=n$
+    \item \text{tutti i vettori riga e colonna sono lin. indip.}
+\end{itemize}
+Dimostrazione:
+\begin{align*}
+    \text{Ipotizzo: } det(A)\neq0 \\
+    \iff \exists! \, F^{-1}\\
+    \iff (\text{essendo invertibile e' anche isomorfismo}): span\{[A]\} \equiv_n \mathbb{R}^n \\
+    \iff \text{F e' biettiva}\\
+    \iff \text{Essendo suriettiva: } Ker=\{\vec{0_v}\} \\
+    \iff \text{Essendo iniettiva: } \exists! \, \vec{x} \to A\vec{x}=\vec{b} \to dim(Im)=\mathbb{R}^n \\
+    \iff rr(A)=rc(A)=n \to rk(A)=n \\
+    \iff rr(A) \to \text{vettori riga indipendenti} \\
+    \iff rc(A) \to \text{vettori colonna indipendenti} \\
+\end{align*}
+\vspace{15em}\\
+\section{Cambio di base}
+Sia \( F: V \to W \) un'applicazione lineare, con basi \( \beta = \{b_1, \dots, b_n\} \) di \( V \) e \( \beta' = \{b'_1, \dots, b'_m\} \) di \( W \). Allora:
+\[
+[F(\vec{v})]_{\beta'} = [A]_{\beta, \beta'} [\vec{v}]_{\beta}
+\]
+dove:
+\[
+[A]_{\beta, \beta'} = 
+\begin{bmatrix}
+[F(b_1)]_{\beta'} & [F(b_2)]_{\beta'} & \cdots & [F(b_n)]_{\beta'}
+\end{bmatrix}
+\]
+(con le colonne date dalle coordinate in \( \beta' \) delle immagini dei vettori della base \( \beta \)).
+\vspace{1em}\\
+\textbf{Caso particolare: matrice identita'}\\
+Dato $F : \mathbb{R}^n \to \mathbb{R}^n$
+\begin{align*}
+    \beta=\{\vec{v_1},\dots,\vec{v_n}\}, \quad \beta'=\{\vec{w_1},\dots,\vec{w_n}\} \\
+[A]_{\beta, \beta'} = 
+\begin{bmatrix}
+[F(\vec{v_1})]_{\beta'} & [F(\vec{v_2})]_{\beta'} & \cdots & [F(\vec{v_n})]_{\beta'}
+\end{bmatrix} \\
+\to \begin{bmatrix}
+(\vec{w_1})_{\beta'} & (\vec{w_2})_{\beta'} & \cdots & (\vec{w_n})_{\beta'}
+\end{bmatrix} \\
+\to [I_n]
+\end{align*}
+Quindi la matrice della applicazione lineare associata ad due basi che generano il dominio ed codominio sara' quella di identita'.
+
+\section{Autovalori e autovettori}
+Si chiama autovettore un vettore $\vec{v}$ di autovalore $\lambda_i$ della applicazione linerare F se:
+\begin{align*}
+    F(\vec{v})=\lambda\vec{v}, \quad \forall \lambda_i \in \mathbb{Z}
+\end{align*}
+con $\mathbb{Z}$ come campo degli scalari; calcolati con
+\begin{align*}
+    det(A-\lambda_iI)=0
+\end{align*}
+\vspace{1em}\\
+Un'applicazione lineare \( F: V \to V \) è \textbf{diagonalizzabile} se esiste una base \( \beta \) di \( V \) formata da autovettori di \( F \).
+
+In altre parole, esiste una base \( \beta = \{v_1, \dots, v_n\} \) tale che
+\[
+F(v_i) = \lambda_i v_i, \quad \lambda_i \in \mathbb{K}, \quad i=1,\dots,n,
+\]
+dove \( \lambda_i \) sono gli autovalori di \( F \).
+
+Allora la matrice di \( F \) rispetto alla base \( \beta \) è diagonale:
+\[
+[A]_{\beta} = 
+\begin{bmatrix}
+\lambda_1 & 0 & \cdots & 0 \\
+0 & \lambda_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \lambda_n
+\end{bmatrix}.
+\]
+
+Equivalentemente, una matrice \( A \) è diagonalizzabile se esiste una matrice invertibile \( P \) tale che
+\[
+P^{-1} A P = D,
+\]
+dove \( D \) è una matrice diagonale. \\
+\vspace{1em} \\
+\textbf{Teorema}: L'applicazione lineare \( T: \mathbb{R}^n \to \mathbb{R}^n \) è diagonalizzabile se e solo se esiste una base di \( \mathbb{R}^n \) formata da autovettori di \( T \). \\
+\vspace{5px} \\
+Dimostrazione: 
+\begin{itemize}
+    \item[\(\Rightarrow\)] Se \(T\) è diagonalizzabile \(\to \exists \beta=\{\vec{a}_1,\dots,\vec{a}_n\}\), e quindi questa base genera \(\mathbb{R}^n\), quindi \(\beta \subseteq \mathbb{R}^n\)
+    \item[\(\Leftarrow\)] Se \(\exists \beta=\{\vec{a}_1,\dots,\vec{a}_n\}\) per definizione sappiamo che allora \(T\) è diagonalizzabile.
+\end{itemize}
+\vspace{1em}
+Si definisce \textbf{polinomio caratteristico} di $F$
+\begin{align*}
+    p_{F}(\lambda)=det(A-\lambda I) \\
+    \text{ovvero} \\
+    p_{F}(\lambda_i)=0 \\ 
+\end{align*}
+\vspace{5px} \\
+Due matrici $A$ e $B$ si dicono \textbf{simili} se 
+\begin{align*}
+    B=P^{-1}AP
+\end{align*}
+Notiamo come anche la matrice diagonalizzabile $D$ sia simile ad A. \\
+\vspace{3px}\\
+\textbf{Teorema del polinomio caratteristico comune fra matrici simili}: se $A$ e $B$ sono matrici simili allora avranno come polinio caratteristico entrambi lo stesso. \\
+\vspace{3px} \\
+Dimostrazione: \\
+\begin{align*}
+    \text{Dato: } B=P^{-1}AP \\
+    \Rightarrow det(B)=det(P^{-1}AP) \\
+    \Rightarrow det(B)=det(P^{-1})det(A)det(P) \\
+    \to det(B)=det(A)det(P^{-1}P) \\
+    \to det(B)=det(A) \\
+    \to det(B -\lambda I)=det(A -\lambda I) \\
+\end{align*}
+\subsection{Autospazi}
+Si dice autospazio $V$
+\begin{align*}
+    V=span\{\vec{v} \mid F(\vec{v})=\lambda \vec{v}\} \\
+    = Ker(A-\lambda I)
+\end{align*}
+\textbf{Teorema:} Gli autovettori di autovalori diversi tra loro sono linearmente indipendenti.
+\begin{align*}
+    \lambda_1\neq\dots\neq\lambda_n\\
+    \to \text{Gli autovettori $\vec{a_1},\dots,\vec{a_n}$ sono linearmente indipendenti}
+\end{align*}
+\vspace{1em} \\
+Indichiamo con \textbf{molteplicita' algebrica} di $\lambda_i$ il grado del polinio $p_{F}(\lambda_i)$. Questa  se coincede con la \textbf{molteplicita' geometrica}, ovvero la dimensione di $Ker(A-\lambda_i I)$, comporta che la matrice $A$ e' diagonalizzabile.
+
+\section{Prodotto scalare}
+Due vettori sono ortogonali se $\langle \vec{u_1},\vec{u_2}\rangle=0$. \\
+\textbf{Base ortogonale}: e' una base di vettori ortogonali
+\begin{align*}
+    \beta_{W^{\bot}}=\{\vec{u_1},\vec{u_2}\}
+\end{align*}
+\textbf{Base ortonormale}: e' una base composta da vettori normalizzati ortogonali
+\begin{align*}
+    \mid\mid \vec{e_i} \mid\mid =1 \\
+    \beta_{ortonormale}=\{\vec{e_1},\vec{e_2}\} \\
+\end{align*}
+\subsection{Processo di Gram-Schmidt}
+Serve per calcolare una base ortonormale (o ortogonale) di un sottospazio vettoriale.
+\begin{align*}
+    W \subseteq \mathbb{R}^n \\
+    \beta_W=\{\vec{v_1},\vec{v_2},\dots,\vec{v_n}\} \\
+    \beta_{W^{\bot}}=\beta_{ortogonale}=\{\vec{u_1},\vec{u_2},\dots,\vec{u_n}\} \\
+    \beta_{ortonormale}=\{\vec{e_1},\vec{e_2},\dots,\vec{e_n}\} \\
+    \vec{u_1}=\vec{v_1}, \quad \vec{e_1}=\frac{\vec{u_1}}{|| \vec{u_1} ||} \\
+    \vec{u_i}=\vec{v_i}-\sum_{j=1}^{i-1} \text{proj}_{\vec{u_j}}(v_i), \quad \vec{e_i}=\frac{\vec{u_i}}{||\vec{u_i}||}
+\end{align*}
+\end{document} 

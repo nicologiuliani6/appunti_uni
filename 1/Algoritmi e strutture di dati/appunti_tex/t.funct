@@ -1,0 +1,17 @@
+function Dijkstra(G = (V, E, w), s, d)
+    for v in V do
+        dist[v] = ∞
+    dist[s] = 0
+
+    PriorityQueue Q = new PriorityQueue()
+    Q.enqueue((0, s))   // (distanza, nodo)
+
+    while not Q.isEmpty() do
+        (currDist, u) = Q.dequeue()
+        if currDist < dist[u] then
+            for v in adj[u] do
+                if currDist + w(u, v) < dist[v] then
+                    dist[v] = currDist + w(u, v)
+                    Q.enqueue((currDist + w(u, v), v))
+
+    return dist[d]

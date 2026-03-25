@@ -1,0 +1,5 @@
+# Player Leaderboard
+# Format: Position | Player | Points
+1,Mario,930
+2,Luigi,200
+3,Marco,80

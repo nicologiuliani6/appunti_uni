@@ -1,0 +1,75 @@
+// Initialization
+@256
+D=A
+@SP
+M=D
+(Sys.init)
+0
+// PUSH CONSTANT 7
+@7
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// Chiamata della funzione Miocodice.test con 1 argomenti
+@RETURN_LABEL-0
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+@LCL
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+@ARG
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+@THIS
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+@THAT
+D=M
+@SP
+M=M+1
+A=M-1
+M=D
+@SP
+D=M
+@6
+D=D-A
+@ARG
+M=D
+@SP
+D=M
+@LCL
+M=D
+@Miocodice.test
+0;JMP
+(RETURN_LABEL-0)
+0
+// POP STATIC 0
+@../testemulatore/Sys.0
+D=A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+// CREATION LABEL END
+(END)
+// GOTO LABEL END
+@END
+0;JMP

@@ -1,0 +1,306 @@
+\documentclass[a4paper,12pt]{article}
+
+% Pacchetti comuni
+\usepackage[utf8]{inputenc}    % Codifica UTF-8
+\usepackage{amsmath}           % Simboli matematici
+\usepackage{amsfonts}          % Font matematici
+\usepackage{amssymb}           % Simboli matematici
+\usepackage{graphicx}          % Gestione delle immagini
+\usepackage{hyperref}          % Collegamenti ipertestuali
+\usepackage[a4paper,margin=1.2cm]{geometry}  % Margini stretti
+
+\title{Formulario di Algebra Lineare}
+\author{Nicolò Giuliani}
+\date{}
+
+
+\begin{document}
+%\maketitle
+\section*{Misc.}
+\textbf{Vettori linearmente indipendenti}:
+\begin{align*}
+    &\alpha \vec{v}_1 + \beta \vec{v}_2 + \gamma \vec{v}_3 = \vec{0} \iff \alpha = \beta = \gamma = 0 \\
+    &\iff \det([\vec{v}_1 \, \vec{v}_2 \, \vec{v}_3]) \neq 0  \\
+    &\iff A = [\vec{v}_1 \, \vec{v}_2 \, \vec{v}_3] \xrightarrow{\text{Gauss}} A' \text{ (forma a scala)}
+\end{align*}
+
+\section*{Esercizio 2}
+\begin{align*}
+    F_k : \mathbb{R}^n \to \mathbb{R}^m\\
+    F_k(x_1,x_2,\dots,x_n)=\begin{cases} 
+        riga_1 \\
+        riga_2 \\
+        \vdots \\
+        riga_m
+    \end{cases}
+\end{align*}
+Sia $A \in M_{m\times n} (\mathbb{R})$: \\
+\begin{align*}
+    F(\vec{v})=A\times [\vec{v}]
+\end{align*}
+\subsection*{a)}
+\textbf{Iniettiva}: $Ker(F_k)=\{0\} \iff det(A_k)\neq 0 $ \\
+\textbf{Suriettiva}: $dim(Im)=dim(\mathbb{R}^{m})\iff det(A_k)\neq 0$ \\
+\textbf{Isomorfismo/Invertibile}: $\exists F^{-1}_k \iff det(A_k)\neq0$ \\
+\textbf{Teorema della dimensione}: $dim(Ker)=dim(\mathbb{R}^m)-dim(Im), dim(Ker)=\text{num. colonne} -rr(A')$ \\
+\textbf{base di Ker}: $A'(\vec{x}) \to \begin{cases}
+    x_1= \dots \\
+    \vdots
+\end{cases}$
+\subsection*{b)}
+\textbf{b.1.1) cerco i $k$ t.c. $\vec{v} \in Ker(F_k$)}: 
+\begin{align*}
+    \vec{v}=\{v_1,v_2,\dots,v_m\} \quad 
+    A\vec{v}=0 \to \begin{cases}
+        v_1=\dots \\
+        v_2=\dots \\
+        \vdots
+    \end{cases}
+    \to \boxed{k=\dots}
+\end{align*}
+\textbf{b.1.2) controllo se $\vec{v}\in Ker$}: 
+\begin{align*}
+    \vec{v}=\{v_1,v_2,\dots,v_m\}\in Ker(F)\iff Ker(F(\vec{v}))=\{0\}\\
+    A\vec{v}=0 \to 
+    \begin{cases}
+        v_1(\dots)=0\\
+        v_2(\dots)=0\\
+        \vdots \\
+        v_m(\dots)=0
+    \end{cases}
+    \to \begin{cases}
+        v_1=0\\
+        v_2=0\\
+        \vdots \\
+        v_m=0
+    \end{cases} \to  (\top)\, \vec{v}\in Ker(F)
+\end{align*}
+\textbf{b.2) calcolo base di $Ker(F)$}:
+\begin{align*}
+    A\vec{x}=0 \to \begin{pmatrix}
+        a_{11} & a_{12}\\
+        a_{21} & a_{22}
+    \end{pmatrix} 
+    \to \begin{cases}
+        a_{11}x_1 + a_{12}x_2 =0 \\
+        \vdots
+    \end{cases} \to \begin{cases}
+        x_1=\dots \\
+        x_2=\dots
+    \end{cases} \\
+    \to \beta_{Ker(F)}=\{(x_1,x_2,\dots)\}
+\end{align*}
+\textbf{b) 2.1 Controllo se \( \vec{v} \in \text{Im}(A) \)}:
+
+\textbf{Metodo 1: Risolvere il sistema \( A \mathbf{x} = \vec{v} \)}
+
+\[
+A \mathbf{x} = \vec{v} \quad \text{dove} \quad A \in \mathbb{R}^{m \times n}, \quad \vec{v} \in \mathbb{R}^m
+\]
+\[
+\to \begin{cases}
+A_{1} \cdot x_1 + A_{2} \cdot x_2 + \dots + A_n \cdot x_n = v_1 \\
+A_{1} \cdot x_1 + A_{2} \cdot x_2 + \dots + A_n \cdot x_n = v_2 \\
+\vdots \\
+A_{1} \cdot x_1 + A_{2} \cdot x_2 + \dots + A_n \cdot x_n = v_m
+\end{cases}
+\]
+Se il sistema è \textbf{compatibile} (non hanno contraddizioni), allora \( \vec{v} \in \text{Im}(A) \). Se il sistema è \textbf{incompatibile}, allora \( \vec{v} \notin \text{Im}(A) \). \\
+\textbf{Metodo 2: Usare il rango}: $rr(A)=rr(A\mid \vec{v}) \iff \vec{v} \in Im(A)$  \\
+\vspace{1em}
+\textbf{b.3) Calcolare le coordinate di $\vec{v}$ rispetto a $\beta$:}
+\begin{align*}
+    &\beta = \{\vec{b}_1, \vec{b}_2\} \\
+    &[\vec{v}]_{\beta} = \begin{bmatrix} y_1 \\ y_2 \end{bmatrix} \\
+    &\Rightarrow \vec{v} = y_1 \vec{b}_1 + y_2 \vec{b}_2\\
+    \to \begin{pmatrix}
+        v_1\\
+        v_2
+    \end{pmatrix}=y_1\begin{pmatrix}
+        [\vec{b_1}]\\
+        \vdots
+    \end{pmatrix}
+    +y_2\begin{pmatrix}
+        [\vec{b_2}]\\
+        \vdots
+    \end{pmatrix}
+\end{align*}
+\subsection*{c)}
+\textbf{c.1.1) Scrivere le equazioni cartesiane di $\ker(F_k)$}:
+
+\begin{align*}
+    &A\vec{x} = \vec{0} \Rightarrow 
+    \begin{cases}
+        a_{11}x_1 + a_{12}x_2 + \dots + a_{1n}x_n = 0 \\
+        a_{21}x_1 + a_{22}x_2 + \dots + a_{2n}x_n = 0 \\
+        \vdots \\
+        a_{m1}x_1 + a_{m2}x_2 + \dots + a_{mn}x_n = 0
+    \end{cases} \\
+    &\text{Semplificando il sistema otteniamo ad esempio:} \\
+    &x_i = 2x_k + 4x_p \iff \boxed{x_i - 2x_k - 4x_p = 0}
+\end{align*}
+
+\textbf{d.1.2) Scrivere le equazioni cartesiane di $\text{Im}(F_{(k)})$, (al variare di $k$):}
+\begin{align*}
+    &A_k\vec{x} = \vec{y} \Rightarrow 
+    \begin{cases}
+        a_{11}(k)x_1 + a_{12}(k)x_2 + \dots + a_{1n}(k)x_n = y_1 \\
+        a_{21}(k)x_1 + a_{22}(k)x_2 + \dots + a_{2n}(k)x_n = y_2 \\
+        \vdots \\
+        a_{m1}(k)x_1 + a_{m2}(k)x_2 + \dots + a_{mn}(k)x_n = y_m
+    \end{cases} \\
+    &\boxed{y_1 = a_{11}(k)x_1 + a_{12}(k)x_2 + \dots + a_{1n}(k)x_n, \quad y_2 = a_{21}(k)x_1 + a_{22}(k)x_2 + \dots + a_{2n}(k)x_n, \dots}
+\end{align*}
+probabilmente meglio:
+\begin{align}
+    A^t \to A^{t'} \\
+    \text{Semplificando, tenendo gli $x_i=\top$  e sostituendo gli $x_j=0$:} \\ 
+    \to \begin{cases}
+        \boxed{x_1-x_k=0} \\
+        x_j=0 \\
+        x_k=\top
+    \end{cases}
+\end{align}
+
+
+\pagebreak
+\section*{Esercizio 3}
+\begin{align*}
+    T_k : \mathbb{R}^n \to \mathbb{R}^n
+\end{align*}
+Sia \( A \) la matrice associata a \( T_k \) rispetto alla base canonica (in dominio e codominio).
+\begin{align*}
+    A_k = \begin{pmatrix}
+        [T_k(e_1)] & [T_k(e_2)] & \dots & [T_k(e_n)] \\
+        \vdots & \vdots & & \vdots
+    \end{pmatrix}
+\end{align*}
+
+\textbf{a.1.1) Valori di \( k \) tali che \( T_k \) è diagonalizzabile:}
+
+\begin{align*}
+    T_k \text{ è diagonalizzabile} \iff \exists \beta = \{ \vec{a_1}, \vec{a_2}, \dots, \vec{a_n} \} \quad \text{con} \quad \vec{a_i} = \text{span}\left( [A] - \lambda_i I = 0 \right)
+\end{align*}
+
+I valori di \( k \) comportano il controllo delle seguenti condizioni:
+
+- \textbf{MA} (molteplicità algebrica): il grado del polinomio caratteristico associato agli autovalori \( \lambda_i \). \\
+- \textbf{MG} (molteplicità geometrica): la dimensione del nucleo \( \text{Ker}(A - \lambda_i I) \), che corrisponde al numero di autovettori indipendenti associati a ciascun autovalore. \\
+
+Per determinare quando \( T_k \) è diagonalizzabile, bisogna verificare che la molteplicità geometrica sia uguale alla molteplicità algebrica per ogni autovalore \( \lambda_i \).
+
+\textbf{Esempio di tabella per analizzare i valori di \( k \):}
+
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    \( \lambda_i \) & MA (Molteplicità Algebrica) & MG (Molteplicità Geometrica) & \( k \) \\
+    \hline
+    0 & 2 & 2 & \( k=0 \) \\
+    \hline
+    1 & 3 & 3 & \( k \neq 0 \) \\
+    \hline
+    2 & 1 & 1 & \( k=2 \) \\
+    \hline
+\end{tabular}
+\vspace{1em}
+
+\textbf{b.1.1) Valori di $k$ t.c. $\vec{v}$ e' autovettore di $F_k$}:
+\begin{align}
+    F_k(\vec{v})=\lambda[\vec{v}] \\
+    \begin{cases}
+        riga_1=\lambda v_1 \\
+        riga_2=\lambda v_2\\
+        \vdots \\
+        riga_n=\lambda v_n
+    \end{cases}
+\end{align}
+\textbf{c.1.1) Matrice associata nel dominio $(C)$ e codominio ($\beta$)}: 
+\begin{align}
+    [M]_{\beta}^{C} &= P_{\beta}^{-1} \cdot A \cdot P_C \\
+    P_C &= I_n \quad \text{(base canonica)} \Rightarrow A \cdot P_C = A \\
+    \beta &= \{ \vec{b}_1,\ \vec{b}_2,\ \vec{b}_3 \} \Rightarrow P_{\beta} = [\vec{b}_1\ \vec{b}_2\ \vec{b}_3]
+\end{align}
+\pagebreak
+\section*{Esercizio 4}
+\section*{1. Congruenze lineari}
+
+Una congruenza lineare è un'equazione del tipo:
+\[
+ax \equiv b \pmod{n}
+\]
+Questa congruenza ammette soluzioni intere se e solo se:
+\[
+\gcd(a, n) \mid b
+\]
+cioè il massimo comun divisore tra \(a\) e \(n\) deve dividere \(b\).
+
+\subsection*{Esempio}
+Consideriamo la congruenza:
+\[
+39x \equiv 81 \pmod{52}
+\]
+Calcoliamo \(\gcd(39, 52)\). Poiché:
+\[
+\gcd(39, 52) = 13
+\quad \text{e} \quad
+13 \nmid 81
+\]
+allora la congruenza \textbf{non ha soluzioni intere}.
+
+\section*{2. Classi di resto}
+
+La classe di resto di un numero intero \(a\) modulo \(n\), indicata con \([a]_n\), è l'insieme:
+\[
+[a]_n = \{x \in \mathbb{Z} \mid x \equiv a \pmod{n} \}
+\]
+Due numeri appartengono alla stessa classe modulo \(n\) se:
+\[
+n \mid (a - b) \quad \text{ossia} \quad a \equiv b \pmod{n}
+\]
+
+\subsection*{Esempio}
+\[
+17 \equiv 5 \pmod{12} \quad \text{perché} \quad 17 - 5 = 12 \Rightarrow 12 \mid (17 - 5)
+\]
+
+\section*{3. Inclusione tra classi di resto}
+
+Dire che \([a]_m \subseteq [b]_n\) significa che:
+\[
+\forall x \in \mathbb{Z}, \; x \equiv a \pmod{m} \Rightarrow x \equiv b \pmod{n}
+\]
+Cioè: ogni intero congruo ad \(a\) modulo \(m\) è anche congruo a \(b\) modulo \(n\).
+
+Per verificare ciò, si risolve il sistema:
+\[
+\begin{cases}
+x \equiv a \pmod{m} \\
+x \equiv b \pmod{n}
+\end{cases}
+\]
+Se il sistema ha \textbf{più di una soluzione} o \textbf{nessuna soluzione}, allora \([a]_m \not\subseteq [b]_n\).  
+Se invece ogni soluzione di \(x \equiv a \pmod{m}\) è anche congrua a \(b \pmod{n}\), allora sì.
+
+\subsection*{Esempio}
+Verificare se \([-7]_{25} \subseteq [18]_{50}\).  
+Scriviamo la congruenza:
+\[
+x \equiv -7 \pmod{25}
+\Rightarrow x = 25k - 7
+\]
+Sostituendo nella seconda congruenza:
+\[
+25k - 7 \equiv 18 \pmod{50}
+\Rightarrow 25k \equiv 25 \pmod{50}
+\Rightarrow 25k - 25 \equiv 0 \pmod{50}
+\Rightarrow 25(k - 1) \equiv 0 \pmod{50}
+\]
+Poiché \(25 \mid 50\), allora:
+\[
+k - 1 \equiv 0 \pmod{2} \Rightarrow k \equiv 1 \pmod{2}
+\]
+Quindi non tutte le soluzioni di \(x \equiv -7 \pmod{25}\) sono congrue a 18 modulo 50.
+
+\textbf{Conclusione:} \([-7]_{25} \not\subseteq [18]_{50}\)
+
+\end{document}

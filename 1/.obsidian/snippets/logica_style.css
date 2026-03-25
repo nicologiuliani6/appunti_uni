@@ -1,0 +1,14 @@
+.inline-title, .HyperMD-header-1, h1 {
+    text-align: center;
+}
+.author {
+    text-align: center;
+    font-size: smaller; /* Testo più piccolo per Nicolò Giuliani */
+    font-style: italic; /* Corsivo */
+}
+
+.quote {
+    text-align: center;
+    font-size: medium; /* Testo leggermente più grande per la citazione */
+    font-style: italic; /* Corsivo */
+}

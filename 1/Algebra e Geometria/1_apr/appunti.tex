@@ -1,0 +1,125 @@
+\documentclass[a4paper,12pt]{article}
+
+% Pacchetti comuni
+\usepackage[utf8]{inputenc}    % Codifica UTF-8
+\usepackage{amsmath}            % Simboli matematici
+\usepackage{amsfonts}           % Font matematici
+\usepackage{amssymb}            % Simboli matematici
+\usepackage{graphicx}           % Gestione delle immagini
+\usepackage{hyperref}           % Collegamenti ipertestuali
+
+\title{Appunti della lez}
+\author{Nicolo' Giuliani}
+\date{\today}
+
+\begin{document}
+\section{Proposizione}
+Sia $F : V \to W$ applicazione lineare, e $w \in W$.
+\\Supponiamo $F^{-1}(w)\neq 0$ e sia $v \in F^{-1}(w)$.
+\\Fissato allora: $F^{-1}(w)={v+z \mid z \in Ker(F)}$
+\section{Teorema di Rouche-Capelli}
+Un sistema lineare $A\vec{x}=b$ di m equazioni (righe) in n incognite (colonne) ha soluzione se e solo se $rk(A)=rk(b)$.
+\\Inoltre se $rk(A)=rk(A|b)=r$ il sistema ha una sola soluzione se $r=n$ e infinite soluzioni che dipendono da $n-r$ parametri se $r<n$.
+\subsection{Dimostrazione}
+Sia $L_A : \mathbb{R}^n \to \mathbb{R}^m$ l'applicazione lineare tale che $L_A(\vec{x})=A\vec{x}$.
+\\Il sistema $A\vec{x}=b$ ha soluzione se e solo se $\exists \vec{x}$ tale che $L_A(\vec{x})=b \iff b\in Im(L_A) \iff \text{b, colonne di A} = \text{colonne di A}$.
+\\Per la proposizione 4.2.4
+\\$\iff dim(\text{colonne di $A\mid b $})=dim(\text{colonne di A}) \iff rk(A\mid b)$.
+\\Esempio:
+\begin{equation*}
+    \begin{cases}
+        x+2y=1 \\
+        2x+5y=3
+    \end{cases}
+\end{equation*}
+Lo si puo' immaginare come?
+\\1) L'intersezione tra 2 rette.
+\\2)Se penso alle colonne lo posso vedere come: cerco $x$ e $y$ tali che 
+\begin{align*}
+    x\begin{pmatrix}
+        1 \\ 
+        2
+    \end{pmatrix}
+    +y\begin{pmatrix}
+        2 \\
+        5
+    \end{pmatrix}
+    =\begin{pmatrix}
+        1 \\ 
+        3
+    \end{pmatrix}
+\end{align*}
+Cioe' voglio esprimere la colonna di destra come combinazione lineare delle altre.
+
+\section{Sottospazi di $\mathbb{R}^n$}
+\textit{(dispense su virtuale)}
+\\Possiamo assegnare un sottospazio di $\mathbb{R}^n$ in due modi:
+\\1)Assegnandole i generatori
+\begin{align*}
+    \langle v_1,\dots,v_k \rangle \iff \exists \lambda_1,\dots,\lambda_k \\
+    \text{tale che } v=\lambda_1 v_1 + \dots + \lambda_k v_k
+\end{align*}
+\subsection{Esempio in $\mathbb{R}^5$}
+\begin{align*}
+    v_1=(1,0,3,-1,4) \\
+    v_2=(2,5,6,-3,7) \\
+    v_3=(0,7,9,-5,2) \\
+    (x_1,x_2,x_3,x_4,x_5) \in \langle v_1,v_2,v_3 \rangle \text{ e } \\
+    \begin{pmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5
+    \end{pmatrix}
+    = \lambda_1 \begin{pmatrix}
+        1 \\ 0 \\ 3 \\ -1 \\ 4
+    \end{pmatrix}
+    + \lambda_2 \begin{pmatrix}
+        1 \\ 5 \\6 \\-3 \\7
+    \end{pmatrix}
+    + \lambda_3 \begin{pmatrix}
+        0 \\ 7 \\ 9 \\-5\\2
+    \end{pmatrix} \\
+    x_1=\lambda_1+2\lambda_2 \\
+    x_2=5\lambda_2+7\lambda_3 \\
+    x_3=3\lambda_1+6\lambda_2+9\lambda_3 \\
+    x_4= -\lambda_1 - 3\lambda_2 -5\lambda_3
+    x_5= 4\lambda_1+7\lambda_2 +2\lambda_3 \\
+    \text{Queste sono le equazioni parametriche.} \\
+    \text{2) Anche assegnando le equazioni cartesiane, cioe':} \\
+    W=\{\text{soluzioni di }Ax=0\} \text{ con } A \in M_{k,n}(\mathbb{R}) \\
+    \text{Lo abbiamo gia fatto tutte le volte che abbiano trovato il nucleo di una applicazione lineare.}
+\end{align*}
+Vediamo il passaggio da $1$ a $2$:
+\begin{align*}
+    v_1=(1,1,0,3), v_2=(2,2,1,3) \in \mathbb{R}^4 \\
+    \text{Se esistono } \lambda_1,\lambda_2 \in \mathbb{R} \text{ tale che } \\
+    \lambda_1 v_1 + \lambda_2 v_2 + \lambda_3 v_3 = v \text{ cioe':} \\
+    \lambda_1\begin{pmatrix}
+        1 \\ 1 \\ 0 \\ 3
+    \end{pmatrix}
+    + \lambda_2 \begin{pmatrix}
+        2 \\ 2 \\ 1 \\3
+    \end{pmatrix}
+    = \begin{pmatrix}
+        x_1 \\ x_2 \\ x_3 \\ x_4
+    \end{pmatrix} \\
+    \iff \text{ il sistema lineare ha soluzione \textit{(riducendolo a scala)}} \\
+    \begin{pmatrix}
+        1 & 2 & x_1 \\
+        1 & 2 & x_2 \\
+        0 & 1 & x_3 \\
+        3 & 3 & x_4
+    \end{pmatrix} 
+    =\dots=\begin{pmatrix}
+        1 & 2 & x_1 \\
+        0 & 1 & x_3 \\
+        0 & 0 & x_2-x_1 \\
+        0 & 0 & x_4-3x_1+3x_3
+    \end{pmatrix}
+    \\ \text{Il sistema ha soluzione solo se $rk(A)=rk(A\mid b)$ e se:}
+    \\ x_2-x_1=0 \text{ e } x_4-3x_1+3x_3=0 \text{ ovvero: } \\
+    \begin{cases}
+        x_1-x_2=0 \\
+        3x_1-3x_3-x_4=0
+    \end{cases} \\
+    x\in W \iff x \text{ rende vere \dots}
+\end{align*}
+\end{document}

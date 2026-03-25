@@ -1,0 +1,7 @@
+Coca succede se si fa un pull quando non si è al livello del main?
+ERRORE
+Bisogna fare un merge così si integra entrambi i cambiamenti da tutti i branches, e si
+avranno 2 parents
+
+Una branch è una linea temporale separata dal main, deve essere creata esplecitamente
+e deve avere un suo nome

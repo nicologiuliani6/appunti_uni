@@ -1,0 +1,219 @@
+// Inizio del programma
+label START
+
+// Test delle operazioni aritmetiche
+push constant 100         // Pusha 100
+push constant 50          // Pusha 50
+add                       // 100 + 50 = 150
+push constant 200         // Pusha 200
+sub                       // 200 - 150 = 50
+neg                       // Neghiamo il risultato, quindi -50
+push constant 30          // Pusha 30
+push constant 40          // Pusha 40
+add                       // 30 + 40 = 70
+push constant 20          // Pusha 20
+add                       // 70 + 20 = 90
+push constant 200         // Pusha 200
+sub                       // 90 - 200 = -110
+
+// Test altre operazioni aritmetiche
+push constant 5           // Pusha 5
+push constant 3           // Pusha 3
+add                       // 5 + 3 = 8
+push constant 100         // Pusha 100
+sub                       // 100 - 8 = 92
+push constant 10          // Pusha 10
+push constant 2           // Pusha 2
+sub                       // 10 - 2 = 8
+push constant 7           // Pusha 7
+push constant 3           // Pusha 3
+add                       // 7 + 3 = 10
+push constant 20          // Pusha 20
+sub                       // 20 - 10 = 10
+push constant 6           // Pusha 6
+push constant 2           // Pusha 2
+add                       // 6 + 2 = 8
+
+// Operazioni logiche
+push constant 1           // Pusha 1
+push constant 0           // Pusha 0
+eq                        // Verifica se 1 == 0 (false)
+push constant 1           // Pusha 1
+push constant 0           // Pusha 0
+lt                        // Verifica se 1 < 0 (false)
+push constant 1           // Pusha 1
+push constant 0           // Pusha 0
+gt                        // Verifica se 1 > 0 (true)
+push constant 1           // Pusha 1
+push constant 0           // Pusha 0
+and                       // 1 AND 0 = 0
+push constant 1           // Pusha 1
+push constant 0           // Pusha 0
+or                        // 1 OR 0 = 1
+push constant 1           // Pusha 1
+not                       // NOT 1 = 0
+
+// Test di controllo del flusso
+push constant 7           // Pusha 7
+push constant 3           // Pusha 3
+eq                        // Verifica se 7 == 3 (false)
+if-goto IF_FALSE          // Salta se falso
+push constant 999         // Non eseguito
+goto END_IF               // Salta alla fine dell'if
+
+label IF_FALSE             // Etichetta se la condizione è falsa
+push constant 1000        // Pusha 1000
+pop local 0               // Salva in local[0]
+push local 0              // Pusha local[0]
+pop static 0              // Salva in static[0]
+
+label END_IF
+
+// Ciclo while
+push constant 10          // Pusha 10 (limite ciclo)
+label WHILE_LOOP
+push local 0              // Pusha local[0]
+push constant 1           // Pusha 1
+lt                        // Controlla se local[0] < 10
+if-goto WHILE_END         // Esce dal ciclo se non è vero
+push local 0              // Pusha local[0]
+push constant 1           // Pusha 1
+add                       // Aumenta local[0] di 1
+pop local 0               // Salva il nuovo valore in local[0]
+goto WHILE_LOOP           // Ripete il ciclo
+label WHILE_END
+
+// Ciclo for
+push constant 0           // Pusha 0 (inizio ciclo)
+push constant 10          // Pusha 10 (limite ciclo)
+label FOR_LOOP
+push local 0              // Pusha local[0]
+push constant 10          // Pusha 10
+lt                        // Controlla se local[0] < 10
+if-goto FOR_END           // Esce dal ciclo se non è vero
+push local 0              // Pusha local[0]
+push constant 2           // Pusha 2
+add                       // Aumenta local[0] di 2
+pop local 0               // Salva il nuovo valore in local[0]
+goto FOR_LOOP             // Ripete il ciclo
+label FOR_END
+
+// Ciclo for con condizioni diverse
+push constant 100         // Pusha 100 (inizio ciclo)
+push constant 500         // Pusha 500 (limite ciclo)
+label FOR_LOOP2
+push local 0              // Pusha local[0]
+push constant 100         // Pusha 100
+lt                        // Controlla se local[0] < 100
+if-goto FOR_END2          // Esce dal ciclo se non è vero
+push local 0              // Pusha local[0]
+push constant 50          // Pusha 50
+sub                       // 100 - 50 = 50
+pop local 0               // Salva il nuovo valore in local[0]
+goto FOR_LOOP2            // Ripete il ciclo
+label FOR_END2
+
+// Chiamata alla funzione "multiplyNumbers"
+call multiplyNumbers 2    // Chiamata alla funzione con 2 argomenti
+
+// Test altre funzioni
+call sumLoop 1            // Chiamata alla funzione sumLoop
+
+// Funzione "multiplyNumbers" che simula la moltiplicazione
+function multiplyNumbers 2
+push argument 0           // Pusha il primo argomento
+push argument 1           // Pusha il secondo argomento
+push constant 0          // Pusha 0 come somma iniziale
+label MULTIPLY_LOOP
+push argument 1           // Pusha il secondo argomento
+push constant 1           // Pusha 1
+sub                       // Decrementa il secondo argomento
+pop argument 1            // Salva il risultato in argument[1]
+push argument 0           // Pusha il primo argomento
+push constant 1           // Pusha 1
+add                       // Somma il primo argomento
+pop argument 0            // Salva il risultato in argument[0]
+push argument 1           // Pusha il secondo argomento
+push constant 0          // Pusha 0
+eq                        // Controlla se il secondo argomento è 0
+if-goto MULTIPLY_END      // Se è 0, esce dal ciclo
+goto MULTIPLY_LOOP        // Ripete il ciclo
+label MULTIPLY_END
+return                   // Restituisce il risultato (prodotto)
+
+// Funzione che esegue un ciclo di somma
+function sumLoop 1        // Funzione che usa 1 variabile locale
+push argument 0           // Pusha l'argomento
+push constant 0          // Pusha 0 (somma iniziale)
+label SUM_LOOP
+push local 0             // Pusha local[0]
+push constant 100        // Pusha 100
+lt                        // Verifica se local[0] < 100
+if-goto SUM_END          // Esce se la condizione non è più soddisfatta
+push local 0             // Pusha local[0]
+push constant 1          // Pusha 1
+add                       // Aumenta local[0] di 1
+pop local 0               // Salva il nuovo valore in local[0]
+push constant 1          // Pusha 1
+add                       // Incrementa la somma
+pop local 0               // Salva la somma in local[0]
+goto SUM_LOOP             // Ripete il ciclo
+label SUM_END
+
+// Funzione di test che calcola il quadrato di un numero
+function squareNumber 1
+push argument 0           // Pusha l'argomento
+push argument 0           // Pusha l'argomento di nuovo
+add                       // Somma il numero a sé stesso
+return                   // Restituisce il risultato (quadrato)
+
+// Funzione per incrementare valori
+function incrementBy 2    // Funzione con 2 parametri
+push argument 0           // Pusha il primo argomento
+push argument 1           // Pusha il secondo argomento
+add                       // Somma i due argomenti
+return                   // Restituisce il risultato
+
+// Funzione per decrementare valori
+function decrementBy 2    // Funzione con 2 parametri
+push argument 0           // Pusha il primo argomento
+push argument 1           // Pusha il secondo argomento
+sub                       // Sottrae il secondo argomento dal primo
+return                   // Restituisce il risultato
+
+// Test di altre operazioni
+push constant 1           // Pusha 1
+push constant 1           // Pusha 1
+eq                        // Verifica se 1 == 1 (true)
+push constant 1           // Pusha 1
+push constant 0           // Pusha 0
+lt                        // Verifica se 1 < 0 (false)
+push constant 1           // Pusha 1
+push constant 0           // Pusha 0
+gt                        // Verifica se 1 > 0 (true)
+
+// Test di salto con condizioni
+push constant 5           // Pusha 5
+push constant 10          // Pusha 10
+eq                        // Verifica se 5 == 10 (false)
+if-goto FALSE_LABEL       // Salta se falso
+push constant 999         // Non eseguito
+goto END_PROGRAM          // Salta alla fine del programma
+label FALSE_LABEL
+push constant 555         // Eseguito solo se la condizione è falsa
+pop local 0               // Salva in local[0]
+
+// Un altro ciclo per testare più operazioni
+push constant 0           // Pusha 0 (inizio ciclo)
+push constant 100         // Pusha 100 (limite ciclo)
+label ANOTHER_LOOP
+push local 0              // Pusha local[0]
+push constant 100         // Pusha 100
+lt                        // Controlla se local[0] < 100
+if-goto ANOTHER_END       // Esce dal ciclo se non è vero
+push local 0              // Pusha local[0]
+push constant 1           // Pusha 1
+add                       // Incrementa local[0] di 1
+pop local 0               // Salva in local[0]
+goto ANOTHER_LOOP         // Ripete il ciclo
+label ANOTHER_END

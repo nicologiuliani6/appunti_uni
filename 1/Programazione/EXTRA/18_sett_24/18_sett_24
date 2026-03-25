@@ -1,0 +1,46 @@
+CENTRALIZZATO
+	- Repo solo sul server dove le workstation si collegano
+DISTRIBUITO
+	- Repo sul server ma anche sulle singole workstation
+	- Reviosion System:
+		commit & restor sono locali
+		avverrà poi un sync verso il server central	- Reviosion System:
+			commit & restor sono locali
+			avverrà poi un sync verso il server centrale
+ES:
+(TEMPO 0)
+remoto: A<-B<-C<-D
+L1:     A<-B<-C<-D<-E
+l2:	A<-B<-C<-D<-E
+
+(TEMPO 1)
+remoto: A<-B<-C<-D<-E //dalla repo locale "L1" viene copiato versione "E"
+L1:     A<-B<-C<-D<-E
+l2:     A<-B<-C<-D
+
+(TEMPO 2)
+remoto: A<-B<-C<-D<-E
+L1:     A<-B<-C<-D<-E
+l2:     A<-B<-C<-D<-E //la repo locale "L2" si inizializza con il server "remoto" (fase di clone/checkout/ ecc.)
+
+____________________________________________
+		TIMELINE:		    |
+Working REPO	Local REPO	Remote REPO |
+<---checkout-------|<---checkout-----|	    |
+----commit-------->|			    |
+<---restore--------|			    |
+<---------------restore--------------|      |
+		   |----push-------->|      |
+		   |<---pull---------|      |
+____________________________________________|
+______________________________________________________________________________________________________
+		GIT:
+git init 		//creare repository
+git checkout -b main	//creare branch main
+git status 		//vedere lo status
+git add [file]		//tenere traccia di un file (* per tutto)
+ls -a 			//vedere la dicrectory nascosta per il tracciamento di git
+git commit [file]	//aggiornare la repo locale (* per tutto)
+git commit [file] -m "[messaggio]" //scriviere i messaggio del commit
+git log 
+

@@ -1,0 +1,21 @@
+// la funzione Sys.init è come un main(): viene eseguito all'avvio del programma
+
+function Sys.init 0
+
+// inserire qui la funzione da testare:
+// push degli argomenti attuali
+// invocare la funzione: call file.nome numArgs
+push constant 7
+call Miocodice.test 1
+
+pop static 0
+
+// ciclo dummy: è necessario: quando il programma VM è tradotto in 
+// un programma ISA, dopo che le istruzioni assembly che implementano 
+// la funzione test sono state eseguite e si è fatto un jump di nuovo 
+// a questo punto nel programma (implementando così il comando return)
+// non vogliamo fare il fetch delle istruzioni assembly che appartengono 
+// alla funzione test (che sono caricate in ROM dopo le istruzioni assembly
+// del programma init): vedi il programma nell'interfaccia del VM emulator
+label END
+goto END

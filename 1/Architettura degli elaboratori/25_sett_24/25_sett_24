@@ -1,0 +1,98 @@
+La CPU (Esegue i programmi nella memoria centrale)
+Una CPU è composta da:
+  - Unità di controllo: legge e interpreta le istruzioni
+  - ALU: esegue le operazioni (AND,OR, addizione, …)
+  - Registri: memorizzano i risultati temporanei e le informazioni necessarie al funzionamento 
+
+Alcuni registri speciali:
+- Program Counter (PC): indica la prossima istruzione in memoria
+- Instruction Register (IR): memorizza l’istruzione che si sta per eseguire
+-Memory Address Register (MAR): indirizzo della cella di memoria da usare nella prossima lettura/scrittura
+- Memory Data Register (MDR): registro che accede al Bus dei Dati (sia in lettura che in scrittura)
+- Program Status Word (PSW): indica informazioni sull’ultima operazione eseguita (zero, overflow, …)
+
+ALU:
+Facciamo uno zoom sul modo di operare della ALU:
+- Con il termine Data Path (percorso dati) intendiamo la parte della CPU comprendente ALU, i suoi input ed i suoi output (solitamente registri)
+- Il flusso da registri a ALU, scrittura dell’output register, e riscrittura in registro del risultato avviene durante il “ciclo di data path” governato da un “clock”
+
+frequenza del clock=1/t
+dove t sta per il periodo del clock
+
+il problema di un clock troppo alto aumenta la possibilità di lettura di un valore che è ancora 
+in intermedio tra lo 0 e 1. Il calcolatore (o il costruttore della CPU) stima il tempo necessario che gli serve e lo aumenta leggermente, così potra avere un tempo di lettura funzionante.
+
+Dato che non si può aumentare il clock all'infinito si può aumentare la velocità attraverso il parallelismo (più calcoli contemporaneamente).
+
+ASM: (esempio 1)
+ADD %EAX,%EBX    //%EAX= %EAX + %EBX
+questa operazione sara es.  PC:2345 (nella realtà è in binario) (PC= program count, indica il numero operazione fatte e indicazioni per la prossima operazione)
+PC -> MAR -> address Bus
+attivare la linea leggi del controllo Bus
+la memoria mette sul data bus il contenuto della cella 2345
+dal data bus arriva al registro MDR
+la controll unit fa in modo che il valore vada dall'MDR -> IR
+la controll unite dice alla ALU di fare ADD
+-------------------------------------------------------------------------------------------------
+ES:
+ogni registro (tipo %EAX,%EBX,%ECX,ecc)
+ogni registro a 64 file (se parlamiamo di archietettura a 64bit)
+i dati entrato dal registro al multiplexer (ha come input i registri, ha come input MBR e ha un solo output)
+la CU (controll unit) dice alla ALU di fare ADD (l'ALU ha 2 input che sono 2 multiplexer)
+la CU dice al registro (%EAX) di memorizzare il nuovo risultato.
+la CU dice a PC di prendere PC+1
+-------------------------------------------------------------------------------------------------
+(esempio 2)
+ADD %EAX,[%EBX] //%EAX = %EAX + il valore della cella dell endirizzo %EBX
+PC -> MAR -> address bus
+la memoria mette sul data bus il contenuto della cella
+la CU fra in modo che MDR->IR
+manda su MAR il valore %EBX (es. 3)
+attivo la linea leggi
+la memoria manda il valore contenuto nella locazione 3 (es. valore 82) sul bus dati, 82 arriva su MDR
+la CU indica al multiplexer di mandare il valore di %EAX al primo ingresso della ALU
+la CU indica ad agli altri multiplexer di mandare il valore di MDR al secondo ingresso della ALU
+la CU infica alla Alu di fare la somma
+la Cu indica al %EAX di memorizzare il risultato
+la PSW azzera il flag di ZERO 
+la Cu dica a Pc di prendere Pc+1
+-------------------------------------------------------------------------------------------------
+(esempio 3)
+JZ 123 //jump if zero 123 (se l'ultima istruzione ha dato 0)
+
+...
+La CU controlla il valore del falg ZERO della PSW
+la CU vede che il flag è zero quindi 
+-------------------------------------------------------------------------------------------------
+Alla fine degli anni ‘70, la microprogrammazione permise
+di realizzare elaboratori con istruzioni molto complesse:
+- CISC (Complex Instruction Set Computer)
+
+In contrapposizione a questa tendenza nacque l’idea di realizzare architetture con set di istruzioni più semplici:
+- RISC (Reduced Instruction Set Computer)
+    Istruzioni più semplici possono essere eseguite più velocemente (con un ciclo di clock ridotto)
+    Possibilmente evitando la microprogrammazione
+
+Ecco perché il livello che abbiamo chiamato
+“microarchitettura” può essere implementato tramite
+software (microprogrammazione) oppure hardware
+
+Pipelining
+-Un modo per migliorare le prestazioni di un processore è eseguire contemporaneamente più cicli FDE, usando per ognuno di essi parti diversi della CPU.
+Multicore
+-In alcuni casi, all’interno della medesima CPU si replicano unità di controllo e ALU per esecuzioni di attività in parallelo
+Parallelismo
+- Ulteriori incrementi delle prestazioni si possono ottenere con molte CPU che lavorano in modo coordinato
+- Un primo esempio è dato dagli “Array computer”: (GPU)
+    Processori eseguono la stessa istruzione su dati diversi
+    SIMD: single istruction-stream, multiple data-stream
+
+Un altro esempio importante è quello dei multiprocessori
+- Molti processori anche diversi che condividono una memoria, senza eseguire necessariamente la stessa istruzione
+- MIMD: multiple istruction-stream,multiple data-stream.
+
+Infine, si possono avere i multicomputer, la forma più estrema di parallelismo..
+- Molti processori che non condividono una memoria e che comunicano scambiandosi dei messaggi
+- Si può fare in modo che moltissime CPU cooperino
+
+Le memorie sono le componenti del calcolatore in grado di memorizzare le informazioni: dati, programmi e risultati indispensabili per il suo funzionamento

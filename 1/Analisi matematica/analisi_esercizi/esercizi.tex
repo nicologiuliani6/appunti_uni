@@ -1,0 +1,666 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}  % Pacchetto per controllare le didascalie
+\usepackage{amsmath}
+\usepackage{amssymb} % Simboli matematici tipo R (ovvero numeri reali)
+\title{Esercizi di Analisi}
+\author{Nicolò Giuliani}
+\date{}
+\begin{document}
+\maketitle
+\section*{Esercizio 1:}
+Individuare e classificare i punti critici della funzione $f : \mathbb{R}^2 \to \mathbb{R}$
+\begin{equation*}
+    f(x,y)=e^{x^2+y}-x^2+e^{-(y+1)}
+\end{equation*}
+i punti critici si trovano in $\nabla f(0,0)$:
+\begin{align*}
+    \frac{\partial f}{\partial x}=e^{x^2+y}*(2x+0)-2x+e^{-(y+1)}*0 \\
+    = 2xe^{x^2+y}-2x \\
+    = 2x(e^{x^2+y}-1)
+\end{align*}
+\begin{align*}
+    \frac{\partial f}{\partial y}=e^{x^2+y}*(0+1)-0+e^{-(y+1)}*(-1+0) \\
+    = e^{x^2+y} - e^{-(y+1)}
+\end{align*}
+bene, ora troviamo i punti critici:
+\begin{align*}
+    \frac{\partial f}{\partial x}=0 \\
+    2x(e^{x^2+y}-1) = 0 \to x=0
+\end{align*}
+poiche' $x=0$ la seconda equazione diventa:
+\begin{align*}
+    e^{0^2+y} - e^{-(y+1)}=0 \\
+    \to e^y - e^{-(y+1)}=0 \\
+    \to e^y = e^{-y-1} \\
+    \to Ln(e^y) = Ln(e^{-y-1}) \\
+    \to y = -y -1 \\
+    \to 2y = -1 \\
+    \to y = -\frac{1}{2}
+\end{align*}
+Abbiamo trovato il punto critico $(0,-\frac{1}{2})$. 
+\vspace{1em}
+\\Ok ora troviamo gli altri punti, caso $x\neq 0$:
+\begin{align*}
+    2x(e^{x^2+y}-1) = 0 \\
+    \to e^{x^2+y}-1=0 \\
+    \to e^{x^2+y}=1 \\
+    \to Ln(e^{x^2+y})=Ln(1) \\
+    \to x^2+y=0 \\
+    \to y = -x^2
+\end{align*}
+Sostituiamo $y=-x^2$ nella seconda equazione:
+\begin{align*}
+    e^{x^2+(-x^2)}-e^{-(-x^2+1)}=0 \\
+    \to e^{0}-e^{x^2-1}=0 \\
+    \to 1-e^{x^2-1}=0 \\
+    \to -e^{x^2-1}=-1 \\
+    \to e^{x^2-1}=1 \\
+    \to Ln(e^{x^2-1})=Ln(1) \\
+    \to x^2-1=0 \\
+    \to x^2=1 \\
+    \to x=\pm 1
+\end{align*}
+Ora sostituiamo a $y=-x^2$ i valori appena trovati:
+\begin{align*}
+    y=-(1)^2=-1 \\
+    y=-(-1)^2=-1
+\end{align*}
+Quindi abbiamo trovato i punti critici $(1,-1)$ e $(-1,-1)$. \\
+Calcoliamo ora la matrice hessiana:
+
+\begin{align*}
+    H=\begin{pmatrix}
+        \frac{\partial f}{\partial^2 x} & \frac{\partial f}{\partial x \partial y} \\
+        \frac{\partial f}{\partial y \partial x} & \frac{\partial f}{\partial^2 y}
+    \end{pmatrix}
+    = \begin{pmatrix}
+        2e^{x^2+y}+4x^2e^{x^2+y}-2 & 2xe^{x^2+y} \\
+        2xe^{x^2+y} & e^{x^2+y} + e^{-y-1}
+    \end{pmatrix}
+\end{align*}
+Ok bene, ora mettiamo come valori $(0,-\frac{1}{2})$
+\begin{align*}
+    H_{(0,-\frac{1}{2})}=\begin{pmatrix}
+        2(\frac{1}{\sqrt{e}}-1) & 0 \\
+        0 & \frac{2}{\sqrt{e}}
+    \end{pmatrix}\\
+     \text{$det$ $H$}=2e^{0^2-\frac{1}{2}}+4*0*^2e^{0^2+\frac{1}{2}}-2(\frac{2}{\sqrt{e}}) \\
+     = 2e^{-\frac{1}{2}}-\frac{4}{\sqrt{e}} \\
+     = \frac{2}{\sqrt{e}}-\frac{4}{\sqrt{e}} \\
+     = -\frac{2}{\sqrt{e}} < 0
+\end{align*}
+Ora calcoliamo la traccia
+\begin{align*}
+     \text{$Tr$ $H$}= 2(\frac{1}{\sqrt{e}}-1) + \frac{2}{\sqrt{e}} - 0^2=  \frac{2}{\sqrt{e}}-2+ \frac{2}{\sqrt{e}}\\     
+     = \frac{4}{\sqrt{e}}-2
+\end{align*}
+Ricorda: $e=2,71$ quindi $\sqrt{2,71}=1,\dots > 1$ 
+\begin{align*}
+    = \frac{4}{1,\dots}-2 \\
+    = 4,\dots -2 \\
+    = 2,\dots >0
+\end{align*}
+Quindi se il determinanente e' negativo, la traccia non importa, quindi abbiamo un punto di sella nel punto $(0,-\frac{1}{2})$. \\ \\
+Ora classifichiamo $(1,-1)$
+\begin{align*}
+    H_{(1,-1)}=\begin{pmatrix}
+        2e^{1-1}+4e^{1-1}-2 & 2e^{1-1} \\
+        2e^{1-1} & e^{1-1} + e^{+1-1}
+    \end{pmatrix}
+    = \begin{pmatrix}
+            2e^{0}+4e^{0}-2 & 2e^{0} \\
+            2e^{0} & e^{0} + e^{0}
+        \end{pmatrix}
+    = \begin{pmatrix}
+        2+4-2 & 2 \\
+        2 & 1 + 1
+    \end{pmatrix} \\
+    =\begin{pmatrix}
+        4 & 2 \\
+        2 & 2
+    \end{pmatrix}
+\end{align*}
+\begin{align*}
+    \text{$det$ $H$}= 4*2 - 2*2 = 8 - 4 = 4 >0 \\
+    \text{$Tr$ $H$}=4+2=6 >0
+\end{align*}
+Quindi se il determinanente e' positivo e la traccia pure abbiamo un minimo locale in $(1,-1)$.
+
+
+\pagebreak
+Ok ci manca poco, ora facciamo $(-1,-1)$
+\begin{align*}
+    H_{(-1,-1)}=\begin{pmatrix}
+        2e^{1-1}+4e^{1-1}-2 & -2e^{1-1} \\
+        -2e^{1-1} & e^{1-1} + e^{+1-1}
+    \end{pmatrix}
+    = \begin{pmatrix}
+            2e^{0}+4e^{0}-2 & -2e^{0} \\
+            -2e^{0} & e^{0} + e^{0}
+        \end{pmatrix}
+    = \begin{pmatrix}
+        2+4-2 & -2 \\
+        -2 & 1 + 1
+    \end{pmatrix} \\
+    =\begin{pmatrix}
+        4 & -2 \\
+        -2 & 2
+    \end{pmatrix}
+\end{align*}
+\begin{align*}
+    \text{$det$ $H$}= 4*2 - (-2)(-2) = 8 - 4 = 4 >0 \\
+    \text{$Tr$ $H$}=4+2=6 >0
+\end{align*}
+Quindi se il determinanente e' positivo e la traccia pure abbiamo un minimo locale in $(-1,-1)$.
+\pagebreak
+\section*{Esercizio 2:}
+1) Individuare e classificare i punti critici.\\
+\begin{align*}
+    f(x,y)=(1+(x+1)y)^\frac{1}{2}-x^2 \\
+    = \sqrt{1+(x+1)y}-x^2
+\end{align*}
+Calcoliamo $\nabla f(0,0)$:
+\begin{align*}
+    \frac{\partial f}{\partial x}=\frac{1}{2}*(1+(x+1)y)^{-\frac{1}{2}}*\frac{\partial({1+xy+y})}{\partial x}-2x =0\\
+    = \frac{1}{2} * (1+(x+1)y)^{-\frac{1}{2}} * (0 + y + 0) -2x \\
+    = \frac{1}{2(1+xy+y)^\frac{1}{2}}*y -2x \\
+    = \frac{y}{2(1+xy+y)^\frac{1}{2}} -2x \\ 
+    \to \frac{y}{2\sqrt{(1+xy+y)}} -2x =0 \\
+    \to \frac{y+(-2x)(2\sqrt{(1+xy+y)})}{2\sqrt{(1+xy+y)}}=0 \\
+    \to  \frac{y-4x\sqrt{(1+xy+y)}}{2\sqrt{(1+xy+y)}}=0
+\end{align*}
+\begin{align*}
+    \frac{\partial f}{\partial y}=\frac{1}{2}*(1+(x+1)y)^{-\frac{1}{2}}*\frac{\partial(1+xy+y)}{\partial y} - 0 =0\\
+    = \frac{1}{2(1+xy+y)^\frac{1}{2}}*(0+x+1) \\
+    \to \frac{x+1}{2\sqrt{(1+xy+y)}} = 0  \\
+\end{align*}
+In $\frac{\partial f}{\partial x}$ il denominatore non e' mai nullo, quindi: 
+\begin{align*}
+    {y-4x\sqrt{(1+xy+y)}}=0 \\
+    \to y = 4x\sqrt{(1+xy+y)}
+\end{align*}
+Se lo sostituiamo in $\frac{\partial f}{\partial y}$
+\begin{align*}
+    \frac{x+1}{2\sqrt{(1+4x^2\sqrt{(1+xy+y)}+4x\sqrt{(1+xy+y)})}} = 0 \\
+    \frac{x+1}{2\sqrt{(1+4x\sqrt{(1+xy+y)}(x+1))}} = 0
+\end{align*}
+Anche qui il denominatore e' sempre positivo, quindi $\frac{\partial f}{\partial y}=0$ quando il numeratore e' nullo, ovvero
+\begin{align*}
+    x+1=0 \\
+    \to x=-1
+\end{align*}
+Sostituiamo $x=-1$ in $\frac{\partial f}{\partial x}$
+\begin{align*}
+    \frac{y}{2(1-y+y)^\frac{1}{2}} +2 =0\\ 
+    = \frac{y}{2(\sqrt{1})}+2 \\
+    = \frac{y}{2}+2 =0\\
+    \to \frac{y}{2}=-2 \\
+    \to y = -4
+\end{align*}
+Quindi $(-1,-4)$ e' un punto critico. \\
+Anche in $\frac{\partial f}{\partial y}$ notiamo che il denominatore non e' mai negativo, quindi per avere l'equazione uguale a 0 dobbiamo avere il numeratore nullo, quindi:
+\begin{align*}
+    x+1=0 \\
+    x=-1
+\end{align*}
+Anche qui abbiamo ritrovato $x=-1$ quindi $(-1,-4)$ e' l'unico punto critico. \\
+Bene ora calcoliamo le derivate seconde per la matrice hessiana:
+\begin{align*}
+    \frac{\partial f}{\partial^2 x}=\frac{\partial(\frac{y}{2\sqrt{(1+xy+y)}})}{\partial x}-2 =0\\
+    = -2 + \frac{\frac{\partial y}{\partial x}* 2\sqrt{(1+xy+y)} - \frac{\partial (2\sqrt{(1+xy+y)})}{\partial x}*y}{(2\sqrt{(1+xy+y)}^2)} \\
+    = -2 - \frac{y(2*(-\frac{1}{2})*(1+xy+y)^{-\frac{1}{2}}*\frac{\partial (1+xy+y)}{\partial x})}{4(1+xy+y)} \\
+    = -2 - \frac{y(-1*(1+xy+y)^{\frac{1}{2}} * (y))}{4(1+xy+y)} \\
+    = -2 - \frac{y^2 * (1+xy+y)^{-\frac{1}{2}}}{4(1+xy+y)} \\
+    = -2 - \frac{y^2}{4(1+xy+y)*(1+xy+y)^{\frac{1}{2}}} \\
+    = -2 - \frac{y^2}{4(1+xy+y)\sqrt{(1+xy+y)}} \\
+    = -2 - \frac{y^2}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = -2 - \frac{y^2}{4\sqrt{(1+xy+y)^3}} =0
+\end{align*}
+\begin{align*}
+    \frac{\partial f}{\partial x \partial y}=\frac{\frac{\partial y}{\partial y}*(2(1+xy+y)^{\frac{1}{2}})-\frac{\partial (2(1+xy+y)^{\frac{1}{2}})}{\partial y}*y}{(2(1+xy+y)^{\frac{1}{2}})^2} - 0 =0\\
+    = \frac{(2(1+xy+y)^{\frac{1}{2}}) - y(2*\frac{1}{2}*(1+xy+y)^{-\frac{1}{2}}*\frac{\partial (1+xy+y)}{\partial y})}{4(1+xy+y)} \\
+    = \frac{(2(1+xy+y)^{\frac{1}{2}}) - y((1+xy+y)^{-\frac{1}{2}}*(x+1))}{4(1+xy+y)} \\
+    = \frac{(2\sqrt{(1+xy+y)}) - (xy+y)(\sqrt{(1+xy+y)}^{-1})}{4(1+xy+y)} \\
+    = \frac{2\sqrt{(1+xy+y)}}{4(1+xy+y)} - \frac{xy+y}{4(1+xy+y)(1+xy+y)^{\frac{1}{2}}} \\
+    = \frac{\sqrt{(1+xy+y)}}{2(1+xy+y)} - \frac{xy+y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{\sqrt{(1+xy+y)}(2(1+xy+y)^{\frac{1}{2}})}{4(1+xy+y)^{\frac{3}{2}}} - \frac{xy+y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{2(1+xy+y)}{4(1+xy+y)^{\frac{3}{2}}} -\frac{xy+y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{2+2xy+2y-xy-y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{2+xy+y}{4(1+xy+y)^{\frac{3}{2}}}=0
+\end{align*}
+\begin{align*}
+    \frac{\partial f}{\partial y\partial x}=\frac{\frac{\partial (x+1)}{\partial x}*2(1+xy+y)^{\frac{1}{2}}-(x+1)(\frac{\partial 2(1+xy+y)^{\frac{1}{2}}}{\partial x})}{(2(1+xy+y)^{\frac{1}{2}})^2} =0\\
+    = \frac{2(1+xy+y)^{\frac{1}{2}} - (x+1)*2*\frac{1}{2}*(1+xy+y)^{-\frac{1}{2}}*\frac{\partial (xy+y)}{\partial x}}{4(1+xy+y)} \\
+    = \frac{2(1+xy+y)^{\frac{1}{2}} - (x+1)*(1+xy+y)^{-\frac{1}{2}}* y}{4(1+xy+y)} \\
+    = \frac{2(1+xy+y)^{\frac{1}{2}} - (yx+y)*(1+xy+y)^{-\frac{1}{2}}}{4(1+xy+y)} \\
+    = \frac{2(1+xy+y)^{\frac{1}{2}}}{4(1+xy+y)} - \frac{yx+y}{4(1+xy+y)(1+xy+y)^{\frac{1}{2}}} \\
+    = \frac{2(1+xy+y)^{\frac{1}{2}}}{4(1+xy+y)} - \frac{yx+y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{(1+xy+y)^{\frac{1}{2}}}{2(1+xy+y)} - \frac{yx+y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{(1+xy+y)^{\frac{1}{2}}(2(1+xy+y)^{\frac{1}{2}})}{4(1+xy+y)^{\frac{3}{2}}} - \frac{yx+y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{2(1+xy+y)}{4(1+xy+y)^{\frac{3}{2}}} - \frac{yx+y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{2+2xy+2y -xy -y}{4(1+xy+y)^{\frac{3}{2}}} \\
+    = \frac{2+xy+y}{4(1+xy+y)^{\frac{3}{2}}}=0 
+\end{align*}
+\begin{align*}
+    \frac{\partial f}{\partial^2 y}=-\frac{(x+1)* \frac{\partial (2(1+xy+y)^{\frac{1}{2}})}{\partial y}}{(2(1+xy+y)^{\frac{1}{2}})^2} =0\\
+    =-\frac{(x+1)* 2*\frac{1}{2}*(1+xy+y)^{-\frac{1}{2}}*\frac{\partial (xy+y)}{\partial x}}{4(1+xy+y)} \\
+    =-\frac{(x+1)*(1+xy+y)^{-\frac{1}{2}} * y}{4(1+xy+y)} \\
+    =-\frac{(yx+y)*(1+xy+y)^{-\frac{1}{2}}}{4(1+xy+y)} \\
+    =-\frac{yx+y}{4(1+xy+y)*(1+xy+y)^{\frac{1}{2}}} \\
+    =-\frac{yx+y}{4(1+xy+y)^{\frac{3}{2}}}=0
+\end{align*}
+
+Scriviamo la matrice:
+\begin{align*}
+    H = \begin{pmatrix}
+        -2 - \frac{y^2}{4\sqrt{(1+xy+y)^3}} & \frac{2+3xy+3y}{4(1+xy+y)^{\frac{3}{2}}} \\
+        \frac{2+3xy+3y}{4(1+xy+y)^{\frac{3}{2}}} & -\frac{yx+y}{4(1+xy+y)^{\frac{3}{2}}}
+    \end{pmatrix}
+\end{align*}
+Ora calcoliamo per il punto $(-1,-4)$
+\begin{align*}
+    H_{(-1,-4)} = \begin{pmatrix}
+        -2 - \frac{(-4)^2}{4\sqrt{(1+(-1)(-4)-4)^3}} & \frac{2+3(-1)(-4)+3(-4)}{4(1+(-1)(-4)-4)^{\frac{3}{2}}} \\
+        \frac{2+3(-1)(-4)+3(-4)}{4(1+(-1)(-4)-4)^{\frac{3}{2}}} & -\frac{(-1)(-4)-4}{4(1+(-1)(-4)-4)^{\frac{3}{2}}}
+    \end{pmatrix} \\
+    =\begin{pmatrix}
+        -2 - \frac{16}{4\sqrt{(1)^3}} & \frac{2}{4(1)^{\frac{3}{2}}} \\
+        \frac{2}{4(1)^{\frac{3}{2}}} & -\frac{0}{4(1)^{\frac{3}{2}}}
+    \end{pmatrix} 
+    = \begin{pmatrix}
+        -2 - \frac{16}{4} & \frac{2}{4} \\
+        \frac{2}{4} & 0
+    \end{pmatrix} 
+    = \begin{pmatrix}
+        -2 - 4 & \frac{1}{2} \\
+        \frac{1}{2} & 0
+    \end{pmatrix} \\
+    = \begin{pmatrix}
+        -6 & \frac{1}{2} \\
+        \frac{1}{2} & 0
+    \end{pmatrix}
+\end{align*}
+
+Calcoliamo ora il determinanente
+\begin{align*}
+    \text{$det$ $H$}= 2 * 0 - (\frac{1}{2})^2\\
+    = -\frac{1}{4} <0
+\end{align*}
+Dato che il determinante nel punto $(-1,-4)$ e' negativo abbiamo un punto di sella.
+
+\pagebreak
+\section*{Esercizio 3:}
+Calcolare nell'insieme $A=\{(x,y) \in \mathbb{R}^2 : |x|\leq\pi , y \geq \frac{1}{2} \text{ e } y\leq sin(x)\}$ l'integrale:
+\begin{equation*}
+    \int_A y \,dxdy
+\end{equation*}
+Sappiamo che A e' limitato da
+\begin{align*}
+   \text{Orizzontalmente: } -\pi \leq x \leq \pi \\
+    \text{Verticalmente: } \frac{1}{2}\leq y \leq sin(x) 
+\end{align*}
+Riscriviamo l'integrale come
+\begin{align*}
+    \int_{-\pi}^\pi \int_{\frac{1}{2}}^{sin(x)} y \,dydx
+\end{align*}
+Calcoliamo il primo integrale
+\begin{align*}
+    \int_{\frac{1}{2}}^{sin(x)} y \,dy=[\frac{y^2}{2}]_{\frac{1}{2}}^{sin(x)} \\
+    = \frac{sin^2(x)}{2}-\frac{\frac{1}{2}^2}{2} \\
+    = \frac{sin^2(x)}{2}-\frac{1}{8}
+\end{align*}
+Bene ora inseriamolo nel secondo integrale
+\begin{align*}
+    \int_{-\pi}^{\pi} \frac{sin^2(x)}{2}-\frac{1}{8} \,dx
+\end{align*}
+ovvero
+\begin{align*}
+    \int_{-\pi}^{\pi} \frac{sin^2(x)}{2} \,dx + \int_{-\pi}^{\pi} -\frac{1}{8} \,dx \\
+    = \int_{-\pi}^{\pi} \frac{sin^2(x)}{2} \,dx -\frac{1}{8} \int_{-\pi}^{\pi}  \,dx
+\end{align*}
+Calcoliamo il primo integrale:
+\begin{align*}
+    \int_{-\pi}^{\pi} \frac{sin^2(x)}{2} \,dx= \frac{1}{2}\int_{-\pi}^{\pi} sin^2(x) \,dx \\
+\end{align*}
+Ricorda la formula di riduzione:
+\begin{align*}
+    sin^2(x)=\frac{1-cos(2x)}{2}
+\end{align*}
+Quindi
+\begin{align*}
+    \frac{1}{2}\int_{-\pi}^{\pi} \frac{1-cos(2x)}{2} \,dx \\
+    = \frac{1}{4}\int_{-\pi}^{\pi} 1-cos(2x) \,dx \\
+    = \frac{1}{4}(\int_{-\pi}^{\pi} 1 \,dx - \int_{-\pi}^{\pi} cos(2x) \,dx) \\
+    = \frac{1}{4}([x]_{-\pi}^{\pi} - \int_{-\pi}^{\pi} cos(2x) \,dx)
+\end{align*}
+Ricorda:
+\begin{align*}
+    \int cos(2x) \, dx = \frac{1}{2}\int 2cos(2x) \,dx \\
+    \text{Sappiamo che: } \int cos(\alpha x) \, dx = \frac{sin(\alpha x)}{\alpha} \\
+    \to \int cos(2x) \, dx = \frac{sin(2x)}{2}+C
+\end{align*}
+Quindi sapendo questo
+\begin{align*}
+    \frac{1}{4}([x]_{-\pi}^{\pi} - \int_{-\pi}^{\pi} cos(2x) \,dx) \\ 
+    = \frac{1}{4}([x]_{-\pi}^{\pi} - [\frac{sin(2x)}{2}_{-\pi}^{\pi}]) \\
+    = \frac{1}{4}( [x-\frac{sin(2x)}{2}_{-\pi}^{\pi}]) \\
+    = \frac{1}{4}(\pi-(-\pi) + (-\frac{sin(2\pi)}{2})-(-\frac{sin(-2\pi)}{2})) \\
+    = \frac{1}{4}(2\pi + 0) \\
+    = \frac{2\pi}{4} \\
+    = \frac{\pi}{2}
+\end{align*}
+Calcoliamo il secondo integrale:
+\begin{align*}
+    -\frac{1}{8}\int_{-\pi}^{\pi}dx \\
+    = -\frac{1}{8}[x]_{-\pi}^{\pi} \\
+    = -\frac{1}{8}(\pi - (-\pi)) \\
+    = -\frac{1}{8}(2\pi) \\
+    = -\frac{2\pi}{8} \\
+    = -\frac{\pi}{4}
+\end{align*}
+Quindi inseriamo i valori trovati
+\begin{align*}
+    \int_{-\pi}^{\pi} \frac{sin^2(x)}{2} \,dx -\frac{1}{8} \int_{-\pi}^{\pi}  \,dx \\
+    = \frac{\pi}{2} - \frac{\pi}{4} \\
+    = \frac{2\pi - \pi}{4}\\
+    = \frac{\pi}{4}
+\end{align*}
+
+\pagebreak
+\section*{Esercizio 4:}
+\textit{Non sono sicuro che lo svolgimento sia giusto} \\
+Dato l'insieme $A={(x,y)\in \mathbb{R}^2 : x \in (0,1) \text{ e } 0\leq y \leq \sqrt{x}}$ calcolare l'integrale
+\begin{equation*}
+    \int_A \frac{y}{x+y^2+1} \,dxdy
+\end{equation*}
+Sappiamo che A e’ limitato da
+\begin{align*}
+    0 < x < 1 \\
+    0 \leq y \leq \sqrt{x} \to x\geq y^2
+\end{align*}
+Riscriviamo l'integrale
+\begin{align*}
+    \int_0^1 \int_0^{\sqrt{x}} \frac{y}{x+y^2+1} \,dydx
+\end{align*}
+Cambio dell'ordine di integrazione
+\begin{align*}
+    0 \leq y \leq \sqrt{x} \text{ se } x=1 \to 0 \leq y \leq 1 \\
+    0 \leq x \leq 1 \text{ e } x\geq y^2 \leq 1 \to y^2 \leq x \leq 1 \\
+    \int_0^{1}\int_{y^2}^1  \frac{y}{x+y^2+1} \,dxdy
+\end{align*}
+Integrazione rispetto a $x$
+\begin{align*}
+    \int_{y^2}^1  \frac{y}{x+y^2+1} \,dx
+\end{align*}
+Integriamo per sostituzione
+\begin{align*}
+    u=x+y^2+1 \\
+    \frac{du}{dx}=\frac{d(x+y^2+1)}{dx}=1 \to du=dx
+\end{align*}
+Quindi se sostituiamo dentro l'integrale
+\begin{align*}
+    \int_{y^2}^1  \frac{y}{u} \,du \\
+    = y \int_{y^2}^1 u \,du \\
+    = y[Ln(u)]_{y^2}^1 \\
+    = y[Ln(x+y^2+1)]_{y^2}^1 \\
+    =y(Ln(y^2+2)-Ln(2y^2+1))
+\end{align*}
+Integrazione rispetto a $y$
+\begin{align*}
+    \int_0^1 y(Ln(y^2+2)-Ln(2y^2+1)) \,dy \\
+    =  \int_0^1 y(Ln(y^2+2)) \,dy - \int_0^1 y(Ln(2y^2+1)) \,dy
+\end{align*}
+Integriamo per sotstituzione il primo integrale
+\begin{align*}
+    u=y^2+2 \\
+    du=2ydy \iff dy=\frac{du}{2y}
+\end{align*}
+Se $y=2 \to u=0^2+2=2$ \\
+Se $y=1 \to u=1^2+2=3$
+\begin{align*}
+    \int_2^3 y(Ln(u))\frac{du}{2y} \\
+    = \int_2^3 (Ln(u))\frac{du}{2} \\
+    = \frac{1}{2}\int_2^3 Ln(u) \,du
+\end{align*}
+Ricorda:
+\begin{align*}
+    \int Ln(u) \,du = uLn(u)-u +C
+\end{align*}
+Quindi
+\begin{align*}
+    \frac{1}{2}[uLn(u)-u]_2^3 \\
+    = \frac{1}{2}(3Ln(3)-3 - (2Ln(2)-2)) \\
+    = \frac{1}{2}(3Ln(3)-2Ln(2)-3+2) \\
+    = \frac{1}{2}(3Ln(3)-2Ln(2)-1) 
+\end{align*}
+Integriamo per sotstituzione il secondo integrale
+\begin{align*}
+    - \int_0^1 y(Ln(2y^2+1)) \,dy \\
+    u=2y^2+1 \\
+    du=4y \,dy \iff dy=\frac{du}{4y} \\
+    \text{Per y=0} \to u=2(0)^2+1=1 \\
+    \text{Per y=1} \to u=2(1)^2+1=3 \\
+    = - \int_1^3 y(Ln(u)) \,\frac{du}{4y} \\
+    = - \int_1^3 Ln(u) \,\frac{du}{4} \\
+    = -\frac{1}{4} \int_1^3 Ln(u) \,du \\
+    = - \frac{1}{4}[uLn(u)-u]_1^3 \\
+    = -\frac{1}{4}(3Ln(3)-3 - (Ln(1)-1)) \\
+    = -\frac{1}{4}(3Ln(3)-3 - Ln(1)+1) \\
+    \text{Ricorda la proprieta' dei logaritmi: } \alpha Ln(y)=Ln(y^\alpha) \\
+    = -\frac{1}{4}(Ln(9)-3 - 0 +1) \\
+    = -\frac{1}{4}(Ln(9)-2)
+\end{align*}
+Quindi
+\begin{align*}
+    \int_0^1 y(Ln(y^2+2)) \,dy - \int_0^1 y(Ln(2y^2+1)) \,dy \\
+    = \frac{1}{2}(3Ln(3)-2Ln(2)-1) -\frac{1}{4}(Ln(9)-2) \\
+    = \frac{1}{2}(Ln(3^3)-Ln(2^2)-1) -\frac{1}{4}(Ln(9)-2)\\
+    = \frac{1}{2}(Ln(27)-Ln(4)-1) -\frac{1}{4}(Ln(9)-2)\\
+    \text{Ricorda la proprieta' dei logaritmi: } Ln(\alpha)-Ln(\beta)=Ln(\frac{\alpha}{\beta}) \\
+    = \frac{1}{2}(Ln(\frac{27}{4}-1)) -\frac{1}{4}(Ln(9)-2)\\
+    \text{Facolativo: } 1=Ln(e) -\frac{1}{4}(Ln(9)-2)\\
+    = \frac{1}{2}(Ln(\frac{27}{4}-Ln(e))) -\frac{1}{4}(Ln(9)-2)\\
+    = \frac{1}{2}(Ln(\frac{27}{4e})) -\frac{1}{4}(Ln(9)-2)\\
+    = Ln((\frac{27}{4e})^\frac{1}{3}) \-\frac{1}{4}(Ln(9)-2)\
+    = Ln(\sqrt[2]{\frac{27}{4e}}) -\frac{1}{4}(Ln(9)-2)\\
+    = Ln(\frac{3\sqrt{3}}{2\sqrt{e}})-\frac{1}{4}(Ln(9)-2) \\
+    = Ln(3\sqrt{3})-Ln(2\sqrt{e})-\frac{1}{4}(Ln(9))+\frac{2}{4} \\
+    = Ln(3)+Ln(\sqrt{3})-Ln(2)-Ln(\sqrt{e})-\frac{1}{4}(Ln(9))+\frac{1}{2} \\
+    = Ln(e)+\frac{1}{2}Ln(3)-Ln(2)-\frac{1}{2}Ln(e)-\frac{1}{3}Ln(9)+\frac{1}{2} \\
+    = 1 + \frac{1}{3}Ln(3)-Ln(2)-\frac{1}{2}-\frac{1}{3}Ln(9)+\frac{1}{2} \\
+    = \frac{1}{3}Ln(3)-Ln(2)-\frac{1}{3}Ln(9)+1\\
+    = \frac{1}{3}(Ln(3)-Ln(9))-Ln(2)+1 \\
+    = \frac{1}{3}(Ln(\frac{3}{9}))-Ln(2)+1 \\
+\end{align*}
+\begin{align*}
+    = \frac{1}{3}(Ln(\frac{1}{3}))-Ln(2)+1 \\
+    = \frac{1}{3}(Ln(1)-Ln(3))-Ln(2)+1 \\
+    = \frac{1}{3}(-Ln(3))-Ln(2)+1\\
+    = -\frac{1}{3}Ln(3)-Ln(2)+1 \\
+    = -Ln(3^\frac{1}{3})-Ln(2)+1 \\
+    = -Ln(\sqrt[3]{3})-Ln(2)+1 \\
+    = -Ln(\frac{\sqrt[3]{3}}{2})+1 \\
+    \text{Ricorda: }-Ln(\frac{\alpha}{1})=Ln(\frac{1}{\alpha}) \\
+    = Ln(\frac{2}{\sqrt[3]{3}})+1 \\
+    = Ln(\frac{2}{\sqrt[3]{3}})+Ln(e) \\
+    = Ln(\frac{2e}{\sqrt[3]{3}})
+\end{align*}
+
+\pagebreak
+\section*{Esercizio 5:}
+Dato l'insieme $A={(x,y)\in\mathbb{R}^2 : 1-x\leq y\leq 1+\frac{x}{3}\leq \frac{4}{3}}$ calcolare l'integrale
+\begin{align*}
+    \int_A \frac{x}{\sqrt{y+x}} \,dxdy
+\end{align*}
+Determiniamo i limiti di integrazione
+\begin{align*}
+    \text{Verticalmente limite inferiore : } 1-x\leq y \\
+    \text{Verticalmente limite superiore : } y\leq 1+\frac{x}{3} \text{ e } y \leq \frac{4}{3} \to y \leq min(1+\frac{x}{3},\frac{4}{3})
+\end{align*}
+ovvero 
+\begin{align*}
+    \int \int_{1-x}^{1+\frac{x}{3}} \frac{x}{\sqrt{y+x}} \,dydx
+\end{align*}
+\textit{(i limiti di x non gli abbiamo ancora definiti)} \\
+Determiniamo il valore di x per il limite superiore
+\begin{align*}
+    1+\frac{x}{3}=\frac{4}{3} \\
+    \frac{x}{3}=\frac{4}{3}-1 \\
+    \frac{x}{3}=\frac{1}{3} \\
+    x=1
+\end{align*}
+Quindi abbiamo 2 casi:
+\begin{align*}
+    \text{1) } x \geq 1 \to y\leq\frac{4}{3} \\
+    \text{2) } x \leq 1 \to y\leq 1+\frac{x}{3}
+\end{align*}
+Caso $x\geq 1$: \\
+Dobbiamo pero' anche trovare il limite inferiore di x
+\begin{align*}
+    1-x\leq 1 \\
+    -x\leq 1-1 \\
+    x\geq 0
+\end{align*}
+\textit{Questo vale anche per $x\leq 1$.} \\
+Quindi riscriviamo l'integrale con i nuovi limiti con $x\geq1 \to x\in (1,+\infty)$
+\begin{align*}
+    \int_1^{+\infty} \int_{1-x}^{\frac{4}{3}} \frac{x}{\sqrt{y+x}} \,dydx
+\end{align*}
+Caso $x\leq 1$: \\
+Scriviamo l'integrale con $x\leq 1 \to x \in (0,1)$
+\begin{align*}
+    \int_0^{1} \int_{1-x}^{1+\frac{x}{3}} \frac{x}{\sqrt{y+x}} \,dydx
+\end{align*}
+Calcoliamo l'integrale indefinito su $y$:
+\begin{align*}
+    \int \frac{x}{\sqrt{y+x}} \,dy
+\end{align*}
+Integriamo per sostituzione
+\begin{align*}
+    u=(y+x)^{\frac{1}{2}} \\
+    du=(\frac{1}{2}*(y+x)^{-\frac{1}{2}}*(1+0))dy \\
+    = (\frac{1}{2(y+x)^{\frac{1}{2}}})dy \iff dy= du*(2(y+x)^{\frac{1}{2}}) \\
+    = (\frac{1}{2(y+x)^{\frac{1}{2}}})dy \iff dy= du*(2u)
+\end{align*}
+Quindi l'integrale diventa
+\begin{align*}
+    \int \frac{x}{u} \,(2u) \,du \\
+    = \int \frac{x(2u)}{u} \, \,du \\
+    = \int 2x \, du \\
+    = 2x \int \,du \\
+    = 2x u +C \\
+    = 2x (y+x)^{\frac{1}{2}} +C\\
+    = 2x \sqrt{y+x}+C
+\end{align*}
+Calcoliamo ora per il caso $x\in(1,+\infty)$:
+\begin{align*}
+    \int_{1-x}^{\frac{4}{3}} \frac{x}{\sqrt{y+x}} \,dy = [2x \sqrt{y+x}]_{1-x}^{\frac{4}{3}} \\
+    = (2x \sqrt{\frac{4}{3}+x} - 2x \sqrt{1-x+x}) \\
+    = (2x \sqrt{\frac{4}{3}+x} - 2x \sqrt{1}) \\
+    = (2x \sqrt{\frac{4}{3}+x} - 2x) 
+\end{align*}
+Integriamo per $x$:
+\begin{align*}
+    \int_1^{+\infty} 2x \sqrt{\frac{4}{3}+x} - 2x \, dx \\
+    = \int_1^{+\infty} 2x \sqrt{\frac{4}{3}+x}\, dx - \int_1^{+\infty} 2x \, dx
+\end{align*}
+Calcoliamo il primo integrale:
+\begin{align*}
+    \int_1^{+\infty} 2x \sqrt{\frac{4}{3}+x}\, dx \\
+    u=\frac{4}{3}+x \iff x=u-\frac{4}{3}\\
+    du=dx \\
+    = \int_1^{+\infty} 2x \sqrt{u} \,du  \\
+    = \int_1^{+\infty} 2(u-\frac{4}{3}) \sqrt{u} \,du \\
+    = \int_1^{+\infty} (2u-\frac{8}{3}) \sqrt{u} \,du
+    \\\text{(i limiti sono ancora riferiti a $x$)}\\
+    \text{Calcoliamo i limiti per $u$: } \\
+    \text{se $x=1\to$ } u=\frac{4}{3}+1=\frac{7}{3} \\
+    \text{se $x=+\infty \to$ } u=+\infty \\
+    \text{Quindi con i nuovi limiti: } \\
+    = \int_{\frac{7}{3}}^{+\infty} (2u-\frac{8}{3})  \sqrt{u} \,du \\
+    = \int_{\frac{7}{3}}^{+\infty} 2u\sqrt{u}\,du - \frac{8}{3}\int_{\frac{7}{3}}^{+\infty}\sqrt{u}\,du
+\end{align*}
+Dividiamo i calcoli:
+\begin{align*}
+    \int_{\frac{7}{3}}^{+\infty} 2u\sqrt{u}\,du \\
+    =2\int_{\frac{7}{3}}^{+\infty} u\sqrt{u}\,du \\
+    =2\int_{\frac{7}{3}}^{+\infty} u^{\frac{3}{2}}\,du \\
+    =2[\frac{u^{\frac{5}{2}}}{\frac{5}{2}}] \\
+    =2[\frac{2u^{\frac{5}{2}}}{5}]_{\frac{7}{3}}^{+\infty} \\
+    =2[\frac{2\sqrt{u^5}}{5}]_{\frac{7}{3}}^{+\infty} \\
+    =2[\frac{2u^2\sqrt{u}}{5}]_{\frac{7}{3}}^{+\infty} \\
+    = 2(\frac{2(+\infty)^2\sqrt{\infty}}{5} - \frac{2(\frac{7}{3})^2\sqrt{\frac{7}{3}}}{5}) \\
+    = +\infty
+\end{align*}
+\begin{align*}
+    - \frac{8}{3}\int_{\frac{7}{3}}^{+\infty}\sqrt{u}\,du\\
+    \vdots \\
+    =-\frac{8}{3}[\frac{2}{3}\sqrt{x^3}]_{\frac{7}{3}}^{+\infty} \\
+    =-\frac{8}{3}(\frac{2}{3}\sqrt{(+\infty)^3} - \frac{2}{3}\sqrt{(\frac{7}{3})^3}) \\
+    =-\frac{8}{3}(+\infty) \\
+    =-\infty
+\end{align*}
+Ok rimettiamo tutto insieme:
+\begin{align*}
+    \int_{\frac{7}{3}}^{+\infty} 2u\sqrt{u}\,du - \frac{8}{3}\int_{\frac{7}{3}}^{+\infty}\sqrt{u}\,du\\
+    = +\infty -\infty \\
+    \text{Risultato indeterminato}
+\end{align*}
+Quindi:
+\begin{align*}
+    = \int_1^{+\infty} 2x \sqrt{\frac{4}{3}+x}\, dx - \int_1^{+\infty} 2x \, dx \\
+    \text{Non si puo' calcolare perche' indeterminato}
+\end{align*}
+Calcoliamo ora per il caso $x\in(0,1)$
+\begin{align*}
+    \int_0^{1} \int_{1-x}^{1+\frac{x}{3}} \frac{x}{\sqrt{y+x}} \,dydx
+\end{align*}
+Integriamo prima per $y$:
+\begin{align*}
+    \int_{1-x}^{1+\frac{x}{3}}\frac{x}{\sqrt{y+x}} \,dy = [2x \sqrt{y+x}]_{1-x}^{1+\frac{x}{3}} \\
+    = 2x \sqrt{(1+\frac{x}{3})+x} - 2x \sqrt{(1-x)+x} \\
+    = 2x \sqrt{1+\frac{4x}{3}}-2x\sqrt{1} \\
+    = 2x(\sqrt{1+\frac{4x}{3}}-1)
+\end{align*}
+Integriamo ora per $x$:
+\begin{align*}
+    \int_0^{1} 2x(\sqrt{1+\frac{4x}{3}}-1)\,dx \\
+    =2\int_0^{1} x(\sqrt{1+\frac{4x}{3}}-1)\,dx \\
+    =2\int_0^{1} x\sqrt{1+\frac{4x}{3}}-x\,dx \\
+    =2(\int_0^{1} x\sqrt{1+\frac{4x}{3}}\,dx-\int_0^{1} x\,dx) \\
+\end{align*}
+Dividiamo i calcoli:
+\begin{align*}
+    \int_0^{1} x\sqrt{1+\frac{4x}{3}}\,dx \\
+    u=1+\frac{4x}{3} \iff \frac{4x}{3}=u-1 \to x=(u-1)\frac{3}{4}=\frac{3u}{4}-\frac{3}{4}\\
+    du=\frac{3}{4}dx \iff dx=\frac{4}{3}du \\
+    =\int_0^{1} x(u)^{\frac{1}{2}} \frac{4}{3}du \\
+    =\int_0^{1} ((u-1)\frac{3}{4})(u)^{\frac{1}{2}} \frac{4}{3}du \\
+    =\int_0^{1} (u-1)(u)^{\frac{1}{2}} du \\
+    =\int_0^{1} (u)^{\frac{3}{2}} \,du -\int_0^{1} u^{\frac{1}{2}}\,du\\
+    \textit{I limiti degli integrali sono ancora su $x$} \\
+    \text{Se $x=0 \to$ } u=1+\frac{4*0}{3}=1 \\
+    \text{Se $x=1 \to$ } u=1+\frac{4*1}{3}=\frac{7}{3}\\
+    =\int_{1}^{\frac{7}{3}} (u)^{\frac{3}{2}} \,du -\int_{1}^{\frac{7}{3}}u^{\frac{1}{2}}\,du\\
+    =[\frac{u^{\frac{5}{2}}}{\frac{5}{2}}]_{1}^{\frac{7}{3}} - [\frac{2}{3}\sqrt{u^3}]_{1}^{\frac{7}{3}} \\
+    =[\frac{2\sqrt{u^5}}{5}]_{1}^{\frac{7}{3}}- [\frac{2}{3}\sqrt{u^3}]_{1}^{\frac{7}{3}} \\
+    =[\frac{2u^2\sqrt{u}}{5}]_{1}^{\frac{7}{3}}- [\frac{2}{3}u\sqrt{u}]_{1}^{\frac{7}{3}} \\
+    = (2(\frac{7}{3})^2 \sqrt{\frac{7}{3}} - 2(1)^2\sqrt{1} ) - (\frac{2}{3}(\frac{7}{3})\sqrt{\frac{7}{3}} - \frac{2}{3}(1)\sqrt{1}) \\
+    = (2(\frac{49}{9})\sqrt{\frac{7}{3}} -2)-(\frac{14}{9}\sqrt{\frac{7}{3}} -\frac{2}{3}) \\
+    = \sqrt{\frac{7}{3}}(2\frac{49}{9} - \frac{14}{9})-2+\frac{2}{3} \\
+    = \sqrt{\frac{7}{3}}(\frac{98}{9} - \frac{14}{9})-\frac{4}{3} \\
+    = \sqrt{\frac{7}{3}}(\frac{84}{9} )-\frac{4}{3} \\
+    = \frac{28}{3} \sqrt{\frac{7}{3}}-\frac{4}{3} \\
+\end{align*}
+\section*{Formula vettoriale del piano tangente}
+Il piano tangente al grafico di $f(x,y)f(x,y)$ nel punto $(x_0,y_0)$ si scrive:
+\begin{align*}
+    =f(x_0,y_0)+\langle \nabla f(x_0,y_0),(x-x_0,y-y_0) \rangle
+\end{align*}
+Dove: \\
+$\nabla f(x_0,y_0)=(f_x(x_0,y_0),f_y(x_0,y_0))$ e' il gradiente. \\
+$\langle \vec{.} \, , \, \vec{.} \rangle$ e' il prodotto scalare tra due vettori in $\mathbb{R}^2$. \\
+$(x-x_0,y-y_0)$ è il vettore di spostamento nel piano.
+\end{document}

@@ -1,0 +1,373 @@
+// Initialization
+@256
+D=A
+@SP
+M=D
+// PUSH CONSTANT 17
+@17
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 17
+@17
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// EQ
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_EQ-0
+D;JEQ
+D=0
+@FALSE_EQ-1
+0;JMP
+(TRUE_EQ-0)
+D=-1
+(FALSE_EQ-1)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 17
+@17
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 16
+@16
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// EQ
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_EQ-2
+D;JEQ
+D=0
+@FALSE_EQ-3
+0;JMP
+(TRUE_EQ-2)
+D=-1
+(FALSE_EQ-3)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 16
+@16
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 17
+@17
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// EQ
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_EQ-4
+D;JEQ
+D=0
+@FALSE_EQ-5
+0;JMP
+(TRUE_EQ-4)
+D=-1
+(FALSE_EQ-5)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 892
+@892
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 891
+@891
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// LT
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_LT-6
+D;JLT
+D=0
+@FALSE_LT-7
+0;JMP
+(TRUE_LT-6)
+D=-1
+(FALSE_LT-7)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 891
+@891
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 892
+@892
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// LT
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_LT-8
+D;JLT
+D=0
+@FALSE_LT-9
+0;JMP
+(TRUE_LT-8)
+D=-1
+(FALSE_LT-9)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 891
+@891
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 891
+@891
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// LT
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_LT-10
+D;JLT
+D=0
+@FALSE_LT-11
+0;JMP
+(TRUE_LT-10)
+D=-1
+(FALSE_LT-11)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 32767
+@32767
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 32766
+@32766
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// GT
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_GT-12
+D;JGT
+D=0
+@FALSE_GT-13
+0;JMP
+(TRUE_GT-12)
+D=-1
+(FALSE_GT-13)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 32766
+@32766
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 32767
+@32767
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// GT
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_GT-14
+D;JGT
+D=0
+@FALSE_GT-15
+0;JMP
+(TRUE_GT-14)
+D=-1
+(FALSE_GT-15)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 32766
+@32766
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 32766
+@32766
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// GT
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+D=M
+@TRUE_GT-16
+D;JGT
+D=0
+@FALSE_GT-17
+0;JMP
+(TRUE_GT-16)
+D=-1
+(FALSE_GT-17)
+@SP
+A=M-1
+M=D
+// PUSH CONSTANT 57
+@57
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 31
+@31
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// PUSH CONSTANT 53
+@53
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// ADD
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M+D
+// PUSH CONSTANT 112
+@112
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// SUB
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M-D
+// NEG
+@SP
+A=M-1
+M=-M
+// AND
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M&D
+// PUSH CONSTANT 82
+@82
+D=A
+@SP
+M=M+1
+A=M-1
+M=D
+// OR
+@SP
+MD=M-1
+A=D
+D=M
+A=A-1
+M=M|D
+// NOT
+@SP
+A=M-1
+M=!M

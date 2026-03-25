@@ -1,0 +1,68 @@
+ESPRESSIONI
+una espressione è una sequenza di operazioni che
+restituiscono un valore
+una espressione può essere:
+  - una variabile
+  - una costante
+  - (una chiamata di funzione)
+  - una combinazione di variabili e costanti (e chiamate di funzioni)
+Sono connesse da operatori (ad esempio +, -, *, /, %)
+
+Esempi: 
+  (5-2)-4 
+  y+(x*5) 
+  7/(2*x)
+
+ORDINE DI VALUTAZIONE DELLE ESPRESSIONI
+la valutazione di && e || usa la short-circuit evaluation: nell'&& viene
+valutato l'argomento di sinistra e se false, l'argomento di destra non
+viene valutato (allo stesso modo nell' || se true)
+
+Esempio: 
+  (x != 0) && (n/x >= 10) non solleva mai un errore
+
+type safety = ogni entità deve essere usata in
+ accordo con il suo tipo
+  - una variabile può essere usata solo dopo che è stata dichiarata solamente le operazioni definite per il tipo dichiarato per la variabile
+  - possono essere applicate ad essa
+  - ogni operazione (totale) applicata correttamente ritorna un valore valido
+
+MEDIA: OSSERVAZIONI
+l'operatore di divisione si comporta in modo diverso tra
+interi e tra double
+(x+y+z)/3 è diverso da (x+y+z)/(double)3
+il mancato uso del cast produce quindi risultati non precisi
+il cast in quanto operatore unario ha precedenza sulla
+divisione
+si può scrivere (x+y+z)/(double)3 invece di
+(x+y+z)/((double)3)
+si può evitare di usare il cast con (x+y+z)/3.0
+
+
+COSTANTI
+non è opportuno usare per pi-greco il valore numerico
+si presta a errori
+rende il programma poco leggibile (cos’è 6,672e-11?)
+non è opportuno usare per pi-greco una variabile
+non vorremo mai modificare il valore di pi-greco
+le costanti si dichiarano come le variabili, aggiungendo il
+prefisso const
+const double pi = 3.14, e = 2.71;
+oppure si dichiarano con
+#define KMS_PER_MILE 1.609
+
+
+FUNZIONI DI LIBRERIA
+il C++ è dotato di librerie per calcolare le funzioni
+matematiche di uso più comune
+includendo <cmath> abbiamo:
+double abs(double)
+double sqrt(double)
+double pow(double, double)
+double cos(double)
+double sin(double)
+. . .
+includendo <cstdlib> abbiamo:
+int rand();
+int srand(int);
+RAND_MAX

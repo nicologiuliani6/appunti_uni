@@ -1,0 +1,267 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[a4paper, margin=2cm]{geometry}  % <--- Aggiunto per ridurre i bordi
+\title{Algebra Lineare}
+\author{Nicolò Giuliani}
+\date{\today}
+
+\begin{document}
+
+\section{Generazione di uno spazio vettoriale}
+Dei vettori $p_1,\dots,p_n$ generano uno spazio vettoriale V se:
+\begin{equation*}
+    A=\begin{pmatrix}
+        p_1 \\
+        \vdots \\
+        p_n
+    \end{pmatrix}
+\end{equation*}
+portata a scala con l'algoritmo di Gauss:
+\begin{equation*}
+    A'=\begin{pmatrix}
+        q_1 \\
+        \vdots \\
+        q_z
+    \end{pmatrix}
+\end{equation*}
+Quindi la base composta  dai vettori $\langle q_1,\dots,q_z\rangle$ hanno come dimensione $z$ e quindi generano tutti gli spazi vettoriali della stessa dimensione. \\
+Per esempio $\langle q_1,\dots,q_z\rangle$ generano: \\
+1) $\mathbb{R}^z$ \\
+2) $\mathbb{R}_{z-1}[x]$ 
+\vspace{2em}
+\\Quindi dei vettori generano un sottospazio se la loro base ha la stessa dimensione del sottospazio.
+
+\section{Trovare una base di uno spazio vettoriale partendo da vettori}
+Sappiamo che $p_1,\dots,p_n \in W$. \\
+Per prima cosa dobbiamo trovare una base V dei vettori, $p_1,\dots,p_n$:
+\begin{equation*}
+    A=\begin{pmatrix}
+        p_1 \\
+        \vdots \\
+        p_n
+    \end{pmatrix}
+\end{equation*}
+portandola a scala:
+\begin{equation*}
+    A'=\begin{pmatrix}
+        q_1 \\
+        \vdots \\
+        q_z
+    \end{pmatrix}
+\end{equation*}
+Quindi $\langle q_1,\dots,q_z\rangle$ genera V. \\
+Quindi $dim(V)=z$. \\
+Dato che i vettori appartengono a W, la loro base e' un sottospazio, di W, di dimensione $z$ se $dim(W)=z$; ovvero $V\subseteq W$. \\
+Per GEL: $\langle q_1,\dots,q_z\rangle$ generano W.
+
+\section{Calcolo della dimensione di $Ker \,F$}
+Scriviamo la matrice A $\in M_{m,n}(\mathbb{R})$ associada ad F:
+\begin{equation*}
+    A=\begin{pmatrix}
+        p_1 \\
+        \vdots \\
+        p_m
+    \end{pmatrix}
+\end{equation*}
+semplifichiamola se serve:
+\begin{equation*}
+    A'=\begin{pmatrix}
+        q_1 \\
+        \vdots \\
+        q_z
+    \end{pmatrix}
+\end{equation*}
+calcoliamo il sistema ponendolo uguale ad zero:
+\begin{align*}
+    \begin{cases}
+        q_1=0 \\
+        \vdots \\
+        q_z=0
+    \end{cases}
+\end{align*}
+Quindi abbiamo $n$ incognite e $rr(A')=z$. Le soluzioni dipendono da $n-z$ parametri. \\
+Quindi $dim(Ker \, F)=n-z$.
+
+\section{Trovare una base di $Ker \, F$ e completarla ad una base di uno spazio vettoriale}
+\subsection{Troviamo una base di $Ker \, F$}
+Se A e' associata ad F:
+\begin{align*}
+    A=\begin{pmatrix}
+        p_1 \\
+        \vdots \\
+        p_n
+    \end{pmatrix}
+\end{align*}
+semplificandola:
+\begin{align*}
+    A'=\begin{pmatrix}
+        q_1 \\
+        \vdots \\
+        q_z
+    \end{pmatrix}
+\end{align*}
+Quindi $rr(A')=z$. \\
+Calcoliamo il sistema uguale ad 0:
+\begin{align*}
+    \begin{cases}
+        q_1=0 \\
+        \vdots \\
+        q_z=0
+    \end{cases}
+    \to 
+    \begin{cases}
+        x_1= \dots \\
+        \vdots \\
+        x_z= \dots
+    \end{cases}
+\end{align*}
+Quindi $Ker \, F=\{(x_1,\dots,x_z) \mid x_i \in \mathbb{R}\}$. \\
+Quindi scegliamo un valore di $x_i$ e lo sostituiamo: $Ker \, F=\{(x_1,\dots,x_z)\}$
+\subsection{Completiamola ad una base di uno spazio vettoriale}
+Completiamola ad $\mathbb{R}^y$: \\
+\begin{align*}
+    \mathbb{R}^y=\{(\vec{v_1}),\dots,(\vec{v_y})\}
+\end{align*}
+quindi prendiamo $Ker \, F=\vec{v_1}$:
+\begin{align*}
+    \mathbb{R}^y=\{(Ker \, F),\dots,(\vec{v_y})\}
+\end{align*}
+Scegliamo gli altri vettori che mancano:
+\begin{align*}
+    \vec{v_2}=(0_1,1,\dots,0_z) \\
+    \vdots \\
+    \vec{v_y}=(0_1,\dots,1_y,\dots,0_z)
+\end{align*}
+Quindi ora scriviamo la base con i vettori scelti:
+\begin{align*}
+    \beta=\{(Ker \, F),(\vec{v_2}),\dots,(\vec{v_y})\} \\
+    =\{(Ker \, F),(0_1,1,\dots,0_z),\dots,(0_1,\dots,1_y,\dots,0_z)\}
+\end{align*}
+\section{Stabilire se $\vec{v}\in Im \, F$}
+Scriviamo la matrice A e semplifichiamola:
+\begin{align*}
+    A'=\begin{pmatrix}
+        q_1 \\
+        \vdots \\
+        q_z
+    \end{pmatrix}
+\end{align*}
+scriviamo la matrice pari ad $\vec{v}=\{v_1,\dots,v_z\}$
+\begin{align*}
+    A'\mid\vec{v}=\begin{pmatrix}
+        q_1 & \mid & v_1\\
+        \vdots & \mid \\
+        q_z & \mid & v_z
+    \end{pmatrix}
+\end{align*}
+Se $rr(A')=rr(A'\mid\vec{v})\to$ il sistema ha soluzione $\to v \in Im \, F$. \\
+Se $rr(A')\neq rr(A\mid\vec{v}) \to$ nessuna soluzione $\to v \notin Im \, F$. \\
+\subsection{Calcolare $F^{-1}(v)$}
+Scriviamo:
+\begin{align*}
+    A'\mid\vec{v}=\begin{pmatrix}
+        q_1 & \mid & v_1\\
+        \vdots & \mid \\
+        q_z & \mid & v_z
+    \end{pmatrix}
+\end{align*}
+\textit{Ricorda: }$rr(A')=z$ \\
+Le soluzioni dipendono da $n-z$ parametri.
+\begin{align*}
+    \begin{cases}
+        q_1=v_1 \\
+        \vdots \\
+        q_z=v_z
+    \end{cases}
+    \to 
+    \begin{cases}
+        x_1 = \dots \\
+        \vdots \\
+        x_z = \dots
+    \end{cases}
+\end{align*}
+Quindi $F^{-1}(\vec{v})=\{(x_1,\dots,x_z) \mid x_i \in \mathbb{R}\}$
+
+\section{Calcolare le cordinate di un vettore rispetto ad una base}
+Calcoliamo le cordinate di $\vec{v}$ rispetto ad $\beta$:
+\begin{align*}
+    \vec{v}=\lambda_1(x_1)+\dots+\lambda_n(x_n)
+\end{align*}
+\textit{Ricorda: } $\beta=\{(x_1),\dots,(x_n)\}$ \\
+\textit{Ricorda: }$x_i=\{x_{i1},x_{i2},\dots,x_{in}\}$. \\
+Quindi calcoliamo il sistema:
+\begin{align*}
+    \begin{cases}
+        \lambda_1x_{11}+\lambda_2x_{21}+\dots+\lambda_nx_{n1}=v_1 \\
+        \vdots \\
+        \lambda_1x_{1n}+\lambda_2x_{2n}+\dots+\lambda_nx_{nn}=v_n
+    \end{cases}
+    \to 
+    \begin{cases}
+        \lambda_1=\dots \\
+        \vdots \\
+        \lambda_n=\dots
+    \end{cases}
+\end{align*}
+Le cordinate sono $(\lambda_1,\dots,\lambda_2)$.
+
+\section{Trovare applicazione lineare $G:\mathbb{R}^3 \to \mathbb{R}^3$ tale che $T $◦$ G$}
+Scriviamo $A\mid I$:
+\begin{align*}
+    A\mid I = \begin{pmatrix}
+        v_1 & | & 1 &0&0\\
+        v_2  &|&0&1&0\\
+        v_3 &|&0&0&1 
+    \end{pmatrix}\\
+    \to \dots \\
+    \to I \mid A^{-1}=\begin{pmatrix}
+        1 &0&0 &|& p_1\\
+        0&1&0 & |&p_2\\
+        0&0&1 & | & p_3
+    \end{pmatrix}
+\end{align*}
+Quindi $G=A^{-1}$.
+\begin{align*}
+    G=\begin{pmatrix}
+        p_1\\p_2\\p_3
+    \end{pmatrix}
+\end{align*}
+
+\section{Si determini la matrice $A_{\beta,C}$ }
+Trovare la matrice $A_{\beta,C}$ rispetto al dominio $\beta=\{e_1-3e_2,4e_2-e_3,e_2\}$ nel dominio e la base canonica $C$ di $\mathbb{R}^3$ nel codominio.
+\begin{align*}
+ I_{\beta,C}=\begin{pmatrix}
+    1&-3&0\\
+    0&4&-1\\
+    0&1&0
+ \end{pmatrix}   
+\end{align*}
+Quindi:
+\begin{align*}
+    A_{\beta,C}=A*I_{\beta,C}\\
+    =\begin{pmatrix}
+        4&0&0\\
+        0&5&1\\
+        -3&4&1
+    \end{pmatrix}\begin{pmatrix}
+        1&-3&0\\
+        0&4&-1\\
+        0&1&0
+     \end{pmatrix}  \\
+     =\begin{pmatrix}
+        4&0&0\\
+        -15&21&5\\
+        -15&15&4
+     \end{pmatrix}
+\end{align*}
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,297 @@
+<style>
+    /* --- Stili della pagina esercitazione (non fanno parte del compito) --- */
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1000px 600px at 10% -10%, #1f2937, transparent), var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .sheet {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .02), transparent), var(--card);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 18px;
+      padding: 28px 28px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: .2rem .55rem;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .86rem
+    }
+
+    h1 {
+      margin: .2rem 0 1rem;
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem)
+    }
+
+    h2 {
+      margin: 1.2rem 0 .4rem;
+      font-size: 1.05rem
+    }
+
+    p,
+    li {
+      color: var(--text)
+    }
+
+    code,
+    kbd,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace
+    }
+
+    .copy-button {
+      background: #374151;
+      color: #e5e7eb;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.2s;
+      margin-left: 10px;
+    }
+
+    .copy-button:hover {
+      background: #4b5563;
+    }
+
+    .copy-button:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .copy-button.copied {
+      background: #10b981;
+    }
+
+    .copy-button.error {
+      background: #ef4444;
+    }
+
+    .download-button {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, .1);
+      padding: .45rem .75rem;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #e5e7eb;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .download-button:hover {
+      border-color: rgba(255, 255, 255, .25)
+    }
+
+    .exercise-section {
+      margin: 30px 0;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .02);
+      position: relative;
+    }
+
+    .exercise-section h2 {
+      color: var(--accent);
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .exercise-description {
+      background: rgba(255, 255, 255, .05);
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid var(--accent);
+      margin: 20px 0;
+    }
+
+    .demo-area {
+      background: rgba(255, 255, 255, .05);
+      padding: 20px;
+      border-radius: 8px;
+      border: 2px dashed rgba(255, 255, 255, .2);
+      margin: 20px 0;
+      min-height: 150px;
+    }
+
+    /* === Stili per le demo box === */
+    .demo-section {
+      margin: 40px 0;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .02);
+      position: relative;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .box-static {
+      background: var(--muted);
+    }
+
+    .box-relative {
+      background: var(--accent);
+    }
+
+    .box-absolute {
+      background: #f59e0b;
+    }
+
+    .box-fixed {
+      background: #ef4444;
+    }
+
+    .box-sticky {
+      background: #10b981;
+    }
+
+    /* Contenitore per il posizionamento relativo */
+    .relative-container {
+      position: relative;
+      height: 200px;
+      background: rgba(14, 165, 233, 0.1);
+      border: 2px dashed rgba(14, 165, 233, 0.5);
+      margin: 20px 0;
+    }
+
+    /* Contenitore per scroll test */
+    .scroll-container {
+      height: 300px;
+      overflow-y: auto;
+      border: 2px solid rgba(255, 255, 255, .2);
+      padding: 20px;
+      background: rgba(255, 255, 255, .05);
+    }
+
+    .tall-content {
+      height: 800px;
+      background: linear-gradient(to bottom, rgba(254, 243, 199, 0.1), rgba(253, 230, 138, 0.1));
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    /* Stili per elementi specifici */
+    .demo-text {
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    .code-example {
+      font-family: monospace;
+      background: rgba(255, 255, 255, .1);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .important-note {
+      color: #ef4444;
+      font-weight: 600;
+    }
+
+    .instructions {
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .instructions h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    .task-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .task-list li {
+      background: rgba(255, 255, 255, .05);
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .task-list li strong {
+      color: var(--accent);
+    }
+
+    a:visited {
+      color: var(--accent) !important;
+    }
+  </style>
+
+<div id="esercizio-1" class="exercise-section" role="region" aria-labelledby="exercise1-heading">
+      <h2 id="exercise1-heading">Esercizio 1: Position Static
+        <button class="copy-button" onclick="copyExerciseHTML('esercizio-1')" aria-label="Copia codice esercizio 1">
+          Copia
+        </button>
+      </h2>
+      <div class="exercise-description">
+        <p>Il posizionamento <span class="code-example">static</span> è quello predefinito. Gli elementi seguono il normale flusso del documento.</p>
+        <p><strong>Compito:</strong> Osserva come gli elementi si dispongono naturalmente nel flusso del documento e dopo aver applicato il <br> <span class="code-example">float</span> left alla prima box, e <span class="code-example">float</span> right alla terza box, nota come il loro comportamento cambia.</p>
+      </div>
+      <div class="demo-area" id="static-section" role="region" aria-label="Dimostrazione posizionamento statico">
+        <div class="box box-static uno" id="static-box" role="img" aria-label="Prima box statica">Static 1</div>
+        <div class="box box-static due" role="img" aria-label="Seconda box statica">Static 2</div>
+        <div class="box box-static tre" role="img" aria-label="Terza box statica">Static 3</div>
+      </div>
+
+      <style>
+        /* ESERCIZIO-1: Float Layout (per Esercizio 1: Position Static)
+          OBIETTIVO: Sperimenta con il posizionamento float (legacy ma ancora utile):
+          - Applica float: left alla prima box static per farla "galleggiare" a sinistra
+          - Applica float: right alla terza box static per farla galleggiare a destra
+          - Osserva come gli elementi flottanti si dispongono nel flusso del documento
+          Nota: float è una tecnica più vecchia, ora sostituita da flexbox/grid, ma utile da conoscere. */
+          .box.box-static.uno{
+            float: left;
+          }
+          .box.box-static.tre{
+            float: right;
+          }
+          
+      </style>
+
+    </div>

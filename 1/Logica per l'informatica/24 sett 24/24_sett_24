@@ -1,0 +1,61 @@
+Implicazione:
+⇒-eliminazione (variante)
+Da un’ipotesi o un risultato intermedio P ⇒ Q di nome H, se
+volete concludere Q, potete procedere dicendo
+“per H, per dimostare Q mi posso ridurre a dimostrare P”
+In Matita si apre una sotto-prova di P che si usa poi per
+dimostrare Q:
+we need to prove P (NOME IPOTESI) ...
+by NOME IPOTESI, H done
+
+Abbreviazioni
+Per ogni tale che
+“sia x tale che P(x). ...”
+"sia x t.c. che P(x). ..."
+abbrevia
+“sia x (un insieme) fissato; assumo P(x); ... ”
+per dimostrare ∀x.P(x) ⇒ Q(x)
+
+Abbreviazioni
+Da H1, . . . , Hn
+“da H1, . . . , Hn ho P (H)”
+“by H1, . . . , Hn we proved P (H)”
+dove ogni Hi ha la forma ∀⃗x.Qi
+1
+(⃗x) ⇒ . . . ⇒ Qi
+ni
+(⃗x) abbrevia
+l’applicazione di un numero arbitrario di regole di eliminazione
+del per ogni e dell’implicazione applicate a partire dalle ipotesi
+H1, . . . , Hn e tali per cui la conclusione finale sia P. Il nome H
+verra poi usato quando ` P e una conclusione intermedia. `
+Quindi
+“quindi” e sinonimi sono un modo per fare riferimento all’ultima
+ipotesi/risultato intermedio, magari omettendone del tutto il
+nome nel testo.
+Matita: "thus" (quindi) l'ultima scosa scoperta la utilizzi nel passaggio successivo
+
+
+Enunciati e prove
+Definizioni informali
+L’enunciato di un teorema e ci ` o che vogliamo dimostrare. Si `
+compone di un insieme di ipotesi e di una conclusione.
+Una prova (informale) e una sequenza di passi che ci convince `
+che la conclusione “valga” quando “valgono” le ipotesi.
+Convenzione
+Tutte le variabili di un enunciato che non sono introdotte da un
+per-ogni o da un esiste si considerano introdotte da dei
+per-ogni all’inizio dell’enunciato (l’ordine non e rilevante). `
+Esempio: l’enunciato n + m = m + n abbrevia
+∀n, m.n + m = m + n.
+
+Prime dimostrazioni informali:
+
+1)Riflessivita del ` ⊆.
+Teorema: X ⊆ X.
+Dimostrazione: Sia X un insieme. Dobbiamo dimostrare
+X ⊆ X, ovvero ∀Y.Y ∈ X ⇒ Y ∈ X. Sia Y un insieme tale che
+Y ∈ X (H). Debbo dimostrare Y ∈ X. Ovvio per l’ipotesi H.
+Qed.
+
+2)

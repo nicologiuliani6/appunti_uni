@@ -1,0 +1,11 @@
+:root {
+  --brand: #2a5d67;
+  --text: #222;
+  --bg: #fafafa;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 2rem;
+  --radius: 0.75rem;
+  --maxw: 1200px;
+}
