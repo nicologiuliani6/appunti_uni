@@ -1,5 +1,4 @@
 \babel@toc {italian}{}\relax 
-\babel@toc {italian}{}\relax 
 \contentsline {section}{\numberline {1}Spazi di probabilità}{2}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Teoria degli insiemi}{2}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Modello matematico di un esperimento aleatorio}{3}{subsection.1.2}%
