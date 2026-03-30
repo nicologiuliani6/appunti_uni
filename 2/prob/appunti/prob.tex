@@ -1272,5 +1272,119 @@ La funzione di ripartizione di una variabile aleatoria normale standard. $\Phi$ 
 }}\\
 \vspace{1px}\\
 \section{Vettori aleatori}
-test2
+\subsection{Introduzione}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(\Omega, \mathbb{P})$ uno spazio di probabilita'.\\
+Una qualunque funzione
+\begin{align*}
+  (X,Y) \, : \, \Omega \rightarrow \mathbb{R}^2
+\end{align*}
+si chiama \textbf{vettore aleatorio} (bidimensionale).\\
+Piu' in generale, per qualunque funzione
+\begin{align*}
+  (X_1, \dots, X_n) \, : \, \Omega \to \mathbb{R}^n
+\end{align*}
+si chiama \textbf{vettore aleatorio} (o \textbf{n-dimensionale}).
+}}\\
+\vspace{1px}\\
+\subsubsection{Distribuzione o legge di un vettore aleatorio}
+Come per le variabili aleatorie, possiamo associare ad ogni vettore aleatorio la sua distribuzione o legge. Diamo la definizione solo per il caso bidimensionale.\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(\Omega, \mathbb{P})$ uno spazio di probabilita' e $(X,Y) : \Omega \to \mathbb{R}$ un vettore aleatorio. Si chiama \textbf{distribuzione} o \textbf{legge} di $(X,Y)$ la probabilita'
+\begin{align}
+  \mathbb{P}_{(X,Y)} : \mathcal{P}(\mathbb{R}^2) \to [0,1]
+\end{align} 
+definita da 
+\begin{align*}
+  \mathbb{P}_{(X,Y)} (B) = \mathbb{P}((X,Y) \in B), \quad \forall B \subset \mathbb{R}^2
+\end{align*}
+Per dire che $(X,Y)$ ha distribuzione o legge $\mathbb{P}_{(X,Y)}$ scriveremo
+\begin{align*}
+  (X,Y) \sim \mathbb{P}_{(X,Y)}
+\end{align*}
+}}\\
+\vspace{1px}\\
+\paragraph{Funzione di ripartizione congiunta.}
+È possibile estendere al caso multidimensionale il concetto di funzione di ripartizione. 
+Si può infatti definire la funzione di ripartizione congiunta di $X$ e $Y$:
+\begin{align*}
+F_{(X,Y)}(x, y) &= P(\{X \leq x\} \cap \{Y \leq y\}) \\
+&= P\big((X, Y) \in (-\infty, x] \times (-\infty, y]\big), \quad \forall (x, y) \in \mathbb{R}^2.
+\end{align*}
+dove la seconda uguaglianza discende dall’Osservazione 2 riportata sopra. Equivalentemente, 
+possiamo definire $F_{(X,Y)}$ in termini della distribuzione di $(X, Y)$:
+\begin{align*}
+F_{(X,Y)}(x, y) = P_{(X,Y)}\big((-\infty, x] \times (-\infty, y]\big), \quad \forall (x, y) \in \mathbb{R}^2.
+\end{align*}
+Nel caso multidimensionale, tuttavia, la funzione di ripartizione non è praticamente 
+utilizzata. Infatti conviene lavorare direttamente con la densità (discreta o continua).
+\subsubsection{Indipendenza di variabili aleatorie}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(\Omega, \mathbb{P})$ uno spazio di probabilita'. Due variabili aleatorie $X$ e $Y$ si dicono \textbf{indipendenti} se
+\begin{align*}
+  \mathbb{P}(X \in B_1, Y \in B_2) = \mathbb{P}(X \in B_1)\mathbb{P}(Y \in B_2)
+\end{align*}
+per ogni $B_1, B_2 \subset \mathbb{R}$
+\begin{align*}
+  \mathbb{P}_{(X,Y)}(B_1 \times B_2) = \mathbb{P}_X(B_1)\mathbb{P}_Y(B_2)
+\end{align*}
+In tal caso scriviamo
+\begin{align*}
+  X \perp Y
+\end{align*}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(\Omega, \mathbb{P})$ uno spazio di probabilita', $n$ variabili aleatorie $X_1, \dots, X_n$ si dicono \textbf{indipendenti} se
+\begin{align*}
+  \mathbb{P}(X_1 \in B_1, \dots, X_n \in B_n) = \prod_{i=1}^{n} \mathbb{P}(X_i \in B_i)
+\end{align*}
+per ogni $B_1, \dots, B_n \subset \mathbb{R}$.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Proposizione}: Siano $X$ e $Y$ variabili aleatorie indipendenti. Siano inoltre $f : \mathbb{R} \to \mathbb{R}$ e $g: \mathbb{R} \to \mathbb{R}$ funzioni arbitrarie. Allora anche le variabili aleatorie
+\begin{align*}
+  f(X) \quad \text{ e } \quad g(Y)
+\end{align*}
+sono \textbf{indipendenti}.
+}}\\
+\vspace{1px}\\
+\subsection{Vettori aleatori discreti}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Sia $(\Omega, \mathbb{P})$ uno spazio di probabilita e $(X,Y)$ un vettore aleatorio. Si dice che $(X,Y)$ e' un vettore aleatorio discreto se sia $X$ che $Y$ sono variabili aleatorie discrete.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Sia $(\Omega, \mathbb{P})$ uno spazio di probabilita' e $(X,Y)$ un vettore aleatorio. La funzione $p_{(X,Y)} : \mathbb{R}^2 \to [0,1]$ data da
+\begin{align*}
+  p_{(X,Y)} & = \mathbb{P}(X = x, Y=y)\\
+  & = \mathbb{P}((X,Y) = (x,y)), \quad \forall (x,y) \in \mathbb{R}^2
+\end{align*}
+si chiama densita' discreta congiunta di $X$ e $Y$.\\
+Infine $p_X$ e $p_Y$ si chiamano \textbf{densita' discrete marginali} di $X$e $Y$, rispettivamente.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $(\Omega, \mathbb{P})$ uno spazio di probabilita' e $(X,Y)$ unv ettore aleatorio discreto. Siano inoltre $\mathcal{S}_X$ e $\mathcal{S}_Y$ i supporti di $X$ e $Y$ rispettivamente. Valgono le seguenti proprieta':
+\begin{itemize}
+  \item $p_{(X,Y)}(x,y) = 0, \quad \forall (x,y) \notin \mathcal{S}_X \times \mathcal{S}_Y$
+  \item $\sum_{x_i \in \mathcal{S}_X} \sum_{y_j \in \mathcal{S}_Y} p_{(X,Y)}(x_i, y_i)=1$
+  \item Vale la forumal
+  \begin{align*}
+    \mathbb{P}((X,Y)\in B) = \sum_{(x_i, y_j) \in B} p_{(X,Y)}(x_i, y_j), \quad \forall B \subset \mathbb{R}^2
+  \end{align*}
+\end{itemize}
+}}\\
+\vspace{1px}\\
+\subsubsection{Densita' discreta congiunta e densit`a discrete marginali}
+pagina 8
 \end{document} 
