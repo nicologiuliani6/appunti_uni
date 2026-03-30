@@ -768,10 +768,206 @@ Head-of-the-Line (HOL) blocking: è quando il pacchetto in testa alla coda blocc
     \includegraphics[width=0.5\textwidth]{img/coda.png}
 \end{figure}
 \subsubsection{Output}
-pagina 23
-
-
+      \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/output.png}
+\end{figure}
+\begin{itemize}
+  \item \textbf{Buffering} (packets possono essere persi per colpa della congestione se non abbiamo un buffer)\\
+  Possiamo fare buffering quando il \textit{arrival rate} supera la \textit{line speed} dello switch. Questo puo' portare loss per colpa del delay e in caso di buffer overflow.\\
+  \vspace{5px}\textbf{Quanto buffer?} RFC 3439 dice: "$RTT \times C$" (con $C$ come link capacity). Es. 10Gpbs link $\Rightarrow$ 2.5Gbit buffer.\\
+  O se no possiamo fare generalmente 
+  \begin{align*}
+    \text{buffer} = \frac{RTT \times C}{\sqrt{N}}
+  \end{align*}
+  \item \textbf{Scheduling} (next packet to send on link; priorita' per ottimizzare le performance)\\
+  Quale meccanismo di scheduling scegliamo?
+  \begin{itemize}
+    \item \textbf{FIFO}
+    \item \textbf{Discard policy}
+    \begin{itemize}
+      \item \texttt{Tail drop}
+      \item \texttt{Priority}: send highest priority queued packet, supporta multiple classes, with different priorities
+            \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/priority.png}
+\end{figure}
+      \item \texttt{Random}
+    \end{itemize}
+    \item \textbf{Round Robin}: cyclically scan class queues, sending one complete packet from each class
+                \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/rr.png}
+\end{figure}
+  \item \textbf{Weighted Fair Queuing} (WFQ): E' una generilizzazione del R.R., each class gets weighted amount of service in each cycle
+                \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/wfq.png}
+\end{figure}  
+\end{itemize}
+\end{itemize}
 \subsection{Internet Protocol}
-\subsection{Forward and SDN}
+\subsubsection{Datagram format}
+                \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/df.png}
+\end{figure}  
+\subsubsection{Fragmentation}
+\begin{itemize}
+  \item network links have MTU
+(max.transfer size) -
+largest possible link-level
+frame
+  \item large IP datagram divided
+(“fragmented”) within net
+  \begin{itemize}
+    \item one datagram becomes
+several datagrams
+    \item “reassembled” only at
+final destination
+    \item IP header bits used to
+identify, order related
+fragments
+  \end{itemize}
+\end{itemize}
+                \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/mtu.png}
+\end{figure}  
+\subsubsection{IPv4 addressing}
+\begin{itemize}
+  \item IP address: 32 bit per host, router, interface
+  \item Interface: connection
+between host/router and
+physical link
+\end{itemize}
+\paragraph{Subnets} Device interfaces with
+same subnet part of IP
+address. \\ 
+Can physically reach
+each other without
+intervening router 
+                \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/subnet.png}
+\end{figure} 
+To determine the
+subnets, detach each
+interface from its host
+or router, creating
+islands of isolated
+networks.\\
+Each isolated network
+is called a subnet.\\
+\vspace{5px}\\
+\paragraph{IP addressing: CIDR}
+\begin{center}
+  CIDR: Classless InterDomain Routing
+\end{center}
+\begin{itemize}
+  \item Subnet portion of address of arbitrary length
+  \item Address format: \texttt{a.b.c.d/x}, where \texttt{x} is \#bits in
+subnet portion of address
+                \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/cidr.png}
+\end{figure} 
+\end{itemize}
+\paragraph{IP addresses: how to get one?}
+\begin{itemize}
+  \item \textbf{Static} (hard coded in OS)
+  \item \textbf{DHCP}: Dynamic Host Configuration Protocol: dynamically get address from as server
+  \begin{itemize}
+    \item host broadcasts “DHCP discover” msg [optional]
+    \item DHCP server responds with “DHCP offer” msg [optional]
+    \item host requests IP address: “DHCP request” msg
+    \item DHCP server sends address: “DHCP ack” msg
+  \end{itemize}
+                  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/dhcp.png}
+\end{figure} 
+DHCP can return more than just allocated IP
+address on subnet:
+\begin{itemize}
+  \item address of first-hop router for client
+  \item name and IP address of DNS sever
+  \item network mask
+\end{itemize}
+\end{itemize}
+\paragraph{How does an ISP get block of addresses?}
+\begin{center}
+  ICANN: Internet Corporation for Assigned
+\end{center}
+\begin{itemize}
+  \item allocates addresses
+  \item manages DNS
+  \item assigns domain names, resolves disputes
+\end{itemize}
+\subsubsection{Network address translation}
+                  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/nat.png}
+\end{figure} 
+\textbf{Motivation}: local network uses just one IP address as far
+as outside world is concerned.\\
+\texttt{NAT router must}:
+\begin{itemize}
+  \item \textbf{outgoing datagrams: replace} (source IP address, port \#) of
+every outgoing datagram to (NAT IP address, new port \#)
+  \item \textbf{remember (in NAT translation table)} every (source IP address,
+port \#) to (NAT IP address, new port \#) translation pair
+  \item incoming datagrams: replace (NAT IP address, new port \#) in
+dest fields of every incoming datagram with corresponding
+(source IP address, port \#) stored in NAT table
+\end{itemize}
+                  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/nat2.png}
+\end{figure} 
+\subsubsection{IPv6}
+\textbf{Initial motivation:} 32-bit address space soon to be
+completely allocated. \\
+\textbf{Extra}: header format helps speed processing/forwarding and header changes to facilitate QoS.
+\paragraph{IPv6 datagram format}
+\begin{itemize}
+  \item 40byte fixed header
+  \item no fragmentation allowed
+\end{itemize}
+                  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/df6.png}
+\end{figure} 
+\paragraph{How will network operate with mixed IPv4 and
+IPv6 routers?} \textbf{Tunneling!} IPv6 datagram carried as payload in IPv4
+datagram among IPv4 routers
+                  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/tunnelling1.png}
+\end{figure} 
+                  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/tunneling2.png}
+\end{figure} 
+\subsection{Generalized Forward and SDN}
+Each router contains a flow table that is computed and
+distributed by a logically centralized routing controller
+                  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/sdn.png}
+\end{figure} 
+\subsubsection{OpenFlow data plane abstraction}
+\begin{itemize}
+  \item flow: defined by header fields
+  \item generalized forwarding: simple packet-handling rules
+  \begin{itemize}
+    \item Pattern: match values in packet header fields
+    \item Actions: for matched packet: drop, forward, modify, matched
+packet or send matched packet to controller
+    \item Priority: disambiguate overlapping patterns
+    \item Counters: \#bytes and \#packets
+  \end{itemize}
+\end{itemize}
+\section{Control Plane}
 \end{document}
 

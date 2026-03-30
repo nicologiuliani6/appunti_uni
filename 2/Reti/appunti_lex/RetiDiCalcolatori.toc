@@ -50,5 +50,18 @@
 \contentsline {subsection}{\numberline {4.2}Come e' fatto un router}{28}{subsection.4.2}%
 \contentsline {subsubsection}{\numberline {4.2.1}Input}{29}{subsubsection.4.2.1}%
 \contentsline {subsubsection}{\numberline {4.2.2}Output}{31}{subsubsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.3}Internet Protocol}{31}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Forward and SDN}{31}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.3}Internet Protocol}{32}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Datagram format}{32}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Fragmentation}{32}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}IPv4 addressing}{33}{subsubsection.4.3.3}%
+\contentsline {paragraph}{Subnets}{33}{section*.28}%
+\contentsline {paragraph}{IP addressing: CIDR}{34}{section*.29}%
+\contentsline {paragraph}{IP addresses: how to get one?}{34}{section*.30}%
+\contentsline {paragraph}{How does an ISP get block of addresses?}{35}{section*.31}%
+\contentsline {subsubsection}{\numberline {4.3.4}Network address translation}{35}{subsubsection.4.3.4}%
+\contentsline {subsubsection}{\numberline {4.3.5}IPv6}{35}{subsubsection.4.3.5}%
+\contentsline {paragraph}{IPv6 datagram format}{36}{section*.32}%
+\contentsline {paragraph}{How will network operate with mixed IPv4 and IPv6 routers?}{36}{section*.33}%
+\contentsline {subsection}{\numberline {4.4}Generalized Forward and SDN}{36}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}OpenFlow data plane abstraction}{37}{subsubsection.4.4.1}%
+\contentsline {section}{\numberline {5}Control Plane}{37}{section.5}%

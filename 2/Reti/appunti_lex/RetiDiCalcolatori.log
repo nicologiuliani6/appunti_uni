@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  20 MAR 2026 16:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  30 MAR 2026 10:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -383,7 +383,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 35--36
 
  []
 
-<img/jitter.png, id=225, 536.0025pt x 255.95625pt>
+<img/jitter.png, id=260, 536.0025pt x 255.95625pt>
 File: img/jitter.png Graphic file (type png)
 <use img/jitter.png>
 Package pdftex.def Info: img/jitter.png  used on input line 40.
@@ -391,12 +391,12 @@ Package pdftex.def Info: img/jitter.png  used on input line 40.
 
 
 [3{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./img/jitter.png>]
-<img/topologia.png, id=237, 565.11125pt x 139.52126pt>
+<img/topologia.png, id=272, 565.11125pt x 139.52126pt>
 File: img/topologia.png Graphic file (type png)
 <use img/topologia.png>
 Package pdftex.def Info: img/topologia.png  used on input line 67.
 (pdftex.def)             Requested size: 338.58632pt x 83.5963pt.
-<img/garr.png, id=238, 1141.26375pt x 1351.0475pt>
+<img/garr.png, id=273, 1141.26375pt x 1351.0475pt>
 File: img/garr.png Graphic file (type png)
 <use img/garr.png>
 Package pdftex.def Info: img/garr.png  used on input line 72.
@@ -414,7 +414,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has
                                                   \__shipout_drop_firstpage_...
 l.83 \subsection
                 *{Scheda di rete} <./img/topologia.png> <./img/garr.png>]
-<img/p2p_broadcast.png, id=246, 570.13pt x 132.495pt>
+<img/p2p_broadcast.png, id=281, 570.13pt x 132.495pt>
 File: img/p2p_broadcast.png Graphic file (type png)
 <use img/p2p_broadcast.png>
 Package pdftex.def Info: img/p2p_broadcast.png  used on input line 90.
@@ -424,7 +424,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 87--92
 
  []
 
-<img/commutazione.png, id=247, 702.625pt x 164.615pt>
+<img/commutazione.png, id=282, 702.625pt x 164.615pt>
 File: img/commutazione.png Graphic file (type png)
 <use img/commutazione.png>
 Package pdftex.def Info: img/commutazione.png  used on input line 108.
@@ -437,12 +437,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 99--110
 
 
 [5 <./img/p2p_broadcast.png>]
-<img/iso-osi.png, id=254, 583.17876pt x 222.8325pt>
+<img/iso-osi.png, id=289, 583.17876pt x 222.8325pt>
 File: img/iso-osi.png Graphic file (type png)
 <use img/iso-osi.png>
 Package pdftex.def Info: img/iso-osi.png  used on input line 115.
 (pdftex.def)             Requested size: 435.32422pt x 166.34192pt.
-<img/internet.png, id=255, 654.445pt x 216.81pt>
+<img/internet.png, id=290, 654.445pt x 216.81pt>
 File: img/internet.png Graphic file (type png)
 <use img/internet.png>
 Package pdftex.def Info: img/internet.png  used on input line 126.
@@ -456,12 +456,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [6 <./img/commutazione.png> <./img/iso-osi.png>]
 
 [7 <./img/internet.png>]
-<img/Internetworking.png, id=267, 700.6175pt x 284.06125pt>
+<img/Internetworking.png, id=302, 700.6175pt x 284.06125pt>
 File: img/Internetworking.png Graphic file (type png)
 <use img/Internetworking.png>
 Package pdftex.def Info: img/Internetworking.png  used on input line 150.
 (pdftex.def)             Requested size: 290.22107pt x 117.67082pt.
-<img/classe.png, id=268, 576.1525pt x 376.40625pt>
+<img/classe.png, id=303, 576.1525pt x 376.40625pt>
 File: img/classe.png Graphic file (type png)
 <use img/classe.png>
 Package pdftex.def Info: img/classe.png  used on input line 178.
@@ -469,7 +469,7 @@ Package pdftex.def Info: img/classe.png  used on input line 178.
 
 
 [8 <./img/Internetworking.png>]
-<img/inforete.png, id=273, 640.3925pt x 212.795pt>
+<img/inforete.png, id=308, 640.3925pt x 212.795pt>
 File: img/inforete.png Graphic file (type png)
 <use img/inforete.png>
 Package pdftex.def Info: img/inforete.png  used on input line 190.
@@ -477,7 +477,7 @@ Package pdftex.def Info: img/inforete.png  used on input line 190.
 
 
 [9 <./img/classe.png> <./img/inforete.png>]
-<img/arp.png, id=278, 548.0475pt x 387.69844pt>
+<img/arp.png, id=313, 548.0475pt x 387.69844pt>
 File: img/arp.png Graphic file (type png)
 <use img/arp.png>
 Package pdftex.def Info: img/arp.png  used on input line 225.
@@ -485,7 +485,7 @@ Package pdftex.def Info: img/arp.png  used on input line 225.
 
 
 [10 <./img/arp.png (PNG copy)>]
-<img/tcp.png, id=283, 362.85562pt x 155.83218pt>
+<img/tcp.png, id=318, 362.85562pt x 155.83218pt>
 File: img/tcp.png Graphic file (type png)
 <use img/tcp.png>
 Package pdftex.def Info: img/tcp.png  used on input line 260.
@@ -493,12 +493,12 @@ Package pdftex.def Info: img/tcp.png  used on input line 260.
 
 
 [11 <./img/tcp.png (PNG copy)>]
-<img/porte.png, id=289, 436.63126pt x 107.65219pt>
+<img/porte.png, id=325, 436.63126pt x 107.65219pt>
 File: img/porte.png Graphic file (type png)
 <use img/porte.png>
 Package pdftex.def Info: img/porte.png  used on input line 274.
 (pdftex.def)             Requested size: 386.95897pt x 95.40604pt.
-<img/congestione.png, id=290, 470.50781pt x 189.70876pt>
+<img/congestione.png, id=326, 470.50781pt x 189.70876pt>
 File: img/congestione.png Graphic file (type png)
 <use img/congestione.png>
 Package pdftex.def Info: img/congestione.png  used on input line 295.
@@ -506,12 +506,12 @@ Package pdftex.def Info: img/congestione.png  used on input line 295.
 
 
 [12 <./img/porte.png (PNG copy)> <./img/congestione.png (PNG copy)>]
-<img/congestione2.png, id=296, 400.49625pt x 201.75375pt>
+<img/congestione2.png, id=332, 400.49625pt x 201.75375pt>
 File: img/congestione2.png Graphic file (type png)
 <use img/congestione2.png>
 Package pdftex.def Info: img/congestione2.png  used on input line 313.
 (pdftex.def)             Requested size: 290.22107pt x 146.21075pt.
-<img/isp.png, id=297, 329.73187pt x 168.63pt>
+<img/isp.png, id=333, 329.73187pt x 168.63pt>
 File: img/isp.png Graphic file (type png)
 <use img/isp.png>
 Package pdftex.def Info: img/isp.png  used on input line 333.
@@ -519,12 +519,12 @@ Package pdftex.def Info: img/isp.png  used on input line 333.
 
 
 [13 <./img/congestione2.png (PNG copy)> <./img/isp.png (PNG copy)>]
-<img/unibo.png, id=305, 455.45157pt x 249.93375pt>
+<img/unibo.png, id=341, 455.45157pt x 249.93375pt>
 File: img/unibo.png Graphic file (type png)
 <use img/unibo.png>
 Package pdftex.def Info: img/unibo.png  used on input line 352.
 (pdftex.def)             Requested size: 290.22107pt x 159.26295pt.
-<img/completo.png, id=306, 620.3175pt x 222.8325pt>
+<img/completo.png, id=342, 620.3175pt x 222.8325pt>
 File: img/completo.png Graphic file (type png)
 <use img/completo.png>
 Package pdftex.def Info: img/completo.png  used on input line 362.
@@ -532,12 +532,12 @@ Package pdftex.def Info: img/completo.png  used on input line 362.
 
 
 [14 <./img/unibo.png (PNG copy)> <./img/completo.png (PNG copy)>]
-<img/chiave.png, id=311, 763.85374pt x 226.8475pt>
+<img/chiave.png, id=347, 763.85374pt x 226.8475pt>
 File: img/chiave.png Graphic file (type png)
 <use img/chiave.png>
 Package pdftex.def Info: img/chiave.png  used on input line 391.
 (pdftex.def)             Requested size: 338.58632pt x 100.55048pt.
-<img/des.png, id=312, 372.39125pt x 566.115pt>
+<img/des.png, id=348, 372.39125pt x 566.115pt>
 File: img/des.png Graphic file (type png)
 <use img/des.png>
 Package pdftex.def Info: img/des.png  used on input line 403.
@@ -545,7 +545,7 @@ Package pdftex.def Info: img/des.png  used on input line 403.
 
 
 [15 <./img/chiave.png>]
-<img/public.png, id=319, 754.82pt x 349.305pt>
+<img/public.png, id=354, 754.82pt x 349.305pt>
 File: img/public.png Graphic file (type png)
 <use img/public.png>
 Package pdftex.def Info: img/public.png  used on input line 418.
@@ -553,7 +553,7 @@ Package pdftex.def Info: img/public.png  used on input line 418.
 
 
 [16 <./img/des.png> <./img/public.png>]
-<img/ap4.png, id=328, 604.2575pt x 252.945pt>
+<img/ap4.png, id=363, 604.2575pt x 252.945pt>
 File: img/ap4.png Graphic file (type png)
 <use img/ap4.png>
 Package pdftex.def Info: img/ap4.png  used on input line 476.
@@ -561,7 +561,7 @@ Package pdftex.def Info: img/ap4.png  used on input line 476.
 
 
 [17]
-<img/ap5.png, id=334, 737.75626pt x 286.06876pt>
+<img/ap5.png, id=369, 737.75626pt x 286.06876pt>
 File: img/ap5.png Graphic file (type png)
 <use img/ap5.png>
 Package pdftex.def Info: img/ap5.png  used on input line 481.
@@ -571,7 +571,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 486--488
 
  []
 
-<img/cert.png, id=335, 752.8125pt x 209.78375pt>
+<img/cert.png, id=370, 752.8125pt x 209.78375pt>
 File: img/cert.png Graphic file (type png)
 <use img/cert.png>
 Package pdftex.def Info: img/cert.png  used on input line 497.
@@ -579,17 +579,17 @@ Package pdftex.def Info: img/cert.png  used on input line 497.
 
 
 [18 <./img/ap4.png> <./img/ap5.png>]
-<img/cert2.png, id=340, 637.38126pt x 259.97125pt>
+<img/cert2.png, id=375, 637.38126pt x 259.97125pt>
 File: img/cert2.png Graphic file (type png)
 <use img/cert2.png>
 Package pdftex.def Info: img/cert2.png  used on input line 502.
 (pdftex.def)             Requested size: 241.84843pt x 98.64333pt.
-<img/mail.png, id=341, 784.9325pt x 259.97125pt>
+<img/mail.png, id=376, 784.9325pt x 259.97125pt>
 File: img/mail.png Graphic file (type png)
 <use img/mail.png>
 Package pdftex.def Info: img/mail.png  used on input line 515.
 (pdftex.def)             Requested size: 338.58632pt x 112.14247pt.
-<img/nonsicuro.png, id=342, 793.96625pt x 254.9525pt>
+<img/nonsicuro.png, id=377, 793.96625pt x 254.9525pt>
 File: img/nonsicuro.png Graphic file (type png)
 <use img/nonsicuro.png>
 Package pdftex.def Info: img/nonsicuro.png  used on input line 524.
@@ -597,17 +597,17 @@ Package pdftex.def Info: img/nonsicuro.png  used on input line 524.
 
 
 [19 <./img/cert.png> <./img/cert2.png> <./img/mail.png>]
-<img/sicuro.png, id=348, 632.3625pt x 305.14pt>
+<img/sicuro.png, id=383, 632.3625pt x 305.14pt>
 File: img/sicuro.png Graphic file (type png)
 <use img/sicuro.png>
 Package pdftex.def Info: img/sicuro.png  used on input line 531.
 (pdftex.def)             Requested size: 290.22107pt x 140.04482pt.
-<img/ssl.png, id=349, 534.99875pt x 259.97125pt>
+<img/ssl.png, id=384, 534.99875pt x 259.97125pt>
 File: img/ssl.png Graphic file (type png)
 <use img/ssl.png>
 Package pdftex.def Info: img/ssl.png  used on input line 542.
 (pdftex.def)             Requested size: 193.47578pt x 94.01402pt.
-<img/toy.png, id=351, 634.37pt x 240.9pt>
+<img/toy.png, id=386, 634.37pt x 240.9pt>
 File: img/toy.png Graphic file (type png)
 <use img/toy.png>
 Package pdftex.def Info: img/toy.png  used on input line 549.
@@ -615,17 +615,17 @@ Package pdftex.def Info: img/toy.png  used on input line 549.
 
 
 [20 <./img/nonsicuro.png> <./img/sicuro.png> <./img/ssl.png>]
-<img/MAC.png, id=358, 555.07375pt x 101.37875pt>
+<img/MAC.png, id=393, 555.07375pt x 101.37875pt>
 File: img/MAC.png Graphic file (type png)
 <use img/MAC.png>
 Package pdftex.def Info: img/MAC.png  used on input line 565.
 (pdftex.def)             Requested size: 290.22107pt x 53.00652pt.
-<img/type.png, id=359, 488.82625pt x 92.345pt>
+<img/type.png, id=394, 488.82625pt x 92.345pt>
 File: img/type.png Graphic file (type png)
 <use img/type.png>
 Package pdftex.def Info: img/type.png  used on input line 574.
 (pdftex.def)             Requested size: 241.84843pt x 45.68906pt.
-<img/toysec.png, id=360, 716.6775pt x 470.75874pt>
+<img/toysec.png, id=395, 716.6775pt x 470.75874pt>
 File: img/toysec.png Graphic file (type png)
 <use img/toysec.png>
 Package pdftex.def Info: img/toysec.png  used on input line 578.
@@ -637,12 +637,12 @@ Overfull \hbox (17.38083pt too wide) in paragraph at lines 598--599
 []\T1/cmr/m/n/12 client e ser-ver in-di-pen-ten-te-men-te cal-co-la-no de-crip-ta-zio-ne e MAC key dal-le pre_master_secret
  []
 
-<img/sslreal.png, id=368, 736.7525pt x 477.785pt>
+<img/sslreal.png, id=403, 736.7525pt x 477.785pt>
 File: img/sslreal.png Graphic file (type png)
 <use img/sslreal.png>
 Package pdftex.def Info: img/sslreal.png  used on input line 605.
 (pdftex.def)             Requested size: 241.84843pt x 156.83842pt.
-<img/formatoreal.png, id=369, 649.42625pt x 403.5075pt>
+<img/formatoreal.png, id=404, 649.42625pt x 403.5075pt>
 File: img/formatoreal.png Graphic file (type png)
 <use img/formatoreal.png>
 Package pdftex.def Info: img/formatoreal.png  used on input line 610.
@@ -650,7 +650,7 @@ Package pdftex.def Info: img/formatoreal.png  used on input line 610.
 
 
 [22 <./img/sslreal.png>]
-<img/connessionereal.png, id=376, 764.8575pt x 566.115pt>
+<img/connessionereal.png, id=411, 764.8575pt x 566.115pt>
 File: img/connessionereal.png Graphic file (type png)
 <use img/connessionereal.png>
 Package pdftex.def Info: img/connessionereal.png  used on input line 615.
@@ -658,22 +658,22 @@ Package pdftex.def Info: img/connessionereal.png  used on input line 615.
 
 
 [23 <./img/formatoreal.png> <./img/connessionereal.png>]
-<img/transport.png, id=381, 647.41875pt x 211.79124pt>
+<img/transport.png, id=416, 647.41875pt x 211.79124pt>
 File: img/transport.png Graphic file (type png)
 <use img/transport.png>
 Package pdftex.def Info: img/transport.png  used on input line 640.
 (pdftex.def)             Requested size: 338.58632pt x 110.76225pt.
-<img/tunnelling.png, id=382, 758.835pt x 223.83624pt>
+<img/tunnelling.png, id=417, 758.835pt x 223.83624pt>
 File: img/tunnelling.png Graphic file (type png)
 <use img/tunnelling.png>
 Package pdftex.def Info: img/tunnelling.png  used on input line 645.
 (pdftex.def)             Requested size: 338.58632pt x 99.87492pt.
-<img/common.png, id=383, 622.325pt x 427.5975pt>
+<img/common.png, id=418, 622.325pt x 427.5975pt>
 File: img/common.png Graphic file (type png)
 <use img/common.png>
 Package pdftex.def Info: img/common.png  used on input line 650.
 (pdftex.def)             Requested size: 338.58632pt x 232.64128pt.
-<img/sas.png, id=384, 706.64pt x 193.72375pt>
+<img/sas.png, id=419, 706.64pt x 193.72375pt>
 File: img/sas.png Graphic file (type png)
 <use img/sas.png>
 Package pdftex.def Info: img/sas.png  used on input line 655.
@@ -681,12 +681,12 @@ Package pdftex.def Info: img/sas.png  used on input line 655.
 
 
 [24 <./img/transport.png> <./img/tunnelling.png> <./img/common.png>]
-<img/sad.png, id=389, 713.66624pt x 477.785pt>
+<img/sad.png, id=424, 713.66624pt x 477.785pt>
 File: img/sad.png Graphic file (type png)
 <use img/sad.png>
 Package pdftex.def Info: img/sad.png  used on input line 660.
 (pdftex.def)             Requested size: 338.58632pt x 226.67319pt.
-<img/wep.png, id=390, 731.73375pt x 301.125pt>
+<img/wep.png, id=425, 731.73375pt x 301.125pt>
 File: img/wep.png Graphic file (type png)
 <use img/wep.png>
 Package pdftex.def Info: img/wep.png  used on input line 678.
@@ -694,7 +694,7 @@ Package pdftex.def Info: img/wep.png  used on input line 678.
 
 
 [25 <./img/sas.png> <./img/sad.png>]
-<img/firewall.png, id=399, 633.36626pt x 308.15125pt>
+<img/firewall.png, id=434, 633.36626pt x 308.15125pt>
 File: img/firewall.png Graphic file (type png)
 <use img/firewall.png>
 Package pdftex.def Info: img/firewall.png  used on input line 686.
@@ -704,12 +704,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 688--689
 
  []
 
-<img/acl.png, id=400, 765.86125pt x 364.36125pt>
+<img/acl.png, id=435, 765.86125pt x 364.36125pt>
 File: img/acl.png Graphic file (type png)
 <use img/acl.png>
 Package pdftex.def Info: img/acl.png  used on input line 692.
 (pdftex.def)             Requested size: 338.58632pt x 161.08667pt.
-<img/statefull.png, id=401, 758.835pt x 349.305pt>
+<img/statefull.png, id=436, 758.835pt x 349.305pt>
 File: img/statefull.png Graphic file (type png)
 <use img/statefull.png>
 Package pdftex.def Info: img/statefull.png  used on input line 699.
@@ -717,12 +717,12 @@ Package pdftex.def Info: img/statefull.png  used on input line 699.
 
 
 [26 <./img/wep.png> <./img/firewall.png> <./img/acl.png>]
-<img/ids.png, id=408, 750.805pt x 356.33125pt>
+<img/ids.png, id=443, 750.805pt x 356.33125pt>
 File: img/ids.png Graphic file (type png)
 <use img/ids.png>
 Package pdftex.def Info: img/ids.png  used on input line 707.
 (pdftex.def)             Requested size: 338.58632pt x 160.69556pt.
-<img/prerouter.png, id=409, 787.94376pt x 489.83pt>
+<img/prerouter.png, id=444, 787.94376pt x 489.83pt>
 File: img/prerouter.png Graphic file (type png)
 <use img/prerouter.png>
 Package pdftex.def Info: img/prerouter.png  used on input line 720.
@@ -730,12 +730,12 @@ Package pdftex.def Info: img/prerouter.png  used on input line 720.
 
 
 [27 <./img/statefull.png> <./img/ids.png>]
-<img/log.png, id=416, 810.02625pt x 538.01pt>
+<img/log.png, id=451, 810.02625pt x 538.01pt>
 File: img/log.png Graphic file (type png)
 <use img/log.png>
 Package pdftex.def Info: img/log.png  used on input line 726.
 (pdftex.def)             Requested size: 338.58632pt x 224.88722pt.
-<img/router.png, id=417, 803.0pt x 387.4475pt>
+<img/router.png, id=452, 803.0pt x 387.4475pt>
 File: img/router.png Graphic file (type png)
 <use img/router.png>
 Package pdftex.def Info: img/router.png  used on input line 732.
@@ -743,17 +743,17 @@ Package pdftex.def Info: img/router.png  used on input line 732.
 
 
 [28 <./img/prerouter.png> <./img/log.png>]
-<img/input.png, id=424, 808.01875pt x 482.80376pt>
+<img/input.png, id=459, 808.01875pt x 482.80376pt>
 File: img/input.png Graphic file (type png)
 <use img/input.png>
 Package pdftex.def Info: img/input.png  used on input line 738.
 (pdftex.def)             Requested size: 338.58632pt x 202.31207pt.
-<img/fabrics.png, id=425, 753.81625pt x 210.7875pt>
+<img/fabrics.png, id=460, 753.81625pt x 210.7875pt>
 File: img/fabrics.png Graphic file (type png)
 <use img/fabrics.png>
 Package pdftex.def Info: img/fabrics.png  used on input line 744.
 (pdftex.def)             Requested size: 338.58632pt x 94.67659pt.
-<img/memory.png, id=426, 675.52374pt x 206.7725pt>
+<img/memory.png, id=461, 675.52374pt x 206.7725pt>
 File: img/memory.png Graphic file (type png)
 <use img/memory.png>
 Package pdftex.def Info: img/memory.png  used on input line 750.
@@ -761,46 +761,144 @@ Package pdftex.def Info: img/memory.png  used on input line 750.
 
 
 [29 <./img/router.png> <./img/input.png> <./img/fabrics.png>]
-<img/bus.png, id=436, 204.765pt x 176.66pt>
+<img/bus.png, id=472, 204.765pt x 176.66pt>
 File: img/bus.png Graphic file (type png)
 <use img/bus.png>
 Package pdftex.def Info: img/bus.png  used on input line 756.
 (pdftex.def)             Requested size: 145.11053pt x 125.20033pt.
-<img/crossbar.png, id=437, 229.85875pt x 208.78pt>
+<img/crossbar.png, id=473, 229.85875pt x 208.78pt>
 File: img/crossbar.png Graphic file (type png)
 <use img/crossbar.png>
 Package pdftex.def Info: img/crossbar.png  used on input line 762.
 (pdftex.def)             Requested size: 145.11053pt x 131.80923pt.
-<img/coda.png, id=438, 638.385pt x 305.14pt>
+<img/coda.png, id=474, 638.385pt x 305.14pt>
 File: img/coda.png Graphic file (type png)
 <use img/coda.png>
 Package pdftex.def Info: img/coda.png  used on input line 768.
 (pdftex.def)             Requested size: 241.84843pt x 115.60052pt.
+<img/output.png, id=475, 623.32875pt x 238.8925pt>
+File: img/output.png Graphic file (type png)
+<use img/output.png>
+Package pdftex.def Info: img/output.png  used on input line 773.
+(pdftex.def)             Requested size: 241.84843pt x 92.69017pt.
 
 
 [30 <./img/memory.png> <./img/bus.png> <./img/crossbar.png> <./img/coda.png>]
+<img/priority.png, id=487, 391.4625pt x 445.665pt>
+File: img/priority.png Graphic file (type png)
+<use img/priority.png>
+Package pdftex.def Info: img/priority.png  used on input line 793.
+(pdftex.def)             Requested size: 241.84843pt x 275.337pt.
+<img/rr.png, id=488, 398.48875pt x 231.86626pt>
+File: img/rr.png Graphic file (type png)
+<use img/rr.png>
+Package pdftex.def Info: img/rr.png  used on input line 800.
+(pdftex.def)             Requested size: 241.84843pt x 140.72353pt.
 
-[31] (./RetiDiCalcolatori.aux)
+
+[31 <./img/output.png> <./img/priority.png>]
+<img/wfq.png, id=496, 553.06625pt x 250.9375pt>
+File: img/wfq.png Graphic file (type png)
+<use img/wfq.png>
+Package pdftex.def Info: img/wfq.png  used on input line 805.
+(pdftex.def)             Requested size: 241.84843pt x 109.73126pt.
+<img/df.png, id=497, 826.08624pt x 511.9125pt>
+File: img/df.png Graphic file (type png)
+<use img/df.png>
+Package pdftex.def Info: img/df.png  used on input line 813.
+(pdftex.def)             Requested size: 386.95897pt x 239.79436pt.
+
+
+[32 <./img/rr.png> <./img/wfq.png> <./img/df.png>]
+<img/mtu.png, id=505, 785.93625pt x 438.63875pt>
+File: img/mtu.png Graphic file (type png)
+<use img/mtu.png>
+Package pdftex.def Info: img/mtu.png  used on input line 835.
+(pdftex.def)             Requested size: 386.95897pt x 215.97229pt.
+<img/subnet.png, id=506, 448.67625pt x 396.48125pt>
+File: img/subnet.png Graphic file (type png)
+<use img/subnet.png>
+Package pdftex.def Info: img/subnet.png  used on input line 852.
+(pdftex.def)             Requested size: 193.47578pt x 170.96759pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 854--863
+
+ []
+
+
+
+[33 <./img/mtu.png> <./img/subnet.png>]
+<img/cidr.png, id=514, 589.20125pt x 159.59625pt>
+File: img/cidr.png Graphic file (type png)
+<use img/cidr.png>
+Package pdftex.def Info: img/cidr.png  used on input line 873.
+(pdftex.def)             Requested size: 193.47578pt x 52.40634pt.
+<img/dhcp.png, id=515, 593.21625pt x 486.81876pt>
+File: img/dhcp.png Graphic file (type png)
+<use img/dhcp.png>
+Package pdftex.def Info: img/dhcp.png  used on input line 888.
+(pdftex.def)             Requested size: 290.22107pt x 238.17186pt.
+
+
+[34 <./img/cidr.png> <./img/dhcp.png>]
+<img/nat.png, id=524, 774.895pt x 287.0725pt>
+File: img/nat.png Graphic file (type png)
+<use img/nat.png>
+Package pdftex.def Info: img/nat.png  used on input line 910.
+(pdftex.def)             Requested size: 338.58632pt x 125.4362pt.
+<img/nat2.png, id=525, 826.08624pt x 456.70625pt>
+File: img/nat2.png Graphic file (type png)
+<use img/nat2.png>
+Package pdftex.def Info: img/nat2.png  used on input line 926.
+(pdftex.def)             Requested size: 338.58632pt x 187.18805pt.
+
+
+[35 <./img/nat.png> <./img/nat2.png>]
+<img/df6.png, id=533, 707.64375pt x 481.8pt>
+File: img/df6.png Graphic file (type png)
+<use img/df6.png>
+Package pdftex.def Info: img/df6.png  used on input line 939.
+(pdftex.def)             Requested size: 338.58632pt x 230.5262pt.
+<img/tunnelling1.png, id=534, 632.3625pt x 215.80624pt>
+File: img/tunnelling1.png Graphic file (type png)
+<use img/tunnelling1.png>
+Package pdftex.def Info: img/tunnelling1.png  used on input line 946.
+(pdftex.def)             Requested size: 338.58632pt x 115.55234pt.
+<img/tunneling2.png, id=535, 752.8125pt x 220.825pt>
+File: img/tunneling2.png Graphic file (type png)
+<use img/tunneling2.png>
+Package pdftex.def Info: img/tunneling2.png  used on input line 950.
+(pdftex.def)             Requested size: 338.58632pt x 99.31978pt.
+<img/sdn.png, id=536, 578.16pt x 448.67625pt>
+File: img/sdn.png Graphic file (type png)
+<use img/sdn.png>
+Package pdftex.def Info: img/sdn.png  used on input line 957.
+(pdftex.def)             Requested size: 338.58632pt x 262.75182pt.
+
+
+[36 <./img/df6.png> <./img/tunnelling1.png> <./img/tunneling2.png>]
+
+[37 <./img/sdn.png>] (./RetiDiCalcolatori.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `RetiDiCalcolatori.out' has not changed.
-(rerunfilecheck)             Checksum: 0DCAD08702E799A557BEA9FA7256ADD9;6164.
+(rerunfilecheck)             Checksum: BE60AC5975AB78A71AAE38F858B448E4;7293.
  ) 
 Here is how much of TeX's memory you used:
- 12164 strings out of 473197
- 188809 string characters out of 5718606
- 609267 words of memory out of 5000000
- 35159 multiletter control sequences out of 15000+600000
+ 12295 strings out of 473197
+ 191241 string characters out of 5718606
+ 609268 words of memory out of 5000000
+ 35271 multiletter control sequences out of 15000+600000
  574990 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,15n,79p,766b,615s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on RetiDiCalcolatori.pdf (31 pages, 2638727 bytes).
+Output written on RetiDiCalcolatori.pdf (37 pages, 3214153 bytes).
 PDF statistics:
- 551 PDF objects out of 1000 (max. 8388607)
- 416 compressed objects within 5 object streams
- 101 named destinations out of 1000 (max. 500000)
- 604 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 482 compressed objects within 5 object streams
+ 120 named destinations out of 1000 (max. 500000)
+ 735 words of extra memory for PDF output out of 10000 (max. 10000000)
 
