@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  31 MAR 2026 11:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  31 MAR 2026 15:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -818,7 +818,7 @@ Overfull \hbox (10.7157pt too wide) in paragraph at lines 537--572
 
 
 [12]
-<img/rip.png, id=330, 743.77875pt x 292.09125pt>
+<img/rip.png, id=364, 743.77875pt x 292.09125pt>
 File: img/rip.png Graphic file (type png)
 <use img/rip.png>
 Package pdftex.def Info: img/rip.png  used on input line 578.
@@ -1030,7 +1030,7 @@ Overfull \hbox (10.7157pt too wide) in paragraph at lines 1008--1018
 [][][] 
  []
 
-<img/tabella.png, id=381, 505.89pt x 248.93pt>
+<img/tabella.png, id=415, 505.89pt x 248.93pt>
 File: img/tabella.png Graphic file (type png)
 <use img/tabella.png>
 Package pdftex.def Info: img/tabella.png  used on input line 1064.
@@ -1330,11 +1330,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 1550--1558
 
 
 [32]
-pdfTeX warning (ext4): destination with the same identifier (name{subsection.6.3}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{subsubsection.6.2.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1561 \subsection{Indici}
-                          
+l.1561 \subsubsection{Indici}
+                             
 Overfull \hbox (10.7157pt too wide) in paragraph at lines 1576--1578
 [][][] 
  []
@@ -1362,7 +1362,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 1591--1615
 
 
 [33]
-pdfTeX warning (ext4): destination with the same identifier (name{subsection.6.4}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{subsection.6.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.1615 ...i bivariati: correlazione e regressione}
@@ -1392,27 +1392,107 @@ Underfull \hbox (badness 10000) in paragraph at lines 1664--1707
 
 [35]
 
-[36] (./prob.aux)
+[36]
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1722--1742
+[][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1722--1742
+
+ []
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{subsection.6.4}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1742 \subsection{Teoremi limite}
+                                  
+Underfull \hbox (badness 10000) in paragraph at lines 1753--1755
+
+ []
+
+
+
+[37]
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1782--1784
+[][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1782--1784
+
+ []
+
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1785--1812
+[][][] 
+ []
+
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1785--1812
+[][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1785--1812
+
+ []
+
+
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 1816--1818
+
+ []
+
+
+
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 1850--1851
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1880--1883
+
+ []
+
+
+
+[40]
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1897--1914
+[][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1897--1914
+
+ []
+
+
+
+[41] (./prob.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `prob.out' has not changed.
-(rerunfilecheck)             Checksum: 0D702294D28814476912B8BA92E58B3D;11712.
+(rerunfilecheck)             Checksum: 6C2FE3744E861D088757C59A37CA542C;13268.
  ) 
 Here is how much of TeX's memory you used:
- 22392 strings out of 473197
- 408769 string characters out of 5718606
- 812067 words of memory out of 5000000
- 45160 multiletter control sequences out of 15000+600000
+ 22429 strings out of 473197
+ 409276 string characters out of 5718606
+ 813066 words of memory out of 5000000
+ 45166 multiletter control sequences out of 15000+600000
  580291 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,24n,91p,579b,623s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on prob.pdf (36 pages, 443818 bytes).
+Output written on prob.pdf (41 pages, 463237 bytes).
 PDF statistics:
- 573 PDF objects out of 1000 (max. 8388607)
- 484 compressed objects within 5 object streams
- 100 named destinations out of 1000 (max. 500000)
- 439 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 657 PDF objects out of 1000 (max. 8388607)
+ 562 compressed objects within 6 object streams
+ 131 named destinations out of 1000 (max. 500000)
+ 495 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1556,9 +1556,9 @@ leggibile; troppo poche classi la rendono poco significativa: il numero giusto v
 buon senso. L’importante e' che \textit{ogni dato appartenga ad una e una sola classe}.\\
 \vspace{1em}\\
 \paragraph{Come si costruiscono le classi?} Per semplicita' noi considereremo solo il caso di classi
-aventi la stessa ampiezza (un’ampiezza differente pu`o essere utile nel caso di dati con
+aventi la stessa ampiezza (un’ampiezza differente puo' essere utile nel caso di dati con
 concentrazione molto variabile).
-\subsection{Indici}
+\subsubsection{Indici}
 D’ora in avanti consideriamo solo dati (o variabili o caratteri) quantitativi. Ricordiamo che la Statistica descrittiva cerca di sintetizzare i dati in esame non solo attraverso
 tabelle e grafici, ma anche tramite singole quantita' numeriche, gli \textbf{indici}, chiamati anche \textbf{statistiche}. Queste sono grandezze calcolate a partire dai dati ed essenzialmente si
 suddividono in due grandi famiglie:
@@ -1637,7 +1637,7 @@ v_h & n_{h1} & n_{h2} & \cdots & n_{hk} & n_h^X \\
 n^Y & n_1^Y & n_2^Y & \cdots & n_k^Y & n
 \end{array}
 \]
-\subsection{Coefficiente di correlazione lineare}
+\subsubsection{Coefficiente di correlazione lineare}
 Per ottenere una misura quantitativa della dipendenza tra due caratteri, introduciamo una nuova statistica: il \textbf{coefficiente di correlazione lineare}.
 Tale indice
 misura se esista una dipendenza tra i due caratteri e se tale dipendenza possa essere
@@ -1704,14 +1704,211 @@ Una formula utile per calcolare la covarianza e' la seguente, che generalizza la
 \end{itemize}
 }}\\
 \vspace{1px}\\
-\subsection{Metodo dei minimi quadrati e regressione lineare}
-
-
-
-
-
-
-
+\subsubsection{Metodo dei minimi quadrati e regressione lineare}
+In questa sezione ci occupiamo del problema di determinare concretamente una relazione lineare in grado di descrivere, seppur approssimativamente, la relazione tra due caratteri.\\
+Faremo cio' indipendentemente dal valore assunto da $r_{xy}$, tuttavia tale relazione lineare sara' chiaramente tanto pi`u significativa quanto pi`u $|r_{xy}|$ assumera' un valore vicino ad 1.\\
+\vspace{1px}\\
+L’idea per determinare tale retta e' la seguente: abbiamo una nuvola di punti nel piano cartesiano e cerchiamo due numeri reali $m$ e $q$ tali che la retta
+\begin{align*}
+  y = mx + q
+\end{align*}
+passi il pi`u vicino possibile a tutti i punti $(x_i, y_i)$. Per ogni punto consideriamo l'\textit{errore relativo} a tale punto (anche detto \textit{errore pariziale}), ovvero la differenza tra il valore reale e quello lungo la retta
+\begin{align*}
+  e_i \, := \, y_i - m x_i - q
+\end{align*}
+Un procedimento che permette di determinare i numeri $m$ e $q$ e' quello dei \textbf{minimi quadrati}, che consiste nel minimizzare la somma dei quadrati degli errori parziali
+\begin{align*}
+  \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - m x_i - q)^2
+\end{align*}
+La retta che si ottiene procedento in questo modo si chiama \textbf{retta di regressione} (o \textbf{retta dei minimi quadrati}).\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+  \textbf{Teorema}: Sia dato un insieme di dati bivariati $\{(x_i, y_i) : i=1,\ldots,n\}$ quantitativi (discreti o continui). Siano $\bar{x}$ e $\bar{y}$ le rispettive medie artimetiche. Siano le deviazioni standard $s_x$ e $s_y$ e la covarianza $s_{xy}$. Supponiamo inoltre che $s_x, s_y \neq 0$.\\
+  La \textbf{retta di regressione} e' data da
+  \begin{align*}
+    y = m x + q
+  \end{align*}
+  con 
+\begin{align*}
+  m = \frac{s_{xy}}{s_x^2} \qquad \text{ e } \qquad q = \bar{y} - \frac{s_{xy}}{s^2_x}\bar{x}
+\end{align*}
+Quindi
+\begin{align}
+  y = \frac{s_{xy}}{s_x^2} (x - \bar{x}) + \bar{y}
+\end{align}
+}}\\
+\vspace{1px}\\
+\subsection{Teoremi limite}
+Sia dunque $X$ una generica variabile aleatoria di cui si vuole stimare il valore atteso.\\
+Per ottenere una “stima” si segue questo classico procedimento della Statistica: si ripete
+un numero “elevato” di volte l’esperimento aleatorio, ogni volta registrando quale valore
+ha assunto la variabile aleatoria $X$. Si ottiene dunque una sequenza di valori numerici
+\begin{align}
+  x_1 \qquad x_2 \quad \cdots \quad x_n
+\end{align}
+La sequenza cosi ottenuta e' percio un \textit{campione} di dati. Come otteniamo a partire da $x_1, \ldots, x_n$ una sitma di $\mathbb{E}[X]$? La scelta naturale e' quella di considerare la \textit{media campionaria}
+\begin{align}
+  \bar{x}_n = \frac{x_1 + x_2 + \dots + x_n}{n}
+\end{align}
+La media artimetica del campione $x_1, \ldots, x_n$ e' denotata con $\bar{x}_n$ e si chiama \textit{media campionaria}.\\
+\subsubsection{Successioni di variabili aleatorie i.i.d.}
+Iniziamo a formalizzare il problema presentato nella sezione precedente.\\
+E' naturale considerare una successione di variabili aleatorie
+che rappresentano gli ipotetici valori assunti dalla variabile aleatoria di interesse nei vari
+esperimenti
+\begin{align}
+  X_1 \qquad X_2 \quad \cdots \quad X_n
+\end{align}
+La lettera maiuscola sta dunque ad indicare che gli esperimenti devono ancora essere svolti
+e le quantita' sono quindi aleatorie. Solo dopo aver eseguito gli esperimenti conosceremo
+i valori da esse assunti, che saranno indicati con le lettere minuscole $x_1, \ldots, x_n$.\\
+La successione $X = (X_1, X_2, \ldots, X_n)$ verra indicata anche con il simbolo
+\begin{align}
+  (X_n)_n
+\end{align}
+Per quanto detto finora e' chiaro che le variabili aleatorie $X_1, X_2, \ldots, X_n$ verificano la seguente proprieta':
+\begin{itemize}
+  \item La variabili aleatorie $X_1, X_2, \ldots, X_n$ sono denticamente distribuite 
+  \item La variabili aleatorie $X_1, X_2, \ldots, X_n$ sono indipendenti
+\end{itemize}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: $(X_n)_n$ e' una \textbf{successione di variabili aleatorie i.i.d} se valgono le seguenti proprieta':
+\begin{itemize}
+  \item Le variabili aleatorie $X_1, X_2, \ldots, X_n$ sono denticamente distribuite 
+  \item Le variabili aleatorie $X_1, X_2, \ldots, X_n$ sono indipendenti
+\end{itemize}
+}}\\
+\vspace{1px}\\
+\subsubsection{Legge dei grandi numeri (LGN)}
+Iniziamo con un risultato preliminare, particolarmente importante.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Lemma (Disuguaglianza di Chebyshev)} Sia $X$ una variabile aleatoria con media $\mu$. Allora per ogni $\varepsilon > 0$ vale che: 
+\begin{align}
+  \mathbb{P}(|X-\mu| \geq \varepsilon) \leq \frac{\text{Var}(X)}{\varepsilon^2}
+\end{align}
+}}\\
+\vspace{1px}\\
+Ovvero la legge dei grandi numeri, la quale stabilisce che $X_n$ \textit{“converge”} verso $\mu$ quando $n$ tende all’infinito.\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema (Legge dei grandi numeri)} Sia $(X_n)_n$ una successione di variabili aleatorie i.i.d. con media $\mu$ e varianza $\sigma^2$. Allora posto
+\begin{align}
+  \bar{X}_n = \frac{X_1 + \dots + X_n}{n}
+\end{align}
+si ha
+\begin{align}
+  \forall \epsilon > 0 \quad \lim_{n \to +\infty} \mathbb{P}(|\bar{X}_n - \mu| \geq \varepsilon) = 0
+\end{align}
+Inoltre vale che 
+\begin{align}
+  \mathbb{P}(| \bar{X}_n - \mu| < \varepsilon) \leq \frac{\sigma^2}{\epsilon^2 n}
+\end{align}
+}}\\
+\vspace{1px}\\
+\subsubsection{Metodo Monte Carlo}
+La Legge dei grandi numeri e' alla base di un metodo numerico \textit{probabilistico} molto importante, noto come metodo Monte Carlo. Consideriamo il seguente problema. 
+\begin{align}
+  \text{Come si puo' approssimare} \int_{a}^b f(x) dx, \text{ con $f$ funzione integrabile?}
+\end{align}
+Per semplicita' consideriamo il caso in cui $a=0$ e $b=1$.\\
+\begin{align*}
+  \int_{0}^1 f(x) dx & = \mathbb{E}[f(U)]
+\end{align*}
+dove $U$ e' una variabile aleatoria uniforme su $[0,1]$ ($U \sim \text{Unif}(0,1)$).\\
+Ci siamo dunque ricondotti al problema di stimare il valore atteso della variabile aleatoria $X=f(U)$. Il metodo Monte Carlo consiste nell’approssimare numericamente il valore atteso $\mathbb{E}[f(U)]$ facendo uso della Legge dei grandi numeri.\\
+Piu' precisamente sia $(U_n)_n$ una successione di variabili aleatorie i.i.d. con distribuzione uniforme su $[0,1]$. Definiamo
+\begin{align}
+  X_n = f(U_n), \quad \forall
+\end{align}
+Allora $(X_n)_n$ e' ancora una successione di variabili aleatorie i.i.d. con media $\mathbb{E}[f(U)]$.\\
+Quindi per la legge dei grandi numeri
+\begin{align}
+  \frac{f(U_1) + \dots + f(U_n)}{n} \xrightarrow[n \to +\infty]{} \mathbb{E}[f(U)] = \int_{0}^1 f(x) dx
+\end{align}
+L’implementazione del metodo Monte Carlo si basa sull’utilizzo dei \textit{generatori aleatori}.\\
+Nell’esempio qui considerato, per approssimare $\mathbb{E}[f(U)]$ si genera una sequenza di numeri casuali con distribuzione uniforme su $(0, 1)$, quindi
+\begin{align}
+  u_1 \qquad u_2 \quad \cdots \quad u_n
+\end{align}
+Tali numeri sono scritti con la lettera minuscola in quanto sono noti, infatti sono i numeri forniti dal generatore aleatorio. Dopodiche', si calcola la quantita'
+\begin{align*}
+  \frac{f(u_1) + \dots + f(u_n)}{n}
+\end{align*}
+Se $n$ e' “elevato” si ottiene una buona approssimazione dell’integrale $\int_0^1 f(x) dx$.\\
+I principali vantaggi rispetto ai metodi deterministici di integrazione numerica sono i seguenti:
+\begin{itemize}
+  \item non si richiedono ipotesi di regolarita' sulla funzione integranda $f$
+  \item l’ordine di convergenza del metodo, che e' $\frac{1}{\sqrt{n}}$ come seguir`a dal Teorema centra-
+le del limite, e' indipendente dalla dimensione e l’implementazione del metodo in
+dimensione maggiore di uno non comporta alcuna difficolt`a aggiuntiva.
+\end{itemize}
+\subsubsection{Metodo del gradiente stocastico}
+Il metodo del gradiente stocastico e' un algoritmo di ottimizzazione che si basa sul metodo Monte Carlo.\\
+\paragraph{Metodo del gradiente} Sia $f: \mathbb{R}^d \to \mathbb{R}$ una funzione differenziabile. Consideriamo il seguente problema di ottimizzazione:
+\begin{align}
+  \text{Trovare } x^* \in \mathbb{R}^d \text{ punto di minimo di } f: \, f(x^*) = \min_x f(x)
+\end{align}
+Ricordiamo il gradiente
+\begin{align}
+  \nabla f(x) = \left( \frac{\partial f}{\partial x_1}(x), \ldots, \frac{\partial f}{\partial x_d}(x) \right)
+\end{align}
+Il vettore $\nabla f(x)$ rappresenta l’incremento infinitesimo della funzione $f$ nel punto $x$.\\ 
+Vediamo il il metodo del gradiente in modo iterativo:
+\begin{itemize}
+  \item Si sceglie un punto di partenza $x_0 \in \mathbb{R}^d$
+  \item Per $n=0,1,2,\ldots$ si calcola il gradiente $\nabla f(x_n)$ e si aggiorna il punto $x_n$
+  \item Si ottiene cosi una successione di punti $x_0, x_1, \ldots$ che converge verso un punto di minimo di $f$
+  \begin{align*}
+    x_{k+1} = x_k + \alpha p_k
+  \end{align*}
+  con $p_k = -\nabla f(x_k)$, ovvero la direzione di massima discesa, e $\alpha > 0$ un opportuno passo di aggiornamento.
+\end{itemize}
+\subsubsection{Metodo del gradiente stocastico}
+Il metodo del gradiente stocastico e' un algoritmo di ottimizzazione che si basa sul metodo del gradiente.\\
+Nell’ambito delle reti neurali si e' interessati al problema di ottimizzazione per una particolare funzione $f$, avente la seguente espressione:
+\begin{align*}
+  f(x) = \frac{1}{n} \sum_{i=1}^{n} f_i(x), \quad \forall x \in \mathbb{R}^d
+\end{align*}
+In altre parole, $f$ e' la media aritmetica di $n$ funzioni qui indicate con $f_1, \ldots, f_n$. Il metodo del gradiente applicato ad una tale funzione corrisponde al seguente schema iterativo:
+\begin{align}
+  x_{k+1} & = x_k - \alpha \nabla f(x_k) \\
+  & = x_k - \alpha \frac{1}{n} \sum_{i=1}^{n} \nabla f_i(x_k)
+\end{align}
+Il metodo del gradiente stocastico consiste dunque nell’individuare, ad ogni passo $k$, un sottoinsieme di addendi in modo casuale; sono tali addendi i soli che vengono utilizzati al passo $k$ per determinare $x_{k+1}$.\\
+\vspace{1px}\\
+\subsubsection{Teorema centrale del limite (TCL)}
+Come nel caso della Legge dei grandi numeri, consideriamo una successione $(X_n)_n$ di variabili aleatorie i.i.d. e indichiamo con $\mu$ e $\sigma^2$ media e varianza di ciascuna variabile aleatoria $_n$. Sia inoltre
+\begin{align*}
+  \bar{X}_n = \frac{X_1 + \dots + X_n}{n  }
+\end{align*}
+Grazie alla Legge dei grandi numeri sappiamo che vale la convergenza
+\begin{align*}
+  \bar{X}_n \xrightarrow[n \to +\infty]{\mathbb{P}} \mu
+\end{align*}
+Il Teorema centrale del limite descrive come avviene questa convergenza, o piu' precisamente, ci dice qual e' approssimativamente la distribuzione di $\bar{X}_n$ per $n$ grande.\\
+rima di enunciare il Teorema centrale del limite, e' utile introdurre la variabile aleato $\bar{\mathbb{Z}_n}$ data da
+\begin{align}
+  \bar{\mathbb{Z}_n} & = \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \\
+  & = \frac{\frac{1}{n} \sum_{i=1}^{n} X_i - \mu}{\sigma / \sqrt{n}}
+\end{align}
+La variabile aleatoria $\bar{\mathbb{Z}_n}$ si chiama \textbf{media campionaria standardizzata}.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema (Teorema centrale del limite)} Sia $(X_n)_{n}$ una successione di variabili aleatorie i.i.d. con media $\mu$ e varianza $\sigma^2$. Supposiano che $\sigma > 0$, allora posto
+\begin{align*}
+  \bar{\mathbb{Z}_n} = \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}}
+\end{align*}
+si ha
+\begin{align*}
+  \lim_{n \to +\infty} \mathbb{P}(\bar{\mathbb{Z}_n} \leq x) = \lim_{n \to +\infty} F_{\bar{\mathbb{Z}_n}}(x) = \Phi(x), \quad \forall x \in \mathbb{R}
+\end{align*}
+}}\\
+\vspace{1px}\\
 \renewcommand{\thesection}{\arabic{section}}
 \setcounter{section}{6} % importante!
 \section{Catene di Markov}
