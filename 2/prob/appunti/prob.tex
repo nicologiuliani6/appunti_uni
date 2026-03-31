@@ -512,7 +512,7 @@ Permette di determinare la cardinalità di un insieme una volta caratterizzati u
 \vspace{1px}\\
 \fcolorbox{blue!75!black}{blue!5!white}{
 \parbox{\linewidth}{
-\textbf{Metodo delle scelte successive}: Supponiamo che \textbf{ciasun} elemento di un insieme $A$ possa essere determinato tramite \textbf{una e una sola} sequenza di $k$ scelte successive, in cui ogni scelta viene effettuata tra un numero fissato di possibilità (tale numero di possibilit`a, qui di seguito indicato con $n_1, \dots, n_k$ non dipende dalle scelte precedenti ma solo da $k$):
+\textbf{Metodo delle scelte successive}: Supponiamo che \textbf{ciasun} elemento di un insieme $A$ possa essere determinato tramite \textbf{una e una sola} sequenza di $k$ scelte successive, in cui ogni scelta viene effettuata tra un numero fissato di possibilità (tale numero di possibilita', qui di seguito indicato con $n_1, \dots, n_k$ non dipende dalle scelte precedenti ma solo da $k$):
 \begin{itemize}
   \item la prima scelta viene effettuata tra $n_1$ possibilità
   \item la seconda scelta viene effettuata tra $n_2$ possibilità
@@ -776,7 +776,7 @@ Dimostrazione: 3.5 - Variabili aleatorie.pdf, pagina 11.\\
 \renewcommand{\thesection}{\arabic{section}}
 \setcounter{section}{3} % importante!
 \section{Variabili aleatorie discrete}
-La \textit{non definizione} dice: una variabile aleatoria si dice \textbf{discreta} se assume un numero finito (o al pi`u un’infinit`a numerabile) di valori.\\
+La \textit{non definizione} dice: una variabile aleatoria si dice \textbf{discreta} se assume un numero finito (o al piu' un’infinita' numerabile) di valori.\\
 \fcolorbox{blue!75!black}{blue!5!white}{
 \parbox{\linewidth}{
 \textbf{Definizione}: Sia $(\Omega, \mathbb{P})$ uno spazio di probabilità e $X$ una variabile aleatoria. La funzione $P_X \, : \, \mathbb{R} \to [0,1]$ data da 
@@ -1017,7 +1017,7 @@ Quindi si verifica che
 }}
 \section{Variabili aleatorie continue}
 Se dobbiamo definire per esempio la vita di un componente $X$ diremo che la sua vita' e' maggiore uguale ad zero, ovvero $\mathcal{S}_X = \{0, + \infty\}$.\\
-Innanzitutto, poiche' $X$ puo' assumere un’infinit`a continua di valori, l’eventualit`a che ne assuma esattamente uno in particolare (ad esempio il numero $x = 3,45362$) e' praticamente impossibile.
+Innanzitutto, poiche' $X$ puo' assumere un’infinita' continua di valori, l’eventualita' che ne assuma esattamente uno in particolare (ad esempio il numero $x = 3,45362$) e' praticamente impossibile.
 \begin{align*}
   p_X(x) = \mathbb{P}(X=x)=0 \quad \forall x \in \mathbb{R} \\
   \mathbb{P}(a \leq X \leq b) > 0 \quad \text{ se } [a,b] \subset [0, +\infty]
@@ -1063,7 +1063,7 @@ Possiamo dunque riassumere nel seguente schema le differenze principali tra vari
     \centering
     \includegraphics[width=0.8\textwidth]{img/tabella.png}
 \end{figure}
-\subsubsection{Dalla funzione di ripartizione alla densit`a continua}
+\subsubsection{Dalla funzione di ripartizione alla densita' continua}
 \fcolorbox{blue!75!black}{blue!5!white}{
 \parbox{\linewidth}{
 \textbf{Proposizione} Sia $X$ una variabile aleatoria e indichiamo con $F_X$ la sua funzione di ripartizione. Supponiamo di sapere gia' che $X$ e' una variabile aleatoria continua (quindi sappiamo gia' che $F_X$ e' una funzione integrale). Allora, una densita' $f_X$ e' data da
@@ -1116,7 +1116,7 @@ Capitera' spesso di dover calcolare il valore atteso di una funzione di $X$:
   \mathbb{E}[Y] = \mathbb{E}[h(X)] = \int_{-\infty}^{+\infty} h(x)f_X(x)dx
 \end{align*}
 }}\\
-Ricordiamo infine la propriet`a di linearit`a del valore atteso, gia' dimostrata nel caso discreto:\\
+Ricordiamo infine la proprieta' di linearita' del valore atteso, gia' dimostrata nel caso discreto:\\
 \vspace{5px}\\
 \fcolorbox{blue!75!black}{blue!5!white}{
 \parbox{\linewidth}{
@@ -1378,13 +1378,341 @@ Infine $p_X$ e $p_Y$ si chiamano \textbf{densita' discrete marginali} di $X$e $Y
 \begin{itemize}
   \item $p_{(X,Y)}(x,y) = 0, \quad \forall (x,y) \notin \mathcal{S}_X \times \mathcal{S}_Y$
   \item $\sum_{x_i \in \mathcal{S}_X} \sum_{y_j \in \mathcal{S}_Y} p_{(X,Y)}(x_i, y_i)=1$
-  \item Vale la forumal
+  \item Vale la foruma
   \begin{align*}
     \mathbb{P}((X,Y)\in B) = \sum_{(x_i, y_j) \in B} p_{(X,Y)}(x_i, y_j), \quad \forall B \subset \mathbb{R}^2
   \end{align*}
 \end{itemize}
 }}\\
 \vspace{1px}\\
-\subsubsection{Densita' discreta congiunta e densit`a discrete marginali}
-pagina 8
+\subsubsection{Densita' discreta congiunta e densita' discrete marginali}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $(X,Y)$ un vettore aleatorio discreto. Allora
+\begin{align*}
+  p_X(x_i) = \sum_j p_{(X,Y)} (x_i, y_i), \quad \forall x_i \in \mathcal{S}_X\\
+  p_Y(y_j) = \sum_i p_{(X,Y)} (x_i, y_i), \quad \forall y_j \in \mathcal{S}_Y\\
+\end{align*}
+}}\\
+\vspace{1px}\\
+\paragraph{Tabella della densita' discreta congiunta} Nel caso in cui sia $\mathcal{S}_X$ che $\mathcal{S}_Y$ sono insiemi finiti, quindi
+\begin{align*}
+  \mathcal{S}_X = \{x_1, \dots, x_n\}\\
+  \mathcal{S}_Y = \{y_1, \dots, y_n\}
+\end{align*}
+possiamo riportare i valori di $p_{(X,Y)}$ in una tabella:
+\[
+\begin{array}{c|cccc|c}
+X \backslash Y 
+  & y_1 
+  & y_2 
+  & \cdots 
+  & y_m 
+  & p_X \\ \hline
+x_1 
+  & p_{X,Y}(x_1,y_1) 
+  & p_{X,Y}(x_1,y_2) 
+  & \cdots 
+  & p_{X,Y}(x_1,y_m) 
+  & p_X(x_1) \\
+x_2 
+  & p_{X,Y}(x_2,y_1) 
+  & p_{X,Y}(x_2,y_2) 
+  & \cdots 
+  & p_{X,Y}(x_2,y_m) 
+  & p_X(x_2) \\
+\vdots 
+  & \vdots 
+  & \vdots 
+  & \ddots 
+  & \vdots 
+  & \vdots \\
+x_n 
+  & p_{X,Y}(x_n,y_1) 
+  & p_{X,Y}(x_n,y_2) 
+  & \cdots 
+  & p_{X,Y}(x_n,y_m) 
+  & p_X(x_n) \\ \hline
+p_Y 
+  & p_Y(y_1) 
+  & p_Y(y_2) 
+  & \cdots 
+  & p_Y(y_m) 
+  & 1
+\end{array}
+\]
+\subsubsection{Indipendenza e densita' discreta congiunta}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema} Siano $X$ e $Y$ variabili aleatorie discrete. Allora $X$ e $Y$ sono indipendenti se e solo se
+\begin{align*}
+  p_{(X,Y)}(x_i, y_j) = p_X(x_i) p_Y(y_j), \quad \forall (x_i, y_i) \in \mathcal{S}_X \times \mathcal{S}_Y
+\end{align*}
+}}\\
+\vspace{1px}\\
+\subsection{Valore atteso e varianza di una funzione di $(X, Y)$}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema} Siano $(X,Y)$ un vettore aleatorio discreto e $h : \mathbb{R}^2 \to \mathbb{R}$. Allora
+\begin{align*}
+  \mathbb{E}[h(X,Y)] = \sum_{i,j} h(x_i, y_j) p_{(X,Y)}(x_i, y_j)
+\end{align*}
+e
+\begin{align*}
+  \text{Var}(h(X,Y)) = \mathbb{E}[(h(X,Y) - \mathbb{E}[h(X,Y)])^2] = \sum_{i,j} (h(x_i, y_j) - \mathbb{E}[h(X,Y)])^2 p_{(X,Y)}(x_i,y_j)
+\end{align*}
+Vale inoltre la formula
+\begin{align*}
+  \text{Var}(h(X,Y)) = \mathbb{E}[(h(X,Y))^2] - \mathbb{E}[h(X,Y)]^2 = \sum_{i,j}(h(x_i, y_j))^2 p_{(X,Y)}(x_i, y_j) - \mathbb{E}[h(X,Y)]^2
+\end{align*}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Corollario} Siano $X$ e $Y$ variabili aleatorie discrete. Siano inoltre $a$ e $b$ due numeri reali fissati. Allora
+\begin{align*}
+  \mathbb{E}[aX+bY]  = a\mathbb{E}[X]+b\mathbb{E}[Y]
+\end{align*}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Corollario} Siano $X$ e $Y$ variabili aleatorie discrete. Se $X$ e $Y$ sono indipendenti allora
+\begin{align*}
+  \mathbb{E}[XY] = \mathbb{E}[X] \mathbb{E}[Y]
+\end{align*}
+}}\\
+\vspace{1px}\\
+\subsection{Indici di sintesi della distribuzione di un vettore aleatorio discreto}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Siano $X$ e $Y$ variabili aleatorie discrete. La \textbf{covarianza} di $X$ e $Y$ e' data da
+\begin{align*}
+  \text{Cov}(X,Y) = \mathbb{E}[(X-\mathbb{E}[X])(Y - \mathbb{E}[Y])] = \sum_{i,j} (x_i - \mathbb{E}[X])(y_j - \mathbb{E}[Y]) p_{(X,Y)}(x_i, y_j)
+\end{align*}
+Se $\text{Cov}(X,Y)=0$ le variabili aleatorie $X$ e $Y$ si dicono \textbf{scorrelate}.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema} Siano $X$ e $Y$ variabili aleatorie discrete. Vale che
+\begin{align*}
+  \text{Cov}(X,Y) = \mathbb{E}[XY] - \mathbb{E}[X]\mathbb{E}[Y] = \sum_{i,j}x_i y_j p_{(X,Y)}(x_i, y_j) - \mathbb{E}[X]\mathbb{E}[Y]
+\end{align*}
+Quindi se le variabili aleatorie $X$ e $Y$ sono indipendenti allora sono scorrelate.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema} Siano $X$ e $Y$ variabili aleatorie discrete. Vale che
+\begin{align*}
+  \text{Var}(X+Y) = \text{Var}(X) + \text{Var}(Y) + 2\text{Cov}(X,Y)
+\end{align*}
+Quindi se $X$ e $Y$ sono scorrelate vale che
+\begin{align*}
+  \text{Var}(X+Y) = \text{Var}(X)+\text{Var}(Y)
+\end{align*}
+}}\\
+\vspace{1px}\\
+\addtocounter{section}{-1} % riporta il contatore a 3
+\renewcommand{\thesection}{6.5}
+\section{Statistica descrittiva e teoremi limite}
+\subsection{Statistica descrittiva}
+Branca della statistica che si occupa di descrivere e sintetizzare tramite indici, tabelle e grafici i dati in esame.\\
+Una prima distinzione che e' necessario fare e' tra dati (o caratteri o variabili) quantitativi:
+\begin{itemize}
+  \item I \textbf{dati quantitativi} sono dati numerici; essi si suddividono a loro volta in:
+  \begin{itemize}
+    \item \textbf{discreti} se possono assumere solo un numero finito o al piu' un’infinita' numerabile di valori
+    \item \textbf{continui} se possono assumere un’infinita' continua di valori
+  \end{itemize}
+  \item I \textbf{dati qualitativi} sono tutti gli altri dati
+\end{itemize}
+Ci sono meno strumenti a disposizione per trattare dati qualitativi. Inoltre, per riuscire
+a studiare dati qualitativi in maniera efficace e' utile che tali dati assumano un numero
+relativamente basso di valori tra loro distinti (come accade ad esempio nel caso in cui si
+studia il gruppo sanguigno di un insieme di persone oppure lo stato occupazionale dei
+laureati di un determinato corso di laurea).
+\subsection{Le frequenze: tabelle e grafici}
+La nozione forse piu' importante della Statistica descrittiva e' quella di \textbf{frequenza}, nelle
+sue varie forme. I valori di tali frequenze sono riportati innanzitutto in tabelle e poi
+rappresentati anche tramite opportuni grafici.\\
+\vspace{1em}\\
+La frequenza (anche detta \textbf{frequenza assoluta}) di un determinato valore e' il numero di volte che quel valore e' stato osservato. A partire dalla frequenza assoluta si ricavano altri tipi di frequenze, in particolare:
+\begin{itemize}
+  \item la \textbf{frequenza relativa}, data dal rapporto tra frequenza assoluta e numero totale di dati in esame
+  \item la \textbf{frequenza percentuale}, che e' la frequenza relativa espressa in termini percentuali
+  \item a \textbf{frequenza (percentuale) cumulata}, definita solo nel caso di dati quantitativi,
+la quale e' la somma delle frequenze percentuali dei valori minori o uguali a quello
+per cui la si sta calcolando. In modo analogo si definiscono la \textbf{frequenza assoluta cumulata} e la \textbf{frequenza relativa cumulata}.
+\end{itemize}
+\subsubsection{Classi di frequenza}
+Nel caso di dati quantitativi giocano un ruolo importante le cosiddette \textbf{classi di frequenza}. Quest’ultime sono infatti necessarie nel caso di dati continui e utili nel caso di
+dati discreti che assumono un numero elevato di valori distinti.
+Le classi di frequenza sono \textbf{intervalli} contigui della retta reale. Stabilire quali deb-
+bano essere le classi da adottare non e' una scelta univoca, infatti il numero di classi e la
+loro ampiezza possono essere scelti in infiniti modi. Troppe classi rendono la tabella poco
+leggibile; troppo poche classi la rendono poco significativa: il numero giusto va scelto con
+buon senso. L’importante e' che \textit{ogni dato appartenga ad una e una sola classe}.\\
+\vspace{1em}\\
+\paragraph{Come si costruiscono le classi?} Per semplicita' noi considereremo solo il caso di classi
+aventi la stessa ampiezza (un’ampiezza differente pu`o essere utile nel caso di dati con
+concentrazione molto variabile).
+\subsection{Indici}
+D’ora in avanti consideriamo solo dati (o variabili o caratteri) quantitativi. Ricordiamo che la Statistica descrittiva cerca di sintetizzare i dati in esame non solo attraverso
+tabelle e grafici, ma anche tramite singole quantita' numeriche, gli \textbf{indici}, chiamati anche \textbf{statistiche}. Queste sono grandezze calcolate a partire dai dati ed essenzialmente si
+suddividono in due grandi famiglie:
+\begin{itemize}
+  \item \textbf{indici di posizione}, che hanno come obiettivo individuare il “centro” dell’insieme dei dati, a cui e' dedicata la presente sezione
+  \item \textbf{indici di variabilita'}, che hanno come obiettivo quantificare la dispersione dei dati attorno ad un determinato “centro”, a cui e' dedicata la prossima sezione
+\end{itemize}
+\vspace{1em}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Sia dice \textbf{media} (o anche media campionario quando i dati provengono da un campione) di $n$ dati $x_1, \dots, x_n$ e si denota con $\bar{x}$ la quantita'
+\begin{align*}
+  \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\end{align*}
+}}\\
+\vspace{1px}\\
+\subsubsection{Indici di dispersione}
+Gli \textbf{indici di dispersione} o variabilita' hanno come obiettivo proprio \textit{quantificare} tale concentrazione/dispersione dei dati
+\paragraph{Varianza} Tra gli indici di variabilita', i piu' importanti sono quelli che usano come
+valore centrale la \textit{media}. Fra questi indici il piu' noto e' la \textbf{varianza}. Prima di darne la
+definizione e' utile introdurre alcune notazioni. Si chiama scarto (o deviazione) di un dato
+dalla media la quantita'
+\begin{align*}
+  x_i - \bar{x}
+\end{align*}
+Si chiamano rispettivamente scarto assoluto (o deviazione assoluta) e scarto quadratico
+(o deviazione quadratica) le quantita'
+\begin{align*}
+  & |x_i - \bar{x}| \qquad (x_i - \bar{x})^2
+\end{align*}
+Gli indici che misurano lo scarto dalla media si ottengono sommando gli scarti (assoluti o quadratici) dalla media stessa \\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Si dice \textbf{varianza} (o anche varianza campionaria quando i dati provengono da un campione) di n dati $x_1, \dots, x_n$ e si denota con $s^2$ (o anche $s_n^2$) la quantita':
+\begin{align*}
+  s^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2
+\end{align*}
+La radice quadrata della varianza si chiama \textbf{deviazione standard} (o \textbf{scostamento quadratico medio}):
+\begin{align*}
+  s = \sqrt{s^2} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2}
+\end{align*}
+}}\\
+\vspace{1em}\\
+Per calcolare la varianza e' spesso preferibile utilizzare la formula seguente:\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}:La varianza di un insieme di $n$ dati $x_1, \dots, x_n$ e' data dalla seguente formula alternativa:
+\begin{align*}
+  s^2 = \frac{1}{n} \sum_{i=1}^{n} x_i^2 - \bar{x}^2
+\end{align*}
+}}\\
+\vspace{1em}\\
+\subsection{Dati bivariati: correlazione e regressione}
+\subsubsection{Insiemi di dati bivariati e frequenza congiunta}
+Come nel caso unidimensionale, la nozione fondamentale e' quella di \textbf{frequenza}, che ora
+definiamo nel caso di dati bivariati. Per semplicita', nella presente sezione, supponiamo
+che i dati siano \textit{quantitativi} e \textit{discreti} e che assumano un numero \textit{finito} di valori distinti.\\
+\vspace{1px}\\
+Per ogni coppia $(v_i, w_j)$ definiamo:
+\begin{itemize}
+  \item la \textbf{frequenza assoluta congiunta} $n_{ij}$, data dal numero di volte che la coppia $(v_i, w_j)$ e' stata osservata
+  \item la \textbf{frequenza relativa congiunta} $f_{ij}=\frac{n_{ij}}{n}$, data dal rapporto tra frequenza assoluta congiunta e numero totale di dati in esame
+  \item la \textbf{frequenza percentuale congiunta} $p_{ij}$ data dalla frequenza relativa congiunta espressa in termini percentuali
+\end{itemize}
+Tali frequenze possono essere riportate in forma tabellare tramite una \textbf{tabella a doppia entrata}, il cui corpo centrale e' costituito dalla matrice $h \times k$ delle frequenze congiunte.
+\[
+\begin{array}{c|ccccc|c}
+X & Y & w_1 & w_2 & \cdots & w_k & n^X \\
+\hline
+v_1 & n_{11} & n_{12} & \cdots & n_{1k} & n_1^X \\
+v_2 & n_{21} & n_{22} & \cdots & n_{2k} & n_2^X \\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+v_h & n_{h1} & n_{h2} & \cdots & n_{hk} & n_h^X \\
+\hline
+n^Y & n_1^Y & n_2^Y & \cdots & n_k^Y & n
+\end{array}
+\]
+\subsection{Coefficiente di correlazione lineare}
+Per ottenere una misura quantitativa della dipendenza tra due caratteri, introduciamo una nuova statistica: il \textbf{coefficiente di correlazione lineare}.
+Tale indice
+misura se esista una dipendenza tra i due caratteri e se tale dipendenza possa essere
+descritta in maniera significativa da una relazione di tipo lineare. Per definire tale indice
+e' utile introdurre le nozioni di \textit{correlazione positiva} e \textit{negativa}:
+\begin{itemize}
+  \item si parla di \textbf{correlazione positiva o diretta} quando se uno dei due caratteri assume
+un valore grande (risp. piccolo) allora anche l’altro carattere assume un valore
+grande (risp. piccolo)
+  \item si parla di \textbf{correlazione negativa o inversa} quando se uno dei due caratteri
+assume un valore grande (risp. piccolo) allora l’altro carattere assume un valore
+piccolo (risp. grande).
+\end{itemize}
+La definizione di coefficiente di correlazione lineare necessita di alcune notazioni.\\
+Consideriamo un insieme di dati bivariati $\{(x_i, y_i) : i=1,\ldots,n\}$ quantitativi (discreti o continui). Siano $\bar{x}$ e $\bar{y}$ le rispettive medie artimetiche. Allo scopo di misurare la correlazione positiva/negativa e' naturale considerare il prodotto degli scarti dalla media per ciscuna coppia di dati il prodotto degli \textit{scarti} delle rispettive medie:
+\begin{align*}
+  (x_i - \bar{x})(y_i - \bar{y})
+\end{align*}
+Infatti se $x_i$ e' un valore grande rispetto a quelli ticipi significa che $x_i - \bar{x}$ e' positivo, se invece $x_i$ e' un valore piccolo rispetto a quelli tipici significa che $x_i - \bar{x}$ e' negativo. Lo stesso discorso vale per $y_i$. Di conseguenza, se il prodotto degli scarti dalla media e' positivo allora i dati bivariati mostrano una correlazione positiva, se invece il prodotto degli scarti dalla media e' negativo allora i dati bivariati mostrano una correlazione negativa.\\
+In conclusione, se tra i due caratteri esiste una correlazione positiva/negativa c’e' da
+aspettarsi che la media aritmetica dei prodotti degli scarti di tutte le coppie
+\begin{align*}
+  \text{covarianza} = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})
+\end{align*}
+lo percepisca, assumendo di conseguenza un valore positivo/negativo, tanto pi`u grande in
+valore assoluto quanto maggiore e' tale correlazione. Prende il
+nome di \textbf{covarianza}, mentre la sua normalizzazione si chiama \textit{coefficiente di correlazione lineare}.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Sia dato un insieme di dati bivariati $\{(x_i, y_i) : i=1,\ldots,n\}$ quantitativi (discreti o continui). Siano $\bar{x}$ e $\bar{y}$ le rispettive medie artimetiche. Siano le deviazioni standard $s_x$ e $s_y$. \\
+Si dice \textbf{covarianza} (o anche covarianza campionaria quando i dati provengono da un campione) di $x$ e $y$ la quantita'
+\begin{align*}
+  s_{xy} = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})
+\end{align*}
+\textit{Supponiamo ora che $s_x$ e $s_y$ siano entrambi diverse da zero.}\\
+Si dice \textbf{coefficiente di correlazione lineare} (o anche coefficiente di correlazione campionario quando i dati provengono da un campione) di $x$ e $y$ la quantita'
+\begin{align*}
+  r_{xy} & = \frac{s_{xy}}{s_x s_y} \\
+  & = \frac{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2} \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \bar{y})^2}}
+\end{align*}
+}}
+\vspace{1px}\\
+Una formula utile per calcolare la covarianza e' la seguente, che generalizza la formula analoga ottenuta per la varianza.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: La covarianza di un insieme di $n$ dati bivariati $\{(x_i, y_i) : i=1,\ldots,n\}$ quantitativi (discreti o continui) e' data dalla seguente formula alternativa:
+\begin{align*}
+  s_{xy} = \frac{1}{n} \sum_{i=1}^{n} x_i y_i - \bar{x} \bar{y}
+\end{align*}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema} Il coefficente di correlazione linare verifica le seguenti proprieta':
+\begin{itemize}
+  \item $-1 \leq r_{xy} \leq 1$
+  \item $r_{xy} = 1$ se e solo se esistono due costanti reali $m \neq 0$ e $q$ t.c.
+  \begin{align*}
+    y_i = m x_i + q, \quad \forall i=1,\ldots,n
+  \end{align*}
+  Inoltre il segno di $r_{xy}$ coincide con il segno di $m$.
+\end{itemize}
+}}\\
+\vspace{1px}\\
+\subsection{Metodo dei minimi quadrati e regressione lineare}
+
+
+
+
+
+
+
+\renewcommand{\thesection}{\arabic{section}}
+\setcounter{section}{6} % importante!
+\section{Catene di Markov}
 \end{document} 
