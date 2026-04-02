@@ -1662,7 +1662,7 @@ aspettarsi che la media aritmetica dei prodotti degli scarti di tutte le coppie
 \begin{align*}
   \text{covarianza} = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})
 \end{align*}
-lo percepisca, assumendo di conseguenza un valore positivo/negativo, tanto pi`u grande in
+lo percepisca, assumendo di conseguenza un valore positivo/negativo, tanto piu' grande in
 valore assoluto quanto maggiore e' tale correlazione. Prende il
 nome di \textbf{covarianza}, mentre la sua normalizzazione si chiama \textit{coefficiente di correlazione lineare}.\\
 \vspace{1px}\\
@@ -1706,13 +1706,13 @@ Una formula utile per calcolare la covarianza e' la seguente, che generalizza la
 \vspace{1px}\\
 \subsubsection{Metodo dei minimi quadrati e regressione lineare}
 In questa sezione ci occupiamo del problema di determinare concretamente una relazione lineare in grado di descrivere, seppur approssimativamente, la relazione tra due caratteri.\\
-Faremo cio' indipendentemente dal valore assunto da $r_{xy}$, tuttavia tale relazione lineare sara' chiaramente tanto pi`u significativa quanto pi`u $|r_{xy}|$ assumera' un valore vicino ad 1.\\
+Faremo cio' indipendentemente dal valore assunto da $r_{xy}$, tuttavia tale relazione lineare sara' chiaramente tanto piu' significativa quanto piu' $|r_{xy}|$ assumera' un valore vicino ad 1.\\
 \vspace{1px}\\
 L’idea per determinare tale retta e' la seguente: abbiamo una nuvola di punti nel piano cartesiano e cerchiamo due numeri reali $m$ e $q$ tali che la retta
 \begin{align*}
   y = mx + q
 \end{align*}
-passi il pi`u vicino possibile a tutti i punti $(x_i, y_i)$. Per ogni punto consideriamo l'\textit{errore relativo} a tale punto (anche detto \textit{errore pariziale}), ovvero la differenza tra il valore reale e quello lungo la retta
+passi il piu' vicino possibile a tutti i punti $(x_i, y_i)$. Per ogni punto consideriamo l'\textit{errore relativo} a tale punto (anche detto \textit{errore pariziale}), ovvero la differenza tra il valore reale e quello lungo la retta
 \begin{align*}
   e_i \, := \, y_i - m x_i - q
 \end{align*}
@@ -1842,9 +1842,9 @@ Se $n$ e' “elevato” si ottiene una buona approssimazione dell’integrale $\
 I principali vantaggi rispetto ai metodi deterministici di integrazione numerica sono i seguenti:
 \begin{itemize}
   \item non si richiedono ipotesi di regolarita' sulla funzione integranda $f$
-  \item l’ordine di convergenza del metodo, che e' $\frac{1}{\sqrt{n}}$ come seguir`a dal Teorema centra-
+  \item l’ordine di convergenza del metodo, che e' $\frac{1}{\sqrt{n}}$ come seguira' dal Teorema centra-
 le del limite, e' indipendente dalla dimensione e l’implementazione del metodo in
-dimensione maggiore di uno non comporta alcuna difficolt`a aggiuntiva.
+dimensione maggiore di uno non comporta alcuna difficolta' aggiuntiva.
 \end{itemize}
 \subsubsection{Metodo del gradiente stocastico}
 Il metodo del gradiente stocastico e' un algoritmo di ottimizzazione che si basa sul metodo Monte Carlo.\\
@@ -1912,4 +1912,168 @@ si ha
 \renewcommand{\thesection}{\arabic{section}}
 \setcounter{section}{6} % importante!
 \section{Catene di Markov}
+\subsection{Processi stocastici}
+Supponiamo di voler descrivere matematicamente una quantita' numerica incerta il cui valore evolve nel tempo. Questo corrisponde ad una famiglia di \textit{variabili aleatorie} indicizzate mediante un parametro che e' appunto il \textit{“tempo”}.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(\Omega, \mathbb{P})$ uno spazio di probabilita'.
+\begin{itemize}
+  \item Si chiama \textbf{processo stocastisco a tempo discreto} una successione di variabili aleatorie $(X_n)_n$, con $n \in \mathbb{N}$, tutte definite su $\Omega$
+  \item Si chiama \textbf{processo stocastisco a tempo continuo} una famiglia di variabili aleatorie $(X_t)_{t}$, tutte definite su $\Omega$
+\end{itemize} 
+}}\\
+\vspace{1px}\\
+\subsection{Catene di Markov a tempo discreto}
+I processi stocastici a tempo discreto che studieremo si chiamano \textit{catene di Markov} a
+\textit{tempo discreto}, dove il termine “catene” fa proprio riferimento alla particolare struttura
+di dipendenza tra le variabili aleatorie del processo.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia chiama \textbf{catena di Markov (a tempo discreto)} una successione di variabili aleatorie $(X_n)_n$ che verifica la seguente proprieta' di Markov:
+\begin{itemize}
+  \item Le variabili aleatorie $X_1, \dots, X_n$ sono discrete e il loro supporto e' contenuto nello stesso insieme $\mathcal{S}$ discreto (cioe' finito o al piu' infinito numerabile), ovvero
+  \begin{align}
+    \mathcal{S}_{X_1} \subset \mathcal{S} \qquad \mathcal{S}_{X_2} \subset \mathcal{S} \qquad \cdots \qquad \mathcal{S}_{X_n} \subset \mathcal{S}
+  \end{align}
+  $\mathcal{S}$ si chiama lo \textbf{spazio degli stati} della catena di Markov.
+  \item (\textbf{Proprieta' di Markov}: dipendenta a "catena") Per ogni scelta di $i_1, \dots, i_{n-1}, i, j \in \mathcal{S}$ (non necessariamente distinti) vale l'uguaglianza
+  \begin{align*}
+    \mathbb{P}(X_{n+1} = j | X_n = i, X_{n-1} = i_{n-1}, \dots, X_1 = i_1) = \mathbb{P}(X_{n+1} = j | X_n = i)
+  \end{align*}
+\end{itemize}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+La quantita' 
+\begin{align*}
+  \pi_{ij} = \mathbb{P}(X_{n+1} = j | X_n = i)
+\end{align*}
+si chiama \textbf{probabilita' di transizione all'istante $n$ dallo stato $i$ allo stato $j$}.
+}}\\
+\vspace{1px}\\
+I valori $i_1, \dots, i_{n-1}, i$ rappresentano la \textit{storia} del processo fino all'istante $n$. Inoltre $i_1, \dots, i_{n-1}$ sono i \textit{valori passati}, mentre $i$ e' il \textit{valore presente}. La proprieta' di Markov afferma che, per determinare la probabilita' che al passo $n+1$ si verifichi l'evento $X_{n+1} = j$, non e' necessario conoscere tutta la storia del processo fino all'istante $n$, ma e' sufficiente conoscere il solo valore presente $i$; infinte $X_{n+1}$ e' il \textit{valore futuro}.
+\begin{align*}
+  \mathbb{P}(\text{"futuro"} | \text{"presente e passato"}) = \mathbb{P}(\text{"futuro"} | \text{"presente"})
+\end{align*}
+\subsection{Catene di Markov omogenee e a stati finiti}
+Nel seguito ci occuperemo solamente di una classe particolare e molto importante di catene
+di Markov, ovvero le \textit{catene di Markov omogenee} e a stati finiti, che ora definiamo.
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(X_n)_n$ una catena di Markov.
+\begin{itemize}
+  \item Si dice che $(X_n)_n$ e' \textbf{omogenea (nel tempo)} se le \textbf{probabilita' di transizione non dipendono da $n$. In tal caso scriveremo $\pi_{ij}$ invece di $\pi_{ij}(n)$, e si dice che $\pi_{ij}$ e' la probabilita' di transizione dallo stato $i$ allo stato $j$}.
+  \item Si dice che $(X_n)_n$ e' a \textbf{stati finiti} se lo spazio degli stati $\mathcal{S}$ e' finito, ovvero se esiste un numero naturale $N$ t.c. $\mathcal{S} = \{1, 2, \dots, N\}$ (ovvero indichiamo con $N$ la cardinalita' di $\mathcal{S}$). Spesso supporremo che $\mathcal{S}$ sia dato da $\mathcal{S} = \{1, 2, \dots, N\}$, oppurre da $\mathcal{S} = \{0, 1, \dots, N-1\}$.
+\end{itemize}
+}}\\
+\vspace{1px}\\
+La struttura di dipendenza a catena di $(X_n)_n$, nel caso omogeneo e a stati finiti, e' completamente descritta da una matrice quadrata di ordine $N$, detta matrice di transizione.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Sia $(X_n)_n$ una cantena di Markov omogena e a stati finiti. Si chiama \textbf{matrice di transizione} la matrice $N \times N$ (dove $N$ e' la cardinalita' di $\mathcal{S}$) indicata con $\Pi$, le cui componenti sono le probabilita' di transizione:
+\begin{align}
+  \pi_{ij} = \mathbb{P}(X_{n+1} = j | X_n = i), \quad \forall i, j \in \mathcal{S}
+\end{align}
+con $n$ qualunque, dato che la catena e' omogenea.  In altri termini, la probabilita' di transizione $\pi_{ij}$ corrisponde all'elemento nella riga $i$ e nella colonna $j$ della matrice $\Pi$.
+}}\\
+\vspace{1px}\\
+La riga $i$ corrisponde quindi alla "densita' discreta di $X_{n+1}$ sapendo che $X_n = i$". 
+Questo implica che ogni elemento di $\Pi$ deve essere un numero appartenente all’intervallo
+$[0, 1]$, in quanto corrisponde ad una probabilita' (condizionata). Inoltre, la somma degli
+elementi di una qualsiasi riga deve essere uguale a $1$. In altri termini, $\Pi$ deve verificare le
+proprieta' riportate nel seguente teorema.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $\Pi$ la matrice di transizione di una catena di Markov omogenea e a stati finiti. Allora $\Pi$ verifica le seguenti proprieta':
+\begin{itemize}
+  \item $\pi_{ij} \in [0, 1]$, per ogni $i, j \in \mathcal{S}$
+  \item $\sum_{j \in \mathcal{S}} \pi_{ij} = 1$, per ogni $i \in \mathcal{S}$
+\end{itemize}
+}}\\
+\vspace{1px}\\
+\paragraph{Rappresentazione grafica di una catena di Markov} Una catena di Markov omogenea e a stati finiti puo' essere rappresentata graficamente mediante un \textit{grafo orientato} costruito nel modo seguente:
+\begin{itemize}
+  \item ogni stato $i \in \mathcal{S}$ corrisponde ad un nodo del grafo
+  \item ogni probabilita' di transizione $\pi_{ij}$ corrisponde ad un arco orientato che va dal nodo $i$ al nodo $j$, con peso pari a $\pi_{ij}$
+\end{itemize}
+In tal caso si dice che la successione di \textit{variabili aleatorie $(X_n)_n$ e' una passeggiata aleatoria} (in inglese \textit{random walk}) sul grafo.
+\subsubsection{Probabilita' di transizione in piu' passi}
+Sia $(X_n)_n$ una catena di Markov omogenea e a stati finiti, con matrice di transizione $\Pi$. Dalla definizione di $(X_n)_n$ sappiamo quanto vale la probabilita' condizionata
+\begin{align*}
+  \mathbb{P}(X_{n+1} = j | X_n = i)
+\end{align*}
+Infatti e' data da $\pi_{ij}$, ovvero dall'elemento nella riga $i$ e nella colonna $j$ della matrice di transizione $\Pi$.\\
+Ma invece quanto vale la probabilita' condizionata
+\begin{align*}
+  \mathbb{P}(X_{n+2} = j | X_n = i) = ?
+\end{align*}
+O piu' in generale
+\begin{align*}
+  \mathbb{P}(X_{n+m} = j | X_n = i) = ?
+\end{align*}
+Tale probabilita' (che nel caso omogeneo non dipende da $n$) si indica con $\pi_{ij}^{(m)}$ e chiama \textbf{probabilita' di transizione dallo stato $i$ allo stato $j$ in $m$ passi}.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(X_n)_n$ una catena di Markov omogenea e a stati finiti. Per ogni intero $m \geq 0$ poniamo (con $n$ qualsiasi)
+\begin{align*}
+  \pi_{ij}^{(m)} = \mathbb{P}(X_{n+m} = j | X_n = i), \qquad \forall i, j \in \mathcal{S}
+\end{align*}
+$\pi_{ij}^{(m)}$ si chiama \textbf{probabilita' di transizione dallo stato $i$ allo stato $j$ in $m$ passi}.
+}}\\
+\vspace{1px}\\
+Quando $m = 0$ oppure $m = 1$ la probabilita' di transizione in $m$ passi si riduce alla probabilita' di transizione definita in precedenza.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Proposizione} Sia $(X_n)_n$ una catena di Markov omogenea e a stati finiti e omogenea.
+\begin{itemize}
+  \item Per $m=0, \pi_{ij}^{(0)}$ e' data da
+  \begin{align*}
+    \pi_{ij}^{(0)} = \begin{cases}
+      1, & \text{se } i = j \\
+      0, & \text{se } i \neq j
+    \end{cases}
+  \end{align*}
+  Quindi la matrice di componenti $\pi_{ij}^{(0)}$ e' la matrice identita' $I$ di ordine $N$.
+  \item Per $m=1, \pi_{ij}^{(1)}$ e' data da
+  \begin{align*}
+    \pi_{ij}^{(1)} = \pi_{ij}
+  \end{align*}
+  Quindi la matrice di componenti $\pi_{ij}^{(1)}$ e' la matrice di transizione $\Pi$.
+\end{itemize}
+}}\\
+\vspace{1px}\\
+Il seguente teorema fornisce una formula per il calcolo di  $\pi_{ij}^{(m)}$ per ogni $m \geq 0$.\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $(X_n)_n$ una catena di Markov omogenea e a stati finiti. Per ogni intero $m$ la matrice dei componenti $\pi_{ij}^{(m)}$ e' data da
+\begin{align*}
+  \Pi^m = \underbrace{\Pi \cdot \Pi \cdot \ldots \cdot \Pi}_{m \text{ volte}}
+\end{align*}
+}}\\
+\vspace{1px}\\
+\paragraph{Calcolo diretto di $\pi_{ij}^{(m)}$} Dal Teorma sappiamo che per calcolare $\pi_{ij}^{(m)}$ e' sufficiente calcolare la matrice $\Pi^m$. Vediam oora invece un modo alternativo piu' diretto he
+si basa sull’utilizzo del grafo orientato associato a $(X_n)_n$.\\ 
+Vediamolo nel caso in cui $m=2$. Sappiamo che $\pi_{ij}^{(2)}$ e' dato da
+\begin{align*}
+  \pi_{ij}^{(2)} & = \mathbb{P}(X_{n+2} = j | X_n = i) \\
+  & = \sum_{k \in \mathcal{S}} \mathbb{P}(X_{n+2} = j, X_{n+1} = k | X_n = i) \\
+  & = \sum_{k \in \mathcal{S}} \mathbb{P}(X_{n+2} = j | X_{n+1} = k, X_n = i) \cdot \mathbb{P}(X_{n+1} = k | X_n = i) \\
+  & = \sum_{k \in \mathcal{S}} \pi_{kj} \cdot \pi_{ik}
+\end{align*}
+Ovvero $\pi_{ij}^{(2)}$ e' dato dalla somma, per ogni $k \in \mathcal{S}$, del prodotto tra la probabilita' di transizione dallo stato $i$ allo stato $k$ e la probabilita' di transizione dallo stato $k$ allo stato $j$.\\
+In generale, per calcolare $\pi_{ij}^{(m)}$ con $m$ qualunque si procede come segue:
+\begin{itemize}
+  \item a partire dal grafo, si trovano tutti i cammini che portano da $i$ a $j$ in $m$ passi
+  \item la probabilita' di ogni cammino e' il prodotto delle probabilita' lungo gli archi del cammino stesso
+  \item $\pi_{ij}^{(m)}$ e' la somma delle probabilita' di tutti i cammini da $i$ a $j$ in $m$ passi
+\end{itemize}
+\subsubsection{Classi comunicanti}
+pagina10
 \end{document} 
