@@ -2075,5 +2075,264 @@ In generale, per calcolare $\pi_{ij}^{(m)}$ con $m$ qualunque si procede come se
   \item $\pi_{ij}^{(m)}$ e' la somma delle probabilita' di tutti i cammini da $i$ a $j$ in $m$ passi
 \end{itemize}
 \subsubsection{Classi comunicanti}
-pagina10
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti. Fissiamo due stati $i,j \in \mathbb{S}$ (non necessariamente $i \neq j$).\\
+Si dice che $j$ \textbf{e' avvessibile da} $i$ se esiste $m \geq 0 $ t.c.
+\begin{align*}
+  \pi_{ij}^{(m)} > 0
+\end{align*}
+In tal caso scriviamo
+\begin{align}
+  i \leadsto j
+\end{align}
+}}\\
+\vspace{1px}\\
+Nei grafi vuol dire che il nodo $i$ e' connesso al nodo $j$.\\
+Nel caso $i\neq j$ si ha che $i \leadsto j$ se e solo se esiste un cammino di probabilita' positiva che conduce da $i$ a $j$.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: La due affermazioni seguenti sono equivalenti se $i \neq j$:
+\begin{itemize}
+  \item $i \leadsto j$
+  \item esiste un intero $m \geq 1$ ed esiste un cammino $i_1 \to i_2 \to \dots to i_{m+1}$ in $m$ passi t.c. $i_1 = i, i_{m+1} = j$ e 
+  \begin{align*}
+    \pi_{i_1 i_2} \cdot \pi_{i_2 i_3} \cdot \dots \cdot \pi_{i_m i_{m+1}} > 0
+  \end{align*}
+\end{itemize}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Sia $(X_n)_n$ una catena di Markov omogenea a satti finiti. Fissiamo due stati $i, j \in \mathbb{S}$.
+\begin{itemize}
+  \item Gli stati $i$ e $j$ si dicono \textbf{comunicanti} se $i \leadsto j$ e $j \leadsto i$. In tal caso scriviamo
+  \begin{align*}
+    i \leftrightsquigarrow  j
+  \end{align*}
+\end{itemize}
+Si chiama \textbf{classe comunicante} un sottoinsie di $\mathbb{S}$ costituito da tutti gli stati tra loro comunicanti.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}:  Sia $(X_n)_n$ una catena di Markov omogenea a satti finiti.\\
+Si dice che $(X_n)_n$ e' \textbf{irriducibile} se esiste un'unica classe comunicanete, che e' quindi data dall'insieme $\mathcal{S}$ stesso.
+}}\\
+\vspace{1px}\\
+\subsubsection{Legge di $X_n$}
+Sia $(X_n)_n$ una catena di Markov (omogenea e a stati finiti) con matrice di transizione $\Pi$. Ci poniamo ora il seguente problema.
+\begin{center}
+  \textit{Qual e' la legge della variabile aleatoria $X_n$?}
+\end{center}
+Sappiamo che $X_n$ e' una variabile aleatoria discreta, quindi e' sufficiente determinare supporto e densita' discreta di $X_n$.\\
+Resta da determinare la densita' discreta$p_{X_n}$ . Supponiamo che lo spazio degli stati $\mathcal{S}$ sia dato dall’insieme ${1, 2, \dots , N }$. Allora determinare la densita' discreta $p_{X_n}$ significa conoscere la tabella
+\[
+\begin{array}{c|cccc}
+X_n      & 1 & 2 & \cdots & N \\
+\hline
+p_{X_n}  & p_{X_n}(1) & p_{X_n}(2) & \cdots & p_{X_n}(N)
+\end{array}
+\]
+Pie' precisamente, determinare la densita' discreta $p_{X_n}$ significa conoscere il vettore riga $\vec{p}_{X_n}$ dato da
+\[
+\vec{p}_{X_n}
+= [\,p_{X_n}(1)\; p_{X_n}(2)\; \cdots\; p_{X_n}(N)\,]
+= [\,\mathbb{P}(X_n = 1)\; \mathbb{P}(X_n = 2)\; \cdots\; \mathbb{P}(X_n = N)\,].
+\]
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti. Allora la distribuzione di $X_n$ e' data dalla seguente formula:
+\begin{align*}
+  \vec{p}_{X_n}  = \vec{p}_{X_1} \Pi^{n-1}, \quad \forall n=1,2,\dots
+\end{align*}
+Si noti in particolare che
+\begin{align*}
+  \vec{p}_{X_n}(j) = \mathbb{P}(X_n = j) = \sum_{i=1}^N \vec{p}_{X_1}(i)\pi_{ij}^{n-1}, \quad \forall j \in \mathcal{S}
+\end{align*}
+}}\\
+\vspace{1px}\\
+\subsubsection{Distribuzione invariante}
+Sia \(X\) una variabile aleatoria discreta con supporto \(S\).
+Sappiamo che la distribuzione (o legge) di \(X\) è completamente descritta
+dal vettore riga \(\vec{p}_X\), che contiene i valori assunti dalla densità discreta di \(X\).
+Per semplificare la notazione, indichiamo questo vettore con \(\vec{v}\).
+Si noti che il vettore \(\vec{v}\) verifica le seguenti proprietà:
+\begin{enumerate}
+    \item ogni sua componente è compresa tra \(0\) e \(1\);
+    \item la somma delle sue componenti è uguale a \(1\).
+\end{enumerate}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione} Siano $\Pi$ una matrice di transizione e $\vec{v}$ un vettore che verifica la proprieta' $1)$ e $2)$ qui sopra.\\
+Si dice che $\vec{v}$ e' una \textbf{ditribuzione invariante} o \textbf{stazionaria} o \textbf{di equilibrio} (per $\Pi$) se
+\begin{align*}
+  \vec{v} = \vec{v} \Pi
+\end{align*}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $(X_n)_n$ una catena di Markov omogenea e a stati finiti con matrice di transizione $\Pi$.\\
+Supponiamo che la distribuzione di $X_1$ sia invariante ovvero
+\begin{align*}
+  \vec{p}_{x_1} = \vec{p}_{x_1} \Pi
+\end{align*}
+Allora la distribuzione di $X_n$ (qualunque sia $n$) e' ancora data da $\vec{p}_{x_1}$.
+}}\\
+\vspace{1px}\\
+\subsubsection{Interpretazione della distribuzione invariante}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}:  Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti con matrice di transizione $\Pi$.\\
+Si dice che $(X_n)_n$ e' regolare se esiste $n_0$ t.c.
+\begin{align*}
+  \pi_{ij}^{n_0} > 0, \quad \forall i,j \in \mathcal{S}
+\end{align*}
+ovvero se la matrice
+\begin{align*}
+  \underbrace{\Pi \dots \Pi}_\text{$n_0$ volte} = \Pi^{n_0}
+\end{align*}
+ha tutte le componenti strettamente positive.
+}}\\
+\vspace{1px}\\
+Se una catena di Markov e' regolare vale il seguente risultato fondamentale.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema (di convergenza all'equilibrio o ergodico)}: Sia $(X_n)_n$ una catena di Markov omogenea e a stati finiti con matrice di transizione $\Pi$.\\
+Se $(X_n)_n$ e' regolare allora esiste un'unica distribuzione invariante $\vec{v}$ t.c. qualunque sia $i \in \mathcal{S}$, 
+\begin{align*}
+  \lim_{n \to + \infty} \pi_{ij}^{(n)} = v_j, \quad \forall j \in \mathcal{S}
+\end{align*} 
+Inoltre la velocita' di convergenza e' esponenziale:
+\begin{align*}
+  |\pi_{ij}^{n} - v_j| \leq C q^n
+\end{align*}
+con $0 \leq q \leq 1$ e $C$ costante poitiva.
+}}\\
+\vspace{1px}\\
+\subsubsection{Google e l’algoritmo PageRank}
+il nome Google e' stato scelto da Brin e Page in
+quanto rimanda al nome \textit{googol}, che e' il termine matematico con cui si indica il numero
+$10^{100}$: il motivo e' che questo numero rende l’idea della scala dei problemi che un motore
+di ricerca deve affrontare.\\
+Google, e in particolare l’algoritmo \textbf{PageRank}, si basa sulla struttura “topologica” del
+web, intesa come grafo orientato in cui ogni nodo corrisponde ad una pagina e ogni freccia
+rappresenta un link. Tale struttura permette di ordinare le pagine, ovvero creare un ran-
+king delle pagine che e' appunto il compito dell’algoritmo PageRank. Questo ordinamento
+viene utilizzato per rispondere in maniera rapida e soddisfacente a ciascuna singola \textit{query}.
+\vspace{5px} L’algoritmo PageRank nella sua forma attuale non e' chiaramente noto (essendo ov-
+viamente tutelato da copyright), per`o l’idea originale del metodo e' chiara. L’ordinamento
+delle pagine web fornito dall’algoritmo PageRank si basa sull’assegnazione di un indice di
+significativita' a ciascuna pagina. Per una generica pagina web A, denotiamo tale indice
+con $PR(A)$. In particolare, l’indice di significativita'
+deve soddisfare i due requisiti seguenti:
+\begin{enumerate}
+  \item risultare elevato se una pagina e' citata da molte altre pagine
+  \item risultare elevato se riferito ad una pagina citata da (eventualmente poche) pagine molto
+significative
+\end{enumerate}Dunque il solo conteggio dei link ad una pagina non pu`o essere un buon indice di signi-
+ficativita' (in quanto non soddisfa il secondo requisito). L’indice di significativita' di una
+pagina $A$ deve essere invece proporzionale agli indici di significativita' delle pagine che
+conducono ad $A$.
+\subsubsection{Esistenza e unicita' della misura invariante}
+Le catene di Markov irriducibili su uno spazio degli stati finito possiedono l’importante
+proprieta' di ammettere sempre un’unica distribuzione invariante.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema (di esistenza ed unicita' della distribuzione invariante)}: Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti.\\
+Se $(X_n)_n$ e' irriducibile allora essa ammette un’unica distribuzione invariante $\vec{v}$.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti con matrice di
+transizione $\Pi$. Definiamo il \textbf{periodo di uno stato} $i \in \mathcal{S}$ ponendo
+\begin{align*}
+  d_i \, := \, \text{MCD}\{m \geq 1: \, \pi_{ij}^{(n) > 0}\}
+\end{align*}
+La catena si dice \textbf{aperiodica} se $d_i = 1$ per ogni $i \in \mathcal{S}$.  
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Proposizione}: Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti. $(X_n)_n$ e regolare se e solo se e' irriducibile e aperiodica. 
+}}\\
+\vspace{1px}\\
+\subsection{Classificazione degli stati}
+I “salti” da uno stato all’altro che la catena di Markov pu`o compiere, secondo le probabilita' $\pi_{ij}$ , fanno si' che nella catena si crei una diversificazione tra gli stati: stati che non vengono
+mai raggiunti, stati raggiunti pi`u volte, gruppi di stati i cui raggiungimenti si escludono
+a vicenda, e cosi' via.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $C \subset S$ una classe di comunicazione. Diciamo che $C$ e' una \textbf{classe chiusa} se oer ogni $i \in C$ t.c. $i \leadsto j$ si ha $j \in C$.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti. Sia $i \in S$.
+\begin{align*}
+  N_i \, := \, \sum_{n=1}^{\infty} 1_{\{x_n = i\}}
+\end{align*}
+e' il numero totale di visite allo stato $i$. Lo stato $i$ si dice
+\begin{itemize}
+  \item \textbf{transitorio} se $N_i < + \infty$ q.c.
+  \item \textbf{ricorrente} se $N_i = + \infty$ q.c.
+\end{itemize}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti.
+\begin{enumerate}
+  \item Ogni classe di comunicazione $C$ chiusa e' ricorrente
+  \item Ogni classe di comunicazione $C$ non chiusa e' transitoria
+\end{enumerate}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Proposizione}:  Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti con matrice di transizione $\Pi$. Siano $R_1, \dots, R_m$ le classi riccorrenti di $(X_n)_n$.\\
+Allora le distribuzioni invarianti di $\Pi$ sono tutte e sole quelle della forma
+\begin{align*}
+  \vec{v} = \sum_{\ell = 1}^{m} a_\ell \vec{v}^\ell
+\end{align*}
+dove $\alpha_\ell \geq 0$ per ogni $\ell = 1, \dots, m$ e $\sum_{\ell =1}^{m} = 1$ con $\vec{v}^\ell$ l’unica distribuzione invariante
+della catena ristretta a $R_\ell$ (con abuso di notazione la identifichiamo con una distribuzione
+su $S$ ponendo $v_k^\ell = 0$ se $j \notin R_\ell$).
+}}\\
+\vspace{1px}\\
+\subsubsection{Problemi di assorbimento}
+Se si parte da uno stato transitorio si finir`a per essere assorbiti da una classe ricorrente.
+D’altra parte, la catena di Markov ristretta ad una classe ricorrente `e irriducibile.
+Se la catena di Markov possiede pi`u classi ricorrenti `e interessante stabilire in quale
+classe andr`a a finire $X_n$, o pi`u precisamente calcolare la probabilit`a di essere assorbita da
+una certa classe ricorrente piuttosto che da un’altra, partendo da uno stato transitorio.
+Sia
+\begin{align*}
+  T_c \, := \, \min{n \geq 1: \, X_n \in C}
+\end{align*}
+l’istante di primo arrivo nella classe $C$. Per ogni $i \in S$ denotiamo con
+\begin{align*}
+  h_i^\ell \, := \, \mathbb{P}(T_{R_\ell} < + \infty | X_1 = i)
+\end{align*}
+la \textbf{probabilita' di assorbimento nella classe riccorente $R_\ell$ partendo da $i$}.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $(X_n)_n$ una catena di Markov omogenea a stati finiti con matrice di
+transizione $\Pi$. Siano $R_1, \dots, R_m$ le classi ricorrenti di $(X_n)_n$. Allora
+\begin{align*}
+  h_i^\ell = \begin{cases}
+    1 & \text{ se $i \in R_\ell$}\\
+    0 & \text{ se $i \in R_p, p \neq \ell$}\\
+    \sum_{k \in S} \pi_{ik} h_k^\ell & \text{ se $i \in S \backslash \{R_1 \cup \dots \cup R_m\}$}
+  \end{cases}
+\end{align*}
+}}\\
+\vspace{1px}\\
 \end{document} 
