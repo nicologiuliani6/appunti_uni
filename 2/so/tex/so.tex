@@ -1870,10 +1870,10 @@ Possiamo utilizzare un \texttt{algoritmo di rimpiazzamento}, ovvero minimizzare 
 \end{itemize}
 \textbf{Algoritmo di rimpiazzamento}
 \begin{itemize}
-  \item Algoritmo FIFO: quando dobbiamo liberare un frame liberiamo il primo frame che e' stato caricato in memoria. Questo non richiede hw specifico, e' veloce ma alcune volte scarta pagine utilizzate. \\
+  \item \texttt{Algoritmo FIFO}: quando dobbiamo liberare un frame liberiamo il primo frame che e' stato caricato in memoria. Questo non richiede hw specifico, e' veloce ma alcune volte scarta pagine utilizzate. \\
   Provoca un effetto dove $+\text{pagine} \Rightarrow +\text{page fault}$
-  \item Algoritmo MIN - Ottimale: algoritmo teorico che seleziona come pagina vittima una pagina che non sarà più acceduta o la pagina che verrà acceduta nel futuro più lontano
-  \item Algoritmo LRU (Least Recently Used): seleziona come pagina vittima la pagina che è stata usata meno recentemente nel passato.\\
+  \item \texttt{Algoritmo MIN - Ottimale}: algoritmo teorico che seleziona come pagina vittima una pagina che non sarà più acceduta o la pagina che verrà acceduta nel futuro più lontano
+  \item \texttt{Algoritmo LRU (Least Recently Used)}: seleziona come pagina vittima la pagina che è stata usata meno recentemente nel passato.\\
   Per implementarla serve hw specifico, la MMU deve registrare nella tabella delle pagine un time-stamp quando accede ad una pagina, il time-stamp può essere implementato come un contatore che viene incrementato ad ogni accesso in memoria.\\
   \vspace{1px}\\
   Puo' essere implementata via uno stack (LIFO) di pagine, nel quale che tutte le volte che una pagina viene acceduta, viene rimossa dallo stack (se presente) e posta in cima allo stack stesso.
@@ -1885,7 +1885,44 @@ Possiamo utilizzare un \texttt{algoritmo di rimpiazzamento}, ovvero minimizzare 
   con $S_t(s,A,m)$ insieme della pagine mantenute al tempo $t$ dell'algoritmo $A$, data una memoria di $m$ frame relativamente alla stringa $s$.\\
   \vspace{2px}\\
   L'algoritmo \textit{LRU} e' a stack. Vediamo come implementarlo:\\
-  pagina 87
+  In entrambi i casi (contatori, stack), mantenere le informazione per LRU è troppo costoso.\\
+  \begin{itemize}
+    \item \textit{Realta'}: poche MMU forniscono il supporto hardware per l'algoritmo LRU, alcuni sistemi non forniscono alcun tipo di supporto, e in tal caso l'algoritmo FIFO deve essere utilizzato.
+    \item \textit{Reference bit}: alcuni sistemi forniscono supporto sotto forma di reference bit, tutte le volte che una pagina è acceduta, il reference bit associato alla pagina viene aggiornato a $1$.
+    \vspace{5px}\\Come si utilizza? 
+    \begin{itemize}
+      \item Inizializzazione di tutti i bit a $0$
+      \item Durante l'esecuzione dei processi, le pagine in memoria vengono accedute e i reference bit vengono posti a $1$
+      \item Periodicamente, è possibile osservare quali pagine sono state accedute e quali non osservando i reference bit
+    \end{itemize}
+    \textit{Nota}: non conosciamo l'ordine in cui sono state utilizzate, ma si puo' \texttt{approssimare l'algoritmo LRU}.\\
+    \paragraph{Approssimare LRU} Abbiamo 2 algortimi "\textit{diversi}"
+    \begin{enumerate}
+      \item \textbf{Additional-Reference-Bit-Algorithm}: Aumentiamo l'informazioni salvando i reference bit ad intervalli regolari (es. 100ms)
+      \begin{itemize}
+        \item il nuovo valore del reference bit viene salvato tramite shift a destra della storia ed inserimento del bit come most signif. bit
+        \item la pagina vittima è quella con valore minore; in caso di parità, si utilizza una disciplina FIFO
+      \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{img/LRU.png}
+      \end{figure} 
+    \end{itemize}
+      \item \textbf{Second-chance algorithm}: caso particolare dell'algoritmo precedente, dove la dimensione della storia è uguale a $1$
+      \begin{itemize}
+        \item le pagine in memoria vengono gestite come una lista circolare
+        \item a partire dalla posizione successiva all'ultima pagina caricata, si scandisce la lista con la seguente regola
+        \begin{itemize}
+          \item se la pagina è stata acceduta (reference bit a 1) $\to$ il reference bit viene messo a 0
+          \item se la pagina non è stata acceduta (reference bit a 0) $\to$ la pagina selezionata è la vittima
+        \end{itemize}
+              \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{img/sc.png}
+      \end{figure} 
+      \end{itemize}
+    \end{enumerate}
+  \end{itemize}
+  \item \texttt{Least frequently used (LFU)}: si mantiene un contatore del numero di accessi ad una pagina, La frequenza e' il valore del contatore diviso per il “tempo” di permanenza in memoria; la pagina con il valore minore viene scelta come vittima. Si implementa con reference bit.
 \end{itemize}
 Definiamo l'\textbf{anomalia di Belady}\phantomsection\label{Belady}: quando all'aumentare delle pagine aumentano i page fault, come per l'algoritmo FIFO.\\
 Non e' sempre detto che all'aumentare delle pagine aumentino i page fault come in FIFO. Dipende tutto dal algortimo scelto. Infatti per \textit{Algoritmo MIN - Ottimale} o per \textit{LRU} all'aumentare delle pagine diminuiscono i page fault. 
@@ -1893,6 +1930,37 @@ Non e' sempre detto che all'aumentare delle pagine aumentino i page fault come i
     \centering
     \includegraphics[width=0.7\textwidth]{img/Belady.png}
 \end{figure} 
+\paragraph{Allocazione}
+Con algoritmo di allocazione (per memoria virtuale) si intende l'algoritmo utilizzato per scegliere quanti frame assegnare ad ogni singolo processo.\\
+\begin{itemize}
+  \item \textbf{Allocazione locale}: ogni processo ha un insieme proprio di frame (poco flessibile)
+  \item \textbf{Allocazione globale}: tutti i processi possono allocare tutti i frame presenti nel sistema (competizione), puo' portare a \textbf{trashing}
+\end{itemize}
+\paragraph{Trashing}
+Un processo (o un sistema) si dice che è in trashing quando spende più tempo per la paginazione che per l'esecuzione. \\
+Possibili cause:
+\begin{enumerate}
+  \item in un sistema con allocazione globale, si ha trashing se i processi
+tendono a "rubarsi i frame a vicenda"
+  \item non riescono a tenere in memoria i frame utili a breve termine
+(perchè altri processi chiedono frame liberi) e quindi generano
+page fault ogni pochi passi di avanzamento
+\end{enumerate}
+\paragraph{Working Set}
+Si definisce working set di finestra $\delta$ l'insieme delle pagine accedute nei più recenti $\delta$ riferimenti.
+\begin{itemize}
+  \item E' una rappresentazione approssimata del concetto di localita'
+  \item Se una pagina non compare in $\delta$ riferimenti successivi in memoria, allora
+esce dal working set; non è più una pagina su cui si lavora attivamente
+\end{itemize}
+\begin{figure}[H] 
+        \centering
+        \includegraphics[width=0.7\textwidth]{img/ws.png}
+\end{figure} 
+Se l'ampiezza della finestra è ben calcolata, il working set è una buona approssimazione dell'insieme delle pagine "utili".\\
+sommando quindi l'ampiezza di tutti i working set dei processi
+attivi, questo valore deve essere sempre minore del numero di
+frame disponibili; altrimenti il sistema e' in trashing!
 \subsection{Gestione I/O, Memoria secondaria}
 \begin{figure}[H]
     \centering
@@ -2002,17 +2070,311 @@ Una richiesta di scrittura deve essere servita da tutti i dischi che ospitano il
     \includegraphics[width=0.7\textwidth]{img/raid5.png}
 \end{figure} 
 \paragraph{RAID 6} Come RAID 5, ma si utilizzano due strip di parità invece di uno. Questo aumenta l'affidabilita'.
-\subsection{}
-
-
-
-
-
-
-
-
-
-
+\subsection{File System}
+\subsubsection{Visione utente}
+I computer possono utilizzare diversi media per registrare in modo permanente le informazioni. Il compito del \textbf{file system} è quello di astrarre la complessità di
+utilizzo dei diversi media proponendo una interfaccia per i
+sistemi di memorizzazione:
+\begin{itemize}
+  \item Comune
+  \item Efficiente
+  \item Conveniente da usare
+\end{itemize}
+Dal punto di vista dell’utente, un file system è composto da due elementi:
+\begin{itemize}
+  \item \textbf{file}: unità logica di memorizzazione
+  \begin{itemize}
+    \item Nome
+    \item Tipo
+    \begin{itemize}
+      \item A seconda della struttura interna:
+      \begin{itemize}
+        \item senza formato (stringa di byte): file testo
+        \item con formato: file di record, file di database, a.out, ecc
+      \end{itemize}
+      \item A seconda del contenuto:
+      \begin{itemize}
+        \item ASCII/binario (visualizzabile o no, 7/8 bit)
+        \item sorgente, oggetto, ecc
+        \item eseguibile (oggetto attivo)
+      \end{itemize}
+      Esistono tre tecniche principali per identificare il tipo di un file:
+      \begin{itemize}
+        \item meccanismo delle estensioni
+        \item utilizzo di un attributo "tipo" associato al file nella directory
+        \item magic number
+      \end{itemize}
+    \end{itemize}
+    \item Locazione e dimensione
+    \item Data e ora: creazione/modifica
+    \item Informazioni sulla proprieta': utenti, gruppi, ecc
+    \item Attributi di protezione: info per determinare chi e' autorizzato a eseguire operazioni sui file
+    \item Altri attributi: flag, locking, ecc
+  \end{itemize}
+  \paragraph{Struttura dei file}
+\begin{enumerate}
+  \item sequenze di byte
+  \item sequenze di record logici
+  \item file indicizzati (albero)
+\end{enumerate}
+      \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/file.png}
+\end{figure} 
+I sistemi operativi possono attuare diverse scelte nella gestione della struttura dei file:
+\begin{itemize}
+  \item minimale: i file sono considerati semplici stringhe di byte, a parte i file eseguibili il cui formato è dettato dal s.o (UNIX; MS-DOS)
+  \item parte strutturata/parte a scelta dell'utente (Macintosh)
+  \item diversi tipi di file predefiniti
+\end{itemize}
+\paragraph{Metodi di accesso}
+\begin{itemize}
+  \item \texttt{Sequenziale}: r/w
+  \item \texttt{Accesso diretto}: read pos, write pos (oppure operazione seek)
+  \item \texttt{Indicizzato}: read key, write key (database)
+\end{itemize}
+\paragraph{Operazioni sui file}
+\begin{itemize}
+  \item creazione
+  \item apertura/chiusura
+  \item lettura/scrittura/append
+  \item posizionamento
+  \item cancellazione
+  \item troncamento
+  \item lettura/scrittura attributi
+\end{itemize}
+L'API (interfaccia per la programmazione) relativa alle operazioni su file è basata sulle operazioni open/close (i file devono essere “aperti” prima di effettuare operazioni e “chiusi” al termine).
+  \item \textbf{directory}: servono per organizzare e fornire informazioni sui file che compongono un file system
+  L'organizzazione dei file system è basata sul concetto di directory, che fornisce un'astrazione per un'insieme di file.
+  \paragraph{Operazioni definite sulle directory}
+  \begin{itemize}
+    \item crezione
+    \item cancellazione
+    \item apertura di una directory
+    \item chiusura di una directory
+    \item lettura di una directory
+    \item lettura di una directory
+    \item rinominazione
+    \item link/unlink
+  \end{itemize}
+  \paragraph{Struttura di una directory}
+  \begin{itemize}
+    \item a livello singolo
+    \item a due livelli
+    \item ad albero
+          \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/directory_albero.png}
+\end{figure} 
+    \item a grafo aciclico: ogni file è contenuto in una directory univoca (un file può essere contenuto in due o più directory)
+              \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/directory_grafo.png}
+\end{figure} 
+    Due implementazioni possibili:
+    \begin{itemize}
+      \item Link simbolici: viene creato un tipo speciale di directory entry, che contiene un
+riferimento (sotto forma di cammino assoluto) al file in question
+      \item Hard link: le informazioni relative al file sono presenti, uguali, in entrambe le directory
+      \begin{itemize}
+        \item Implementazione: E' necessario utilizzare la tecnica degli i-node, E' necessario utilizzare la tecnica degli i-node
+                      \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/hardlink.png}
+\end{figure} 
+      \end{itemize}
+    \end{itemize}
+    \item a grafo
+  \end{itemize}
+\end{itemize}
+\subsubsection{Visione implementatore}
+Problemi da tenere in considerazione:
+\begin{itemize}
+  \item organizzazione di un disco: un disco può essere diviso in una o più partizioni, porzioni
+indipendenti del disco che possono ospitare file system distinti
+  \begin{itemize}
+    \item Il primo settore dei dischi è il cosiddetto \textbf{master boot record (MBR)}: boot di sistema letto all'avvio, contiene la \textbf{partition table}
+                \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/mbr.png}
+\end{figure} 
+  \texttt{Struttura di una partizione}:
+  \begin{itemize}
+    \item ogni partizione inizia con un boot block
+    \item il MBR carica il boot block della partizione attiva e lo esegue
+    \item il boot block carica il sistema operativo e lo esegue
+    \item l'organizzazione del resto della partizione dipende dal file system
+  \end{itemize}
+                \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{img/partizione.png}
+\end{figure} 
+\begin{itemize}
+  \item \textbf{Superblock}: contiene informazioni sul tipo di file system e sui parametri
+fondamentali della sua organizzazione
+  \item \textbf{Tabelle per la gestione dello spazio libero}: struttura dati contenente informazioni sui blocchi liberi
+  \item \textbf{Tabelle per la gestione dello spazio occupato}: (non in tutti i fs) contiene informazioni sui file presenti nel sistema
+  \item \textbf{Root dir}: directory radice (del file system)
+  \item \textbf{File e directory}
+\end{itemize}
+  \end{itemize}
+  \item allocazione dello spazio in blocchi: come si implementa l'astrazione dei file su un accesso hw e driver di un disco di blocchi di dimensione fissa? (ovvero come vengono scelti i blocchi dati da utilizzare per
+un file e come questi blocchi dati vengono collegati assieme a
+formare una struttura unica)
+  \begin{itemize}
+    \item \textbf{Allocazione contigua}: i file sono memorizzati in sequenze contigue di blocchi di dischi
+    \begin{itemize}
+      \item Vantaggi: non è necessario utilizzare strutture
+dati per collegare i blocchi, l'accesso sequenziale è efficiente
+      \item Svantaggi: si ripropongono tutte le problematiche dell’allocazione contigua in memoria centrale! (frammentazione esterna, politica di scelta dei blocchi, ecc)
+    \end{itemize}
+    \item \textbf{Allocazione concatenata}: 
+    \begin{itemize}
+      \item ogni file è costituito da un lista concatenata di blocchi
+      \item ogni blocco contiene un puntatore al blocco successivo
+      \item il descrittore del file contiene i puntatori al primo e all’ultimo
+elemento della lista
+    \end{itemize}
+                    \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/concatenata.png}
+\end{figure} 
+  \begin{itemize}
+    \item Vantaggi: risolve il problema della frammentazione esterna, accesso sequenziale efficiente
+    \item Svantaggi: l’accesso diretto è inefficiente, progressivamente l’efficienza globale del file system degrada, la dimensione utile di un blocco non è una potenza di due 
+  \end{itemize}
+    \item \textbf{Allocazione basata su FAT}: 
+        \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/fat.png}
+\end{figure} 
+  \begin{itemize}
+    \item Vantaggi: i blocchi dati sono interamente dedicati ai dati (è possibile fare caching in memoria dei blocchi FAT)
+    \item Svantaggi: la scansione richiede anche la lettura della FAT, aumentando così il
+numero di accessi al disco.
+  \end{itemize}
+    \item \textbf{Allocazione indicizzata}: l'elenco dei blocchi che compongono un file viene memorizzato in
+un blocco (o area) indice; per accedere ad un file, si carica in memoria la sua area indice e si
+utilizzano i puntatori contenuti
+        \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/indicizzata.png}
+\end{figure}  
+  \begin{itemize}
+    \item Vantaggi: risolve (come l’allocazione concatenata) il problema della
+frammentazione esterna, efficiente per accesso diretto, il blocco indice deve essere caricato in memoria solo quando il file
+è aperto
+    \item Svantaggi: la dimensione del blocco indice determina l’ampiezza massima del
+file, utilizzare blocchi indici troppo grandi comporta un notevole spreco
+di spazio
+  \end{itemize}
+  Come risolviamo?
+  \begin{itemize}
+    \item \texttt{Concatenazione di blocchi indice}: l’ultimo elemento del blocco indice non punta al blocco dati ma al
+blocco indice successivo (si ripropone il problema per l’accesso diretto a file di grandi
+dimensioni)
+        \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/indice.png}
+\end{figure}  
+    \item \texttt{Indice multilivello}: si utilizza un blocco indice dei blocchi indice, degradano le prestazioni, in quanto richiede un maggior numero di
+accessi
+        \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/multilivello.png}
+\end{figure} 
+  \end{itemize}
+  \end{itemize}
+  \item gestione spazio libero:
+  \begin{itemize}
+    \item \textbf{Mappa di bit}: ad ogni blocco corrisponde un bit in una bitmap; i blocchi liberi sono associati ad un bit di valore 0, i blocchi occupati
+sono associati ad un bit di valore 1
+        \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/bitmap.png}
+\end{figure} 
+\begin{itemize}
+  \item Vantaggi: semplice, è possibile selezionare aree contigue
+  \item Svantaggi:la memorizzazione del vettore puo' richiedere molto spazio
+\end{itemize}
+  \item \textbf{Lista concatenata}: i blocchi liberi vengono mantenuti in una lista concatenata
+          \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/lconcatenata.png}
+\end{figure} 
+  \begin{itemize}
+    \item Vantaggi: richiede poco spazio in memoria centrale
+    \item Svantaggi: l’allocazione di un’area di ampie dimensioni è costosa, l’allocazione di aree libere contigue è molto difficoltosa
+  \end{itemize}
+  \item \textbf{Lista concatenata (blocchi)}: è costituita da una lista concatenata di blocchi contenenti
+puntatori a blocchi liberi
+          \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/listablocchi.png}
+\end{figure} 
+  \begin{itemize}
+    \item Vantaggi: ad ogni istante, è sufficiente mantenere in memoria
+semplicemente un blocco contenente elementi liberi, non è necessario utilizzare una struttura a dati a parte;
+i blocchi contenenti elenchi di blocchi liberi possono essere
+mantenuti all'interno dei blocchi liberi stessi
+    \item Svantaggi: l’allocazione di un’area di ampie dimensioni è costosa, l’allocazione di aree libere contigue è molto difficoltosa
+  \end{itemize}
+  \item 
+  \end{itemize}
+  \item implementazione delle directory: una \textbf{directory} è un \textit{file speciale} contenente informazioni sui file contenuti nella directory
+  \begin{itemize}
+    \item una directory è suddivisa in un certo numero di \textit{directory entry}
+    \item ogni directory entry deve permettere di accedere a tutte le
+informazioni necessarie per gestire il file
+    \begin{itemize}
+      \item nome
+      \item attributi
+      \item informazioni di allocazione
+    \end{itemize}
+    \texttt{Come le implementiamo?}
+    \begin{itemize}
+      \item Informazioni nelle directory entry: la directory entry contiene tutte le
+informazioni necessarie associate
+ad un file (MS-DOS)
+      \item Informazione negli i-node: le informazioni sono contenute
+negli inode; una directory entry
+contiene un indice di inode (UNIX)
+      \item Lista lineare: semplice da implementare, inefficiente nel caso di directory di grandi dimensioni
+      \item Tabella hash: occorre stabilire la dimensione della tabella di hash e il metodo di
+gestione delle collisioni, la gestione può essere inefficiente se ci sono numerose collisioni
+    \end{itemize}
+  \end{itemize}
+  \item tecniche per ottimizzare le prestazioni
+  \item tecniche per garantire la coerenza
+\end{itemize}
+\paragraph{Performance}
+Tecniche per migliorare le performance dei file system:
+          \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/performance.png}
+\end{figure} 
+\paragraph{Tecniche per garantire la coerenza}
+I meccanismi di caching possono causare inconsistenze nel file system.
+Due possibili soluzioni:
+\begin{itemize}
+  \item curare (file system checker)
+  \begin{enumerate}
+    \item Check Blocks and Sizes: Scandisce la tabella degli I-node: controlla le incoerenze
+    \item Check Path-Names - checks directory: Controlla dir: devono puntare a inode legali
+    \item Check Connectivity: Scandisce l’albero per vedere se tutti i file sono raggiungibili
+(L+F)
+    \item Check Reference Counts: Verifica il numero di riferimenti ad ogni file
+    \item Check Cylinder Group: Verifica i-node e blocchi liberi-occupati
+    \item Salvage Cylinder Groups: Aggiorna le tabelle per salvare i cambiamenti
+  \end{enumerate}
+  \item prevenire (journaling file system)
+\end{itemize}
+\paragraph{File system basati su log} Consente di ripristinare rapidamente uno stato coerente
+\begin{itemize}
+  \item ogni aggiornamento al file system è trattato come una \textbf{transizione}
+  \item una transazione è un'operazione che viene eseguita in modo
+atomico: o tutto, o niente
+\end{itemize}
 
 
 
@@ -2046,7 +2408,7 @@ Uniplexed Information and Computing Service nasce fra gli anni '60 e '70 come si
 Negli anni, il codice sorgente di UNIX è stato concesso in licenza a varie università e aziende. Ognuna ha creato una propria “versione” di Unix, adattata alle proprie esigenze hardware o commerciali (Solaris di Oracle, BSD Unix, ecc). Ad oggi solo i sistemi certificati (come MacOS) sotto il marchio registrato di The Open Group possono definirsi, legalmente, Unix.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{img/kernel_layout.png}
+    \includegraphics[width=0.8\textwidth]{img/kernel_layout.png}
 \end{figure} 
 Ad oggi troviamo molti \textit{Unix-like}, ovvero SO che si basano su vecchi ceppi di Unix o si ispirano fortemente
 \begin{itemize} 
@@ -2073,7 +2435,7 @@ GNU sviluppo': librerie (glibc), compilatore (gcc), shell (bash), strumenti base
 Ovviamente essendo un modello libero, Unix-like con standard POSIX e molto flessibile in breve tempo si diffusero diverse \texttt{distribuzioni}.
 \begin{figure}[h] % [h] = qui (here)
     \centering
-    \includegraphics[width=0.3\textwidth]{img/linux_kernel.png}
+    \includegraphics[width=0.5\textwidth]{img/linux_kernel.png}
 \end{figure} \\
 Il kernel deve occuparsi delle risorse hw (CPU, memoria, IO), deve fornire delle API portatili e standarizzate tra le architetture, gestire accessi concorrenti. \\
 Fra lo \textit{user space} e il kernel troviamo le system call, ovvero un set di comandi del kernel (circa 400 ad oggi). Tutte le system call le troviamo nella libreria C, ma non le chiamiamo mai direttamente ma convochiamo le rispettive versione della funzione in C. \\
