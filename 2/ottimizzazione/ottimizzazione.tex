@@ -740,6 +740,179 @@ Agent Task Cost
 ----------------------
 \end{lstlisting}
 \section{Problemi di ottimizzazione su reti}
+\subsection{Problemi di Flusso su Rete}
+\subsubsection{Generalita'}
+Molti problemi pratici sono modellati naturalmente da grafi.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Una \textbf{Rete} e' rappresentata da un grafo, generalmente orientato (diretto) $G=(N,A)$ in cui
+\begin{itemize}
+  \item i vertici (nodi) $i \in N$, con $|N|=n$ sono punti di \textbf{ingresso, uscita, trasferimento}
+  \item gli archi $(i,j) \in A$ con $|A|=m$ sono i \textbf{collegamenti} tra i nodi
+\end{itemize}
+Una \textbf{soluzione} e' rappresentata da un flusso di oggetti tra i nodi attraverso gli archi della rete e puo' essere
+\begin{itemize}
+  \item discreto (camion o pacchetti)
+  \item continuo (fluido o di corrente)
+\end{itemize}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Ad ogni nodo $i \in N$ e' associata un valore reale $b$ detto \textbf{sbilanciamento} che puo' essere
+\begin{itemize}
+  \item Positivo:
+  \begin{itemize}
+    \item Il nodo $i$ e' un nodo di uscita dalla rete e viene detto \textbf{destinazione, pozzo, nodo di output}
+    \item $b_i$ e' detto domanda di $i$
+    \item $D \subset N = \{i \in N : b_i > 0\}$
+  \end{itemize}
+  \item Negativo:
+  \begin{itemize}
+    \item Il nodo $i$ e' un nodo di ingresso della rete e viene detto \textbf{origine, sorgente, nodo di input}
+    \item $b_i$ e' detto offerta di input
+    \item $O \subset N = \{i \in N : b_i < 0\}$
+  \end{itemize}
+  \item Nullo:
+  \begin{itemize}
+    \item Il nodo $i$ e' detto di \textbf{trasferimento}
+    \item $T \subset N = \{i \in N : b_i = 0\}$
+  \end{itemize}
+\end{itemize}
+$N = O \cup D \cup T$
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Ad ogni arco $(i,j) \in A$ sono associati:
+\begin{itemize}
+  \item Un \textbf{costo} $c_{ij}$ che indica quanto costa per unita' di flusso utilizzare o attraversare il collegamento
+  \item Una \textbf{capacita inferiore} $l_{ij}$ che indica un limite inferiore alla quantita' di flusso che puo' influire attarverso il colegamento
+  \item Una \textbf{capacita' superiore} $u_{ij}$ che indica un limite superiore alla quantita' di flusso che puo' influire attarverso il colegamento
+\end{itemize}
+}}\\
+\vspace{1px}\\
+Nei problemi di flusso, una \textbf{soluzione} non è altro che un flusso, ossia un assegnamento di valori reali agli archi di una rete $G = (N, A)$. \\
+Il costo di un flusso non è nient’altro che il costo complessivo di tutti i flussi presenti nella rete:
+\begin{align*}
+  \sum_{(i,j) \in A} c_{ij} x_{ij}
+\end{align*}
+Come vincoli abbiamo:
+\begin{itemize}
+  \item \textbf{Domanda ed offerta globale si equivalgono:}
+  \begin{align*}
+    \sum_{i \in D} b_i = - \sum_{i \in D} b_i \iff \sum_{i \in D} b_i = 0
+  \end{align*}
+  \item \textbf{Il flusso deve essere ammissibile:}
+  \begin{align*}
+    l_{ij} \leq x_{ij} \leq u_{ij} \quad \forall {i,j} \in A
+  \end{align*}
+  \item \textbf{Il flusso si conserva:}
+  \begin{align*}
+    \sum_{(i,j) \in BS(i)} x_{ij} - \sum_{(i,j) \in FS(j)} x_{ij} = b_i \quad \forall i \in N
+  \end{align*}
+  dove 
+  \begin{itemize}
+    \item $BS(i) = \{(k, i)|(k, i) \in A\}$: detto \textit{backward star} di $i$
+    \item $FS(i) = \{(i, k)|(i, k) \in A\}$: detto \textit{forward star} di $i$
+  \end{itemize}
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/esempio.png}
+\end{figure}
+\paragraph{Ipotesi semplificative: capacità inferiore nulla}
+Per semplificare problema e notazione supponiamo che $l_{ij} = 0 \quad \forall (i,j)\in A$, e' sempre possibile farlo:
+\begin{itemize}
+  \item Data una rete $G$ esiste sempre una rete $H$ equivalente ad $G$ che abbia capacita' inferiori nulle.
+  \begin{enumerate}
+    \item si sottrae la quantita' $l_{ij}$ a $b_{ij}$ e a $u_ij$
+    \item si aggiunge la quantia' $l_{ij}$ a $b_i$
+    \item alla funziona obbiettivo bisognera' aggiungere
+    \begin{align*}
+      \sum_{(i,j) \in A} c_{ij}x_{ij}
+    \end{align*}
+  \end{enumerate}
+  Ovvero al flusso $x_{ij}$ in $H$ corrisponde al flusso $x_{ij} + l_{ij}$ in $G$.
+\end{itemize}
+\paragraph{Ipotesi semplificativa: una sola sorgente e pozzo}
+Spesso, nel progetto di algoritmi per problemi di flusso, conviene assumere che vi sia una sola sorgente e un solo pozzo.
+\begin{itemize}
+  \item Si può costruire una rete equivalente:
+  \begin{itemize}
+    \item Aggiungendo due nodi fittizi, uno corrispondente all’unica sorgente,
+e l’altro all’unico pozzo.
+    \item Aggiungendo archi fittizi dalla sorgente a ciascuna delle sorgenti
+della rete di partenza. Tali archi avranno costo nullo, e capacità
+superiore pari all’inverso dello sbilanciamento della sorgente.
+    \item Aggiungendo archi fittizi da ciascuno dei pozzi della rete di partenza
+al pozzo. Tali archi avranno anch’essi costo nullo, ma capacità
+superiore pari allo sbilanciamento dell pozzo
+  \item Lo sbilanciamento dell’unica sorgente sarà uguale alla somma degli
+sbilanciamenti delle sorgenti. Similmente per il pozzo.
+  \end{itemize}
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/singolopozzo.png}
+\end{figure}
+\paragraph{Capacità sui nodi}
+Alcune volte è utile imporre che anche i nodi (e non solo gli archi) abbiamo delle capacita'
+\begin{itemize}
+  \item si sdoppia ogni nodo i con capacità in due nodi $i', i''$ in modo che:
+  \begin{itemize}
+    \item tutti gli archi entrati in $i$ entrano in $i'$
+    \item tutti gli archi uscenti da $i$ partano da $i''$
+    \item Si aggiunge un arco fittizio $(i', i'')$ con csoto nullo capacita' inferiore $l_i$ e capacita' superiore $u_i$
+  \end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/capacitanodi.png}
+\end{figure}
+\end{itemize}
+\subsubsection{Definizione e Modelli Matematici}
+\paragraph{Problema del Flusso di Costo Minimo (MCF)}
+\begin{align*}
+  & \min cx \\
+  & 0 \leq x \leq u \quad Ex = b
+\end{align*}
+con $c$ vettore costi, $u$ vettore capacita superiori, $E$ matrice di indidenza sui nodi e archi, $b$ vettore degli sbilanciamenti.\\
+\vspace{2px}\\
+Il \textbf{problema di flusso massimo} (o maximum flow, MF) è un
+problema di ottimizzazione su reti che può essere visto come una
+restrizione di MCF.\\
+Ciò che cambia è la funzione obiettivo: non vogliamo minimizzare i
+costi, ma piuttosto \textbf{massimizzare} i flussi.\\
+\begin{align*}
+  & \max v \\
+  & \sum_{(j,s) \in BS(s)} x_{js} + v = \sum_{(s,j) \in FS(s)} x_{sj}\\
+  & \sum_{(j,s) \in BS(i)} x_{ji} - \sum_{(i,j) \in FS(i)} x_{ij} = 0, \quad i \in N - \{s,t\}\\
+  & \sum_{(j,s) \in BS(t)} x_{ji} = \sum_{(t,j) \in FS(t)} x_{tj} + v\\
+  & 0 \leq x_{ij} \leq u_{ij}, \quad (i,j) \in A
+\end{align*}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/max2.png}
+\end{figure}
+Il problema MF può essere visto come un caso particolare di MCF:
+\begin{itemize}
+  \item costi nulli
+  \item sbilanciamenti nulli
+  \item Si aggiunge però un arco fittizio da $t$ a $s$ con costo $-1$ e capacità infinita
+\end{itemize}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/fittizzio.png}
+\end{figure}
+\subsection{Il Problema del Flusso Massimo: Algortimi}
+pagina 24
+\subsubsection{Algoritmo di Ford-Fulkerson}
+\subsubsection{Algortimo di Edmonds-Karp}
+\subsubsection{Algortimo di Golberg-Tarjan}
+\subsection{Il Problema del Flusso di Costo Minimo: Algoritmi}
+\subsection{Problemi di Accoppiamento}
+
 \fcolorbox{blue!75!black}{blue!5!white}{
 \parbox{\linewidth}{
 }}\\
