@@ -35,20 +35,21 @@
 \contentsline {subsubsection}{\numberline {2.1.2}Definizione e Modelli Matematici}{22}{subsubsection.2.1.2}%
 \contentsline {paragraph}{Problema del Flusso di Costo Minimo (MCF)}{22}{section*.29}%
 \contentsline {subsection}{\numberline {2.2}Il Problema del Flusso Massimo: Algortimi}{23}{subsection.2.2}%
+\contentsline {paragraph}{Cammini Aumentanti}{24}{section*.30}%
 \contentsline {subsubsection}{\numberline {2.2.1}Algoritmo di Ford-Fulkerson}{24}{subsubsection.2.2.1}%
-\contentsline {subsubsection}{\numberline {2.2.2}Algortimo di Edmonds-Karp}{24}{subsubsection.2.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.3}Algortimo di Golberg-Tarjan}{24}{subsubsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.3}Il Problema del Flusso di Costo Minimo: Algoritmi}{24}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Problemi di Accoppiamento}{24}{subsection.2.4}%
-\contentsline {section}{\numberline {3}Algoritmi per PL e PLI}{24}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Geometria Della Programmazione Lineare}{24}{subsection.3.1}%
-\contentsline {paragraph}{Soluzioni di Base}{26}{section*.30}%
-\contentsline {paragraph}{Vincoli attivi}{26}{section*.31}%
-\contentsline {paragraph}{Due Rappresentazioni}{27}{section*.32}%
-\contentsline {subsection}{\numberline {3.2}Dualità, Direzioni Ammissibili e di Crescita}{28}{subsection.3.2}%
-\contentsline {paragraph}{Proprietà Primale e Duale}{28}{section*.33}%
-\contentsline {paragraph}{Direzioni Ammissibili — I}{28}{section*.34}%
-\contentsline {paragraph}{Direzioni Ammissibili — II}{28}{section*.35}%
-\contentsline {paragraph}{Direzioni di Crescita}{28}{section*.36}%
-\contentsline {subsection}{\numberline {3.3}L'algoritmo del Simplesso}{29}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}La tecnica Branch-and-Bound}{29}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {2.2.2}Algortimo di Edmonds-Karp}{25}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Algortimo di Golberg-Tarjan}{25}{subsubsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.3}Il Problema del Flusso di Costo Minimo: Algoritmi}{25}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Problemi di Accoppiamento}{25}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Algoritmi per PL e PLI}{25}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Geometria Della Programmazione Lineare}{25}{subsection.3.1}%
+\contentsline {paragraph}{Soluzioni di Base}{27}{section*.31}%
+\contentsline {paragraph}{Vincoli attivi}{27}{section*.32}%
+\contentsline {paragraph}{Due Rappresentazioni}{29}{section*.33}%
+\contentsline {subsection}{\numberline {3.2}Dualità, Direzioni Ammissibili e di Crescita}{29}{subsection.3.2}%
+\contentsline {paragraph}{Proprietà Primale e Duale}{29}{section*.34}%
+\contentsline {paragraph}{Direzioni Ammissibili — I}{30}{section*.35}%
+\contentsline {paragraph}{Direzioni Ammissibili — II}{30}{section*.36}%
+\contentsline {paragraph}{Direzioni di Crescita}{30}{section*.37}%
+\contentsline {subsection}{\numberline {3.3}L'algoritmo del Simplesso}{30}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}La tecnica Branch-and-Bound}{31}{subsection.3.4}%

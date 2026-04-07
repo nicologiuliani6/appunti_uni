@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1775559997.07564 "/home/nico/Desktop/uni/2/ottimizzazione/ottimizzazione.tex" "ottimizzazione.pdf" "ottimizzazione" 1775559999.50032 0
+["pdflatex"] 1775572009.21734 "/home/nico/Desktop/uni/2/ottimizzazione/ottimizzazione.tex" "ottimizzazione.pdf" "ottimizzazione" 1775572011.80817 0
   "/etc/texmf/web2c/texmf.cnf" 1758984917.6732 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/nico/Desktop/uni/2/ottimizzazione/ottimizzazione.tex" 1775559995.24849 50265 84b9251b27d36b46b69ce391cde07470 ""
+  "/home/nico/Desktop/uni/2/ottimizzazione/ottimizzazione.tex" 1775572008.81878 54080 ab0cb95cc0adac7799db9c9f354b81bb ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -232,13 +232,14 @@
   "img/regione.png" 1773819195.88321 24522 751efe8561d5418a5c78e93860d8cc61 ""
   "img/semispazio.png" 1773819195.97821 14473 fc9b22a44ee26935fbc61db11f084ecd ""
   "img/singolopozzo.png" 1775558533.84021 63400 12a6de0c68493488ca1c725bdf2a877b ""
+  "img/taglio.png" 1775570852.5355 41381 a3ba925d1aea68c08d8335e36fcf9941 ""
   "img/tratti.png" 1773819195.96221 36563 00263f6f349f6d8e8bbc50d5c9ea34d3 ""
   "img/z.png" 1773819195.84522 10264 1635fcfc1bd7aeac94ddb82ea8256db5 ""
   "img/z2.png" 1773819195.84922 23174 ea65f211f7e9cdbcc6cf978ce2c2e64c ""
-  "ottimizzazione.aux" 1775559999.24637 7333 76288c95869c95737387890a58f04221 "pdflatex"
-  "ottimizzazione.out" 1775559999.24837 6914 d4b0f1188641be10536b91a58557c549 "pdflatex"
-  "ottimizzazione.tex" 1775559995.24849 50265 84b9251b27d36b46b69ce391cde07470 ""
-  "ottimizzazione.toc" 1775559999.24937 4672 2bc9eb717a13b4c56cbffa616d7d4801 "pdflatex"
+  "ottimizzazione.aux" 1775572011.54269 7438 d320501e00f7a435cd12bca7cb313618 "pdflatex"
+  "ottimizzazione.out" 1775572011.54469 6914 d4b0f1188641be10536b91a58557c549 "pdflatex"
+  "ottimizzazione.tex" 1775572008.81878 54080 ab0cb95cc0adac7799db9c9f354b81bb ""
+  "ottimizzazione.toc" 1775572011.54569 4736 bac1e7a3bcc702f876e815a3eec2d2be "pdflatex"
   (generated)
   "ottimizzazione.aux"
   "ottimizzazione.log"

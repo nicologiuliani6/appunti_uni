@@ -906,9 +906,98 @@ Il problema MF può essere visto come un caso particolare di MCF:
     \includegraphics[width=0.5\textwidth]{img/fittizzio.png}
 \end{figure}
 \subsection{Il Problema del Flusso Massimo: Algortimi}
-pagina 24
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Definizione}: Un taglio in una rete $G=(N,A)$ e' dato da una coppia $(N', N'')$ di sottoninsiemi di $N$ t.c. $N' \cap N'' = \emptyset$ e $N' \cup N'' = N$.\\
+Un $(s,t)$-taglio in una rete $G$ e' un taglio $(N_s, N_t)$ dove $s \in N_s$ e $t \in N_t$.\\
+\begin{itemize}
+  \item Dato un $(s,t)$-taglio in $G=(N,A)$ indichiamo con $A^+(N_s, N_t)$ e $A^-(N_s, N_t)$ i seguenti sottoinsiemi di $A$:
+  \begin{align*}
+    & A^+(N_s, N_t) = \{(i,j) \in A | i \in N_s \land j \in N_t\} \\
+    & A^-(N_s, N_t) = \{(i,j) \in A | i \in N_t \land j \in N_s\}
+  \end{align*}
+\end{itemize}
+}}\\
+\vspace{1px}\\
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/taglio.png}
+\end{figure}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Lemma}: Per ogni $(s,t)$-taglio $(N_s, N_t)$ e ogni flusso ammissibile $x$ con valore $v$:
+\begin{enumerate}
+  \item \textbf{Flusso del taglio}: $v = \sum_{(i,j) \in A^+(N_s, N_t)} x_{ij} - \sum_{(i,j)\in A^- (N_s, N_t)} x_{ij}$; si indica con $x(N_s, N_t)$
+  \item \textbf{Capacita' del taglio}: $v \leq \sum_{(i,j) \in A^+(N_s, N_t)} u_{ij}$; si indica con $u(N_s, N_t)$
+\end{enumerate}
+\begin{align*}
+  v = x(N_s, N_t) \leq u(N_s, N_t)
+\end{align*}
+}}\\
+\vspace{1px}\\
+\paragraph{Cammini Aumentanti} Un cammino aumentante $P$ in una rete $G$ rispetto a $x$ non è nient’altro che un cammino semplice e orientato da $s$ a $t$ in $G_x$.\\
+Dato un cammino aumentante $P$ rispetto a $x$, definiamo la capacità di $P$ rispetto a $x$ come:
+\begin{align*}
+  & \theta(P,x) = \min\{\min\{u_{ij} - x_{ij} | (i,j) \in P^+\}, \, \min\{x_{ij} | (j,i) \in P^-\}\}
+\end{align*}
+Dato un flusso $x$, un cammino $P$ in $G_x$ e un reale $\theta$, definiamo $x(P, \theta)$ il flusso definito come segue:
+\begin{align*}
+  (x(P, \theta)) = \begin{cases}
+    x_{ij} + \theta & \text{ se $(i, j) \in P^+$}\\
+    x_{ij} - \theta & \text{ se $(j, i) \in P^-$}\\
+    x_{ij} & \text{ altrimenti}
+  \end{cases}
+\end{align*}
 \subsubsection{Algoritmo di Ford-Fulkerson}
+\fcolorbox{lime!75!black}{lime!5!white}{
+\parbox{\linewidth}{
+\begin{align*}
+1. & x \gets 0\\[4pt]
+2. & \text{Costruisci } G_x \text{ e determina se esiste un cammino aumentante } P.\\
+        & \text{Se tale } P \text{ non esiste, termina e restituisci } x.\\[4pt]
+3. & x \gets x(P, \theta(P,x))\\[4pt]
+4. & \text{Ritorna al punto 2.}
+\end{align*}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Lemma}: Se $x$ e' ammissibile allora anche $x(P, \theta(P, x))$ e' ammissibile.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Lemma}: Se $x$ e' un flesso ammissibile massimo, allora $G_x$ non ha cammini aumentanti.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Lemma}: Se $G_x$ non ha camminni aumentanti, allora esiste un taglio di capacita' pari a $v$.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema (Correttezza)}: Se l'algoritmo di Ford-Fulkerson termina, allora il flusso $x$ è un flusso massimo.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Il valore del amssimo flusso e' uguale alla minima capacita' dei tagli.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Se le capacita' di $G$ sono numeri interi, allora esiste almeno un flusso intero massimo.
+}}\\
+\vspace{1px}\\
 \subsubsection{Algortimo di Edmonds-Karp}
+L’Algoritmo di Edmonds-Karp non è nient’altro che l’algoritmo di
+Ford-Fulkerson dove, però, la ricerca del cammino aumentante
+viene eseguita visitando in ampiezza (BFS) il grafo residuo $G_x$.\\
+Notiamo che in questo modo i cammini aumentanti saranno
+sempre cammini di \textbf{lunghezza minima}.\\
+pagina 43
+
 \subsubsection{Algortimo di Golberg-Tarjan}
 \subsection{Il Problema del Flusso di Costo Minimo: Algoritmi}
 \subsection{Problemi di Accoppiamento}
@@ -917,6 +1006,10 @@ pagina 24
 \parbox{\linewidth}{
 }}\\
 \vspace{1px}\\
+
+
+
+
 \section{Algoritmi per PL e PLI}
 \subsection{Geometria Della Programmazione Lineare}
 \begin{figure}[H]
