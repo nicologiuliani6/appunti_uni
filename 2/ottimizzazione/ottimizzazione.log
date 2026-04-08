@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  7 APR 2026 16:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  8 APR 2026 10:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -975,144 +975,247 @@ Underfull \hbox (badness 10000) in paragraph at lines 961--993
 
 
 [24 <./img/taglio.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1007--1009
-
- []
-
-<img/PL.png, id=435, 312.16624pt x 251.94125pt>
-File: img/PL.png Graphic file (type png)
-<use img/PL.png>
-Package pdftex.def Info: img/PL.png  used on input line 1017.
-(pdftex.def)             Requested size: 145.11053pt x 117.11687pt.
-<img/iperpiano.png, id=436, 532.99126pt x 261.97874pt>
-File: img/iperpiano.png Graphic file (type png)
-<use img/iperpiano.png>
-Package pdftex.def Info: img/iperpiano.png  used on input line 1029.
-(pdftex.def)             Requested size: 241.84843pt x 118.87271pt.
-<img/semispazio.png, id=437, 413.545pt x 217.81375pt>
-File: img/semispazio.png Graphic file (type png)
-<use img/semispazio.png>
-Package pdftex.def Info: img/semispazio.png  used on input line 1040.
-(pdftex.def)             Requested size: 241.84843pt x 127.3823pt.
-<img/poliedro.png, id=438, 365.365pt x 195.73125pt>
-File: img/poliedro.png Graphic file (type png)
-<use img/poliedro.png>
-Package pdftex.def Info: img/poliedro.png  used on input line 1049.
-(pdftex.def)             Requested size: 241.84843pt x 129.56232pt.
-<img/convesso.png, id=439, 511.9125pt x 198.7425pt>
-File: img/convesso.png Graphic file (type png)
-<use img/convesso.png>
-Package pdftex.def Info: img/convesso.png  used on input line 1061.
-(pdftex.def)             Requested size: 290.22107pt x 112.67485pt.
-<img/facce.png, id=440, 562.1pt x 292.09125pt>
-File: img/facce.png Graphic file (type png)
-<use img/facce.png>
-Package pdftex.def Info: img/facce.png  used on input line 1069.
-(pdftex.def)             Requested size: 338.58632pt x 175.94246pt.
-
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1019--1070
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 994--1012
 [][][] 
  []
 
 
-Overfull \hbox (13.32619pt too wide) in paragraph at lines 1019--1070
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 994--1012
+[][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 994--1012
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1015--1019
+
+ []
+
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1020--1051
+[][][] 
+ []
+
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1020--1051
+[][][] 
+ []
+
+
+
+[25]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 1058.
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1055--1086
+[][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1055--1086
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1113--1113
+
+ []
+
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1113--1116
+[][][] 
+ []
+
+
+
+[26]
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1124--1155
+[][][] 
+ []
+
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1124--1155
+[][][] 
+ []
+
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1124--1155
+[][][] 
+ []
+
+
+
+[27]
+<img/ammissibile.png, id=450, 415.5525pt x 235.88126pt>
+File: img/ammissibile.png Graphic file (type png)
+<use img/ammissibile.png>
+Package pdftex.def Info: img/ammissibile.png  used on input line 1190.
+(pdftex.def)             Requested size: 193.47578pt x 109.82402pt.
+<img/ammissibile2.png, id=451, 656.4525pt x 247.92625pt>
+File: img/ammissibile2.png Graphic file (type png)
+<use img/ammissibile2.png>
+Package pdftex.def Info: img/ammissibile2.png  used on input line 1194.
+(pdftex.def)             Requested size: 290.22107pt x 109.60994pt.
+
+
+[28 <./img/ammissibile.png>]
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1244--1246
+[][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1244--1246
+
+ []
+
+
+
+[29 <./img/ammissibile2.png>]
+<img/costominimo.png, id=465, 648.4225pt x 274.02374pt>
+File: img/costominimo.png Graphic file (type png)
+<use img/costominimo.png>
+Package pdftex.def Info: img/costominimo.png  used on input line 1287.
+(pdftex.def)             Requested size: 241.84843pt x 102.20671pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1278--1288
+
+ []
+
+<img/PL.png, id=466, 312.16624pt x 251.94125pt>
+File: img/PL.png Graphic file (type png)
+<use img/PL.png>
+Package pdftex.def Info: img/PL.png  used on input line 1293.
+(pdftex.def)             Requested size: 145.11053pt x 117.11687pt.
+
+
+[30 <./img/costominimo.png>]
+<img/iperpiano.png, id=474, 532.99126pt x 261.97874pt>
+File: img/iperpiano.png Graphic file (type png)
+<use img/iperpiano.png>
+Package pdftex.def Info: img/iperpiano.png  used on input line 1305.
+(pdftex.def)             Requested size: 241.84843pt x 118.87271pt.
+<img/semispazio.png, id=475, 413.545pt x 217.81375pt>
+File: img/semispazio.png Graphic file (type png)
+<use img/semispazio.png>
+Package pdftex.def Info: img/semispazio.png  used on input line 1316.
+(pdftex.def)             Requested size: 241.84843pt x 127.3823pt.
+<img/poliedro.png, id=476, 365.365pt x 195.73125pt>
+File: img/poliedro.png Graphic file (type png)
+<use img/poliedro.png>
+Package pdftex.def Info: img/poliedro.png  used on input line 1325.
+(pdftex.def)             Requested size: 241.84843pt x 129.56232pt.
+<img/convesso.png, id=477, 511.9125pt x 198.7425pt>
+File: img/convesso.png Graphic file (type png)
+<use img/convesso.png>
+Package pdftex.def Info: img/convesso.png  used on input line 1337.
+(pdftex.def)             Requested size: 290.22107pt x 112.67485pt.
+<img/facce.png, id=478, 562.1pt x 292.09125pt>
+File: img/facce.png Graphic file (type png)
+<use img/facce.png>
+Package pdftex.def Info: img/facce.png  used on input line 1345.
+(pdftex.def)             Requested size: 338.58632pt x 175.94246pt.
+
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1295--1346
+[][][] 
+ []
+
+
+Overfull \hbox (13.32619pt too wide) in paragraph at lines 1295--1346
  [][][] 
  []
 
 
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1019--1070
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1295--1346
 [][][] 
  []
 
 
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1019--1070
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1295--1346
 [][][] 
  []
 
 
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1019--1070
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1295--1346
 [][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1019--1070
+Underfull \hbox (badness 10000) in paragraph at lines 1295--1346
 
  []
 
 
 
-[25 <./img/PL.png>]
+[31 <./img/PL.png> <./img/iperpiano.png> <./img/semispazio.png>]
 
-[26 <./img/iperpiano.png> <./img/semispazio.png> <./img/poliedro.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1078--1080
+[32 <./img/poliedro.png> <./img/convesso.png> <./img/facce.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1354--1356
 
  []
 
-<img/conv.png, id=450, 390.45876pt x 252.945pt>
+<img/conv.png, id=489, 390.45876pt x 252.945pt>
 File: img/conv.png Graphic file (type png)
 <use img/conv.png>
-Package pdftex.def Info: img/conv.png  used on input line 1098.
+Package pdftex.def Info: img/conv.png  used on input line 1374.
 (pdftex.def)             Requested size: 193.47578pt x 125.33745pt.
 
-Underfull \hbox (badness 3792) in paragraph at lines 1116--1116
+Underfull \hbox (badness 3792) in paragraph at lines 1392--1392
 \T1/cmr/m/n/12 I co-ni che sia-no an-che in-sie-mi con-ves-si (det-ti co-ni con-ves-si) so-no ca-rat-te-riz-za-bi-li
  []
 
-<img/cono.png, id=451, 368.37625pt x 247.92625pt>
+<img/cono.png, id=490, 368.37625pt x 247.92625pt>
 File: img/cono.png Graphic file (type png)
 <use img/cono.png>
-Package pdftex.def Info: img/cono.png  used on input line 1116.
+Package pdftex.def Info: img/cono.png  used on input line 1392.
 (pdftex.def)             Requested size: 193.47578pt x 130.2124pt.
-<img/Motzin.png, id=452, 474.77374pt x 335.2525pt>
+<img/Motzin.png, id=491, 474.77374pt x 335.2525pt>
 File: img/Motzin.png Graphic file (type png)
 <use img/Motzin.png>
-Package pdftex.def Info: img/Motzin.png  used on input line 1129.
+Package pdftex.def Info: img/Motzin.png  used on input line 1405.
 (pdftex.def)             Requested size: 193.47578pt x 136.62057pt.
 
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1084--1131
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1360--1407
 [][][] 
  []
 
 
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1084--1131
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1360--1407
 [][][] 
  []
 
 
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1084--1131
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1360--1407
 [][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1084--1131
+Underfull \hbox (badness 10000) in paragraph at lines 1360--1407
 
  []
 
 
 
-[27 <./img/convesso.png> <./img/facce.png>]
-
-[28 <./img/conv.png> <./img/cono.png>]
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1136--1146
-[][][] 
- []
-
-
-Overfull \hbox (10.7157pt too wide) in paragraph at lines 1153--1165
+[33 <./img/conv.png>]
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1412--1422
 [][][] 
  []
 
 
 
-[29 <./img/Motzin.png>]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 1175.
+[34 <./img/cono.png> <./img/Motzin.png>]
+Overfull \hbox (10.7157pt too wide) in paragraph at lines 1429--1441
+[][][] 
+ []
 
 
-[30]
 
-[31]
+[35]
 
-[32] (./ottimizzazione.aux)
+[36]
+
+[37] (./ottimizzazione.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1121,18 +1224,18 @@ Package rerunfilecheck Info: File `ottimizzazione.out' has not changed.
 (rerunfilecheck)             Checksum: D4B0F1188641BE10536B91A58557C549;6914.
  ) 
 Here is how much of TeX's memory you used:
- 24851 strings out of 473197
- 444536 string characters out of 5718606
+ 24899 strings out of 473197
+ 445434 string characters out of 5718606
  1040143 words of memory out of 5000000
- 47523 multiletter control sequences out of 15000+600000
+ 47560 multiletter control sequences out of 15000+600000
  578867 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,19n,91p,591b,1974s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on ottimizzazione.pdf (32 pages, 910727 bytes).
+Output written on ottimizzazione.pdf (37 pages, 996201 bytes).
 PDF statistics:
- 616 PDF objects out of 1000 (max. 8388607)
- 492 compressed objects within 5 object streams
- 170 named destinations out of 1000 (max. 500000)
- 466 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 655 PDF objects out of 1000 (max. 8388607)
+ 519 compressed objects within 6 object streams
+ 181 named destinations out of 1000 (max. 500000)
+ 481 words of extra memory for PDF output out of 10000 (max. 10000000)
 

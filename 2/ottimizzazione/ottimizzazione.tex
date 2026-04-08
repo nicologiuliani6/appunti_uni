@@ -996,20 +996,296 @@ Ford-Fulkerson dove, però, la ricerca del cammino aumentante
 viene eseguita visitando in ampiezza (BFS) il grafo residuo $G_x$.\\
 Notiamo che in questo modo i cammini aumentanti saranno
 sempre cammini di \textbf{lunghezza minima}.\\
-pagina 43
-
-\subsubsection{Algortimo di Golberg-Tarjan}
-\subsection{Il Problema del Flusso di Costo Minimo: Algoritmi}
-\subsection{Problemi di Accoppiamento}
-
+\vspace{1px}\\
 \fcolorbox{blue!75!black}{blue!5!white}{
 \parbox{\linewidth}{
+\textbf{Lemma}: Se, durante l’esecuzione di EK, il flusso $y$ è ottenuto da $x$ tramite
+un’operazione di aumento del flusso in un cammino aumentante, allora
+per ogni nodo $i \in N$, vale che $\delta_x (s,i) \leq \delta_y (s,i)$.
 }}\\
 \vspace{1px}\\
-
-
-
-
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Il numero di iterazioni di EK e' $O(NA)$, quindi la sua complessita' e' $O(NA^2)$.
+}}\\
+\vspace{1px}\\
+\begin{align*}
+  \delta_y (s,i) & = \delta_y (s,j)+1 \geq \delta_x (s,j)+1 \\
+  & = \delta_x (s,i)+2
+\end{align*}
+Da un momento in cui $(i, j)$ diventa critico al successivo, la sua
+distanza da $s$ aumenta di almeno $2$. Siccome tale distanza non può essere
+superiore a $|N|$, il numero di volte in cui $(i, j)$ può diventare critico è lineare in $|N|$.\\
+\subsubsection{Algortimo di Golberg-Tarjan}
+Una delle strade che ci permettono di scendere sotto la soglia di
+una complessità O(NA2) è quella che Goldberg e Tarjan
+intrapresero nel 1986 e che consiste nel rendere la costruzione del
+flusso massimo più \textbf{locale}. (questo in opposizione con FF ed EK, in cui ad ogni iterazione
+occorre procedere con un’analisi \textbf{globale})\\
+C’è un prezzo da pagare, ossia il fatto che durante l’esecuzione
+dell’algoritmo, non si lavora solo con flussi ammissibili, ma anche
+con \textbf{preflussi}.\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+Un \textbf{preflusso} e' un vettore $x$ t.c.
+\begin{align*}
+  \sum_{(j,i) \in BS(i)} x_{ij} - \sum_{(i,j) \in FS(i)} x_{ij} > 0, \quad i \in N-\{s,t\}\\
+  0 \leq x_{ij} \leq u_{ij}, \quad (i,j) \in A 
+\end{align*}
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+Un nodo si dice \textbf{attivo} se il suo eccesso è positivo, altrimenti si dice \textbf{bilanciato}.
+\begin{align*}
+  e_i = \sum_{(j,i) \in BS(i)} x_{ij} - \sum_{(i,j) \in FS(j)} x_{ij}
+\end{align*}
+}}\\
+\vspace{1px}\\
+L’idea centrale dell’algoritmo è quella di eliminare gli
+sbilanciamenti presenti nel preflusso corrente in modo \textit{iterativo} e
+\textit{locale}.\\
+Lo sbilanciamento presente in un nodo i viene eliminato spostando
+parte del flusso in eccesso:
+\begin{itemize}
+  \item In avanti (\textbf{push forward}), ossia attraverso un arco $(i, j)$, ogniqualvolta $x_{ij} < u_{ij}$
+  \item Indietro (\textbf{push backward}), ossia attraverso un arco $(j, i)$, ogniqualvolta $x_{ij}  0$
+\end{itemize}
+Non e' sempre possibile effetturare \textit{push}, altrimenti sarebbe molto difficile tenere la complessità
+dell’algoritmo sotto controllo. Si usa invece un sistema basato su \textbf{etichettature}.
+\begin{algorithm}
+\caption{GOLDBERGTARJAN($G, s, t$)}
+\begin{algorithmic}[1]
+\State $x \gets 0$
+\ForAll{$(s, j) \in FS(s)$}
+    \State $x_{sj} \gets u_{sj}$
+\EndFor
+\State $d \gets \text{ETICHETTATURAVALIDA}(G)$
+\State $d_s \gets n$
+\If{tutti i nodi (diversi da $s$ e $t$) sono bilanciati}
+    \State \Return $x$
+\EndIf
+\While{esiste un nodo sbilanciato $v$}
+    \If{esiste $(v, j)$ ammissibile per $v$}
+        \State $\text{PUSHFORWARD}(v, j)$
+    \ElsIf{esiste $(i, v)$ ammissibile per $v$}
+        \State $\text{PUSHBACKWARD}(i, v)$
+    \Else
+        \State $\text{RELABEL}(v)$
+    \EndIf
+\EndWhile
+\State \Return $x$
+\end{algorithmic}
+\end{algorithm}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: L’algoritmo di Goldberg e Tarjan è corretto, e la sua complessità in tempo è $O(N^2A$).
+}}\\
+\vspace{1px}\\
+\subsection{Il Problema del Flusso di Costo Minimo: Algoritmi}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+Uno \textbf{pseudoflusso} è un vettore x che soddisfa i vincoli di capacità, ossia tale che
+\begin{align*}
+  0 \leq x_{ij} \leq u_{ij}, \quad (i,j)\in A
+\end{align*}
+Se $x$ è uno pseudoflusso, definiamo sbilanciamento di un nodo i
+rispetto a $x$ la quantità
+\begin{align*}
+  e_x(i) = \sum_{(j,i) \in BS(i)} x_{ji} - \sum_{(i,j) \in FS(i)} x_{ij} - b_i
+\end{align*}
+Possiamo anche vedere $e_x$ come un vettore, detto vettore degli \textbf{sbilanciamenti}.\\
+\vspace{1px}\\
+Dato uno pseudoflusso $x$, i nodi sbilanciati rispetto a $x$ fanno parte di uno dei seguenti due insiemi:
+\begin{align*}
+  & O_x = \{i \in N | e_x(i)> 0\}\\
+  & D_x = \{i \in N | e_x(i) < 0\}
+\end{align*}
+I nodi in $Ox$ sono detti \textbf{nodi con eccesso di flusso}, mentre quelli in $D_x$ sono detti \textbf{nodi con difetto di flusso}.\\
+\begin{itemize}
+  \item Se $O_x = D_x = \emptyset$ allora $x$ e' un flusso. 
+\end{itemize}
+Lo \textbf{sbilanciamento complessivo} di $x$ e' definito come:
+\begin{align*}
+  g(x) = \sum_{i \in O_x} e_x(i) = - \sum_{j \in D_x} e_x(j)
+\end{align*}
+}}\\
+\vspace{1px}\\
+Un cammino $P$ tra $i$ e $j$ in $Gx$ verrà quindi detto cammino aumentante tra $i$ e $j$
+\begin{itemize}
+  \item I suoi archi possono essere partizionati in $P^+$ e $P^-$
+  \item La suacapacita' $\theta (P, x)$ e' definita come al solito
+  \item Un cammino aumentante tra i e i viene anche detto \textbf{ciclo aumentante}
+\end{itemize}
+Il \textbf{costo} di un cammino aumentante P è definito come:
+\begin{align*}
+  c(P) = \sum_{(i,j) \in P^+} c_{ij} - \sum_{(i,j)\in P^-} c_{ij}
+\end{align*}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Siano $x$ e $y$ due pseudoflussi qualunque. Allora esistono $k \leq n + m$ cammini
+aumentanti $P_1, \dots , P_k$, tutti per $x$, di cui al più $m$ sono cicli, t.c.
+\begin{align*}
+  & z_1 = x\\
+  & z_{i+1} = z_i \oplus \theta_i P_i \quad 1\leq i \leq k\\
+  & z_{k+1} = y \\
+  & 0 \leq \theta_i \leq \theta(P_i, z_i)
+\end{align*}
+Inoltre, tutti i $P_i$ hanno come estremi dei nodi in cui lo sbilanciamento di $x$ è diverso da quello di $y$.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Lemma}: Uno pseudoflusso (rispettivamente, un flusso ammissibile) è minimale
+(rispettivamente, ottimo) sse non esistono cicli aumentanti di costo
+negativo.
+}}\\
+\vspace{1px}\\
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+\textbf{Teorema}: Sia $x$ uno pseudoflusso minimale e sia $P$ un cammino aumentante rispetto
+ad $x$ avente costo minimo tra tutti i cammini che uniscono un nodo di $O_x$
+ad un nodo di $D_x$. Allora, qualunque sia $\theta \leq \theta (x, P)$, abbiamo che
+$x(\theta , P) = x \oplus \theta P$ è ancora pseudoflusso minimale.
+}}\\
+\vspace{1px}\\
+È abbastanza facile costruire uno pseudoflusso minimale x, se non
+si bada agli sbilanciamenti. Ad esempio, il flusso x definito come
+\begin{align*}
+  x_{ij} = \begin{cases}
+    0 & \text{ se $x_{ij} \geq 0$}\\
+    u_{ij} & \text{ altrimenti}
+  \end{cases}
+\end{align*}
+In questo modo i costi degli archi in $G_x$ sono tutti non-negativi e
+quindi $G_x$ non avrà cicli negativi (e in ultima analisi $x$ sarà
+minimale).\\
+\begin{algorithm}
+\caption{CAMMINI MINIMI SUCCESSIVI($G$)}
+\begin{algorithmic}[1]
+\State $x \gets \text{PSEUDOFLUSSOMINIMALE}(G)$
+\If{$g(x) = 0$}
+    \State \Return $x$
+\EndIf
+\While{true}
+    \State Cerca un cammino di costo minimo $P$ tra un nodo $i \in O_x$ e $j \in D_x$
+    \If{$P$ non esiste}
+        \State \Return \text{``il problema è vuoto''}
+    \EndIf
+    \State $x \gets x\big(P, \min\{\theta(P, x), ex(i), -ex(j)\}\big)$
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+Il costo computazionale di \textbf{ogni iterazione} è dominato dalla ricerca
+di un cammino minimo, che possiamo eseguire in tempo $O(NA)$. La complessità sarà quindi nel caso peggiore $O(\bar{g}NA)$,
+\textbf{pseudopolinomiale} nella dimensione del grafo.
+\paragraph{Costruire un Flusso Ammissibile}
+Data una rete G, è possibile determinare se esiste un \textbf{flusso}
+ammissibile (ma non necessariamente ottimo) per essa?
+Basta risolvere il problema MF sulla rete ottenuta nel modo
+seguente:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{img/ammissibile.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/ammissibile2.png}
+\end{figure}
+\begin{algorithm}
+\caption{CANCELLAZIONE CICLI($G$)}
+\begin{algorithmic}[1]
+\State $x \gets \text{FLUSSOAMMISSIBILE}(G)$
+\If{$x$ non esiste}
+    \State \Return \text{``il problema è vuoto''}
+\EndIf
+\While{true}
+    \State Cerca un ciclo di costo negativo in $G_x$
+    \If{nessun ciclo trovato}
+        \State \Return $x$
+    \EndIf
+    \State Sia $C$ il ciclo trovato
+    \State $x \gets x\big(C, \theta(C, x)\big)$
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+Il costo di qualunque flusso ammissibile è compreso tra $-A\bar{uc}$ e
+$A\bar{uc}$, dove
+\begin{align*}
+  & \bar{u} = \max\{u_{ij} | (i,j)\in N\}\\
+  & \bar{c} = \max\{c_{ij} | (i,j)\in N\}
+\end{align*}
+La complessità dell’algoritmo sarà quindi \textbf{pseudoplinomiale}, ossia
+\begin{align*}
+  O(NA) \cdot O(A\bar{uc}) = O(NA^2 \bar{uc})
+\end{align*}
+\subsection{Problemi di Accoppiamento}
+Nei problemi di accoppiamento, si lavora con grafi bipartiti non
+orientati ossia con grafi nella forma $G = (O \cup D, A)$, dove:
+\begin{itemize}
+  \item $O = \{1, \dots, n\}$ e' l'insieme dei \textbf{nodi di origine}
+  \item $D = \{n+1, \dots, n+d\}$ e' l'indieme dei \textbf{nodi di destinazione}
+  \item $A \subseteq O \times D$ e' l'insieme degli \textbf{archi} a ciascun dei quali e' associato un \textbf{costo}
+\end{itemize}
+Un \textbf{accoppiamento} per un grafo bipartito $G = (O \cup D, A)$ è un
+sottoinsieme $M$ di $A$ i cui archi non abbiano nodi in comune.
+\begin{itemize}
+  \item Gli archi in $M$ si dicono \textbf{interni}, mentre quelli in$ A-M$ sono detti \textbf{esterni}.
+  \item I nodi che compaiono in qualche arco di $M$ si dicono \textbf{accoppiati}, gli altri nodi si dicono invece \textbf{esposti}.
+\end{itemize}
+\fcolorbox{blue!75!black}{blue!5!white}{
+\parbox{\linewidth}{
+$M$ e' detto \textbf{accoppiamento perfetto} sse non vi sono nodi esposti.\\
+Il \textit{costo} di un accoppiamento $M$ e' nient'altro che
+\begin{align*}
+  c(M) = \sum_{(i,j) \in M} c_{ij}
+\end{align*}
+}}\\
+\vspace{1px}\\
+\paragraph{Accoppiamento di Massima Cardinalità}
+Si vuole determinare, semplicemente, l’accoppiamento di massima cardinalità.\\
+Il problema può essere visto come un problema di flusso massimo con più sorgenti (i nodi in $O$) e più pozzi (i nodi in $D$).
+\begin{itemize}
+  \item Le \textbf{capacita'} saranno tutte pari a 1
+  \item Ci interessano sono \textbf{flussi interi}
+  \item Come sappiamo, una rete con molte sorgenti e molte destinazioni può essere poi tradotta in una rete con una sorgente e una destinazione.
+\end{itemize}
+Ogni cammino aumentante in $G_M$ deve:
+\begin{itemize}
+  \item Essere alternante, ossia consistere di archi interni, seguiti da archi
+esterni, seguiti da archi interni, e così via.
+  \item Partire da un’origine esposta e arrivare ad una destinazione
+esposta.
+  \item In altre parole, se $P_E = P - M$ e $P_I = M \cap P$ sono rispettivamente gli
+archi esterni e interni di un cammino aumentante $P$, allora
+$|P_E| - |P_I| = 1$.
+\end{itemize}
+La capacità $\theta (M, P)$ di un cammino aumentante $P$ sarà sempre $1$, e
+di conseguenza:
+\begin{align*}
+  M \oplus (\theta (M,P))P = (M-P_I) \cup P_E
+\end{align*}
+Otteniamo in questo modo un algoritmo del tutto simile a FF, ma in
+cui la ricerca del cammino aumentante può essere eseguita tramite
+una semplice procedura di visita.\\
+La complessità di quest’algoritmo, a differenza di quella di FF, sarà
+$O(mn)$, perché
+\begin{align*}
+  U = \max\{c_{ij} | (i,j) \in A\}=1
+\end{align*}
+\paragraph{Accoppiamento di Costo Minimo}
+Si vuole determinare l’accoppiamento di costo minimo tra tutti gli accopiamenti perfetti.\\
+Seguendo lo stesso identico tipo di ragionamento, è possibile
+vedere una qualunque istanza del problema di accoppiamento di
+costo minimo come un’istanza di MCF.\\
+In particolare, i camminimi minimi aumentanti potrebbero essere
+visti come cammini esposti tra due vertici esposti, rispettivamente in
+$O$ e in $D$.\\
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/costominimo.png}
+\end{figure}
 \section{Algoritmi per PL e PLI}
 \subsection{Geometria Della Programmazione Lineare}
 \begin{figure}[H]

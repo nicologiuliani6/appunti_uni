@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1775572009.21734 "/home/nico/Desktop/uni/2/ottimizzazione/ottimizzazione.tex" "ottimizzazione.pdf" "ottimizzazione" 1775572011.80817 0
+["pdflatex"] 1775636448.65736 "/home/nico/Desktop/uni/2/ottimizzazione/ottimizzazione.tex" "ottimizzazione.pdf" "ottimizzazione" 1775636451.41129 0
   "/etc/texmf/web2c/texmf.cnf" 1758984917.6732 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/nico/Desktop/uni/2/ottimizzazione/ottimizzazione.tex" 1775572008.81878 54080 ab0cb95cc0adac7799db9c9f354b81bb ""
+  "/home/nico/Desktop/uni/2/ottimizzazione/ottimizzazione.tex" 1775636448.25782 65935 6b14e4d0f009071878ee168ca3bc22ec ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -205,6 +205,8 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1772808145 3349296 92ae11ed9b913348834dd0189eeaf1c3 ""
   "img/Motzin.png" 1773996018.35311 11006 8594e58daa789e1b66b6772db91d70e1 ""
   "img/PL.png" 1773819195.96921 5653 8cfd193ae686ae93518b11eb01e1ec23 ""
+  "img/ammissibile.png" 1775635054.99975 20234 4701e84b8079d40a46fe897135cc32bc ""
+  "img/ammissibile2.png" 1775635062.78578 29400 46410fa9861298674efb1bba05f57dc0 ""
   "img/capacitanodi.png" 1775559349.55392 14307 45adeeee2c315097acf63c786e9985a0 ""
   "img/cono.png" 1773995856.49484 7870 9f87839339a4bb1ecfb9bc55200898e0 ""
   "img/conv.png" 1773995553.07291 5217 3f0057697692360e225ebd4838fd0105 ""
@@ -212,6 +214,7 @@
   "img/convesso.png" 1773819195.99321 15549 c7f8cfbe4b08edcb43a5b8237b66cb25 ""
   "img/convesso_intersezione.png" 1773819195.86122 13464 2a0249cb3d216031e8661df995a13f27 ""
   "img/costofisso.png" 1773819195.96621 2688 b82c472af07c4094c6f556a6af656103 ""
+  "img/costominimo.png" 1775636412.72949 37403 832cf9be683f5c8d78715d84ccefcff5 ""
   "img/esempio.png" 1775558231.17464 34009 486378df17b92ab5d5aff804d0a19c2f ""
   "img/eu.png" 1773819195.89821 10601 975f654cfd2b20bbace752a4b4532251 ""
   "img/facce.png" 1773819195.99921 42982 8ecce58bbeb32f9aca90645f33ead643 ""
@@ -236,10 +239,10 @@
   "img/tratti.png" 1773819195.96221 36563 00263f6f349f6d8e8bbc50d5c9ea34d3 ""
   "img/z.png" 1773819195.84522 10264 1635fcfc1bd7aeac94ddb82ea8256db5 ""
   "img/z2.png" 1773819195.84922 23174 ea65f211f7e9cdbcc6cf978ce2c2e64c ""
-  "ottimizzazione.aux" 1775572011.54269 7438 d320501e00f7a435cd12bca7cb313618 "pdflatex"
-  "ottimizzazione.out" 1775572011.54469 6914 d4b0f1188641be10536b91a58557c549 "pdflatex"
-  "ottimizzazione.tex" 1775572008.81878 54080 ab0cb95cc0adac7799db9c9f354b81bb ""
-  "ottimizzazione.toc" 1775572011.54569 4736 bac1e7a3bcc702f876e815a3eec2d2be "pdflatex"
+  "ottimizzazione.aux" 1775636451.13175 8229 49a1ac8f71e2e65fa0d35cf230617817 "pdflatex"
+  "ottimizzazione.out" 1775636451.13375 6914 d4b0f1188641be10536b91a58557c549 "pdflatex"
+  "ottimizzazione.tex" 1775636448.25782 65935 6b14e4d0f009071878ee168ca3bc22ec ""
+  "ottimizzazione.toc" 1775636451.13475 4971 16c6abdf44e285ef45c4321818bfec1f "pdflatex"
   (generated)
   "ottimizzazione.aux"
   "ottimizzazione.log"

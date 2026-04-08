@@ -39,17 +39,20 @@
 \contentsline {subsubsection}{\numberline {2.2.1}Algoritmo di Ford-Fulkerson}{24}{subsubsection.2.2.1}%
 \contentsline {subsubsection}{\numberline {2.2.2}Algortimo di Edmonds-Karp}{25}{subsubsection.2.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.3}Algortimo di Golberg-Tarjan}{25}{subsubsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.3}Il Problema del Flusso di Costo Minimo: Algoritmi}{25}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Problemi di Accoppiamento}{25}{subsection.2.4}%
-\contentsline {section}{\numberline {3}Algoritmi per PL e PLI}{25}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Geometria Della Programmazione Lineare}{25}{subsection.3.1}%
-\contentsline {paragraph}{Soluzioni di Base}{27}{section*.31}%
-\contentsline {paragraph}{Vincoli attivi}{27}{section*.32}%
-\contentsline {paragraph}{Due Rappresentazioni}{29}{section*.33}%
-\contentsline {subsection}{\numberline {3.2}Dualità, Direzioni Ammissibili e di Crescita}{29}{subsection.3.2}%
-\contentsline {paragraph}{Proprietà Primale e Duale}{29}{section*.34}%
-\contentsline {paragraph}{Direzioni Ammissibili — I}{30}{section*.35}%
-\contentsline {paragraph}{Direzioni Ammissibili — II}{30}{section*.36}%
-\contentsline {paragraph}{Direzioni di Crescita}{30}{section*.37}%
-\contentsline {subsection}{\numberline {3.3}L'algoritmo del Simplesso}{30}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}La tecnica Branch-and-Bound}{31}{subsection.3.4}%
+\contentsline {subsection}{\numberline {2.3}Il Problema del Flusso di Costo Minimo: Algoritmi}{27}{subsection.2.3}%
+\contentsline {paragraph}{Costruire un Flusso Ammissibile}{28}{section*.31}%
+\contentsline {subsection}{\numberline {2.4}Problemi di Accoppiamento}{29}{subsection.2.4}%
+\contentsline {paragraph}{Accoppiamento di Massima Cardinalità}{30}{section*.32}%
+\contentsline {paragraph}{Accoppiamento di Costo Minimo}{30}{section*.33}%
+\contentsline {section}{\numberline {3}Algoritmi per PL e PLI}{31}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Geometria Della Programmazione Lineare}{31}{subsection.3.1}%
+\contentsline {paragraph}{Soluzioni di Base}{32}{section*.34}%
+\contentsline {paragraph}{Vincoli attivi}{33}{section*.35}%
+\contentsline {paragraph}{Due Rappresentazioni}{34}{section*.36}%
+\contentsline {subsection}{\numberline {3.2}Dualità, Direzioni Ammissibili e di Crescita}{35}{subsection.3.2}%
+\contentsline {paragraph}{Proprietà Primale e Duale}{35}{section*.37}%
+\contentsline {paragraph}{Direzioni Ammissibili — I}{35}{section*.38}%
+\contentsline {paragraph}{Direzioni Ammissibili — II}{35}{section*.39}%
+\contentsline {paragraph}{Direzioni di Crescita}{35}{section*.40}%
+\contentsline {subsection}{\numberline {3.3}L'algoritmo del Simplesso}{36}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}La tecnica Branch-and-Bound}{36}{subsection.3.4}%
