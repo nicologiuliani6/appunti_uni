@@ -15,6 +15,11 @@
 \usepackage{tikz}        % per barra sopra
 \usepackage{mathcomp} % per simbolo siile al dollaro con due barre 
 \usepackage{listings}
+\lstset{
+  literate=
+    {∪}{{$\cup$}}1
+    {∩}{{$\cap$}}1
+}
 
 % Informazioni sul documento
 \title{Linguaggi di Programmazione\\
@@ -520,9 +525,181 @@ tipicamente tramite \emph{ricerca binaria}.
 Una volta individuata la voce corrispondente, il controllo viene trasferito
 all’indirizzo del gestore ($\mathit{handler\_addr}$), dopo aver effettuato lo
 \emph{stack unwinding}.
-
 Se il gestore rilancia l’eccezione, il processo viene ripetuto nel frame
 chiamante, continuando la ricerca di un gestore compatibile. Se non lo trova il programma finisce senza gestire l'eccezione.
+
+\section{Introduzione ai Tipi}
+Il termine \textbf{sistema di tipi} (o teoria dei tipi) si riferisce a un ampio campo di
+studi in logica, matematica e filosofia. I primi ricercatori hanno formalizzato i
+sistemi di tipi in questo senso all'inizio del 1900 per evitare i \textbf{paradossi logici},
+come il paradosso di Russell, che minacciavano i fondamenti della matematica.\\
+In informatica esistono due grandi branche di ricerca sui sistemi di tipi:
+\begin{itemize}
+  \item quella più \textbf{pratica} riguarda le applicazioni ai linguaggi di programmazione
+  \item quella più \textbf{astratta} si concentra sulle connessioni con le varietà della logica
+\end{itemize}
+\paragraph{Supporto all’Organizzazione Concettuale} I tipi possono aiutare a disciplinare l'organizzazione concettuale dei programmi. I tipi consentono ai programmatori di esprimere la differenza tra le entità che formano
+la soluzione di un determinato problema. L'uso di tipi distinti è uno strumento di \textbf{documentazione} e di \textbf{progettazione}.
+\paragraph{Supporto all’Astrazione} Una particolare declinazione del supporto all'organizzazione concettuale offerto
+dai tipi è quella di dare supporto concreto ai sistemi di moduli nei linguaggi dove i moduli “impacchettano” e legano insieme diverse unità software. L'esempio tipico di questo tipo di utilizzo dei tipi sono le \textbf{interfacce}, che
+\textbf{associano un tipo} (per esempio, l'intero) \textbf{ad operazioni} che si possono applicare
+su di esso (per esempio, +, -, \%, conversioni). 
+\paragraph{Supporto alla Correttezza} Il vantaggio più famoso dei tipi è il \textbf{type-checking}, cioè la possibilità di usare i tipi
+per rilevare errori di programmazione. I tipi aiutano molto anche il \textbf{refactoring}. In generale, la “safety” si riferisce alla capacità di un linguaggio di \textbf{garantire l'integrità delle sue astrazioni}.
+\paragraph{Supporto all’Implementazione} I tipi possono contribuire a migliorare l'efficienza dei programmi; nei linguaggi safe, i tipi aiutano a migliorare l'efficienza eliminando molti dei
+controlli dinamici per garantire la sicurezza. 
+\subsection*{Dynamic vs Static Typing}
+\begin{itemize}
+  \item Un linguaggio è “tipato staticamente” (statically typed) se possiamo controllare
+i tipi sul testo del programma, senza doverlo eseguire (compilazione)
+  \item Si parla di linguaggi “tipati dinamicamente” (dynamically typed) quando il
+controllo dei tipi avviene durante l'esecuzione del programma 
+\end{itemize}
+\subsection*{Manifest vs Inferred typing}
+La tipizzazione statica o dinamica riguarda il momento in cui un linguaggio (interpretato o
+compilato) esegue il controllo dei tipi. 
+\begin{itemize}
+  \item Un linguaggio con manifest typing richiede che il programmatore annoti tutti i tipi di variabili e
+operazioni. Un linguaggio con inferred typing non ha bisogno di annotazioni, in quanto dispone di
+algoritmi che deducono i tipi dal contesto (dichiarazioni, operazioni).
+  \item Mentre il tipaggio statico e quello dinamico lasciano poco spazio (utile) all'ibridazione, il tipaggio
+manifesto e inferito sono uno spettro determinato da fattori ergonomici e algoritmici. 
+\end{itemize}
+\section{Tipi Base e l’Algebra dei Tipi}
+Ogni linguaggio di programmazione ha un proprio sistema di tipi, cioè le informazioni e le regole
+che governano i tipi e i loro valori, chiamati abitanti (inhabitants) del tipo.
+\begin{enumerate}
+  \item un insieme di \textbf{tipi di base}
+  \item meccanismi per \textbf{definire nuovi tipi}
+  \item meccanismi di computazione sui tipi:
+  \begin{itemize}
+    \item \textbf{regole di equivalenza}: che specificano quando due tipi corrispondono allo stesso tipo
+    \item \textbf{regole di compatibilita'}: che specificano quando si può usare un tipo al posto di un altro
+    \item \textbf{regole/tecniche di inferenza}: specificano come assegnare un tipo a un'espressione, a partire dalle informazioni sui suoi componenti;
+  \end{itemize}
+  \item la definizione sul controllo dei vincoli di tipo statico o dinamico.
+\end{enumerate}
+\paragraph{Tipo Unit (e Void)}
+Il tipo più elementare è quello che contiene un solo elemento (l'insieme è un singoletto). 'unico abitante del tipo Unit è l'unità singoletto (rappresentato anche come ()) e di solito
+è associato a operazioni il cui tipo di ritorno non è utilizzabile. Un concetto simile all’unità col tipo void che, tuttavia,
+presenta alcune differenze con Unit. Per esempio, mentre possiamo passare l'unità come
+argomento delle operazioni, non possiamo ottenere né passare un void
+\paragraph{Tipi Booleani}
+I booleani indicano il tipo di valori logici e di solito comprendono \textbf{true} e \textbf{false}. Le operazioni logiche sono congiunzione ($\&$), la disgiunzione ($|$), la negazione ($!$), l'uguaglianza ($==$), lo XOR (\^{}).
+\paragraph{Tipi Carattere}
+I caratteri (chars) indicano tutti i caratteri di un determinato (e
+definito a livello linguistico) insieme di simboli. Include valori (ASCII/UNICODE) e operazioni dipendenti da linguaggio come uguaglianza e confronti.
+\paragraph{Tipi Interi}
+Indicano un intervallo (finito) di numeri interi con o senza segno. Supporta operazioni di uguaglianza, confronti e operazioni aritmetiche ($+, -, *, \%$)
+\paragraph{Tipi Reali}
+I floating point indicano un intervallo (limitato) di numeri reali a virgola fissa/mobile. Possono non essere distribuiti ugualmente in tutto l'intervallo!
+\paragraph{Enumeration types}
+Un tipo di enumerazione consiste in un insieme finito di costanti, ciascuna caratterizzata da un
+proprio nome.
+\begin{lstlisting}
+  enum Color{
+    Red,
+    Green,
+    Blue
+  }
+\end{lstlisting}
+Non tutti i linguaggi integrano gli enum in \textbf{modo sicuro}, in $C$ per esempio e' zucchero sintatico su interi
+\begin{lstlisting}
+  typedef Color{
+    Red = 0,
+    Green = 1,
+    Blue = 2
+  }
+\end{lstlisting}
+questo impedisce di verificare la correttezza e di distinguerli da \textit{int}.
+\paragraph{Tipi Array}
+Un tipo array denota un insieme di elementi di un certo tipo, ciascuno indicizzato da
+almeno una \textbf{chiave identificativa} di un certo tipo. Per $n+1$ elementi si indica l'intervallo $[0, n]$, e si lascia all'utente indicare il tipo degli elementi.\\
+Altri versioni di array come \textit{mappe} (map) o array associativi permettono all'utente di fissare sia il tipo per la chiave che per gli ementi.
+\begin{lstlisting}
+  map<string, int> Database; //Hashmap che dato un nome ritorna un int
+\end{lstlisting}
+Come operazioni abbiamo la \textbf{selezione} tramite l'indice, assegnazione, confronti e operazioni artimetiche. I linguaggi safe verificano che gli accessi siano nei limiti dell'array.
+\paragraph{Tipi Riferimento}
+Un riferimenti da accesso indiretto ad un altro valore. Le operazioni sono \textbf{creazione}, controllo di uguaglianza e \textbf{deferenziazione} (accesso al dato referenziato). Sono essenziali per linguaggi a basso livello. Vengono fortemente applicati attraverso i puntatori
+\begin{lstlisting}
+  float pi = 3.14;
+  float *p = NULL;
+  p = &pi; //Il puntatore p punta alla posizione che contiene pi.
+  *p+=1; //fa diventare pi=4.14 deferenziando p
+\end{lstlisting}
+Bisogna stare attenti alla \textbf{deallocazione implicita}
+\begin{lstlisting}
+  int *p = malloc(sizeof(int));
+  *p = 5; 
+  p = NULL; //rendiamo inaccessibile la locazione di malloc precedente!
+\end{lstlisting}
+Questa porzione di memoria “non liberata” può crescere nel
+tempo (finché il programma viene eseguito) e può incorrere
+in un fenomeno chiamato “memory leak”. Questo problema puo' essere risolto via il \textit{garbage collector}.\\
+Nei linguaggi con riferimenti troviamo un \textbf{operatore di deallocazione esplicito}:
+\begin{lstlisting}
+    int *p = malloc(sizeof(int));
+  *p = 5; 
+  free(p) //deallochiamo la sezione di memoria di malloc
+  p = NULL;
+\end{lstlisting}
+\paragraph{Tipi Prodotto}
+Array, set e puntatori sono esempi di tipi compositi che "prendono come parametro" un tipo. Quando si combinano due o più tipi in una struttura fissa, si parla di tipi
+prodotto. I tipi di prodotto più comuni sono coppie (pair), tuple, record e varianti. Per conveenzione il vuoto e' unita' (Unit).
+\paragraph{Tipi Record}
+I record interpretano i tipi prodotto sostituendo la definizione posizionale dei
+componenti con la loro identificazione mediante etichette (distinte).
+\begin{lstlisting}
+  struct Person{
+    char *name;
+    int age;
+  }
+\end{lstlisting}
+\paragraph{Pattern Matching}
+Tecnica per i record per semplificare i dati strutturati, attraverso costrutti che rendono semplice destrutturarli.
+\begin{lstlisting}
+  let evaR = PersonR{ name, age: match age {
+    1..=10 => [ 'K','i','d','' ],
+    11..=20 => [ 'T','e','e','n' ],
+    _ => [ 'O', 'l', 'd', '' ]
+}}
+\end{lstlisting}
+\paragraph{Tipi Ricorsivi}
+I tipo ricorsivi (concetto) sono strutture dati (liste, alberi, ecc.) che possiamo modificare dinamicamente.
+\begin{lstlisting}
+  struct List{
+    int val;
+    List* next;
+  }
+\end{lstlisting} 
+\paragraph{Tipi Somma}
+Quando un tipo e' a variabile di tipo composta del tipo
+\begin{lstlisting}
+  x := int ∪ char
+  x = {5, j, 17, i}
+\end{lstlisting}
+\paragraph{Tipi Funzione}
+I linguaggi di alto livello supportano spesso la definizione di funzioni (o procedure), tuttavia solo alcuni denotano il tipo di funzioni.
+\begin{align*}
+  T_f \, : \, \quad & f(T \, \, p)\{\\
+    & \quad \vdots \\
+    & \}
+\end{align*}
+Puo' essere definita come 
+\begin{align*}
+  f \, : \, T_f \to T
+\end{align*}
+
+
+
+
+
+
+\section{}
+\section{}
+\section{}
+\section{}
 \end{document}
 
 
