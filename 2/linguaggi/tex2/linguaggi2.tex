@@ -690,13 +690,82 @@ Puo' essere definita come
 \begin{align*}
   f \, : \, T_f \to T
 \end{align*}
+\section{Tipi Polimorfi}
+Se un sistema di tipi non ci permette di esprimere che alcuni tipi accettano altri tipi come parametri, chiamiamo il sistema di tipi \textbf{monomorfico}.\\
+Ipotizziamo di volere definire una funzione per trovare il $\max$ per \textit{int} e \textit{float}, in un sistema monorfico definiremo:
+\begin{align*}
+  & \text{max} \, (int, \,\, int) \to int \\
+    & \text{max} \, (float, \,\, float) \to float \\
+    & \vdots
+\end{align*}
+Invece in un sistema a \textbf{polimorfismo} di tipo consente agli sviluppatori di specificare un
+insieme di operazioni su un dato tipo parametrico che \textbf{astrae da alcuni dettagli
+dell'istanziazione concreta del tipo}.\\
+In generale, esistono tre tipi di polimorfismo:
+\begin{itemize}
+  \item \textbf{ad-hoc (sovraccarico/overloading)}: sfrutta la capacità del compilatore/runtime del linguaggio di
+distinguere dal contesto di chiamata definizioni alternative di operazioni con
+lo stesso nome.
+\begin{lstlisting}
+  int max(int i, int j){
+    return i > j ? i : j;
+  }
+  float max(float i, float j){
+    return i > j ? i : j;
+  }
+\end{lstlisting}
+  \item \textbf{di sottotipo (subtyping)}: si basa su una relazione di sottoinsieme, per esempio
+  \begin{align*}
+    S \, <: \, T
+  \end{align*}
+  si dice che $S$ e' sottosipo di $T$, ovvero $S$ e' piu' specifico di $T$, possiamo utilizzare $S$ in qualsiasi posto che necessiti un $T$. \\
+  Abbiamo due tipi di sottotipaggio, consideriamo $Dog \, <: \, Animal$:
+  \begin{itemize}
+    \item \textbf{sottotipaggio in larghezza}: i record dei sottotipi aggiungono campi
+    \begin{lstlisting}
+      type Animal:{name:string}
+      type Dog:{name:string, back:string}
+    \end{lstlisting}
+    \item \textbf{sottosipaggio in profondita'}: sostituiamo campo con sottotipi
+    \begin{lstlisting}
+      type AnimalHouse:{tenant: Animal}
+      type DogHouse:{tenant: Dog}
+    \end{lstlisting}
+  \end{itemize}
+  Nel caso della funzione $\max$ per $int$ e $float$ definiamo
+  \begin{align*}
+    int \, <: \, float
+  \end{align*} 
+  \begin{lstlisting}
+    max(float i, float j) -> float {
+      ...
+    }
+  \end{lstlisting}
+  \item \textbf{parametrico (universale)}: non si possono fare ipotesi sulla forma dei parametri del tipo 
+  \begin{lstlisting}
+    //Definiamo i tipi
+    int <: Comparable
+    float <: Comparable
+
+    type T extends Comparable;
+
+    T max(T x, T y) -> T { //Definiamo la funzione
+      ...
+    }
+  \end{lstlisting}
+  Quindi abbiamo definito
+  \begin{align}
+    \max \, := \, T \times T \rightarrow T
+  \end{align}
+\end{itemize}
 
 
 
 
 
 
-\section{}
+
+
 \section{}
 \section{}
 \section{}

@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1775767022.04805 "/home/nico/Desktop/uni/2/linguaggi/tex2/linguaggi2.tex" "linguaggi2.pdf" "linguaggi2" 1775767023.75216 0
+["pdflatex"] 1775816463.14561 "/home/nico/Desktop/uni/2/linguaggi/tex2/linguaggi2.tex" "linguaggi2.pdf" "linguaggi2" 1775816464.91671 0
   "/etc/texmf/web2c/texmf.cnf" 1758984917.6732 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/nico/Desktop/uni/2/linguaggi/tex2/linguaggi2.tex" 1775767021.67547 32759 76cf499c8dda53f307e17a278a3fa6c0 ""
+  "/home/nico/Desktop/uni/2/linguaggi/tex2/linguaggi2.tex" 1775816462.76167 35303 273980d4d690ce318fbd1fe0da935971 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -205,10 +205,10 @@
   "img/term.png" 1773819200.14306 45272 0670638e360101740c13f78596527f02 ""
   "img/up.png" 1773819200.23505 21142 6e8bcbb1f49a4523ae9ec2c296375224 ""
   "img/vrisultato.png" 1773819200.21006 31771 e90d77a7b7873d3ea73204dd2ff051d1 ""
-  "linguaggi2.aux" 1775767023.53262 4915 0f903a57f8bd0c2f419a1764cf78d991 "pdflatex"
-  "linguaggi2.out" 1775767023.53462 2340 593bfc3061c8c2c2663c6cfe2f77d654 "pdflatex"
-  "linguaggi2.tex" 1775767021.67547 32759 76cf499c8dda53f307e17a278a3fa6c0 ""
-  "linguaggi2.toc" 1775767023.53562 2848 b9fd8fdbac8b41e18e2bcc8017b1b7f8 "pdflatex"
+  "linguaggi2.aux" 1775816464.6929 4929 57fedf35cb4a3e86475e498ff267e9f0 "pdflatex"
+  "linguaggi2.out" 1775816464.6949 2421 09992c399e84549d3c56522fafc44ba7 "pdflatex"
+  "linguaggi2.tex" 1775816462.76167 35303 273980d4d690ce318fbd1fe0da935971 ""
+  "linguaggi2.toc" 1775816464.6949 2862 32ac897b6f10033d92965e85152ff339 "pdflatex"
   (generated)
   "linguaggi2.aux"
   "linguaggi2.log"
