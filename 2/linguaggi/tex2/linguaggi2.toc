@@ -37,6 +37,6 @@
 \contentsline {paragraph}{Tipi Somma}{18}{section*.23}%
 \contentsline {paragraph}{Tipi Funzione}{18}{section*.24}%
 \contentsline {section}{\numberline {7}Tipi Polimorfi}{18}{section.7}%
-\contentsline {section}{\numberline {8}}{19}{section.8}%
-\contentsline {section}{\numberline {9}}{19}{section.9}%
-\contentsline {section}{\numberline {10}}{19}{section.10}%
+\contentsline {section}{\numberline {8}Exceptions}{19}{section.8}%
+\contentsline {section}{\numberline {9}Sicurezza della memoria: Garbage collection e Borrow-checking}{20}{section.9}%
+\contentsline {section}{\numberline {10}}{20}{section.10}%

@@ -758,16 +758,45 @@ lo stesso nome.
     \max \, := \, T \times T \rightarrow T
   \end{align}
 \end{itemize}
-
-
-
-
-
-
-
-
-\section{}
-\section{}
+\section{Exceptions}
+A seconda delle istruzioni che vogliamo eseguire, potremmo aver bisogno di programmare operazioni
+che \textbf{falliscono}; oltre a poter \textbf{esprimere} queste situazioni nei programmi, dovremmo (dobbiamo) anche trovare il modo di \textbf{strutturarle}.\\
+L'idea alla base delle eccezioni è che una condizione eccezionale (un raro
+evento di fallimento) causa il trasfer\textbf{}imento diretto \textbf{del controllo a un gestore di
+eccezioni} definito in qualche punto dello stack di chiamate del programma.
+\begin{lstlisting}
+  try{
+      x = 1 / 0
+  } catch(ArithmeticException exception){
+    print("Non si divide per 0!")
+  }
+\end{lstlisting}
+Il blocco catch accetta un argomento: l'eccezione che si aspetta di intercettare.\\
+Il codice nel blocco \textbf{try} non viene eseguito "atomicamente". Infatti, il codice nel
+blocco catch sostituisce il codice nel blocco try solo a partire dall'istruzione che solleva (\textbf{throw}).\\
+Concentrandosi sulle Exception, Java obbliga gli sviluppatori a gestirle
+esplicitamente in due modi possibili: o dichiarando che un'operazione lancia
+un'eccezione o gestendo l'eccezione lanciata all'interno dell'operazione.\\
+\begin{minipage}{0.48\textwidth}
+\begin{lstlisting}
+void o() throws MyException{
+  throw new MyException();
+}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\begin{lstlisting}
+void o(){
+  try {
+    throw new MyException();
+  } catch ( MyException e ){
+    ...
+  }
+}
+\end{lstlisting}
+\end{minipage}
+\section{Sicurezza della memoria: Garbage collection e Borrow-checking}
 \section{}
 \end{document}
 
