@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  11 APR 2026 09:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  12 APR 2026 19:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -506,31 +506,56 @@ File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
 File: listings.cfg 2024/09/23 1.10c listings configuration
 ))
 Package: listings 2024/09/23 1.10c (Carsten Heinz)
- (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+ (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks47
+\c@algorithm=\count332
+) (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+ (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count333
+\c@ALG@rem=\count334
+\c@ALG@nested=\count335
+\ALG@tlm=\skip58
+\ALG@thistlm=\skip59
+\c@ALG@Lnr=\count336
+\c@ALG@blocknr=\count337
+\c@ALG@storecount=\count338
+\c@ALG@tmpcounter=\count339
+\ALG@tmplength=\skip60
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count332
+\l__color_backend_stack_int=\count340
 \l__pdf_internal_box=\box69
 ) (./linguaggi2.aux)
 \openout1 = `linguaggi2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 31.
-LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -566,38 +591,38 @@ LaTeX Font Info:    ... okay on input line 31.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \it@ocap on input line 31.
-LaTeX Info: Redefining \it@ccap on input line 31.
+LaTeX Info: Redefining \it@ocap on input line 34.
+LaTeX Info: Redefining \it@ccap on input line 34.
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count333
+\scratchcounter=\count341
 \scratchdimen=\dimen276
 \scratchbox=\box70
-\nofMPsegments=\count334
-\nofMParguments=\count335
-\everyMPshowfont=\toks47
-\MPscratchCnt=\count336
+\nofMPsegments=\count342
+\nofMParguments=\count343
+\everyMPshowfont=\toks48
+\MPscratchCnt=\count344
 \MPscratchDim=\dimen277
-\MPnumerator=\count337
-\makeMPintoPDFobject=\count338
-\everyMPtoPDFconversion=\toks48
+\MPnumerator=\count345
+\makeMPintoPDFobject=\count346
+\everyMPtoPDFconversion=\toks49
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 31.
+Package hyperref Info: Link coloring OFF on input line 34.
  (./linguaggi2.out) (./linguaggi2.out)
 \@outlinefile=\write4
 \openout4 = `linguaggi2.out'.
 
-\c@lstlisting=\count339
-LaTeX Font Info:    Trying to load font information for U+msa on input line 33.
+\c@lstlisting=\count347
+LaTeX Font Info:    Trying to load font information for U+msa on input line 36.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 33.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 36.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (./linguaggi2.toc)
@@ -611,215 +636,215 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
 
 [2{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-Underfull \hbox (badness 10000) in paragraph at lines 129--130
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 135--136
-[][][][][][][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 136--137
-[][][][][][][][][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 137--138
-[][][][][][][][][][][]
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 138--139
-[][][][][][][][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--140
-[][][][][][][][][][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 141--142
-[][][][][][][][][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 154--155
 [][][][][][][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 155--156
+Underfull \hbox (badness 10000) in paragraph at lines 139--140
 [][][][][][][][][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 156--157
+Underfull \hbox (badness 10000) in paragraph at lines 140--141
 [][][][][][][][][][][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 157--158
+Underfull \hbox (badness 10000) in paragraph at lines 141--142
 [][][][][][][][]
  []
 
 
-Overfull \hbox (14.51947pt too wide) in paragraph at lines 157--158
-[][][][][][][][][][][][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 158--159
+Underfull \hbox (badness 10000) in paragraph at lines 142--143
 [][][][][][][][][][]
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 144--145
+[][][][][][][][][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 157--158
+[][][][][][][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 158--159
+[][][][][][][][][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--160
+[][][][][][][][][][][]
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 160--161
+[][][][][][][][]
+ []
+
+
+Overfull \hbox (14.51947pt too wide) in paragraph at lines 160--161
+[][][][][][][][][][][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 161--162
+[][][][][][][][][][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
 [][][][][][][][][]
  []
 
 
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 187--188
+Underfull \hbox (badness 10000) in paragraph at lines 190--191
 
  []
 
 
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 194--197
+Underfull \hbox (badness 10000) in paragraph at lines 197--200
 
  []
 
-<img/statico.png, id=220, 405.515pt x 337.26pt>
+<img/statico.png, id=250, 405.515pt x 337.26pt>
 File: img/statico.png Graphic file (type png)
 <use img/statico.png>
-Package pdftex.def Info: img/statico.png  used on input line 215.
+Package pdftex.def Info: img/statico.png  used on input line 218.
 (pdftex.def)             Requested size: 241.84843pt x 201.14821pt.
 
 
 [5 <./img/statico.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 234.
+(hyperref)                removing `\@ifnextchar' on input line 237.
 
-<img/catena.png, id=234, 115.43124pt x 277.035pt>
+<img/catena.png, id=264, 115.43124pt x 277.035pt>
 File: img/catena.png Graphic file (type png)
 <use img/catena.png>
-Package pdftex.def Info: img/catena.png  used on input line 248.
+Package pdftex.def Info: img/catena.png  used on input line 251.
 (pdftex.def)             Requested size: 69.65244pt x 167.16495pt.
-<img/statici.png, id=235, 301.125pt x 364.36125pt>
+<img/statici.png, id=265, 301.125pt x 364.36125pt>
 File: img/statici.png Graphic file (type png)
 <use img/statici.png>
-Package pdftex.def Info: img/statici.png  used on input line 255.
+Package pdftex.def Info: img/statici.png  used on input line 258.
 (pdftex.def)             Requested size: 162.51997pt x 196.65762pt.
 
-Overfull \hbox (35.87236pt too wide) in paragraph at lines 245--260
+Overfull \hbox (35.87236pt too wide) in paragraph at lines 248--263
 []$[]$ $[]$
  []
 
 
 
 [6 <./img/catena.png> <./img/statici.png>]
-<img/albero.png, id=241, 182.6825pt x 129.48375pt>
+<img/albero.png, id=271, 182.6825pt x 129.48375pt>
 File: img/albero.png Graphic file (type png)
 <use img/albero.png>
-Package pdftex.def Info: img/albero.png  used on input line 286.
+Package pdftex.def Info: img/albero.png  used on input line 289.
 (pdftex.def)             Requested size: 96.73788pt x 68.56677pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 293--294
+Underfull \hbox (badness 10000) in paragraph at lines 296--297
 
  []
 
 
 
 [7 <./img/albero.png>]
-<img/rif.png, id=249, 615.29875pt x 207.77625pt>
+<img/rif.png, id=280, 615.29875pt x 207.77625pt>
 File: img/rif.png Graphic file (type png)
 <use img/rif.png>
-Package pdftex.def Info: img/rif.png  used on input line 315.
+Package pdftex.def Info: img/rif.png  used on input line 318.
 (pdftex.def)             Requested size: 241.84843pt x 81.66647pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 312--316
+Underfull \hbox (badness 10000) in paragraph at lines 315--319
 
  []
 
 
 
 [8 <./img/rif.png>]
-<img/fatt.png, id=264, 310.15875pt x 289.08pt>
+<img/fatt.png, id=295, 310.15875pt x 289.08pt>
 File: img/fatt.png Graphic file (type png)
 <use img/fatt.png>
-Package pdftex.def Info: img/fatt.png  used on input line 350.
+Package pdftex.def Info: img/fatt.png  used on input line 353.
 (pdftex.def)             Requested size: 145.11053pt x 135.24565pt.
-<img/fib.png, id=265, 402.50375pt x 139.52126pt>
+<img/fib.png, id=296, 402.50375pt x 139.52126pt>
 File: img/fib.png Graphic file (type png)
 <use img/fib.png>
-Package pdftex.def Info: img/fib.png  used on input line 355.
+Package pdftex.def Info: img/fib.png  used on input line 358.
 (pdftex.def)             Requested size: 241.84843pt x 83.83261pt.
 
 
 [9 <./img/fatt.png> <./img/fib.png>]
-<img/controllo.png, id=276, 509.905pt x 273.02pt>
+<img/controllo.png, id=306, 509.905pt x 273.02pt>
 File: img/controllo.png Graphic file (type png)
 <use img/controllo.png>
-Package pdftex.def Info: img/controllo.png  used on input line 367.
+Package pdftex.def Info: img/controllo.png  used on input line 370.
 (pdftex.def)             Requested size: 241.84843pt x 129.4942pt.
-<img/term.png, id=277, 587.19376pt x 177.66376pt>
+<img/term.png, id=307, 587.19376pt x 177.66376pt>
 File: img/term.png Graphic file (type png)
 <use img/term.png>
-Package pdftex.def Info: img/term.png  used on input line 374.
+Package pdftex.def Info: img/term.png  used on input line 377.
 (pdftex.def)             Requested size: 241.84843pt x 73.17334pt.
-<img/risultato.png, id=278, 552.0625pt x 102.3825pt>
+<img/risultato.png, id=308, 552.0625pt x 102.3825pt>
 File: img/risultato.png Graphic file (type png)
 <use img/risultato.png>
-Package pdftex.def Info: img/risultato.png  used on input line 384.
+Package pdftex.def Info: img/risultato.png  used on input line 387.
 (pdftex.def)             Requested size: 241.84843pt x 44.8516pt.
-<img/vrisultato.png, id=279, 560.0925pt x 130.4875pt>
+<img/vrisultato.png, id=309, 560.0925pt x 130.4875pt>
 File: img/vrisultato.png Graphic file (type png)
 <use img/vrisultato.png>
-Package pdftex.def Info: img/vrisultato.png  used on input line 389.
+Package pdftex.def Info: img/vrisultato.png  used on input line 392.
 (pdftex.def)             Requested size: 241.84843pt x 56.34546pt.
-<img/nome.png, id=280, 546.04pt x 155.58125pt>
+<img/nome.png, id=310, 546.04pt x 155.58125pt>
 File: img/nome.png Graphic file (type png)
 <use img/nome.png>
-Package pdftex.def Info: img/nome.png  used on input line 394.
+Package pdftex.def Info: img/nome.png  used on input line 397.
 (pdftex.def)             Requested size: 241.84843pt x 68.90938pt.
 
 
 [10 <./img/controllo.png> <./img/term.png> <./img/risultato.png> <./img/vrisultato.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 399--400
+Underfull \hbox (badness 10000) in paragraph at lines 402--403
 
  []
 
-<img/scope.png, id=285, 238.8925pt x 238.8925pt>
+<img/scope.png, id=315, 238.8925pt x 238.8925pt>
 File: img/scope.png Graphic file (type png)
 <use img/scope.png>
-Package pdftex.def Info: img/scope.png  used on input line 428.
+Package pdftex.def Info: img/scope.png  used on input line 431.
 (pdftex.def)             Requested size: 145.11053pt x 145.10817pt.
 
 
 [11 <./img/nome.png>]
-<img/up.png, id=303, 307.1475pt x 258.9675pt>
+<img/up.png, id=333, 307.1475pt x 258.9675pt>
 File: img/up.png Graphic file (type png)
 <use img/up.png>
-Package pdftex.def Info: img/up.png  used on input line 462.
+Package pdftex.def Info: img/up.png  used on input line 465.
 (pdftex.def)             Requested size: 96.73788pt x 81.56332pt.
 
 
 [12 <./img/scope.png> <./img/up.png>]
-<img/ec.png, id=309, 694.595pt x 444.66125pt>
+<img/ec.png, id=339, 694.595pt x 444.66125pt>
 File: img/ec.png Graphic file (type png)
 <use img/ec.png>
-Package pdftex.def Info: img/ec.png  used on input line 477.
+Package pdftex.def Info: img/ec.png  used on input line 480.
 (pdftex.def)             Requested size: 338.58632pt x 216.75961pt.
 
 
@@ -828,14 +853,14 @@ Package pdftex.def Info: img/ec.png  used on input line 477.
 [14]
 
 [15]
-Overfull \hbox (9.68692pt too wide) in paragraph at lines 620--621
+Overfull \hbox (9.68692pt too wide) in paragraph at lines 623--624
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
 
 [16]
-Overfull \hbox (16.73526pt too wide) in paragraph at lines 635--636
+Overfull \hbox (16.73526pt too wide) in paragraph at lines 638--639
 [][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
@@ -846,28 +871,55 @@ Overfull \hbox (16.73526pt too wide) in paragraph at lines 635--636
 [18]
 
 [19]
+Underfull \hbox (badness 10000) in paragraph at lines 803--804
 
-[20] (./linguaggi2.aux)
+ []
+
+<img/tombstones.png, id=502, 243.91125pt x 250.9375pt>
+File: img/tombstones.png Graphic file (type png)
+<use img/tombstones.png>
+Package pdftex.def Info: img/tombstones.png  used on input line 821.
+(pdftex.def)             Requested size: 116.08621pt x 119.43011pt.
+<img/lock.png, id=504, 248.93pt x 256.96pt>
+File: img/lock.png Graphic file (type png)
+<use img/lock.png>
+Package pdftex.def Info: img/lock.png  used on input line 851.
+(pdftex.def)             Requested size: 139.30487pt x 143.8025pt.
+
+
+[20 <./img/tombstones.png>]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 876.
+
+
+[21 <./img/lock.png>]
+<img/mark.png, id=544, 831.105pt x 177.66376pt>
+File: img/mark.png Graphic file (type png)
+<use img/mark.png>
+Package pdftex.def Info: img/mark.png  used on input line 913.
+(pdftex.def)             Requested size: 290.22107pt x 62.03955pt.
+
+
+[22 <./img/mark.png>] (./linguaggi2.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `linguaggi2.out' has not changed.
-(rerunfilecheck)             Checksum: BFA342BCE655A9C4D9FD95ACA2FAA04F;2810.
+(rerunfilecheck)             Checksum: AF6D8755D346FAA62FBD1A6193744713;3632.
  ) 
 Here is how much of TeX's memory you used:
- 24222 strings out of 473197
- 433437 string characters out of 5718606
- 855354 words of memory out of 5000000
- 46781 multiletter control sequences out of 15000+600000
- 577085 words of font info for 85 fonts, out of 8000000 for 9000
+ 24912 strings out of 473197
+ 444459 string characters out of 5718606
+ 864256 words of memory out of 5000000
+ 47430 multiletter control sequences out of 15000+600000
+ 578459 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,10n,91p,587b,1960s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on linguaggi2.pdf (20 pages, 742501 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb>
+Output written on linguaggi2.pdf (22 pages, 909123 bytes).
 PDF statistics:
- 616 PDF objects out of 1000 (max. 8388607)
- 544 compressed objects within 6 object streams
- 300 named destinations out of 1000 (max. 500000)
- 248 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 695 PDF objects out of 1000 (max. 8388607)
+ 610 compressed objects within 7 object streams
+ 325 named destinations out of 1000 (max. 500000)
+ 311 words of extra memory for PDF output out of 10000 (max. 10000000)
 

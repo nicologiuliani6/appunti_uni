@@ -20,6 +20,9 @@
     {∪}{{$\cup$}}1
     {∩}{{$\cap$}}1
 }
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
 
 % Informazioni sul documento
 \title{Linguaggi di Programmazione\\
@@ -797,6 +800,125 @@ void o(){
 \end{lstlisting}
 \end{minipage}
 \section{Sicurezza della memoria: Garbage collection e Borrow-checking}
+I riferimenti quando fanno riferimento a memoria deallocata/reallocata diventano \textbf{dangling} e posso portare \textbf{undefined behaviour} (comportamenti inaspettati).\\
+\subsection{Tombstones} 
+Un modo per gestire i punattori e' con le tombstones, ovverso si associa ad ogni allocazione una cella di memoria extra. All'iniziallizzaione  la tombstone contiene l'indirizzo dell'elemento e il puntatore punta alla tombstones. La deferenziazione funziona prima alla tombstones e poi all'oggetto.\\
+\begin{minipage}{0.48\textwidth}
+  \begin{lstlisting}
+  {
+    char *dp = NULL;
+    {
+      char c = "a";
+      dp = &c;
+    }
+  }
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.5\textwidth]{img/tombstones.png}
+  \end{figure}
+\end{minipage}\\
+Il costo maggiore e' i ltempo di deallocazione perche' e' duplicato e il costo di memoria occupata dalla tombstone.
+\subsection{Locks and Keys}
+I lock-and-keys sono un'alternativa alle tombstones, ma solo per i puntatori allo heap.\\
+Ogni volta che allochiamo un oggetto
+sull'heap, lo \textbf{associamo a un "\textit{lock}"} costituito da una parola casuale in memoria. 
+\begin{align*}
+  \text{obj} \to <value, \, key>
+\end{align*}
+Un puntatore consiste in una coppia: l'indirizzo effettivo e una “chiave" (key), cioè una parola in memoria inizializzata al valore del blocco dell'oggetto puntato.\\
+Ogni volta che si dereferenzia un puntatore, si controlla
+che la chiave possa “aprire” il lock, (cioè che le due parole
+coincidano). \\
+\begin{minipage}{0.48\textwidth}
+  \begin{lstlisting}
+  {
+    char *dp = NULL;
+    {
+      char c = "a";
+      dp = &c;
+    }
+  }
+  \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{img/lock.png}
+  \end{figure}
+\end{minipage}\\
+Locks-and-keys ha un costo significativo. In termini di
+spazio, costano anche più delle tombstones, poiché è
+necessaria una parola aggiuntiva per ogni puntatore. Oltre al costo di equivalenza per crezione/assegnazione/deferenziazione.
+\subsection{Garbage Collection}
+Meccanismo per gestire automaticamente la deallocazione degli oggetti non più utilizzati.\\
+Da un punto di vista logico, le operazioni di un garbage collector comprendono:
+\begin{itemize}
+  \item \textbf{Garbage detection}: rilevare se gli oggetti in memoria sono in uso o meno
+  \item \textbf{Garbage collection}: rilasciare la memoria occupata dagli oggetti non utilizzati
+\end{itemize}
+Vediamo le tecniche piu' comuni di garbage collection.
+\subsubsection{Reference Count}
+La tecnica dei contatori di riferimenti segue questa definizione ed è probabilmente il modo più elementare per realizzare un garbage collector.\\
+Quando si alloca un oggetto nello heap, il runtime inizializza anche un contatore di
+riferimenti (un intero, inaccessibile al programmatore) di quell'oggetto e si
+assicura di mantenere il contatore di ogni oggetto sincronizzato con il numero di
+puntatori attivi a quell'oggetto. Al momente della creazione il contatore e' $1$. Il
+runtime aumenta il contatore ogni volta che assegniamo il suo puntatore a una
+variabile puntatore e lo diminuisce ogni volta che perde una variabile puntatore.\\
+Quando un contatore di riferimento raggiunge lo 0, il suo oggetto diventa garbage e
+possiamo deallocarlo dalla memoria. Oltretutto prima di segnare uno oggetto come garbage dobbiamo decrementare tutti i suoi puntatori.
+\begin{algorithm}[H]
+\caption{Release con reference counting}
+\begin{algorithmic}
+\Procedure{release}{obj}
+    \If{$obj = \text{null}$}
+        \State \Return
+    \EndIf
+
+    \If{$obj.counter > 0$}
+        \State \Return
+    \EndIf
+
+    \ForAll{$v \in obj.variables$}
+        \If{$v.type = \text{pointer} \land v.value \neq \text{null}$}
+            \State $v.value.counter \gets v.value.counter - 1$
+            \If{$v.value.counter = 0$}
+                \State \Call{release}{$v.value$}
+            \EndIf
+        \EndIf
+    \EndFor
+
+    \State \Call{deallocate}{obj}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+\textit{Nota:} Essendo una visita ricorsiva non e' possibile deallocare strutture ricorsive (Liste circolari, ecc).
+\subsubsection{Mark and Sweep}
+La tecnica mark-and-sweep prende il nome dal modo in cui esegue detection e collection.
+\begin{itemize}
+  \item \textbf{Mark}: indica che la detection utilizza contrassegni per identificare il garbage, seguendo due fasi. 
+  \begin{itemize}
+    \item Attraversa l'heap e contrassegna tutti gli oggetti come garbage
+    \item Attraversa lo stack, segue i puntatori attivi agli oggetti nello heap e rimuove i contrassegni precedenti da quelli visitati (ricorsivamente)
+  \end{itemize}
+  \item \textbf{Sweep}: è una visita piatta dell'heap per raccogliere tutti gli oggetti marcati come garbage
+\end{itemize}
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.6\textwidth]{img/mark.png}
+  \end{figure}
+Una differenza con il reference counting e' che la memoria quando diventa garbage non viene liberata istantaneamente ma solo quando il runtime lo ritiene utile.\\
+Generalemnte mark and sweep e' piu' efficiente e facile da implementare, ma rallenta molto le prestazione e reattivita'
+\subsubsection{Stop and Copy}
+
+
+
+
 \section{}
 \end{document}
 
