@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  12 APR 2026 19:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  13 APR 2026 09:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -724,7 +724,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 197--200
 
  []
 
-<img/statico.png, id=250, 405.515pt x 337.26pt>
+<img/statico.png, id=260, 405.515pt x 337.26pt>
 File: img/statico.png Graphic file (type png)
 <use img/statico.png>
 Package pdftex.def Info: img/statico.png  used on input line 218.
@@ -736,12 +736,12 @@ Package pdftex.def Info: img/statico.png  used on input line 218.
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\@ifnextchar' on input line 237.
 
-<img/catena.png, id=264, 115.43124pt x 277.035pt>
+<img/catena.png, id=274, 115.43124pt x 277.035pt>
 File: img/catena.png Graphic file (type png)
 <use img/catena.png>
 Package pdftex.def Info: img/catena.png  used on input line 251.
 (pdftex.def)             Requested size: 69.65244pt x 167.16495pt.
-<img/statici.png, id=265, 301.125pt x 364.36125pt>
+<img/statici.png, id=275, 301.125pt x 364.36125pt>
 File: img/statici.png Graphic file (type png)
 <use img/statici.png>
 Package pdftex.def Info: img/statici.png  used on input line 258.
@@ -754,7 +754,7 @@ Overfull \hbox (35.87236pt too wide) in paragraph at lines 248--263
 
 
 [6 <./img/catena.png> <./img/statici.png>]
-<img/albero.png, id=271, 182.6825pt x 129.48375pt>
+<img/albero.png, id=282, 182.6825pt x 129.48375pt>
 File: img/albero.png Graphic file (type png)
 <use img/albero.png>
 Package pdftex.def Info: img/albero.png  used on input line 289.
@@ -767,7 +767,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 296--297
 
 
 [7 <./img/albero.png>]
-<img/rif.png, id=280, 615.29875pt x 207.77625pt>
+<img/rif.png, id=290, 615.29875pt x 207.77625pt>
 File: img/rif.png Graphic file (type png)
 <use img/rif.png>
 Package pdftex.def Info: img/rif.png  used on input line 318.
@@ -780,12 +780,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 315--319
 
 
 [8 <./img/rif.png>]
-<img/fatt.png, id=295, 310.15875pt x 289.08pt>
+<img/fatt.png, id=305, 310.15875pt x 289.08pt>
 File: img/fatt.png Graphic file (type png)
 <use img/fatt.png>
 Package pdftex.def Info: img/fatt.png  used on input line 353.
 (pdftex.def)             Requested size: 145.11053pt x 135.24565pt.
-<img/fib.png, id=296, 402.50375pt x 139.52126pt>
+<img/fib.png, id=306, 402.50375pt x 139.52126pt>
 File: img/fib.png Graphic file (type png)
 <use img/fib.png>
 Package pdftex.def Info: img/fib.png  used on input line 358.
@@ -793,27 +793,27 @@ Package pdftex.def Info: img/fib.png  used on input line 358.
 
 
 [9 <./img/fatt.png> <./img/fib.png>]
-<img/controllo.png, id=306, 509.905pt x 273.02pt>
+<img/controllo.png, id=316, 509.905pt x 273.02pt>
 File: img/controllo.png Graphic file (type png)
 <use img/controllo.png>
 Package pdftex.def Info: img/controllo.png  used on input line 370.
 (pdftex.def)             Requested size: 241.84843pt x 129.4942pt.
-<img/term.png, id=307, 587.19376pt x 177.66376pt>
+<img/term.png, id=317, 587.19376pt x 177.66376pt>
 File: img/term.png Graphic file (type png)
 <use img/term.png>
 Package pdftex.def Info: img/term.png  used on input line 377.
 (pdftex.def)             Requested size: 241.84843pt x 73.17334pt.
-<img/risultato.png, id=308, 552.0625pt x 102.3825pt>
+<img/risultato.png, id=318, 552.0625pt x 102.3825pt>
 File: img/risultato.png Graphic file (type png)
 <use img/risultato.png>
 Package pdftex.def Info: img/risultato.png  used on input line 387.
 (pdftex.def)             Requested size: 241.84843pt x 44.8516pt.
-<img/vrisultato.png, id=309, 560.0925pt x 130.4875pt>
+<img/vrisultato.png, id=319, 560.0925pt x 130.4875pt>
 File: img/vrisultato.png Graphic file (type png)
 <use img/vrisultato.png>
 Package pdftex.def Info: img/vrisultato.png  used on input line 392.
 (pdftex.def)             Requested size: 241.84843pt x 56.34546pt.
-<img/nome.png, id=310, 546.04pt x 155.58125pt>
+<img/nome.png, id=320, 546.04pt x 155.58125pt>
 File: img/nome.png Graphic file (type png)
 <use img/nome.png>
 Package pdftex.def Info: img/nome.png  used on input line 397.
@@ -825,7 +825,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 402--403
 
  []
 
-<img/scope.png, id=315, 238.8925pt x 238.8925pt>
+<img/scope.png, id=325, 238.8925pt x 238.8925pt>
 File: img/scope.png Graphic file (type png)
 <use img/scope.png>
 Package pdftex.def Info: img/scope.png  used on input line 431.
@@ -833,7 +833,7 @@ Package pdftex.def Info: img/scope.png  used on input line 431.
 
 
 [11 <./img/nome.png>]
-<img/up.png, id=333, 307.1475pt x 258.9675pt>
+<img/up.png, id=343, 307.1475pt x 258.9675pt>
 File: img/up.png Graphic file (type png)
 <use img/up.png>
 Package pdftex.def Info: img/up.png  used on input line 465.
@@ -841,7 +841,7 @@ Package pdftex.def Info: img/up.png  used on input line 465.
 
 
 [12 <./img/scope.png> <./img/up.png>]
-<img/ec.png, id=339, 694.595pt x 444.66125pt>
+<img/ec.png, id=349, 694.595pt x 444.66125pt>
 File: img/ec.png Graphic file (type png)
 <use img/ec.png>
 Package pdftex.def Info: img/ec.png  used on input line 480.
@@ -875,12 +875,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 803--804
 
  []
 
-<img/tombstones.png, id=502, 243.91125pt x 250.9375pt>
+<img/tombstones.png, id=512, 243.91125pt x 250.9375pt>
 File: img/tombstones.png Graphic file (type png)
 <use img/tombstones.png>
 Package pdftex.def Info: img/tombstones.png  used on input line 821.
 (pdftex.def)             Requested size: 116.08621pt x 119.43011pt.
-<img/lock.png, id=504, 248.93pt x 256.96pt>
+<img/lock.png, id=514, 248.93pt x 256.96pt>
 File: img/lock.png Graphic file (type png)
 <use img/lock.png>
 Package pdftex.def Info: img/lock.png  used on input line 851.
@@ -892,34 +892,59 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on inp
 
 
 [21 <./img/lock.png>]
-<img/mark.png, id=544, 831.105pt x 177.66376pt>
+<img/mark.png, id=554, 831.105pt x 177.66376pt>
 File: img/mark.png Graphic file (type png)
 <use img/mark.png>
 Package pdftex.def Info: img/mark.png  used on input line 913.
-(pdftex.def)             Requested size: 290.22107pt x 62.03955pt.
+(pdftex.def)             Requested size: 435.32422pt x 93.05798pt.
+<img/stop.png, id=555, 342.27875pt x 393.47pt>
+File: img/stop.png Graphic file (type png)
+<use img/stop.png>
+Package pdftex.def Info: img/stop.png  used on input line 927.
+(pdftex.def)             Requested size: 145.11053pt x 166.81726pt.
 
 
-[22 <./img/mark.png>] (./linguaggi2.aux)
+[22 <./img/mark.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 935--938
+
+ []
+
+
+
+[23 <./img/stop.png>]
+<img/rc.png, id=577, 280.04625pt x 234.8775pt>
+File: img/rc.png Graphic file (type png)
+<use img/rc.png>
+Package pdftex.def Info: img/rc.png  used on input line 978.
+(pdftex.def)             Requested size: 139.30487pt x 116.83994pt.
+
+Overfull \hbox (38.48285pt too wide) in paragraph at lines 968--981
+$[]$  $[]$
+ []
+
+
+
+[24 <./img/rc.png>] (./linguaggi2.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `linguaggi2.out' has not changed.
-(rerunfilecheck)             Checksum: AF6D8755D346FAA62FBD1A6193744713;3632.
+(rerunfilecheck)             Checksum: 7E8805857B4CD1CF0C4E3E23E903B751;4117.
  ) 
 Here is how much of TeX's memory you used:
- 24912 strings out of 473197
- 444459 string characters out of 5718606
+ 24954 strings out of 473197
+ 445098 string characters out of 5718606
  864256 words of memory out of 5000000
- 47430 multiletter control sequences out of 15000+600000
+ 47446 multiletter control sequences out of 15000+600000
  578459 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,10n,91p,587b,1960s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on linguaggi2.pdf (22 pages, 909123 bytes).
+Output written on linguaggi2.pdf (24 pages, 943519 bytes).
 PDF statistics:
- 695 PDF objects out of 1000 (max. 8388607)
- 610 compressed objects within 7 object streams
- 325 named destinations out of 1000 (max. 500000)
- 311 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 743 PDF objects out of 1000 (max. 8388607)
+ 652 compressed objects within 7 object streams
+ 351 named destinations out of 1000 (max. 500000)
+ 337 words of extra memory for PDF output out of 10000 (max. 10000000)
 

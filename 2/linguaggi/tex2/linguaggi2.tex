@@ -910,16 +910,89 @@ La tecnica mark-and-sweep prende il nome dal modo in cui esegue detection e coll
 \end{itemize}
   \begin{figure}[H]
       \centering
-      \includegraphics[width=0.6\textwidth]{img/mark.png}
+      \includegraphics[width=0.9\textwidth]{img/mark.png}
   \end{figure}
 Una differenza con il reference counting e' che la memoria quando diventa garbage non viene liberata istantaneamente ma solo quando il runtime lo ritiene utile.\\
 Generalemnte mark and sweep e' piu' efficiente e facile da implementare, ma rallenta molto le prestazione e reattivita'
 \subsubsection{Stop and Copy}
-
-
-
-
-\section{}
+Evoluzione del mark and sweep che consente di ottenere la pulizia dello heap eliminando sia la prima fase della marcatura che lo sweep.\\
+La tecnica funziona dividendo l'heap in due regioni di uguale dimensione. Tutte le allocazioni avvengono nella metà "corrente",
+mentre l’altra è vuota. Quando la meta' corrente e' quasi piena il garbage collector esplora la metà "corrente", a partire
+dall'insieme delle radici nello stack, e copia ogni oggetto
+raggiungibile in modo contiguo nell'altra metà. Quando il
+garbage collector termina l'esplorazione, scambia i puntatori
+dalla metà "corrente" e all’altra.
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.3\textwidth]{img/stop.png}
+  \end{figure}
+\subsubsection{Borrow checking}
+Tecnica (presente in Rust) di sicurezza nel quale se i programmi vengono compilati correttamente sappiamo che e' privo di errori di puntatori dangling e wild, double free, ecc.\\
+La tecnica si basa sulla definizione, nel linguaggio, di una proprietà di
+possesso (\textit{ownership}), dove ogni valore del programma ha un \textit{unico
+proprietario }(una variabile) che ne determina la durata (\textit{lifetime}) in memoria.
+\paragraph{Ownership}
+Il concetto di ownership che abbiamo visto finora è piuttosto semplice: si tratta
+essenzialmente di un albero in cui, deallocando la radice, sappiamo di poter
+deallocare tutti i suoi sottonodi. Questo consente anche le struttura annidati (non circolari).\\
+\begin{itemize}
+  \item Possiamo \textbf{passare (move) la ownership} dei valori da un proprietario ad un altro
+  \begin{itemize}
+    \item In Rust, per la maggior parte dei tipi (a parte alcune eccezioni, discusse in seguito),
+operazioni come l'assegnazione di un valore a una variabile, il passaggio di un valore a
+una funzione o la restituzione di un valore non
+eseguono alcuna copia, ma spostano la
+proprietà del valore.
+    \begin{lstlisting}
+      let x = vec![10, 20, 30];
+      if false {
+        let a = x; 
+      } else {
+        let c = 2;
+      }
+      let c = x;
+    \end{lstlisting}
+    Questo codice non viene compilato, infatti il principio generale è che, se è possibile che una variabile abbia spostato la
+proprietà del proprio valore (e non è certo che da allora le sia stato assegnato
+un nuovo valore) consideriamo la variabile non inizializzata.\\
+    Per alcuni tipi di variabili (int, float, char, bool, fix. size array) e' abbastanza efficiente (e sicuro) la copia rispetto che spostarli. Al contrario per \textit{string, dinamic array, ecc} essendo allocato in heap non e' conveniente.
+  \end{itemize}
+  \item Possiamo dare maggiore libertà dalle regole di ownership ad alcuni tipi semplici, come gli interi, i floats e i caratteri
+  \item Possiamo fornire tipi speciali di puntatore con conteggio dei riferimenti (Rc e Arc), che consentono ai valori di avere più proprietari, con alcune restrizioni
+  \begin{itemize}
+    \item Se abbiamo valori a cui serve condividere tra proprietari (per esempio per var. immutabili) possiamo definire
+    \begin{enumerate}
+      \item \textbf{Reference count} (Rc<T>)
+      \item \textbf{Atomic reference counte} (Arc<T>)
+    \end{enumerate}
+\begin{minipage}{0.48\textwidth}
+\begin{lstlisting}[breaklines=true]
+let s: Rc<String> = Rc::new("a".to_string());
+let t: Rc<String> = s.clone();
+let u: Rc<String> = s.clone();
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+\centering
+\includegraphics[width=0.6\textwidth]{img/rc.png}
+\end{minipage}
+    Ognuno dei tre puntatori \textit{Rc<String>} si riferisce allo stesso blocco di memoria.
+  \end{itemize}
+  \item Possiamo permettere ai proprietari di \textbf{"\textit{prendere in prestito un riferimento}” (borrow)} a un valore, a patto di limitare i riferimenti a puntatori non proprietari con durata limitata
+\end{itemize}
+\subsection{Lifetimes}
+Il compilatore di Rust convalida i “prestiti” ragionando sulle lifetime delle variabili; essenzialmente si assicura che nessun riferimento sopravviva al proprietario da cui prende in prestito il valore.
+\begin{lstlisting}
+let x: &str;
+{
+  let y = "a"; //y e' definita solo dentro lo scope
+  x = &y; //errore perche fuori dallo scope y e' deallocata
+}
+println!( "{}", x );
+\end{lstlisting}
+Le interazioni tra le variabili (prestiti) non modificano i lifetime delle variabili, ma impongono vincoli tra queste che il compilatore deve controllare.
+\section{Tipi di Dato Astratto e Object Orientation}
 \end{document}
 
 

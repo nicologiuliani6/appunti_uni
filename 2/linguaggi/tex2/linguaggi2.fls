@@ -421,6 +421,16 @@ INPUT ./img/mark.png
 INPUT ./img/mark.png
 INPUT ./img/mark.png
 INPUT ./img/mark.png
+INPUT ./img/stop.png
+INPUT ./img/stop.png
+INPUT ./img/stop.png
+INPUT ./img/stop.png
+INPUT ./img/stop.png
+INPUT ./img/rc.png
+INPUT ./img/rc.png
+INPUT ./img/rc.png
+INPUT ./img/rc.png
+INPUT ./img/rc.png
 INPUT linguaggi2.aux
 INPUT ./linguaggi2.out
 INPUT ./linguaggi2.out
