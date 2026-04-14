@@ -993,6 +993,412 @@ println!( "{}", x );
 \end{lstlisting}
 Le interazioni tra le variabili (prestiti) non modificano i lifetime delle variabili, ma impongono vincoli tra queste che il compilatore deve controllare.
 \section{Tipi di Dato Astratto e Object Orientation}
+\subsection{Abstract Data Type}
+Chiamiamo il tipo un \textbf{tipo di
+dato astratto} (ADT), cioè un tipo che definisce
+i possibili valori che lo compongono e le
+possibili operazioni che possono agire su
+questi. Queste non si limitano a far rispettare le astrazioni del linguaggio (es. 2+true e' ERRORE), ma anche anche quelle del programmatore.\\
+Un ADT e' costituito da:
+\begin{itemize}
+  \item Il nome $A$
+  \item Il tipo di rappresentazione $T$
+  \item Implementazioni di operazioni per la creazione, l'interrogazione e la manipolazione di valori di tipo $A$
+  \item Un confine di astrazione che racchiude $T$ e lo rende accessibile solo attraverso le operazioni di $A$
+\end{itemize}
+\begin{lstlisting}
+type Counter
+  representation int
+    signature
+    new: Counter
+    get: Counter -> int
+    inc: Counter -> Counter
+  operations
+    new = 1
+    get = fn( int i ){ i }
+    inc = fn( int i ){ i+1 }
+\end{lstlisting}
+\subsection{Oggetti Esistenziali}
+L’interpretazione esistenziale degli ADT non è legata a questi ultimi. Al contrario,
+osserviamo che \textbf{i tipi esistenziali catturano in generale l'information hiding e
+l'indipendenza dalla rappresentazione}.\\
+Gli \textbf{oggetti} (esistenziali) forniscono una visione alternativa degli ADT, che
+consente a più implementazioni dello stesso tipo esistenziale di interagire. Con tale supporto, possiamo definire oggetti come \textit{tipi concreti} che
+mantengono il loro stato (\textbf{implementazione}) interno e portano con sé
+l'\textbf{associazione con il loro tipo esistenziale}.\\
+Per gli oggetti, dove manteniamo sempre "chiuso" un oggetto e
+usiamo i suoi metodi per accedere al suo stato interno, mentre per gli ADT adottano una visione "aperta" dei tipi esistenziali.\\
+\begin{algorithm}[H]
+\caption{Counter e operazioni}
+\begin{algorithmic}
+
+\State $Counter = \{ \exists X,\ \{ state : X,\ methods :
+\{ get : X \to int,\ inc : Counter \to X \} \} \}$
+
+\State $c1 = \{ *int,\ \{ state : 1,\ methods :
+\{ get(int\ i)\ \{ i \},\
+inc(\{*A,\ c\}\ as\ Counter)\ \{ c.get(c) + 1 \} \} \} \}\ as\ Counter$
+
+\State $c2 = \{ *\{c : int\},\ \{ state : \{c : 1\},\ methods :
+\{ get(*\{c : int\}\ i)\ \{ i.c \},\
+inc(\{*A,\ c\}\ as\ Counter)\ \{ \{c : c.get(c) + 1\} \} \} \} \}\ as\ Counter$
+
+\State \textbf{function} $f(\{*A,\ a\}\ as\ Counter,\ \{*B,\ b\}\ as\ Counter)$
+\State \hspace{1em} $\{*A,\ \{ state : a.inc(b),\ methods : a.methods \} \}\ as\ Counter$
+\State \textbf{end function}
+
+\State $f(c1, c2)$
+\State $f(c2, c1)$
+
+\end{algorithmic}
+\end{algorithm}
+Ora vediamo meglio gli oggetti. Il costrutto principale di ogni linguaggio orientato agli oggetti è quello di oggetto: una
+capsula che contiene sia dati che operazioni per manipolarli e che fornisce un'interfaccia
+al mondo esterno attraverso la quale è possibile accedervi. Nel gergo degli oggetti, le operazioni sono chiamate \textbf{metodi} e possono accedere
+internamente ai dati contenuti nell'oggetto, raggiungibili tramite variabili interne,
+chiamati \textbf{campi}.\\
+Sebbene sia concettualmente ammissibile che ogni oggetto specifichi la
+propria implementazione, può diventare difficile da gestire e dispendioso
+specificare molte volte la stessa implementazione solo per avere istanze
+diverse. Questo ha portato all'introduzione di un nuovo concetto, chiamato \textbf{classe}, che
+ci permette di specificare un canovaccio o un modello di implementazione di
+riferimento che contiene le variabili e i metodi comuni alla stessa classe (da
+cui il nome) di oggetti.
+\subsection{Classi}
+Una classe è un modello per un
+insieme di oggetti: stabilisce quali
+sono i loro dati (quanti, di che tipo,
+con quale visibilità) e fissa il nome, la
+segnatura, la visibilità e
+l'implementazione dei suoi metodi.
+\begin{lstlisting}
+class Counter {
+  private int x=1;
+    public int get(){
+      return x;
+    }
+    public void inc( int i ){
+      x = x+i;
+    }
+}
+Counter c1 = new Counter();
+\end{lstlisting}
+In generale, le classi memorizzano la
+(sola) implementazione del codice di
+tutti i suoi oggetti e quando invochiamo
+un metodo di un oggetto ci rivolgiamo
+all'implementazione legata alla classe, a
+cui fa riferimento l'oggetto.
+  \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.4\textwidth]{img/classe.png}
+  \end{figure}
+In pratica i metodi degli
+oggetti ricevono implicitamente come
+parametro l'oggetto che li ha invocati,
+per cui quando il corpo del metodo fa
+riferimento a variabili di istanza.
+\begin{lstlisting}
+class Counter {
+  private int x=1;
+    public int get(){
+      return this.x;
+    }
+    public void inc( int i ){
+      this.x = this.x+i;
+    }
+}
+Counter c1 = new Counter();
+\end{lstlisting}
+Tutti i linguaggi orientati agli oggetti creano oggetti dinamicamente, il che di
+solito fa pensare a \textbf{strutture allocate sull'heap}. Questo e' il caso di Java, mentre per C++ consente di specificare l'allocazione e la deallocazione
+degli oggetti sullo stack.\\
+\subsection{Prototipi}
+I prototipi sono simili alle classi, nel senso che servono come modelli per la
+struttura e il funzionamento di altri oggetti. Tuttavia, contrariamente alle
+classi, i prototipi sono (linguisticamente) oggetti, eventualmente utilizzati
+come modelli.\\
+Un oggetto basato su prototipi può
+cambiare il suo delegato a tempo di
+esecuzione!
+\begin{lstlisting}
+function Counter() { this.x = 1; }
+Counter.prototype.get=function()
+  { return this.x; }
+Counter.prototype.inc=function(i)
+  { this.x = this.x+i; }
+function OtherCounter(){Counter.call(this);}
+function Multiplier(){}
+Multiplier.prototype.mult=function( i )
+  { this.x = this.x*i; }
+OtherCounter.prototype = Counter.prototype;
+
+c = new OtherCounter();
+c.inc(1);
+Object.setPrototypeOf(c,Multiplier.prototype);
+c.mult(2);
+Object.setPrototypeOf(c, Counter.prototype);
+c.get(); // 4
+\end{lstlisting}
+\subsection{Interfacce}
+Le interfacce, che fanno da ponte (linguistico) tra classi e tipi. Per questo, consideriamo la definizione di una
+classe come accompagnata da una definizione
+implicita di un'interfaccia della vista pubblica di
+quella classe. A sua volta, la classe implementa
+tale interfaccia, stabilendo con essa una
+relazione di sottotipaggio.
+\begin{lstlisting}
+interface CounterInterface {
+  int get();
+  void inc( int i );
+}
+class MyCounter
+  implements CounterInterface {
+  private int x=1;
+  public int get(){ ... }
+  public void inc( int i ){ ... }
+  private void doubleInc( int i ){ ... }
+}
+\end{lstlisting}
+\paragraph{Principio di Astrazione} le interfacce ci permettono di
+fornire ai clienti una descrizione del
+"contratto" che i nostri oggetti promettono
+di soddisfare, senza costringerci a fornire
+la loro effettiva implementazione.
+\begin{lstlisting}
+interface CounterInterface {
+  int get();
+  void inc( int i );
+}
+class CounterUser {
+  void incCounter( CounterInterface c ){
+    c.inc( 1 );
+  }
+}
+\end{lstlisting}
+\subsection{Ereditarietà}
+Definiamo una classe (es. \textit{Counter}) che implementa la sua interfaccia associata (\textit{Counter\_Interface}). Dichiariamo che quest'ultima e' sottotipo di un \textit{CounterInterface}.
+\begin{lstlisting}
+interface CounterInterface {
+  int get();
+  void inc( int i );
+}
+interface MultCounterInterface extends CounterInterface
+{
+  void mult( int i );
+}
+\end{lstlisting}
+Quindi, il sottotipaggio da interfaccia a classe
+presuppone una relazione di sottotipaggio da
+interfaccia a interfaccia, che di solito viene chiamata
+\textbf{estensione}.\\
+Possiamo fare il sottotipaggio a livello di classi pure, ovvero facciamo l'esensione da interfaccia a
+interfaccia per coprire anche lo stato, i vincoli di
+incapsulamento e l'implementazione dei metodi
+delle classi.
+\begin{lstlisting}
+class Counter {
+  int x=1;
+  public int get(){ return this.x; }
+  public void inc( int i ) { this.x = this.x+i; }
+}
+class MyCounter extends Counter {
+  private void doubleInc( int i ){...}
+}
+class MultCounter extends MyCounter {
+  public void mult( int i ){...}
+}
+MultCounter mc = new MultCounter();
+mc.inc( 1 );
+mc.mult( 2 );
+mc.doubleInc( 3 )
+\end{lstlisting}
+Questa relazione prende il nome di \textbf{ereditarietà},
+poiché il sottotipo della classe "eredita" da
+quest'ultima la sua definizione di stato.
+\subsubsection{Shadowing} 
+Indica che una
+sottoclasse può "mascherare" i campi della sua
+superclasse (da cui eredita) definendo campi con lo
+stesso nome (ma non necessariamente con gli stessi
+tipi).
+\begin{lstlisting}
+class Counter {
+  int x=1;
+  int get(){ return x; }
+  void inc( int i ){ x = x + i; }
+}
+class MultCounter extends Counter {
+  int x=2;
+  void multMult( int i ){
+    super.x = super.x * this.x * i;
+  }
+}
+MultCounter mc = new MultCounter();
+mc.inc( 1 );
+mc.multMult( 2 );
+mc.get(); // 8 
+\end{lstlisting}
+Per evitare errori, Java adotta una notazione esplicita:
+se una sottoclasse vuole accedere a una variabile
+della sua superclasse, deve usare il prefisso \textit{super}, oltre che a \textit{this}.
+\subsubsection{Overriding dei Metodi}
+Un'altra peculiarità dell'ereditarietà è la
+possibilità di fare l’override (“sovrascrivere”)
+delle implementazioni dei metodi ereditati.\\
+Questa possibilità è data, tra l’altro, dal
+principio di astrazione, che dice che
+possiamo cambiare le implementazioni dei
+metodi purché rispettino le interfacce.
+\begin{lstlisting}
+class Counter {
+  int x=1;
+  int get(){ return x; }
+  void inc( int i ){ x = x + i; }
+}
+class MultCounter extends Counter {
+  void mult( int i ){
+    super.x = super.x * i;
+  }
+  @Override
+  void inc( int i ){ mult( i ); }
+}
+Counter c = new MultCounter();
+c.inc( 2 );
+c.inc( 3 );
+c.get(); // 6
+\end{lstlisting}
+Una differenza tra l'overriding dei metodi e
+lo shadowing delle variabili è che il primo è
+risolto dinamicamente, mentre il secondo è
+risolto staticamente.
+\subsection{Costruttori}
+I costruttori 
+possono essere visti come metodi speciali di
+una classe che possono accettare alcuni
+parametri e restituire un oggetto istanziato di
+quella classe.
+\begin{lstlisting}
+  class Counter {
+  int x;
+  public Counter(){
+    this.x = 1;
+  }
+  public Counter( int i ){
+    this.x = i;
+  }
+  public get(){
+    return this.x;
+  }
+  public inc( int i ){
+    this.x = this.x + i;
+  }
+}
+\end{lstlisting}
+Oltre a che allocare la memoria (heap/stack) dobbiamo anche inizializzare le veriabile, e per questo utilizziamo le classi a costruttori. Definiscono il codice la cui esecuzione
+garantisce la creazione di un'istanza corretta della
+classe.
+\paragraph{Ereditarieta' dei costruttori} Questo cambia a seconda del linguaggio, in C++ viene imposto che l'inizializzazione di un oggetto richiami prima il
+costruttore della super-classe (concatenamento di
+costruttori).
+\subsection{Dispatch Dinamico dei Metodi}
+\textbf{Overriding} dei metodi, è il cuore del
+paradigma orientato agli oggetti; è \textbf{il punto in
+cui astrazione ed ereditarietà si incontrano e
+danno origine a uno dei tratti paradigmatici
+dell'orientamento agli oggetti}.\\il meccanismo è semplice:
+una sottoclasse può ridefinire (override)
+l'implementazione di un metodo, in modo che
+il codice eseguito dipenda dal tipo dell'oggetto
+che riceve il messaggio
+\begin{lstlisting}
+class Counter {
+  int x=1;
+  int get(){ ... }
+  void inc( int i ){ x = x + i; }
+}
+class MultCounter extends Counter {
+  void mult( int i ){ ... }
+  @Override
+  void inc( int i ){ mult( i ); }
+}
+Counter c = new MultCounter();
+c.inc( 2 ); //esegue l'Override
+c.inc( 3 );
+\end{lstlisting}
+\subsection{Metodi Statici}
+Si accede dalla classe che li
+definisce, piuttosto che da un'istanza
+(oggetto) di quella classe. Essendo risolti
+staticamente, i metodi statici non possono
+essere sovrascritti, ma solo sovraccaricati.
+\begin{lstlisting}
+class Counter {
+  int x=1;
+  int get(){ ... }
+  void inc( int i ){ x = x + i; }
+  static void inc( Counter c ){
+    c.inc( 1 );
+  }
+}
+class MultCounter extends Counter {
+  static void inc( MultCounter c ){
+    c.inc( 2 );
+  }
+}
+Counter c = new MultCounter();
+MultCounter.inc( c ); // Statically solved
+c.inc( 1 );
+c.get(); // 3 
+\end{lstlisting}
+\subsection{Aspetti di Implementazione}
+\subsubsection{Oggetti}
+In caso di shadowing (early binding), l'oggetto ha campi che
+corrispondono a una dichiarazione diversa (spesso il nome
+usato nella super-classe non è accessibile nella sottoclasse, se
+non tramite qualche qualificatore, per esempio super).
+\begin{lstlisting}
+class A {
+  int a;
+  void f(){...}
+  void g(){...}
+}
+class B extends A {
+  int b; int c;
+  void f(){...}
+  void h(){...}
+}
+A o;
+o = new B();
+\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/obj.png}
+\end{figure}
+\subsubsection{Ereditarietà Singola}
+Con le vtables, \textbf{ogni definizione di
+classe corrisponde a una vtable} e
+tutte le istanze di quella classe
+condividono la stessa vtable. Quando definiamo una
+sottoclasse B della classe A,
+costruiamo la vtable di B facendo
+una copia della vtable di A,
+sostituendo in questa copia tutti
+i metodi ridefiniti in B e
+aggiungendo poi in fondo alla
+vtable i nuovi metodi definiti in B.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/ered.png}
+\end{figure}
+\subsubsection{Dynamic Method Dispatch (JVM)}
+Semplificando, Java compila le classi separatamente l'una dall'altra: ogni
+classe dà origine a un file che la macchina virtuale carica dinamicamente
+quando il programma in esecuzione fa riferimento a quella classe. Per risparmiare spazio, ogni volta che il codice sorgente utilizza un nome, la
+intermediate representation della JVM utilizza l'indice di quel nome nella constant pool
+(e non il nome stesso). Questi indici non sono utili solo per la compattezza della
+rappresentazione. Quando, in fase di esecuzione, si fa riferimento a un nome per la prima volta
+(attraverso il suo indice), questo viene risolto.
 \end{document}
 
 
