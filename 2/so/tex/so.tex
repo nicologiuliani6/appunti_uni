@@ -2375,11 +2375,90 @@ Due possibili soluzioni:
   \item una transazione è un'operazione che viene eseguita in modo
 atomico: o tutto, o niente
 \end{itemize}
-
-
-
-
-
+\subsection{Sicurezza}
+Obiettivi della sicurezza:
+\begin{itemize}
+  \item Data confidentiality
+  \item Data integrity
+  \item System availability
+\end{itemize}
+\textit{Un sistema è sicuro se tutte le sue risorse sono accedute
+nei modi previsti e autorizzati.}\\
+Le violazioni alla sicurezza sono:
+\begin{itemize}
+  \item Discosure (furto di informazione)
+  \item Alteration (modifica di dati)
+  \item Denial of service
+\end{itemize}
+Separazione della politica dai meccanismi:
+\begin{enumerate}
+  \item Security policy: requisiti di sicurezza del sistema
+  \item Meccanismi: implementazione pratica
+\end{enumerate}
+Questo fa parte del \textbf{software engineering}.
+\subsubsection{Crittografia}
+Sono i meccanismi per trasformare da \textbf{plaintext} a \textbf{ciphertext}. L'autorizzazione assume la forma di \textbf{chiave} per decifrare il messaggio cifrato.
+\begin{align*}
+  decrypt(encrypt(\text{msg}, \, K_E), \, K_D) = \text{msg}
+\end{align*}
+Per avere metodi di \textit{cript/decrypt} funzionali devono essere nella forma di \textbf{one-wat function} (OWF) ovverro:
+\begin{itemize}
+  \item Dato $x$ e' facile calcolare $f(x)$
+  \item Dato $f(x)$ e' computazionalmente impossibile calcolare $x$
+\end{itemize}
+Come? Attraverso operazioni che \textit{"perdono informazioni"}, come bitswapping, inversione, ecc.
+\subsubsection{Crittografica a chiave privata}
+Si ha una unica chiave sia per criptare che decriptare, questa va mantenuta segreta ad entrambi i comunicatori. (Es. cifrario di Cesare)\\
+\vspace{1px}\\
+\paragraph{DES} Dato \textbf{msg} di 64bit lo dividiamo in $L_0$ (32bit piu' significativi), $R_0$ (32bit meno significativi). 
+\begin{align*}
+  & L_i = R_{i-1}\\
+  & R_i = \text{xor($L_{i-1}, \, encrypt(key, \, R_{i-1})$)}
+\end{align*}
+Ripetiamo questo per 16 volte, $L_{16}, R_{16}$ rappresentano la forma codificata!
+\subsubsection{Crittografia a chiave pubblica}
+\begin{itemize}
+  \item \textbf{Chiave pubblica}: utilizzata per criptare i messaggi in chiaro
+  \item \textbf{Chiave privata}: utilizzata per decriptare i messaggi cifrati
+\end{itemize}
+\textit{Attenzione}: la relazione tra chiave pubblica e privata deve essere praticamente impossibile risalire alla chiave privata!
+\paragraph{RSA} Scegliamo $q, p$ molto grandi (> 100 cifre)
+\begin{align*}
+  & n= pq\\
+\end{align*}
+Scegliamo $d$ t.c. $\gcd(d, \, (p-1)(q-1))=1$.\\
+Scegliamo $e$ come inverso moltiplicativo di $d$, ovvero
+\begin{align*}
+  de \equiv_{\gcd(d, \, (p-1)(q-1))} 1
+\end{align*}
+Allora
+\begin{align*}
+  E(\text{msg}) \equiv_n m^e \\
+  D(E(\text{msg})) \equiv_n E(\text{msg})^d 
+\end{align*}
+\subsection*{Esempio di attacco}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/esempio.png}
+\end{figure} 
+\subsubsection{Buffer Overflow}
+L'idea generale è quella di fornire ad un programma (server) un
+insieme di dati di dimensioni superiori a quella prevista (buffer
+overflow)\\
+Nel migliore dei casi il programma \textit{crasha}, nei peggiori l'attaccante prende il controllo della macchina.\\
+Come? L'idea generale è quella di riempire il buffer con codice maligno, di base abbiamo lo stack con i \textit{return address}, si copia dentro lo stack sovrascrivendo quello vecchio con nuovi \textit{return address} e il codice maligno che viene puntato da esso.
+\subsubsection{Trojan horse}
+Sono programmi che replicano le funzionalità di programmi di
+uso comune o programmi dall’apparenza innocua ma che
+contengono codice “malefico”.
+\subsubsection{Bombe logiche}
+Il creatore di un software utilizzato internamente in una
+compagnia inserisce un software che può attivarsi sotto
+particolari condizioni
+\subsubsection{Backdoor / Trapdoor}
+Il creatore di un software può deliberatamente lasciare “porte di
+servizio” per entrare aggirando i sistemi di protezione
+\subsubsection{Virus e worm}
 
 \pagebreak
 \section{Linguaggio C per Sistemi Operativi}

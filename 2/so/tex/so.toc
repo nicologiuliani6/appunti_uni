@@ -1,76 +1,87 @@
 \babel@toc {italian}{}\relax 
 \babel@toc {italian}{}\relax 
-\contentsline {section}{\numberline {1}Concorrenza}{2}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Introduzione alla concorrenza}{2}{subsection.1.1}%
-\contentsline {paragraph}{Come descriviamo un processo?}{2}{section*.2}%
-\contentsline {paragraph}{Cosa è la concorrenza?\\}{2}{section*.3}%
-\contentsline {subsection}{\numberline {1.2}Interazioni tra processi}{3}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Sezioni critiche}{4}{subsection.1.3}%
-\contentsline {subsection}{\numberline {1.4}Semafori}{8}{subsection.1.4}%
-\contentsline {subsection}{\numberline {1.5}Monitor}{17}{subsection.1.5}%
-\contentsline {subsection}{\numberline {1.6}Message passing}{21}{subsection.1.6}%
-\contentsline {subsection}{\numberline {1.7}Conclusioni}{24}{subsection.1.7}%
-\contentsline {section}{\numberline {2}Generale}{26}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Architettura di un calcolatore}{26}{subsection.2.1}%
-\contentsline {paragraph}{Interrupt}{26}{section*.5}%
-\contentsline {paragraph}{Comunicazione fra processore e dispositivi di I/O}{28}{section*.6}%
-\contentsline {subsection}{\numberline {2.2}Architettura dei sistemi operativi}{29}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}Struttura del SO}{30}{subsubsection.2.2.1}%
-\contentsline {subsubsection}{\numberline {2.2.2}Software engineering del SO}{31}{subsubsection.2.2.2}%
-\contentsline {paragraph}{Microkernel}{31}{section*.14}%
-\contentsline {subsubsection}{\numberline {2.2.3}Macchine virtuali}{32}{subsubsection.2.2.3}%
-\contentsline {subsubsection}{\numberline {2.2.4}Namespace}{32}{subsubsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.3}Scheduling}{32}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}Scheduler, processi e thread}{34}{subsubsection.2.3.1}%
-\contentsline {paragraph}{Vita di un processo}{34}{section*.15}%
-\contentsline {subsubsection}{\numberline {2.3.2}Scheduling}{35}{subsubsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.4}Gestione risorse e deadlock}{36}{subsection.2.4}%
-\contentsline {paragraph}{Tipi di richieste}{37}{section*.16}%
-\contentsline {paragraph}{Tipi di risorse}{37}{section*.17}%
-\contentsline {paragraph}{Risorse prerilasciabili}{37}{section*.18}%
-\contentsline {paragraph}{Risorse non prelasciabili}{37}{section*.19}%
-\contentsline {subsubsection}{\numberline {2.4.1}Deadlock}{37}{subsubsection.2.4.1}%
-\contentsline {paragraph}{Grafo di Holt}{37}{section*.20}%
-\contentsline {paragraph}{Metodi di gestione dei deadlock}{38}{section*.21}%
-\contentsline {paragraph}{Teorema dell'algoritmo del banchiere}{41}{section*.22}%
-\contentsline {subsection}{\numberline {2.5}Gestione della memoria}{41}{subsection.2.5}%
-\contentsline {subsubsection}{\numberline {2.5.1}Binding, loading, linking}{41}{subsubsection.2.5.1}%
-\contentsline {paragraph}{Prestazioni speciali}{42}{section*.23}%
-\contentsline {subsubsection}{\numberline {2.5.2}Allocazione contigua}{42}{subsubsection.2.5.2}%
-\contentsline {subsubsection}{\numberline {2.5.3}Paginazione}{45}{subsubsection.2.5.3}%
-\contentsline {subsubsection}{\numberline {2.5.4}Segmentazione}{46}{subsubsection.2.5.4}%
-\contentsline {paragraph}{Segmentazione e condivisione?}{47}{section*.25}%
-\contentsline {paragraph}{Segmentazione + paginazione}{47}{section*.26}%
-\contentsline {subsubsection}{\numberline {2.5.5}Memoria virtuale}{47}{subsubsection.2.5.5}%
-\contentsline {paragraph}{Non infrange i requisiti di un'architettura di Von Neumann?}{47}{section*.27}%
-\contentsline {paragraph}{Implementazione della memoria virtuale}{47}{section*.28}%
-\contentsline {paragraph}{Approssimare LRU}{50}{section*.32}%
-\contentsline {paragraph}{Allocazione}{51}{section*.34}%
-\contentsline {paragraph}{Trashing}{51}{section*.35}%
-\contentsline {paragraph}{Working Set}{51}{section*.36}%
-\contentsline {subsection}{\numberline {2.6}Gestione I/O, Memoria secondaria}{52}{subsection.2.6}%
-\contentsline {subsubsection}{\numberline {2.6.1}Progettazione del sistema di I/O}{52}{subsubsection.2.6.1}%
-\contentsline {subsubsection}{\numberline {2.6.2}Memoria Secondaria}{53}{subsubsection.2.6.2}%
-\contentsline {paragraph}{SSD}{53}{section*.37}%
-\contentsline {paragraph}{Dischi}{53}{section*.38}%
-\contentsline {subsubsection}{\numberline {2.6.3}RAID}{55}{subsubsection.2.6.3}%
-\contentsline {paragraph}{RAID 0 (striping)}{56}{section*.39}%
-\contentsline {paragraph}{RAID 1 (mirroring)}{56}{section*.40}%
-\contentsline {paragraph}{RAID 4}{56}{section*.41}%
-\contentsline {paragraph}{RAID 5}{57}{section*.42}%
-\contentsline {paragraph}{RAID 6}{57}{section*.43}%
-\contentsline {subsection}{\numberline {2.7}File System}{57}{subsection.2.7}%
-\contentsline {subsubsection}{\numberline {2.7.1}Visione utente}{57}{subsubsection.2.7.1}%
-\contentsline {paragraph}{Struttura dei file}{58}{section*.44}%
-\contentsline {paragraph}{Metodi di accesso}{58}{section*.45}%
-\contentsline {paragraph}{Operazioni sui file}{58}{section*.46}%
-\contentsline {paragraph}{Operazioni definite sulle directory}{59}{section*.47}%
-\contentsline {paragraph}{Struttura di una directory}{59}{section*.48}%
-\contentsline {subsubsection}{\numberline {2.7.2}Visione implementatore}{60}{subsubsection.2.7.2}%
-\contentsline {paragraph}{Performance}{65}{section*.49}%
-\contentsline {paragraph}{Tecniche per garantire la coerenza}{65}{section*.50}%
-\contentsline {paragraph}{File system basati su log}{66}{section*.51}%
-\contentsline {section}{\numberline {3}Linguaggio C per Sistemi Operativi}{67}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Unix}{67}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Cosa definisce POSIX?}{68}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}GNU}{68}{subsection.3.3}%
+\contentsline {section}{\numberline {1}Concorrenza}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Introduzione alla concorrenza}{3}{subsection.1.1}%
+\contentsline {paragraph}{Come descriviamo un processo?}{3}{section*.2}%
+\contentsline {paragraph}{Cosa è la concorrenza?\\}{3}{section*.3}%
+\contentsline {subsection}{\numberline {1.2}Interazioni tra processi}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Sezioni critiche}{5}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Semafori}{9}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Monitor}{18}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Message passing}{22}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Conclusioni}{25}{subsection.1.7}%
+\contentsline {section}{\numberline {2}Generale}{27}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Architettura di un calcolatore}{27}{subsection.2.1}%
+\contentsline {paragraph}{Interrupt}{27}{section*.5}%
+\contentsline {paragraph}{Comunicazione fra processore e dispositivi di I/O}{29}{section*.6}%
+\contentsline {subsection}{\numberline {2.2}Architettura dei sistemi operativi}{30}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Struttura del SO}{31}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Software engineering del SO}{32}{subsubsection.2.2.2}%
+\contentsline {paragraph}{Microkernel}{32}{section*.14}%
+\contentsline {subsubsection}{\numberline {2.2.3}Macchine virtuali}{33}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Namespace}{33}{subsubsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.3}Scheduling}{33}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Scheduler, processi e thread}{35}{subsubsection.2.3.1}%
+\contentsline {paragraph}{Vita di un processo}{35}{section*.15}%
+\contentsline {subsubsection}{\numberline {2.3.2}Scheduling}{36}{subsubsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.4}Gestione risorse e deadlock}{37}{subsection.2.4}%
+\contentsline {paragraph}{Tipi di richieste}{38}{section*.16}%
+\contentsline {paragraph}{Tipi di risorse}{38}{section*.17}%
+\contentsline {paragraph}{Risorse prerilasciabili}{38}{section*.18}%
+\contentsline {paragraph}{Risorse non prelasciabili}{38}{section*.19}%
+\contentsline {subsubsection}{\numberline {2.4.1}Deadlock}{38}{subsubsection.2.4.1}%
+\contentsline {paragraph}{Grafo di Holt}{38}{section*.20}%
+\contentsline {paragraph}{Metodi di gestione dei deadlock}{39}{section*.21}%
+\contentsline {paragraph}{Teorema dell'algoritmo del banchiere}{42}{section*.22}%
+\contentsline {subsection}{\numberline {2.5}Gestione della memoria}{42}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Binding, loading, linking}{42}{subsubsection.2.5.1}%
+\contentsline {paragraph}{Prestazioni speciali}{43}{section*.23}%
+\contentsline {subsubsection}{\numberline {2.5.2}Allocazione contigua}{43}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}Paginazione}{46}{subsubsection.2.5.3}%
+\contentsline {subsubsection}{\numberline {2.5.4}Segmentazione}{47}{subsubsection.2.5.4}%
+\contentsline {paragraph}{Segmentazione e condivisione?}{48}{section*.25}%
+\contentsline {paragraph}{Segmentazione + paginazione}{48}{section*.26}%
+\contentsline {subsubsection}{\numberline {2.5.5}Memoria virtuale}{48}{subsubsection.2.5.5}%
+\contentsline {paragraph}{Non infrange i requisiti di un'architettura di Von Neumann?}{48}{section*.27}%
+\contentsline {paragraph}{Implementazione della memoria virtuale}{48}{section*.28}%
+\contentsline {paragraph}{Approssimare LRU}{51}{section*.32}%
+\contentsline {paragraph}{Allocazione}{52}{section*.34}%
+\contentsline {paragraph}{Trashing}{52}{section*.35}%
+\contentsline {paragraph}{Working Set}{52}{section*.36}%
+\contentsline {subsection}{\numberline {2.6}Gestione I/O, Memoria secondaria}{53}{subsection.2.6}%
+\contentsline {subsubsection}{\numberline {2.6.1}Progettazione del sistema di I/O}{53}{subsubsection.2.6.1}%
+\contentsline {subsubsection}{\numberline {2.6.2}Memoria Secondaria}{54}{subsubsection.2.6.2}%
+\contentsline {paragraph}{SSD}{54}{section*.37}%
+\contentsline {paragraph}{Dischi}{54}{section*.38}%
+\contentsline {subsubsection}{\numberline {2.6.3}RAID}{56}{subsubsection.2.6.3}%
+\contentsline {paragraph}{RAID 0 (striping)}{57}{section*.39}%
+\contentsline {paragraph}{RAID 1 (mirroring)}{57}{section*.40}%
+\contentsline {paragraph}{RAID 4}{57}{section*.41}%
+\contentsline {paragraph}{RAID 5}{58}{section*.42}%
+\contentsline {paragraph}{RAID 6}{58}{section*.43}%
+\contentsline {subsection}{\numberline {2.7}File System}{58}{subsection.2.7}%
+\contentsline {subsubsection}{\numberline {2.7.1}Visione utente}{58}{subsubsection.2.7.1}%
+\contentsline {paragraph}{Struttura dei file}{59}{section*.44}%
+\contentsline {paragraph}{Metodi di accesso}{59}{section*.45}%
+\contentsline {paragraph}{Operazioni sui file}{59}{section*.46}%
+\contentsline {paragraph}{Operazioni definite sulle directory}{60}{section*.47}%
+\contentsline {paragraph}{Struttura di una directory}{60}{section*.48}%
+\contentsline {subsubsection}{\numberline {2.7.2}Visione implementatore}{61}{subsubsection.2.7.2}%
+\contentsline {paragraph}{Performance}{66}{section*.49}%
+\contentsline {paragraph}{Tecniche per garantire la coerenza}{66}{section*.50}%
+\contentsline {paragraph}{File system basati su log}{67}{section*.51}%
+\contentsline {subsection}{\numberline {2.8}Sicurezza}{67}{subsection.2.8}%
+\contentsline {subsubsection}{\numberline {2.8.1}Crittografia}{67}{subsubsection.2.8.1}%
+\contentsline {subsubsection}{\numberline {2.8.2}Crittografica a chiave privata}{67}{subsubsection.2.8.2}%
+\contentsline {paragraph}{DES}{68}{section*.52}%
+\contentsline {subsubsection}{\numberline {2.8.3}Crittografia a chiave pubblica}{68}{subsubsection.2.8.3}%
+\contentsline {paragraph}{RSA}{68}{section*.53}%
+\contentsline {subsubsection}{\numberline {2.8.4}Buffer Overflow}{69}{subsubsection.2.8.4}%
+\contentsline {subsubsection}{\numberline {2.8.5}Trojan horse}{69}{subsubsection.2.8.5}%
+\contentsline {subsubsection}{\numberline {2.8.6}Bombe logiche}{69}{subsubsection.2.8.6}%
+\contentsline {subsubsection}{\numberline {2.8.7}Backdoor / Trapdoor}{69}{subsubsection.2.8.7}%
+\contentsline {subsubsection}{\numberline {2.8.8}Virus e worm}{69}{subsubsection.2.8.8}%
+\contentsline {section}{\numberline {3}Linguaggio C per Sistemi Operativi}{70}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Unix}{70}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Cosa definisce POSIX?}{71}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}GNU}{71}{subsection.3.3}%

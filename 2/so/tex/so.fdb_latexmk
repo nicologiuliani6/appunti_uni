@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1775462086.83332 "/home/nico/Desktop/uni/2/so/tex/so.tex" "so.pdf" "so" 1775462091.32008 0
+["pdflatex"] 1776935735.07537 "/home/nico/Desktop/uni/2/so/tex/so.tex" "so.pdf" "so" 1776935739.60748 0
   "/etc/texmf/web2c/texmf.cnf" 1758984917.6732 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/nico/Desktop/uni/2/so/tex/so.tex" 1775462086.44064 114219 a08900a4fa40b1a3d00b03c0ceb0c2cf ""
+  "/home/nico/Desktop/uni/2/so/tex/so.tex" 1776935730.08813 118037 29eb2d6112034990952d89f5b69f1195 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -138,6 +138,7 @@
   "img/dis.png" 1773819195.16824 20647 f6c34bbd00cb01772b555bfc7e12f1f6 ""
   "img/dos.png" 1773819195.18424 25779 b796a20061b8cef86ad92789bbdc51eb ""
   "img/esecuzione.png" 1773819195.33224 16877 597e09daf5e47e33fa49b06c62f9cd49 ""
+  "img/esempio.png" 1776934693.74342 68003 3387f89dabe2cda552945eb9ca724dc6 ""
   "img/fat.png" 1775460725.12909 48502 8291afa2aaaf0704d2daafd34526f4b1 ""
   "img/fcfs.png" 1773823515.78597 28951 904695ae5a0985df2d15457c81c31b50 ""
   "img/file.png" 1775459607.43185 15470 118c6d0c190fc26ca50122972b4e30e5 ""
@@ -188,10 +189,10 @@
   "img/vm.png" 1773819195.19424 19394 f75a091ac0cb771ff30f72299a112e86 ""
   "img/von.png" 1773819195.16024 27531 c7ded077583406f677796a0eb5cea46d ""
   "img/ws.png" 1775458994.06495 10017 591a0870a340397551e309d0cca6b399 ""
-  "so.aux" 1775462091.05135 9403 fdaecd4e095c15845fe6160e00982520 "pdflatex"
-  "so.out" 1775462091.05253 5641 adb55630b98a631579de9f8dce9c0846 "pdflatex"
-  "so.tex" 1775462086.44064 114219 a08900a4fa40b1a3d00b03c0ceb0c2cf ""
-  "so.toc" 1775462091.05353 5785 b340fda1e5bd1313b42c5a695cd56b7e "pdflatex"
+  "so.aux" 1776935739.34428 10787 bed7badadcffd9d39f8092745c5dd102 "pdflatex"
+  "so.out" 1776935739.3467 7042 34c10b62f09378b26d988f341aabf34c "pdflatex"
+  "so.tex" 1776935730.08813 118037 29eb2d6112034990952d89f5b69f1195 ""
+  "so.toc" 1776935739.34725 6718 7a72fb882b913effca21a70247f8368d "pdflatex"
   (generated)
   "so.aux"
   "so.log"
