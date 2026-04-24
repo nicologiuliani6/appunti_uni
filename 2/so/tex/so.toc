@@ -81,7 +81,14 @@
 \contentsline {subsubsection}{\numberline {2.8.6}Bombe logiche}{69}{subsubsection.2.8.6}%
 \contentsline {subsubsection}{\numberline {2.8.7}Backdoor / Trapdoor}{69}{subsubsection.2.8.7}%
 \contentsline {subsubsection}{\numberline {2.8.8}Virus e worm}{69}{subsubsection.2.8.8}%
-\contentsline {section}{\numberline {3}Linguaggio C per Sistemi Operativi}{70}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Unix}{70}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Cosa definisce POSIX?}{71}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}GNU}{71}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {2.8.9}Autenticazione}{69}{subsubsection.2.8.9}%
+\contentsline {paragraph}{Password}{69}{section*.55}%
+\contentsline {paragraph}{Attacchi alla password}{70}{section*.56}%
+\contentsline {subsubsection}{\numberline {2.8.10}Protezione e controllo dell'accesso del SO}{70}{subsubsection.2.8.10}%
+\contentsline {subsubsection}{\numberline {2.8.11}Modello tradizionale UNIX}{71}{subsubsection.2.8.11}%
+\contentsline {paragraph}{umask: maschera utilizza per la creazione dei file}{71}{section*.58}%
+\contentsline {paragraph}{Come vengono ereditate le default ACL?}{72}{section*.60}%
+\contentsline {section}{\numberline {3}Linguaggio C per Sistemi Operativi}{74}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Unix}{74}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Cosa definisce POSIX?}{75}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}GNU}{75}{subsection.3.3}%

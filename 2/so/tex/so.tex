@@ -11,6 +11,8 @@
 \usepackage{listings}         %codice programmazione
 \usepackage{xcolor}           % per colori opzionali del codice
 \usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 \lstset{escapeinside={<@}{@>}}
 % Definizione linguaggio MIPS per listings
@@ -2459,6 +2461,171 @@ particolari condizioni
 Il creatore di un software può deliberatamente lasciare “porte di
 servizio” per entrare aggirando i sistemi di protezione
 \subsubsection{Virus e worm}
+\begin{itemize}
+  \item Virus: frammento di programma che può infettare altri programmi non maligni modificandoli\\
+    L'attività di un virus si divide in due fasi:
+    \begin{enumerate}
+      \item Riproduzione (infezione)
+      \item Attivazione: puo' essere scatenata da un evento
+    \end{enumerate}  
+    Un virus per diffondersi deve essere eseguito. Come? Accodandosi a un programma esistente, bootstrap, accodandosi a file dati che vengono eseguiti automaticamente (es. email)
+  \item Worm: programma che diffonde copie di se stesso in una rete
+\end{itemize}
+\subsubsection{Autenticazione}
+L'operazione di associare ad un utente un'identità, base di tutti i meccanismi di protezione.
+\paragraph{Password} Tutti la conosciamo, il problema maggiore? Se qualcun'altro la conosce.\\
+Come si memorizzano? Plaintext o su funzione one-way, quando viene effettuato il login si codifica la password e la si confronta.\\
+\paragraph{Attacchi alla password} 
+\begin{enumerate}
+  \item \textbf{Dizionario}: Si utilizza un dizionario di password banali, queste vengono codificate nella funzione one-way e poi confrontate per vedere se sono giuste.
+  \item \textbf{Login spoofing}: L'attaccante scrive un programma (testuale o grafico) che presenta una finta schermata di login, si attende che la vittima inserisca la password, esce \textit{Login incorrect}, si fa partire il verro login e nel frattempo la password viene spedita all'attaccante.
+  \item \textbf{Packet sniffing}: cerca di individuare pacchetti contenenti coppie login/password
+spediti "in chiaro" da meccanismi di comunicazione come telnet
+e ftp
+\end{enumerate}
+\subsubsection*{PAM} 
+Originariamente in UNIX ogni applicazione doveva implementare la propria autenticazione, oggi abbiamo \textbf{Pluggable Authentication Module} ovvero un servizio generale di autenticazione basato su file di
+configurazione.
+\subsubsection{Protezione e controllo dell'accesso del SO}
+Insieme di meccanismi che separano il \textbf{gestore} (nucleo del s.o.)
+dalle \textbf{risorse} gestite (processi, risorse), attraverso \textit{mode bit} (kernel/user), interrupt e protezione memoria e dispositivi. E per l'autenticazione?
+\begin{itemize}
+  \item \textbf{Principio di Accesso Mediato}: Tutti gli accessi ad un oggetto devono essere controllati
+  \item \textbf{Principio di Separazione dei privilegi}: Un sistema non dovrebbe concedere permessi in base ad una singola condizione (es. in linux passwd di \textit{root} + utente nel gruppo \textit{wheel})
+  \item \textbf{Principio di Failsafe default}: nessun soggetto ha diritti per default
+  \item \textbf{Principio di Privilegio minimo}: ogni soggetto ha, in ogni istante, i soli diritti necessari per quella fase dell’elaborazione
+\end{itemize}
+In UNIX:
+\begin{itemize}
+  \item Soggetti: processori, thread
+  \item Oggetti: file, dispositivi, processi
+  \item Dirritti di accesso: read, write, exec
+\end{itemize}
+\textit{Nota}: Soggetti $\subseteq$ Oggetti.\\
+\vspace{1px}\\
+Un \textbf{dominio} e' un insieme di coppie $<o, \, rs>$ dove $o \in \text{Oggetti}$, $rs \subseteq \text{Risorse}$.\\
+Definiamo \textbf{matrice di accesso} una matrice di domini/oggetti dove l'emenento $A_{i,j}$ contiene i diritti che il dominio $D_i$ prevede per l'oggetto $O_{j}$.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/matrice.png}
+\end{figure} 
+L'associazione soggetto / dominio può essere \textbf{statica} o \textbf{dinamica} (variare durante la vita di un soggetto).\\
+\textit{Come lo implementiamo?} \textbf{ACL} o \textit{Capability}! \\
+\begin{itemize}
+  \item Con gli Access control list Ad ogni oggetto viene associata una lista di elementi $<\text{dominio}, \, \text{dirritti di accesso}>$.\\
+  \item Mentre con capacity ad ogni dominio viene associata una lista di capability, ovvero coppie $<\text{oggetti}, \, \text{diritti di accesso}>$
+\end{itemize}
+Possiamo pure implementare la \textit{revoca dei diritti di accesso}, in modo \textbf{immediato} o \textbf{ritardato}, selettiva o generale (tutti o solo alcuni dominii), parziale o totale (per tutti i diritti o solo alcuni), \textbf{temporaneamente} o \textbf{permanentemente}.
+\subsubsection{Modello tradizionale UNIX}
+Ogni processo possiede sei o più ID associate ad esso:
+\begin{enumerate}
+  \item real user ID, real group ID: identificano il vero utente e gruppo che esegue il processo
+  \item effective user ID, effective group ID, supplementary group IDs: sono quelle effettivamente utilizzate per determinare i nostri
+diritti di accesso al file system
+  \item saved set-user-ID e saved set-group-ID: contengono copie della effective user id e della effective group
+id; inizializzate con la system call setuid
+\end{enumerate}
+\begin{algorithm}
+\caption{Modalità di accesso ad un file}
+\begin{algorithmic}[1]
+
+\State \textbf{Input:} processo con effective uid, effective gid, supplementary gids
+\State \textbf{Input:} file con owner e group owner
+
+\If{effective uid == 0}
+    \State access allowed
+\ElsIf{effective uid == owner \textbf{and} appropriate user permission}
+    \State access allowed
+\ElsIf{group owner $\in$ supplementary gids $\cup$ \{effective gid\} \textbf{and} appropriate group permission}
+    \State access allowed
+\ElsIf{appropriate other permission}
+    \State access allowed
+\Else
+    \State access denied
+\EndIf
+
+\end{algorithmic}
+\end{algorithm}
+
+\paragraph{umask: maschera utilizza per la creazione dei file} Utilizzata tutte le volte che un processo crea un nuovo file.\\
+Tutti i bit che sono accesi nella maschera, verranno spenti
+nell’access mode del file creato.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/umask.png}
+\end{figure} 
+
+\subsubsection*{POSIX ACL}
+I permessi di ogni oggetto vengono rappresentati come una
+ACL. Una ACL consiste in un insieme di ACL entry.\\
+Tipi di ACL entry:
+\begin{itemize}
+    \item \textbf{Owner user:} \texttt{user::rwx}
+    \item \textbf{Named user:} \texttt{user:name:rwx}
+    \item \textbf{Owning group:} \texttt{group::rwx}
+    \item \textbf{Named group:} \texttt{group:name:rwx}
+    \item \textbf{Mask:} \texttt{mask::rwx}
+    \item \textbf{Others:} \texttt{other::rwx}
+\end{itemize}
+\begin{itemize}
+  \item Access ACL: Ogni file (regolare e non) è associato ad una access ACL, le access ACL determinano i diritti di accesso
+  \item Default ACL: Le directory sono associate anche ad una default ACL che determinano i diritti di accesso
+dei file creati in quella directory
+\end{itemize}
+\paragraph{Come vengono ereditate le default ACL?} la default ACL viene copiata nella access ACL dei nuovi file; la default ACL viene copiata nella default ACL delle nuove
+directory
+\begin{algorithm}[H]
+\caption{POSIX ACL access control}
+\begin{algorithmic}
+
+\State \textbf{Input:} process $p$, file $f$, access type $t$
+
+\State \textbf{Step 1: Select matching ACL entry}
+
+\If{owner entry matches $p$}
+    \State selected $\leftarrow$ owner
+\ElsIf{there exists a named user entry matching $p$}
+    \State selected $\leftarrow$ named user entry
+\ElsIf{there exists a group entry (owning or named) containing $p$}
+    \For{each group $g$ of $p$}
+        \If{$g$ matches an ACL group entry}
+            \State selected $\leftarrow$ that group entry
+            \State \textbf{break}
+        \EndIf
+    \EndFor
+\ElsIf{others entry applies}
+    \State selected $\leftarrow$ others
+\Else
+    \State access denied
+\EndIf
+
+\State \textbf{Step 2: Permission check}
+
+\If{$t \in$ permissions of selected ACL entry}
+    \State access allowed
+\Else
+    \State access denied
+\EndIf
+
+\end{algorithmic}
+\end{algorithm}
+\subsubsection*{POSIX ACL - Implementazione}
+Come sono realizzate: Informazioni di lunghezza variabile associate agli oggetti dei file
+system, le ACL non sono le uniche informazioni "addizionali" che
+possono essere associate ad un file.\\
+\textbf{Extended attribute (EA)}: Coppie \textit{name=value} associate ad ogni file, ACL sono implementate come EA
+\begin{itemize}
+  \item EXT2/EXT3/EXT4: EA memorizzate in 1 blocco separato, puntato dall'inode, limite 1KB
+  \item JFS: EA memorizzate in un extent di blocchi, puntato dall'inode, nessun limite alla dimensione
+  \item XFS: EA piccoli memorizzati nell'inode
+  \item ReiserFS: Gli EA vengono memorizzati in piccoli file, il cui nome è
+associato all'inode, in una directory di sistema nascosta
+\end{itemize}
+NTFS ACL e POSIX ACL non sono totalmente compatibili, tuttavia, le versioni correnti di SAMBA permettono una buona compatibilità.
+
+
+
+
 
 \pagebreak
 \section{Linguaggio C per Sistemi Operativi}
