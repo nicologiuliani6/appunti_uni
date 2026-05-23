@@ -107,7 +107,7 @@ ogni classe di risorse) e tutti i processi siano in deadlock
   \item[c)] Perché i metodi di sincronizzazione tipo test\&set (detti anche spinlock) assumono grande rilevanza nella
 scrittura di sistemi operativi multiprocessore?
   \item[R:] \textit{Nei sistemi multiprocessore dobbiamo implementare il kernel in multiprocesso concorrente. Per non avere conflitti tra thread del kernel dobbiamo avere accesso atomico alle strutture dati del Kernel. Per far questo un semplice semaforo non basta dato che blocca a livello solo della singola CPU. Mentre con gli \texttt{spinlock}, ovvero istruzioni dell'IS della CPU, abbiamo accesso atomico su tutti i processori logici contemporaneamente.}
-  
+  \label{risposta:spinlock}
   \item[d)] Perché è difficile revocare una autorizzazione fornita tramite capability?
   \item[R:] \textit{Le capability non hanno una "sede centrale" dove possiamo gestirle tutte come per ACL, infatti ogni processo/utente (e anche i figli che la ereditano) ha la sua capability. Quindi in un sistema multiprocesso/multiutente diventa impossibile (o quasi) fare una revoca perche' bisognerebbe scansionare l'intero disco (e sapere anche i figli).}
 \end{exambox}
@@ -121,7 +121,7 @@ scrittura di sistemi operativi multiprocessore?
     \item Caso meno hardlink: il fs segna che abbiamo meno hardlink, quindi quando andiamo a eliminare un hardlink (anche se realmente ne abbiamo altri) il fs eliminera' l'inode e mettera' i blocchi come liberi, portando a una corruzzione del file.
 \end{enumerate} 
 Per fixare entrambi i casi fsck (\texttt{File System Consistency Check}) scannerrizza tutti i file e per ogni file conta il numero di hardlink reali e poi corregge se serve nel inode.
-}
+} \label{risposta:inode_hardlink}
 \item[b)] Siano dati due array di dischi identici, il primo viene gestito in modalità RAID1, il secondo in modalità RAID5. In quale array l'operazione di lettura è statisticamente più veloce?
 \item[R:] \textit{Il RAID1 ha come massimo di velocita' in lettura la velocita' di lettura minore di tutti i dischi. Mentre RAID5 avendo avendo oltre che ridondanza anche uno striping abbiamo velocita' in lettura maggiori rispetto anche al singolo disco.}
 \item[c)] La seguente descrizione del funzionamento dell'algoritmo del banchiere è errata: ``Quando un processo richiede risorse, l'algoritmo del banchiere controlla se lo stato del sistema rimarrebbe safe assegnando le risorse richieste: se sì le risorse vengono assegnate, se no l'operazione viene sospesa. Quando un processo restituisce risorse si controlla se il nuovo stato consente di soddisfare una o più operazioni sospese.'' Perché è errata? Come si può correggere la descrizione?
@@ -201,64 +201,90 @@ Dopo:   [P1][P2][P3][--------]\\
 \datasection{23 giugno 2025}
 \begin{exambox}
 \item[a)] L'algoritmo LOOK (detto anche dell'ascensore) è più efficiente di C-LOOK (che ha lo stesso principio di funzionamento del metodo LOOK, ma la scansione del disco avviene in una sola direzione). In quali casi si preferisce C-LOOK a LOOK?
-\item[R:]
+\item[R:]\textit{LOOK ha un thoughtput maggiore ma il tempo tra le chieste agli estremi e' molto alto, mentre C-LOOK va a risolvere il problema andando a minimizzare la varianza (differenza dei tempi medi).}
 \item[b)] Spiegare quali attacchi sono possibili se non viene usato il meccanismo del ``sale'' (salt) nella memorizzazione delle password criptate.
-\item[R:]
+\item[R:] \textit{Il \texttt{salt} serve per proteggerci dagli attacchi dizionario. Infatti la password viene confrontata con $H(password + salt)$ con $salt$ come numero univoco per utente. questo numero e' di $256bit \backslash 32byte$.}
 \item[c)] L'algoritmo del Banchiere evita il verificarsi di situazioni di deadlock ritardando le richieste che porterebbero il sistema in uno stato unsafe. Basta questa regola a evitare anche situazioni di starvation?
-\item[R:]
+\item[R:] \textit{No, infatti la richiesta potrebbe essere rimandata all'infinito. Bisognerebbe implementare anche una tecnica simile al aging per impedire starvation.2}
 \item[d)] Perché è necessario usare spinlock in sistemi multiprocessore per implementare kernel di tipo simmetrico (SMP)?
-\item[R:]
+\item[R:] Vedi risposta a pagina \pageref{risposta:spinlock}, esame 06 febbraio 2026.
 \end{exambox}
 
 \newpage
 \datasection{28 maggio 2025}
 \begin{exambox}
 \item[a)] Perché è difficile revocare un diritto di accesso se espresso come capability rispetto a revocare lo stesso diritto in una access control list?
-\item[R:]
+\item[R:] \textit{Perche' in capability non abbiamo una lista centrale per file/dir. come per ACL con tutti i permessi li, ma tante capability per diversi processi/utenti (e anche per i figli). Quindi la revoca diventa impossibile. Mentre per ACL ci basta modificare la tabella riferito a quel file.}
+\label{risposta:diff_acl_cap}
 \item[b)] Si può implementare la memoria virtuale con paginazione a richiesta in un sistema che ha una Memory Management Unit priva di TLB (Translation Lookaside Buffer)?
-\item[R:]
+\item[R:] \textit{Si, pero' senza la TLB come buffer bisogna ogni volta leggere dalla tabella in RAM. Questo porta' un grande overhead.}
 \item[c)] Perché non si può implementare la funzionalità di link fisico di file in un file system di tipo FAT?
-\item[R:]
+\item[R:] \textit{In FAT non esiste un reference counter associato ai blocchi: l'unica informazione presente è la catena nella tabella FAT. Se due directory entry puntassero forzatamente alla stessa catena, al momento della cancellazione di una delle due non ci sarebbe modo di sapere se esistono altri riferimenti, quindi i blocchi verrebbero liberati anche se l'altra entry li sta ancora usando. Per supportare gli hard link servirebbe un contatore di riferimenti, che FAT non prevede.}
 \item[d)] L'algoritmo del Banchiere evita che si verifichino situazioni di deadlock. Sembra una funzione desiderabile eppure viene raramente usato nei sistemi reali, perché?
-\item[R:]
+\item[R:] \textit{Perche' nei sistemi reali e' quasi impossibile sapere a priori il numero di risorse che un algortimo ha bisogno, e quindi le condizioni per eseguire l'algortimo diventano impossibili. Poi c'e' anche da tenere in mente il costo computazionale alto perche' per $n$ processi e $r$ valute il costo e' di $O(n^2 \cdot r)$.}
 \end{exambox}
 
 \newpage
 \datasection{11 febbraio 2025}
 \begin{exambox}
 \item[a)] La tecnica dell'aging serve per evitare casi di starvation. Come funziona?
-\item[R:]
+\item[R:] \textit{Si, la tecnica del aging serve per gli scheduler a priorita', nei quali se non avessimo aging alcuni processi potrebbero non essere mai eseguiti perche' i processi a priorita' maggiore occupano tutto il tempo la CPU. Quindi con il passare del tempo l'aging aumenta la priorita' di un processo che non e' stato eseguito.}
 \item[b)] Può esistere un controller di device capace di usare DMA ma che non genera interrupt? Se NO: perché non esiste? Se SÌ: come deve essere costruito il relativo device driver?
-\item[R:]
+\item[R:] \textit{Puo' esistere ma allora in quel caso dovremmo avere la CPU che fa polling costantemente per vedere quando il trasferimento e' completato. Questo andrebbe ad annullare tutti i benefici del DMA. Quindi gli interrupt ci servono proprio per mettere in pausa la CPU e farla continuare con altri processi che non tocchino gli indirizzi che stiamo lavorando con il DMA.}
 \item[c)] Quanti dischi sono coinvolti da una operazione di scrittura di un blocco in un array di dischi RAID 5? Perché?
-\item[R:]
+\item[R:] \textit{In scrittura in RAID5 abbiamo 4 operazioni sequenziali:
+\begin{enumerate}
+    \item Lettura blocco dati vecchio
+    \item Lettura blocco parita' vecchio
+    \item Scrittura dati nuovo
+    \item Scrittura parita' nuova
+\end{enumerate}
+\begin{align*}
+    P_{new} = P_{old} \oplus D_{old} \oplus D_{new}
+\end{align*}
+con $P$ e $D$ rispettivamente per parita' e dati.
+}
 \item[d)] Quale problema risolve la compattazione di memoria? Quali sono i difetti di questo metodo?
-\item[R:]
+\item[R:] \textit{La compattazione di memoria serve per ridurre la frammentazione esterna. Questa puo' essere fatta sia su dischi fissi, ma generalmente su RAM per i processi su CPU senza MMU. Se avessimo una MMU a priori la compatazzione non servirebbe perche' ci basterebbe modificare la tabella degli indirizzi virtuali a indirizzi fisici. Il diffetto principale e' che dobbiamo fermare i processi, spostare i dati, ricalcolare i nuovi indirizzi e copiarli nella PCB del processo e poi riprendere l'esecuzione.}
+
 \end{exambox}
 
 \newpage
 \datasection{15 gennaio 2025}
 \begin{exambox}
 \item[a)] Un i-node di un file system tipo ext2 per un errore viene riportato un numero di link maggiore del reale. Cosa può succedere se si continua ad usare il file system? (perché?) E se il numero di link errato fosse al contrario inferiore al reale cosa potrebbe succedere? (perché?)
-\item[R:]
+\item[R:] Vedi risposta a pagina \pageref{risposta:inode_hardlink}, esame 09 gennaio 2026.
 \item[b)] Perché è necessario usare spinlock in sistemi multiprocessore per implementare kernel di tipo simmetrico (SMP)?
-\item[R:]
+\item[R:] Vedi risposta a pagina \pageref{risposta:spinlock}, esame 06 febbraio 2026.
 \item[c)] Perché nei sistemi reali l'algoritmo di rimpiazzamento second chance (orologio) viene preferito a LRU sebbene il primo non sia a stack e il secondo sì?
-\item[R:]
+\item[R:] \textit{Nei sistemi reali l'algortimo LRU e' troppo costoso da implementare perche' per avere tempo di accesso alla domanda $O(1$) dovremmo avere una tabella grande $n \times n$, mentre se ci accontentassimo di una risposta $O(n)$ ci basterebbe una vettore $n$ che costantemente anrebbe aggiornato. Il costo di una memoria cosi veloce e di una grandezza cosi esponenziale e' troppo alto in un sistema reale. Mentre per implementare \texttt{second chanche} abbiamo $O(n)$ ma per la memorizzazione solo $n$ bit. E questo algortimo approssima LRU abbastanza precisamente per compensare.}
 \item[d)] Perché revocare un'autorizzazione espressa come capability è più difficile che revocare lo stesso diritto quando espresso come access control list?
-\item[R:]
+\item[R:] Vedi risposta a pagina \pageref{risposta:diff_acl_cap}, esame 28 maggio 2025.
 \end{exambox}
 
 \newpage
 \datasection{10 settembre 2024}
 \begin{exambox}
 \item[a)] In RAID61 (RAID1 di RAID6) qual è il livello di fault tolerance (quanti dischi possono guastarsi)? E in RAID16 (RAID6 di RAID1)?
-\item[R:]
+\item[R:] {\itshape
+In \textbf{RAID61} (RAID1 di RAID6) si mantengono due copie identiche di un array RAID6.
+Poiché RAID6 tollera fino a 2 dischi guasti per array, nel caso peggiore garantito
+si possono perdere \textbf{almeno 2 dischi qualsiasi}. Nel caso limite, se un intero
+array RAID6 cade, l'altro lo copre interamente, quindi si possono perdere tutti i
+dischi di un array più 2 dell'altro.
+
+In \textbf{RAID16} (RAID6 di RAID1) i ``dischi'' del RAID6 sono coppie RAID1.
+RAID6 tollera la perdita di 2 array interi, e ogni coppia RAID1 tollera 1 disco
+guasto internamente. Quindi si possono perdere entrambi i dischi di al massimo
+2 coppie (assorbiti dal RAID6), più un disco da ciascuna delle coppie rimanenti
+(assorbiti dal RAID1). La fault tolerance scala con il numero di coppie, rendendo
+RAID16 generalmente più robusto di RAID61.
+}
 \item[b)] Nella configurazione di un sistema l'amministratore decide di creare una partizione di un disco rotazionale con file system FAT da montare come \texttt{/tmp}. È una buona o cattiva idea? Perché?
-\item[R:]
+\item[R:] \textit{E' una cattiva idea perche' in FAT per leggere il blocco $n$ dobbiamo prima leggere $n$ blocchi e i file sotto \texttt{/tmp} chiedono molto letture velocemente di blocchi in qualsiasi posizione. Oltretutto per gli HDD peggiorerebbero molto le performance.} 
 \item[c)] Quali sono i benefici della gestione degli interrupt nidificati e quali sono le difficoltà da affrontare per sviluppare un sistema operativo che supporti gli interrupt nidificati?
-\item[R:]
+\item[R:] \textit{Il beneficio maggiore e' la maggiore responsivita' del sistema, infatti per gli interrupt di I/O questi possono avere priorita' maggiore rispetto ad altri in corso e questo porta a un sistema piu' responsivo per l'utente. Per far questo ci servirebbe uno stack per poter segnare a quale interrupt tornare, ripristinare il sistema a quando era stato bloccato e non avere cicli infiniti internamente.}
 \item[d)] Perché aumentando la dimensione dell'area di memoria secondaria usata dalla memoria virtuale si corre il rischio di thrashing?
-\item[R:]
+\item[R:] \textit{Perche' la CPU accetterebbe l'esecuzione di piu' processi e quindi piu' memoria utilizzata e quindi dovremo passare sempre piu' tempo a passare dati da RAM a memoria secondaria, e avverrebbe trashing peggiorando le performance.}
 \end{exambox}
 \end{document}

@@ -1,8 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1779528865.03357 "/home/nico/Desktop/uni/2/so/domande_teoria/teoria.tex" "teoria.pdf" "teoria" 1779528866.52567 0
+["pdflatex"] 1779533320.66996 "/home/nico/Desktop/uni/2/so/domande_teoria/teoria.tex" "teoria.pdf" "teoria" 1779533322.31664 0
   "/etc/texmf/web2c/texmf.cnf" 1758984917.6732 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/nico/Desktop/uni/2/so/domande_teoria/teoria.tex" 1779528864.65209 16957 42f5e31c56b654ab0d998cbe8dbe15ae ""
+  "/home/nico/Desktop/uni/2/so/domande_teoria/teoria.tex" 1779533320.29142 23079 00da5534598fb5c6ec59b0f9b207cd49 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbi1200.tfm" 1136768653 3072 ccae1a240ab272417e4399fe942df546 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1728.tfm" 1136768653 3584 ad49a18d8515beef6d92d4d3f197d0fd ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecit1200.tfm" 1136768653 1536 931f72ad28a2b51c41231609a9d95d3a ""
@@ -178,6 +179,7 @@
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
   "/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1636152094 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1636152094 2900 1537cc8184ad1792082cd229ecc269f4 ""
+  "/usr/share/texmf/fonts/type1/public/cm-super/sfbi1200.pfb" 1772796459.37414 205875 5958bf9326f04501f7006947acfbcae1 ""
   "/usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb" 1772796459.4165 140176 d4962f948b4cc0adf4d3dde77a128c95 ""
   "/usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb" 1772796459.41813 139826 9213617a7cb78635fc326b859c0b2273 ""
   "/usr/share/texmf/fonts/type1/public/cm-super/sfit1200.pfb" 1772796459.48602 156727 9b0ba8fddba6d5b31c1193af669d35e8 ""
@@ -189,10 +191,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1772808045 5467255 9a64d1b40e0b893fc5588ecce9d8accf ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1772808145 3349296 92ae11ed9b913348834dd0189eeaf1c3 ""
-  "teoria.aux" 1779528866.32204 1226 2f6ac36337a47f3410975500f6fc5d09 "pdflatex"
-  "teoria.out" 1779528866.32404 1141 cf702348a657428451e5403418bcc03b "pdflatex"
-  "teoria.tex" 1779528864.65209 16957 42f5e31c56b654ab0d998cbe8dbe15ae ""
-  "teoria.toc" 1779528866.32486 579 64e9163e86c931fae6d1b18f1f35f20e "pdflatex"
+  "teoria.aux" 1779533322.09937 1433 75fec46b991c9b77f4f6d2539eca1242 "pdflatex"
+  "teoria.out" 1779533322.10037 1141 cf702348a657428451e5403418bcc03b "pdflatex"
+  "teoria.tex" 1779533320.29142 23079 00da5534598fb5c6ec59b0f9b207cd49 ""
+  "teoria.toc" 1779533322.10154 579 64e9163e86c931fae6d1b18f1f35f20e "pdflatex"
   (generated)
   "teoria.aux"
   "teoria.log"
