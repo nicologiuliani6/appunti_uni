@@ -389,4 +389,47 @@ Il RAID0 scrive un blocco su un disco e l'altro blocco sull'altro disco. Quindi 
 }
 \end{exambox}
 
+\newpage
+\datasection{11 settembre 2023}
+\begin{exambox}
+\item[a)] Perché è necessario l'algoritmo della media esponenziale nel calcolo dello scheduler shortest job first? La media
+esponenziale dipende da un parametro (normalmente indicato con alpha, di valore fra zero e uno). A cosa serve questo
+parametro?
+\item[R:] \textit{SJF richiede di conoscere il burst CPU futuro di un processo, ma questo non è noto a priori. Si stima quindi basandosi sui burst passati. La media esponenziale permette di fare questa stima senza dover memorizzare tutta la storia dei burst — basta il valore precedente stimato e l'ultimo burst reale.
+\begin{align*}
+    \tau_{n+1} = \alpha t_n + \bar{\alpha}  \tau_n \quad \text{ con } \alpha \in [0,1]
+\end{align*}
+Quindi $\alpha$ serve per decidere quando "peso" dare al tempo reale rispetto al burst precedentemente calcolato.
+}
+\item[b)] Dato un array di 4 dischi di uguale dimensioni confrontare l'uso di raid10 e di raid6. Qual è la capacità utilizzabile nei
+due casi? Qual è il livello di fault tolerance? Quali sono le prestazioni?
+\item[R:] \textit{In RAID6 abbiamo 2 dischi di ridondanza, quindi $N-2$ dischi di spazio. Mentre per RAID10 abbiamo che ogni RAID1 ha 1 disco di ridondanza ma abbiamo 2 RAID1; quindi anche qua 2 dischi di ridondanza totale. Il RAID6 ha una tollerance migliore, perche' se anche i due RAID hanno 2 dischi di ridondanza, in RAID6 possiamo perdere 2 dischi qualunque. Mentre in RAID10 unicamente 1 disco per RAID1. Quindi nel caso ottimo 2 dischi, in quello limite 1 disco singolo. Le prestazioni in RAID10 sono buone, infatti il costo di scrittura e' basso, 2 operazioni per RAID1 quindi 4 operazioni (di cui 2 alla volta parallelizzate). Il RAID6 ha un costo di calcolo superiore, infatti 6 operazioni sequenziali.}
+\item[c)] Perché i metodi di sincronizzazione tipo test\&set (detti anche spinlock) assumono grande rilevanza nella scrittura di
+sistemi operativi multiprocessore?
+\item[R:] \textit{Vedi risposta a pagina \pageref{risposta:spinlock}, esame 06 febbraio 2026.}
+\item[d)] Il file system ext2 è più efficiente nell'accesso diretto a file di piccole dimensioni rispetto a quelli di grandi dimensioni.
+Perché?
+\item[R:] \textit{Perche' in ext2 abbiamo 15 puntatori:
+\begin{itemize}
+    \item 0-11 puntatori ai primi 12 blocchi
+    \item 12-267 puntatori con 1 tabella prima del blocco
+    \item 268-65803 puntatori con 2 tabelle prima del blocco
+    \item >65804 puntatori con 3 tabelle prima del blocco
+\end{itemize}
+Quindi per un file che sta nei primi blocchi rispetto a un file di grandi dimensione con piu' blocchi l'accesso al file comporta meno passaggi per puntatori.}
+\end{exambox}
+
+
+\newpage
+\datasection{}
+\begin{exambox}
+\item[a)] 
+\item[R:] \textit{}
+\item[b)] 
+\item[R:] \textit{}
+\item[c)] 
+\item[R:] \textit{}
+\item[d)] 
+\item[R:] \textit{}
+\end{exambox}
 \end{document}
