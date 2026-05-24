@@ -257,7 +257,18 @@ con $P$ e $D$ rispettivamente per parita' e dati.
 \item[b)] Perché è necessario usare spinlock in sistemi multiprocessore per implementare kernel di tipo simmetrico (SMP)?
 \item[R:] Vedi risposta a pagina \pageref{risposta:spinlock}, esame 06 febbraio 2026.
 \item[c)] Perché nei sistemi reali l'algoritmo di rimpiazzamento second chance (orologio) viene preferito a LRU sebbene il primo non sia a stack e il secondo sì?
-\item[R:] \textit{Nei sistemi reali l'algortimo LRU e' troppo costoso da implementare perche' per avere tempo di accesso alla domanda $O(1$) dovremmo avere una tabella grande $n \times n$, mentre se ci accontentassimo di una risposta $O(n)$ ci basterebbe una vettore $n$ che costantemente anrebbe aggiornato. Il costo di una memoria cosi veloce e di una grandezza cosi esponenziale e' troppo alto in un sistema reale. Mentre per implementare \texttt{second chanche} abbiamo $O(n)$ ma per la memorizzazione solo $n$ bit. E questo algortimo approssima LRU abbastanza precisamente per compensare.}
+\item[R:] \textit{Per implementare \texttt{LRU} dovremmo avere una MMU che memorizzi l'ordine di tutte le pagine. Per farlo abbiamo 2 opzioni:
+\begin{enumerate}
+    \item Tabella $n \times n$, costo di lettura della pagina $O(1)$
+    \item Tabella $n \times 1$, costo di lettura della pagina $O(n)$
+\end{enumerate}
+In entrambi i casi il problema maggiore e' il costo della memoria buffer della MMU, che deve essere una cache ad altre prestazioni con molta memoria (sopratutto per il caso n.1). E questo rende il sistema troppo costoso.\\
+Generalmente rispetto a LRU si preferisce il \texttt{second chance}, una tecnica che approssima abbastanza bene LRU pero' con
+\begin{itemize}
+    \item $n$ bit, costo di lettura $\Omega(1)$ e $O(n)$.
+\end{itemize}
+Quindi il costo per implementare quest'ultima tecnica e' decisamente minore e anche rispetto al n.2 di LRU ha tempi d'accesso minori ($\Theta(\frac{n}{2})$ e' migliore rispetto al $\Theta(n)$ del n.2).
+}
 \item[d)] Perché revocare un'autorizzazione espressa come capability è più difficile che revocare lo stesso diritto quando espresso come access control list?
 \item[R:] Vedi risposta a pagina \pageref{risposta:diff_acl_cap}, esame 28 maggio 2025.
 \end{exambox}
@@ -287,4 +298,95 @@ RAID16 generalmente più robusto di RAID61.
 \item[d)] Perché aumentando la dimensione dell'area di memoria secondaria usata dalla memoria virtuale si corre il rischio di thrashing?
 \item[R:] \textit{Perche' la CPU accetterebbe l'esecuzione di piu' processi e quindi piu' memoria utilizzata e quindi dovremo passare sempre piu' tempo a passare dati da RAM a memoria secondaria, e avverrebbe trashing peggiorando le performance.}
 \end{exambox}
+
+\newpage
+\datasection{22 luglio 2024}
+\begin{exambox}
+\item[a)] La ricostruzione della coerenza mediante tecnica di journaling risolve solo alcuni tipi di incoerenze; quali non vengono gestite?
+\item[R:] \textit{Il journaling risolve le incrongruenze a livello di filesystem quindi come due file occupano lo stesso blocco (quindi uno o entrambi i file sono corrotti), il numero di hardlink (se supportati) e' errato, blocchi che vengono segnati come occupati ma sono liberi e viceversa. In casi come FAT blocchi che creano dei loop circolari e non sono segnati fra i liberi. Le incoerenze che non vengono gestite sono quelle a livello del SO ovvero per esempio un programma che nella scrittura errata via disco scrive i dati sbagliati, un software malevolo che cripta i dati, il sistema operativo si corrompe con un aggiornamento, se si corrompe in boot sector il fs non puo' ripristinarlo dato che e' una partizione esterna rispetto il fs; e altri ancora $\dots$ .}
+\item[b)] A cosa serve partizionare un disco? Fornire esempi pratici di uso di dischi partizionati.
+\item[R:] \textit{Il partizionamento del disco serve per due motivi principali: il primo e' una ottimizzazione nell'ultizzo del disco a livello del SO, ovvero dividere il disco il piu' partizioni permette di utilizzarlo al meglio. Infatti possiamo installare 2 SO diversi, partizionarlo per avere memoria SWAP, partizionarlo per \texttt{/home} o \texttt{/tmp} e in generale per poter dividere i dati in maniera piu' "comoda per un umano". Mentre un secondo motivo (ad oggi poco rilevante), che partizionando per esempio i blocchi piu' esterni di un disco (a parità di velocità angolare, le tracce esterne hanno maggiore velocità lineare) abbiamo un leggero miglioramento delle prestazioni.}
+\item[c)] Il tempo rimanente calcolato dall'algoritmo SRTF (shortest remaining time first) può diventare negativo? (sì o no, perché?)
+\item[R:] \textit{No, perche' SRTF calcola
+\begin{align*}
+    \min_{x} \, \text{Tempo rimanente di $x$} \quad = \{\text{Tempo stimato di $x$} - \text{Tempo passato di $x$}\}
+\end{align*}
+con $x$ $\in$ Processi in coda dello scheduler.\\
+Quindi dato che il tempo stimato e' massimo $\geq$ del tempo passato (il tempo stimato si aggiorna il realtime), e quindi il tempo rimanente e' sempre $\geq$ 0.
+}
+\item[d)] I sorgenti del sistema operativo Linux possono essere scaricati e il kernel può essere ricompilato. In quali casi pensate sia necessario compilare un kernel specifico?
+\item[R:] \textit{Dipende fortemente dal tipo di kernel. Il kernel linux e' un caso particolare perche' non e' il classimo kernel monolitico che va sempre ricompilato ad ogni aggiornamento del SO o dei driver, infatti Linux attarverso i moduli va ricompilato solo quando si aggiorna (o in generale si modifica) la logica interna (come scheduler, TLB, gestione dei raw device, ecc). Diversamente ancora e' per i microkernel che non vanno quasi mai ricompilati (tranne per le modifiche a livello del SO, come per linux).}
+\end{exambox}
+
+\newpage
+\datasection{25 giugno 2024}
+\begin{exambox}
+\item[a)] L'algoritmo di rimpiazzamento LeastUsed sceglie come pagina vittima quella che ha avuto il minor numero di riferimenti da quando è in memoria. Quali funzionalità dovrebbe avere la MMU per poter implementare questo algoritmo di rimpiazzamento? Possono esistere MMU che forniscono le funzionalità richieste?
+\item[R:] \textit{L'algortimo \texttt{LeastUsed}} deve memorizzare in una tabella $n\times 1$ il numero di accessi per ogni pagina, quindi abbiamo anche bisogno di una logica di incremento oltre alla memoria e confronto oltre al buffer di memoria. Per implementarlo nella realta' e' quasi infattibile perche' anche se teoricamente va bene, i limiti fisici dei componenti, sia per il costo alto della memoria, sia per quello di sommatorio e confronto estremamente veloci, portano a dei costi generali troppo alti per un sistema.
+\item[b)] Perché è bene che l'area di memoria dove viene memorizzato lo stack di valutazione non sia eseguibile?
+\item[R:] \textit{Perche' se fosse eseguibile attraverso un buffer overflow potremmo cambiare il \texttt{return address} del RDA e quindi poi puntare a un blocco di codice malevolo.}
+\item[c)] RAID0 non tollera guasti. Quali sono i casi di utilizzo di RAID0?
+\item[R:] \textit{RAID0 e' pensato per le performance senza ridondanza, mentre altri sistemi RAID come il 5, 6, 10 ecc (anche le versioni in ZFS) sono una via di mezzo tra performance e ridondanza. I casi possono essere trasferimento multimediale, server cache, gestione IO ad alte velocita', ecc.}
+\item[d)] Perché è necessario usare spinlock in sistemi multiprocessore per implementare kernel di tipo simmetrico (SMP)?
+\item[R:] \textit{Vedi risposta a pagina \pageref{risposta:spinlock}, esame 06 febbraio 2026.}
+\end{exambox}
+
+\newpage
+\datasection{29 maggio 2024}
+\begin{exambox}
+\item[a)] Un controller DMA per i dischi migliora le prestazioni di un servizio di memoria virtuale con paginazione a richiesta?
+\item[R:] \textit{Un controller DMA puo' migliorare le performance della paginazione della memoria virtuale. Infatti senza DMA abbiamo:}
+\begin{center}
+    RAM $\Rightarrow \underbrace{\text{CPU}}_\text{collo di bottiglia} \Rightarrow $ DISK
+\end{center}
+\textit{Mentre con DMA abbiamo:}
+\begin{center}
+    RAM $\Rightarrow$ DISK
+\end{center}
+\textit{e viceversa (in entrambi i casi).\\
+Quindi DMA e i suoi interrupt serve per poter non far occupare la CPU cicli dove aspetta la fine del trasferimento, infatti mentre un trasferimento e' attivo la CPU puo' fare altri processi nei quali non sono richiesti quegli indirizzi virtuali.}
+\item[b)] Il meccanismo del sale (salt) serve per evitare gli attacchi di tipo ``dizionario''. Perché un ``sale'' di un solo byte può non essere sufficiente?
+\item[R:] \textit{Perche' con un solo byte possiamo scrivere $2^8=256$ numeri. E quindi l'attaccante potrebbe provare tutti gli Hash per i 256 numeri. Quindi aumentando anche solo a 16byte abbiamo $2^{8*16}$ numeri che e' un numero che computazionalmente e' impossibile da trovare con il bruteforce a dizionario.}
+\item[c)] Per migliorare la gestione dei processi interattivi un progettista decide di implementare uno scheduler round robin dimezzando la durata del prossimo time slice a ogni processo ogni volta che lo consuma completamente senza fare I/O. Quali problemi potrebbero emergere?
+\item[R:] \textit{Per ogni processo senza IO facciamo che timeslice/=2. Questo porta che il timeslice converga a 0. E porterebbe a un sistema dove non si eseguono piu' processi ma solo skip di essi, rendendolo inutilizzabile.}
+\item[d)] Che differenza c'è fra deadlock prevention e deadlock avoidance? Il metodo dell'allocazione gerarchica è un metodo di prevention o avoidance? Perché?
+\item[R:] \textit{Il deadlock prevention e' una tecnica che previene anche solo una unica condizione del deadlock. Mentre l'avoidance previene tutte e 4 le condizioni necessarie (mutua esclusione, hold and wait di risorse, attesa circolare, no preemption). Il metodo della allocazione geradica previene l'attesa circolare.}
+\end{exambox}
+
+\newpage
+\datasection{13 febbraio 2024}
+\begin{exambox}
+\item[a)] Perché è necessario l'interval timer per implementare lo scheduler round robin?
+\item[R:] \textit{Perche' un processo in RR senza IT. non terminerebbe mai. Il context switch tra processi non avverebbe e quindi nessun processo termina.}
+\item[b)] Per accedere in modo diretto (seek) a un file di grandi dimensioni è più efficiente usare file system con allocazione concatenata o indicizzata? Perché?
+\item[R:] \textit{Per un file di grandi dimensioni l'allocazione indicizzata e' superiore infatti in ext2 per accederee ai blocchi >65k abbiamo solo 4 letture, mentre in FAT (concatenta abbiamo 65k letture).}
+\item[c)] Per prevenire i deadlock si usa l'algoritmo del banchiere. Cosa fa il sistema operativo se una richiesta porta ad uno stato unsafe? Perché?
+\item[R:] \textit{Se il SO rileva un potenziale deadlock se rileva che lo stato e' unsafe, semplicemente rifuita la richiesta del processo e lo mette in coda insieme agli altri processi in coda. Quando ad una nuova richiesta/rilascio di risorse l'algortimo verra' ri-eseguito il SO controllera' se esiste almento una combinazione t.c. il sistema abbiamo abbastanza risorse da poter eseguire tutti i processi in quel ordine dato, cosi' lo stato rimarra' safe.}
+\item[d)] Dato lo schema di numerazione del sistema di archiviazione RAID, confrontare RAID 5 con RAID 50. Dato un array di dischi, quale metodo consente la maggiore capacità utilizzabile? Quanti dischi guasti sono tollerati? Quali vantaggi o svantaggi hanno i due metodi?
+\item[R:] \textit{Il RAID5 consente un solo disco di tolleranza, mentre il RAID50 due dischi nel caso ottimo (1 disco per ogni RAID5). Un RAID5 ci richiede solo 1 disco di parita' mentre il RAID50 2. Il RAID5 ha meno overhead ma per tanti disci le performance possono degradare, mentre il RAID50 ha senso quando abbiamo una pool di dischi grande e quindi dividendola in 2 RAID5 e poi lo striping ottiniamo delle ottime prestazioni.}
+\end{exambox}
+
+\newpage
+\datasection{17 gennaio 2024}
+\begin{exambox}
+\item[a)] Quali sono gli algoritmi di scheduling più adatti a sistemi interattivi, quelli preemptive o quelli non-preemptive? Perché?
+\item[R:] \textit{Per i sistemi operativo interattivi gli scheduler preemptive permettono di non avere delle attese troppo lunghe per le operazioni di IO. Quindi risultano decisamente piu' reattive all'utente. Questo perche' magari un processo con tanto calcolo occuperebbe la CPU per molto tempo, ma con uno scheduler preemptive questo problema e' solo parziale peche' dopo un tot. di ms. cambiamo processo.}
+\item[b)] Le unità di memoria secondaria allo stato solido (SSD) sono più veloci dei dischi. L'uso di SSD per implementare la memoria virtuale consentirebbe di avere minori problemi di thrashing (a parità di ampiezza della RAM e di memoria secondaria dedicata)? Perché? È comunque sconsigliato di usare SSD per gestire la memoria virtuale, perché?
+\item[R:] \textit{E' fortemente sconsigliato perche' gli SSD hanno un target di scrittura/lettura sulle celle di memoria. Quindi anche se avremo prestazioni migliori, le operazioni di SWAP scriverebbero e ri-scriverebbero in continuazioni quelle celle. Portando a un usura veloce della memoria, fino a che dopo poco andrebbe ricambiata.}
+\item[c)] Mostrare almeno tre tipi di incongruenze che possono essere rilevate durante il controllo di coerenza di un file system di tipo ext3.
+\item[R:] \textit{\begin{enumerate}
+    \item Numero di Hardlink errati, bisogna per fixare ricontare manualmente in tutto il disco quanti hardlink reali abbiamo
+    \item Due inode che puntano agli stessi blocchi utilizzati, quindi uno o entrambi i file saranno corrotti. L'utente probabilmente dovra' fixare manualmente scegliendo lui
+    \item Blocchi segnati come occupati mentre solo liberi e viceversa, scansione dei blocchi realemnte occupati e segnarsi realmente quelli liberi
+\end{enumerate}}
+\item[d)] Dato lo schema di numerazione del sistema di archiviazione RAID, come funziona RAID 60? Qual è il numero minimo di dischi necessario? Quale è la capacità utilizzabile? Se tutti i dischi sono regolarmente funzionanti, a quanti dischi occorre accedere per effettuare una operazione di scrittura di un blocco dati?
+\item[R:] \textit{Il RAID0 di RAID6 comprende 4 dischi di parita', minimo 4*2 dischi. La capacita' utilizzabile e' $n-4$ dischi. Se vogliamo scrivere un blocco dobbiamo:
+\begin{itemize}
+    \item 6 operazioni sequenziali per RAID6 (3 dischi)
+    \item 2 operazioni parallelo RAID0 (2 dischi)
+\end{itemize}
+Il RAID0 scrive un blocco su un disco e l'altro blocco sull'altro disco. Quindi se dobbiamo scrivere un singolo blocco in RAID60 allora scriveremo un solo blocco nel primo RAID6, ovvero 3 dischi.
+}
+\end{exambox}
+
 \end{document}
