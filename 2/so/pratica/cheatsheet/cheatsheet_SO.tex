@@ -1,0 +1,598 @@
+\documentclass[10pt,a4paper]{article}
+
+% ============================================================
+%  CHEATSHEET ESAME PRATICO SISTEMI OPERATIVI
+%  Forme generalizzate dei task ricorrenti (C + Python)
+% ============================================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue!60!black, urlcolor=blue!60!black}
+
+\setlist{nosep, leftmargin=1.4em}
+\titlespacing*{\section}{0pt}{1.2ex}{0.6ex}
+\titlespacing*{\subsection}{0pt}{0.9ex}{0.4ex}
+
+% ---- stile codice ----
+\definecolor{codebg}{rgb}{0.97,0.97,0.95}
+\definecolor{kw}{rgb}{0.0,0.0,0.6}
+\definecolor{cmt}{rgb}{0.0,0.5,0.0}
+\definecolor{str}{rgb}{0.6,0.0,0.0}
+
+\lstdefinestyle{base}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\scriptsize,
+  keywordstyle=\color{kw}\bfseries,
+  commentstyle=\color{cmt}\itshape,
+  stringstyle=\color{str},
+  numbers=none,
+  breaklines=true,
+  showstringspaces=false,
+  frame=single,
+  framesep=3pt,
+  aboveskip=4pt, belowskip=4pt,
+  tabsize=4,
+}
+\lstdefinestyle{c}{style=base, language=C}
+\lstdefinestyle{py}{style=base, language=Python}
+
+\newcommand{\fn}[1]{\texttt{\textbf{#1}}}
+
+\title{\vspace{-1.5cm}\textbf{Cheatsheet Esame Pratico --- Sistemi Operativi}\\[-2mm]
+\large Forme generalizzate dei task ricorrenti (C \& Python)}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-0.8cm}
+{\small\tableofcontents}
+\vspace{0.3cm}
+\hrule
+
+% ============================================================
+\section{Regole d'esame: Esercizio 0 e consegna}
+% ============================================================
+\textbf{Compaiono in OGNI prova.} Falli subito, valgono punti / squalifica.
+
+\subsection{Esercizio 0 --- "Se copiate vi cacciamo"}
+Rendere la home inaccessibile ad altri (no lettura, no esecuzione). Tenere una sola dir in \verb|/public| col proprio username e permessi \verb|700|.
+\begin{lstlisting}[style=base]
+chmod 700 ~                                  # home solo per me
+mkdir -p /public/nome.cognome
+chmod 700 /public/nome.cognome
+\end{lstlisting}
+
+\subsection{Vincolo FONDAMENTALE su come eseguire comandi}
+\textbf{VIETATO}: \fn{system}, \fn{popen} o simili; \textbf{vietato} fare exec di \verb|sh -c|. In Python usare \fn{subprocess} \emph{senza} shell, \textbf{mai} \fn{os.system}/\fn{os.spawn}.
+\begin{lstlisting}[style=c]
+// C: SEMPRE fork + execv/execvp (mai system())
+pid_t p=fork();
+if(p==0){ execvp(args[0], args); perror("execvp"); _exit(127); }
+else waitpid(p,NULL,0);
+\end{lstlisting}
+\begin{lstlisting}[style=py]
+import subprocess
+subprocess.run(["ls","-l","/tmp"])     # lista di argomenti, shell=False (default)
+# MAI: os.system(...), os.popen(...), shell=True
+\end{lstlisting}
+
+\subsection{Esercizio finale --- consegna}
+\begin{itemize}
+\item Mail a \texttt{renzo@cs.unibo.it}, oggetto \textbf{esatto} \texttt{PROVAPRATICA}, allegati \emph{separati}.
+\item Nomi file con il proprio cognome. Rinominare i \verb|.py| con suffisso diverso (es. \verb|.pytxt|).
+\item I file consegnati devono essere \textbf{privi di commenti}.
+\item Mostrare/allegare l'output di \verb|sha1sum| di ogni file consegnato. Niente link a cloud.
+\end{itemize}
+\begin{lstlisting}[style=base]
+sha1sum *.c *.pytxt        # lasciare l'output a video nel terminale
+\end{lstlisting}
+
+% ============================================================
+\section{Librerie / header: cosa includere e perché}
+% ============================================================
+
+\subsection{C --- header POSIX}
+\begin{tabular}{@{}p{4.2cm}p{12.5cm}@{}}
+\fn{<stdio.h>} & \fn{printf}, \fn{fopen}, \fn{fread}, \fn{fgets}, \fn{snprintf}, \fn{perror}. \\
+\fn{<stdlib.h>} & \fn{malloc}, \fn{realloc}, \fn{free}, \fn{exit}, \fn{atoi}, \fn{realpath}, \fn{EXIT\_*}. \\
+\fn{<string.h>} & \fn{strcmp}, \fn{strcpy}, \fn{strlen}, \fn{strdup}, \fn{strrchr}, \fn{strcspn}, \fn{memcmp}, \fn{memmem}. \\
+\fn{<unistd.h>} & \fn{read}, \fn{write}, \fn{close}, \fn{readlink}, \fn{symlink}, \fn{link}, \fn{unlink}, \fn{fork}, \fn{exec*}, \fn{getcwd}, \fn{getpid}. \\
+\fn{<fcntl.h>} & \fn{open}, flag \fn{O\_RDONLY}/\fn{O\_WRONLY}/\fn{O\_CREAT}. \\
+\fn{<dirent.h>} & \fn{opendir}, \fn{readdir}, \fn{closedir}, \fn{struct dirent} (iterazione manuale di una directory). \\
+\fn{<sys/stat.h>} & \fn{stat}, \fn{lstat}, \fn{mkdir}, \fn{mkfifo}, macro \fn{S\_ISREG}/\fn{S\_ISDIR}/\fn{S\_ISLNK}, bit permessi \fn{S\_IXUSR}. \\
+\fn{<sys/types.h>} & tipi: \fn{ino\_t}, \fn{off\_t}, \fn{pid\_t}, \fn{ssize\_t}. \\
+\fn{<ftw.h>} & \fn{nftw} (visita ricorsiva automatica dell'albero). Serve \verb|#define _XOPEN_SOURCE 500| \emph{prima} degli include. \\
+\fn{<sys/wait.h>} & \fn{wait}, \fn{waitpid}, macro \fn{WEXITSTATUS}. \\
+\fn{<sys/inotify.h>} & \fn{inotify\_init}, \fn{inotify\_add\_watch}, \fn{struct inotify\_event}. \\
+\fn{<signal.h>} & \fn{sigaction}, \fn{sigqueue}, \fn{sigemptyset}, \fn{union sigval}, \fn{SIGRTMIN}/\fn{SIGRTMAX}. Serve \verb|#define _POSIX_C_SOURCE 200809L|. \\
+\fn{<limits.h>} & \fn{PATH\_MAX} (dimensione buffer per i path). \\
+\fn{<errno.h>} & \fn{errno}, costanti \fn{EEXIST} ecc. (gestione errori fine). \\
+\fn{<openssl/sha.h>} & SHA1/SHA256. Compila con \verb|-lssl -lcrypto|. \\
+\fn{<time.h>} & \fn{time\_t} (confronto \fn{st\_mtime}). \\
+\end{tabular}
+
+\medskip
+\textbf{Feature-test macro} (riga 1, prima di tutto): \verb|_XOPEN_SOURCE 500| per \fn{nftw}; \verb|_GNU_SOURCE| per \fn{memmem}/\fn{FTW\_ACTIONRETVAL}; \verb|_POSIX_C_SOURCE 200809L| per i segnali real-time.
+
+\subsection{Python --- moduli}
+\begin{tabular}{@{}p{3.2cm}p{13.5cm}@{}}
+\fn{os} & \fn{os.walk}, \fn{os.scandir}, \fn{os.stat}/\fn{os.lstat}, \fn{os.symlink}, \fn{os.makedirs}, \fn{os.path.*}, \fn{os.sep}. \\
+\fn{sys} & \fn{sys.argv} (parametri), \fn{sys.exit}. \\
+\fn{stat} & \fn{stat.filemode} (stringa tipo \texttt{-rwxr-xr-x}), \fn{stat.S\_ISDIR} ecc. \\
+\fn{shutil} & \fn{shutil.copy}, \fn{shutil.move}, \fn{shutil.rmtree} (operazioni ad alto livello). \\
+\fn{hashlib} & \fn{hashlib.sha1()/sha256()} per digest file. \\
+\fn{collections} & \fn{defaultdict} per raggruppare. \\
+\fn{dataclasses} & \fn{@dataclass} per record semplici. \\
+\end{tabular}
+
+% ============================================================
+\section{Iterare i file di una directory}
+% ============================================================
+
+\subsection{C --- iterazione manuale + ricorsione (\fn{opendir}/\fn{readdir})}
+Usa quando devi controllare tu la ricorsione, costruire path, o serve flessibilità.
+\begin{lstlisting}[style=c]
+void scan_dir(const char *path) {
+    DIR *dir = opendir(path);
+    if (!dir) { perror("opendir"); return; }
+
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
+        // SEMPRE saltare "." e ".." o ricorsione infinita
+        if (strcmp(entry->d_name, ".") == 0 ||
+            strcmp(entry->d_name, "..") == 0) continue;
+
+        // costruire il path completo: dir + "/" + nome
+        char full[PATH_MAX];
+        snprintf(full, sizeof(full), "%s/%s", path, entry->d_name);
+
+        struct stat st;
+        if (lstat(full, &st) == -1) continue;  // lstat NON segue i symlink
+
+        if (S_ISDIR(st.st_mode))      scan_dir(full);     // ricorsione
+        else if (S_ISREG(st.st_mode)) printf("%s\n", full);
+    }
+    closedir(dir);
+}
+\end{lstlisting}
+
+\subsection{C --- visita automatica dell'albero (\fn{nftw})}
+Usa quando basta "visita tutto e per ogni file fai X". Niente ricorsione manuale.
+\begin{lstlisting}[style=c]
+#define _XOPEN_SOURCE 500
+#include <ftw.h>
+// typeflag: FTW_F=file regolare, FTW_D=directory, FTW_SL=symlink (con FTW_PHYS)
+// ftwbuf->base = offset del nome nel path ; ftwbuf->level = profondita'
+int cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *fb) {
+    if (typeflag != FTW_F) return 0;        // filtra solo i file
+    printf("%s (nome: %s)\n", fpath, fpath + fb->base);
+    return 0;                               // 0 = continua la visita
+}
+int main(int argc, char **argv) {
+    // FTW_PHYS = non seguire i symlink (li riporta come FTW_SL)
+    nftw(argv[1], cb, 20 /*max fd*/, FTW_PHYS);
+}
+\end{lstlisting}
+\textbf{Trucchi nftw:} con \verb|FTW_ACTIONRETVAL| puoi tornare \fn{FTW\_SKIP\_SUBTREE} per saltare una sottocartella. La callback usa variabili \emph{globali} per passare dati (file target, contatori, ecc.).
+
+\subsection{Python --- \fn{os.walk} (ricorsivo) e \fn{os.scandir} (un livello)}
+\begin{lstlisting}[style=py]
+# os.walk: visita ricorsiva, restituisce (dirpath, sottocartelle, file) per ogni nodo
+for dirpath, dirnames, filenames in os.walk(root):
+    for f in filenames:
+        full = os.path.join(dirpath, f)
+        print(full)
+
+# os.scandir: un solo livello, ma con .stat()/.is_dir() veloci (niente syscall extra)
+for entry in os.scandir(path):
+    if entry.is_file(follow_symlinks=False):   # equivalente a lstat+S_ISREG
+        print(entry.path, entry.stat().st_ino)
+\end{lstlisting}
+\textbf{Profondità in os.walk:} \verb|depth = dirpath.replace(root,'').count(os.sep)|. Per ricorsione con limite di profondità conviene \fn{os.scandir} ricorsivo con contatore.
+
+% ============================================================
+\section{Controllare il tipo / i metadati di un file}
+% ============================================================
+
+\subsection{C --- \fn{stat} vs \fn{lstat}}
+\begin{itemize}
+\item \fn{stat(path,\&st)}: segue i symlink (riporta info sul \emph{target}).
+\item \fn{lstat(path,\&st)}: NON segue i symlink (riporta info sul \emph{link stesso}). \textbf{Usa lstat quando devi distinguere/contare i symlink.}
+\end{itemize}
+\begin{lstlisting}[style=c]
+struct stat st; lstat(path, &st);
+if (S_ISREG(st.st_mode)) ...   // file regolare
+if (S_ISDIR(st.st_mode)) ...   // directory
+if (S_ISLNK(st.st_mode)) ...   // symlink (solo con lstat)
+// campi utili:
+st.st_ino    // numero di inode
+st.st_dev    // device  (inode UNICO = coppia (st_dev, st_ino))
+st.st_size   // dimensione in byte
+st.st_mtime  // ultima modifica (time_t)
+st.st_nlink  // numero di hard link
+st.st_mode   // tipo + permessi ; bit permessi: S_IXUSR, S_IWGRP, ...
+if (st.st_mode & S_IXUSR) ...  // eseguibile dal proprietario?
+\end{lstlisting}
+
+\subsection{C --- riconoscere il contenuto dai "magic bytes"}
+\begin{lstlisting}[style=c]
+int is_elf(const char *p){ FILE*f=fopen(p,"rb"); unsigned char b[4];
+    size_t n=fread(b,1,4,f); fclose(f);
+    return n==4 && b[0]==0x7f && b[1]=='E' && b[2]=='L' && b[3]=='F'; }
+int is_script(const char *p){ FILE*f=fopen(p,"rb"); unsigned char b[2];
+    size_t n=fread(b,1,2,f); fclose(f);
+    return n==2 && b[0]=='#' && b[1]=='!'; }   // shebang #!
+\end{lstlisting}
+
+\subsection{Python --- tipo e permessi}
+\begin{lstlisting}[style=py]
+import os, stat
+st = os.lstat(path)                 # lstat: non segue symlink
+stat.S_ISREG(st.st_mode)            # file?
+stat.S_ISDIR(st.st_mode)            # dir?
+stat.S_ISLNK(st.st_mode)            # symlink?
+mode_str = stat.filemode(st.st_mode)   # "-rwxr-xr-x"  (come ls -l)
+st.st_mode & stat.S_IXUSR           # eseguibile owner?
+# scorciatoie su DirEntry di scandir:
+entry.is_file(follow_symlinks=False); entry.is_dir(); entry.is_symlink()
+\end{lstlisting}
+
+% ============================================================
+\section{Hard link, symlink, inode}
+% ============================================================
+
+\subsection{Concetti}
+\begin{itemize}
+\item \textbf{Hard link}: due nomi $\to$ stesso inode (stessa coppia \fn{st\_dev}+\fn{st\_ino}). Si crea con \fn{link}. Identità file = \fn{(st\_dev, st\_ino)} \emph{non solo} l'inode.
+\item \textbf{Symlink}: file speciale che contiene un \emph{path}. Si crea con \fn{symlink}, si legge con \fn{readlink}, si risolve con \fn{realpath}.
+\end{itemize}
+
+\subsection{C --- creare link}
+\begin{lstlisting}[style=c]
+link("orig", "nuovo_hardlink");        // hard link (stesso inode)
+symlink("target_path", "nome_link");   // symlink (salva la stringa target)
+
+// leggere dove punta un symlink (readlink NON mette il '\0'!)
+char buf[PATH_MAX];
+ssize_t n = readlink(linkpath, buf, sizeof(buf)-1);
+if (n != -1) buf[n] = '\0';            // terminare a mano = ERRORE TIPICO
+
+// path assoluto/canonico (risolve symlink, "..", "."):
+char *real = realpath(path, NULL);     // malloc'd -> free dopo
+// oppure su buffer fisso:  realpath(path, abs_buf);
+\end{lstlisting}
+
+\subsection{C --- trovare hard link / symlink di un file (pattern d'esame classico)}
+\begin{lstlisting}[style=c]
+// HARD LINK di F nel sottoalbero: stesso (dev,ino) ma path diverso dall'originale
+if (sb->st_ino == F.st_ino && sb->st_dev == F.st_dev) {
+    char *r = realpath(fpath, NULL);
+    if (strcmp(r, F.realpath) != 0) printf("%s\n", fpath);  // escludi originale
+    free(r);
+}
+// SYMLINK che puntano a F: risolvi il target del link e confronta col realpath di F
+if (typeflag == FTW_SL) {
+    char buf[PATH_MAX]; ssize_t n = readlink(fpath, buf, sizeof(buf)-1);
+    buf[n]='\0';
+    char *rl = realpath(buf, NULL);             // attenzione ai target RELATIVI
+    if (rl && strcmp(rl, F.realpath)==0) printf("%s\n", fpath);
+    free(rl);
+}
+\end{lstlisting}
+\textbf{Target relativi:} se \verb|readlink| ritorna un path che non inizia con \verb|/|, va risolto rispetto alla directory del symlink (prendi \verb|dirname| del link, concatena, poi \verb|realpath|).
+
+\subsection{Python --- link}
+\begin{lstlisting}[style=py]
+os.symlink(target, linkname)     # symlink
+os.link(src, dst)                # hard link
+os.readlink(linkname)            # legge il target
+os.path.realpath(path)           # path canonico
+os.makedirs(d, exist_ok=True)    # mkdir -p (niente errore se esiste)
+\end{lstlisting}
+
+% ============================================================
+\section{Creare / spostare / copiare directory e file}
+% ============================================================
+
+\subsection{C --- mkdir, rename (spostamento atomico), copia ricorsiva}
+\begin{lstlisting}[style=c]
+// mkdir idempotente (ignora "esiste gia'")
+if (mkdir(path, 0755) == -1 && errno != EEXIST) { perror("mkdir"); }
+
+// SPOSTARE un file = rename (atomico, stesso filesystem)
+rename("vecchio/path", "nuovo/path");
+
+// COPIA RICORSIVA di un albero ricreando dir/symlink/hardlink:
+int clone(const char *src, const char *dst){
+    mkdir(dst, 0755);
+    DIR *d = opendir(src); struct dirent *e;
+    while ((e = readdir(d))) {
+        if (!strcmp(e->d_name,".")||!strcmp(e->d_name,"..")) continue;
+        char from[PATH_MAX], to[PATH_MAX];
+        snprintf(from,sizeof from,"%s/%s",src,e->d_name);
+        snprintf(to,  sizeof to,  "%s/%s",dst,e->d_name);
+        struct stat st; lstat(from,&st);
+        if (S_ISDIR(st.st_mode))       clone(from,to);          // ricorsione
+        else if (S_ISLNK(st.st_mode)){ char t[PATH_MAX];        // ricrea symlink
+            ssize_t n=readlink(from,t,sizeof t-1); t[n]='\0'; symlink(t,to); }
+        else                           link(from,to);           // hard link
+    }
+    closedir(d); return 0;
+}
+\end{lstlisting}
+
+\subsection{Python --- alto livello}
+\begin{lstlisting}[style=py]
+os.makedirs(d, exist_ok=True)        # mkdir -p
+os.rename(src, dst)                  # sposta (atomico)
+import shutil
+shutil.copy2(src, dst)               # copia file + metadati
+shutil.copytree(src, dst)            # copia albero
+shutil.move(src, dst)               # sposta (anche tra filesystem)
+\end{lstlisting}
+
+% ============================================================
+\section{Leggere / scrivere file e contenuto}
+% ============================================================
+
+\subsection{C --- leggere un intero file in memoria}
+\begin{lstlisting}[style=c]
+FILE *f = fopen(path, "rb");
+fseek(f, 0, SEEK_END); long sz = ftell(f); rewind(f);
+char *buf = malloc(sz);
+fread(buf, 1, sz, f); fclose(f);
+// cercare una sottostringa binaria (GNU): memmem(buf, sz, needle, nlen)
+if (memmem(buf, sz, target, strlen(target)) != NULL) printf("trovato\n");
+\end{lstlisting}
+
+\subsection{C --- digest SHA1 (OpenSSL, compila \texttt{-lssl -lcrypto})}
+\begin{lstlisting}[style=c]
+#include <openssl/sha.h>
+void sha1_file(const char *path, char out[41]){
+    FILE *f=fopen(path,"rb"); SHA_CTX c; SHA1_Init(&c);
+    unsigned char b[65536]; size_t n;
+    while ((n=fread(b,1,sizeof b,f))>0) SHA1_Update(&c,b,n);
+    fclose(f);
+    unsigned char d[SHA_DIGEST_LENGTH]; SHA1_Final(d,&c);
+    for (int i=0;i<SHA_DIGEST_LENGTH;i++) sprintf(out+i*2,"%02x",d[i]);
+    out[40]='\0';
+}
+\end{lstlisting}
+
+\subsection{Python --- testo, encoding, digest}
+\begin{lstlisting}[style=py]
+text = open(path, "r", encoding="utf-8").read()
+open(out, "w", encoding="ascii").write(text)          # forza ASCII
+# carattere non-ASCII?  ord(c) >= 128
+def has_non_ascii(s): return any(ord(c) >= 128 for c in s)
+import hashlib
+h = hashlib.sha1(open(path,"rb").read()).hexdigest()  # digest file
+\end{lstlisting}
+
+% ============================================================
+\section{Argomenti, processi, exec}
+% ============================================================
+
+\subsection{C --- parametri e usage}
+\begin{lstlisting}[style=c]
+int main(int argc, char **argv){
+    if (argc != 3) { fprintf(stderr,"usage: %s <a> <b>\n", argv[0]); return 1; }
+    // argv[0]=nome prog, argv[1]=primo arg ...
+}
+// scegliere modalita' da opzione:
+if      (strcmp(argv[1],"-l")==0) mode=HARD;
+else if (strcmp(argv[1],"-s")==0) mode=SYM;
+\end{lstlisting}
+
+\subsection{C --- fork + exec + wait}
+\begin{lstlisting}[style=c]
+pid_t pid = fork();
+if (pid < 0) { perror("fork"); return 1; }
+else if (pid == 0) {                 // FIGLIO
+    execv(path, argv_array);         // argv_array[0]=prog, ultimo = NULL !
+    perror("execv"); exit(1);        // si arriva qui solo se exec fallisce
+} else {                             // PADRE
+    int status; waitpid(pid, &status, 0);
+    printf("exit code = %d\n", WEXITSTATUS(status));
+}
+// execv  : path esatto + array argv ; execvp : cerca nel $PATH
+\end{lstlisting}
+\textbf{Regola d'oro:} l'array per \fn{exec} deve terminare con \verb|NULL|, e \verb|argv[0]| è il nome del programma.
+
+\subsection{C --- leggere args da /proc (cmdline è separato da \texttt{\textbackslash 0})}
+\begin{lstlisting}[style=c]
+// /proc/PID/exe  = symlink all'eseguibile (readlink)
+// /proc/PID/cmdline = argomenti separati da '\0'
+snprintf(p,sizeof p,"/proc/%s/cmdline",argv[1]);
+int fd=open(p,O_RDONLY); int n=read(fd,cmd,sizeof cmd-1); close(fd); cmd[n]='\0';
+char *args[100]; int k=0;
+for (int i=0;i<n;) { args[k++]=cmd+i; i+=strlen(cmd+i)+1; }  // split su '\0'
+args[k]=NULL;
+\end{lstlisting}
+Lo stesso schema "buffer di stringhe separate da \verb|\0|" si usa per \textbf{leggere da stdin/pipe} una lista di argomenti (vedi sezione FIFO).
+
+% ============================================================
+\section{Comunicazione tra processi (IPC)}
+% ============================================================
+
+\subsection{C --- FIFO / named pipe}
+\begin{lstlisting}[style=c]
+// LETTORE
+mkfifo(path, 0666);
+int fd = open(path, O_RDONLY);     // si BLOCCA finche' qualcuno apre in scrittura
+char buf[PATH_MAX]; int pos=0, n;
+while ((n=read(fd,buf+pos,sizeof buf-pos))>0) pos+=n;   // leggi fino a EOF
+// SCRITTORE: scrive ogni arg seguito da '\0', poi chiude
+for (int i=1;i<argc;i++){ printf("%s",argv[i]); putchar('\0'); }
+\end{lstlisting}
+
+\subsection{C --- segnali real-time (passano un valore, sono in coda)}
+Schema: \fn{SIGRTMIN}..\fn{SIGRTMAX} sono affidabili e accodati; \fn{sigqueue} invia un \fn{int} (\fn{sival\_int}); il numero del segnale può codificare un indice.
+\begin{lstlisting}[style=c]
+// --- RICEVITORE ---
+void handler(int sig, siginfo_t *info, void *ctx){
+    int val = info->si_value.sival_int;     // valore inviato
+    int idx = sig - SIGRTMIN;               // indice dal numero segnale
+}
+struct sigaction sa = {0};
+sa.sa_sigaction = handler; sa.sa_flags = SA_SIGINFO;  // SA_SIGINFO => 3 args
+sigemptyset(&sa.sa_mask);
+for (int i=0;i<=SIGRTMAX-SIGRTMIN;i++) sigaction(SIGRTMIN+i,&sa,NULL);
+while(1) pause();
+// --- TRASMETTITORE ---
+union sigval sv; sv.sival_int = valore;
+sigqueue(pid, SIGRTMIN + i, sv);
+\end{lstlisting}
+
+\subsection{C --- trasmettere bit a bit con SIGUSR1/SIGUSR2 + ack (variante d'esame)}
+Schema: ogni bit del carattere $\to$ un segnale (\fn{SIGUSR1}=0, \fn{SIGUSR2}=1). Dopo ogni blocco il ricevitore manda un \textbf{ack} al mittente (serve il pid del mittente: lo si legge da \fn{info->si\_pid} con \fn{SA\_SIGINFO}).
+\begin{lstlisting}[style=c]
+// --- RICEVITORE: ricostruisce un byte bit a bit ---
+volatile sig_atomic_t cur=0, nbit=0, got_ack=0;
+void on_bit(int sig, siginfo_t *info, void *c){
+    int bit = (sig==SIGUSR2);                 // USR1->0, USR2->1
+    cur |= (bit << nbit);                      // accumula (LSB first)
+    if (++nbit==8){ putchar(cur); fflush(stdout); cur=0; nbit=0;
+        kill(info->si_pid, SIGUSR1);           // ACK al mittente (pid dal segnale)
+    }
+}
+void on_ack(int s){ got_ack=1; }
+// --- MITTENTE: invia un byte bit a bit, poi aspetta l'ack ---
+for (int b=0;b<8;b++){
+    kill(rx_pid, (c>>b)&1 ? SIGUSR2 : SIGUSR1);
+    usleep(2000);                              // "rallentare ad arte" -> evita perdite
+}
+while(!got_ack) pause();  got_ack=0;           // handshake prima del prossimo byte
+\end{lstlisting}
+\textbf{Nota:} \fn{SIGUSR1}/\fn{SIGUSR2} \emph{non} sono accodati (a differenza dei real-time): vanno scanditi/serializzati, da qui l'ack e gli \fn{usleep}. Mandare anche il terminatore \verb|'\0'| per segnalare fine stringa.
+
+\subsection{C --- contare segnali con \fn{signalfd} (variante d'esame)}
+Alternativa a \fn{sigaction}: i segnali diventano leggibili da un file descriptor (niente handler asincrono).
+\begin{lstlisting}[style=c]
+#include <sys/signalfd.h>
+sigset_t m; sigemptyset(&m); sigaddset(&m,SIGUSR1); sigaddset(&m,SIGUSR2);
+sigprocmask(SIG_BLOCK,&m,NULL);          // OBBLIGATORIO: blocca la consegna normale
+int fd = signalfd(-1,&m,0);
+struct signalfd_siginfo si;
+while (read(fd,&si,sizeof si)==sizeof si) {
+    if (si.ssi_signo==SIGUSR1) c1++;
+    else if (si.ssi_signo==SIGUSR2) c2++;
+}
+\end{lstlisting}
+
+% ============================================================
+\section{inotify --- reagire a eventi del filesystem}
+% ============================================================
+\begin{lstlisting}[style=c]
+#include <sys/inotify.h>
+#define MASK (IN_CLOSE_WRITE | IN_MOVED_TO)   // file finito di scrivere / spostato dentro
+int fd = inotify_init();
+inotify_add_watch(fd, dir, MASK);
+char buf[4096];
+while (1) {
+    ssize_t n = read(fd, buf, sizeof buf);    // BLOCCA fino a un evento
+    struct inotify_event *ev = (void*)buf;
+    while ((char*)ev < buf + n) {
+        if (ev->mask & MASK) { /* ev->name = nome file coinvolto */ }
+        // avanzare: dimensione struct + lunghezza nome variabile
+        ev = (void*)((char*)ev + sizeof(struct inotify_event) + ev->len);
+    }
+}
+\end{lstlisting}
+\textbf{Maschere comuni:} \fn{IN\_CREATE}, \fn{IN\_DELETE}, \fn{IN\_MODIFY}, \fn{IN\_CLOSE\_WRITE}, \fn{IN\_MOVED\_TO}, \fn{IN\_MOVED\_FROM}.
+
+% ============================================================
+\section{Pattern Python ricorrenti}
+% ============================================================
+
+\subsection{Raggruppare file per criterio + creare cartelle/symlink}
+\begin{lstlisting}[style=py]
+from collections import defaultdict
+import os, stat
+by_key = defaultdict(list)
+for entry in os.scandir(dir):
+    if not entry.is_file(follow_symlinks=False): continue
+    key = stat.filemode(os.stat(entry.path).st_mode)   # es: raggruppa per permessi
+    by_key[key].append(entry.path)
+for key, paths in by_key.items():
+    os.makedirs(key, exist_ok=True)
+    for p in paths:
+        os.symlink(p, os.path.join(key, os.path.basename(p)))
+\end{lstlisting}
+
+\subsection{Ordinare i file per profondità / nome / inode}
+\begin{lstlisting}[style=py]
+files = []
+for dirpath, dirs, names in os.walk(root):
+    depth = dirpath.replace(root, '').count(os.sep)
+    for f in names: files.append((depth, f, os.path.join(dirpath, f)))
+# piu' profondi prima, a parita' ordine alfabetico:
+files.sort(key=lambda x: (-x[0], x[1]))
+\end{lstlisting}
+
+\subsection{Tabella inode con profondità limitata (scandir ricorsivo)}
+\begin{lstlisting}[style=py]
+items = []
+def walk(folder, remaining):
+    if remaining == -1: return
+    for e in os.scandir(folder):
+        items.append((e.stat().st_ino, e.path))
+        if e.is_dir(): walk(e.path, remaining-1)
+items.sort(key=lambda x: x[0])     # ordina per inode
+\end{lstlisting}
+
+\subsection{Aggiungere testo come commento in base al linguaggio (per suffisso)}
+\begin{lstlisting}[style=py]
+import os
+def banner(text, ext):
+    if ext == ".c":  return f"/*\n{text}\n*/\n"
+    if ext == ".py": return f"'''\n{text}\n'''\n"
+    if ext == ".sh": return "".join(f"# {l}\n" for l in text.splitlines())
+for f in os.listdir("."):
+    ext = os.path.splitext(f)[1]
+    if ext not in (".c", ".sh", ".py"): continue
+    old = open(f).read()
+    if ext == ".sh" and old.startswith("#!"):   # bash: dopo lo shebang
+        first, _, rest = old.partition("\n")
+        open(f,"w").write(first + "\n" + banner(MSG, ext) + rest)
+    else:
+        open(f,"w").write(banner(MSG, ext) + old)
+\end{lstlisting}
+
+\subsection{Confronto contenuto file / eliminare duplicati di f (dremcont)}
+\begin{lstlisting}[style=py]
+import os, hashlib
+def sha1(p): return hashlib.sha1(open(p,"rb").read()).hexdigest()
+target = sha1(f)
+for dp, _, names in os.walk(d):
+    for n in names:
+        p = os.path.join(dp, n)
+        if os.path.isfile(p) and sha1(p) == target:
+            os.remove(p)          # stesso contenuto -> cancella
+\end{lstlisting}
+
+% ============================================================
+\section{Errori tipici da NON fare (checklist mentale)}
+% ============================================================
+\begin{itemize}
+\item Dimenticare \verb|buf[n]='\0'| dopo \fn{readlink}/\fn{read} (non terminano la stringa).
+\item Non saltare \verb|"."| e \verb|".."| in \fn{readdir} $\to$ ricorsione infinita.
+\item Usare \fn{stat} invece di \fn{lstat} quando devi distinguere/contare i symlink.
+\item Identificare un file solo per \fn{st\_ino}: serve la coppia \fn{(st\_dev, st\_ino)}.
+\item Dimenticare \verb|NULL| finale nell'array di \fn{exec}, o \verb|argv[0]|.
+\item Mancata feature-test macro $\to$ \fn{nftw}/\fn{memmem} "implicit declaration".
+\item Buffer dei path troppo piccolo: usa \fn{PATH\_MAX} e \fn{snprintf} (non \fn{sprintf}).
+\item Symlink con target relativo: vanno risolti rispetto alla dir del link.
+\item Non gestire \fn{EEXIST} su \fn{mkdir}/\fn{symlink} quando l'oggetto può già esistere.
+\item Compilazione: \verb|gcc -Wall -o prog prog.c| ; con OpenSSL aggiungi \verb|-lssl -lcrypto|.
+\end{itemize}
+
+\end{document}
