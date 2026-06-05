@@ -1,0 +1,885 @@
+\documentclass[12pt,a4paper,tikz,border=5pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{forest}
+\usepackage{mathpartir}
+\usepackage{tikz}
+\usepackage{float}
+
+\usetikzlibrary{automata,positioning}
+\definecolor{grigiochiarissimo}{RGB}{245,245,245}
+
+\geometry{margin=2.5cm}
+
+
+
+
+\newcommand{\domanda}[3]{%
+  % #1 = numero, #2 = testo domanda, #3 = risposta
+  \subsubsection*{Domanda #1}
+  \textbf{#2}
+  \begin{mdframed}[backgroundcolor=grigiochiarissimo, linecolor=gray!50, linewidth=0.6pt, innertopmargin=6pt, innerbottommargin=12pt, innerleftmargin=8pt, innerrightmargin=8pt]
+    \textit{#3}%
+  \end{mdframed}%
+  \vspace{0.4em}
+}
+
+\title{%
+  \textbf{Domande per l'Orale LP}\\[0.4em]
+  \large Modulo I/II/III%
+}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+
+\tableofcontents
+\newpage
+
+% ================================================================
+\section{Modulo 1 -- Gorrieri}
+% ================================================================
+
+% ----------------------------------------------------------------
+\subsection{Capitolo 1 -- Macchine astratte, interpreti, compilatori}
+% ----------------------------------------------------------------
+
+\domanda{1}{Che cosa e una macchina astratta? E in cosa si differenzia da una macchina fisica?}{E' un insieme di algortimi e strutture dati che dato un programma scritto in un linguaggio relativo alla macchina astratta, quest'ultima lo esegue.\\
+Una macchina fisica e' un insieme di circuiti logici composti da circuiti elettrici che allo stesso modo della macchina astratta dato un linguaggio specifico (conforme all'IS), la macchina fisica lo esegue.}
+
+\domanda{2}{Che cos'e un interprete? In cosa consiste il ciclo fetch-decode-execute?}{Un interprete e' un programma che viene eseguito su un calcolatore che serve per eseguire in realtime un programma, senza prima doverlo compilare. Serve per poter eseguire un linguaggio $\mathcal{L}_A$ su un calcolatore che nativamente esegue il linguaggio $\mathcal{L}$. L'interprete eseegue il codice leggendo una istruzione alla volta.\\
+FDE e' lo schema della CPU nel quale prende, decodifica ed esegue una istruzione. Questo e' fortemente collegato alla pipeline della CPU.}
+
+\domanda{3}{Cos'e il linguaggio macchina?}{E' linguaggio relativo all'interprete $I_\mathcal{L}$ per la macchina $M_\mathcal{L}$.}
+
+\domanda{4}{Possono esistere macchine diverse con lo stesso linguaggio macchina?}{Certamente, infatti possiamo avere macchine astratte o fisiche che implementano o adattano ISA a seconda del linguaggio.}
+
+\domanda{5}{In quali modi e possibile implementare una macchina astratta? Elencare vantaggi e svantaggi delle varie tecniche.}{In 3 modi:
+\begin{enumerate}
+    \item A livello software: piu' lento ma il piu' flessibile
+    \item A livello firmware: abbastanza veloce, abbastanza flessibile
+    \item A livello hardware: piu' veloce ma meno flessibile
+\end{enumerate}
+Questo perche' ogni aumento di livello porta un overhead maggiore, quindi abbiamo un tradeoff fra performance e velocita' di implementazione da parte del programmatore.
+}
+\domanda{6}{Che cos'e un compilatore?}{Un compilatore e' un programma che traduce programma scritti in $\mathcal{L}$ in altri linguaggi in $\mathcal{L}_0$:
+\begin{align*}
+    C_{\mathcal{L}, \mathcal{L}_0} \, : \, P^{\mathcal{L}} \to P^{\mathcal{L}_0}
+\end{align*}}
+
+\domanda{7}{Relativamente alla tecnica d'implementazione software, descrivere la tecnica d'implementazione interpretativa pura e quella compilativa pura.}{Il compilatore e' un traduttore da un linguaggio $\mathcal{L}$ a un altro linguaggio $\mathcal{L}_0$, questo traduce da inizio a fine e ritorna un nuovo programma in $\mathcal{L}_0$. Mentre un interprete e' una macchina astratta dove esegue riga per riga alla volta una operazione.}
+
+\domanda{8}{Quando un interprete si puo dire corretto? Quando un compilatore si puo dire corretto?}{Un interprete o compilatore si puo' dire corretto quando l'output restituito dal programma/esecuzione combacia di relazione dominio $\Rightarrow$ codominio con quello nativo.}
+
+\domanda{9}{Confrontare l'implementazione di una macchina astratta su una macchina ospite per mezzo di un interprete o di un compilatore.}{Data una macchina fisica $M$ con linguaggio $\mathcal{L}$ possiamo eseguire programmi scritti in $\mathcal{L}_0$ grazie a un interprete o compilatore t.c.:
+\begin{align*}
+    & I_\mathcal{L_0}^\mathcal{L} \\
+    & C_{\mathcal{L}, \mathcal{L}_0}
+\end{align*}
+L'interpretazione esegue ogni istruzione di $\mathcal{L}_0$, istruzione per istruzione, sulla macchina astratta che gira in $M$. Mentre il compilatore traduce a priorio e poi se si vuole si esegue il nuovo programma tradotto da $\mathcal{L}_0$ in linguaggio nativo $\mathcal{L}$.}
+
+\domanda{10}{Come vengono implementate nella realta le macchine astratte? Che cos'e la macchina intermedia?}{In una macchina fisica per implementare il linguaggio $\mathcal{L}_0$ possiamo tradurlo prima in un IR/Bytecode $\mathcal{L}_1$ che verra' eseguito su una macchina astratta (intermediaria) fra $\mathcal{L}$ e $\mathcal{L}_0$:
+\begin{align*}
+    \mathcal{L}_0 \rightarrow \mathcal{L}_1 \rightarrow \mathcal{L}
+\end{align*}}
+
+\domanda{11}{Quando si dice che una implementazione e di tipo interpretativo e quando di tipo compilativo? Fare esempi di linguaggi la cui implementazione e di un tipo o dell'altro.}{E' interpretativo quando utilizziamo un interprete, mentre e' compilativo quando utilizziamo un compilatore. Per esempio python e' interpretativo, mentre C e' compilativo.}
+
+\domanda{12}{Cos'e la Just-in-Time compilation?}{E' una via di mezzo fra interpretazione e compilazione. Cerca di abbattere i costi di rallentamente dell'interpretazione avendo un codice compilato, pero' non dovendo compilare tutto a priori ma solo a chiamata quando serve in esecuzione.}
+
+\domanda{13}{L'interprete e il compilatore si possono sempre realizzare?}{Il compilatore puo' essere sempre realizzato anche perche' puo' girare su una macchina esterna rispetto a i linguaggi in input-output. Mentre l'interprete ha un costo di implmentazione maggiore, quindi non e' detto che sia supportato. Bisogna poi tenere conto anche del livello di espressionalita' dei linguaggi. Un linguaggio con potere maggiore non puo' essere convertito in uno di potere minore.}
+
+\domanda{14}{Che cosa e l'implementazione via kernel?}{Si divide il linguaggio $\mathcal{L}0$ in due parti:
+\begin{itemize}
+    \item Primitive: operazioni essenziali
+    \item Derivate: operazioni che poi vengono ridotti (tradotte) nelle primitive
+\end{itemize}
+Il vantaggio e' che dobbiamo implementare solo poche operazione, ovvero le primitive, il resto e' solo traduzione statica.}
+
+\domanda{15}{Quando si parla di bootstrapping?}{E' quando per implementare il linguaggio $\mathcal{L}$ scriviamo un compilatore o un interprete in $\mathcal{L}$.}
+
+% ----------------------------------------------------------------
+\subsection{Capitolo 2 -- Descrivere un linguaggio di programmazione}
+% ----------------------------------------------------------------
+
+\domanda{16}{Quali sono i livelli di descrizione di un linguaggio?}{
+\begin{enumerate}
+    \item Sintassi: parole (token)
+    \item Semantica: costruzione delle frasi (es. assegnazione tipo sbagliato)
+    \item Pragmatica: come lo implementiamo
+\end{enumerate}
+}
+
+\domanda{17}{Sintassi: qual e l'aspetto lessicale e quale quello grammaticale di un linguaggio?}{Il lessico sono le parole (token) consentite, mentre la grammatica e' l'ordine delle parole.}
+
+\domanda{18}{Cos'e un alfabeto? Cos'e una parola o stringa? Cos'e A*? Tale insieme e enumerabile?}{Un alfabeto $A$ e' un insieme finito di simboli non vuoti. Una parola (o stringa) e' una sequenza di lettere dell'alfabeto. Definiamo $A*$ l'insieme di tutte le parole finite (inclusa la vuota) di $A$:
+\begin{align*}
+    A* = \bigcup_{i\geq 0} A^i
+\end{align*}
+Se $A$ e' finito allora possiamo ordinare per lunghezza tutte le parole, ottenendo una sequenza numerabili di numeri naturali.}
+
+\domanda{19}{Definizione di potenza di una stringa. Definizione di potenza di un linguaggio. Definizione di chiusura/iterazione (o stella di Kleene) di un linguaggio.}{La $n$-esima potenza della stringa $w$ e' definita come:
+\begin{align*}
+    w^{n} = \begin{cases}
+        \epsilon & n = 0 \\
+        ww^{n-1} & n>0
+    \end{cases}
+\end{align*}
+Dato un alfabeto $A$ e $L$ l'insieme di stringhe (linguaggio), definiamo la stessa di Kleene:
+\begin{align*}
+    L* = \bigcup_{i \geq 0} L^i
+\end{align*}
+con
+\begin{itemize}
+    \item $L^0 = \{\epsilon\}$
+    \item $L^{n+1} = LL^n$
+\end{itemize}}
+
+\domanda{20}{Definizione di grammatica libera da contesto. Come si deriva una stringa? Qual e il linguaggio generato da una grammatica libera?}{
+Una CFG (PDA) e' una quadra 
+\begin{align*}
+    CFG = (V, T, P, S)
+\end{align*}
+\begin{itemize}
+    \item $V$: variabili (non terminali)
+    \item $T$: terminali
+    \item $P$: produzioni ($A \to a | b$)
+    \item $S$: simboli di start
+\end{itemize}
+Data una CFG deriviamo $w$ da $v$ se esiste una transizione riflessiva:
+\begin{align*}
+    v \to w_i \to w
+\end{align*}
+ovvero
+\begin{align*}
+    \dfrac{}{v \to^* w_i} \quad \dfrac{v \to^* w}{v \to^* w_i \, w_i \to w}
+\end{align*}
+Il linguaggio generato da una CFG è l'insieme di tutte le stringhe di terminali derivabili da $S$ (simboli di start)}
+
+\domanda{21}{Cos'e un albero di derivazione? Cos'e una derivazione canonica sinistra/destra? Esiste una corrispondenza biunivoca tra alberi di derivazioni e derivazioni canoniche?}{Un albero di derivazione e' una rappresentazione grafica di una derivazione in una CFG.\\
+Per calcolare l'albero di derivazione dobbiamo prima espandere i non terminali, quindi dobbiamo decidere se partire da destra o sinistra (sono le derivazioni canoniche). Quindi l'albero di derivazione e' equivalente alle espansioni canoniche (sono biunivoche).}
+
+\domanda{22}{Quando una grammatica e ambigua? (fare un esempio) Quando un linguaggio e ambiguo? (fare un esempio)}{Una grammatica e' ambigua quando data una stringa esistono più di un albero di derivazione \textbf{distinto}:
+\begin{align*}
+    E \to E+E | E*E | (E) | v
+\end{align*}
+ESEMPIO: \texttt{v+v*v}
+\begin{enumerate}
+    \item $(v+v)*v$\\
+    \begin{forest}
+[$E$
+  [$E$
+    [$v$]
+  ]
+  [$+$]
+  [$E$
+    [$E$
+      [$v$]
+    ]
+    [$*$]
+    [$E$
+      [$v$]
+    ]
+  ]
+]
+\end{forest}\\
+    \item $v+(v*v)$\\
+    \begin{forest}
+[$E$
+  [$E$
+    [$E$
+      [$v$]
+    ]
+    [$+$]
+    [$E$
+      [$v$]
+    ]
+  ]
+  [$*$]
+  [$E$
+    [$v$]
+  ]
+]
+\end{forest}\\ 
+\end{enumerate}
+Un linguaggio e' ambiguo quando possiamo formularlo con una grammatica ambigua.\\
+ESEMPIO: \texttt{$L$ = espressione su $v$.}
+}
+\domanda{23}{E possibile rimuovere l'ambiguita dalla grammatica delle espressioni aritmetiche? Come?}{Si e' possibile introducendo priorita' fra gli operatori aritmetici.
+\begin{align*}
+    & E \to E+T | T \\
+    & T \to T*F | F \\
+    & F \to (E) | v
+\end{align*}
+Ovvero essendo che il $*$ sta a un livello piu' profondo del $+$ allora ha una precedenza maggiore.
+}
+
+\domanda{24}{Cos'e l'albero di sintassi astratta? Che differenza c'e tra sintassi concreta e sintassi astratta? Cos'e lo zucchero sintattico?}{L'AST e' l'albero ripulito dai non terminali e terminali dell'albero di derivazione e anche dalla sintassi non essenziali. E' una rappresentazione logica della struttura essenziali del linguaggio di programmazione.\\
+\vspace{2px}\\
+ESEMPIO: \texttt{v+v*v}\\
+\begin{forest}
+[$+$
+  [$v$]
+  [$*$
+    [$v$]
+    [$v$]
+  ]
+]
+\end{forest}\\
+Lo zucchero sintatico sono tutti quei costrutti di un LP che servono a migliorare la leggibilita' del programma rispetto alla implementazione (es. i \texttt{for} sono sotto \texttt{while}).
+}
+
+\domanda{25}{Fare esempi di vincoli sintattici contestuali. Possono essere catturati attraverso grammatiche libere?}{I vincoli sintattici contestuali sono regole che non dipendono solo dalla forma della stringa, ma dal contesto in cui compaiono simboli o costrutti. (ovvero tipo uso di variabili non prima dichiarate). Queste non possono essere rilevate da CFG.}
+
+\domanda{26}{Cosa s'intende per semantica statica? E per semantica dinamica?}{La semantica statica copre tutti i controlli statici sul linguaggio (es. conflitto di tipi, var. non dichiarata), mentre la semantica dinamica escrive il comportamento del programma durante l’esecuzione (es. if-else, operazioni aritmetiche).}
+
+\domanda{27}{Elencare le varie fasi in cui si articola un compilatore. Descrivere in dettaglio ogni singola fase.}{
+    \begin{enumerate}
+        \item Lexer: genera il sorgente in una lista di token
+        \item Parser: Genera AST, verifica regole grammaticali (ordine parole)
+        \item Analisi semantica statica: controllo su conflitti di tipi, dichiarazione di variabili
+        \item Generazione IR
+        \item Ottimizzazione (facoltativa)
+        \item Generazione del codice per la archiettura
+    \end{enumerate}
+}
+
+\domanda{28}{A chi serve definire la semantica dinamica di un linguaggio e perche?}{La semantica dinamica è la base teorica dell’esecuzione degli interpreti o del derivato di un compilatore. Serve all'implmentatore/sviluppatore.}
+
+\domanda{29}{Quali tecniche si usano per dare semantica dinamica ad un linguaggio di programmazione?}{
+    \begin{enumerate}
+        \item Semantica operazionale: descrive l’esecuzione come una sequenza di passi su una macchina astratta
+        \item Semantica denotazionale: associa a ogni costrutto del linguaggio un oggetto matematico
+        \item Semantica assiomatica: descrive il comportamento tramite logica e predicati (Hoare logic) (tipo \texttt{precondizione} $\to$ \texttt{comando} $\to$ \texttt{postcondizione})
+    \end{enumerate}
+}
+
+\domanda{30}{Imparare le regole di semantica operazionale SOS per il semplice linguaggio presentato a lezione. Regole di valutazione: interna vs esterna, sinistra vs destra vs parallela.}{
+    La valutazione interna descrive ogni pasaggio intermedio, mentre la esterna solo il risultato finale.\\
+    La valutazione destra, sinistra servono per indicare la priorita' di valutazione in caso di due argomenti. Parallela invece li valuta contemporaneamente.
+}
+\begin{mdframed}[backgroundcolor=grigiochiarissimo,
+  linecolor=gray!50, linewidth=0.6pt,
+  innertopmargin=6pt, innerbottommargin=12pt,
+  innerleftmargin=8pt, innerrightmargin=8pt]
+
+\begin{mathpar}
+
+\inferrule*[right=Var]{}
+  {\langle V, \sigma \rangle \to_e \langle \underbrace{\sigma(V), \sigma \rangle}_\text{stato terminale}}
+\;\\
+
+\inferrule*[right=Sum1]
+  {\langle e_0, \sigma \rangle \to_e \langle e_0', \sigma' \rangle}
+  {\langle e_0 + e_1, \sigma \rangle \to_e \langle e_0' + e_1, \sigma' \rangle}
+
+\inferrule*[right=Sum2]
+  {\langle e_1, \sigma \rangle \to_e \langle e_1', \sigma' \rangle}
+  {\langle m + e_1, \sigma \rangle \to_e \langle m + e_1', \sigma' \rangle}
+
+\inferrule*[right=Sum3]{ }
+  {\langle m + m', \sigma \rangle \to_e \langle P, \sigma \rangle}
+\;\text{se } P = m + m'
+\\
+\inferrule*[right=Sub1]
+  {\langle e_0, \sigma \rangle \to_e \langle e_0', \sigma' \rangle}
+  {\langle e_0 - e_1, \sigma \rangle \to_e \langle e_0' - e_1, \sigma' \rangle}
+
+\inferrule*[right=Sub2]
+  {\langle e_1, \sigma \rangle \to_e \langle e_1', \sigma' \rangle}
+  {\langle m - e_1, \sigma \rangle \to_e \langle m - e_1', \sigma' \rangle}
+
+\inferrule*[right=Sub3]{ }
+  {\langle m - m', \sigma \rangle \to_e \langle P, \sigma \rangle}
+\;\text{se } m \ge m' \text{ e } P = m - m'
+
+\end{mathpar}
+
+\end{mdframed}
+
+\domanda{31}{Cosa s'intende per pragmatica? Cosa si intende per implementazione di un linguaggio?}{Per pragmatica di un linguaggio si intende l’insieme degli aspetti legati all’uso del linguaggio da parte del programmatore e agli effetti concreti dell’esecuzione dei programmi, cioè come il linguaggio si comporta nella pratica (efficienza, gestione della memoria, effetti collaterali, modello di esecuzione, ecc.). \\
+Con implementazione intendiamo la realizzazione concreta del linguaggio attraverso un interprete o compilatore.}
+
+% ----------------------------------------------------------------
+\subsection{Capitolo 3 -- Analisi lessicale, linguaggi regolari}
+% ----------------------------------------------------------------
+
+\domanda{32}{Cosa fa l'analizzatore lessicale?}{Il lexer prende il sorgente e restituisce una lista di token (identificatori, numeri, operazioni, ecc)}
+
+\domanda{33}{Cos'e un token?}{Un token e' un identificatore che il programmatore del compilatore ha definito per specificare che quella parola (stringa) sia di quella tipologia.}
+
+\domanda{34}{Cos'e un pattern? Come lo si rappresenta? Cos'e un lessema?}{Un pattern è una descrizione formale che specifica quali stringhe appartengono a una certa categoria lessicale.
+\begin{itemize}
+    \item Regex
+    \item NFA-DFA
+\end{itemize}
+L'output del lexer e' una lista di tuple (token, lessemma)}
+
+\domanda{35}{Definizione di espressioni regolari (sintassi) e di linguaggio associato (semantica).}{Dato alfabeto $A$ con lettere $a_i \in A$ definiamo espressioni regolari:
+\begin{align*}
+    E \to \emptyset \,|\, \epsilon \,|\, a_i \,|\, r \cdot r \,|\, E \texttt{ or } E \,|\, E*
+\end{align*}
+Definiamo linguaggio regolare:
+\begin{itemize}
+    \item $L[\emptyset] = \emptyset$
+    \item $L[\epsilon] = \{\epsilon\}$
+    \item $L[a_i] = \{a_i\}$, per ogni simbolo $a_i \in A$ 
+    \item $L[E_1 \cdot E_2] = \{xy \mid x \in L[E_1],\, y \in L[E_2]\}$ (concatenazione)
+    \item $L[E_1 \,|\, E_2] = L[E_1] \cup L[E_2]$ (unione / or)
+    \item $L[E^*] = \bigcup_{n \ge 0} L[E]^n$ (stella di Kleene)
+\end{itemize}
+}
+
+\domanda{36}{Quali sono i linguaggi regolari? I linguaggi finiti sono tutti regolari? Esistono linguaggi infiniti regolari?}{I linguaggi regolari sono una classe dei linguaggi formali. Sono descritti da:
+\begin{itemize}
+    \item Espressioni regolari
+    \item Automi a stati finiti (DFA-NFA)
+    \item CFG
+\end{itemize}
+I linguaggi finiti sono tutti regolari, infatti essendo finiti possiamo definire una espressione regolare ad-hoc:
+\begin{align*}
+    L={a, bb, ccc} \Rightarrow a \, | \, bb \, | \, ccc
+\end{align*}
+Esistono pero' linguaggi infiniti (solo alcuni non tutti!) che sono regolari:
+\begin{align*}
+    L = \{\epsilon, a, aa, aaa, \dots\} \Rightarrow aA \,|\, \epsilon
+\end{align*}
+}
+
+\domanda{37}{Definizione di equivalenza tra espressioni regolari. Elencare alcune leggi di equivalenza.}{Una definizione regolare su alfabeto A è costituita da una lista di definizioni regolari
+\begin{align*}
+    & d_1 := E_1\\
+    & \vdots \\
+    & d_n := E_n
+\end{align*}
+definiamo $d_i$ simboli nuovi da utilizzare per ampliare l'alfabeto ($A \cup {d_i}$).\\
+ESEMPIO: 
+\begin{align*}
+    & identifier := \texttt{letter} \, (\texttt{letter}|\texttt{digit})^*\\
+    & letter := [a-zA-Z]\\
+    & digit := [0-9]
+\end{align*}
+Dato $E_1$ e $E_2$ come espressioni regolari, definiamo equivialenti $L_1$ e $L_2$ se 
+\begin{align*}
+    L_1[E_1] = L_2[E_2]
+\end{align*}
+} 
+
+\domanda{38}{Cos'e una definizione regolare e a cosa serve?}{E' una lista di espressioni regolari, e servono per ampliare l'alfabeto di un linguaggio attraverso lettere + espressioni.}
+
+\domanda{39}{Definizione di NFA (automa finito nondeterministico). Discutere cosa si intende per nondeterminismo. Mettere in relazione la definizione formale con la rappresentazione grafica come diagramma di transizioni.}{Un NFA e' una quintupla $\{\Sigma, Q, \delta, q_0, F\}$ dove:
+\begin{itemize}
+    \item $\Sigma$: input
+    \item $Q$: stati totali
+    \item $\delta$: funzione di transizione
+    \item $q_0 \subseteq Q$: stati iniziali
+    \item $F \subseteq Q$: stati finali
+\end{itemize}
+Con nondeterminismo si intende quando esiste almeno uno stato $q$, che ha input $a$ t.c.
+\begin{align*}
+    \delta(q, a) = q'\\
+    \delta(q, a) = q''
+\end{align*}
+Ovvero se esiste almeno uno stato che puo' prendere due alternative possibili ($|\delta(q,a)\geq 1|$).\\
+\vspace{1px}\\
+Possiamo disegnare un NFA come un grafo nel quale:
+\begin{itemize}
+    \item Lo stato iniziale e' $q_0$ 
+    \item Ogni stato $q \in Q$ corrisponde a un nodo (cerchio) del grafo.
+    \item Gli stati finali $F$ sono rappresentati con doppio cerchio.
+    \item Ogni transizione $q' \in \delta(q,a)$ è rappresentata da un arco (freccia) orientato da $q$ a $q'$ etichettato con il simbolo $a$.
+\end{itemize}}
+
+\domanda{40}{Come si definisce il linguaggio accettato da un NFA? Definizione di equivalenza tra NFA.}{Il linguaggio accettato per stato finali di un NFA si definisce come l'insieme generato dallo stato $q_0$ + i valori consumati dalle transazioni $\delta$ fino ad arrivare a stati finali in $F$.\\
+Due NFA sono equivalenti quando i loro linguaggi accettati e rifuitati combaciano.}
+
+\domanda{41}{Definizione di DFA (automa finito deterministico). Discutere cosa si intende per determinismo. Mostrare che un DFA e un caso speciale di NFA, ovvero la classe dei DFA e un sottoinsieme della classe degli NFA.}{Un DFA e' una quintupla $\{\Sigma, Q, \delta, q_0, F\}$ dove:
+\begin{itemize}
+    \item $\Sigma$: input
+    \item $Q$: stati totali
+    \item $\delta$: funzione di transizione
+    \item $q_0 \subseteq Q$: stati iniziali
+    \item $F \subseteq Q$: stati finali
+\end{itemize}
+Ma la cardinalita' di tutte le transizioni e' 1, $|\delta(q, a)|=1$.\\
+Per determinismo definiamo che ad ogni stato non possiamo scegliere fra alternative ma abbiamo una strada singola.\\
+}
+
+\domanda{42}{Dato un NFA, come si ricava un equivalente DFA? Descrivere la costruzione per sottoinsiemi. Definizione di epsilon-closure e algoritmo associato. Qual e la complessita della costruzione per sottoinsiemi nel caso pessimo?}{Per dimostrare che DFA $\subset$ NFA, dobbiamo utilizzare la $\epsilon-closure$.}
+\begin{mdframed}[backgroundcolor=grigiochiarissimo,
+  linecolor=gray!50, linewidth=0.6pt,
+  innertopmargin=6pt, innerbottommargin=12pt,
+  innerleftmargin=8pt, innerrightmargin=8pt]
+
+\begin{tikzpicture}[>=stealth,node distance=3cm,auto]
+  % Stati
+  \node[state,initial] (q0) {$q_0$};
+  \node[state,right=of q0] (q1) {$q_1$};
+  \node[state,accepting,right=of q1] (q2) {$q_2$};
+
+  % Loop su q0
+  \path[->]
+    (q0) edge[loop above] node {$a,b$} (q0)
+    % Transizione q0 --b--> q1
+    (q0) edge[bend left] node {$b$} (q1)
+    % Transizione q1 --a--> q2
+    (q1) edge[bend left] node {$a$} (q2);
+\end{tikzpicture}\\
+\textit{Ora calcoliamo i nuovi stati grazie alla funzione di transizione  $\triangle$ del DFA:}\\
+\begin{itemize}
+    \item $A=\epsilon$-closure(0): \{0\}
+    \item $\triangle(A,a)=\{\epsilon$-closure$(\underbrace{\text{mossa}(A,a)}_\text{esclusa partenza})\}=\epsilon$-closure$(\{0\})=\{0\}$
+    \item $\triangle(A,b)=\epsilon$-closure$(\{0,1\})=\{0,1\} = B$
+    \item $\triangle(B,a)=\epsilon$-closure$(\{0,2\})=\{0,2\}=C$
+    \item $\triangle(B,b)=\epsilon$-closure$(\{0,1\})=\{0,1\}=B$
+    \item $\triangle(C,a)=\epsilon$-closure$(\{0\})=\{0\}=A$
+    \item $\triangle(C,b)\epsilon$-closure$(\{0,1\})=\{0,1\}=B$
+\end{itemize}
+\begin{tikzpicture}[>=stealth,node distance=3cm,auto]
+
+  % Stati
+  \node[state,initial] (A) {$A$};
+  \node[state,right=of A] (B) {$B$};
+  \node[state,accepting,below=of B] (C) {$C$};
+
+  % Transizioni
+  \path[->]
+    (A) edge[loop above] node {$a$} (A)
+    (A) edge[bend left] node {$b$} (B)
+
+    (B) edge[loop above] node {$b$} (B)
+    (B) edge[bend left] node {$a$} (C)
+
+    (C) edge[bend left] node {$a$} (A)
+    (C) edge[bend left] node {$b$} (B);
+
+\end{tikzpicture}\\
+\textit{DFA ottenuto per costruzione per sottoinsiemi.\\
+\vspace{1px}\\
+La $\epsilon$-closure di $q$ e' l'insieme degli stati raggiungibile da $q$ solo con mosse $\epsilon$.\\
+Se con un NFA ha cardinalita $n$ allora il suo DFA nel caso peggiore ha $2^n$ di cardinalita'.}
+\end{mdframed}
+\domanda{43}{Enunciare il teorema che dice che la classe dei linguaggi riconosciuti da NFA coincide con la classe dei linguaggi riconosciuti da DFA.}{Teorema: Sia $N=(\Sigma, Q, \delta, q_0, F)$ un NFA e sia $M_N$ l'automa ottenuto per sottoinsiemi. Allora $M_N$ e' un DFA e si ha che:
+\begin{align}
+    L[N]=L[M_N]
+\end{align}}
+
+\domanda{44}{Come si costruisce un NFA a partire da una espressione regolare, in modo tale che il linguaggio riconosciuto dall'NFA sia lo stesso del linguaggio associato all'espressione regolare?}{Dato $S=(a|b)^*ba$ \\
+Partiamo dalla radice (bottom-up):}
+\begin{mdframed}[backgroundcolor=grigiochiarissimo,
+  linecolor=gray!50, linewidth=0.6pt,
+  innertopmargin=6pt, innerbottommargin=12pt,
+  innerleftmargin=8pt, innerrightmargin=8pt]
+N[a]\\
+  \begin{tikzpicture}[>=stealth,node distance=2cm,auto]
+  \node[state,initial] (s0) {};
+  \node[state,accepting,right=of s0] (s1) {};
+  \path[->] (s0) edge node {$a$} (s1);
+\end{tikzpicture}\\
+N[b]\\
+\begin{tikzpicture}[>=stealth,node distance=2cm,auto]
+  \node[state,initial] (s0) {};
+  \node[state,accepting,right=of s0] (s1) {};
+  \path[->] (s0) edge node {$b$} (s1);
+\end{tikzpicture}\\
+N[a|b]\\
+\begin{tikzpicture}[>=stealth,node distance=1.8cm,auto]
+
+  % Stati
+  \node[state,initial] (s0) {};
+  \node[state,above right=0.8cm and 1.8cm of s0] (s1a) {};
+  \node[state,below right=0.8cm and 1.8cm of s0] (s1b) {};
+  \node[state,right=of s1a] (s2a) {};
+  \node[state,right=of s1b] (s2b) {};
+  \node[state,accepting,right=5.8cm of s0] (sf) {};
+
+  % Transizioni
+  \path[->]
+    (s0) edge node[above] {$\varepsilon$} (s1a)
+    (s0) edge node[below] {$\varepsilon$} (s1b)
+
+    (s1a) edge node {$a$} (s2a)
+    (s1b) edge node {$b$} (s2b)
+
+    (s2a) edge node[above] {$\varepsilon$} (sf)
+    (s2b) edge node[below] {$\varepsilon$} (sf);
+
+\end{tikzpicture}\\
+\begin{figure}[H]
+  \centering
+  \includegraphics[height=10cm]{img/NFA.png}
+\end{figure}
+
+
+
+\end{mdframed}
+
+\domanda{45}{Definizione di grammatica regolare.}{La dice grammatica $G$ e' regolare sse e' generata da un linguaggio regolare.\\
+ESEMPIO:\\
+\begin{align*}
+    G := & \begin{cases}
+        A \to aB \,|\, \epsilon \\
+        B \to bA \,|\, \epsilon
+    \end{cases}\\
+    G := & A \to abA \,|\, a \,|\, \epsilon\\
+    G := & (ab)^*(a|\epsilon)
+\end{align*}}
+
+\domanda{46}{Come si associa ad una grammatica regolare un equivalente NFA?}{
+    \begin{center}
+        NFA $\Rightarrow$ DFA $\Rightarrow$ Grammatica regolare
+    \end{center}
+}
+
+\domanda{47}{Dato un DFA, come si costruisce una grammatica regolare equivalente?}{I nodi saranno i terminali, mentre gli archi i non terminali.}
+
+\begin{mdframed}[backgroundcolor=grigiochiarissimo,
+  linecolor=gray!50, linewidth=0.6pt,
+  innertopmargin=6pt, innerbottommargin=12pt,
+  innerleftmargin=8pt, innerrightmargin=8pt]
+\begin{tikzpicture}[>=stealth,node distance=3cm,auto]
+
+  % Stati
+  \node[state,initial] (A) {$A$};
+  \node[state,right=of A] (B) {$B$};
+  \node[state,accepting,below=of B] (C) {$C$};
+
+  % Transizioni
+  \path[->]
+    (A) edge[loop above] node {$a$} (A)
+    (A) edge[bend left] node {$b$} (B)
+
+    (B) edge[loop above] node {$b$} (B)
+    (B) edge[bend left] node {$a$} (C)
+
+    (C) edge[bend left] node {$a$} (A)
+    (C) edge[bend left] node {$b$} (B);
+
+\end{tikzpicture}\\
+$     S \to A \\
+     A \to aA \,|\, bB \\
+     B \to aC \,|\, bB \\
+     C \to aA \,|\, bB \,|\, \epsilon$
+\end{mdframed}
+\domanda{48}{Data una grammatica regolare, come si costruisce un'espressione regolare equivalente?}{Semplifichiamo la grammatica rimuovendo i simboli inutili\\
+$ A \to aA \,|\, \epsilon \,|\, bc\\
+C \to bC \,|\, \epsilon \,|\, aD \\
+D \to aD \,|\, bD$ (questa non finisce mai)\\
+diventa\\
+$A \to aA \,|\, \epsilon \,|\, bC\\
+C \to bC \,|\, \epsilon 
+$\\
+Ora ricaviamo l'espressione regolare associata:\\
+$
+C = b^*\\
+A = a^*b^*$
+}
+
+\domanda{49}{Descrivere, con un diagramma riassuntivo, tutte le relazioni fra i formalismi introdotti: NFA, DFA, grammatiche regolari, espressioni regolari.}{
+\begin{center}
+\begin{tabular}{c c}
+Grammatiche regolari $\Rightarrow$ NFA \\
+$\Uparrow \hspace{4cm} \Downarrow$ \\
+Espressioni regolari $\Leftarrow$ DFA \\
+\end{tabular}
+\end{center}
+}
+
+\domanda{50}{Definizione di stati equivalenti in un DFA. Quando due stati di un DFA sono distinguibili?}{Due stati sono equivalenti quando per ogni stringa $w \in \{\Sigma +\epsilon\}$:
+\begin{align*}
+  &\delta^*(q_0, w) \in F \iff \delta^*(q_1), w \in F\\
+  & L[DFA, q_0] = L{DFA, q_1}
+\end{align*}
+Nota che $\delta^*$ e' la funzione di transizione completa su tutta la stringa.\\
+\vspace{1px}\\
+Due stati sono distinguibili quando:
+\begin{align*}
+  \delta^*(q,0, w) \in F \text{ e } \delta^*(q_1, w) \notin F
+\end{align*}}
+
+\domanda{51}{Come funziona l'algoritmo iterativo con tabella a scala per produrre le classi di equivalenza di stati di un DFA?}{Dato un DFA con $q_0, \dots, q_i$ stati e $q_i$ stato terminale, costruiamo la tabella a scala:
+\begin{enumerate}
+  \item Le $x$ sara' numerato da $0$ a $i-1$
+  \item Le $y$ sara' numerato da $i$ a $1$
+  \item Flag su l'incrocio fra tutti gli elementi con gli stati terminali
+  \item Controlliamo per ogni cella , ip. $q_k$ $q_m$, ogni movimento per ogni lettera, se otteniamo anche solo una nuova coppia che e' flaggata allora flaggiamo anche qua
+  \item Se abbiamo delle coppie di stati non flaggate allora sono equivalenti
+  \item Costruiamo un nuovo grafo unendo le coppie equivalenti
+  \item Ricontroliamo
+\end{enumerate}}
+
+\domanda{52}{Una volta determinate le classi di equivalenza degli stati di un DFA, come si costruisce l'automa minimo associato?}{
+  \begin{enumerate}
+    \item Date le coppie di stati di equivalenza
+    \item Costriamo un nuovo grafo unendo le coppie identica fra le loro relazioni
+    \item Ricostruiamo un nuovo DFA
+    \item Controlliamo se questo sia minimo
+  \end{enumerate}
+Ora abbiamo un DFA minimo!
+}
+
+\domanda{53}{Cos'e Lex? Qual e il suo input e il suo output?}{Lex e' un generatore di Lexer:
+\begin{itemize}
+  \item Input: file \texttt{.l} nel quale specifichiamo le definizioni regolare
+  \item Output: file \texttt{.c} che realizza l'automa riconoscitore
+\end{itemize}}
+
+\domanda{54}{Qual e la struttura di un file .l? Come funziona l'analizzatore lessicale prodotto da Lex?}{E' diviso in 3 parti:
+\begin{enumerate}
+  \item Dichiarazioni (definizioni regolari)
+  \item Regole (pattern $\Rightarrow$ C code)
+  \item Funzioni ausiliarie
+\end{enumerate}
+L'automa in C implementa il DFA riconoscitore delle espressioni regolari e restituisce <TOKEN, lessemma>.}
+
+\domanda{55}{Come si interfaccia Lex con Yacc?}{Yacc chiama Lex attraverso una funzione \texttt{yylex()}, lex ritorna la tuple <TOKEN, lessemma> e YACC e' un generatore di parser (analizzatore sintattico).}
+
+\domanda{56}{Intestazione e dimostrazione del pumping lemma.}{Se $L$ e' un linguaggio regolare allora $\exists N\geq 1$ t.c. per ogni stringa accettata in $L$ ($uvw \in L$) e' $|uvw|\geq N$: 
+\begin{itemize}
+  \item $|uv| \leq N$
+  \item $v \geq 1$
+  \item $\forall k \geq 0 \quad uv^kw \in L$
+\end{itemize}
+\texttt{DIMOSTRAZIONE}: Sia $DFA=(\Sigma, Q, \delta, q_0, F)$ che genera $L$:
+\begin{align}
+  & |DFA| = N
+\end{align}
+Consideriamo una stringa $|uvw|\geq N$, durante la lettura delle prime $N$ lettere siamo passati da $N+1$ stati (anche iniziale), ed essendo un DFA per definione abbiamo solo $N$ stati. Quindi in uno stato ci siamo passati piu' volte.\\
+Chiamiamo $q_i$ lo stato passato piu' volte, definiamo che
+\begin{itemize}
+  \item $x$ e' la parte di string fino a $q_i$
+  \item $v$ e' la parte di loop 
+  \item $w$ e' la parte post $q_i$
+\end{itemize}
+Ovvero che allo stato $q_i$ se leggiamo certi caratteri (quelli dentro $v$) otteniamo 
+\begin{align*}
+  \delta^*(q_i, v) = q_i
+\end{align*}
+la lunghezza di $v$ non importa tanto e' un loop che consuma tutti i caratteri compatibili con il loop, ovvero
+\begin{align*}
+  uv^kw \in L \quad \forall k \geq 0
+\end{align*}}
+
+\domanda{57}{Come si puo utilizzare il pumping lemma (a rovescio) per dimostrare che un linguaggio non e regolare?}{ 
+Dimostriamo che $L=\{a^nb^n | n \geq 1\}$ non sia regolare.\\
+\vspace{1px}\\
+Assumiamo per assurdo che $L$ sia regolare, allora vale il pumping lemma che ci dice:
+\begin{itemize}
+  \item Fissata una lunghezza $N \geq 1$
+  \item Data la stringa $uvw \in L$ e $|uvw| \geq N$: \begin{enumerate}
+    \item $|uv| \leq N$
+    \item $|v| \geq 1$
+    \item $\forall k \geq 0 \quad uv^kw \in L$
+  \end{enumerate}
+  La nostra stringa e' $a^Nb^N$, quindi $uv=a^N$ e $w=b^N$.\\
+  Scomponiamo $uv=a^N$ in $u=a^m$ e $v=a^{N-m}$ ($m<N$), pero' per n.3 sappiamo che 
+  \begin{align*}
+    & uv^kw \in L\\
+    \Rightarrow & a^m a^{k(N-m)}b^N \in L \quad \forall m<N \quad \forall k \geq 0 \\
+    \Rightarrow & a^m a^{kN-km} b^N
+  \end{align*}
+  Ipotizziamo $N=2$, $k=2$:
+  \begin{align*}
+    \Rightarrow & a^m a^{4-2m} b^2
+  \end{align*}
+  Ipotizziamo $m=1$
+  \begin{align*}
+    \Rightarrow & a^1 a^2 b^2 \\
+    \Rightarrow & aaabb \notin L
+  \end{align*}
+  $\to$ assurdo! Quindi $L$ non e' regolare.\\
+\end{itemize}}
+
+\domanda{58}{Quali sono le proprieta di chiusura dei linguaggi regolari? Quali proprieta si possono decidere (ovvero verificare algoritmicamente)?}{La classe regolare e' chiusa per tutto, ovvero unione, intersezione, concatenazione, Kleene, complemento.}
+
+% ----------------------------------------------------------------
+\subsection{Capitolo 4 -- Analisi sintattica, linguaggi liberi}
+% ----------------------------------------------------------------
+
+\domanda{59}{Cosa si intende per analisi sintattica? Cos'e un parser?}{L'analisi sintattica e' la fase del compilatore dove data una lista di token si controlla che rispetti la grammatica del linguaggio (ordine dei token). Il parser e' il componente che esegue l'analisi sintattica e restituisce AST.}
+
+\domanda{60}{Definizione di automa a pila nondeterministico (PDA). Definizione di configurazione (o descrizione istantanea), mossa in un passo e mossa in piu passi.}{Un PDA (automa a pila non-deterministico) e' una 7-pla $(\Sigma, Q, \Gamma, \delta, q_0, \bot, F)$ dove:
+\begin{itemize}
+  \item $\Sigma$: input
+  \item $Q$: stati totali
+  \item $\Gamma$: insieme simboli pila
+  \item $\delta$: funzione di transizione
+  \item $q_0$: stato iniziale
+  \item $\bot \in \Gamma$: simbolo iniziale sulla pila
+  \item $F$: stato finale
+\end{itemize}}
+
+\domanda{61}{Definizione di linguaggio accettato da un PDA per stato finale o per pila vuota. Sono equivalenti queste due modalita di riconoscimento?}{Due modalita' di riconoscimento:
+\begin{itemize}
+  \item Stato finale:
+  \begin{align*}
+    \{w \in \Sigma^* | (q_0, w, \bot) \vdash^*_N (q_f, \epsilon, \gamma \quad q_f \in F)\}
+  \end{align*}
+  \item Pila vuota:
+   \begin{align*}
+    \{w \in \Sigma^* | (q_0, w, \bot)\vdash^*_N (q, \epsilon, \epsilon)\} 
+  \end{align*}
+\end{itemize}
+\begin{itemize}
+  \item $q_0$ stato iniziale
+  \item $w$ stringa ancora non letta
+  \item $\bot$ pila vuota
+  \item $q_f$ stato finale
+  \item $\epsilon$ lettera terminale
+  \item $\gamma$ contenuto pila (completa)
+\end{itemize}
+Le due modalita' sono equivalenti per un teorema.}
+
+\domanda{62}{Mostrare come data una grammatica libera G sia possibile costruire un PDA P equivalente. E possibile costruire, dato un PDA P, una grammatica equivalente G? Concludere che la classe dei linguaggi liberi coincide con la classe dei linguaggi riconosciuti da PDA.}{}
+
+\domanda{63}{Quali sono le proprieta di chiusura dei linguaggi liberi? L'intersezione di un linguaggio libero con un regolare e un linguaggio libero?}{}
+
+\domanda{64}{Intestazione e dimostrazione del Pumping Theorem per i linguaggi liberi.}{}
+
+\domanda{65}{Come si puo utilizzare tale teorema (a rovescio) per dimostrare che un linguaggio non e libero?}{}
+
+\domanda{66}{Classificazione di Chomsky delle grammatiche e dei linguaggi. Definizione di grammatica dipendente dal contesto e di grammatica monotona. Quale tipo di automi corrisponde ad ogni classe?}{}
+
+\domanda{67}{Definizione di DPDA (automa a pila deterministico) e di linguaggio libero deterministico.}{}
+
+\domanda{68}{La classe dei linguaggi liberi deterministici e strettamente inclusa in quella dei linguaggi liberi? Contiene strettamente la classe dei linguaggi regolari?}{}
+
+\domanda{69}{Che cosa dice la prefix property e perche e interessante per i DPDA?}{}
+
+\domanda{70}{Usando un endmarker \$, si puo riconoscere un linguaggio libero deterministico che non gode della prefix property anche per pila vuota? Come?}{}
+
+\domanda{71}{Un linguaggio libero deterministico e ambiguo?}{}
+
+\domanda{72}{Proprieta di chiusura dei linguaggi liberi deterministici: chiusi per complementazione, ma non per intersezione ne per unione.}{}
+
+\domanda{73}{Da cosa si parte per costruire un analizzatore sintattico (ovvero parser)? Da una espressione regolare? Da una grammatica libera? Da un PDA?}{}
+
+\domanda{74}{Cosa prende in input e cosa produce in output un parser?}{}
+
+\domanda{75}{Che differenza c'e tra un parser nondeterministico ed uno deterministico?}{}
+
+\domanda{76}{Quali sono le due tecniche essenziali per costruire parsers?}{}
+
+\domanda{77}{Le tecniche top-down e bottom-up in che cosa differiscono?}{}
+
+\domanda{78}{Quali tipi di grammatiche non sono adatte al top-down parsing? Quali tipi di produzioni sono poco adatte al bottom-up parsing?}{}
+
+\domanda{79}{Cosa sono le produzioni epsilon e cosa sono i simboli non-terminali annullabili?}{}
+
+\domanda{80}{Come si puo trasformare una grammatica G che contiene produzioni epsilon in una grammatica G' che non ne contiene, preservando il linguaggio a meno di epsilon?}{}
+
+\domanda{81}{Cosa sono le produzioni unitarie e cosa sono le coppie unitarie?}{}
+
+\domanda{82}{Come si puo trasformare una grammatica G che contiene produzioni unitarie in una equivalente G' che non ne contiene?}{}
+
+\domanda{83}{Data una grammatica G, quali sono i suoi simboli utili? Quali sono i suoi simboli generatori? Quali i suoi simboli raggiungibili?}{}
+
+\domanda{84}{Come si calcolano i generatori? Come si calcolano i raggiungibili?}{}
+
+\domanda{85}{In che modo si eliminano i simboli inutili di una grammatica? E importante l'ordine delle operazioni da svolgere?}{}
+
+\domanda{86}{Quando si dice che una grammatica e ricorsiva sinistra? Come si elimina la ricorsione sinistra immediata? E quella non immediata? Perche serve eliminare la ricorsione sinistra?}{}
+
+\domanda{87}{Cosa vuol dire fattorizzare a sinistra una grammatica? Perche serve fattorizzare?}{}
+
+\domanda{88}{Cos'e un parser a discesa ricorsiva?}{}
+
+\domanda{89}{Definizione di First(a) e di Follow(A).}{}
+
+\domanda{90}{Algoritmi per calcolare First(a) e Follow(A).}{}
+
+\domanda{91}{Come e fatta e come si riempie una tabella di parsing LL(1)?}{}
+
+\domanda{92}{Quando una grammatica G si dice di classe LL(1)? Quali sono le condizioni necessarie e sufficienti per G affinche sia di classe LL(1)?}{}
+
+\domanda{93}{Perche un parser di questo tipo e chiamato LL?}{}
+
+\domanda{94}{Come funziona il parser LL(1) con una pila?}{}
+
+\domanda{95}{E vero che ogni linguaggio regolare e pure LL(1)?}{}
+
+\domanda{96}{Come sono definiti First$_k$(a) e Follow$_k$(A) per $k \geq 2$?}{}
+
+\domanda{97}{Come si definisce una grammatica LL(k)? Ed un linguaggio LL(k)? Come si relazionano tra di loro?}{}
+
+\domanda{98}{Che relazione esiste tra grammatiche LL(k) e grammatiche ambigue? E con le grammatiche ricorsive sinistre?}{}
+
+\domanda{99}{Esistono linguaggi liberi che non sono LL(k) per nessun k? Ed esistono linguaggi liberi deterministici che non sono LL(k) per nessun k?}{}
+
+\domanda{100}{Cos'e un parser bottom-up (o shift-reduce)? Qual e il suo input e il suo output? Perche sono chiamati parser LR?}{}
+
+\domanda{101}{Che tipo di conflitti si possono presentare in un parser del genere? Quando si presenta un conflitto (shift/reduce o reduce/reduce), quale azione bisogna scegliere?}{}
+
+\domanda{102}{Cos'e un prefisso viabile? Come lo si definisce in termini di una grammatica?}{}
+
+\domanda{103}{Cos'e un item LR(0)? Come si generano tutti gli item di una grammatica (aumentata con un simbolo iniziale nuovo S')?}{}
+
+\domanda{104}{Come e fatto il NFA dei prefissi viabili? Come si ricava il DFA dei prefissi viabili, detto anche automa canonico LR(0)?}{}
+
+\domanda{105}{Come e fatta una tabella di parsing LR(0)? Come la si riempie a partire dall'automa canonico LR(0)? Quando una grammatica e di classe LR(0)?}{}
+
+\domanda{106}{Come e fatto il parser LR(0) che utilizza la tabella di parsing LR(0)? Quanti stack servono?}{}
+
+\domanda{107}{Esistono grammatiche non LR(0)? Fare un esempio semplice.}{}
+
+\domanda{108}{Come e fatta e come si riempie una tabella di parsing SLR(1)? Cosa vuol dire l'acronimo SLR? Perche si mette 1 come parametro?}{}
+
+\domanda{109}{Quando una grammatica e di classe SLR(1)? Esistono grammatiche non di classe SLR(1)?}{}
+
+\domanda{110}{Cos'e un item LR(1)? Come si costruisce il NFA LR(1)? E come l'automa canonico LR(1)?}{}
+
+\domanda{111}{Come e fatta e come si riempie una tabella di parsing LR(1)?}{}
+
+\domanda{112}{Come e fatta una tabella di parsing LALR(1)? Quando una grammatica e di classe LALR(1)?}{}
+
+\domanda{113}{Esistono grammatiche LALR(1) che non sono SLR(1)? Esistono grammatiche LR(1) che non sono LALR(1)? Mostrare una grammatica che e LR(1) ma non LALR(1).}{}
+
+\domanda{114}{Come si puo generalizzare l'idea per ogni $k \geq 2$? Ovvero quando una grammatica e di classe LR(k), SLR(k) o LALR(k)?}{}
+
+\domanda{115}{Come si relazionano le grammatiche della famiglia LR (LR, SLR, LALR) al variare di k? Come si relazionano le grammatiche LR(k) e LL(k) al variare di k? Le grammatiche LR(k) e LL(k) sono sempre non ambigue? Esistono grammatiche che non sono LR(k) per nessun k?}{}
+
+\domanda{116}{Come si relazionano i linguaggi della famiglia LR(k) rispetto a quelli LL(k)? Esistono linguaggi liberi deterministici che non sono LR(k) per qualche k? Esistono linguaggi liberi deterministici che non sono LL(k) per qualche k?}{}
+
+\domanda{117}{Esiste un linguaggio regolare che non e LR(0)? Come si relazionano i linguaggi LR(0) rispetto a quelli LL(1)? La prefix property e una condizione necessaria e sufficiente affinche un linguaggio sia di classe LR(0)?}{}
+
+\domanda{118}{La classe dei linguaggi SLR(1) coincide con la classe dei linguaggi liberi deterministici?}{}
+
+\domanda{119}{Cos'e YACC? Qual e il suo input e il suo output? Come si ottiene un parser eseguibile a partire da un file .y? Come agisce il parser generato da YACC in sintonia con lo scanner generato da Lex?}{}
+
+\domanda{120}{Come e la struttura di un file .y di YACC? Cosa sono le regole? Cos'e l'azione semantica?}{}
+
+\domanda{121}{E possibile gestire grammatiche ambigue con YACC, specificando le associativita e le priorita fra gli operatori per risolvere l'ambiguita? Come si comporta YACC in presenza di conflitti?}{}
+
+% ----------------------------------------------------------------
+\subsection{Capitolo 5 -- Fondamenti}
+% ----------------------------------------------------------------
+
+\domanda{122}{E possibile costruire un programma Check che, preso in input un qualunque programma P, restituisce 1 se P e corretto e 0 se P e scorretto? Ovvero esiste un qualche compilatore che puo scovare tutti i possibili errori di un programma?}{}
+
+\domanda{123}{Cosa dice il problema della fermata (Halting Problem)? Come si dimostra che il problema non puo essere risolto?}{}
+
+\domanda{124}{Quando un problema e decidibile?}{}
+
+\domanda{125}{Quali sono tipici esempi di proprieta indecidibili per i linguaggi di programmazione?}{}
+
+\domanda{126}{Cos'e una Macchina di Turing (MdT)? Che cosa calcola?}{}
+
+\domanda{127}{Quando un linguaggio e detto Turing-completo? Cosa afferma la tesi di Church-Turing e perche non si puo dimostrare?}{}
+
+\domanda{128}{I normali linguaggi di programmazione sono Turing-completi? Cosa afferma il teorema di Jacopini-Bohm?}{}
+
+\domanda{129}{Quale relazione esiste tra espressivita di un formalismo e decidibilita di proprieta dello stesso? Fare una panoramica prendendo in esame i tre formalismi MdT, PDA, DFA, e le due proprieta $w \in L(M)$ e $L(M_1) = L(M_2)$.}{}
+
+\end{document}
