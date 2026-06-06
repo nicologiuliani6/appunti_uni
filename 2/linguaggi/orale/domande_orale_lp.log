@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  6 JUN 2026 09:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  6 JUN 2026 17:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1529,126 +1529,185 @@ Package mdframed Info: Not enough space on this page on input line 1477.
 [46]
 Package mdframed Info: Not enough space on this page on input line 1477.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1484--1484
+
+[47]
+Underfull \hbox (badness 10000) in paragraph at lines 1495--1495
 
  []
 
-
-
-[47]
-Package mdframed Info: Not enough space on this page on input line 1493.
 
 
 [48]
-Package mdframed Info: Not enough space on this page on input line 1493.
 
-Overfull \hbox (15.13397pt too wide) in paragraph at lines 1498--1498
-\T1/cmr/bx/n/12 Come fun-ziona l'invocazione di-nam-ica di un metodo? Come avviene l'invocazione
- []
+Package mdframed Warning: You got a bad break
+(mdframed)                because the last box will be empty
+(mdframed)                you have to change it manually
+(mdframed)                by changing the text, the space
+(mdframed)                or something else on input line 1520.
 
-Package mdframed Info: Not enough space on this page on input line 1501.
+Package mdframed Info: You first box width is to small
+ mdframed fixed it
+(mdframed)              on input line 1520.
 
 
 [49]
-Package mdframed Info: Not enough space on this page on input line 1501.
-Package mdframed Info: Not enough space on this page on input line 1515.
+
+Package mdframed Warning: You got a bad break
+(mdframed)                because the last split box is empty
+(mdframed)                You have to change the settings on input line 1520.
+
+
+Overfull \hbox (30.59146pt too wide) in paragraph at lines 1522--1522
+[]\T1/cmr/m/it/12 Si crea la dichiarazione tra la vari-abile della fun-zione e l'indirizzo di memo-ria dell'argomento.
+ []
+
 
 
 [50]
-Package mdframed Info: Not enough space on this page on input line 1515.
-
-Overfull \hbox (9.94481pt too wide) in paragraph at lines 1516--1516
+Overfull \hbox (9.94481pt too wide) in paragraph at lines 1552--1552
 \T1/cmr/bx/n/12 Tipaggio statico e tipag-gio di-nam-ico: dif-ferenze ed es-empi di lin-guaggi.             
  []
 
-Package mdframed Info: Not enough space on this page on input line 1523.
+Package mdframed Info: Not enough space on this page on input line 1557.
 
 
 [51]
-Package mdframed Info: Not enough space on this page on input line 1523.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1528--1528
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1531--1531
-
- []
-
-Package mdframed Info: Not enough space on this page on input line 1531.
+Package mdframed Info: Not enough space on this page on input line 1557.
 
 
 [52]
-Package mdframed Info: Not enough space on this page on input line 1531.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1535--1535
+Underfull \hbox (badness 10000) in paragraph at lines 1580--1580
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1538--1538
+Package mdframed Warning: You got a bad break
+(mdframed)                because the last box will be empty
+(mdframed)                you have to change it manually
+(mdframed)                by changing the text, the space
+(mdframed)                or something else on input line 1592.
 
- []
-
-Package mdframed Info: Not enough space on this page on input line 1539.
 
 
 [53]
-Package mdframed Info: Not enough space on this page on input line 1539.
-Package mdframed Info: Not enough space on this page on input line 1547.
+Underfull \hbox (badness 10000) in paragraph at lines 1600--1600
+
+ []
+
+Package mdframed Info: Box was splittet wrong
+ starting loop to iterate the splitting point
+(mdframed)              on input line 1614.
 
 
 [54]
-Package mdframed Info: Not enough space on this page on input line 1547.
-
-Underfull \hbox (badness 10000) in paragraph at lines 1548--1548
+Underfull \hbox (badness 10000) in paragraph at lines 1619--1619
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1549--1549
+Underfull \hbox (badness 10000) in paragraph at lines 1637--1637
 
  []
 
-Package mdframed Info: Not enough space on this page on input line 1555.
+Package mdframed Info: Not enough space on this page on input line 1637.
 
 
 [55]
-Package mdframed Info: Not enough space on this page on input line 1555.
+Package mdframed Info: Not enough space on this page on input line 1637.
 
-Overfull \hbox (11.46397pt too wide) in paragraph at lines 1562--1562
+Underfull \hbox (badness 10000) in paragraph at lines 1651--1651
+
+ []
+
+
+
+[56]
+Package mdframed Info: Not enough space on this page on input line 1686.
+
+
+[57]
+Package mdframed Info: Not enough space on this page on input line 1686.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1702--1702
+
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1703.
+
+
+[58]
+Package mdframed Info: Not enough space on this page on input line 1703.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1704--1704
+
+ []
+
+
+Overfull \hbox (15.13397pt too wide) in paragraph at lines 1722--1722
+\T1/cmr/bx/n/12 Come fun-ziona l'invocazione di-nam-ica di un metodo? Come avviene l'invocazione
+ []
+
+
+Package mdframed Warning: You got a bad break
+(mdframed)                because the last box will be empty
+(mdframed)                you have to change it manually
+(mdframed)                by changing the text, the space
+(mdframed)                or something else on input line 1722.
+
+Package mdframed Info: You first box width is to small
+ mdframed fixed it
+(mdframed)              on input line 1722.
+
+
+[59]
+
+Package mdframed Warning: You got a bad break
+(mdframed)                because the last split box is empty
+(mdframed)                You have to change the settings on input line 1722.
+
+Package mdframed Info: Not enough space on this page on input line 1729.
+
+
+[60]
+Package mdframed Info: Not enough space on this page on input line 1729.
+
+Overfull \hbox (11.46397pt too wide) in paragraph at lines 1733--1733
 \T1/cmr/bx/n/12 Differenza tra ar-ray uni-di-men-sion-ali e mul-ti-di-men-sion-ali. Row-major vs column-
  []
 
 
-Overfull \hbox (5.489pt too wide) in paragraph at lines 1563--1563
+Overfull \hbox (5.489pt too wide) in paragraph at lines 1734--1734
 \T1/cmr/bx/n/12 Array in re-lazione a weakly-typed e C. Van-taggi e svan-taggi dell'interoperabilità
  []
 
-Package mdframed Info: Not enough space on this page on input line 1564.
+Package mdframed Info: Not enough space on this page on input line 1741.
 
 
-[56]
-Package mdframed Info: Not enough space on this page on input line 1564.
+[61]
+Package mdframed Info: Not enough space on this page on input line 1741.
 
-Underfull \hbox (badness 10000) in paragraph at lines 1567--1567
+Underfull \hbox (badness 10000) in paragraph at lines 1744--1744
 
  []
 
-Package mdframed Info: Not enough space on this page on input line 1572.
+Package mdframed Info: Not enough space on this page on input line 1749.
 
 
-[57]
-Package mdframed Info: Not enough space on this page on input line 1572.
-Package mdframed Info: Not enough space on this page on input line 1581.
+[62]
+Package mdframed Info: Not enough space on this page on input line 1749.
+Package mdframed Info: Not enough space on this page on input line 1757.
 
 
-[58]
-Package mdframed Info: Not enough space on this page on input line 1581.
+[63]
+Package mdframed Info: Not enough space on this page on input line 1757.
+Package mdframed Info: Not enough space on this page on input line 1767.
 
 
-[59] (./domande_orale_lp.aux)
+[64]
+Package mdframed Info: Not enough space on this page on input line 1767.
+
+
+[65] (./domande_orale_lp.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1657,18 +1716,18 @@ Package rerunfilecheck Info: File `domande_orale_lp.out' has not changed.
 (rerunfilecheck)             Checksum: 7E7F304887F8C1875DC06B7F1AA168FD;2019.
  ) 
 Here is how much of TeX's memory you used:
- 36140 strings out of 473197
- 770387 string characters out of 5718606
- 1180041 words of memory out of 5000000
- 58791 multiletter control sequences out of 15000+600000
+ 36156 strings out of 473197
+ 770654 string characters out of 5718606
+ 1180270 words of memory out of 5000000
+ 58801 multiletter control sequences out of 15000+600000
  577029 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  126i,21n,135p,1656b,1753s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on domande_orale_lp.pdf (59 pages, 612588 bytes).
+Output written on domande_orale_lp.pdf (65 pages, 628943 bytes).
 PDF statistics:
- 486 PDF objects out of 1000 (max. 8388607)
- 378 compressed objects within 4 object streams
- 118 named destinations out of 1000 (max. 500000)
+ 512 PDF objects out of 1000 (max. 8388607)
+ 398 compressed objects within 4 object streams
+ 124 named destinations out of 1000 (max. 500000)
  82 words of extra memory for PDF output out of 10000 (max. 10000000)
 

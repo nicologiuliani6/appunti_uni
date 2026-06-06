@@ -1475,113 +1475,294 @@ $L(M_1) = L(M_2)$ & decidibile & indecidibile & indecidibile \\
 \end{itemize}
 \textbf{Relazione generale:} più un formalismo è espressivo, meno proprietà su di esso sono decidibili. La potenza espressiva ha un costo: al crescere di ciò che il formalismo può calcolare, si perde la capacità di ragionare staticamente sul suo comportamento.
 }
+\newpage
 % ================================================================
 \section{Modulo 2 -- Gabbrielli}
 % ================================================================
 
-\domanda{1}{Definizione di ambiente.}{}
-\domanda{2}{Cos'è un blocco?}{}
-\domanda{3}{Differenza tra scope statico e dinamico. Qual è il loro potere espressivo?}{}
-\domanda{4}{Scope statico implementato con catena statica: come funziona? E scope dinamico con catena dinamica? Vantaggi e svantaggi?}{}
-\domanda{5}{Come si determina il contatore di catena statica?}{}
+\domanda{1}{Definizione di ambiente.}{Insieme delle relazioni $nome \Rightarrow Oggetto$. Attraverso le dichiarazioni creiamo una nuova relazione nell'ambiente.}
+\domanda{2}{Cos'è un blocco?}{E' un sottoinsieme dell'ambiente, l'ambiente e' diviso in blocchi a seconda di dove abbiamo definito le dichiarazioni:
+\begin{itemize}
+  \item Ambiente globale: non e' riferito a nessun blocco
+  \item Ambiente locale: definito nel blocco
+  \item Ambiente non locale: ereditato da un'altro blocco
+\end{itemize}}
+\domanda{3}{Differenza tra scope statico e dinamico. Qual è il loro potere espressivo?}{Dato un blocco qualsiasi se eseguiamo delle operazioni su variabili su ambiente non locale dove ereditiamo queste variabili?
+\begin{itemize}
+  \item Scope statico: ereditarieta' dal blocco comune
+  \item Scope dinamico: ereditarieta' dal blocco precedente a runtime
+\end{itemize}
+Il potere espressivo non cambia, sono entrambi compatibili con la MdT.}
+\domanda{4}{Scope statico implementato con catena statica: come funziona? E scope dinamico con catena dinamica? Vantaggi e svantaggi?}{Lo scope statico si implementa attraverso la catena statica: abbiamo uno stack di RdA con 2 puntatori per ogni RdA:
+\begin{itemize}
+  \item puntatore statico (lessicale): punta il RdA dove definiamo il nuovo scope
+  \item puntatore dinamico: punta il RdA che ha chiamato
+\end{itemize}
+Se dal RdA $k$ dobbiamo cercare una variabile su ambiente non locale il costo e' $O(n)$.\\
+\vspace{1px}\\
+Lo scope dinamico lo implementiamo con CRT, ovvero la lista dei puntatori dinamici degli RdA (come per la catena statica). }
+\domanda{5}{Come si determina il contatore di catena statica?}{Sarebbe la lunghezza massima dei puntatori statici, puo' essere calcolata staticamente guardando quale e' la profondita' massima di annidamento.}
 
-\domanda{6}{Differenza tra espressione e comando.}{}
-\domanda{7}{Nei linguaggi funzionali ci sono comandi?}{}
-\domanda{8}{Differenza tra iterazione determinata e indeterminata.}{}
-\domanda{9}{Quali sono i comandi condizionali? Vantaggi tra if e switch.}{}
+\domanda{6}{Differenza tra espressione e comando.}{
+  \begin{itemize}
+    \item Espressione: produce un valore (a+b)
+    \item Comando: puo' non produrre un valore, ma comporta effetti collaterali (x=5)
+  \end{itemize}
+}
+\domanda{7}{Nei linguaggi funzionali ci sono comandi?}{No nei linguaggi funzionali non abbiamo comandi, ma solo espressioni.}
+\domanda{8}{Differenza tra iterazione determinata e indeterminata.}{L'iterazione determinata e' quando prima di eseguire il ciclo sappiamo il numero di iterazioni (for), mentre quella indeterminata non e' nota a priori (while x != 0 ).}
+\domanda{9}{Quali sono i comandi condizionali? Vantaggi tra if e switch.}{
+  \begin{itemize}
+    \item if-else
+    \item switch
+  \end{itemize}
+Con gli if se abbiamo diversi else if dobbiamo rivalutare ogni volta, mentre con gli switch valutiamo una singola volta e confrontiamo solamente.
+}
 
-\domanda{10}{Cos'è il passaggio per riferimento e come funziona?}{}
-\domanda{11}{Quando una funzione restituisce un'altra funzione come parametro, cosa succede?}{}
-\domanda{12}{Cos'è la ricorsione in coda?}{}
+\domanda{10}{Cos'è il passaggio per riferimento e come funziona?}{Si crea la dichiarazione tra la variabile della funzione e l'indirizzo di memoria dell'argomento. Quindi questo viene valutato solo alla chiamata.}
+\domanda{11}{Quando una funzione restituisce un'altra funzione come parametro, cosa succede?}{Quando una funzione ritorna un'altra funzione succede che dobbiamo mantenere le variabili anche se lo scope della funzione e' chiuso, perche' se no perderemmo i valori.}
+\domanda{12}{Cos'è la ricorsione in coda?}{E' quando una funzione ritorna il valore chiamando se stessa. Puo' essere ottimizzata con la ottimizzazione in coda per utilizzare 1 singolo RdA.}
 
-\domanda{13}{Come sono memorizzati gli array? Cos'è il dope vector?}{}
-\domanda{14}{Come funziona l'invocazione dinamica di un metodo? Come avviene l'invocazione Object-oriented?}{}
-\domanda{15}{Cos'è un sottotipo? Ereditarietà e sottotipi in Java.}{}
-\domanda{16}{Metodi per implementare l'ereditarietà.}{}
-\domanda{17}{Differenza tra parte pubblica e parte privata.}{}
+\domanda{13}{Cos'è il CRT e a cosa serve?}{E' una lista dei puntatori dinamici dei chiamanti, e serve per implementare lo scope dinamico.}
 
-\domanda{18}{Cos'è il tipo void? Che insieme di valori denota?}{}
-\domanda{19}{Esistono linguaggi non tipati? Che vantaggi ci sono? Dal punto di vista dell'efficienza cambia qualcosa?}{}
-
-\domanda{20}{Cos'è il CRT e a cosa serve?}{}
-\domanda{21}{Garbage collection: come funzionano i contatori dei riferimenti?}{}
-\domanda{22}{Posso implementare la comunicazione sincrona con quella asincrona?}{}
-
+\newpage  
 % ================================================================
 \section{Modulo 3 -- Giallorenzo}
 % ================================================================
 
-\domanda{1}{A cosa servono i sistemi di tipi?}{}
-\domanda{2}{Quando un linguaggio è strongly typed e quando è weakly typed?}{}
-\domanda{3}{Tipaggio statico e tipaggio dinamico: differenze ed esempi di linguaggi.}{}
-\domanda{4}{Come funziona il sistema di tipi di JavaScript e Python?}{}
-\domanda{5}{Controlli statici sui tipi contro controlli dinamici. Cenno all'halting problem.}{}
+\domanda{1}{A cosa servono i sistemi di tipi?}{Nella programmazione i tipi sono nati:
+\begin{itemize}
+  \item Organizzazione concettuale: definire differenze tra entita'
+  \item Astrazione: per legare tipi ad operazioni
+  \item Corretteza: type-checking
+  \item Implementazione: linguaggio piu' safe
+\end{itemize}}
+\domanda{2}{Quando un linguaggio è strongly typed e quando è weakly typed?}{
+  \begin{itemize}
+    \item Strongly typed: controlli rigidi sulle operazioni (C, python, ecc)
+    \item Weakly typed: supporta piu operazioni ("1" + 5 = "15") (Js)
+  \end{itemize}
+}
+\domanda{3}{Tipaggio statico e tipaggio dinamico: differenze ed esempi di linguaggi.}{
+  \begin{itemize}
+    \item Statico: controllo statico sui tipi (C)
+    \item Dinamico: controllo sui tipi a runtime (python)
+  \end{itemize}
+Nel dinamico gli errori arrivano solo quando spunta un controllo non valido.
+}
+\domanda{4}{Come funziona il sistema di tipi di JavaScript e Python?}{Js e python sono a dynamic typing, ma js e' weakly typed mentre python e' strongly typed.}
+\domanda{5}{Controlli statici sui tipi contro controlli dinamici. Cenno all'halting problem.}{
+Il controllo statico si basa sulla deduzione del codice, mentre il dinamico in base alla situazione nel runtime.\\
+Il problema del controllo statico e' che facciamo una deduzione e questo puo' provare situazioni dove blocchiamo anche quando era compatibile. Questo perche' un compilatore che staticamente possa prevedere tutti gli errori ricade nel halting problem.
+}
+\domanda{6}{Esistono linguaggi non tipati? Che vantaggi ci sono? Dal punto di vista dell'efficienza cambia qualcosa?}{Si possono esistere, il vantaggio principale e' la compabilita' assoluta tra tutte le variabili. Ma puo' portare molti bug se il programmatore non sta attento.\\
+Infatti il motivo principale per cui abbiamo creato i tipi e' proprio per rilevare e differire le variabili fra loro.\\
+E' leggermente piu' efficiente dato che non abbiamo controli.\\
+ASM e' un esempio.}
 
-\domanda{6}{Differenza tra tipaggio nominale e strutturale. Perché sceglierne uno o l'altro? Pro e contro.}{}
-\domanda{7}{Cos'è il duck typing e connessione con lo structural typing. Pro e contro.}{}
-\domanda{8}{Differenza tra manifest e inferred typing. Pro e contro.}{}
-\domanda{9}{Descrivimi l'algoritmo di unificazione e il suo funzionamento.}{}
-\domanda{10}{Che tipaggio usa Java?}{}
-\domanda{11}{Come funzionano equivalenza e comparazione nel typing nominale?}{}
+\domanda{7}{Differenza tra tipaggio nominale e strutturale. Perché sceglierne uno o l'altro? Pro e contro.}{Il tipaggio nominale basa il controllo in base ai tipi delle variabili e la loro compatibilita'. Mentre quello strutturale accetta o no in base alla struttura delle variabili. Il tipaggio strutturale e' piu' comodo perche non bisogna manualmente specificare le relazioni di tipo fra loro e i loro operatori.\\
+Anche l'efficienza puo' cambiare infatti in quello nomiale ci basta ci basta confrontare i tag (O(1)), mentre in quello strutturale bisogna che cerchiamo dentro la struttura ogni volta.\\
+Quello strutturale pero' potrebbe portare a comportamenti non aspettati se non si sta attenti.}
+\domanda{8}{Cos'è il duck typing e connessione con lo structural typing. Pro e contro.}{Con structural typing intendiamo il controllo statico dove una operazione e' combatibile su un tipo a seconda della struttura interna del tipo (e non dal nome), il duck-typing e' lo stesso controllo in python ma a runtime.}
+\domanda{9}{Differenza tra manifest e inferred typing. Pro e contro.}{
+  \begin{itemize}
+    \item Statico: deduciamo la compatibilita' lessicale
+    \item Dinamico: controllo a runtime
+  \end{itemize}
+Il problema che il controllo statico e' dedotto, non e' assoluto. Infatti dovremmo sapere alcune cose che staticamente sono impossibili. Quindi ci limitiamo a essere conservativi.\\
+Infatti un checker statico perfetto risolverebbe l'halting problem, cosa che per teorema e' impossibile.
+}
+\domanda{10}{Descrivimi l'algoritmo di unificazione e il suo funzionamento.}{E' usato in alcuni linguaggi per dedurre automaticamente i tipi, senza dover avere annotazioni espicite.\\
+\begin{itemize}
+  \item Data una qualsiasi funzione determiniamo i tipi in base alle operazioni
+  \item Proviamo a sostituire il tipo rilevato nel restante del codice
+  \item Rileviamo errori se presenti
+\end{itemize}}
+\domanda{11}{Che tipaggio usa Java?}{Java ha 
+\begin{itemize}
+  \item Tipaggio nominale
+  \item Tipaggio statico
+  \item Manifest (dobbiamo specificare i tipi alle dichiarazioni)
+\end{itemize}}
+\domanda{12}{Come funzionano equivalenza e comparazione nel typing nominale?}{
+  \begin{itemize}
+    \item Equivalenza: se hanno lo stesso nome
+    \item Comparazione: se uno estendo l'akltr
+  \end{itemize}
+}
 
-\domanda{12}{Cos'è un tipo prodotto? Fai un esempio.}{}
-\domanda{13}{Cos'è un tipo somma? Qual è la differenza tra tipo somma e tipo prodotto?}{}
-\domanda{14}{Differenza tra definizione estensionale e intensionale. Come si combina col sub-typing?}{}
-\domanda{15}{Sottotipaggio e definizione degli enum. Differenza tra int ed enum.}{}
-\domanda{16}{Definisci un tipo ricorsivo prodotto. Quale potrebbe essere un suo abitante?}{}
-\domanda{17}{Cos'è un tipo ricorsivo?}{}
-\domanda{18}{Come scriverebbe il tipo lista come tipo ricorsivo prodotto?}{}
-\domanda{19}{Cos'è un tipo intersezione?}{}
-\domanda{20}{Cosa sono i tipi parametrici? In che modo sono utilizzati nel polimorfismo?}{}
+\domanda{13}{Cos'è un tipo prodotto? Fai un esempio.}{E' un tipo "definito" che si basa su altri tipi "minori"
+\begin{center}
+  Tuple = (int, bool)
+\end{center}
+Si chiama prodotto perche il numero di combinazioni possibili e' $|T_1| \times |T_2|$. (bool $\times$ bool = 4).}
+\domanda{14}{Cos'è un tipo somma? Qual è la differenza tra tipo somma e tipo prodotto?}{Un tipo somma e' un tipo "maggiorato" che si basa sul essere soltanto un tipo singolo definito (enum).\\
+Mentre i tipi prodotto sono una combinazioni che creano un nuovo tipo dato dal prodotto dei tipi minori.}
+\domanda{15}{Differenza tra definizione estensionale e intensionale. Come si combina col sub-typing?}{
+  \begin{itemize}
+    \item Estensionale: definiamo esplicitamente tutti i valori, tipo gli enum ($\{1,2,3\}$)
+    \item Intersionale: definiamo un insieme ($\{x \mid x>0\}$)
+  \end{itemize}
+Nella definizione intensionale se abbiamo un $A \subset B$ allora $A <: B$. \\
+Mentre in quella estensionale dobbiamo manualmente specificare, come nel typing classico, il sottotipo.
+}
+\domanda{16}{Sottotipaggio e definizione degli enum. Differenza tra int ed enum.}{Dato un tipo $T$, definiamo sottotipo un suo insieme ristretto di valori chiamto $A$ e lo scriviamo:
+\begin{align*}
+  A <: T
+\end{align*}
+Un enum e un int non poi calcolarli insieme, mentre due int si. Due enum se non sottotipati esplicitamente no.
+}
+\domanda{17}{Definisci un tipo ricorsivo prodotto. Quale potrebbe essere un suo abitante?}{Un tipo ricorsivo 
+\begin{center}
+  List(int) = (int, List(int))
+\end{center}
+Il suo abitante e' per esempio \texttt{(1, (2, (3, ())))}.}
+\domanda{18}{Cos'è un tipo ricorsivo?}{Un tipo ricorsivo e' un tipo che per definizione include se stesso.}
+\domanda{19}{Come scriverebbe il tipo lista come tipo ricorsivo prodotto?}{
+\begin{center}
+  List(T) = (T, List(T))
+\end{center}
+}
+\domanda{20}{Cos'è un tipo intersezione?}{E' un tipo $T= A \cap B$ che dati due tipi padri $A,B$ e i valori di $T$ coincidono sia dentro $A$ che $B$.
+\begin{align*}
+  &T = A \cap B\\
+  &T <: A\\
+  &T <: B
+\end{align*}
+Ovvero $T$ e' l'insieme dei valori comuni fra $A$ e $B$.}
+\domanda{21}{Cosa sono i tipi parametrici? In che modo sono utilizzati nel polimorfismo?}{I tipi parametrici sono tipi "maggiori" che si implementano basandosi su un'altro tipo
+\begin{center}
+  List<T>
+\end{center}
+Sono utilizzati nel polimorfismo parametrico (universale).}
 
-\domanda{21}{Quali sono i tipi di polimorfismo?}{}
-\domanda{22}{Polimorfismo di sovraccarico e dynamic dispatch: quali sono le differenze?}{}
-\domanda{23}{Controvarianza e covarianza: quando le troviamo e come mai?}{}
-\domanda{24}{Cos'è il sub-typing?}{}
-\domanda{25}{Nel momento in cui dico che A è un sottotipo di B, quali proprietà deve avere A?}{}
-\domanda{26}{Principio di sostituzione di Liskov.}{}
+\domanda{22}{Quali sono i tipi di polimorfismo?}{
+  \begin{itemize}
+    \item Ad-hoc (sovraccarico/overloading)
+    \item Sottotipo
+    \item Parametrico (universale)
+  \end{itemize}
+}
+\domanda{23}{Polimorfismo di sovraccarico e dynamic dispatch: quali sono le differenze?}{
+  \begin{itemize}
+    \item Sovraccarico: e' per le funzioni definite con tipi diversi in I/O
+    \item Dynamic-dispatch: la funzione viene chiamata in base al tipo che la ha chiamata
+  \end{itemize}
+}
+\domanda{24}{Controvarianza e covarianza: quando le troviamo e come mai?}{
+  \begin{itemize}
+    \item Covarianza: restituiamo un sottotipo
+    \item Controvarianza: accettiamo un sovratipo
+  \end{itemize}
+  Servono per ampliare la compabilita fra tipi e funzioni.
+}
+\domanda{25}{Cos'è il sub-typing?}{E' la relazione che ci dice che dove $T$ e' supportato $S<:T$ lo e' ugualmente.}
+\domanda{26}{Nel momento in cui dico che A è un sottotipo di B, quali proprietà deve avere A?}{
+  Dato 
+  \begin{align*}
+    A <: B
+  \end{align*}
+Sappiamo che tutti i valori di $A$ valgono per $B$, le operazioni sono definite ugualmente, al massima abbiamo piu valori.
+}
+\domanda{27}{Principio di sostituzione di Liskov.}{E' il principio che ci dice che dato un sottotipo questo e' compatibile ovunque dove utilizziamo il sovratipo.}
+\domanda{28}{Cos'è un sottotipo? Ereditarietà e sottotipi in Java.}{Un sottotipo e' un sottinsieme del suo sovratipo. Tutto quello che va con il sovratipo va con il sottotipo.\\
+In Java abbiamo le classi con ereditarieta' dove possiamo estendere le classi (ovvero avere sottotipi di classi), e quello che non viene redefinito lo si eredita' dal padre.}
 
-\domanda{27}{Quali sono i 4 pilastri dell'OOP? (attenzione: dynamic dispatch al posto di polimorfismo)}{}
-\domanda{28}{Classi, oggetti, interfacce e prototipi: differenze e caratteristiche.}{}
-\domanda{29}{Differenza tra sistemi basati su classi e sistemi basati su prototipi. Che garanzie offrono?}{}
-\domanda{30}{La relazione tra sottotipaggio ed ereditarietà nell'OO. Differenza pratica tra sottotipi e sottoclassi.}{}
-\domanda{31}{Ereditarietà singola e multipla: differenze e metodi per risolvere i conflitti.}{}
-\domanda{32}{Perché i costruttori si possono solo sovraccaricare e non fare overriding?}{}
-\domanda{33}{Differenza tra overriding e overloading.}{}
+\domanda{29}{Quali sono i 4 pilastri dell'OOP? (attenzione: dynamic dispatch al posto di polimorfismo)}{
+  \begin{itemize}
+    \item Incapsulamento: dati-metodi insieme con visibilità (public/protected/private)
+    \item Astrazione: solo interfaccia (no metodo)
+    \item Ereditarietà
+    \item Dynamic dispatch: scelta runtime in base all'oggetto
+  \end{itemize}
+}
+\domanda{30}{Classi, oggetti, interfacce e prototipi: differenze e caratteristiche.}{
+  \begin{itemize}
+    \item Interfaccie: definisce solo i metodi e non implementazione
+    \item Prototipi: servono per essere ereditati per avere le implementazioni
+    \item Classe: struttura e comportamento degli oggetti
+    \item Oggetti: istanza di una classe con valore in memoria con campi
+  \end{itemize}
+}
+\domanda{31}{Differenza tra sistemi basati su classi e sistemi basati su prototipi. Che garanzie offrono?}{
+  \begin{itemize}
+    \item Classi: oggetto con valore in memoria, funzioni, ecc (statico)
+    \item Prototipi: oggetto con alla base delle implementazioni derivanti dal prototipo (puo' variare a runtime)
+  \end{itemize}
+}
+\domanda{32}{La relazione tra sottotipaggio ed ereditarietà nell'OO. Differenza pratica tra sottotipi e sottoclassi.}{
+  L'ereditarietà nelle classi e' un sottotipo.\\
+  Pero' differisce dal sottotipaggio che consiste solo nel avere una versione del padre piu "spefica".
+  La differenza principale e' che il sottotipo e' una versione "specifica" del padre, mentre una sottoclasse puo' ridefinire e ereditarie (dynamic-dispatch).
+}
+\domanda{33}{Ereditarietà singola e multipla: differenze e metodi per risolvere i conflitti.}{\begin{itemize}
+  \item Singola: una classe puo' estendere solo un'altra classe
+  \item Multipla: una classe puo' estendere piu' classi, ma questo provoca conflitti.
+\end{itemize}
+Per risolvere i conflitti nella multipla Java offre le interfaccie.}
+\domanda{34}{Metodi per implementare l'ereditarietà.}{Possiamo utilizzare le vtable, ovvero una tabella dove abbiamo tutte le variabili (anche quelle ereditate e sotto-definite), e i puntatori per le funzioni in base alla redefinizioni e tipologia (dynamic-dispatch).}
+\domanda{35}{Perché i costruttori si possono solo sovraccaricare e non fare overriding?}{Perche' il costruttore serve per definire la creazione del tipo e non viene ereditato dal padre.}
+\domanda{36}{Differenza tra overriding e overloading.}{
+  \begin{itemize}
+    \item overloading: redefinire una funzione con I/O diverso
+    \item overiding: redifinire una funzione in una classe estesa
+  \end{itemize}
+}
 
-\domanda{34}{I 2 metodi di implementazione del dynamic dispatch. Qual è il più efficiente?}{}
-\domanda{35}{Come si fa in memoria il dynamic dispatch? Come si memorizzano vtable e funzioni?}{}
-\domanda{36}{In una classe, dove vivono i metodi e i campi e come vengono memorizzati?}{}
-\domanda{37}{Cos'è il problema della classe base fragile?}{}
+\domanda{37}{I 2 metodi di implementazione del dynamic dispatch. Qual è il più efficiente?}{
+  \begin{itemize}
+    \item vtable
+    \item Message passing: oggetto riceve un messaggio (nome metodo) e lo cerca a runtime
+  \end{itemize}
+  Vtable piu' efficienti perche' $O(1)$.
+}
+\domanda{38}{Come funziona l'invocazione dinamica di un metodo? Come avviene l'invocazione Object-oriented?}{
+  Attraverso il dynamic-dispatch implementato con le vtable, cerchiamo ed eseguiamo il metodo.\\
+  In generale la invocazione nell'OO viene implementata con il MP, quindi e' un msg con il nome del metodo che poi l'oggetto ricerca ed esegue.
+}
+\domanda{39}{Come si fa in memoria il dynamic dispatch? Come si memorizzano vtable e funzioni?}{Attraverso le vtable (segmento \texttt{data} in RAM), una tabella dove memorizziamo puntatori alle variabili (anche quelle sotto-definite) e poi puntatori alle funzioni.}
+\domanda{40}{In una classe, dove vivono i metodi e i campi e come vengono memorizzati?}{Vivono nelle vtable in RAM, in una tabella dove memorizziamo i puntaori alle variabili e puntatori ai metodi.}
+\domanda{41}{Cos'è il problema della classe base fragile?}{}
 
-\domanda{38}{Coercizione e casting: cosa sono e differenze.}{}
-\domanda{39}{Differenza tra typed casting e type coercion. Perché non si usano nel polimorfismo generale in Java?}{}
-\domanda{40}{Differenza tra void e unit.}{}
-\domanda{41}{Differenza tra maybe e option.}{}
+\domanda{42}{Coercizione e casting: cosa sono e differenze.}{}
+\domanda{43}{Differenza tra typed casting e type coercion. Perché non si usano nel polimorfismo generale in Java?}{}
+\domanda{44}{Differenza tra void e unit.}{}
+\domanda{45}{Cos'è il tipo void? Che insieme di valori denota?}{}
+\domanda{46}{Differenza tra maybe e option.}{}
 
-\domanda{42}{Differenza tra array unidimensionali e multidimensionali. Row-major vs column-major: pro, contro e caching.}{}
-\domanda{43}{Array in relazione a weakly-typed e C. Vantaggi e svantaggi dell'interoperabilità tra array e puntatori.}{}
-\domanda{44}{Cos'è il dope vector e qual è il suo utilizzo? Dove viene allocato?}{}
-\domanda{45}{Differenza degli array fra Java e C. Come fa Java a gestire gli array?}{}
+\domanda{47}{Differenza tra array unidimensionali e multidimensionali. Row-major vs column-major: pro, contro e caching.}{}
+\domanda{48}{Array in relazione a weakly-typed e C. Vantaggi e svantaggi dell'interoperabilità tra array e puntatori.}{}
+\domanda{49}{Come sono memorizzati gli array? Cos'è il dope vector?}{Gli array sono memorizzati per
+\begin{itemize}
+  \item Riga (A[0][0], A[0][1], $\dots$)
+  \item Colonna (A[0][0], A[1][0], $\dots$)
+\end{itemize}
+Il dope vector e' una tabella con tutte i metadati (informazioni) di un array (Tipo, indirizzo base, ecc).}
+\domanda{50}{Cos'è il dope vector e qual è il suo utilizzo? Dove viene allocato?}{}
+\domanda{51}{Differenza degli array fra Java e C. Come fa Java a gestire gli array?}{}
 
-\domanda{46}{Garbage collection: quali implementazioni abbiamo visto e come funzionano?}{}
-\domanda{47}{Limiti del reference counting.}{}
-\domanda{48}{Garbage collector con il costo più basso di memoria?}{}
-\domanda{49}{Problemi di un garbage collector stop-the-world. In quali applicazioni crea problemi? Alternative?}{}
-\domanda{50}{Cosa significa che un valore non è garbage?}{}
-\domanda{51}{Cosa sono i dangling pointers e le dangling reference?}{}
-\domanda{52}{Cos'è una use after free?}{}
-\domanda{53}{Cosa sono i wide pointers / initialized pointers?}{}
-\domanda{54}{Tecniche di protezione della memoria e loro problemi.}{}
+\domanda{52}{Garbage collection: quali implementazioni abbiamo visto e come funzionano?}{}
+\domanda{53}{Garbage collection: come funzionano i contatori dei riferimenti?}{}
+\domanda{54}{Limiti del reference counting.}{}
+\domanda{55}{Garbage collector con il costo più basso di memoria?}{}
+\domanda{56}{Problemi di un garbage collector stop-the-world. In quali applicazioni crea problemi? Alternative?}{}
+\domanda{57}{Cosa significa che un valore non è garbage?}{}
+\domanda{58}{Cosa sono i dangling pointers e le dangling reference?}{}
+\domanda{59}{Cos'è una use after free?}{}
+\domanda{60}{Cosa sono i wide pointers / initialized pointers?}{}
+\domanda{61}{Tecniche di protezione della memoria e loro problemi.}{}
 
-\domanda{55}{Cosa sono le eccezioni? A cosa servono? Come sono gestite in Java?}{}
-\domanda{56}{Ci sono similitudini tra eccezioni e tipaggio?}{}
-\domanda{57}{Tipi di gestione degli errori. Cos'è il result type? Cos'è il tipo option/maybe?}{}
+\domanda{62}{Cosa sono le eccezioni? A cosa servono? Come sono gestite in Java?}{}
+\domanda{63}{Ci sono similitudini tra eccezioni e tipaggio?}{}
+\domanda{64}{Tipi di gestione degli errori. Cos'è il result type? Cos'è il tipo option/maybe?}{}
 
-\domanda{58}{Differenza tra abstract data types e oggetti. Possono convivere nello stesso codice?}{}
-\domanda{59}{Definisci i tipi di dato astratti.}{}
-\domanda{60}{Cosa vuol dire dal punto di vista concettuale e pratico avere diverse visibilità (pubblica/privata)?}{}
+\domanda{65}{Differenza tra abstract data types e oggetti. Possono convivere nello stesso codice?}{}
+\domanda{66}{Definisci i tipi di dato astratti.}{}
+\domanda{67}{Cosa vuol dire dal punto di vista concettuale e pratico avere diverse visibilità (pubblica/privata)?}{}
+\domanda{68}{Differenza tra parte pubblica e parte privata.}{}
 
-\domanda{61}{Se le funzioni fossero come le funzioni matematiche, come potremmo ottimizzarne l'esecuzione?}{}
-\domanda{62}{Cos'è una relazione? Come ottimizzare il calcolo di una funzione con dominio molto piccolo?}{}
+\domanda{69}{Se le funzioni fossero come le funzioni matematiche, come potremmo ottimizzarne l'esecuzione?}{}
+\domanda{70}{Cos'è una relazione? Come ottimizzare il calcolo di una funzione con dominio molto piccolo?}{}
+
+\domanda{71}{Posso implementare la comunicazione sincrona con quella asincrona?}{}
 \end{document}
