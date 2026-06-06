@@ -14,7 +14,8 @@
 \usepackage{mathpartir}
 \usepackage{tikz}
 \usepackage{float}
-
+\usepackage{listings}
+\usepackage{booktabs}
 \usetikzlibrary{automata,positioning}
 \definecolor{grigiochiarissimo}{RGB}{245,245,245}
 
@@ -725,11 +726,11 @@ Assumiamo per assurdo che $L$ sia regolare, allora vale il pumping lemma che ci 
 \begin{itemize}
   \item Stato finale:
   \begin{align*}
-    \{w \in \Sigma^* | (q_0, w, \bot) \vdash^*_N (q_f, \epsilon, \gamma \quad q_f \in F)\}
+    \{w \in \Sigma^* | (q_0, w, \bot) \vdash^*_N (q_f, \epsilon, \gamma ) \quad q_f \in F\}
   \end{align*}
   \item Pila vuota:
    \begin{align*}
-    \{w \in \Sigma^* | (q_0, w, \bot)\vdash^*_N (q, \epsilon, \epsilon)\} 
+    \{w \in \Sigma^* | (q_0, w, \bot)\vdash^*_N (q_f, \epsilon, \epsilon) \quad q_f \in F\} 
   \end{align*}
 \end{itemize}
 \begin{itemize}
@@ -742,144 +743,845 @@ Assumiamo per assurdo che $L$ sia regolare, allora vale il pumping lemma che ci 
 \end{itemize}
 Le due modalita' sono equivalenti per un teorema.}
 
-\domanda{62}{Mostrare come data una grammatica libera G sia possibile costruire un PDA P equivalente. E possibile costruire, dato un PDA P, una grammatica equivalente G? Concludere che la classe dei linguaggi liberi coincide con la classe dei linguaggi riconosciuti da PDA.}{}
+\domanda{62}{Mostrare come data una grammatica libera G sia possibile costruire un PDA P equivalente. E possibile costruire, dato un PDA P, una grammatica equivalente G? Concludere che la classe dei linguaggi liberi coincide con la classe dei linguaggi riconosciuti da PDA.}{Data la grammatica libera $G$:\\
+$G=
+\begin{cases}
+  A \to aAb \mid \epsilon
+\end{cases}$
+}
+\begin{mdframed}[backgroundcolor=grigiochiarissimo,
+  linecolor=gray!50, linewidth=0.6pt,
+  innertopmargin=6pt, innerbottommargin=12pt,
+  innerleftmargin=8pt, innerrightmargin=8pt]
+\textit{PDA stato finale:}\\
+\begin{tikzpicture}[>=stealth,node distance=3cm,auto]
+  \tikzstyle{state}=[circle,draw,minimum size=18pt]
 
-\domanda{63}{Quali sono le proprieta di chiusura dei linguaggi liberi? L'intersezione di un linguaggio libero con un regolare e un linguaggio libero?}{}
+  \node[state,initial] (q0) {$q_0$};
+  \node[state] (q1) [right of=q0] {$q_1$};
+  \node[state] (q2) [right of=q1] {$q_2$};
+  \node[state,accepting] (q3) [right of=q2] {$q_3$};
 
-\domanda{64}{Intestazione e dimostrazione del Pumping Theorem per i linguaggi liberi.}{}
+  \path[->]
+    (q0) edge node {a, Z/A} (q1)
+    (q1) edge[loop above] node {a, A/AA} ()
+    (q1) edge[bend left] node {b, A/$\epsilon$} (q2)
+    (q2) edge[loop above] node {b, A/$\epsilon$} ()
+    (q2) edge node {$\epsilon$, Z/$\epsilon$} (q3)    
+    (q3) edge[bend left] node {$\epsilon$, Z/$\epsilon$} (q0);
+\end{tikzpicture}\\
+\vspace{1px}\\
+Si, dato il PDA qua sopra sappiamo che:
+\begin{itemize}
+  \item Inizia con $(a \mid \epsilon)$
+  \item Contiene $a^*$
+  \item Contiene $b^*$
+\end{itemize}
+Quindi $L[PDA]=a^*b^*$, che si puo' scrivere come: $S \to aSb \mid \epsilon$.\\
+\vspace{1px}\\
+Quindi abbiamo mostrato come dalla grammatica $G$ abbiamo ottenuto un PDA che a sua volta ha generato una grammatica, tutte queste coincidono nello stesso linguaggio.
+\end{mdframed}
+\domanda{63}{Quali sono le proprieta di chiusura dei linguaggi liberi? L'intersezione di un linguaggio libero con un regolare e un linguaggio libero?}{I linguaggi liberi sono chiusi per:
+\begin{itemize}
+  \item Unione
+  \item Concatenazione
+  \item Kleene
+\end{itemize}
+Mentre se l'intersezione tra un libero e un regolare e' sempre libero (chiuso).}
 
-\domanda{65}{Come si puo utilizzare tale teorema (a rovescio) per dimostrare che un linguaggio non e libero?}{}
+\domanda{64}{Intestazione e dimostrazione del Pumping Theorem per i linguaggi liberi.}{Fissiamo $N \geq 1$, allora $uvwxy \in L$ e $|uvwxy||\geq N:$\\
+\begin{itemize}
+  \item $|vwx| \leq N$ 
+  \item $|vx| \geq 1$
+  \item $\forall k \geq 0 \quad uv^kwx^ky \in L$
+\end{itemize}}
 
-\domanda{66}{Classificazione di Chomsky delle grammatiche e dei linguaggi. Definizione di grammatica dipendente dal contesto e di grammatica monotona. Quale tipo di automi corrisponde ad ogni classe?}{}
+\domanda{65}{Come si puo utilizzare tale teorema (a rovescio) per dimostrare che un linguaggio non e libero?}{Ipotizziamo per assurdo che $L$ sia libero, allora $\forall N \geq 1$ e $\forall uvwxy \in L$ t.c. $|uvwxy| \geq N$. Allora vale per pumping theorem libero:
+\begin{itemize}
+  \item $|vwx| \leq N$ 
+  \item $|vx| \geq 1$
+  \item $\forall k \geq 0 \quad uv^kwx^ky \in L$
+\end{itemize}
+Fissiamo un valore $k$ t.c. $uv^kwx^ky \notin L$\\
+$\Rightarrow$ $L$ non e' libero!}
 
-\domanda{67}{Definizione di DPDA (automa a pila deterministico) e di linguaggio libero deterministico.}{}
+\domanda{66}{Classificazione di Chomsky delle grammatiche e dei linguaggi. Definizione di grammatica dipendente dal contesto e di grammatica monotona. Quale tipo di automi corrisponde ad ogni classe?}{
+  \begin{enumerate}
+    \item Grammatiche regolari (DFA-NFA)
+    \item Grammatiche libere da contesto (PDA)
+    \item Grammatiche dipendeti da contesto (LBA):
+    \begin{align*}
+      aA \to B \quad \text{ Nota come dipende da 2 argomenti a sinistra!}
+    \end{align*}
+    \item \begin{itemize}
+      \item Grammatiche Monotone: non acconsente di accorciare ($aA \to B$)
+    \begin{align*}
+        A \to B \quad \text{ con } |A| \leq |B|
+    \end{align*}
+    \item Grammatiche generali (Macchine di Turing)
+    \end{itemize}
+  \end{enumerate}
+}
 
-\domanda{68}{La classe dei linguaggi liberi deterministici e strettamente inclusa in quella dei linguaggi liberi? Contiene strettamente la classe dei linguaggi regolari?}{}
+\domanda{67}{Definizione di DPDA (automa a pila deterministico) e di linguaggio libero deterministico.}{Un linguaggio e' libero deterministico se e' accettato per stato finale da un DPDA:
+\begin{align*}
+  \forall q \in Q \quad \forall z \in \Gamma \quad \forall a \in \Sigma^* \quad \mid \delta(q,a,z)\mid \leq 1
+\end{align*}
+Ovvero ad ogni stato se dobbiamo mettere $a$ dentro la pila possiamo prendere 1 sola strada possibile.}
 
-\domanda{69}{Che cosa dice la prefix property e perche e interessante per i DPDA?}{}
+\domanda{68}{La classe dei linguaggi liberi deterministici e strettamente inclusa in quella dei linguaggi liberi? Contiene strettamente la classe dei linguaggi regolari?}{
+  \begin{align*}
+    & REG \subset DCFG \subset CFG \\
+    & NFA/DFA \subset DPDA \subset PDA
+  \end{align*}
+}
 
-\domanda{70}{Usando un endmarker \$, si puo riconoscere un linguaggio libero deterministico che non gode della prefix property anche per pila vuota? Come?}{}
+\domanda{69}{Che cosa dice la prefix property e perche e interessante per i DPDA?}{Un linguaggio libero deterministico gode della prefix property quando nessuna parola e' prefisso di un'altra. \\
+Tipo $L=\{a, ab\}$ il DPDA dopo aver letto $a$ non saprebbe se chiudere o continuare. Quindi non sarebbe deterministico.}
 
-\domanda{71}{Un linguaggio libero deterministico e ambiguo?}{}
+\domanda{70}{Usando un endmarker \$, si puo riconoscere un linguaggio libero deterministico che non gode della prefix property anche per pila vuota? Come?}{Esattamente $\$$ serve proprio per far riconoscere per pila vuota un DPDA che non gode di prefix property.\\
+Inseriamo il simbolo $\$$ al fine del linguaggio:
+\begin{align*}
+  L \to L\$
+\end{align*}
+Cosi quando leggiamo $\$$ siamo sicuri che sia finito.}
 
-\domanda{72}{Proprieta di chiusura dei linguaggi liberi deterministici: chiusi per complementazione, ma non per intersezione ne per unione.}{}
+\domanda{71}{Un linguaggio libero deterministico e ambiguo?}{Non sempre dipende, un DPDA e' deterministico ma possono esistere gramamtiche ambigue che generano il linguaggio.}
 
-\domanda{73}{Da cosa si parte per costruire un analizzatore sintattico (ovvero parser)? Da una espressione regolare? Da una grammatica libera? Da un PDA?}{}
+\domanda{72}{Proprieta di chiusura dei linguaggi liberi deterministici: chiusi per complementazione, ma non per intersezione ne per unione.}{
+  \begin{itemize}
+    \item Complemento
+    \item Intersezione con i regolari
+  \end{itemize}
+}
 
-\domanda{74}{Cosa prende in input e cosa produce in output un parser?}{}
+\domanda{73}{Da cosa si parte per costruire un analizzatore sintattico (ovvero parser)? Da una espressione regolare? Da una grammatica libera? Da un PDA?}{Si utilizza una CFG. Il PDA lo utilizziamo sono come modello per il riconoscimento.\\
+L'espressione regolare non va bene perche' e' limitante esprimento un linguaggio regolare (NFA/DFA).}
 
-\domanda{75}{Che differenza c'e tra un parser nondeterministico ed uno deterministico?}{}
+\domanda{74}{Cosa prende in input e cosa produce in output un parser?}{Prende in input una tuple <TOKEN, lessemma> e restituisce in output un AST.}
 
-\domanda{76}{Quali sono le due tecniche essenziali per costruire parsers?}{}
+\domanda{75}{Che differenza c'e tra un parser nondeterministico ed uno deterministico?}{Il parser determinstico e' quello "classico" che prende scelte assolute, mentre quello nondeterministico utilizza il backtracking quando una scelta e' errata.}
 
-\domanda{77}{Le tecniche top-down e bottom-up in che cosa differiscono?}{}
+\domanda{76}{Quali sono le due tecniche essenziali per costruire parsers?}{Le due tecniche sono:
+\begin{itemize}
+  \item Top-down: data la stringa in input $w$ partiamo dal simbolo iniziale $S$
+  \item Bottom-up: data la stringa in input $w$ cerchiamo di ridurre fino a $S$
+\end{itemize}}
 
-\domanda{78}{Quali tipi di grammatiche non sono adatte al top-down parsing? Quali tipi di produzioni sono poco adatte al bottom-up parsing?}{}
+\domanda{77}{Le tecniche top-down e bottom-up in che cosa differiscono?}{
+  \begin{itemize}
+    \item Top-down: partiamo con $S$ sulla pila e la espandiamo a seconda dell'input
+    \item Bottom-up: partendo dalla pila vuota pushiamo (shift) gli input sulla pila, quando poi abbiamo una combinazione li traduciamo in Terminali (reduce) e continiamo fino ad avere stato iniziale $S$
+  \end{itemize}
+}
 
-\domanda{79}{Cosa sono le produzioni epsilon e cosa sono i simboli non-terminali annullabili?}{}
+\domanda{78}{Quali tipi di grammatiche non sono adatte al top-down parsing? Quali tipi di produzioni sono poco adatte al bottom-up parsing?}{
+Il Top-down non supporta il \texttt{left recursion}
+\begin{align*}
+  A \to Aa \mid b
+\end{align*}
+Il Bottom-up ha problemi per i \texttt{conflitti shift/reduce}:
+\begin{align*}
+  E \to E+E \mid id
+\end{align*}
+Top-down e Bottom-up DETERMINISTICI non supportano le $\epsilon$-produzioni:
+\begin{align*}
+  A \to \epsilon
+\end{align*}
+}
 
-\domanda{80}{Come si puo trasformare una grammatica G che contiene produzioni epsilon in una grammatica G' che non ne contiene, preservando il linguaggio a meno di epsilon?}{}
+\domanda{79}{Cosa sono le produzioni epsilon e cosa sono i simboli non-terminali annullabili?}{Le $\epsilon$-produzioni sono la riduzione da 
+\begin{align*}
+  & A \to \epsilon \\
+  & L(G) = L(G) \backslash \{\epsilon\}
+\end{align*}
+non sono compatibili con i DPDA.\\
+\vspace{1px}\\
+I simboli non-terminali annullabili sono quelli che si riducono a $\epsilon$-produzioni (anche indirettamente).
+}
 
-\domanda{81}{Cosa sono le produzioni unitarie e cosa sono le coppie unitarie?}{}
+\domanda{80}{Come si puo trasformare una grammatica G che contiene produzioni epsilon in una grammatica G' che non ne contiene, preservando il linguaggio a meno di epsilon?}{Se $\epsilon \in L(G)$ e vogliamo $L(G')=L(G)\backslash \{\epsilon\}$ allora:
+\begin{itemize}
+  \item Eliminiamo i non-terminali annullabili
+  \item Mettiamo un nuovo simbolo iniziale $S' \to S \mid \epsilon$
+\end{itemize}}
 
-\domanda{82}{Come si puo trasformare una grammatica G che contiene produzioni unitarie in una equivalente G' che non ne contiene?}{}
+\domanda{81}{Cosa sono le produzioni unitarie e cosa sono le coppie unitarie?}{Dati i non-terminali $A,B$ li definiamo unitari se
+\begin{align*}
+  A \to B
+\end{align*}
+Li definiamo coppie unitarie se
+\begin{align*}
+  A \to^* B \text{ attraverso solo coppie unitarie}
+\end{align*}}
 
-\domanda{83}{Data una grammatica G, quali sono i suoi simboli utili? Quali sono i suoi simboli generatori? Quali i suoi simboli raggiungibili?}{}
+\domanda{82}{Come si puo trasformare una grammatica G che contiene produzioni unitarie in una equivalente G' che non ne contiene?}{Possiamo sostituire tutte le produzioni unitarie $A\to B$ direttamente con le produzioni di $B$.}
 
-\domanda{84}{Come si calcolano i generatori? Come si calcolano i raggiungibili?}{}
+\domanda{83}{Data una grammatica G, quali sono i suoi simboli utili? Quali sono i suoi simboli generatori? Quali i suoi simboli raggiungibili?}{Un non-terminale e' generatore quando riesce a derivare almeno una stringa di soli terminali
+\begin{align*}
+  A \to^* w \quad w \in \Sigma^*
+\end{align*}
+Un simbolo (terminale e non) e' raggiungibile quando si puo' produrre partendo da $S$.\\
+Un simbolo e' utilie quando e' generatore e raggiungibile.}
 
-\domanda{85}{In che modo si eliminano i simboli inutili di una grammatica? E importante l'ordine delle operazioni da svolgere?}{}
+\domanda{84}{Come si calcolano i generatori? Come si calcolano i raggiungibili?}{I generatori si calcolano:
+\begin{itemize}
+  \item Segniamo tutti i non-terminali che si riducono con 1 step a terminale (stringhe)
+  \item Segniamo ora tutti i non-terminali che si riducono a i non-terminale di prima
+  \item Cosi via
+  \item I restanti alla fine sono i non generatori.
+\end{itemize}
+I simboli non raggiungibili si calcolano:
+\begin{itemize}
+  \item Iteriamo da $S$ ogni possibile strada presa dalle riduzioni
+  \item Quando arriviamo a un terminale (stringhe) lo flaggiamo
+  \item Backtracking alla divarazione precedente
+  \item Ripetiamo finche non abbiamo passato tutte le divariazioni
+  \item I non flaggati sono non raggiungibili
+\end{itemize}}
 
-\domanda{86}{Quando si dice che una grammatica e ricorsiva sinistra? Come si elimina la ricorsione sinistra immediata? E quella non immediata? Perche serve eliminare la ricorsione sinistra?}{}
+\domanda{85}{In che modo si eliminano i simboli inutili di una grammatica? E importante l'ordine delle operazioni da svolgere?}{Calcoliamo i simboli non-terminali generatori, quelli non-generatori li cancelliamo ovonque. \\
+Calcoliamo i simboli raggiungibili, i restanti li cancelliamo. Ora abbiamo solo simboli utili.}
 
-\domanda{87}{Cosa vuol dire fattorizzare a sinistra una grammatica? Perche serve fattorizzare?}{}
+\domanda{86}{Quando si dice che una grammatica e ricorsiva sinistra? Come si elimina la ricorsione sinistra immediata? E quella non immediata? Perche serve eliminare la ricorsione sinistra?}{Una grammatica e' ricorsiva sinistra (left recursion) quando abbiamo
+\begin{align*}
+  A \to Aa
+\end{align*}
+Ovvero il primo carattere della riduzione e' il non-terminale stesso che si e' appena ridotto.\\
+Per rimuoverla se abbiamo:
+\begin{align*}
+  A \to Aa | B \mid 
+\end{align*}
+Definiamo un nuovo non-terminale per produrre ricorsivamente a destra "$a$" chiamato $A'$
+\begin{align*}
+  A' \to aA' \mid \epsilon
+\end{align*}
+e modifichiamo $A$ in modo che prima chiamiamo $B$ e poi generiamo gli "$a$":
+\begin{align*}
+  &A \to BA' \\
+  &A' \to aA' \mid \epsilon
+\end{align*}}
 
-\domanda{88}{Cos'e un parser a discesa ricorsiva?}{}
+\domanda{87}{Cosa vuol dire fattorizzare a sinistra una grammatica? Perche serve fattorizzare?}{In un DPDA se abbiamo
+\begin{align*}
+  A \to aB \mid a
+\end{align*}
+non sappiamo cosa scegliere. Quindi creiamo un nuovo terminale $A'$ che ci genera la parte non-comune:
+\begin{align*}
+  &A \to aA'\\
+  &A' \to B
+\end{align*}
+Questo ci permette di avere lo stesso linguaggio ma con una grammatica che vada su un parser deterministico.}
 
-\domanda{89}{Definizione di First(a) e di Follow(A).}{}
+\domanda{88}{Cos'e un parser a discesa ricorsiva?}{Un parser a discesa ricorsiva e' un parser top-down che ricostruisce partendo da $S$ attraverso dichiarazioni ricorsive.\\
+Per il linguaggio
+\begin{align*}
+  &E \to T + E \mid T \\
+  &T \to id
+\end{align*}
+lo definiamo con:
+\[
+\begin{aligned}
+E(): \quad & T() \\
+          & \text{if } next == '+' \text{ then} \\
+          & \quad match('+') \\
+          & \quad E() \\[2mm]
+T(): \quad & match(id)
+\end{aligned}
+\]
+}
 
-\domanda{90}{Algoritmi per calcolare First(a) e Follow(A).}{}
+\domanda{89}{Definizione di First(a) e di Follow(A).}{First e' l'insieme dei terminali che sono in prima posizione dal terminale $A$:
+\begin{align*}
+  &A \to aA \mid epsilon\\
+  &First(A)=\{a, \epsilon\}
+\end{align*}
+Follow del non-terminale $X$ e' l'insieme dei terminali che spuntano dopo per definizione o riduzione ad $X$:
+\begin{align*}
+  &S \to Ab \mid c \\
+  &A \to aA \mid \epsilon\\
+  &Follow(S) = \{\$\}\\
+  &Follow(A)=\{b\}
+\end{align*}}
 
-\domanda{91}{Come e fatta e come si riempie una tabella di parsing LL(1)?}{}
+\domanda{90}{Algoritmi per calcolare First(a) e Follow(A).}{
+First:
+\begin{itemize}
+  \item Per ogni terminale $x$ facciamo che $First(x)=\{x\}$
+  \item Per ogni non-terminale $A$:
+  \begin{itemize}
+    \item Per ogni sua produzione $x$:
+    \begin{itemize}
+      \item Per ogni carattere di $x$ chiamato $c$:
+      \begin{itemize}
+      \item $First(A)+=First(c)$
+    \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+Follow:
+\begin{itemize}
+  \item $Follow(S)=\{\$\}$
+  \item Per ogni non-terminale $A$:
+  \begin{itemize}
+    \item Per ogni sua produzione $x$:
+    \begin{itemize}
+      \item Per ogni carattere di $x$ chiamato $c$:
+      \begin{itemize}
+        \item if $A == S$ and $c$ is ultimo in $x$: $Follow(A)+=\{\epsilon\}$
+        \item else if $c$ is not ultimo in $x$: $Follow(c)+=First(c+1)\backslash \{\epsilon\}$
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+}
 
-\domanda{92}{Quando una grammatica G si dice di classe LL(1)? Quali sono le condizioni necessarie e sufficienti per G affinche sia di classe LL(1)?}{}
+\domanda{91}{Come e fatta e come si riempie una tabella di parsing LL(1)?}{Righe non-terminali, Colonne terminali.\\
+Dalle produzioni per ogni per ogni $c \in First(A)$ compiliamo la cella $(A, x)$ con la produzione $A \to x\dots$. \\
+Mentre i $c \in Follow(A)$ ci servono per ridurre $A \to \epsilon$ quando leggiamo $c$.}
 
-\domanda{93}{Perche un parser di questo tipo e chiamato LL?}{}
+\domanda{92}{Quando una grammatica G si dice di classe LL(1)? Quali sono le condizioni necessarie e sufficienti per G affinche sia di classe LL(1)?}{Una grammatica $G$ e' LL(1) se la sua tabella di parsing LL(1) contiene al max. 1 produzione per ogni casella.\\
+E' LL(1) quando per ogni 
+\begin{align*}
+  A \to B \mid C
+\end{align*}
+abbiamo
+\begin{enumerate}
+  \item $First(B)\cap First(C) = \emptyset$
+  \item Se $\epsilon \in Follow(B)$ allora $Follow(A) \cap Fist(C) = \emptyset$
+  \item Se $\epsilon \in Follow(C)$ allora $Follow(A) \cap Fist(B) = \emptyset$
+\end{enumerate}
+Nota che 2/3 servono perche se avessimo caratteri in comuni non sapremmo se ridurre $A \to C \to \epsilon + B \to c$ oppure $A \to B \to c$}
 
-\domanda{94}{Come funziona il parser LL(1) con una pila?}{}
+\domanda{93}{Perche un parser di questo tipo e chiamato LL?}{
+  \begin{center}
+    Left-to-right $\qquad$ Leftmost
+  \end{center}
+  Perche' e' un parser top-down che partendo da $S$ consuma da sinistra a destra gli input per arrivare allo stato finale.
+}
 
-\domanda{95}{E vero che ogni linguaggio regolare e pure LL(1)?}{}
+\domanda{94}{Come funziona il parser LL(1) con una pila?}{A seconda di quello che e' il carattere in lettura pushiamo nello stack la produzione della sua cella in base al non terminale dello stack per poi consumarlo da entrambi i lati. Continiamo finche' non abbiamo piu' caratteri in input e la pila con il terminatore.}
 
-\domanda{96}{Come sono definiti First$_k$(a) e Follow$_k$(A) per $k \geq 2$?}{}
+\domanda{95}{E vero che ogni linguaggio regolare e pure LL(1)?}{Si perche ogni grammatica regolare puo' essere trasformata in una LL(1) compatibile, dato che le sue restrizioni forti permettono di non avere mai conflitti in LL(1).}
 
-\domanda{97}{Come si definisce una grammatica LL(k)? Ed un linguaggio LL(k)? Come si relazionano tra di loro?}{}
+\domanda{96}{Come sono definiti First$_k$(a) e Follow$_k$(A) per $k \geq 2$?}{
+Le definizioni di FIRST$_k$ e FOLLOW$_k$ estendono FIRST e FOLLOW considerando stringhe terminali di lunghezza al più $k$.\\
+\textbf{FIRST$_k$:}
+Per una stringa $\alpha$, FIRST$_k(\alpha)$ è l’insieme delle stringhe terminali $w$ tali che:
+\[
+\alpha \Rightarrow^* w\beta \quad \text{con } |w| \le k
+\]
+cioè tutte le possibili stringhe di terminali (lunghezza $\leq$ $k$) che possono apparire come prefisso di una derivazione di $\alpha$.\\
+\vspace{2mm}\\
+\textbf{FOLLOW$_k$:}
+Per un non-terminale $A$, FOLLOW$_k(A)$ è l’insieme delle stringhe terminali $w$ tali che:
+\[
+S \Rightarrow^* \alpha A w \beta \quad \text{con } |w| \le k
+\]
+cioè tutte le stringhe di terminali (lunghezza $\leq$ $k$) che possono comparire immediatamente a destra di $A$ in una derivazione.
+}
 
-\domanda{98}{Che relazione esiste tra grammatiche LL(k) e grammatiche ambigue? E con le grammatiche ricorsive sinistre?}{}
+\domanda{97}{Come si definisce una grammatica LL(k)? Ed un linguaggio LL(k)? Come si relazionano tra di loro?}{LL(k) e' una quadrupla $(NT, T, \delta, S)$ con:
+\begin{itemize}
+  \item $NT$ insieme non terminali
+  \item $T$ insieme terminali
+  \item $\delta$ funzione transazione
+  \item $S$ simbolo iniziale
+\end{itemize}
+Un linguaggio $L \subseteq \Sigma^*$ e' LL(k) se esiste almeno una grammatica $LL(k)$ che lo genera.}
 
-\domanda{99}{Esistono linguaggi liberi che non sono LL(k) per nessun k? Ed esistono linguaggi liberi deterministici che non sono LL(k) per nessun k?}{}
+\domanda{98}{Che relazione esiste tra grammatiche LL(k) e grammatiche ambigue? E con le grammatiche ricorsive sinistre?}{Una grammatica LL(k) non e':
+\begin{itemize}
+  \item ambigua
+  \item ricorsiva sinistra
+\end{itemize}
+Ogni grammatica LL(k) non e' ambigua e ogni grammatica ambigua e' non LL(k).}
 
-\domanda{100}{Cos'e un parser bottom-up (o shift-reduce)? Qual e il suo input e il suo output? Perche sono chiamati parser LR?}{}
+\domanda{99}{Esistono linguaggi liberi che non sono LL(k) per nessun k? Ed esistono linguaggi liberi deterministici che non sono LL(k) per nessun k?}{Si perche' abbiamo che
+\begin{align*}
+  LL(k) \subset DCFG \subset CFG
+\end{align*}
+Quindi essendo una relazione stretta alcuni linguaggi non esistono nel sottoinsieme minore.}
 
-\domanda{101}{Che tipo di conflitti si possono presentare in un parser del genere? Quando si presenta un conflitto (shift/reduce o reduce/reduce), quale azione bisogna scegliere?}{}
+\domanda{100}{Cos'e un parser bottom-up (o shift-reduce)? Qual e il suo input e il suo output? Perche sono chiamati parser LR?}{Un parser bottom-up parte dalla pila vuota e attraverso gli shift-reduce arriviamo allo stato iniziale $S$.\\
+Il suo input sono una lista di token, e il suo output e' un ast.\\
+Si chiama LR perche' e left-to-right rightmost, ovvero legge da sinistra a destra ma partiamo dalla pila vuota.}
 
-\domanda{102}{Cos'e un prefisso viabile? Come lo si definisce in termini di una grammatica?}{}
+\domanda{101}{Che tipo di conflitti si possono presentare in un parser del genere? Quando si presenta un conflitto (shift/reduce o reduce/reduce), quale azione bisogna scegliere?}{Possiamo avere conflitto shift-reduce o reduce-reduce ovvero momenti che il parser dove scegliere non deterministicamente una strada.\\
+Se la grammatica e' LR(k) allora il problema shift-reduce o reduce-reduce non si pone.}
+\domanda{102}{Cos'e un prefisso viabile? Come lo si definisce in termini di una grammatica?}{
+Le stringhe che otteniamo durante il parsing bottom-up corretto si chiamano
+prefissi viabili.\\
+Data la grammatica $G = (NT, T, \delta, S)$, definiamo prefisso viabile:
+\[
+\{\, a \in (NT \cup T)^*
+\mid
+\exists\, \beta, A, w, \gamma :
+S \Rightarrow^* \beta A w \Rightarrow \beta\gamma w
+\ \land\
+a \preceq \beta\gamma
+\,\}.
+\]
+}
 
-\domanda{103}{Cos'e un item LR(0)? Come si generano tutti gli item di una grammatica (aumentata con un simbolo iniziale nuovo S')?}{}
 
-\domanda{104}{Come e fatto il NFA dei prefissi viabili? Come si ricava il DFA dei prefissi viabili, detto anche automa canonico LR(0)?}{}
+\domanda{103}{Cos'e un item LR(0)? Come si generano tutti gli item di una grammatica (aumentata con un simbolo iniziale nuovo S')?}{Gli item in $LR(0)$ indicano quali prefissi viabile abbiamo riconociuto e quale simbolo ci stiamo aspettando.\\
+\vspace{1px}\\
+Dato $S\to A_1\dots A_n$\\
+Generiamo un item per ogni posizione:
+\begin{itemize}
+  \item $S' \to . S$
+  \item $S' \to S .$
+  \item $S \to . A_1\dots A_n$
+  \item $S \to A_1 . \dots A_n$
+  \item $\vdots$
+  \item $S \to A_1\dots A_n .$
+  \item $A \to . a$
+  \item $A \to . a$
+\end{itemize}
+Se abbiamo $S \to \epsilon$ mettiamo $S \to .$.\\
+Nota come se abbiamo dopo un punto un terminale espandiamo anche lui.}
 
-\domanda{105}{Come e fatta una tabella di parsing LR(0)? Come la si riempie a partire dall'automa canonico LR(0)? Quando una grammatica e di classe LR(0)?}{}
+\domanda{104}{Come e fatto il NFA dei prefissi viabili? Come si ricava il DFA dei prefissi viabili, detto anche automa canonico LR(0)?}{Data la grammatica estesa $G$:
+\begin{itemize}
+  \item $q_0 = [S' \to .S]$
+  \item $q_i$ = \begin{itemize}
+    \item Se abbiamo un NT mettiamo una transizione a costo $\epsilon$ tipo $[A \to B.a]$
+    \item Se abbiamo un T mettiamo una transizione a costo $a$ tipo $[A \to a.B]$
+  \end{itemize}
+\end{itemize}
+Quindi per ogni transizione in $G$ abbiamo uno stato nel NFA.\\
+\vspace{1px}\\
+Il DFA (automa canonico LR(0)) lo otteniamo:
+\begin{enumerate}
+  \item Costruzione per sottoinsiemi
+  \item Clos(x) e Goto(I, x)
+\end{enumerate}}
 
-\domanda{106}{Come e fatto il parser LR(0) che utilizza la tabella di parsing LR(0)? Quanti stack servono?}{}
+\domanda{105}{Come e fatta una tabella di parsing LR(0)? Come la si riempie a partire dall'automa canonico LR(0)? Quando una grammatica e di classe LR(0)?}{Dato DFA automa canonico LR(0) facciamo una tabella
+\begin{itemize}
+  \item righe: $1$ fino a $|DFA|$
+  \item colonne: $T \cup NT \cup \{\$\}$
+\end{itemize}
+Se dallo stato $q_i$ abbiamo un T che vada a $k$ allora nella casella $(i, T)$ mettiamo $goto(k)$.\\
+Se dallo stato $q_i$ abbiamo un NT che vada a $k$ allora nella casella $(i, NT)$ mettiamo $shift(k)$.\\
+\vspace{1px}\\
+Una grammatica e' LR(0) quando la sua tabella di parsing LR(0) non ha conflitti.}
 
-\domanda{107}{Esistono grammatiche non LR(0)? Fare un esempio semplice.}{}
+\domanda{106}{Come e fatto il parser LR(0) che utilizza la tabella di parsing LR(0)? Quanti stack servono?}{\begin{itemize}
+  \item Automa che genera tabella LR(0) 
+  \item 1 Stack che indica il percorso degli stati (tipo [0,2,3])
+  \item Tabella compilata LR(0)
+  \item Input
+\end{itemize}}
 
-\domanda{108}{Come e fatta e come si riempie una tabella di parsing SLR(1)? Cosa vuol dire l'acronimo SLR? Perche si mette 1 come parametro?}{}
+\domanda{107}{Esistono grammatiche non LR(0)? Fare un esempio semplice.}{Si non avendo lookhaed non riesci a risolvere:
+\begin{align*}
+  S \to aS \mid a
+\end{align*}
+oppure con ricorsione sinistra:
+\begin{align*}
+  S \to Sa \mid a
+\end{align*}
+Non sappiamo se leggiamo "a" se derivi da $Sa$ o $a$.\\
+Questo perche' $First(S)\cap Follow(S) \neq \emptyset.$}
 
-\domanda{109}{Quando una grammatica e di classe SLR(1)? Esistono grammatiche non di classe SLR(1)?}{}
+\domanda{108}{Come e fatta e come si riempie una tabella di parsing SLR(1)? Cosa vuol dire l'acronimo SLR? Perche si mette 1 come parametro?}{Attraverso 1 parametro di $lookhaed$ riusciamo ad ampliare il linguaggio di LR(0) riducendo i conflitti shift-reduce. Infatti
+\begin{align*}
+  LR(0) \subset SRL(1)
+\end{align*}
+Partendo da automa DFA LR(0) riusciamo a modificarlo attraverso 1 simbolo di lookhaed rispettivamente $Follow_1$.\\
+SLR significa: "simple left-to-right rightmost", diciamo \texttt{simple} perche rispetto LR(1) la tecnica di seguire i $Follow$ e' banale e meno precisa.\\
+Per definizione ci serve almeno 1 parametro, infatti SLR(0) non esiste.}
 
-\domanda{110}{Cos'e un item LR(1)? Come si costruisce il NFA LR(1)? E come l'automa canonico LR(1)?}{}
+\domanda{109}{Quando una grammatica e di classe SLR(1)? Esistono grammatiche non di classe SLR(1)?}{Definiamo $G=(NT, T, \delta, S)$ grammatica SLR(1) se la sua tabella di parsing LR(0) + 1 simbolo di lookhaed basata sui i $Follow$ non contiene conflitti.\\
+Si, esistono grammatiche non SLR(1) anche qua possiamo avere conflitti shift-reduce.}
 
-\domanda{111}{Come e fatta e come si riempie una tabella di parsing LR(1)?}{}
+\domanda{110}{Cos'e un item LR(1)? Come si costruisce il NFA LR(1)? E come l'automa canonico LR(1)?}{Un item LR(0) e' tipo:
+\begin{align*}
+  A \to a.
+\end{align*}
+mentre un item LR(1) e'
+\begin{align*}
+  A \to a. \, , a
+\end{align*}
+Ovvero possiamo produrre $A \to a$ solo se il prossimo simbolo e' un "a".\\
+\vspace{1px}\\
+NFA LR(1):
+\begin{itemize}
+  \item $q_0 = [S' \to .S , \mathdollar]$ 
+  \item $q_i$ = \begin{itemize}
+    \item Da $[A \to \omega . xB, a]$ abbiamo una transizione di costo $x \in T$ per andare allo stato $[A \to \omega x . B, a]$
+    \item Da $[A \to \omega . xB, a]$ abbiamo una transizione di costo $\epsilon$ per andare allo stato $[A \to \omega x.B, a]$ per ogni produzione di $x$
+  \end{itemize}
+\end{itemize}
+Dato NFA LR(1) otteniamo il DFA LR(1) (automa canonico LR(1)) in due modi:
+\begin{enumerate}
+  \item Costruzione per sottoinsiemi
+  \item $Clos(x)$ e $Goto(I, x)$
+\end{enumerate}}
 
-\domanda{112}{Come e fatta una tabella di parsing LALR(1)? Quando una grammatica e di classe LALR(1)?}{}
+\domanda{111}{Come e fatta e come si riempie una tabella di parsing LR(1)?}{Dato DFA LR(1) (automa canonico LR(1)) facciamo la tabella:
+\begin{itemize}
+  \item righe: 1 fino a $|DFA|$
+  \item colonne: $T \cup NT \cup \{\mathdollar\}$
+\end{itemize}
+Se dallo stato $q_i$ abbiamo un T che vada a $k$ allora nella casella $(i, T)$ mettiamo $goto(k)$.\\
+Se dallo stato $q_i$ abbiamo un NT che vada a $k$ allora nella casella $(i, NT)$ mettiamo $shift(k)$.\\
+}
 
-\domanda{113}{Esistono grammatiche LALR(1) che non sono SLR(1)? Esistono grammatiche LR(1) che non sono LALR(1)? Mostrare una grammatica che e LR(1) ma non LALR(1).}{}
+\domanda{112}{Come e fatta una tabella di parsing LALR(1)? Quando una grammatica e di classe LALR(1)?}{Partendo dall'automa LR(1) si fondono gli stati con \texttt{core} identico:
+Dati due stati dall'automa DFA LR(1):
+\begin{align*}
+  Stato 1 \, := & \, \\
+  &[A \to \alpha . \beta, a] \\
+  &[B \to \gamma .,   b] \\
+  Stato 2 \, := & \, \\
+  &[A \to \alpha . \beta, c] \\
+  &[B \to \gamma ., d]
+\end{align*}
+Stato 1 e 2 hanno lo stesso core $\Rightarrow$ in LALR(1) li fondiamo.\\
+\begin{align*}
+  Stato 1/2 \, := &\, \\
+  &[A \to \alpha . \beta, a/c] \\
+  &[B \to \gamma .,   b/d] \\
+\end{align*}
+Nella tabella gli shift/goto rimangono uguali bisogna solo aggiornare gli indici nuovi con quelli fusi.\\
+\vspace{1px}\\
+Una grammatica $G=(NT, T, \delta, S)$ e' di classe LALR(1) quando la tabella di parsing LALR(1) non ha conflitti.}
 
-\domanda{114}{Come si puo generalizzare l'idea per ogni $k \geq 2$? Ovvero quando una grammatica e di classe LR(k), SLR(k) o LALR(k)?}{}
+\domanda{113}{Esistono grammatiche LALR(1) che non sono SLR(1)? Esistono grammatiche LR(1) che non sono LALR(1)? Mostrare una grammatica che e LR(1) ma non LALR(1).}{Si esistono, infatti
+\begin{align*}
+  SLR(1) \subset LALR(1) \subset LR(1)
+\end{align*}
+Ecco un esempio di grammatica LR(1) e non LALR(1):
+\begin{align*}
+S &\to aEb \mid bEa \mid aFa \mid bFb \\
+E &\to e \\
+F &\to e
+\end{align*}}
 
-\domanda{115}{Come si relazionano le grammatiche della famiglia LR (LR, SLR, LALR) al variare di k? Come si relazionano le grammatiche LR(k) e LL(k) al variare di k? Le grammatiche LR(k) e LL(k) sono sempre non ambigue? Esistono grammatiche che non sono LR(k) per nessun k?}{}
+\domanda{114}{Come si puo generalizzare l'idea per ogni $k \geq 2$? Ovvero quando una grammatica e di classe LR(k), SLR(k) o LALR(k)?}{
+  \begin{itemize}
+    \item $First_k(A) = \{w \mid A \to^* wv \quad \text{ con } |w| \leq k\}$
+    \item $Follow_k(A) = \{w \mid S\to^* Awv \quad \text{ con } |w|\leq k\}$
+  \end{itemize}
+E generalizziamo:
+\begin{itemize}
+  \item $SLR(k)$ si basa su LR(0) e segue per tutti i $Follow_k$
+  \item $LR(k)$ si basa sui lookhaed esatti ad ogni istante
+  \item $LALR(k)$ si basa su $LR(k)$ e unisce gli stati per nucleo
+\end{itemize}
+}
 
-\domanda{116}{Come si relazionano i linguaggi della famiglia LR(k) rispetto a quelli LL(k)? Esistono linguaggi liberi deterministici che non sono LR(k) per qualche k? Esistono linguaggi liberi deterministici che non sono LL(k) per qualche k?}{}
+\domanda{115}{Come si relazionano le grammatiche della famiglia LR (LR, SLR, LALR) al variare di k? Come si relazionano le grammatiche LR(k) e LL(k) al variare di k? Le grammatiche LR(k) e LL(k) sono sempre non ambigue? Esistono grammatiche che non sono LR(k) per nessun k?}{
+  \begin{align*}
+    &LR(k-1) \subset SLR(k) \subset LALR(k) \subset LR(k)\\
+    &LL(k) \subset LR(k)
+  \end{align*}
+  Essendo parser deterministici $LL$ e $LR$ per definizione le grammatiche sono non-ambigue.\\
+  Sappiamo che 
+  \begin{align*}
+    LR(k) \subset CFG
+  \end{align*}
+  No, non esistono grammatiche LR(k) che non sono DCFL per nessun $k$ infatti vale:
+  \begin{align*}
+    \bigcup_{k \geq 1} LR(k) = DCFL
+  \end{align*}
+}
 
-\domanda{117}{Esiste un linguaggio regolare che non e LR(0)? Come si relazionano i linguaggi LR(0) rispetto a quelli LL(1)? La prefix property e una condizione necessaria e sufficiente affinche un linguaggio sia di classe LR(0)?}{}
+\domanda{116}{Come si relazionano i linguaggi della famiglia LR(k) rispetto a quelli LL(k)? Esistono linguaggi liberi deterministici che non sono LR(k) per qualche k? Esistono linguaggi liberi deterministici che non sono LL(k) per qualche k?}{
+  \begin{align*}
+    LL(k) \subset LR(k)
+  \end{align*}
+  Si esistono linguaggi liberi deterministici che non sono LR(k) per qualche (non tutti) k:
+  \begin{align*}
+    LR(k) \subset DCFL \subset CFG
+  \end{align*}
+  Si esistono linguaggi liberi deterministici che non sono LL(k) per qualche (non tutti) k:
+\begin{align*}
+      LL(k) \subset LR(k) \subset DCFL \subset CFG
+\end{align*}
+  }
 
-\domanda{118}{La classe dei linguaggi SLR(1) coincide con la classe dei linguaggi liberi deterministici?}{}
+\domanda{117}{Esiste un linguaggio regolare che non e LR(0)? Come si relazionano i linguaggi LR(0) rispetto a quelli LL(1)? La prefix property e una condizione necessaria e sufficiente affinche un linguaggio sia di classe LR(0)?}{
+  \begin{align*}
+    &REG \subset DCFG \subset CFG\\
+    &LR(k) \subset DCFG \subset CFG\\
+    & \Rightarrow REG \neq LR(k)
+  \end{align*}
+  Quindi esistono linguaggi regolari ma non LR(0).\\
+  \vspace{1px}\\
+  LR(0) e LL(1) non sono combatibili in relazione.\\
+  \vspace{1px}\\
+  Si la prefix propriety e' necessaria (se no avremmo conflitti shift-reduce) per essere LR(0) ma non e' sufficiente.
+}
 
-\domanda{119}{Cos'e YACC? Qual e il suo input e il suo output? Come si ottiene un parser eseguibile a partire da un file .y? Come agisce il parser generato da YACC in sintonia con lo scanner generato da Lex?}{}
+\domanda{118}{La classe dei linguaggi SLR(1) coincide con la classe dei linguaggi liberi deterministici?}{No
+\begin{align*}
+  SLR(1) \subset LALR(1) \subset LR(1) \subset DCFL
+\end{align*}}
 
-\domanda{120}{Come e la struttura di un file .y di YACC? Cosa sono le regole? Cos'e l'azione semantica?}{}
+\domanda{119}{Cos'e YACC? Qual e il suo input e il suo output? Come si ottiene un parser eseguibile a partire da un file .y? Come agisce il parser generato da YACC in sintonia con lo scanner generato da Lex?}{Yacc e' un generatore di parser,
+dato un file \texttt{.y} dove definiamo dichiarazioni, regole e definizioni e ci restituisce il parser \texttt{.c} .\\
+Il parser YACC chiama attraverso la funzione \texttt{yylex()} il lexer che restituisce i token. }
 
-\domanda{121}{E possibile gestire grammatiche ambigue con YACC, specificando le associativita e le priorita fra gli operatori per risolvere l'ambiguita? Come si comporta YACC in presenza di conflitti?}{}
+\domanda{120}{Come e la struttura di un file .y di YACC? Cosa sono le regole? Cos'e l'azione semantica?}{Un file \texttt{.y} e' diviso in:
+\begin{enumerate}
+  \item Dichiarazioni 
+  \item Regole grammaticali ($S \to A \mid B$)
+  \item Definizioni ausiliarie
+\end{enumerate}
+Le regole sarebbero la gramamtica che il parser deve seguire.\\
+\vspace{1px}\\
+L'azione semantica è il codice C che esegui in occasione di quella riduzione — è separata e opzionale. Potresti ridurre senza fare nulla, oppure sommare (interprete), oppure costruire un nodo AST (compilatore), oppure emettere codice assembly.}
+
+\domanda{121}{E possibile gestire grammatiche ambigue con YACC, specificando le associativita e le priorita fra gli operatori per risolvere l'ambiguita? Come si comporta YACC in presenza di conflitti?}{Sì, YACC permette di usare grammatiche ambigue dichiarando esplicitamente precedenza e associatività con:\\
+\begin{center}
+  \%left  '+'  '-'\\
+  \%left  '*'  '/'\\
+  \%right '!'\\
+\end{center}
+Piu' basso = precedenza maggiore.\\
+\vspace{1px}\\
+In presenza di conflitti YACC non si ferma — compila lo stesso ma emette un warning e applica regole di default:
+\begin{itemize}
+  \item shift/reduce conflict $\to$ di default fa shift
+  \item reduce/reduce conflict $\to$ di default riduce con la produzione che appare prima nel file
+\end{itemize}}
 
 % ----------------------------------------------------------------
 \subsection{Capitolo 5 -- Fondamenti}
 % ----------------------------------------------------------------
 
-\domanda{122}{E possibile costruire un programma Check che, preso in input un qualunque programma P, restituisce 1 se P e corretto e 0 se P e scorretto? Ovvero esiste un qualche compilatore che puo scovare tutti i possibili errori di un programma?}{}
+\domanda{122}{E possibile costruire un programma Check che, preso in input un qualunque programma P, restituisce 1 se P e corretto e 0 se P e scorretto? Ovvero esiste un qualche compilatore che puo scovare tutti i possibili errori di un programma?}{Non puo' esistere per l'Halting Problem.\\
+Immaginiamo il programma "notCheck" cosi:
+\begin{itemize}
+  \item if Check(P) == 1:
+  \begin{itemize}
+    \item loop infinito
+  \end{itemize}
+  \item termina
+\end{itemize}
+Ma se passiamo notCheck(notCheck) se Check(notCheck) rileva errori pero' notCheck terminera'.\\
+Mentre se non rileva errori va in loop infinito (che e' un errore).\\
+Quindi e' impossibile.}
 
-\domanda{123}{Cosa dice il problema della fermata (Halting Problem)? Come si dimostra che il problema non puo essere risolto?}{}
+\domanda{123}{Cosa dice il problema della fermata (Halting Problem)? Come si dimostra che il problema non puo essere risolto?}{Dato il problema: "possiamo creare un compilatore che staticamente rilevi tutti gli errori runtime?".\\ 
+Definiamo $H$ l'algoritmo che rilevi se un programma dia errore o no:
+\begin{align*}
+  H(P, \text{input}) = \begin{cases}
+    1 & \text{ terminato correttamente}\\
+    0 & \text{ errore}
+  \end{cases}
+\end{align*}
+Definiamo $K(P)=H(P, P).$
+\begin{align*}
+  K(P) = H(P,P) = \begin{cases}
+    1 & \text{$P(P)$ terminato correttamente}\\
+    0 & \text{$P(P)$ errore}
+  \end{cases}
+\end{align*}
+Definamo $G(P)=!K(P)$
+\begin{align*}
+  G(P) = !K(P) = !H(P,P) = \begin{cases}
+    0 & \text{$P(P)$ terminato correttamente}\\
+    1 & \text{$P(P)$ errore}
+  \end{cases}
+\end{align*}
+Ma cosa succede con $G(G)$?
+  \begin{align*}
+  G(G) = !K(G) = !H(G,G) = \begin{cases}
+    0 & \text{$P(G)$ terminato correttamente}\\
+    1 & \text{$P(G)$ errore}
+  \end{cases}
+\end{align*}
+Ma questo vuol dire che:
+\begin{align*}
+  G(G)=0 & \text{ sse } \text{$G(G)=1$ terminato correttamente}\\
+  G(G)=1 & \text{ sse } \text{$G(G)=0$ errore}
+\end{align*}
+Abbiamo dimostrato $1=0$, quindi assurdo!\\
+$G$ non esiste $\Rightarrow$ $K$ non esiste $\Rightarrow$ $H$ non esiste!
+}
 
-\domanda{124}{Quando un problema e decidibile?}{}
+\domanda{124}{Quando un problema e decidibile?}{Una proprietà è decidibile se esiste un algoritmo che, dato un programma in input, risponde sempre sì o no in tempo finito.\\
+Una proprieta' e' indeducibile quando non può esistere nessun algoritmo che risponda sempre correttamente. Non è questione di potenza di calcolo o tempo — è impossibile in linea di principio.\\
+Un esempio e' L'Halting Problem.}
 
-\domanda{125}{Quali sono tipici esempi di proprieta indecidibili per i linguaggi di programmazione?}{}
+\domanda{125}{Quali sono tipici esempi di proprieta indecidibili per i linguaggi di programmazione?}{
+  \begin{itemize}
+    \item Halting Problem
+    \item Equivalenza fra due programmi (dovremmo provare tutti gli input possibili, infiniti)
+    \item Correttezza (per tutti gli input, infiniti)
+    \item Raggiungibilita' (per tutti gli input, infiniti)
+    \item Errori a runtime (per tutti gli input, infiniti)
+  \end{itemize}
+}
 
-\domanda{126}{Cos'e una Macchina di Turing (MdT)? Che cosa calcola?}{}
+\domanda{126}{Cos'e una Macchina di Turing (MdT)? Che cosa calcola?}{Una macchina di Turing e' un automa $M=(Q, \Sigma, \Sigma_B, \delta, q_0, q_f)$
+\begin{itemize}
+  \item $Q$ insieme stati
+  \item $\Sigma$ alfabeto input
+  \item $\Sigma_B$ alfabeto input del nastro
+  \item $\delta$ funzione transizione
+  \item $q_0$ stato iniziale
+  \item $q_f$ stato finale
+\end{itemize}
+Calcola un risultato di funzione (sul nastro) se l'algortimo termina corretamente.}
 
-\domanda{127}{Quando un linguaggio e detto Turing-completo? Cosa afferma la tesi di Church-Turing e perche non si puo dimostrare?}{}
+\domanda{127}{Quando un linguaggio e detto Turing-completo? Cosa afferma la tesi di Church-Turing e perche non si puo dimostrare?}{Quando puo' implemetare una macchina di Turing, ovvero serve al minimo:
+\begin{itemize}
+  \item Variabili
+  \item Salti condizionati (if-else)
+  \item While (finiti/infiniti)
+  \item (Ricorsione)
+\end{itemize}
+\vspace{1px}
+Church-Turing ha definito che qualsiasi metodo "manuale" possa essere emulato da una macchina di Turing, non si puo' dimostrare perche' e' un concetto filosofico e non matematico. Anche se volessimo farlo dovremmo dimostrarlo su infiniti input.
+}
 
-\domanda{128}{I normali linguaggi di programmazione sono Turing-completi? Cosa afferma il teorema di Jacopini-Bohm?}{}
+\domanda{128}{I normali linguaggi di programmazione sono Turing-completi? Cosa afferma il teorema di Jacopini-Bohm?}{Si i linguaggi standard sono Turing completi.\\
+Jacopini-Bohm dimostra come qualsiasi astrazione di controllo puo' implementata se abbiamo soltanto:
+\begin{itemize}
+  \item sequenza di comandi
+  \item if-else
+  \item while
+\end{itemize}
+Ovvero il \texttt{goto} e \texttt{ricorsione} non serve.}
 
-\domanda{129}{Quale relazione esiste tra espressivita di un formalismo e decidibilita di proprieta dello stesso? Fare una panoramica prendendo in esame i tre formalismi MdT, PDA, DFA, e le due proprieta $w \in L(M)$ e $L(M_1) = L(M_2)$.}{}
+\domanda{129}{Quale relazione esiste tra espressivita di un formalismo e decidibilita di proprieta dello stesso? Fare una panoramica prendendo in esame i tre formalismi MdT, PDA, DFA, e le due proprieta $w \in L(M)$ e $L(M_1) = L(M_2)$.}{
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+\textbf{Proprietà} & \textbf{DFA} & \textbf{PDA} & \textbf{MdT} \\
+\hline
+$w \in L(M)$ & decidibile & decidibile & solo riconoscibile \\
+$L(M_1) = L(M_2)$ & decidibile & indecidibile & indecidibile \\
+\hline
+\end{tabular}
+\end{center}
+\textbf{Membership $w \in L(M)$:}
+\begin{itemize}
+  \item \textbf{DFA}: si simula l'automa su $w$ passo per passo. L'automa ha un numero finito di stati e $w$ è finita, quindi termina sempre. Decidibile.
+  \item \textbf{PDA}: analogamente si simula il PDA su $w$. Anche qui la computazione termina sempre (per PDA deterministici; per quelli non deterministici si esplorano tutti i rami). Decidibile.
+  \item \textbf{MdT}: la macchina potrebbe non terminare mai su certi input, andando in loop infinito. Non esiste un algoritmo che risponda sempre. Il problema è solo \emph{riconoscibile}: se $w \in L(M)$ la macchina prima o poi accetta, ma se $w \notin L(M)$ potrebbe non fermarsi mai.
+\end{itemize}
+\textbf{Equivalenza $L(M_1) = L(M_2)$:}
+\begin{itemize}
+  \item \textbf{DFA}: si minimizzano entrambi gli automi tramite l'algoritmo di minimizzazione, ottenendo due DFA canonici. Se sono isomorfi i linguaggi sono uguali. Decidibile.
+  \item \textbf{PDA}: non esiste un algoritmo generale. Si dimostra per riduzione dall'Halting Problem o da altri problemi indecidibili noti sui linguaggi context-free. Indecidibile.
+  \item \textbf{MdT}: proprietà non banale della funzione calcolata, quindi indecidibile per il \textbf{Teorema di Rice}.
+\end{itemize}
+\textbf{Relazione generale:} più un formalismo è espressivo, meno proprietà su di esso sono decidibili. La potenza espressiva ha un costo: al crescere di ciò che il formalismo può calcolare, si perde la capacità di ragionare staticamente sul suo comportamento.
+}
+% ================================================================
+\section{Modulo 2 -- Gabbrielli}
+% ================================================================
 
+\domanda{1}{Definizione di ambiente.}{}
+\domanda{2}{Cos'è un blocco?}{}
+\domanda{3}{Differenza tra scope statico e dinamico. Qual è il loro potere espressivo?}{}
+\domanda{4}{Scope statico implementato con catena statica: come funziona? E scope dinamico con catena dinamica? Vantaggi e svantaggi?}{}
+\domanda{5}{Come si determina il contatore di catena statica?}{}
+
+\domanda{6}{Differenza tra espressione e comando.}{}
+\domanda{7}{Nei linguaggi funzionali ci sono comandi?}{}
+\domanda{8}{Differenza tra iterazione determinata e indeterminata.}{}
+\domanda{9}{Quali sono i comandi condizionali? Vantaggi tra if e switch.}{}
+
+\domanda{10}{Cos'è il passaggio per riferimento e come funziona?}{}
+\domanda{11}{Quando una funzione restituisce un'altra funzione come parametro, cosa succede?}{}
+\domanda{12}{Cos'è la ricorsione in coda?}{}
+
+\domanda{13}{Come sono memorizzati gli array? Cos'è il dope vector?}{}
+\domanda{14}{Come funziona l'invocazione dinamica di un metodo? Come avviene l'invocazione Object-oriented?}{}
+\domanda{15}{Cos'è un sottotipo? Ereditarietà e sottotipi in Java.}{}
+\domanda{16}{Metodi per implementare l'ereditarietà.}{}
+\domanda{17}{Differenza tra parte pubblica e parte privata.}{}
+
+\domanda{18}{Cos'è il tipo void? Che insieme di valori denota?}{}
+\domanda{19}{Esistono linguaggi non tipati? Che vantaggi ci sono? Dal punto di vista dell'efficienza cambia qualcosa?}{}
+
+\domanda{20}{Cos'è il CRT e a cosa serve?}{}
+\domanda{21}{Garbage collection: come funzionano i contatori dei riferimenti?}{}
+\domanda{22}{Posso implementare la comunicazione sincrona con quella asincrona?}{}
+
+% ================================================================
+\section{Modulo 3 -- Giallorenzo}
+% ================================================================
+
+\domanda{1}{A cosa servono i sistemi di tipi?}{}
+\domanda{2}{Quando un linguaggio è strongly typed e quando è weakly typed?}{}
+\domanda{3}{Tipaggio statico e tipaggio dinamico: differenze ed esempi di linguaggi.}{}
+\domanda{4}{Come funziona il sistema di tipi di JavaScript e Python?}{}
+\domanda{5}{Controlli statici sui tipi contro controlli dinamici. Cenno all'halting problem.}{}
+
+\domanda{6}{Differenza tra tipaggio nominale e strutturale. Perché sceglierne uno o l'altro? Pro e contro.}{}
+\domanda{7}{Cos'è il duck typing e connessione con lo structural typing. Pro e contro.}{}
+\domanda{8}{Differenza tra manifest e inferred typing. Pro e contro.}{}
+\domanda{9}{Descrivimi l'algoritmo di unificazione e il suo funzionamento.}{}
+\domanda{10}{Che tipaggio usa Java?}{}
+\domanda{11}{Come funzionano equivalenza e comparazione nel typing nominale?}{}
+
+\domanda{12}{Cos'è un tipo prodotto? Fai un esempio.}{}
+\domanda{13}{Cos'è un tipo somma? Qual è la differenza tra tipo somma e tipo prodotto?}{}
+\domanda{14}{Differenza tra definizione estensionale e intensionale. Come si combina col sub-typing?}{}
+\domanda{15}{Sottotipaggio e definizione degli enum. Differenza tra int ed enum.}{}
+\domanda{16}{Definisci un tipo ricorsivo prodotto. Quale potrebbe essere un suo abitante?}{}
+\domanda{17}{Cos'è un tipo ricorsivo?}{}
+\domanda{18}{Come scriverebbe il tipo lista come tipo ricorsivo prodotto?}{}
+\domanda{19}{Cos'è un tipo intersezione?}{}
+\domanda{20}{Cosa sono i tipi parametrici? In che modo sono utilizzati nel polimorfismo?}{}
+
+\domanda{21}{Quali sono i tipi di polimorfismo?}{}
+\domanda{22}{Polimorfismo di sovraccarico e dynamic dispatch: quali sono le differenze?}{}
+\domanda{23}{Controvarianza e covarianza: quando le troviamo e come mai?}{}
+\domanda{24}{Cos'è il sub-typing?}{}
+\domanda{25}{Nel momento in cui dico che A è un sottotipo di B, quali proprietà deve avere A?}{}
+\domanda{26}{Principio di sostituzione di Liskov.}{}
+
+\domanda{27}{Quali sono i 4 pilastri dell'OOP? (attenzione: dynamic dispatch al posto di polimorfismo)}{}
+\domanda{28}{Classi, oggetti, interfacce e prototipi: differenze e caratteristiche.}{}
+\domanda{29}{Differenza tra sistemi basati su classi e sistemi basati su prototipi. Che garanzie offrono?}{}
+\domanda{30}{La relazione tra sottotipaggio ed ereditarietà nell'OO. Differenza pratica tra sottotipi e sottoclassi.}{}
+\domanda{31}{Ereditarietà singola e multipla: differenze e metodi per risolvere i conflitti.}{}
+\domanda{32}{Perché i costruttori si possono solo sovraccaricare e non fare overriding?}{}
+\domanda{33}{Differenza tra overriding e overloading.}{}
+
+\domanda{34}{I 2 metodi di implementazione del dynamic dispatch. Qual è il più efficiente?}{}
+\domanda{35}{Come si fa in memoria il dynamic dispatch? Come si memorizzano vtable e funzioni?}{}
+\domanda{36}{In una classe, dove vivono i metodi e i campi e come vengono memorizzati?}{}
+\domanda{37}{Cos'è il problema della classe base fragile?}{}
+
+\domanda{38}{Coercizione e casting: cosa sono e differenze.}{}
+\domanda{39}{Differenza tra typed casting e type coercion. Perché non si usano nel polimorfismo generale in Java?}{}
+\domanda{40}{Differenza tra void e unit.}{}
+\domanda{41}{Differenza tra maybe e option.}{}
+
+\domanda{42}{Differenza tra array unidimensionali e multidimensionali. Row-major vs column-major: pro, contro e caching.}{}
+\domanda{43}{Array in relazione a weakly-typed e C. Vantaggi e svantaggi dell'interoperabilità tra array e puntatori.}{}
+\domanda{44}{Cos'è il dope vector e qual è il suo utilizzo? Dove viene allocato?}{}
+\domanda{45}{Differenza degli array fra Java e C. Come fa Java a gestire gli array?}{}
+
+\domanda{46}{Garbage collection: quali implementazioni abbiamo visto e come funzionano?}{}
+\domanda{47}{Limiti del reference counting.}{}
+\domanda{48}{Garbage collector con il costo più basso di memoria?}{}
+\domanda{49}{Problemi di un garbage collector stop-the-world. In quali applicazioni crea problemi? Alternative?}{}
+\domanda{50}{Cosa significa che un valore non è garbage?}{}
+\domanda{51}{Cosa sono i dangling pointers e le dangling reference?}{}
+\domanda{52}{Cos'è una use after free?}{}
+\domanda{53}{Cosa sono i wide pointers / initialized pointers?}{}
+\domanda{54}{Tecniche di protezione della memoria e loro problemi.}{}
+
+\domanda{55}{Cosa sono le eccezioni? A cosa servono? Come sono gestite in Java?}{}
+\domanda{56}{Ci sono similitudini tra eccezioni e tipaggio?}{}
+\domanda{57}{Tipi di gestione degli errori. Cos'è il result type? Cos'è il tipo option/maybe?}{}
+
+\domanda{58}{Differenza tra abstract data types e oggetti. Possono convivere nello stesso codice?}{}
+\domanda{59}{Definisci i tipi di dato astratti.}{}
+\domanda{60}{Cosa vuol dire dal punto di vista concettuale e pratico avere diverse visibilità (pubblica/privata)?}{}
+
+\domanda{61}{Se le funzioni fossero come le funzioni matematiche, come potremmo ottimizzarne l'esecuzione?}{}
+\domanda{62}{Cos'è una relazione? Come ottimizzare il calcolo di una funzione con dominio molto piccolo?}{}
 \end{document}

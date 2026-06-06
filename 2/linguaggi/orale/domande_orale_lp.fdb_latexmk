@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1780645581.44457 "/home/nico/Desktop/uni/2/linguaggi/orale/domande_orale_lp.tex" "domande_orale_lp.pdf" "domande_orale_lp" 1780645587.59005 0
+["pdflatex"] 1780729399.82527 "/home/nico/Desktop/uni/2/linguaggi/orale/domande_orale_lp.tex" "domande_orale_lp.pdf" "domande_orale_lp" 1780729408.02871 0
   "/etc/texmf/web2c/texmf.cnf" 1758984917.6732 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/nico/Desktop/uni/2/linguaggi/orale/domande_orale_lp.tex" 1780645574.85134 43967 102749cfbc29f727ad52c194c1f0f861 ""
+  "/home/nico/Desktop/uni/2/linguaggi/orale/domande_orale_lp.tex" 1780729391.08916 77460 80e0c5ab9b21025976623e39bf57a7c0 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbi1200.tfm" 1136768653 3072 ccae1a240ab272417e4399fe942df546 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
@@ -143,6 +143,7 @@
   "/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty" 1738182759 5275 0d62fb62162c7ab056e941ef18c5076d ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty" 1738182759 5048 0270515b828149155424600fd2d58ac5 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo" 1738182759 8449 ffe4ba2166a344827c3a832d1d5e0a91 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty" 1579038678 6078 f1cb470c9199e7110a27851508ed7a5c ""
   "/usr/share/texlive/texmf-dist/tex/latex/elocalloc/elocalloc.sty" 1481841771 1428 7d469063535b93044f827bfdb1b0a130 ""
   "/usr/share/texlive/texmf-dist/tex/latex/enumitem/enumitem.sty" 1738874546 52272 63d293bc0d496619edb57585740861a2 ""
   "/usr/share/texlive/texmf-dist/tex/latex/environ/environ.sty" 1399239813 4378 f429f0da968c278653359293040a8f52 ""
@@ -173,6 +174,10 @@
   "/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty" 1738271527 6565 f51d809db6193fae7b06c1bc26ca8f75 ""
   "/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty" 1724879202 9783 ab4bee47700c04aadedb8da27591b0ab ""
   "/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg" 1279039959 678 4792914a8f45be57bb98413425e4c7af ""
+  "/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg" 1727126400 1865 301ae3c26fb8c0243307b619a6aa2dd3 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty" 1727126400 81640 997090b6c021dc4af9ee00a97b85c5b4 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty" 1727126400 77051 be68720e5402397a830abb9eed5a2cb4 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/listings/lstpatch.sty" 1710360531 353 9024412f43e92cd5b21fe9ded82d0610 ""
   "/usr/share/texlive/texmf-dist/tex/latex/mathpartir/mathpartir.sty" 1456439960 14401 0712448ba80da5750b26552c69bbf0c8 ""
   "/usr/share/texlive/texmf-dist/tex/latex/mdframed/md-frame-1.mdf" 1372805434 24632 760c4c81e779e6958bac43417deb524f ""
   "/usr/share/texlive/texmf-dist/tex/latex/mdframed/mdframed.sty" 1372805434 53487 3e997243f47cb3ba8b4c7b8df9c82989 ""
@@ -214,10 +219,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1772808045 5467255 9a64d1b40e0b893fc5588ecce9d8accf ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1772808145 3349296 92ae11ed9b913348834dd0189eeaf1c3 ""
-  "domande_orale_lp.aux" 1780645587.29531 7426 b0ff17774e9e5c8369eb827c5c8892cd "pdflatex"
-  "domande_orale_lp.out" 1780645587.29631 1694 fbb947b7ade8459d8729c4e38bc6ab9f "pdflatex"
-  "domande_orale_lp.tex" 1780645574.85134 43967 102749cfbc29f727ad52c194c1f0f861 ""
-  "domande_orale_lp.toc" 1780645587.29731 646 fe905862dfff48d372e79062069486c7 "pdflatex"
+  "domande_orale_lp.aux" 1780729407.70372 11833 148637fddc099f00669208717a4fc817 "pdflatex"
+  "domande_orale_lp.out" 1780729407.70672 2019 7e7f304887f8c1875dc06b7f1aa168fd "pdflatex"
+  "domande_orale_lp.tex" 1780729391.08916 77460 80e0c5ab9b21025976623e39bf57a7c0 ""
+  "domande_orale_lp.toc" 1780729407.70756 805 1b07a275a786bb574a1bcfd9d7cbf82f "pdflatex"
   "img/NFA.png" 1780581855.09509 173104 10acd52cd5ef04065787c4984c95d7b5 ""
   (generated)
   "domande_orale_lp.aux"

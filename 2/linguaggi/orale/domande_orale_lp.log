@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  5 JUN 2026 09:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  6 JUN 2026 09:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -691,6 +691,49 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box97
 \@float@everytoks=\toks57
 \@floatcapt=\box98
+) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count358
+\lst@gtempboxa=\box99
+\lst@token=\toks58
+\lst@length=\count359
+\lst@currlwidth=\dimen283
+\lst@column=\count360
+\lst@pos=\count361
+\lst@lostspace=\dimen284
+\lst@width=\dimen285
+\lst@newlines=\count362
+\lst@lineno=\count363
+\lst@maxwidth=\dimen286
+ (/usr/share/texlive/texmf-dist/tex/latex/listings/lstpatch.sty
+File: lstpatch.sty 2024/09/23 1.10c (Carsten Heinz)
+) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
+\c@lstnumber=\count364
+\lst@skipnumbers=\count365
+\lst@framebox=\box100
+) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2024/09/23 1.10c listings configuration
+))
+Package: listings 2024/09/23 1.10c (Carsten Heinz)
+ (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen287
+\lightrulewidth=\dimen288
+\cmidrulewidth=\dimen289
+\belowrulesep=\dimen290
+\belowbottomsep=\dimen291
+\aboverulesep=\dimen292
+\abovetopsep=\dimen293
+\cmidrulesep=\dimen294
+\cmidrulekern=\dimen295
+\defaultaddspace=\dimen296
+\@cmidla=\count366
+\@cmidlb=\count367
+\@aboverulesep=\dimen297
+\@belowrulesep=\dimen298
+\@thisruleclass=\count368
+\@lastruleclass=\count369
+\@thisrulewidth=\dimen299
 ) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryautomata.code.tex
 File: tikzlibraryautomata.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex
@@ -703,24 +746,24 @@ LaTeX Warning: Unused global option(s):
 (./domande_orale_lp.aux)
 \openout1 = `domande_orale_lp.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -758,28 +801,29 @@ LaTeX Font Info:    ... okay on input line 43.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count358
-\scratchdimen=\dimen283
-\scratchbox=\box99
-\nofMPsegments=\count359
-\nofMParguments=\count360
-\everyMPshowfont=\toks58
-\MPscratchCnt=\count361
-\MPscratchDim=\dimen284
-\MPnumerator=\count362
-\makeMPintoPDFobject=\count363
-\everyMPtoPDFconversion=\toks59
+\scratchcounter=\count370
+\scratchdimen=\dimen300
+\scratchbox=\box101
+\nofMPsegments=\count371
+\nofMParguments=\count372
+\everyMPshowfont=\toks59
+\MPscratchCnt=\count373
+\MPscratchDim=\dimen301
+\MPnumerator=\count374
+\makeMPintoPDFobject=\count375
+\everyMPtoPDFconversion=\toks60
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 43.
+Package hyperref Info: Link coloring OFF on input line 44.
  (./domande_orale_lp.out) (./domande_orale_lp.out)
 \@outlinefile=\write5
 \openout5 = `domande_orale_lp.out'.
 
+\c@lstlisting=\count376
  (./domande_orale_lp.toc)
 \tf@toc=\write6
 \openout6 = `domande_orale_lp.toc'.
@@ -789,45 +833,45 @@ Package hyperref Info: Link coloring OFF on input line 43.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
-Overfull \hbox (8.54646pt too wide) in paragraph at lines 63--63
+Overfull \hbox (8.54646pt too wide) in paragraph at lines 64--64
 \T1/cmr/bx/n/12 Che cos'e un in-ter-prete? In cosa con-siste il ci-clo fetch-decode-execute?             
  []
 
-Package mdframed Info: Not enough space on this page on input line 76.
+Package mdframed Info: Not enough space on this page on input line 77.
 
 
 [2]
-Package mdframed Info: Not enough space on this page on input line 76.
+Package mdframed Info: Not enough space on this page on input line 77.
 
 
 [3]
-Package mdframed Info: Not enough space on this page on input line 102.
+Package mdframed Info: Not enough space on this page on input line 103.
 
 
 [4]
-Package mdframed Info: Not enough space on this page on input line 102.
-Package mdframed Info: Not enough space on this page on input line 125.
+Package mdframed Info: Not enough space on this page on input line 103.
+Package mdframed Info: Not enough space on this page on input line 126.
 
 
 [5{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-Package mdframed Info: Not enough space on this page on input line 125.
-Package mdframed Info: Not enough space on this page on input line 169.
+Package mdframed Info: Not enough space on this page on input line 126.
+Package mdframed Info: Not enough space on this page on input line 170.
 
 
 [6]
-Package mdframed Info: Not enough space on this page on input line 169.
+Package mdframed Info: Not enough space on this page on input line 170.
 
-Overfull \hbox (3.49089pt too wide) in paragraph at lines 172--172
-\T1/cmr/bx/n/12 Cos'e un al-bero di derivazione? Cos'e una derivazione canon-ica sin-is-tra/destra?
+Overfull \hbox (3.11043pt too wide) in paragraph at lines 173--173
+\T1/cmr/bx/n/12 stra? Es-iste una cor-rispon-denza bi-u-ni-voca tra al-beri di derivazioni e derivazioni
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 219--219
+Underfull \hbox (badness 10000) in paragraph at lines 220--220
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 219--219
+Underfull \hbox (badness 10000) in paragraph at lines 220--220
 
  []
 
@@ -838,429 +882,429 @@ Underfull \hbox (badness 10000) in paragraph at lines 219--219
 [8]
 
 [9]
-Overfull \hbox (8.67868pt too wide) in paragraph at lines 267--267
+Overfull \hbox (8.67868pt too wide) in paragraph at lines 268--268
 []\T1/cmr/m/it/12 Semantica de-no-tazionale: as-so-cia a ogni costrutto del lin-guag-gio un oggetto matem-
  []
 
 
-Overfull \vbox (0.83998pt too high) detected at line 310
+Overfull \vbox (0.83998pt too high) detected at line 311
  []
 
 Package mdframed Info: Box was splittet wrong
  starting loop to iterate the splitting point
-(mdframed)              on input line 310.
+(mdframed)              on input line 311.
 
-Overfull \vbox (1.83998pt too high) detected at line 310
+Overfull \vbox (1.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (2.83998pt too high) detected at line 310
+Overfull \vbox (2.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (3.83998pt too high) detected at line 310
+Overfull \vbox (3.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (4.83998pt too high) detected at line 310
+Overfull \vbox (4.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (5.83998pt too high) detected at line 310
+Overfull \vbox (5.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (6.83998pt too high) detected at line 310
+Overfull \vbox (6.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (7.83998pt too high) detected at line 310
+Overfull \vbox (7.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (8.83998pt too high) detected at line 310
+Overfull \vbox (8.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (9.83998pt too high) detected at line 310
+Overfull \vbox (9.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (10.83998pt too high) detected at line 310
+Overfull \vbox (10.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (11.83998pt too high) detected at line 310
+Overfull \vbox (11.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (12.83998pt too high) detected at line 310
+Overfull \vbox (12.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (13.83998pt too high) detected at line 310
+Overfull \vbox (13.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (14.83998pt too high) detected at line 310
+Overfull \vbox (14.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (15.83998pt too high) detected at line 310
+Overfull \vbox (15.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (16.83998pt too high) detected at line 310
+Overfull \vbox (16.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (17.83998pt too high) detected at line 310
+Overfull \vbox (17.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (18.83998pt too high) detected at line 310
+Overfull \vbox (18.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (19.83998pt too high) detected at line 310
+Overfull \vbox (19.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (20.83998pt too high) detected at line 310
+Overfull \vbox (20.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (21.83998pt too high) detected at line 310
+Overfull \vbox (21.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (22.83998pt too high) detected at line 310
+Overfull \vbox (22.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (23.83998pt too high) detected at line 310
+Overfull \vbox (23.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (24.83998pt too high) detected at line 310
+Overfull \vbox (24.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (25.83998pt too high) detected at line 310
+Overfull \vbox (25.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (26.83998pt too high) detected at line 310
+Overfull \vbox (26.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (27.83998pt too high) detected at line 310
+Overfull \vbox (27.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (28.83998pt too high) detected at line 310
+Overfull \vbox (28.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (29.83998pt too high) detected at line 310
+Overfull \vbox (29.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (30.83998pt too high) detected at line 310
+Overfull \vbox (30.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (31.83998pt too high) detected at line 310
+Overfull \vbox (31.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (32.83998pt too high) detected at line 310
+Overfull \vbox (32.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (33.83998pt too high) detected at line 310
+Overfull \vbox (33.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (34.83998pt too high) detected at line 310
+Overfull \vbox (34.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (35.83998pt too high) detected at line 310
+Overfull \vbox (35.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (36.83998pt too high) detected at line 310
+Overfull \vbox (36.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (37.83998pt too high) detected at line 310
+Overfull \vbox (37.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (38.83998pt too high) detected at line 310
+Overfull \vbox (38.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (39.83998pt too high) detected at line 310
+Overfull \vbox (39.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (40.83998pt too high) detected at line 310
+Overfull \vbox (40.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (41.83998pt too high) detected at line 310
+Overfull \vbox (41.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (42.83998pt too high) detected at line 310
+Overfull \vbox (42.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (43.83998pt too high) detected at line 310
+Overfull \vbox (43.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (44.83998pt too high) detected at line 310
+Overfull \vbox (44.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (45.83998pt too high) detected at line 310
+Overfull \vbox (45.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (46.83998pt too high) detected at line 310
+Overfull \vbox (46.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (47.83998pt too high) detected at line 310
+Overfull \vbox (47.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (48.83998pt too high) detected at line 310
+Overfull \vbox (48.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (49.83998pt too high) detected at line 310
+Overfull \vbox (49.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (50.83998pt too high) detected at line 310
+Overfull \vbox (50.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (51.83998pt too high) detected at line 310
+Overfull \vbox (51.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (52.83998pt too high) detected at line 310
+Overfull \vbox (52.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (53.83998pt too high) detected at line 310
+Overfull \vbox (53.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (54.83998pt too high) detected at line 310
+Overfull \vbox (54.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (55.83998pt too high) detected at line 310
+Overfull \vbox (55.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (56.83998pt too high) detected at line 310
+Overfull \vbox (56.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (57.83998pt too high) detected at line 310
+Overfull \vbox (57.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (58.83998pt too high) detected at line 310
+Overfull \vbox (58.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (59.83998pt too high) detected at line 310
+Overfull \vbox (59.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (60.83998pt too high) detected at line 310
+Overfull \vbox (60.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (61.83998pt too high) detected at line 310
+Overfull \vbox (61.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (62.83998pt too high) detected at line 310
+Overfull \vbox (62.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (63.83998pt too high) detected at line 310
+Overfull \vbox (63.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (64.83998pt too high) detected at line 310
+Overfull \vbox (64.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (65.83998pt too high) detected at line 310
+Overfull \vbox (65.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (66.83998pt too high) detected at line 310
+Overfull \vbox (66.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (67.83998pt too high) detected at line 310
+Overfull \vbox (67.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (68.83998pt too high) detected at line 310
+Overfull \vbox (68.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (69.83998pt too high) detected at line 310
+Overfull \vbox (69.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (70.83998pt too high) detected at line 310
+Overfull \vbox (70.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (71.83998pt too high) detected at line 310
+Overfull \vbox (71.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (72.83998pt too high) detected at line 310
+Overfull \vbox (72.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (73.83998pt too high) detected at line 310
+Overfull \vbox (73.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (74.83998pt too high) detected at line 310
+Overfull \vbox (74.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (75.83998pt too high) detected at line 310
+Overfull \vbox (75.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (76.83998pt too high) detected at line 310
+Overfull \vbox (76.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (77.83998pt too high) detected at line 310
+Overfull \vbox (77.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (78.83998pt too high) detected at line 310
+Overfull \vbox (78.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (79.83998pt too high) detected at line 310
+Overfull \vbox (79.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (80.83998pt too high) detected at line 310
+Overfull \vbox (80.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (81.83998pt too high) detected at line 310
+Overfull \vbox (81.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (82.83998pt too high) detected at line 310
+Overfull \vbox (82.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (83.83998pt too high) detected at line 310
+Overfull \vbox (83.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (84.83998pt too high) detected at line 310
+Overfull \vbox (84.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (85.83998pt too high) detected at line 310
+Overfull \vbox (85.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (86.83998pt too high) detected at line 310
+Overfull \vbox (86.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (87.83998pt too high) detected at line 310
+Overfull \vbox (87.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (88.83998pt too high) detected at line 310
+Overfull \vbox (88.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (89.83998pt too high) detected at line 310
+Overfull \vbox (89.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (90.83998pt too high) detected at line 310
+Overfull \vbox (90.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (91.83998pt too high) detected at line 310
+Overfull \vbox (91.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (92.83998pt too high) detected at line 310
+Overfull \vbox (92.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (93.83998pt too high) detected at line 310
+Overfull \vbox (93.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (94.83998pt too high) detected at line 310
+Overfull \vbox (94.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (95.83998pt too high) detected at line 310
+Overfull \vbox (95.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (96.83998pt too high) detected at line 310
+Overfull \vbox (96.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (97.83998pt too high) detected at line 310
+Overfull \vbox (97.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (98.83998pt too high) detected at line 310
+Overfull \vbox (98.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (99.83998pt too high) detected at line 310
+Overfull \vbox (99.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (100.83998pt too high) detected at line 310
+Overfull \vbox (100.83998pt too high) detected at line 311
  []
 
 
-Overfull \vbox (101.83998pt too high) detected at line 310
+Overfull \vbox (101.83998pt too high) detected at line 311
  []
 
 
 Package mdframed Warning: correct box splittet fails
  It seems you are using a non splittable contents
-(mdframed)                 on input line 310.
+(mdframed)                 on input line 311.
 
 Package mdframed Info: You first box width is to small
  mdframed fixed it
-(mdframed)              on input line 310.
+(mdframed)              on input line 311.
 
 
 [10]
@@ -1270,178 +1314,361 @@ Package mdframed Info: You first box width is to small
 [12]
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 418--418
+Underfull \hbox (badness 10000) in paragraph at lines 419--419
 
  []
 
 
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 439--442
+Underfull \hbox (badness 10000) in paragraph at lines 440--443
 
  []
 
 
 
 [15]
-<img/NFA.png, id=138, 737.75626pt x 489.83pt>
+<img/NFA.png, id=148, 737.75626pt x 489.83pt>
 File: img/NFA.png Graphic file (type png)
 <use img/NFA.png>
-Package pdftex.def Info: img/NFA.png  used on input line 522.
+Package pdftex.def Info: img/NFA.png  used on input line 523.
 (pdftex.def)             Requested size: 428.55185pt x 284.52756pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 485--523
+Underfull \hbox (badness 10000) in paragraph at lines 486--524
 
  []
 
 
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 538--538
+Underfull \hbox (badness 10000) in paragraph at lines 539--539
 
  []
 
 
-Overfull \hbox (11.54713pt too wide) in paragraph at lines 546--546
+Overfull \hbox (11.54713pt too wide) in paragraph at lines 547--547
 \T1/cmr/bx/n/12 Dato un DFA, come si costru-isce una gram-mat-ica re-go-lare equiv-a-lente?             
  []
 
-Package mdframed Info: Not enough space on this page on input line 546.
+Package mdframed Info: Not enough space on this page on input line 547.
 
 
 [17 <./img/NFA.png>]
-Package mdframed Info: Not enough space on this page on input line 546.
+Package mdframed Info: Not enough space on this page on input line 547.
 
 
 Package mdframed Warning: You got a bad break
 (mdframed)                because the last box will be empty
 (mdframed)                you have to change it manually
 (mdframed)                by changing the text, the space
-(mdframed)                or something else on input line 598.
+(mdframed)                or something else on input line 599.
 
 
 
 [18]
 
 [19]
-Package mdframed Info: Not enough space on this page on input line 631.
-Package mdframed Info: Not enough space on this page on input line 673.
+Package mdframed Info: Not enough space on this page on input line 632.
+Package mdframed Info: Not enough space on this page on input line 674.
 
 
 [20]
-Package mdframed Info: Not enough space on this page on input line 673.
+Package mdframed Info: Not enough space on this page on input line 674.
 
-Underfull \hbox (badness 10000) in paragraph at lines 703--703
+Underfull \hbox (badness 10000) in paragraph at lines 704--704
 
  []
 
 
 
 [21]
-Underfull \hbox (badness 10000) in paragraph at lines 722--722
+Underfull \hbox (badness 10000) in paragraph at lines 723--723
 
  []
 
 
 
 [22]
+Package mdframed Info: Not enough space on this page on input line 783.
+
 
 [23]
-Package mdframed Info: Not enough space on this page on input line 747.
+Package mdframed Info: Not enough space on this page on input line 783.
 
-Underfull \hbox (badness 10000) in paragraph at lines 749--749
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 757--757
+Underfull \hbox (badness 10000) in paragraph at lines 797--797
 
  []
 
-Package mdframed Info: Not enough space on this page on input line 759.
+
+Underfull \hbox (badness 10000) in paragraph at lines 797--797
+
+ []
+
 
 
 [24]
-Package mdframed Info: Not enough space on this page on input line 759.
 
-Underfull \hbox (badness 10000) in paragraph at lines 771--771
+Package mdframed Warning: You got a bad break
+(mdframed)                because the last box will be empty
+(mdframed)                you have to change it manually
+(mdframed)                by changing the text, the space
+(mdframed)                or something else on input line 830.
 
- []
-
-Package mdframed Info: Not enough space on this page on input line 773.
+Package mdframed Info: Box was splittet wrong
+ starting loop to iterate the splitting point
+(mdframed)              on input line 830.
 
 
 [25]
-Package mdframed Info: Not enough space on this page on input line 773.
+Underfull \hbox (badness 10000) in paragraph at lines 837--837
+
+ []
+
 
 
 [26]
-Package mdframed Info: Not enough space on this page on input line 799.
+Underfull \hbox (badness 10000) in paragraph at lines 863--863
+
+ []
+
 
 
 [27]
-Package mdframed Info: Not enough space on this page on input line 799.
-Package mdframed Info: Not enough space on this page on input line 813.
-
 
 [28]
-Package mdframed Info: Not enough space on this page on input line 813.
-Package mdframed Info: Not enough space on this page on input line 825.
+Package mdframed Info: Not enough space on this page on input line 907.
+Package mdframed Info: Not enough space on this page on input line 941.
 
 
 [29]
-Package mdframed Info: Not enough space on this page on input line 825.
-
-Underfull \hbox (badness 10000) in paragraph at lines 831--831
-
- []
-
-Package mdframed Info: Not enough space on this page on input line 837.
+Package mdframed Info: Not enough space on this page on input line 941.
+Package mdframed Info: Box was splittet wrong
+ starting loop to iterate the splitting point
+(mdframed)              on input line 963.
 
 
 [30]
-Package mdframed Info: Not enough space on this page on input line 837.
-Package mdframed Info: Not enough space on this page on input line 849.
-
 
 [31]
-Package mdframed Info: Not enough space on this page on input line 849.
+Overfull \hbox (0.95747pt too wide) in paragraph at lines 1005--1005
+\T1/cmr/m/it/12 Follow del non-terminale $\OML/cmm/m/it/12 X$ \T1/cmr/m/it/12 e' l'insieme dei ter-mi-nali che spun-tano dopo per definizione
+ []
 
-Underfull \hbox (badness 10000) in paragraph at lines 853--853
+Package mdframed Info: Not enough space on this page on input line 1041.
+
+
+[32]
+Package mdframed Info: Not enough space on this page on input line 1041.
+
+
+[33]
+
+[34]
+Package mdframed Info: Not enough space on this page on input line 1098.
+
+
+[35]
+
+[36]
+Underfull \hbox (badness 10000) in paragraph at lines 1169--1169
+
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1187.
+
+
+[37]
+Package mdframed Info: Not enough space on this page on input line 1187.
+
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 1231--1231
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1251--1251
 
  []
 
 
 
-[32]
-Package mdframed Info: Not enough space on this page on input line 875.
+[39]
+Package mdframed Info: Not enough space on this page on input line 1275.
 
 
-[33]
-Package mdframed Info: Not enough space on this page on input line 875.
+[40]
+Package mdframed Info: Not enough space on this page on input line 1275.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1305--1305
+
+ []
+
+Package mdframed Info: Box was splittet wrong
+ starting loop to iterate the splitting point
+(mdframed)              on input line 1305.
 
 
-[34] (./domande_orale_lp.aux)
+[41]
+
+[42]
+Underfull \hbox (badness 10000) in paragraph at lines 1351--1351
+
+ []
+
+
+
+[43]
+
+[44]
+
+[45]
+Package mdframed Info: Not enough space on this page on input line 1477.
+
+
+[46]
+Package mdframed Info: Not enough space on this page on input line 1477.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1484--1484
+
+ []
+
+
+
+[47]
+Package mdframed Info: Not enough space on this page on input line 1493.
+
+
+[48]
+Package mdframed Info: Not enough space on this page on input line 1493.
+
+Overfull \hbox (15.13397pt too wide) in paragraph at lines 1498--1498
+\T1/cmr/bx/n/12 Come fun-ziona l'invocazione di-nam-ica di un metodo? Come avviene l'invocazione
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1501.
+
+
+[49]
+Package mdframed Info: Not enough space on this page on input line 1501.
+Package mdframed Info: Not enough space on this page on input line 1515.
+
+
+[50]
+Package mdframed Info: Not enough space on this page on input line 1515.
+
+Overfull \hbox (9.94481pt too wide) in paragraph at lines 1516--1516
+\T1/cmr/bx/n/12 Tipaggio statico e tipag-gio di-nam-ico: dif-ferenze ed es-empi di lin-guaggi.             
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1523.
+
+
+[51]
+Package mdframed Info: Not enough space on this page on input line 1523.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1528--1528
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1531--1531
+
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1531.
+
+
+[52]
+Package mdframed Info: Not enough space on this page on input line 1531.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1535--1535
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1538--1538
+
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1539.
+
+
+[53]
+Package mdframed Info: Not enough space on this page on input line 1539.
+Package mdframed Info: Not enough space on this page on input line 1547.
+
+
+[54]
+Package mdframed Info: Not enough space on this page on input line 1547.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1548--1548
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1549--1549
+
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1555.
+
+
+[55]
+Package mdframed Info: Not enough space on this page on input line 1555.
+
+Overfull \hbox (11.46397pt too wide) in paragraph at lines 1562--1562
+\T1/cmr/bx/n/12 Differenza tra ar-ray uni-di-men-sion-ali e mul-ti-di-men-sion-ali. Row-major vs column-
+ []
+
+
+Overfull \hbox (5.489pt too wide) in paragraph at lines 1563--1563
+\T1/cmr/bx/n/12 Array in re-lazione a weakly-typed e C. Van-taggi e svan-taggi dell'interoperabilità
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1564.
+
+
+[56]
+Package mdframed Info: Not enough space on this page on input line 1564.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1567--1567
+
+ []
+
+Package mdframed Info: Not enough space on this page on input line 1572.
+
+
+[57]
+Package mdframed Info: Not enough space on this page on input line 1572.
+Package mdframed Info: Not enough space on this page on input line 1581.
+
+
+[58]
+Package mdframed Info: Not enough space on this page on input line 1581.
+
+
+[59] (./domande_orale_lp.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `domande_orale_lp.out' has not changed.
-(rerunfilecheck)             Checksum: FBB947B7ADE8459D8729C4E38BC6AB9F;1694.
+(rerunfilecheck)             Checksum: 7E7F304887F8C1875DC06B7F1AA168FD;2019.
  ) 
 Here is how much of TeX's memory you used:
- 34458 strings out of 473197
- 744589 string characters out of 5718606
- 1154076 words of memory out of 5000000
- 57166 multiletter control sequences out of 15000+600000
- 576802 words of font info for 73 fonts, out of 8000000 for 9000
+ 36140 strings out of 473197
+ 770387 string characters out of 5718606
+ 1180041 words of memory out of 5000000
+ 58791 multiletter control sequences out of 15000+600000
+ 577029 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  126i,21n,135p,1656b,1753s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbi1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb>
-Output written on domande_orale_lp.pdf (34 pages, 534839 bytes).
+Output written on domande_orale_lp.pdf (59 pages, 612588 bytes).
 PDF statistics:
- 347 PDF objects out of 1000 (max. 8388607)
- 265 compressed objects within 3 object streams
- 77 named destinations out of 1000 (max. 500000)
- 66 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 486 PDF objects out of 1000 (max. 8388607)
+ 378 compressed objects within 4 object streams
+ 118 named destinations out of 1000 (max. 500000)
+ 82 words of extra memory for PDF output out of 10000 (max. 10000000)
 
