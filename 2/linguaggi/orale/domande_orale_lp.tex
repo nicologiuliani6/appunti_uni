@@ -1721,48 +1721,133 @@ Per risolvere i conflitti nella multipla Java offre le interfaccie.}
   In generale la invocazione nell'OO viene implementata con il MP, quindi e' un msg con il nome del metodo che poi l'oggetto ricerca ed esegue.
 }
 \domanda{39}{Come si fa in memoria il dynamic dispatch? Come si memorizzano vtable e funzioni?}{Attraverso le vtable (segmento \texttt{data} in RAM), una tabella dove memorizziamo puntatori alle variabili (anche quelle sotto-definite) e poi puntatori alle funzioni.}
-\domanda{40}{In una classe, dove vivono i metodi e i campi e come vengono memorizzati?}{Vivono nelle vtable in RAM, in una tabella dove memorizziamo i puntaori alle variabili e puntatori ai metodi.}
-\domanda{41}{Cos'è il problema della classe base fragile?}{}
+\domanda{40}{In una classe, dove vivono i metodi e i campi e come vengono memorizzati?}{Vivono nelle vtable in RAM, in una tabella dove memorizziamo i puntatori alle variabili e puntatori ai metodi.}
+\domanda{41}{Cos'è il problema della classe base fragile?}{E' quando estendiamo una classe e sovrascriviamo dei metodi, rischiamo di rompere la logica interna delle funzioni.}
 
-\domanda{42}{Coercizione e casting: cosa sono e differenze.}{}
-\domanda{43}{Differenza tra typed casting e type coercion. Perché non si usano nel polimorfismo generale in Java?}{}
-\domanda{44}{Differenza tra void e unit.}{}
-\domanda{45}{Cos'è il tipo void? Che insieme di valori denota?}{}
-\domanda{46}{Differenza tra maybe e option.}{}
+\domanda{42}{Coercizione e casting: cosa sono e differenze.}{
+  \begin{itemize}
+    \item Casting: traduzione manuale del programmatore ($int x = (int)msg$)
+    \item Coercizione: compilatore manualmente traduce perche' "sicuro" ($int y; float x = y;$) 
+  \end{itemize}
+}
+\domanda{43}{Differenza tra typed casting e type coercion. Perché non si usano nel polimorfismo generale in Java?}{
+  \begin{itemize}
+    \item Casting: traduzione esplicita del programmatore
+    \item Coercizione: traduzione implicita del compilatore
+  \end{itemize}
+In java abbiamo in dynamic dispatch, quindi i metodi in base al tipo. Se facciamo un cast rischiamo che il tipo di sorgente non abbia il metodo
+}
+\domanda{44}{Differenza tra void e unit.}{
+  \begin{itemize}
+    \item Void: e' l'assenza di un tipo, in una variabile void non puo' esistere e un metodo void non ritorna nulla
+    \item Unit: e' un tipo che restituisce il tipo Unit
+  \end{itemize}
+Unit serve in quei linguaggi dove le funzioni devono per forza ritornare un valore, quindi con Unit possiamo ritornare il valore Unit\\
+Void invece e' il concetto piu' classico dei LP imperativi dove una funzione puo' svolgere soltanto senza tornare nulla.
+}
+\domanda{45}{Cos'è il tipo void? Che insieme di valori denota?}{Il tipo Void e' un tipo concettuale dei LP imperativi dove un metodo non deve tornare nulla. Il suo insieme non comprende niente.}
+\domanda{46}{Differenza tra maybe e option.}{Stesso concetto che serve per specificare per un metodo che ritorniamo un valore o \texttt{maybe} un altro
+\begin{center}
+  fn foo (int x) -> Option<bool>\{\\
+    if x == 0 return x;\\
+    else return false;\\
+  \}
+\end{center}
+Un esempio in Rust.}
 
-\domanda{47}{Differenza tra array unidimensionali e multidimensionali. Row-major vs column-major: pro, contro e caching.}{}
-\domanda{48}{Array in relazione a weakly-typed e C. Vantaggi e svantaggi dell'interoperabilità tra array e puntatori.}{}
+\domanda{47}{Differenza tra array unidimensionali e multidimensionali. Row-major vs column-major: pro, contro e caching.}{Un array unidimensionale e' una lista di valori con un singolo indice. Mentre un array multidimensionale e' una matrice, o piu' con piu' indici.\\
+Possiamo memorizzarli in memoria in ordine:
+\begin{itemize}
+    \item Riga (A[0][0], A[0][1], $\dots$)
+  \item Colonna (A[0][0], A[1][0], $\dots$)
+\end{itemize}
+Questo migliora o peggiore le performance (grazie alla cache) in base se e' maggiore il numero di letture per riga o colonna.}
+\domanda{48}{Array in relazione a weakly-typed e C. Vantaggi e svantaggi dell'interoperabilità tra array e puntatori.}{In C gli array sono considerati weakly-typed infatti attraverso i puntatori possiamo modificare la memoria come ci pare.\\
+Interoperabilità fra array e puntatori e' interessante perche' ci permette di non fare distinzione in quale segmento di memoria troviamo gli array (stack o heap), e possiamo avere una singola implementazione. Questo pero' comporta a lavorare con i puntatori nei metodi, cosa che ci fa perdere di informazione implicita la lunghezza degli array.
+}
 \domanda{49}{Come sono memorizzati gli array? Cos'è il dope vector?}{Gli array sono memorizzati per
 \begin{itemize}
   \item Riga (A[0][0], A[0][1], $\dots$)
   \item Colonna (A[0][0], A[1][0], $\dots$)
 \end{itemize}
 Il dope vector e' una tabella con tutte i metadati (informazioni) di un array (Tipo, indirizzo base, ecc).}
-\domanda{50}{Cos'è il dope vector e qual è il suo utilizzo? Dove viene allocato?}{}
-\domanda{51}{Differenza degli array fra Java e C. Come fa Java a gestire gli array?}{}
+\domanda{50}{Cos'è il dope vector e qual è il suo utilizzo? Dove viene allocato?}{Il dope vector e' la tabella di un singolo array con tutti i sui metadati e lo memorizziamo nello stack.
+}
+\domanda{51}{Differenza degli array fra Java e C. Come fa Java a gestire gli array?}{In Java gli array sono sempre allocati nell'heap. Mentre in C dipende se li allochiamo noi nello stack o heap.\\
+Questo porta che in Java possiamo sempre sapere la lunghezza dell'oggetto, mentre in C nei metodi mai.}
 
-\domanda{52}{Garbage collection: quali implementazioni abbiamo visto e come funzionano?}{}
-\domanda{53}{Garbage collection: come funzionano i contatori dei riferimenti?}{}
-\domanda{54}{Limiti del reference counting.}{}
-\domanda{55}{Garbage collector con il costo più basso di memoria?}{}
-\domanda{56}{Problemi di un garbage collector stop-the-world. In quali applicazioni crea problemi? Alternative?}{}
-\domanda{57}{Cosa significa che un valore non è garbage?}{}
-\domanda{58}{Cosa sono i dangling pointers e le dangling reference?}{}
-\domanda{59}{Cos'è una use after free?}{}
-\domanda{60}{Cosa sono i wide pointers / initialized pointers?}{}
-\domanda{61}{Tecniche di protezione della memoria e loro problemi.}{}
+\domanda{52}{Garbage collection: quali implementazioni abbiamo visto e come funzionano?}{
+  \begin{itemize}
+    \item RC
+    \item Stop and copy
+    \item Mark and sweep
+    \item Borrow checking
+  \end{itemize}
+  I primi 3 sono a runtime, mentre il 4 e' statico.
+}
+\domanda{53}{Garbage collection: come funzionano i contatori dei riferimenti?}{
+  Per ogni oggetto nel heap manteniamo un contatore che ci indica quanti sono i puntatori che ne fanno riferimento, quando arriviamo a 0 deallochiamo.
+}
+\domanda{54}{Limiti del reference counting.}{I cicli, due oggetti che puntano a se stessi non verranno mai deallcoati. Poi anche il costo in memoria di tutti i contatori, del costo di controllo se dobbiamo deallocare e che la deallocazione viene appena un oggetto e' trash.}
+\domanda{55}{Garbage collector con il costo più basso di memoria?}{Borrow checking perche' essendo statico non implica overhead.}
+\domanda{56}{Problemi di un garbage collector stop-the-world. In quali applicazioni crea problemi? Alternative?}{E' un problema nei sistemi realtime con magari IO, infatti un blocco del programma per spostare e ripulire la memoria rallenta e peggiora notevolmente le performance. Una alternativa o RC se il costo di overhead e' accettabile o Borrow checking.}
+\domanda{57}{Cosa significa che un valore non è garbage?}{Un valore non e' garbage quando quel valore e' ancora raggiungibile attraverso un quale oggetto.}
+\domanda{58}{Cosa sono i dangling pointers e le dangling reference?}{Un dandling pointer/reference e' un puntatore che punta a una cella di memoria liberata.}
+\domanda{59}{Cos'è una use after free?}{E' quando cerchiamo di dereferenziare un puntatore che puntava a una cella che e' stata liberata, questo porta a un segfault.}
+\domanda{60}{Cosa sono i wide pointers / initialized pointers?}{
+  \begin{itemize}
+    \item Wide pointers: puntatori che hanno info aggiuntive (come len di un array)
+    \item Initialized pointers: puntatori che alla creazione non punta una cella a caso (Rust)
+  \end{itemize}
+}
+\domanda{61}{Tecniche di protezione della memoria e loro problemi.}{
+  \begin{itemize}
+    \item Garbage Collector
+    \item Wide pointers
+    \item Non avere puntatori (e gestione della memoria direttamente)
+  \end{itemize}
+}
 
-\domanda{62}{Cosa sono le eccezioni? A cosa servono? Come sono gestite in Java?}{}
-\domanda{63}{Ci sono similitudini tra eccezioni e tipaggio?}{}
-\domanda{64}{Tipi di gestione degli errori. Cos'è il result type? Cos'è il tipo option/maybe?}{}
+\domanda{62}{Cosa sono le eccezioni? A cosa servono? Come sono gestite in Java?}{Tecnica nei LP per lanciare un segnale per interrompere un metodo e ed eseguire un pezzo di codice specifico quando un gestore combatibile la rileva.\\
+Servono per ampliare le opzioni di programmazione in un linguaggio e semplificare la vita al programmatore.\\
+In Java abbiamo Errori e Eccezioni che entrambe possono essere lanciate, alcune vanno gestite altre no.
+}
+\domanda{63}{Ci sono similitudini tra eccezioni e tipaggio?}{Si le eccezzioni catturano proprio per tipo, infatti ci basiamo su polimofismo di sottotipo.}
+\domanda{64}{Tipi di gestione degli errori. Cos'è il result type? Cos'è il tipo option/maybe?}{
+  \begin{itemize}
+    \item Classico: ritorniamo un valore specifico tipo EXIT\_ERROR
+    \item Result Type: ritorniamo un tipo enum dove abbiamo il risultato o un errore
+    \begin{center}
+      enum R \{ \\ 
+        result;\\ 
+        error;\\
+      \}
+    \end{center}
+  \end{itemize}
+}
 
-\domanda{65}{Differenza tra abstract data types e oggetti. Possono convivere nello stesso codice?}{}
-\domanda{66}{Definisci i tipi di dato astratti.}{}
-\domanda{67}{Cosa vuol dire dal punto di vista concettuale e pratico avere diverse visibilità (pubblica/privata)?}{}
-\domanda{68}{Differenza tra parte pubblica e parte privata.}{}
+\domanda{65}{Differenza tra abstract data types e oggetti. Possono convivere nello stesso codice?}{
+  \begin{itemize}
+    \item ADT: un tipo ha gia delle operazioni integrate, e il programmatore non se ne deve preoccupare
+    \item Oggetto: definiamo noi i tipi ma dobbiamo creare tutte le implementazioni
+  \end{itemize}
+Se vogliamo aggiungere nuovi tipi gli oggetti sono piu' comodi, mentre se vogliamo aggiungere nuove funzioni possiamo utilizzare gli ADT.\\
+In Java abbiamo entrambi anche contemporaneamente.
+}
+\domanda{66}{Definisci i tipi di dato astratti.}{Un ADT e' un tipo che ha gia dei metodi implementati internamente, il programmatore non se ne deve preuccupare. \\
+Sono comodi per creare nuove funzioni, ma scomodi per creare nuovi tipi (dovremo modificare TUTTI i metodi interni per renderlo compatibili con il nuovo).}
+\domanda{67}{Cosa vuol dire dal punto di vista concettuale e pratico avere diverse visibilità (pubblica/privata)?}{
+  \begin{itemize}
+    \item Concettuale: separiamo interfaccia dalle implementazioni'
+    \item Pratico: accessibile sono all'interno della classe
+  \end{itemize}
+}
+\domanda{68}{Differenza tra parte pubblica e parte privata.}{Pubblica tutti possono accedervi anche da fuori dalla classe, privata sono internamente alla classe possiamo accedervi.\\
+Questo si collega con anche la logica interfaccie-implementazione.}
 
-\domanda{69}{Se le funzioni fossero come le funzioni matematiche, come potremmo ottimizzarne l'esecuzione?}{}
-\domanda{70}{Cos'è una relazione? Come ottimizzare il calcolo di una funzione con dominio molto piccolo?}{}
+\domanda{69}{Se le funzioni fossero come le funzioni matematiche, come potremmo ottimizzarne l'esecuzione?}{Potremo trasformalo in funzioni deterministiche cosi da cachare il risultato se ci riserve.}
+\domanda{70}{Cos'è una relazione? Come ottimizzare il calcolo di una funzione con dominio molto piccolo?}{Una relazione e' l'insieme prodotto di due tipi.\\
+Se abbiamo un dominio molto piccolo potremmo precalcolare tutti i risultati per poi accederci in $O(1)$.}
 
-\domanda{71}{Posso implementare la comunicazione sincrona con quella asincrona?}{}
+\domanda{71}{Posso implementare la comunicazione sincrona con quella asincrona?}{Si certamente, mentre il contrario no (senza un processo esterno server).}
 \end{document}
