@@ -1,0 +1,101 @@
+\contentsline {chapter}{\numberline {1}Introduzione}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Collegamenti e Infrastrutture}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Topologie e Mezzo Fisico di Trasmissione}{6}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Canali di Comunicazione di Rete}{7}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Reti a Commutazione di Pacchetto}{8}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Architettura standard dei protocolli (ISO/OSI)}{10}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Parità incrociata e autocorrezione}{12}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Digressione sugli ACK e Tempo di Trasmissione}{13}{section.1.7}%
+\contentsline {section}{\numberline {1.8}Throughput e Utilizzo della rete}{14}{section.1.8}%
+\contentsline {chapter}{\numberline {2}Approfondimenti Capitolo 1 — Topologie e ACK}{15}{chapter.2}%
+\contentsline {section}{\numberline {2.1}ACK: livello MAC/LLC vs Trasporto}{15}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Reti di Reti — Internetworking}{16}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Indirizzo IP}{17}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Composizione dell'indirizzo IPv4 e Sottoreti}{18}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Protocollo ARP e RARP}{20}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Livello Trasporto (TCP / UDP)}{22}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Approfondimento d'esame: Go-Back-N vs Selective Repeat}{23}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Approfondimento d'esame: Congestion Window (CWND) ideale}{23}{section.3.2}%
+\contentsline {section}{\numberline {3.3}DNS — Domain Name Server}{23}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Approfondimenti Capitolo 2 — Internet Protocol (IP)}{26}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Approfondimento d'esame: Routing Link State (Dijkstra)}{26}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Approfondimento d'esame: Distance Vector (Bellman-Ford)}{27}{section.4.2}%
+\contentsline {section}{\numberline {4.3}DNS: server locali e root}{27}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Approfondimenti Capitolo 3 — Socket TCP}{29}{chapter.5}%
+\contentsline {subsection}{\numberline {5.0.1}Socket TCP client-server}{29}{subsection.5.0.1}%
+\contentsline {subsubsection}{Il Meccanismo di Connessione: Handshake a 3 Vie}{29}{subsubsection*.2}%
+\contentsline {subsubsection}{Gestione dei Flussi in Parallelo sul Server}{30}{subsubsection*.3}%
+\contentsline {subsubsection}{Affidabilità, Controllo e Chiusura}{30}{subsubsection*.4}%
+\contentsline {chapter}{\numberline {6}Livello Applicazione}{31}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Tabella applicazioni e Protocollo HTTP}{31}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Proxy e Web Cache}{33}{section.6.2}%
+\contentsline {section}{\numberline {6.3}NAT — Network Address Translator}{33}{section.6.3}%
+\contentsline {section}{\numberline {6.4}File Distribution System (Client-Server vs P2P)}{34}{section.6.4}%
+\contentsline {section}{\numberline {6.5}DASH, Spatial e Temporal Coding}{35}{section.6.5}%
+\contentsline {chapter}{\numberline {7}Sicurezza in Rete}{37}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Crittografia: chiave simmetrica e DES}{38}{section.7.1}%
+\contentsline {section}{\numberline {7.2}RSA}{38}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Certification Authority e Certificati}{39}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Comunicazione sicura e SSL}{40}{section.7.4}%
+\contentsline {section}{\numberline {7.5}IPsec}{41}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Firewall}{42}{section.7.6}%
+\contentsline {section}{\numberline {7.7}Access Control List (ACL)}{43}{section.7.7}%
+\contentsline {chapter}{\numberline {8}Approfondimenti Capitolo 4 — Crittografia (dettagli)}{45}{chapter.8}%
+\contentsline {section}{\numberline {8.1}RSA (dettagli) e Schemi di scambio messaggi}{45}{section.8.1}%
+\contentsline {section}{\numberline {8.2}SSL (dettagli)}{46}{section.8.2}%
+\contentsline {chapter}{\numberline {9}Network Layer — Routing dei Router}{47}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Porta di ingresso del router}{48}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Switching Fabric}{49}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Scheduling (FIFO, Priority)}{49}{section.9.3}%
+\contentsline {section}{\numberline {9.4}IPv4 datagram e frammentazione}{50}{section.9.4}%
+\contentsline {chapter}{\numberline {10}Reti Wireless}{51}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Polarizzazione e Multipath Propagation}{51}{section.10.1}%
+\contentsline {section}{\numberline {10.2}EIRP e IR Power Output}{52}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Decibel e Power Difference}{53}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Somma in dBm e tabella dBm-mW}{53}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Le Antenne (frequenza e lunghezza d'onda)}{54}{section.10.5}%
+\contentsline {section}{\numberline {10.6}Antenne direzionali e linea di visuale}{54}{section.10.6}%
+\contentsline {section}{\numberline {10.7}Antenne settorizzate, Azimuth ed Elevation}{55}{section.10.7}%
+\contentsline {section}{\numberline {10.8}Path Loss e Link Budget}{55}{section.10.8}%
+\contentsline {section}{\numberline {10.9}Larghezza di Banda e Spettro}{56}{section.10.9}%
+\contentsline {section}{\numberline {10.10}Frequency Hopping}{57}{section.10.10}%
+\contentsline {section}{\numberline {10.11}WWAN e WMAN}{57}{section.10.11}%
+\contentsline {section}{\numberline {10.12}Multiplexing}{58}{section.10.12}%
+\contentsline {section}{\numberline {10.13}Frequency Planning}{60}{section.10.13}%
+\contentsline {section}{\numberline {10.14}Modulazione Digitale (ASK, FSK, PSK)}{61}{section.10.14}%
+\contentsline {section}{\numberline {10.15}QAM}{62}{section.10.15}%
+\contentsline {section}{\numberline {10.16}Esempio su sinusoide}{63}{section.10.16}%
+\contentsline {subsection}{\numberline {10.16.1}Rappresentazione del segnale}{63}{subsection.10.16.1}%
+\contentsline {subsection}{\numberline {10.16.2}Codifiche per il segnale}{63}{subsection.10.16.2}%
+\contentsline {section}{\numberline {10.17}Spread Spectrum Technology}{64}{section.10.17}%
+\contentsline {section}{\numberline {10.18}Canali Wi-Fi}{66}{section.10.18}%
+\contentsline {section}{\numberline {10.19}OFDM}{67}{section.10.19}%
+\contentsline {section}{\numberline {10.20}Terminali Esposti e Nascosti — RTS/CTS}{68}{section.10.20}%
+\contentsline {chapter}{\numberline {11}Approfondimenti Capitolo 6 — Polarizzazione e Multipath}{70}{chapter.11}%
+\contentsline {chapter}{\numberline {A}TEORIA (how-to)}{71}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Alice-Bob (Due Nodi e Tre Nodi con Intermediario)}{71}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Regole Generali e Principi di Base}{71}{subsection.A.1.1}%
+\contentsline {subsection}{\numberline {A.1.2}Esempi Classici a Due Nodi (Alice-Bob)}{71}{subsection.A.1.2}%
+\contentsline {subsection}{\numberline {A.1.3}Estensione a Tre Nodi (Alice - Intermediario/Notaio Claire - Bob)}{72}{subsection.A.1.3}%
+\contentsline {subsubsection}{Casi Banali con Intermediario}{72}{subsubsection*.5}%
+\contentsline {subsubsection}{Casi Combinati Complessi}{72}{subsubsection*.6}%
+\contentsline {section}{\numberline {A.2}Calcolo Ipv4 valido, host, classe, sottoreti}{74}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Da maschera di rete a rete/host}{74}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Subnetting: ultimo IP valido della rete di un host}{74}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Definire gli indirizzi IPv4 assegnabili nelle reti LOCALI}{74}{section.A.5}%
+\contentsline {subsection}{\numberline {A.5.1}Rete con topologia ad albero e gateway centralizzato}{74}{subsection.A.5.1}%
+\contentsline {subsection}{\numberline {A.5.2}Esercizio 2: Suddivisione a 3 LAN standard}{76}{subsection.A.5.2}%
+\contentsline {subsection}{\numberline {A.5.3}VLSM: guida metodologica generale}{76}{subsection.A.5.3}%
+\contentsline {section}{\numberline {A.6}Calcolo del router per IP}{77}{section.A.6}%
+\contentsline {section}{\numberline {A.7}NAT: tabella di traduzione}{78}{section.A.7}%
+\contentsline {section}{\numberline {A.8}Link budget + zona di Fresnel}{79}{section.A.8}%
+\contentsline {section}{\numberline {A.9}Multipath: anticipo/ritardo di fase}{79}{section.A.9}%
+\contentsline {section}{\numberline {A.10}Modulazione: decodifica bit, parità, esadecimale}{79}{section.A.10}%
+\contentsline {section}{\numberline {A.11}Congestione e saturazione del buffer}{80}{section.A.11}%
+\contentsline {section}{\numberline {A.12}Stop\&Wait: throughput, utilizzo e CWND ideale}{80}{section.A.12}%
+\contentsline {subsection}{\numberline {A.12.1}Esempio: Calcolo della CWND Ideale in Comunicazione Bidirezionale Simmetrica}{80}{subsection.A.12.1}%
+\contentsline {section}{\numberline {A.13}Store \& Forward: ritardo totale}{81}{section.A.13}%
+\contentsline {section}{\numberline {A.14}Dijkstra costo minimo Link State}{81}{section.A.14}%
+\contentsline {section}{\numberline {A.15}Rimandi: esercizi svolti presenti nella teoria}{82}{section.A.15}%
+\contentsline {subsection}{\numberline {A.15.1}Subnetting --- esempio /21 svolto nella teoria}{82}{subsection.A.15.1}%
+\contentsline {subsection}{\numberline {A.15.2}Congestione e saturazione del buffer --- esempio svolto nella teoria}{82}{subsection.A.15.2}%

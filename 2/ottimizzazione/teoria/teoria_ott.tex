@@ -1,0 +1,441 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\definecolor{grigio}{RGB}{100,100,100}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}
+\titlespacing{\section}{0pt}{1.8em}{0.4em}
+
+\newcommand{\domanda}[2]{%
+  \vspace{0.6em}
+  \noindent\textbf{#1}\\[0.2em]
+  \noindent#2
+  \vspace{1em}
+  \par
+}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Ottimizzazione Combinatoria}\\[0.5em]
+  {\large Domande di teoria 2025--26}
+\end{center}
+
+\vspace{1.5em}
+
+\section{1 \quad Ottimizzazione lineare}
+
+\domanda{1.1 \quad Descrivere i quattro casi di soluzione di un problema di ottimizzazione.}{
+\begin{enumerate}
+    \item Soluzione ottima unica: unico punto che massimizza la funzione obbiettivo rispetto ai vincoli
+    \item Soluzione ottima infinite: infiniti punti che massimizzano la funzione obbiettivo rispetto ai vincoli
+    \item Problema illimitato: la soluzione tende all'infinito
+    \item Problema inamissibile: i vincoli non permettono nessun valore 
+\end{enumerate}
+}
+
+\domanda{1.2 \quad Definire problema di ottimizzazione, di esistenza e di certificato.}{
+Un problema di ottimizzazione e' definito da:
+\begin{itemize}
+    \item $S$ come insieme soluzioni ammissibili
+    \item $f \, : \, S \to \mathbb{R}$ come funzione obbiettivo
+    \item $\max$ (o $\min$)
+\end{itemize}
+t.c. $f(x^*) = \max f$\\
+\vspace{1px}\\
+Un problema di esistenza: \textit{Esiste almeno una soluzione valida?}
+\begin{align*}
+    S \neq \emptyset
+\end{align*}
+\vspace{1px}\\
+Un problema di certificato indica la dimostrazione del risultato che abbiamo ottenuto:
+\begin{itemize}
+    \item Se esiste una soluzione controlliamo in punto $x \in S$ se rispetta i vincoli
+    \item Se non esiste una soluzione allora dobbiamo trovare dei vincoli che si contraddicono!
+\end{itemize}
+}
+
+\domanda{1.3 \quad Definire un algoritmo di tipo primale e duale e fornirne un esempio.}{
+\begin{itemize}
+    \item Primale: parte da una soluzione ammissibile per il primale e la ottimizza (mantenendo l'ammissibile)
+    \item Duale: parte della soluzione ottimale per il duale (non ammissibile per il primale) e raggiunge l'ammissibilita' (mantenendo l'ottimo)
+\end{itemize}
+Un esempio e' Simplex e Simplex duale.
+}
+
+\domanda{1.4 \quad Definire un rilassamento di problema di ottimizzazione e illustrarne un esempio.}{
+Dato un problema di ottimizzazione $P=(s, f \max)$, un problema di rilassamento e' un problema di ottimizzazione $P'=(S', f', \max)$ t.c.
+\begin{enumerate}
+    \item $S \subseteq S'$
+    \item $f'(x) \geq f(x)$ 
+\end{enumerate}
+$\Rightarrow$ l'ottimo di $P$ e' minore uguale al ottimo di $P'$. abbiamo un upper-bound su $P$.\\
+\vspace{1px}\\
+Un esempio e'
+\begin{align*}
+    \max \quad &x \\
+    \text{s.t. } A&x\leq b \quad x \in \mathbb{N}\cup\{0\}
+\end{align*}
+Il rilassamento $P'$ e':
+\begin{align*}
+    \max \quad &x \\
+    \text{s.t. } A &x\leq b \quad x \geq 0
+\end{align*}
+Quindi $x$ puo' essere anche $1.5, 3.2, \dots$, ovvero numeri non interi.
+}
+
+\domanda{1.5 \quad Discutere ed illustrare con un esempio la modellazione con vincoli lineari di relazioni logiche (almeno un caso).}{
+Per rappresentare le relazioni logiche in un problema di ottimizzazione utilizziamo una formulazione specifica. \\
+\vspace{1px}\\
+Tipo per descrivere il problema di massimo sulla base $0 \leq x \leq 10$ con i vincoli $x \leq 3 \lor x \geq 7$:\\
+\texttt{Variabili}
+\begin{align*}
+    &y = \begin{cases}
+        0 \text{ se } x \leq 3\\
+        1 \text{ se } x \geq 7
+    \end{cases}\\
+    &M=10
+\end{align*}
+\texttt{Funzione obbiettivo}
+\begin{align*}
+    \max \quad &x \\
+    \text{s.t } \quad &x \geq 0\\
+    &x \leq 10
+\end{align*}
+\texttt{Vincoli}
+\begin{align*}
+    x \leq 3 + My \\
+    x \geq 7 - M(1-y)
+\end{align*}
+\vspace{1px}\\
+Per \texttt{and} basta scrivere i due vincoli, mentre per \texttt{implicazione} su $A \to B$ dobbiamo fare
+\begin{align*}
+    y_A \leq y_B
+\end{align*}
+ovvero se $A$ e' vero allora $B$ lo e', mentre se $A$ non e' vero allora $B$ puo' essere qualsiasi cosa.
+}
+
+\domanda{1.6 \quad Illustrare la modellazione con vincoli lineari di funzioni lineari a tratti e convesse.}{
+Dato una funzione del tipo
+\begin{align*}
+    f(x) = \max(a_1x+b_1,\ a_2x+b_2,\ \dots,\ a_kx+b_k)
+\end{align*}
+Abbiamo una funzione convessa composta da rette.\\
+Se volessimo trovare il minimo di essa?
+\begin{align*}
+    &\min \quad f(x)\\
+    =&\min \quad \max(a_1x+b_1,\ a_2x+b_2,\ \dots,\ a_kx+b_k)
+\end{align*}
+Il problema e' che $\max$ non e' lineare! Introduciamo quindi una variabile ausiliaria $z$:
+\begin{align*}
+    \min \quad &z\\
+    \text{s.t. }\quad &z \geq a_1x+b_1\\
+    &z \geq a_2x+b_2\\
+    &\vdots\\
+    &z \geq a_kx+b_k
+\end{align*}
+Questo porta precisamente che $z = \max(a_1x+b_1,\ a_2x+b_2,\ \dots,\ a_kx+b_k)$.
+}
+
+\domanda{1.7 \quad Definire una soluzione base ed una soluzione base ammissibile di un problema PL.}{
+Dato un problema di ottimizzazione in forma standard
+\begin{align*}
+    \min \quad &x\\
+    \text{s.t.} \quad &Ax = b, \quad x \geq 0
+\end{align*}
+scegliamo $m$ colonne linearmente indipendenti di $A$ formando la \textbf{base} $A_B$, con $A_N$ le colonne fuori base.\\
+Ponendo $x_N = 0$ otteniamo la \textbf{soluzione di base}:
+\begin{align*}
+    \hat{x}_B = A^{-1}_B b
+\end{align*}
+Se vale anche $\hat{x}_B \geq 0$, allora $\hat{x}$ è una \textbf{soluzione di base ammissibile} (SBA).
+}
+
+\domanda{1.8 \quad Enunciare il teorema di Motzkin (decomposizione) per un poliedro.}{
+Ogni poliedro $P=Ax\leq b$ puo' essere riscritto come:
+\begin{align*}
+    P=Q+C
+\end{align*}
+\begin{itemize}
+    \item $Q$ guscio convesso di vertici $v_i$
+    \item $C$ cono di direzioni $d_j$
+\end{itemize}
+Ogni punto puo' essere scritto come
+\begin{align*}
+    x = \sum_i \lambda_i v_i + \sum_j \mu_j d_j
+\end{align*}
+}
+
+\domanda{1.9 \quad Enunciare e dimostrare la proprietà fondamentale della PL.}{
+\texttt{Enunciato}: se un problema di PL ha soluzione ottima allora il suo poliedro ha soluzione ottima in uno dei suoi vertici!\\
+\vspace{1px}\\
+\texttt{Dimostrazione}: Dal teorema di Motzkin sappiamo che abbiamo vertici e direzioni
+\begin{enumerate}
+    \item Essendo $x^*$ massimo non abbiamo direzioni, ovvero il cono non contribuisce
+    \item \begin{align*}
+        z^* = x^* = &\sum_i \lambda_i v_i + \sum_j \mu_j d_j \leq \sum_i \lambda_i v^*\\
+        &\sum_i \lambda_i v_i \leq \sum_i \lambda_i v^*=v^*\\
+        \Rightarrow & z^* \leq v^*
+    \end{align*}
+    ma dato che $z^*$ e' soluzione ottima allora
+    \begin{align*}
+        z^* = v^*
+    \end{align*}
+    Quindi $v_i$ e' ottimo!
+\end{enumerate}
+}
+
+\domanda{1.10 \quad Definire il problema primale e duale e fornire un esempio.}{
+Dato un problema primale
+\begin{align*}
+    \min \quad &c^Tx \\
+    \text{s.t. }\quad &Ax \geq b \quad x\geq 0
+\end{align*}
+Possiamo definire il duale come
+\begin{align*}
+    \max \quad &b^T y\\
+    \text{s.t.}\quad &A^Ty \leq c \quad y \geq 0
+\end{align*}
+\vspace{1px}\\
+Un esempio:
+\begin{align*}
+    \min \quad &3x_1 + 2x_2 \\
+    \text{s.t.}\quad &x_1+x_2 \geq 4\\
+    &2x_1+x_2 \geq 6\\
+    &x_1,x_2 \geq 0
+\end{align*}
+Il duale e':
+\begin{align*}
+    \max \quad & 4y_1 + 6y_2\\
+    &y_1 + 2y_2 \leq 3\\
+    &y_1 + y_2 \leq 2
+\end{align*}
+L'ottimo coindice, il vantaggio e' che il duale potrebbe essere piu' facile da calcolare rispetto il primale.
+}
+
+\domanda{1.11 \quad Discutere l'interpretazione delle variabili duali.}{
+Una variabile $i$ duale indica il valore marginale del vincolo
+\begin{align*}
+    y_i = \frac{\partial z^*}{\partial b_i}
+\end{align*}
+\begin{itemize}
+    \item $y_i=0$ avere piu' risorse $i$ non migliora verso ottimo
+    \item $y_i >0$ avere di piu' ci porta a ottimo, con un incremento di $y_i$
+\end{itemize}
+}
+
+\domanda{1.12 \quad Enunciare e dimostrare il teorema debole della dualità.}{
+\texttt{Enunciato:} Per ogni soluzione ammissibile $x$ del primale, per ogni soluzione ammisibile $y$ del duale:
+\begin{align*}
+    b^Ty \leq c^T x
+\end{align*}
+\vspace{1px}\\
+\texttt{Dimostrazione}:
+\begin{align*}
+    1. \quad &Ax \geq b\\
+    &y^TAx \geq y^T b \\
+    &y^TAx \geq b^T y\\
+    2. \quad &A^T y \leq c\\
+    &x^T A^T y \leq x^T c\\
+    &x^T A^T y \leq c^T x\\
+\end{align*}
+Sappiamo che $y^TAx = (y^TAx)^T = x^T A^T y$
+\begin{align*}
+    \Rightarrow &y^TAx \leq c^T x\\
+\end{align*}
+Allora
+\begin{align*}
+    \begin{cases}
+    &y^TAx \geq b^Ty \\
+    &y^TAx \leq c^T x
+    \end{cases}\\
+    \Rightarrow b^Ty \leq c^Tx
+\end{align*}
+}
+
+\domanda{1.13 \quad Definire una direzione ammissibile e di crescita.}{
+Data una \texttt{soluzioni ammissibile} $x \in P$, definiamo direzione ammissibile
+\begin{align*}
+    x + \epsilon d \in P \quad \exists \epsilon > 0
+\end{align*}
+Un vettore $d$ lo definiamo \texttt{direzione di crescita} se 
+\begin{align*}
+    c^T d > 0
+\end{align*}
+Cioè muovendosi nella direzione $d$ il valore della funzione obiettivo aumenta.
+}
+
+\domanda{1.14 \quad Enunciare la condizione di ottimalità per la PL.}{
+Dato un problema di PL
+\begin{align*}
+    \min \quad c^T &x \\
+    \text{s.t. } \quad A&x=b \quad x \geq 0
+\end{align*}
+\texttt{Enunciato:} Sia $x^*$ soluzione ammissibile alla base $B$, allora:
+\begin{align*}
+    \hat{c}_N^T=c_N^T- \hat{y}^T A_N \geq 0 
+\end{align*}
+}
+
+\section{2 \quad Ottimizzazione su rete}
+
+\domanda{2.1 \quad Definire il problema del flusso massimo su una rete ed il relativo modello matematico.}{
+Una rete di flusso e' una quadrupla $G=(V, A, s, t)$ 
+\begin{itemize}
+    \item $V$ insieme dei nodi
+    \item $S$ insieme degli archi orientati con capacita' $c_{ij}$
+    \item $s$ nodo sorgente
+    \item $t$ nodo pozzo
+\end{itemize}
+Il modello matematico si formula come 
+\begin{align*}
+    \max \quad & v = \sum_{j \,:\, (s,j) \in A} x_{sj} - \sum_{j \,:\, (j,s) \in A} x_{js} \\[6pt]
+    & \sum_{j \,:\, (j,i) \in A} x_{ji} - \sum_{j \,:\, (i,j) \in A} x_{ij} = 0
+      \qquad \forall\, i \in V \setminus \{s, t\} \\[4pt]
+    & 0 \leq x_{ij} \leq c_{ij} \qquad \forall\, (i,j) \in A
+\end{align*}
+Con $x_{ij}$ flusso su arco $(i,j) \in A$.
+}
+
+\domanda{2.2 \quad Definire il problema del flusso di costo minimo su una rete ed il relativo modello matematico.}{
+La rete e' una quintupla $G=(V, A, b_i, c_{ij}, j_{ij})$
+\begin{itemize}
+    \item $V$ insieme dei nodi
+    \item $A$ insieme degli archi
+    \item $b_i$ bilancio del nodo $i$
+    \item $c_{ij}$ capacita' dell'arco $(i,j)$
+    \item $k_{ij}$ costo unitario del flusso
+\end{itemize}
+Il modello matematico lo modelliamo come
+\begin{align*}
+    &\min \quad \sum_{(i,j) \in A} k_{ij}x_{ij}
+\end{align*}
+soggetto a
+\begin{align*}
+    & \sum_{j \,:\, (i,j) \in A} x_{ij} - \sum_{j \,:\, (j,i) \in A} x_{ji} = b_i \qquad \forall i \in V\\
+    &0 \leq x_{ij} \leq c_{ij} \qquad \forall (i,j) \in A
+\end{align*}
+}
+
+\domanda{2.3 \quad Data una rete, definire un taglio s-t ed illustrarne le proprietà.}{
+Data una rete $G$, definiamo taglio $s-t$ una tupla ($S, T$) t.c.
+\begin{itemize}
+    \item $s \in S$
+    \item $t \in T$
+    \item $T = V \backslash S$
+\end{itemize}
+La capacita' di taglio e' definita 
+\begin{align*}
+    C(S, T) = \sum_{(i,j)\in S} c_{ij}
+\end{align*}
+Le proprieta' sono
+\begin{itemize}
+    \item Il flusso netto attraverso ogni taglio è uguale al valore del flusso
+    \item Ogni taglio fornisce un limite superiore al valore del flusso
+    \item Teorema Max-Flow Min-Cut 
+\end{itemize}
+}
+
+\domanda{2.4 \quad Data una rete ed un flusso, definire il grafo residuo corrispondente.}{
+\textit{Da svolgere nel esercizio dato dal prof.}
+}
+
+\domanda{2.5 \quad Definire un cammino aumentante per il flusso massimo sul grafo residuo.}{
+Un cammino aumentante e' un cammino valido da $s$ a $t$ nel grafo residuo.
+}
+
+\domanda{2.6 \quad Discutere la correttezza dell'algoritmo di Ford-Fulkerson (ev.\ solo enunciati o specifiche fasi).}{
+\begin{algorithm}
+\caption{Ford-Fulkerson}
+\begin{algorithmic}[H]
+\State $x_{ij} = 0$ \textbf{per ogni} $(i,j) \in A$
+\While{esiste un cammino aumentante $P$ in $G_x$}
+    \State $\delta = \min \quad \text{residuo}_{ij}$
+    \State aggiorna $x$ lungo $P$ con bottleneck $\delta$
+\EndWhile\\
+\Return $x$
+\end{algorithmic}
+\end{algorithm}\\
+Correttezza:
+\begin{enumerate}
+    \item Il flusso resta ammissibile
+    \item Quando si ferma, il flusso è massimo
+    \item Termina sempre
+\end{enumerate}
+}
+
+\domanda{2.7 \quad Enunciare e dimostrare il teorema max-flow-min-cut per il flusso massimo.}{
+\texttt{Enunciato}: Per qualsiasi rete di flusso le tre condizioni sono equivalenti:
+\begin{enumerate}
+    \item $x$ è flusso massimo
+    \item Non esiste nessun cammino aumentante in $G_x$
+    \item Esiste un taglio $(S, \bar{S})$ t.c. $v(x) = C(S, \bar{S})$
+\end{enumerate}
+
+\texttt{Dimostrazione} ($1 \Rightarrow 2 \Rightarrow 3 \Rightarrow 1$):
+
+\textbf{($1 \Rightarrow 2$)} Se esistesse un cammino aumentante in $G_x$,
+si potrebbe aumentare $v(x)$, contraddicendo la massimalità. $\square$
+
+\textbf{($2 \Rightarrow 3$)} Sia $S = \{\text{nodi raggiungibili da } s
+\text{ in } G_x\}$. Poiché $t \notin S$, la coppia $(S, \bar{S})$ è un
+taglio s-t. Per costruzione, ogni arco diretto del taglio è saturo
+($x_{ij} = c_{ij}$) e ogni arco inverso è vuoto ($x_{ij} = 0$).
+Dalla Proprietà 1 sui tagli:
+\[
+    v(x) = \sum_{A^+(S)} x_{ij} - \sum_{A^-(S)} x_{ij}
+         = \sum_{A^+(S)} c_{ij} = C(S, \bar{S}) \qquad \square
+\]
+
+\textbf{($3 \Rightarrow 1$)} Dalla Proprietà 2 sappiamo che per qualsiasi
+flusso $x'$ e qualsiasi taglio: $v(x') \leq C(S, \bar{S}) = v(x)$.
+Quindi $x$ è massimo. $\square$
+
+\textbf{Corollario}: combinando $1 \Rightarrow 2 \Rightarrow 3$ si ottiene
+che quando Ford-Fulkerson termina, il taglio $(S, \bar{S})$ costruito è
+minimo e il flusso corrente è massimo, quindi:
+\[
+    \max v(x) = \min C(S, \bar{S})
+\]
+}
+
+\domanda{2.8 \quad Definire uno pseudoflusso e discutere le condizioni della sua ammissibilità.}{
+Data una rete $G$ definiamo \texttt{pseudoflusso} una funzione che soddifsfi solo 
+\begin{align*}
+    0 \leq x_{ij} \leq c_{ij} \qquad \forall (i,j) \in A
+\end{align*}
+(La conservazione del flusso non è richiesta).\\
+\vspace{1px}\\
+Uno pseudoflusso e' flusso ammissibile se e solo se tutti i nodi sono sbilanciati
+\begin{align*}
+    e_i(x)=0 \qquad \forall i \in V
+\end{align*}
+}
+
+\domanda{2.9 \quad Definire un cammino aumentante per il flusso a costo minimo sul grafo residuo.}{
+Un cammino aumentante per il flusso a costo minimo e' un camminimo di costo minimo nel grafo residuo $G_x$ da un nodo di surplus e un nodo di decifit.
+}
+
+\domanda{2.10 \quad Definire uno pseudoflusso minimale.}{
+Uno pseudoflusso e' minimale se nel grafo residuo $G_x$ non esistono cicli di costo negativo.
+}
+
+\domanda{2.11 \quad Discutere l'effetto di un cammino aumentante a costo minimo su uno pseudoflusso minimale.}{
+\texttt{Teorema}: Se $x$ e' minimale e $P$ e' un camminimo di costo minimo in $G_x$ allora lo pseudoflusso $x'$ ottenuto aumentando lungo $P$ e' ancora minimale.
+}
+
+\domanda{2.12 \quad Discutere come ottenere un flusso ammissibile, se esiste, per un problema di flusso a costo minimo.}{
+Si procede in due fasi: si costruisce un pseudoflusso minimale iniziale, poi lo si rende ammissibile tramite augmentation successive, controllando se la feasibility è raggiungibile. Cosi' otteniamo un flusso ammissibile e ottimo.
+}
+
+\end{document}
