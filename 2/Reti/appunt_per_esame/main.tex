@@ -197,6 +197,18 @@ Vogliamo anche che il canale sia \textbf{affidabile}, cioè che non generi ulter
 \section{Digressione sugli ACK e Tempo di Trasmissione}\pagemark{12}
 \textbf{Digressione sugli ACK.} Quando la busta gialla fa un passo in avanti, un ack fa un passo a ritroso per confermare la ricezione, e ciò avviene per ogni passo del frame. Alla fine, il destinatario finale manda un \textbf{ack finale}: questo non riguarda più il livello MAC/LLC ma il \textbf{livello di trasporto}, perché bisogna garantire il servizio \emph{end-to-end}, e solo il destinatario finale può confermare di aver ricevuto il pacchetto completo e corretto (servizio connection-oriented).
 
+\hl{\textbf{Servizio End-to-End.}} Il livello trasporto realizza un servizio
+\emph{end-to-end} perché garantisce la consegna corretta, ordinata e completa
+\textbf{direttamente tra mittente e destinatario finali}, scavalcando
+logicamente tutti i nodi intermedi. I livelli inferiori (MAC/LLC) lavorano
+\emph{hop-by-hop} (nodo $n \to$ nodo $n+1$), mentre il trasporto costruisce un
+\textbf{canale logico} che collega i due estremi come se fossero direttamente
+connessi, anche con decine di router in mezzo. I router intermedi salgono al
+massimo fino al livello $3$ (rete) e non aprono mai la busta di trasporto:
+l'affidabilità è quindi una proprietà \emph{tra i due capi}, non di ogni singolo
+salto. Per questo solo il destinatario finale può inviare l'ACK di trasporto, che
+conferma la ricezione dell'intero pacchetto.\\
+\vspace{1px}\\
 In una rete locale ad \textbf{anello}, non c'è un ``super-responsabile'' che decide chi trasmette, ma un \textbf{token ring} che gira nella rete: chi detiene il token ha diritto a trasmettere; finita la comunicazione, il token viene accodato all'ultimo pacchetto inviato. In questa configurazione gli ack non vengono inviati: se il messaggio ritorna per intero al mittente, significa che anche il destinatario lo ha ricevuto correttamente; in caso contrario i pacchetti vengono reinviati per intero.
 
 \textbf{Tempo di Trasmissione.} La formula del tempo necessario affinché un intero pacchetto arrivi a destinazione è:
@@ -233,15 +245,15 @@ Nella topologia \textbf{a stella} i nodi sono connessi a un nodo centrale: ogni 
 
 \textbf{Particolarità}: nelle reti ad anello nessun ACK viene inviato; se il messaggio partito dal mittente ritorna al mittente, la comunicazione è andata a buon fine.
 
-\textbf{Ritardo di ricezione.} Nei servizi connection-oriented il ritardo di ricezione e il conseguente RTT influiscono sull'utilizzo della rete in due modi:
+\hl{\textbf{Ritardo di ricezione.}} Nei servizi connection-oriented il ritardo di ricezione e il conseguente RTT influiscono sull'utilizzo della rete in due modi:
 \begin{enumerate}[noitemsep]
 \item \textbf{Tempi di inattività}: il mittente deve attendere l'ACK; se il ritardo di rete è elevato, resta molto tempo in attesa lasciando il canale inattivo, non sfruttando la banda.
 \item \textbf{Ritrasmissioni e spreco di banda}: se la rete è congestionata e il timeout scatta pochi istanti prima della consegna effettiva, il mittente reinvia il messaggio sprecando banda.
 \end{enumerate}
 
 \section{ACK: livello MAC/LLC vs Trasporto}\pagemark{15}
-\textbf{ACK.} Esistono due tipi di ACK: quelli del livello \textbf{MAC/LLC} e quelli del livello \textbf{Trasporto}.
-\begin{itemize}[noitemsep]
+\hl{\textbf{ACK.} Esistono due tipi di ACK: quelli del livello \textbf{MAC/LLC} e quelli del livello \textbf{Trasporto}.
+}\begin{itemize}[noitemsep]
 \item \textbf{MAC/LLC}: inviato quando un frame passa correttamente (senza errori) da un nodo $n$ al nodo $n+1$.
 \item \textbf{Trasporto}: inviato quando un pacchetto giunge correttamente dal mittente al destinatario.
 \end{itemize}
@@ -340,6 +352,36 @@ I router scoprono nuovi cammini con \textbf{algoritmi di routing}; comunicano so
 
 \textbf{Nota (TTL).} Ogni pacchetto ha un \textbf{TTL}, il numero massimo di router che può attraversare; a ogni passaggio diminuisce di uno e a zero il pacchetto viene scartato, evitando pacchetti ``zombie'' che girano all'infinito.
 
+\section{Subnetting e Super-netting}
+ Sono due operazioni opposte che agiscono
+sul confine tra parte \emph{network} e parte \emph{host} di un indirizzo IPv4,
+spostando bit dall'una all'altra.
+
+\hl{\textbf{Subnetting (divisione).}} Si \textbf{divide} una rete in sottoreti più
+piccole \emph{rubando bit all'host} e promuovendoli a network: il prefisso si
+\emph{allunga} (es. da $/16$ a $/19$). Con $k$ bit rubati si ottengono $2^k$
+sottoreti, ciascuna con meno host. Serve a segmentare una rete grande in più reti
+indipendenti (per organizzazione, sicurezza, riduzione dei domini di
+broadcast/collisione). L'appartenenza di un host alla sottorete si verifica con
+l'AND bit a bit tra indirizzo e maschera.
+
+\hl{\textbf{Super-netting (aggregazione).}} È l'operazione inversa: si
+\textbf{aggregano} più reti/host in un'unica rete più grande \emph{rubando bit
+alla parte network} e restituendoli all'host, quindi \emph{accorciando} il
+prefisso (es. da $/24$ a $/22$). Serve a riassumere più reti contigue in una sola
+voce di routing (\emph{route aggregation}) o a trovare la rete minima che
+contiene un insieme di indirizzi. Due indirizzi stanno nella stessa super-rete
+$/n$ se condividono i primi $n$ bit: si cerca il \textbf{prefisso comune più
+lungo} (bit uguali da sinistra fino al primo che diverge), e quello è il prefisso
+della super-rete. Più gli indirizzi differiscono presto (bit alti diversi), più
+corto è il prefisso e più grande la super-rete. L'aggregazione che supera il
+confine di classe è alla base del \textbf{CIDR} (Classless Inter-Domain Routing).
+
+\textbf{In sintesi.} Subnetting allunga il prefisso (network$\to$host diventa
+network$\leftarrow$host: più reti, meno host ciascuna); super-netting lo accorcia
+(meno reti, più host ciascuna). In entrambi i casi la maschera segna il confine:
+spostarla a destra divide, a sinistra aggrega.
+
 \section{Protocollo ARP e RARP}\pagemark{21}
 \textbf{Protocollo ARP e RARP.} Quando un pacchetto partito dalla rete 140.217 arriva alla rete 130.136.2, deve essere imbustato nella busta gialla per raggiungere il destinatario via rete locale (frame). Il problema è che il router della sottorete potrebbe non conoscere il \textbf{MAC} del destinatario. Lo risolve il protocollo \textbf{ARP} (Address Resolution Protocol): il router produce un frame broadcast a tutti gli host chiedendo ``qual è il MAC dell'host con IP X?''. Se il dispositivo esiste, risponde e il pacchetto viene consegnato. Il \textbf{RARP} è la versione opposta di ARP.
 
@@ -377,7 +419,10 @@ Prima di scambiare dati TCP crea una connessione logica (non un cavo dedicato) t
 \textbf{Esempio.} Socket del client $(192.168.1.10{:}52133)\to$ socket del server $(93.44.12.5{:}80)$. PC1 invia una richiesta TCP di connessione (\textbf{SYN}); se il socket esiste ed è libero, il server risponde con \textbf{SYN-ACK}; PC1 invia l'\textbf{ACK} finale e la connessione è attiva (solo quei due socket parlano). Terminato lo scambio, la connessione è rilasciata e le porte liberate.
 
 \noindent\hfill{\footnotesize\color{gray}[p.23]}\\
-\textbf{Controllo di flusso e congestione.} TCP crea un canale logico tra due dispositivi anche distanti, ma ha due problemi: la \textbf{latenza} è alta (inviare un pacchetto e attenderne la conferma è lento per grossi file); inviare tutto in una volta crea \textbf{congestione} dei router e perdita di pacchetti. Bisogna controllare il \textbf{flusso} (ritmo massimo sostenibile dal destinatario) e la \textbf{congestione} (ritmo massimo sostenibile dal router più lento). Il meccanismo è la \textbf{sliding window} (SW).
+\section{Controllo di flusso e congestione}
+\hl{\textbf{Controllo di flusso e congestione.}} TCP crea un canale logico tra due dispositivi anche distanti, ma ha due problemi: la \textbf{latenza} è alta (inviare un pacchetto e attenderne la conferma è lento per grossi file); inviare tutto in una volta crea \textbf{congestione} dei router e perdita di pacchetti. Bisogna controllare il \textbf{flusso} (ritmo massimo sostenibile dal destinatario) e la \textbf{congestione} (ritmo massimo sostenibile dal router più lento). Il meccanismo è la \textbf{sliding window} (SW).
+
+\textbf{Dove e da chi.} Entrambi i controlli sono implementati al \textbf{livello Trasporto (livello 4)}, dentro il protocollo \textbf{TCP} (UDP non li ha: sono a carico dell'app). Risiedono nei \textbf{due endpoint} della connessione, eseguiti dal \textbf{sistema operativo / stack TCP} degli host, \emph{non} dall'applicazione e \emph{non} dai router intermedi (che subiscono la congestione ma lavorano solo al livello 3). \textbf{Perché:} rispondono a due colli di bottiglia \emph{distinti} --- il flusso protegge il singolo \emph{ricevente} (buffer finito), la congestione protegge la \emph{rete} condivisa (router con code finite).
 
 Una sliding window è un valore interno $sw$ = numero massimo di pacchetti che il mittente può spedire di seguito in attesa di conferma. Il \textbf{flusso} è controllato perché \textbf{non si spediscono pacchetti oltre l'ultimo non confermato}: se i primi $sw$ sono confermati si inviano i successivi $sw$; se un pacchetto non è confermato, viene rispedito. La \textbf{congestione} permette di spedire un numero variabile:
 \begin{itemize}[noitemsep]
@@ -391,6 +436,18 @@ Politiche di (Re)Transmit quando un pacchetto della finestra non arriva:
 \end{itemize}
 \textbf{Nota}: la finestra scorrevole si blocca finché tutti i pacchetti della finestra corrente non sono consegnati e ``ackati''. \textbf{Riassumendo}: il controllo di flusso evita il sovraccarico del ricevente, il controllo di congestione evita la saturazione della rete; un metodo è la sliding window.
 
+\textbf{Differenze in sintesi.}
+\[
+\begin{array}{l|l|l}
+\textbf{Aspetto} & \textbf{Controllo di flusso} & \textbf{Controllo di congestione} \\ \hline
+\text{Cosa protegge} & \text{il destinatario (suo buffer)} & \text{la rete (router intermedi)} \\
+\text{Da cosa} & \text{ricevente troppo lento} & \text{router/colli di bottiglia} \\
+\text{Limite imposto} & \text{ritmo max del ricevitore} & \text{ritmo max del router più lento} \\
+\text{Chi fissa il limite} & \text{il destinatario (annuncia la finestra)} & \text{il mittente (deduce dalle perdite)} \\
+\text{Segnale} & \text{spazio nel buffer del ricevente} & \text{timeout / pacchetti persi} \\
+\end{array}
+\]
+In una frase: il controllo di \textbf{flusso} affronta un problema \emph{locale} (il singolo ricevente), il controllo di \textbf{congestione} un problema \emph{globale} (la rete condivisa). Entrambi usano la \emph{stessa} sliding window, ma con vincoli diversi: il flusso non supera lo spazio nel buffer del ricevente, la congestione cresce/decresce in base alle conferme e ai timeout.
 \section{Approfondimento d'esame: Go-Back-N vs Selective Repeat}
 Entrambi sono protocolli a finestra scorrevole per la consegna affidabile (la stessa idea della sliding window vista sopra), e differiscono nella politica di ritrasmissione:
 \begin{itemize}[noitemsep]
@@ -472,10 +529,36 @@ Transazioni bancarie    & no  & \cellcolor{yellow}s\`i & nessuna perdita ammessa
 \item \textbf{TCP} $\to$ applicazioni che richiedono \emph{consegna affidabile, ordinata e senza errori} (connessione, controllo di flusso e di congestione, ritrasmissione automatica).
 \end{itemize}
 
+\section{Multiplexing e Demultiplexing tra mittente e destinatario}
+\hl{\textbf{Multiplexing e Demultiplexing.}} Su uno stesso host più processi
+applicativi (browser, client mail, SSH\dots) comunicano contemporaneamente, ma
+condividono un'unica interfaccia verso il livello di rete. Il livello trasporto
+risolve questo tramite il \textbf{numero di porta}, che identifica il singolo
+processo all'interno della macchina.
+
+\begin{itemize}
+    \item \textbf{Multiplexing} (lato mittente): il livello trasporto raccoglie i
+    dati provenienti dai diversi socket dei vari processi, li imbusta in segmenti
+    aggiungendo nell'header la porta sorgente e la porta destinazione, e li
+    consegna tutti all'unico livello di rete sottostante. Tanti flussi
+    applicativi $\to$ un'unica connessione di rete.
+    \item \textbf{Demultiplexing} (lato destinatario): l'host riceve dal livello
+    di rete un flusso di segmenti diretti a processi diversi. Il livello
+    trasporto legge la \emph{porta di destinazione} nell'header di ciascun
+    segmento e lo consegna al socket (quindi al processo) corretto. Un unico
+    flusso in arrivo $\to$ smistato verso le giuste applicazioni.
+\end{itemize}
+
+Il \textbf{collante} del meccanismo è il numero di porta: senza di esso l'host
+riceverebbe i dati ma non saprebbe a quale processo consegnarli. È questo che
+permette al servizio \textbf{end-to-end} del trasporto di collegare non due
+\emph{macchine} (compito dell'IP) ma due \emph{processi} specifici ai capi della
+comunicazione.
+
 \chapter{Approfondimenti Capitolo 2 — Internet Protocol (IP)}\pagemark{26}
 \textbf{Internet Protocol (IP).} Protocollo di rete che costruisce un indirizzamento globale e gerarchico (\textbf{indirizzo IP}), fornisce il \textbf{forwarding} e servizi connectionless e introduce nuovi dispositivi del livello di rete, i \textbf{router}.
 
-\textbf{IPv6 e IPv4.} Gli indirizzi \textbf{IPv6} sono logici (strutturati e gerarchici) con uno spazio gigantesco: 128 bit (16 byte). Non sono retrocompatibili: i router che ``parlano'' IPv4 non sanno decifrare 128 bit, perché usano tabelle diverse. Il problema è il \textbf{binding} (far coesistere indirizzi interpretabili da infrastrutture diverse). La soluzione è il \textbf{tunnel}: quando un pacchetto IPv6 deve attraversare una porzione ``vecchia'' (router IPv4), il router di confine incapsula l'intero pacchetto IPv6 dentro un normale pacchetto IPv4; viaggia ``sotto-copertura'' fino al router di confine successivo. Permette una transizione lenta e graduale.
+\hl{\textbf{IPv6 e IPv4.}} Gli indirizzi \textbf{IPv6} sono logici (strutturati e gerarchici) con uno spazio gigantesco: 128 bit (16 byte). Non sono retrocompatibili: i router che ``parlano'' IPv4 non sanno decifrare 128 bit, perché usano tabelle diverse. Il problema è il \textbf{binding} (far coesistere indirizzi interpretabili da infrastrutture diverse). La soluzione è il \textbf{tunnel}: quando un pacchetto IPv6 deve attraversare una porzione ``vecchia'' (router IPv4), il router di confine incapsula l'intero pacchetto IPv6 dentro un normale pacchetto IPv4; viaggia ``sotto-copertura'' fino al router di confine successivo. Permette una transizione lenta e graduale.
 
 \textbf{Algoritmi di Routing.} Decidono la strada migliore; la comunicazione tra router avviene tramite ICMP.
 \begin{itemize}[noitemsep]
@@ -518,8 +601,8 @@ Un host deve conoscere almeno un DNS server, e ogni DNS server almeno uno superi
 \begin{itemize}[noitemsep]
 \item \textbf{DNS locali}: non appartengono alla gerarchia, sono una cache/proxy locale delle traduzioni recenti \emph{name-to-address} (default name server); è quello fornito dal DHCP quando l'host si collega a una rete sconosciuta.
 \item \textbf{Root name server}: contattati dai DNS locali che non riescono a risolvere un nome; non conoscono l'indirizzo finale ma sanno a quale \textbf{TLD} reindirizzare in base all'estensione del dominio.
-\item \textbf{TLD Server} (Top Level Domain): responsabili del primo livello (desinenza finale); conoscono l'authoritative DNS dei nomi che finiscono in \emph{.com .org .net .edu} e country names come \emph{.uk .fr .ca .it}.
-\item \textbf{Authoritative DNS}: il capolinea, il server autorevole che possiede i registri ufficiali e definitivi (i veri IP) per uno specifico dominio; consulta i propri file e restituisce l'IP esatto.
+\item \hl{\textbf{TLD Server} (Top Level Domain)}: responsabili del primo livello (desinenza finale); conoscono l'authoritative DNS dei nomi che finiscono in \emph{.com .org .net .edu} e country names come \emph{.uk .fr .ca .it}.
+\item \hl{\textbf{Authoritative DNS}}: il capolinea, il server autorevole che possiede i registri ufficiali e definitivi (i veri IP) per uno specifico dominio; consulta i propri file e restituisce l'IP esatto.
 \end{itemize}
 \textbf{Esempio}: si richiede \texttt{www.amazon.it}; il local DNS interpella la sua tabella, se è vuota chiede al \textbf{root DNS} l'estensione \emph{.com}; il root reindirizza al \textbf{TLD .com}; il TLD non ha l'IP preciso ma sa che \emph{amazon.com} è gestito dall'authoritative DNS di Amazon; l'authoritative DNS traduce infine \texttt{www.amazon.com} nell'IP corretto (es. 205.1.10.20). Le query possono essere \textbf{iterative} o \textbf{ricorsive}.
 
@@ -1056,6 +1139,25 @@ dove $d$ = distanza in miglia, $f$ = frequenza del segnale in GHz, $Ft$ = distan
 \[ \text{Loss (dB)} = 32{,}4 + 20\log_{10}(F) + 20\log_{10}(D) \quad\to\quad \text{formula pessimista} \]
 dove $F$ = frequenza in MHz e $D$ = distanza in miglia. Al raddoppiare della distanza la perdita aumenta di circa $-6\,dB$ per ogni ``passo''.
 
+\hl{\textbf{Regola dei 6 dB.}} Nelle formule di path loss la distanza entra come
+$20\log_{10}(D)$. Raddoppiare la distanza aggiunge quindi
+$20\log_{10}(2)\approx 6\,dB$ di attenuazione: \emph{ogni volta che la distanza
+Tx--Rx raddoppia, il path loss cresce di $\sim 6\,dB$} (e la potenza ricevuta si
+divide per $4$). Specularmente, dimezzando la distanza si \emph{guadagnano}
+$6\,dB$. Il valore $6$ deriva dal fatto che $6\,dB = 2\times 3\,dB$ e ogni
+$3\,dB$ raddoppia/dimezza la potenza ($-3\,dB \Rightarrow \tfrac{1}{2}$,
+$-6\,dB \Rightarrow \tfrac{1}{4}$).
+
+\emph{Utilità pratica}: permette di stimare \textbf{a mente} come varia la
+potenza ricevuta (o il link budget) al variare della distanza, senza ricalcolare
+la formula completa. Per esempio, per coprire il \emph{doppio} della distanza
+servono $+6\,dB$ recuperati altrove, cioè $\sim 4\times$ in potenza (mW) oppure
+guadagno aggiuntivo sulle antenne. È lo strumento rapido per capire se un
+collegamento ``regge'' allontanando le antenne e quanta potenza/gain occorre per
+estendere la portata. La tabella dei raddoppi di distanza (sotto) mostra la
+regola applicata: $100\to 200\to 500\to 1000\,$m, ciascun raddoppio
+$\approx -6\,dB$.
+
 \textbf{Link Budget.} È il segnale in più rispetto al minimo necessario (l'eccesso tra mittente e destinatario), misurabile in dBm o dB. Il $LB$ deve essere maggiore del \textbf{fade margin (FM)}: poiché le onde subiscono rimbalzi ed effetti atmosferici, serve $LB \ge FM$, così anche nelle giornate peggiori la comunicazione riesce. Il peggio è avere il $LB$ uguale alla \emph{receive sensitivity} (RS) del destinatario.
 \[ \text{Link Budget (dBm)} = \text{Received Power (dBm)} - RS\,(dBm) \]
 \[ \text{Received Power (dBm)} = \text{Total Gain (dBm)} + \text{Total Loss (dBm)} \]
@@ -1133,7 +1235,7 @@ Il \textbf{simbolo} è la caratteristica dell'onda radio (a una certa frequenza)
 \figura{p70_1.png}{0.82}
 
 \section{Modulazione Digitale (ASK, FSK, PSK)}\pagemark{71}
-\textbf{Digital Modulation -- Tecniche.} La modulazione digitale porta dal bit grezzo alla \textbf{base band}. Tecniche principali: ASK, FSK, PSK.
+\hl{\textbf{Digital Modulation -- Tecniche.}} La modulazione digitale porta dal bit grezzo alla \textbf{base band}. Tecniche principali: ASK, FSK, PSK.
 \begin{itemize}[noitemsep]
 \item \textbf{ASK} (Amplitude Shift Keying): il più semplice, un on/off (basta un transistor); economico (una sola frequenza), ma molto sensibile alle interferenze. Es.\ il bit ``1'' ha la sinusoide, il bit ``0'' è spento (OFF): un disturbo sullo ``0'' può farlo interpretare come ``1''.
 \item \textbf{FSK} (Frequency Shift Keying): usa frequenze diverse (es.\ ``1'' a 2 Hz, ``0'' a 1 Hz). Usa più spettro ma è più robusto contro le interferenze.
@@ -1303,6 +1405,47 @@ Col protocollo Ethernet, chi vuole trasmettere aspetta qualche millisecondo e, s
 La soluzione è l'accordo \textbf{CDMA/CA}: chi vuole trasmettere invia al destinatario un \emph{request to send} (RTS); se il destinatario è libero invia un \emph{clear to send} (CTS), requisendo il canale e dicendo a chiunque sia nella sua sfera di influenza di stare in silenzio. Così B non inizierà la comunicazione verso D e rimarrà in silenzio.
 \figura{p81_1.png}{0.82}
 \figura{p81_2.png}{0.42}
+\subsection{Vulnerabilità del frame (Random Access wireless)}
+
+\hl{\textbf{Periodo di vulnerabilità.} Nei protocolli MAC ad \textbf{accesso casuale}
+(random access: ALOHA, CSMA) le stazioni trasmettono senza una coordinazione
+centrale, quindi due frame possono sovrapporsi e collidere. Si definisce
+\textbf{periodo (o tempo) di vulnerabilità} di un frame l'intervallo di tempo
+durante il quale, se un'altra stazione inizia a trasmettere, il frame viene
+distrutto da una collisione.}
+
+\begin{itemize}
+    \item \textbf{ALOHA puro}: una stazione trasmette appena ha un dato pronto.
+    Un frame che parte all'istante $t_0$ collide sia con un frame iniziato poco
+    prima (fino a un tempo di trasmissione $T$ prima) sia con uno iniziato poco
+    dopo (fino a $T$ dopo). Il periodo di vulnerabilità è quindi
+    $\mathbf{2T}$ (due volte il \emph{frame time}).
+    \item \textbf{Slotted ALOHA}: l'asse temporale è diviso in slot e le stazioni
+    possono trasmettere solo all'inizio di uno slot. Due frame o si sovrappongono
+    completamente o non si toccano: il periodo di vulnerabilità si dimezza a
+    $\mathbf{T}$ (un solo slot), e l'efficienza massima passa da $\sim 18\%$ a
+    $\sim 37\%$.
+\end{itemize}
+
+\hl{\textbf{Perché nel wireless è un problema aggravato.}} Nelle reti cablate
+(Ethernet, CSMA/CD) la stazione può \emph{ascoltare il canale mentre trasmette}
+e rilevare immediatamente una collisione (collision detection), interrompendo
+subito la trasmissione e limitando lo spreco. Nel wireless questo \textbf{non è
+possibile}: il segnale ricevuto dalla propria antenna è enormemente più forte di
+quello degli altri, quindi una stazione non può sentire le altrui trasmissioni
+mentre trasmette. Senza collision detection, la collisione viene scoperta solo
+\emph{a posteriori} (manca l'ACK), pagando l'intero frame perso. Per questo nel
+wireless si usa \textbf{CSMA/CA} (Collision \emph{Avoidance}): si cerca di
+\emph{evitare} la collisione invece di rilevarla.
+
+\textbf{Aggravante del terminale nascosto.} Il \emph{carrier sense} da solo non
+basta, perché due stazioni fuori dalla portata reciproca (terminali nascosti)
+ascoltano il canale libero e trasmettono entrambe verso un ricevitore comune,
+estendendo di fatto il periodo di vulnerabilità a situazioni che il sender non
+può prevenire ascoltando. La soluzione è lo scambio \textbf{RTS/CTS}
+(vedi sopra): il \emph{Clear To Send} del ricevitore zittisce tutti i nodi nella
+sua sfera di copertura, riservando il canale e azzerando la finestra in cui un
+terminale nascosto potrebbe collidere.
 
 \chapter{Approfondimenti Capitolo 6 — Polarizzazione e Multipath}\pagemark{82}
 \textbf{Polarizzazione.} \emph{H-plane}: campo magnetico, perpendicolare all'antenna. \emph{E-plane}: campo elettrico, parallelo all'antenna. Antenne diverse, posizionate in modo diverso, permettono di leggere meglio o peggio le radiofrequenze trasmesse su un asse particolare.
@@ -1313,6 +1456,140 @@ La soluzione è l'accordo \textbf{CDMA/CA}: chi vuole trasmettere invia al desti
 
 \textbf{RSSI} (Received Signal Strength Indicator). È una misura non standard, cambia da produttore a produttore e non è indicativa. In fase di acquisto dei dispositivi, oltre all'RSSI bisogna considerare il \emph{Signal Detection Limit}, il bitrate, e i dBm in cui si raggiunge il massimo bitrate.
 \figura{p82_1.png}{0.82}
+
+\chapter{Riepilogo dei Protocolli di Rete}
+
+Questo capitolo raccoglie i protocolli trattati nel corso (e i classici
+correlati), organizzati per livello dello stack. Per ciascuno: livello, su cosa
+si appoggia, e funzione. La tabella serve da colpo d'occhio; i paragrafi
+spiegano il \emph{perché}.
+
+\section*{Tabella riepilogativa}
+\[
+\begin{array}{l|l|l|l}
+\textbf{Protocollo} & \textbf{Livello} & \textbf{Trasp.} & \textbf{Funzione} \\ \hline
+\text{ARP / RARP} & \text{2--3} & \text{---} & \text{IP}\leftrightarrow\text{MAC} \\
+\text{IPv4 / IPv6} & \text{Rete (3)} & \text{---} & \text{indirizzamento, forwarding} \\
+\text{ICMP} & \text{Rete (3)} & \text{su IP} & \text{messaggi di controllo/errore} \\
+\text{RIP} & \text{Rete (3)} & \text{UDP} & \text{routing (distance vector)} \\
+\text{OSPF} & \text{Rete (3)} & \text{su IP} & \text{routing (link state)} \\
+\text{BGP} & \text{Rete (3)} & \text{TCP} & \text{routing tra AS} \\
+\text{IPsec} & \text{Rete (3)} & \text{---} & \text{cifratura pacchetti IP (VPN)} \\
+\text{TCP} & \text{Trasp. (4)} & \text{---} & \text{affidabile, connection-oriented} \\
+\text{UDP} & \text{Trasp. (4)} & \text{---} & \text{best effort, connectionless} \\
+\text{DNS} & \text{Appl. (7)} & \text{UDP} & \text{nome}\to\text{IP} \\
+\text{DHCP} & \text{Appl. (7)} & \text{UDP} & \text{assegna IP dinamici} \\
+\text{HTTP/HTTPS} & \text{Appl. (7)} & \text{TCP} & \text{pagine web} \\
+\text{SMTP} & \text{Appl. (7)} & \text{TCP} & \text{invio email} \\
+\text{POP3 / IMAP} & \text{Appl. (7)} & \text{TCP} & \text{lettura email} \\
+\text{FTP} & \text{Appl. (7)} & \text{TCP} & \text{trasferimento file} \\
+\text{SSH / Telnet} & \text{Appl. (7)} & \text{TCP} & \text{sessione remota} \\
+\text{SNMP} & \text{Appl. (7)} & \text{UDP} & \text{gestione/monitoraggio} \\
+\text{NTP} & \text{Appl. (7)} & \text{UDP} & \text{sincronizzazione orario} \\
+\text{TFTP} & \text{Appl. (7)} & \text{UDP} & \text{trasferimento file leggero} \\
+\text{SSL/TLS} & \text{tra 4 e 7} & \text{TCP} & \text{canale cifrato (HTTPS)} \\
+\end{array}
+\]
+
+\section*{Livello 2--3 (collegamento / rete)}
+
+\textbf{ARP / RARP.} L'\textbf{Address Resolution Protocol} traduce un indirizzo
+IP nel MAC corrispondente sulla rete locale: il router invia un frame broadcast
+``chi ha l'IP X?'' e l'host interessato risponde col proprio MAC. Serve perché
+la consegna finale in LAN avviene per MAC, ma l'instradamento ragiona per IP.
+\textbf{RARP} è l'opposto (MAC$\to$IP), oggi soppiantato da DHCP.
+
+\textbf{IPv4 / IPv6.} Protocollo di rete che fornisce indirizzamento globale e
+gerarchico, forwarding dei pacchetti tramite router e servizio connectionless.
+IPv6 ha indirizzi a 128 bit; non è retrocompatibile con IPv4, per cui la
+coesistenza avviene tramite \emph{tunnelling} (incapsulamento IPv6 in IPv4).
+
+\textbf{ICMP.} \emph{Internet Control Message Protocol}, livello rete, incapsulato
+direttamente in IP. Trasporta messaggi di controllo ed errore (destinazione/host
+irraggiungibile, TTL azzerato). Vi si appoggiano \textbf{ping} (misura l'RTT con
+echo request/reply) e \textbf{traceroute} (TTL crescente per scoprire il
+percorso). È diagnostico e reattivo: segnala problemi di consegna.
+
+\section*{Routing (livello 3)}
+
+\textbf{RIP.} Protocollo \emph{distance vector} (algoritmo di Bellman-Ford):
+ogni router conosce solo i vicini e scambia il proprio vettore delle distanze.
+Unica metrica il numero di salti; vecchio e poco efficiente, soffre il
+count-to-infinity (mitigato con split horizon). Gira su UDP.
+
+\textbf{OSPF.} Protocollo \emph{link state} (algoritmo di Dijkstra): ogni router
+conosce la mappa completa della rete e calcola il cammino di costo minimo. Usato
+\emph{dentro} un Autonomous System; rapido nel ricalcolo. Va direttamente su IP.
+
+\textbf{BGP.} Routing \emph{tra} Autonomous System, basato su accordi commerciali
+più che su efficienza: instrada verso il provider col servizio migliore. Gira su
+TCP (serve affidabilità nello scambio delle rotte).
+
+\textbf{IPsec.} Suite di sicurezza a livello rete: cifra il contenuto dei
+pacchetti IP (header e payload) e fa apparire reti diverse come un'unica LAN.
+È la base delle \textbf{VPN}. Due protocolli (AH, solo autenticazione; ESP,
+autenticazione + confidenzialità) e due modi (Transport, Tunnel). A differenza
+di IP (connectionless), IPsec è connection-oriented.
+
+\section*{Livello Trasporto (4)}
+
+\textbf{TCP.} Servizio affidabile e connection-oriented: handshaking a 3 vie,
+numerazione e ordinamento dei segmenti, eliminazione duplicati, controllo di
+flusso e congestione (sliding window). Usa porte e socket. Per applicazioni che
+non tollerano perdite (web, email, file, SSH).
+
+\textbf{UDP.} Servizio best effort connectionless: nessun handshaking, nessun
+ACK, nessun controllo di flusso/congestione (a carico dell'app). Overhead minimo
+e bassa latenza. Per applicazioni real-time o a scambio breve (VoIP, streaming,
+DNS, giochi).
+
+\section*{Livello Applicazione (7)}
+
+\textbf{DNS.} \emph{Domain Name Server}: risolve nomi mnemonici in IP, tramite
+gerarchia ad albero (local $\to$ root $\to$ TLD $\to$ authoritative). Usa UDP per
+velocità (TCP solo per zone transfer). Senza DNS si dovrebbero memorizzare gli IP.
+
+\textbf{DHCP.} \emph{Dynamic Host Configuration Protocol}: assegna su richiesta
+IP dinamici agli host che si collegano, insieme a maschera, default router e DNS.
+Riusa gli indirizzi inutilizzati. Scambio broadcast su UDP.
+
+\textbf{HTTP / HTTPS.} Protocollo per le risorse web (HTML, immagini, ecc.),
+basato su richieste/risposte, stateless (cookie per lo stato), su TCP porta 80
+(443 per HTTPS, che aggiunge SSL/TLS). Metodi GET/POST/PUT/DELETE, status code.
+
+\textbf{SMTP.} \emph{Simple Mail Transfer Protocol}: trasferisce email tra mail
+server, su TCP porta 25 (comandi HELO, FROM, RCPT TO, DATA). Gestisce l'\emph{invio}.
+
+\textbf{POP3 / IMAP.} Protocolli per la \emph{lettura} della posta. POP3: vecchio,
+credenziali in chiaro, niente sync tra dispositivi. IMAP: completo, messaggi sul
+server organizzati in cartelle, stato condiviso tra dispositivi. Su TCP.
+
+\textbf{FTP.} \emph{File Transfer Protocol}: trasferimento file affidabile su TCP.
+
+\textbf{SSH / Telnet.} Sessione remota su TCP. Telnet è in chiaro (obsoleto);
+SSH è cifrato (well-known port 22) ed è lo standard attuale.
+
+\textbf{SNMP.} \emph{Simple Network Management Protocol}: gestione e monitoraggio
+dei dispositivi di rete. Un \emph{manager} centrale interroga gli \emph{agent}
+sui dispositivi per leggere statistiche (traffico, errori, stato interfacce) o
+modificarne la config; gli agent inviano \emph{trap} (notifiche spontanee).
+Su UDP (161/162). A differenza di ICMP (livello 3, reattivo, segnala errori),
+SNMP è di livello applicazione, proattivo e gestionale.
+
+\textbf{NTP.} \emph{Network Time Protocol}: sincronizza l'orologio dei
+dispositivi. Scambio breve su UDP, tollera la perdita.
+
+\textbf{TFTP.} \emph{Trivial FTP}: versione leggera di FTP su UDP; gestisce gli
+errori a livello applicativo. Usato per trasferimenti semplici (es. boot di
+dispositivi).
+
+\section*{Sicurezza (tra trasporto e applicazione)}
+
+\textbf{SSL / TLS.} \emph{Secure Socket Layer} (oggi TLS): si pone sopra TCP per
+dare confidenzialità, integrità e autenticazione; è ciò che trasforma HTTP in
+HTTPS. Quattro fasi: handshake (autenticazione coi certificati), key derivation
+(scambio chiavi simmetriche), data transfer, connection closure (rigenerazione
+chiavi). Negozia una \emph{cipher suite} tra client e server.
 
 \appendix
 \chapter{TEORIA (how-to)}
@@ -1330,12 +1607,12 @@ Procedure passo-passo per i tipi pratici ricorrenti, con i numeri tipici degli e
 \item \textbf{Autenticazione delle chiavi:} La CA (Certificate Authority) certifica le chiavi pubbliche.
 \item \textbf{Anti-replay:} Utilizzo di un nonce (o timestamp) unico per sessione.
 \item \textbf{Efficienza:} Utilizzo di funzioni Hash per evitare operazioni asimmetriche su testi lunghi.
+\item \textbf{Non falsificazione:} data da $H(m)$ (integrità) $+$ firma $K_a^-$ (autenticazione del mittente), nel blocco $\langle K_a^-[H(m)],\, m\rangle$: alterare $m$ rompe l'hash, e nessuno tranne Alice può produrre la firma.
 \end{itemize}
 
 \textit{Regola aurea:} Si usa la chiave privata per firmare (garanzia/non ripudio) e la chiave pubblica per cifrare (privacy).\\
-\textit{Regola di efficienza:} Si firma o si cifra asimmetricamente sempre e solo l'hash o la chiave simmetrica, mai il corpo del messaggio intero se questo è grande.\\
-\vspace{1px}\\
-\hl{\textbf{Traccia tipo.}} 
+\textit{Regola di efficienza:} Si firma o si cifra asimmetricamente sempre e solo l'hash o la chiave simmetrica, mai il corpo del messaggio intero se questo è grande.
+
 \subsection{Esempi Classici a Due Nodi (Alice-Bob)}
 
 \noindent \textbf{Esempio 1: Msg GRANDE + non ripudiabilità (senza privacy):}
@@ -1435,6 +1712,60 @@ Dato che il payload è ridotto e non è richiesta riservatezza, è possibile ome
 \end{align*}
 
 \textit{Nota per la risoluzione dei problemi d'esame:} Presta sempre massima attenzione a dove si possono generare i replay attack. Un nonce iniettato nella prima tratta decade se il pacchetto intero viene catturato e re-inviato da Trudy sulla seconda tratta; per questa ragione l'intermediario deve tassativamente rigenerare un'ulteriore prova di freschezza ($R_2$) o racchiudere tutto sotto una nuova firma temporale.
+
+\subsection{Sequenza di N messaggi segreti (N ignoto a priori)}
+
+\hl{\textbf{Traccia tipo.}} Alice invia $N$ messaggi brevi $m_1,\dots,m_N$ a Bob. Né Alice né Bob conoscono $N$ a priori (Alice decide \emph{quando} è l'ultimo). Servono: \textbf{privacy} (nessuno tranne Bob conosce i contenuti \emph{né} $N$), \textbf{integrità} e \textbf{ordinamento} corretto, conferma \textbf{affidabile} di quale sia l'ultimo. Trudy può ritardare, duplicare, aggiungere e riordinare pacchetti (\emph{ma non cancellarli}, e con ritardi finiti).
+
+\subsubsection*{Idee chiave}
+\begin{itemize}[noitemsep]
+\item \textbf{Chiave di sessione $K_s$} (efficienza): il payload pesante è cifrato con $K_s$ (simmetrica, veloce); solo $K_s$ è cifrata asimmetricamente, una volta, con $K_b^+$. Le firme operano sempre su hash, mai sul corpo.
+\item \textbf{Numerazione $i$ + nonce $R_i$}: ogni messaggio porta il suo indice $i$ (per l'ordinamento) e un nonce $R_i$ unico (anti-replay: Bob rifiuta un $R_i$ già visto $\Rightarrow$ niente duplicati né riordini iniettati).
+\item \textbf{Hash unico che lega tutto}: si firma un solo hash $H(m_i, i, R_i, \texttt{last})$ che vincola \emph{insieme} contenuto, posizione, freschezza e flag di fine. Così Trudy non può ricombinare la firma dell'indice di un pacchetto col messaggio di un altro.
+\item \textbf{Flag \texttt{last} firmato}: l'ultimo messaggio porta $\texttt{last}=1$ \emph{dentro} l'hash firmato. È l'unico modo affidabile e non falsificabile per dire ``questo è $m_N$'': Trudy non può anticiparlo né nasconderlo.
+\end{itemize}
+
+\subsubsection*{Protocollo}
+\noindent\textbf{Setup (una volta):}
+\begin{align*}
+  \text{Alice} \to \text{Bob:}\quad \langle\, K_b^+(K_s)\, \rangle
+\end{align*}
+La chiave di sessione $K_s$ è consegnata a Bob in modo confidenziale. Da qui in poi tutto il contenuto viaggia cifrato con $K_s$.
+
+\noindent\textbf{Invio (per $i = 1,\dots,N$):}
+\begin{align*}
+  P_i = \Big\langle\, \underbrace{K_s(m_i)}_{\text{privacy}},\ \underbrace{i}_{\text{ordine}},\ \underbrace{R_i}_{\text{anti-replay}},\ \underbrace{K_a^-\big[H(m_i,\, i,\, R_i,\, \texttt{last}_i)\big]}_{\text{integrità + autenticità + legame}} \Big\rangle
+\end{align*}
+con $\texttt{last}_i = 1$ se $i = N$, altrimenti $0$.
+
+\noindent\textbf{Ritrasmissione (affidabilità):} dopo aver inviato $P_i$, Alice attende l'ACK; se scade il timeout senza ACK, ritrasmette $P_i$ (stesso $R_i$):
+\begin{verbatim}
+invia P_i
+while (true) {
+    if (ricevuto ACK di i)  then break;       // confermato, passo a i+1
+    if (timeout)            then reinvia P_i;  // riprova
+}
+\end{verbatim}
+
+\noindent\textbf{Ricezione lato Bob (per ogni $P_i$):}
+\begin{enumerate}[noitemsep]
+\item Se $R_i$ è già stato visto $\to$ scarta (duplicato/replay di Trudy).
+\item Decifra $K_s(m_i)$ con $K_s$ $\to$ ottiene $m_i$.
+\item Calcola $H(m_i, i, R_i, \texttt{last}_i)$ e lo confronta con $K_a^+\!\big(K_a^-[H(\cdot)]\big)$: se coincidono, il messaggio è integro, autentico e l'indice $i$ è quello firmato da Alice (non manomesso).
+\item Inserisce $m_i$ nel buffer alla posizione $i$ (ordinamento).
+\item Invia ad Alice un ACK firmato: $\langle K_b^-[\,\text{ACK},\, i,\, R_i\,]\rangle$.
+\item Se $\texttt{last}_i = 1$ $\to$ Bob sa che $m_i$ è l'ultimo; quando ha ricevuto tutti gli indici $1..i$ senza buchi, la sequenza è completa.
+\end{enumerate}
+
+\subsubsection*{Attacchi di Trudy e contromisure}
+\begin{itemize}[noitemsep]
+\item \textbf{Duplicare un pacchetto}: bloccato dal nonce $R_i$ (Bob scarta i nonce già visti).
+\item \textbf{Riordinare i messaggi}: l'indice $i$ è dentro l'hash firmato $\to$ Bob li rimette in ordine e rileva alterazioni della posizione.
+\item \textbf{Modificare un contenuto}: rompe $H(m_i,\dots)$ $\to$ firma non valida.
+\item \textbf{Fingere un falso ``ultimo''} (anticipare/ritardare $m_N$): il flag \texttt{last} è dentro l'hash firmato da Alice $\to$ Trudy non può produrlo né sopprimerlo.
+\item \textbf{Ritardare pacchetti}: tollerato dall'affidabilità (timeout + ritrasmissione); poiché Trudy non può \emph{cancellare} e i ritardi sono finiti, ogni messaggio prima o poi arriva.
+\item \textbf{Contare $N$ osservando il traffico}: \emph{attacco residuo}. Anche se $i$ e $N$ sono cifrati, Trudy può stimare $N$ contando i pacchetti sul filo. Difesa: Alice inserisce \textbf{pacchetti dummy} cifrati e indistinguibili (o padding a lunghezza fissa), così il numero di pacchetti osservati non rivela $N$. Senza questa accortezza, la riservatezza \emph{sul valore} $N$ non è garantita contro un osservatore del traffico.
+\end{itemize}
 
 \section{Calcolo Ipv4 valido, host, classe, sottoreti}
 \hl{\textbf{Traccia tipo.}} Dato $x.y.z.h/n$:
@@ -1680,6 +2011,40 @@ Il router coincide con l'ultimo indirizzo IP valido della subnet:
 \text{Router} &= \text{broadcast} - 1 \\
 &= 131.118.127.254
 \end{align*}
+
+\section{Super-netting: super-rete comune a due host}
+
+\hl{\textbf{Traccia tipo.}} Trovare la super-rete che contiene host A $=
+55.111.11.32$ e host B $= 55.112.24.97$: indirizzo di rete, netmask, router.
+
+\textbf{Procedimento.}
+\begin{enumerate}[noitemsep]
+\item Scrivi i due indirizzi in binario, trova il \textbf{prefisso comune più
+lungo} (bit uguali da sinistra fino alla divergenza) $\Rightarrow$ prefisso $/n$.
+\item Indirizzo di rete $=$ prefisso comune con bit host a $0$; netmask $= n$ uni.
+\item Router $=$ broadcast $-1$ (broadcast $=$ prefisso con bit host a $1$).
+\end{enumerate}
+
+\textbf{Svolgimento.} $55 \in [1,126] \Rightarrow$ classe A. $1^o$ ottetto uguale;
+confronto nel $2^o$:
+\[
+\begin{aligned}
+111 &= \mathtt{0110\,1111}\\
+112 &= \mathtt{0111\,0000}
+\end{aligned}
+\quad\Rightarrow\quad \text{comuni } \mathtt{011} \Rightarrow 8+3 = /11.
+\]
+\[
+\text{Rete} = 55.\mathtt{011\,00000}.0.0 = \boxed{55.96.0.0/11},
+\qquad \text{Netmask} = 255.224.0.0
+\]
+\[
+\text{Broadcast} = 55.127.255.255 \;\Rightarrow\;
+\text{Router} = \boxed{55.127.255.254}
+\]
+\textbf{Verifica}: $2^o$ ottetto da $96$ a $127$; A ($111$) e B ($112$) sono nel
+range $\Rightarrow$ contenuti.
+
 \section{NAT: tabella di traduzione}
 \textbf{Traccia tipo.} Host LAN $10.0.0.1:3345$ verso $128.119.40.186:80$; IP pubblico NAT $138.76.29.7$.
 \begin{enumerate}[noitemsep]
@@ -1701,6 +2066,37 @@ sarà completata la tabella NAT indicata in figura e gli Header dei quattro pacc
 \item \textbf{Distanza doppia}: $20\log_{10}2\approx 6$ dB in più di path loss $\Rightarrow$ servono circa $+6$ dB di potenza ($\sim 4\times$ in mW). Possibile se il margine lo consente.
 \item \textbf{Raggio Fresnel} (formula degli appunti, p.62): $R_{100\%}=72{,}2\sqrt{d/(4f)}=72{,}2\sqrt{5/(4\cdot 1{,}9)}=72{,}2\sqrt{0{,}658}\approx 58{,}6$ ft $\approx 17{,}9$ m.
 \end{enumerate}
+
+\subsection{Guadagno antenne dato il bitrate}
+\hl{\textbf{Traccia tipo (guadagno antenne dato il bitrate).}} IRPO $=20$ mW,
+path loss $=-110$ dB, antenne Tx/Rx con guadagno uguale $G$. Quale $G$ minimo
+serve per sostenere almeno $40$ Mbps? Tabella receiver sensitivity:
+\[
+\begin{array}{c|c}
+\textbf{RS (dBm)} & \textbf{Bitrate} \\ \hline
+-96 & 10 \text{ Mbps} \\
+-93 & 20 \text{ Mbps} \\
+-87 & 40 \text{ Mbps} \\
+-82 & 80 \text{ Mbps}
+\end{array}
+\]
+\begin{enumerate}[noitemsep]
+\item \textbf{IRPO in dBm}: $P_{dBm}=10\log_{10}(20)\approx 13$ dBm.
+\item \textbf{RS target}: per $\ge 40$ Mbps serve $RS=-87$ dBm (dalla tabella).
+\item \textbf{Bilancio} (due antenne):
+$P_{Rx}=P_{IRPO}+G_{tx}+G_{rx}+L=13+2G-110$.
+\item \textbf{Condizione} $P_{Rx}\ge RS$:
+$13+2G-110\ge -87 \Rightarrow 2G\ge 10 \Rightarrow \boxed{G\ge 5 \text{ dBi per antenna}}$.
+\item \textbf{Verifica}: con $G=5$ dBi, $P_{Rx}=13+5+5-110=-87$ dBm, esattamente
+la RS dei $40$ Mbps $\Rightarrow$ è il minimo (Link Budget $=0$, nessun fade margin).
+\end{enumerate}
+\textbf{Note.} La $P_{Rx}$ deve raggiungere la RS del bitrate \emph{target}: più
+alto il bitrate, meno negativa la RS richiesta. Per $80$ Mbps servirebbe
+$-82$ dBm ($+5$ dB) $\Rightarrow 2G\ge 15 \Rightarrow G\ge 7{,}5$ dBi per antenna.
+Se la traccia chiede di garantire la comunicazione anche con attenuazioni
+(nebbia, pioggia), aggiungi un fade margin ($10\le LB\le 20$ dBm, p.64) e alza
+$G$ di conseguenza. Se i guadagni Tx/Rx possono essere diversi, la condizione è
+$G_{tx}+G_{rx}\ge 10$ dBi totali, distribuibili liberamente.
 
 \section{Multipath: anticipo/ritardo di fase}
 \textbf{Traccia tipo (10/06/2022).} Segnale a $37{,}5$ MHz; cammino diretto $21$ m, cammino riflesso (rimbalzo) $29$ m.
@@ -1774,9 +2170,266 @@ In store-and-forward ogni router riceve \emph{interamente} il pacchetto prima di
 \[ T_{tot}=k\cdot\frac{S}{B}. \]
 \textbf{Esempio.} File $S=75$ MB $=600$ Mb, $k=3$ link a $B=100$ Mb/s: $T_{tot}=3\cdot\dfrac{600}{100}=18$ s. Se il file è frammentato in pacchetti con \emph{pipelining}, il tempo si avvicina a $\dfrac{S}{B}+(k-1)\dfrac{P}{B}$ (con $P$ = dimensione pacchetto).
 
+\subsection{Bus condiviso vs Stella con switch}
+\hl{\textbf{Traccia tipo.}} Un host trasmette due file da $100$ MB a due destinatari
+diversi su un segmento Ethernet a $B=100$ Mb/s. Ritardo di propagazione massimo
+$T_{prop}=1\,\mu s$, frame MAC da $P=1$ KB. Tempo totale minimo con topologia a
+\textbf{Bus condiviso}? E con \textbf{Stella + switch} (buffer $1$ GB)?
+
+\medskip
+\textbf{Grandezze base} (convenzione decimale: $1$ MB $=10^6$ byte):
+\begin{itemize}
+    \item Ritardo di trasmissione di un file:
+    $\dfrac{S}{B}=\dfrac{100\text{ MB}\times 8}{100\text{ Mb/s}}
+    =\dfrac{800\text{ Mb}}{100\text{ Mb/s}}=8$ s.
+    \item Due file: $2\cdot\dfrac{S}{B}=16$ s di dati da serializzare.
+    \item Tempo di un frame: $\dfrac{P}{B}=\dfrac{8000\text{ bit}}{100\text{ Mb/s}}
+    =80\,\mu s$ (trascurabile).
+\end{itemize}
+
+\textbf{1) Bus condiviso} ($k=1$, link diretto host $\to$ destinatario).
+Il mezzo è condiviso e half-duplex, ma c'è \emph{un solo trasmettitore}: niente
+collisioni né backoff. L'host serializza i $200$ MB sull'unico mezzo:
+\[
+T_{bus}=2\cdot\frac{S}{B}+T_{prop}=16\text{ s}+1\,\mu s \approx 16\text{ s}.
+\]
+
+\textbf{2) Stella con switch} ($k=2$, host $\to$ switch $\to$ destinatario).
+Lo switch è store-and-forward, ma con frame da $1$ KB vale il \emph{pipelining}:
+mentre l'host invia un frame, lo switch ne inoltra uno precedente. Il secondo hop
+si annulla quasi tutto, tranne lo store-and-forward dell'\emph{ultimo} frame:
+\[
+T_{star}\approx 2\cdot\frac{S}{B}+\frac{P}{B}+T_{prop}
+=16\text{ s}+80\,\mu s+1\,\mu s \approx 16\text{ s}.
+\]
+
+\medskip
+\textbf{Spiegazione (punto chiave).} Le due topologie danno lo stesso tempo
+$\approx 16$ s, perché il collo di bottiglia è l'\textbf{unica interfaccia a
+$100$ Mb/s del mittente}, che deve serializzare $200$ MB. Lo switch offre
+parallelismo \emph{sul lato destinatari} (porte diverse in contemporanea), ma
+con \emph{un solo sorgente} questo parallelismo è inutile: l'host emette comunque
+a $100$ Mb/s totali. Lo switch sarebbe vantaggioso solo con \textbf{più host che
+trasmettono simultaneamente} verso destinatari diversi (il bus li serializzerebbe
+o li farebbe collidere, lo switch darebbe full-duplex a banda piena a ogni coppia).
+\begin{itemize}
+    \item Il \textbf{bus} è marginalmente più veloce ($\sim 80\,\mu s$): il frame
+    arriva diretto, senza l'hop store-and-forward dello switch.
+    \item Il \textbf{buffer da $1$ GB} garantisce solo l'assenza di perdite
+    ($1$ GB $>200$ MB): non accelera nulla, evita il buffer overflow.
+\end{itemize}
+\textbf{Trappola:} rispondere ``lo switch è più veloce'' è errato. Con sorgente
+singola il tempo minimo è lo stesso, dominato dal ritardo di trasmissione del
+mittente; propagazione e store-and-forward sono rumore numerico.
+
 \section{Dijkstra costo minimo Link State}
 \hl{Da $A \to B$: }
 \figura{dj.png}{1.0}
+
+
+\section{PING}
+\hl{\textbf{Traccia tipo.}} Dato l'output di
+\texttt{ping flora.cs.unibo.it}, indicare la causa e i protocolli/servizi
+coinvolti.
+
+\medskip
+\textbf{Caso 1 --- interruzione temporanea, poi ripristino.}
+\begin{verbatim}
+PING flora.cs.unibo.it (130.136.5.36): 56 data bytes
+64 bytes from 130.136.5.36: icmp_seq=0 ttl=54 time=16.624 ms
+64 bytes from 130.136.5.36: icmp_seq=1 ttl=54 time=15.590 ms
+ping: sendto: No route to host
+ping: sendto: No route to host
+Request timeout for icmp_seq 2
+Request timeout for icmp_seq 3
+64 bytes from 130.136.5.36: icmp_seq=4 ttl=54 time=15.404 ms
+64 bytes from 130.136.5.36: icmp_seq=5 ttl=54 time=14.712 ms
+\end{verbatim}
+
+\textbf{Causa}: perdita \emph{temporanea} di connettività lungo il percorso. Il
+\texttt{No route to host} indica che un router del cammino (o il default gateway)
+in quell'istante non aveva una rotta valida verso la destinazione (link caduto o
+tabella di routing momentaneamente incompleta); i \texttt{Request timeout}
+(seq 2--3) sono i pacchetti persi in quella finestra. Poi il routing ha
+ricalcolato il cammino e i ping sono ripartiti (seq 4--5). \emph{Non} è un
+problema DNS: l'IP $130.136.5.36$ compare in cima, quindi il nome era già stato
+risolto correttamente.
+
+\textbf{Protocolli/servizi}:
+\begin{itemize}[noitemsep]
+    \item \textbf{DNS}: usato \emph{una sola volta} all'inizio per risolvere
+    \texttt{flora.cs.unibo.it} $\to 130.136.5.36$ (UDP). La presenza dell'IP
+    prova che ha funzionato.
+    \item \textbf{ICMP}: base di ping (Echo Request/Reply per l'RTT,
+    \texttt{time=...ms}). Anche \texttt{No route to host} è un ICMP
+    \emph{Destination Unreachable} (host unreachable) generato dal router.
+    \item \textbf{Routing} (liv.~3): la causa vera; tabelle di instradamento
+    momentaneamente prive di rotta, ricostruite da RIP/OSPF/BGP.
+    \item \textbf{ARP}: risoluzione IP$\to$MAC per la consegna sull'ultimo hop locale.
+    \item \textbf{TTL}: \texttt{ttl=54} $\Rightarrow$ partito da $64$, $\sim 10$
+    router attraversati.
+\end{itemize}
+
+\medskip
+\textbf{Caso 2 --- risoluzione del nome fallita.}
+\begin{verbatim}
+PING flora.cs.unibo.it (130.136.5.36): 56 data bytes
+ping: cannot resolve flora.cs.unibo.it: Unknown host
+\end{verbatim}
+
+\textbf{Causa}: fallimento della \textbf{risoluzione DNS}, non di connettività.
+Il server DNS configurato non risponde / è offline, oppure manca del tutto un DNS
+configurato sul client (o il nome non esiste). Discriminante chiave: l'IP
+$130.136.5.36$ \emph{non compare mai}, quindi il fallimento avviene \emph{prima}
+di qualsiasi pacchetto ICMP --- ping si ferma senza partire.
+
+\textbf{Protocolli/servizi}: solo il \textbf{DNS}, ed è proprio quello che
+fallisce (query UDP verso il local DNS senza risposta valida $\Rightarrow$
+\texttt{Unknown host}). \textbf{ICMP non viene mai usato}, perché ping non arriva
+a costruire l'Echo Request.
+
+\medskip
+\textbf{Distinzione (vale i punti).} La discriminante visibile è se l'IP
+$130.136.5.36$ compare o no: la sua \emph{presenza} isola il DNS come
+funzionante e sposta il problema sul routing/connettività (Caso 1); la sua
+\emph{assenza} incrimina direttamente il DNS, a monte di tutto (Caso 2).
+
+\section{Matrice bit parita'}
+\hl{\textbf{Traccia tipo.}} Data la
+matrice a parità pari (ultima riga/colonna = bit di parità, angolo assente),
+dire cosa si può concludere sugli errori.
+
+\[
+\begin{array}{cccccc|c}
+1 & 0 & 1 & 0 & 0 & 1 & 1 \\
+1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+0 & 1 & 1 & 1 & 0 & 0 & 1 \\
+1 & 0 & 1 & 0 & 1 & 0 & 1 \\
+1 & 1 & 1 & 1 & 0 & 1 & 1 \\
+1 & 1 & 1 & 1 & 1 & 1 & 0 \\ \hline
+1 & 1 & 1 & 0 & 1 & 1 &
+\end{array}
+\]
+
+\textbf{Controllo righe} (n.\ di 1 incluso il bit di parità deve essere pari):
+solo \textbf{R2} è dispari ($1\,1\,1\,0\,0\,0 + 0 = 3$).
+
+\textbf{Controllo colonne}: dispari \textbf{C2, C3, C4, C5}.
+
+\textbf{Conclusione.} Gli errori sono \textbf{rilevati} (parità non rispettate)
+ma \textbf{non correggibili}: un singolo bit errato darebbe esattamente
+\emph{una} riga \emph{e} una colonna in errore, e basterebbe invertirne
+l'intersezione. Qui invece $1$ riga e $4$ colonne incoerenti $\Rightarrow$
+\textbf{errori multipli}, oltre la capacità di autocorrezione della parità
+incrociata (che corregge $1$ solo bit). Il frame va \textbf{scartato e
+ritrasmesso}. La regola diagnostica: $1$ riga $+$ $1$ colonna $=$ correggibile;
+qualsiasi altra combinazione $=$ errore multiplo, solo rilevabile.
+
+\section{Saturazione switch + sottoreti}
+\hl{\textbf{Traccia tipo.}} Rete di classe C,
+stella con \emph{switch centrale unico}, link a $10$ Mbps, $254$ client in un
+unico dominio IPv4. Al massimo $100$ client trasmettono in UDP $X$ messaggi/s da
+$25$ byte ciascuno verso il destinatario $(\text{host}+100)\bmod 250 +1$. Ogni
+destinatario riceve \emph{per intero} gli $X$ messaggi, poi si attiva e ritrasmette
+al successivo, all'infinito. Lo switch non bufferizza oltre il pacchetto in transito.
+
+\subsubsection*{a) Massimo X a saturazione}
+
+Dimensione pacchetto: $25 \text{ B} \times 8 = 200$ bit.
+
+\textbf{Collo di bottiglia.} La chiave è che lo switch è \emph{unico} e non
+bufferizza: il suo \emph{fabric} ha capacità pari a quella di un collegamento,
+$10$ Mbps, e \textbf{tutti i flussi attivi lo attraversano e se la dividono}.
+Non vanno dimensionati i singoli link in isolamento (errore tipico: darebbe
+$10^7/200 = 50\,000$, ignorando la contesa sullo switch), ma la capacità
+\emph{condivisa} del fabric.
+
+\textbf{Flussi simultanei.} Per la regola ``ricevi tutto, poi ritrasmetti'' la
+comunicazione è a ondate: in ogni istante trasmettono al massimo $100$ host, ma
+verso $100$ destinatari distinti $\Rightarrow$ $100$ flussi attraversano insieme
+lo switch. Imponendo che la somma saturi (e non superi) i $10$ Mbps del fabric:
+\[
+100 \times 200 \times X \le 10\,000\,000
+\;\Rightarrow\; 20\,000\,X \le 10\,000\,000
+\;\Rightarrow\; \boxed{X \le 500 \text{ msg/s}}
+\]
+A regime, ogni ondata di $100$ mittenti satura esattamente la capacità dello
+switch con $X = 500$ messaggi al secondo ciascuno.
+
+\subsubsection*{b) Due sottoreti con router: si può aumentare X?}
+
+\textbf{Sì}, pur restando i link a $10$ Mbps. Il guadagno \emph{non} viene da
+collegamenti più veloci, ma dal \textbf{parallelismo dei domini di commutazione}.
+
+\textbf{Idea.} Dividendo il dominio di classe C in due sottoreti (ciascuna col
+proprio router/switch), si creano \textbf{due fabric indipendenti} che lavorano
+in contemporanea. Il traffico \emph{interno} a una sottorete non attraversa più
+l'unico switch centrale: resta locale e usa la capacità del proprio fabric. La
+banda aggregata della rete \emph{raddoppia} ($2 \times 10$ Mbps di commutazione),
+quindi $X$ può salire (fino a $\sim 1000$ se il partizionamento è ideale).
+
+\textbf{Vincolo di progetto.} Il guadagno dipende dalla regola di destinazione
+$(\text{host}+100)\bmod 250 +1$: bisogna partizionare gli indirizzi in modo che
+mittente e relativo destinatario cadano \emph{nella stessa sottorete} il più
+possibile, così il traffico resta locale. Il router tra le due sottoreti diventa
+il nuovo collo di bottiglia \emph{solo} per il traffico inter-sottorete: se il
+partizionamento minimizza quel traffico, $X$ aumenta; se invece molti flussi
+attraversassero il router, il vantaggio si ridurrebbe.
+
+\textbf{In sintesi.} Il limite di $10$ Mbps per link resta invariato, ma separare
+il dominio in due commutazioni parallele e indipendenti aumenta la \emph{banda
+aggregata} disponibile $\Rightarrow$ è possibile aumentare $X$.
+
+
+\section{Tempo di trasmissione + overhead parità}
+\hl{\textbf{Traccia tipo.}} File da
+$16$ Mbit, canale narrowband QPSK, symbol rate $500\,000$ Sym/s. Tempo di
+trasmissione? E con matrice di parità per correggere $1$ bit errato ogni $256$ bit?
+
+\subsubsection*{Parte 1 --- trasmissione semplice}
+QPSK $= 4$ simboli $= 2$ bit/simbolo. Bit rate:
+\[
+500\,000 \text{ sym/s} \times 2 \text{ bit/sym} = 1\,000\,000 \text{ bit/s}.
+\]
+\[
+T_{tx} = \frac{16\,000\,000}{1\,000\,000} = \boxed{16 \text{ s}}.
+\]
+
+\subsubsection*{Parte 2 --- con parità incrociata}
+\textbf{Dimensionamento.} La parità incrociata corregge $1$ bit errato per
+matrice. Il canale fa $1$ errore ogni $256$ bit $\Rightarrow$ si sceglie una
+matrice di \emph{esattamente} $256$ bit di dato, cioè $\mathbf{16 \times 16}$,
+così in media c'è $1$ errore per matrice (al limite del correggibile). Più
+piccola sprecherebbe overhead; più grande rischierebbe $2$ errori per matrice
+(non correggibili).
+
+\textbf{Overhead.} Ogni matrice $16\times16$ richiede $16$ bit di parità di riga
+$+$ $16$ di colonna $= 32$ bit (l'angolo si omette: serve solo a confermare, non
+a localizzare).
+\[
+\#\text{matrici} = \frac{16\,000\,000}{256} = 62\,500,
+\qquad
+\text{overhead} = 62\,500 \times 32 = 2\,000\,000 \text{ bit}.
+\]
+
+\textbf{Tempo totale.}
+\[
+T_{tx}' = \frac{16\,000\,000 + 2\,000\,000}{1\,000\,000}
+= \frac{18\,000\,000}{1\,000\,000} = \boxed{18 \text{ s}}.
+\]
+L'overhead di correzione ($+12{,}5\%$) costa $2$ secondi in più, ma garantisce
+la correzione di $1$ bit per blocco da $256$ senza ritrasmissioni.
+
+\[
+\begin{array}{cccccccccccccccc|c}
+\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot& p\\
+\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot& p\\
+\multicolumn{16}{c|}{\vdots\quad(16\times16\ \text{bit dato})} & \vdots\\
+\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot&\cdot& p\\ \hline
+p&p&p&p&p&p&p&p&p&p&p&p&p&p&p&p&
+\end{array}
+\]
+\noindent ($16$ bit di parità di colonna in basso, $16$ di riga a destra $= 32$ bit/matrice.)
 
 \section{Rimandi: esercizi svolti presenti nella teoria}
 Alcuni tipi hanno anche un esempio numerico già svolto dentro la teoria. Sono elencati qui (e nell'indice) con il rimando alla sezione e alla pagina.
