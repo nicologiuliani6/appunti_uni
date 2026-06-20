@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1781599209.48657 "/home/nico/Desktop/uni/2/ottimizzazione/teoria/teoria_ott.tex" "teoria_ott.pdf" "teoria_ott" 1781599210.30293 0
+["pdflatex"] 1781973658.71164 "/home/nico/Desktop/uni/2/ottimizzazione/teoria/teoria_ott.tex" "teoria_ott.pdf" "teoria_ott" 1781973659.54411 0
   "/etc/texmf/web2c/texmf.cnf" 1758984917.6732 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/nico/Desktop/uni/2/ottimizzazione/teoria/teoria_ott.tex" 1781599209.12051 15435 7ab55ddb953bbd2b3d4d06560d00c19c ""
+  "/home/nico/Desktop/uni/2/ottimizzazione/teoria/teoria_ott.tex" 1781973657.51275 15435 7ab55ddb953bbd2b3d4d06560d00c19c ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1095.tfm" 1136768653 3584 21b378cca2e40816b0e6d74a4dc98f04 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
@@ -93,8 +93,8 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1741904018 41538 c016915c1d51223b6dbbfe27341748a8 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1772808045 5467255 9a64d1b40e0b893fc5588ecce9d8accf ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1772808145 3349296 92ae11ed9b913348834dd0189eeaf1c3 ""
-  "teoria_ott.aux" 1781599210.17448 550 5517f9adceda237492bfd47780dd995c "pdflatex"
-  "teoria_ott.tex" 1781599209.12051 15435 7ab55ddb953bbd2b3d4d06560d00c19c ""
+  "teoria_ott.aux" 1781973659.41227 550 5517f9adceda237492bfd47780dd995c "pdflatex"
+  "teoria_ott.tex" 1781973657.51275 15435 7ab55ddb953bbd2b3d4d06560d00c19c ""
   (generated)
   "teoria_ott.aux"
   "teoria_ott.log"

@@ -1,5 +1,11 @@
 # Fdb version 4
-["pdflatex"] 1781972556.09029 "main.tex" "main.pdf" "main" 1781972561.52076 0
+["makeindex main.idx"] 1781974328.26558 "main.idx" "main.ind" "main" 1781974333.97586 0
+  "main.idx" 1781974333.37551 5729 b04f17f8166b3b555c3886dfc9c49584 "pdflatex"
+  (generated)
+  "main.ilg"
+  "main.ind"
+  (rewritten before read)
+["pdflatex"] 1781974328.43291 "main.tex" "main.pdf" "main" 1781974333.97617 0
   "/etc/texmf/web2c/texmf.cnf" 1758984917.6732 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm" 1136768653 3584 929cdff2b7a8c11bd4d49fd68cb0ae70 ""
@@ -43,6 +49,7 @@
   "/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty" 1738182759 2378 14b657ee5031da98cf91648f19642694 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty" 1738182759 5275 0d62fb62162c7ab056e941ef18c5076d ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty" 1738182759 5048 0270515b828149155424600fd2d58ac5 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty" 1738182759 1939 6a53b9b28a14b26311df6cf40fff84ab ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/report.cls" 1738182759 23203 7ac64169eac711b8259b91f4833984f3 ""
   "/usr/share/texlive/texmf-dist/tex/latex/base/size11.clo" 1738182759 8464 e73911cdcc738e82d6adccd28e654bb1 ""
   "/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty" 1720383029 12726 67708fc852a887b2ba598148f60c3756 ""
@@ -277,12 +284,14 @@
   "figs/p82_1.png" 1781543890.5812 256267 a444b698f1f8cb9c6da1268716c3527e ""
   "figs/rete.png" 1781718423.12213 428205 a56b706a2910f2b36180507396665271 ""
   "figs/segnale.png" 1781713115.84785 193418 4349970c93aaf24f0df03784799df783 ""
-  "main.aux" 1781972560.92998 24826 8332dfa251046e97431d25c54304916a "pdflatex"
-  "main.out" 1781972560.93398 33365 f9682e6e9845a330f7f888ba32fd9615 "pdflatex"
-  "main.tex" 1781972382.79413 309347 be2be1c2bf7568d25a44e195ceb1f3bc ""
-  "main.toc" 1781972560.93443 13846 e09a5592ff34619f83151527fdeb768a "pdflatex"
+  "main.aux" 1781974333.37058 24925 fcdc856b23308992f6d88b2212aaa534 "pdflatex"
+  "main.ind" 1781974328.41828 5631 ecba6488c6465715b509a0a0ec9c26b1 "makeindex main.idx"
+  "main.out" 1781974333.37458 33492 80e0307609df799c9f2127afe04353a1 "pdflatex"
+  "main.tex" 1781974294.64749 312144 68bcb8c2d60cfb42e88d6ec5f82f0d28 ""
+  "main.toc" 1781974333.37551 13904 bcb85c01908f320640683cf486fd913c "pdflatex"
   (generated)
   "main.aux"
+  "main.idx"
   "main.log"
   "main.out"
   "main.pdf"

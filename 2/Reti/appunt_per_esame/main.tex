@@ -15,6 +15,8 @@
 \usepackage{soul}
 \usepackage[table]{xcolor}
 \usepackage{array}
+\usepackage{makeidx}\makeindex
+\renewcommand{\indexname}{Indice analitico (cerca qui gli argomenti)}
 
 \definecolor{acc}{RGB}{20,90,160}
 \titleformat{\chapter}[hang]{\bfseries\Huge\color{acc}}{\thechapter}{14pt}{}
@@ -44,7 +46,7 @@ Una rete di calcolatori è un insieme di dispositivi autonomi ed interconnessi, 
 \item \textbf{MAN} (Metropolitan Area Network): le reti urbane, metropolitane e civiche.
 \item \textbf{WAN} (Wide Area Network): la connessione di aree ampie ed estese, come le reti nazionali ed internazionali.
 \end{itemize}
-Internet è invece una \emph{rete di reti} realizzata attraverso protocolli del tipo TCP/IP, che garantiscono la navigazione simultanea nascondendo l'eterogeneità.
+\index{TCP}Internet è invece una \emph{rete di reti} realizzata attraverso protocolli del tipo TCP/IP, che garantiscono la navigazione simultanea nascondendo l'eterogeneità.
 
 \textbf{Prestazioni.} Uno degli aspetti cruciali è la prestazione, misurabile in:
 \begin{itemize}
@@ -54,7 +56,7 @@ Internet è invece una \emph{rete di reti} realizzata attraverso protocolli del 
 
 Il \textbf{Jitter} è la varianza sul ritardo di collegamento: i pacchetti partono a intervalli regolari (in base alla capacità di trasmissione), ma il loro ritardo non è stabile. Più alto è il Jitter, più memoria del buffer viene usata, comportando un ritardo notevole nella visualizzazione di una trasmissione in diretta.
 
-Il \textbf{RTT} (Round Trip Time) è il tempo impiegato da un'informazione per partire dal mittente, arrivare al server e tornare indietro al mittente.
+\index{RTT}Il \textbf{RTT} (Round Trip Time) è il tempo impiegato da un'informazione per partire dal mittente, arrivare al server e tornare indietro al mittente.
 
 \textbf{Componenti del calcolatore per la rete.} Oltre al calcolatore di base servono:
 \begin{itemize}
@@ -71,13 +73,13 @@ Il \textbf{RTT} (Round Trip Time) è il tempo impiegato da un'informazione per p
 \item \textbf{Completamente connesse}: più di due nodi collegati tutti tra loro, con $n-1$ collegamenti distinti.
 \item \textbf{Parzialmente connesse}: un unico collegamento che attraversa tutti i nodi.
 \item \textbf{Partizioni di rete}: un collegamento spaccato che crea due isole di nodi connessi.
-\end{itemize}
+\index{topologia}\end{itemize}
 
 \hl{Le infrastrutture assumono vari schemi di connessione (\textbf{topologia}). In Internet compaiono topologie ibride, ovvero miscugli di topologie diverse:
 }\begin{itemize}
 \item \textbf{Anello}: ogni componente comunica inviando segnali in senso orario o antiorario; poter comunicare in entrambi i sensi accorcia il cammino medio. Il metodo è ridondante (servono $n$ collegamenti dove in una rete completamente connessa ne basterebbero $n-1$), ma garantisce una ricaduta ottimale: se manca un nodo la rete non si rompe, si chiude su sé stessa e resta connessa.
-\item \textbf{Stella}: ogni componente comunica con qualsiasi nodo periferico passando dal nodo centrale (predominante). Il grado della rete è $n-1$; se si taglia un collegamento si ha una partizione. Se il nodo centrale (Hub) muore, l'intero sistema va in panne (\emph{Single Point of Failure}). È la topologia più usata per il grande vantaggio costo-efficienza. L'\textbf{Hub} però reinoltra ogni segnale a tutti gli host: se due host trasmettono nello stesso istante il messaggio è distrutto (\textbf{dominio di collisione}). Oggi l'elemento centrale è uno \textbf{Switch}, che invece di inondare tutti guarda l'indirizzo MAC nel pacchetto (frame) e inoltra sulla strada corretta, garantendo comunicazione migliore e privacy. Lo Switch auto-costruisce una tabella che associa indirizzi MAC e collegamenti, e al termine invia un acknowledgment al mittente.
-\item \textbf{Bus}: ogni componente è collegato a una dorsale collegata a tutti i nodi; sono molto frequenti collisioni e sovrapposizioni di trasmissione (topologia broadcast, senza switch o hub).
+\index{indirizzo MAC}\item \textbf{Stella}: ogni componente comunica con qualsiasi nodo periferico passando dal nodo centrale (predominante). Il grado della rete è $n-1$; se si taglia un collegamento si ha una partizione. Se il nodo centrale (Hub) muore, l'intero sistema va in panne (\emph{Single Point of Failure}). È la topologia più usata per il grande vantaggio costo-efficienza. L'\textbf{Hub} però reinoltra ogni segnale a tutti gli host: se due host trasmettono nello stesso istante il messaggio è distrutto (\textbf{dominio di collisione}). Oggi l'elemento centrale è uno \textbf{Switch}, che invece di inondare tutti guarda l'indirizzo MAC nel pacchetto (frame) e inoltra sulla strada corretta, garantendo comunicazione migliore e privacy. Lo Switch auto-costruisce una tabella che associa indirizzi MAC e collegamenti, e al termine invia un acknowledgment al mittente.
+\index{broadcast}\index{hub}\item \textbf{Bus}: ogni componente è collegato a una dorsale collegata a tutti i nodi; sono molto frequenti collisioni e sovrapposizioni di trasmissione (topologia broadcast, senza switch o hub).
 \end{itemize}
 \figura{p03_1.png}{0.82}
 \figura{p03_2.png}{0.82}
@@ -94,7 +96,7 @@ Internet ha una topologia ibrida, detta \textbf{a maglia}.
 \item \textbf{Cavi di rame}: trasmettono segnali elettrici, affidabili, costano poco a fronte di un leggero disturbo. Esempio classico: il cavo Ethernet.
 \item \textbf{Fibre ottiche}: fanno passare la luce in una fibra di vetro. Costano molto, funzionano bene su lunghe distanze e non lasciano spazio a disturbi: il segnale che esce è uguale a quello entrato.
 \item \textbf{Wireless}: trasmissione di onde radio, non necessita un mezzo fisico e si propaga anche nel vuoto, ma l'intensità dell'onda si riduce molto dopo pochi metri; è il mezzo più versatile ma più limitato.
-\end{itemize}
+\index{fading}\end{itemize}
 Senza Hub/Switch, su una backbone con Router o amplificatori, \hl{il cavo Ethernet arriva a circa 200 m prima del \emph{fading}}.
 
 \textbf{Dispositivo o scheda di rete.} È il componente che permette al calcolatore di comunicare con gli altri nodi. Dispone di un connettore in cui si innesta il mezzo di trasmissione (fisico o wireless), e ha il compito di trasmettere e ricevere i dati codificati/decodificati. Ogni scheda di rete ha un \textbf{indirizzo MAC} (48 bit in valore esadecimale) che identifica univocamente un calcolatore nella rete, rendendo più facile la comunicazione (specialmente con gli switch). È esadecimale perché così si compattano i 48 bit.
@@ -111,7 +113,7 @@ Lo stesso mezzo può anche realizzare un unico \textbf{canale ad accesso multipl
 
 \hl{Il \textbf{MAC broadcast} (FF:FF:FF:FF:FF:FF) è un indirizzo speciale che indica tutte le schede di rete: la comunicazione viaggia ovunque e arriva a tutti.
 }\\
-\textbf{Reti a commutazione di circuito.} I dati vengono trasmessi tra mittente e destinatario posti agli estremi di un \textbf{cammino (circuito)} di canali punto a punto. Il circuito viene negoziato e riservato a priori: una volta fissato, i dati viaggiano come un'unica sequenza di bit senza interruzioni. Il ritardo di trasmissione è ridotto, ma i costi sono elevati perché si occupa un canale virtuale appoggiandosi ad altre reti: il servizio non si paga ad utilizzo, ma a tempo di permanenza del circuito. Esempio classico: la linea telefonica di un tempo.
+\index{commutazione di circuito}\textbf{Reti a commutazione di circuito.} I dati vengono trasmessi tra mittente e destinatario posti agli estremi di un \textbf{cammino (circuito)} di canali punto a punto. Il circuito viene negoziato e riservato a priori: una volta fissato, i dati viaggiano come un'unica sequenza di bit senza interruzioni. Il ritardo di trasmissione è ridotto, ma i costi sono elevati perché si occupa un canale virtuale appoggiandosi ad altre reti: il servizio non si paga ad utilizzo, ma a tempo di permanenza del circuito. Esempio classico: la linea telefonica di un tempo.
 \figura{p05_1.png}{0.82}
 \figura{p05_2.png}{0.82}
 
@@ -129,7 +131,7 @@ di indirizzamento gerarchico, non fisico.
 \begin{enumerate}[noitemsep]
 \item \emph{Il broadcast MAC è l'unico possibile quando non si conoscono ancora
 gli IP.} Un dispositivo appena acceso (ARP, DHCP) non ha un IP né conosce il MAC
-del destinatario: non può usare un broadcast IP (che presuppone di sapere
+\index{ARP}\index{DHCP}del destinatario: non può usare un broadcast IP (che presuppone di sapere
 indirizzi di rete). Solo $\mathtt{FF{:}FF{:}\dots}$ funziona ``al buio'',
 raggiungendo fisicamente tutte le schede. Senza di esso, ARP e DHCP non potrebbero
 nemmeno partire.
@@ -149,7 +151,7 @@ perderebbe o la comunicazione prima di avere un IP (togliendo il MAC), o il conc
 di ``tutti gli host di una rete'' (togliendo l'IP).
 
 \section{Reti a Commutazione di Pacchetto}\pagemark{6}
-\textbf{Reti a commutazione di pacchetto.} I pacchetti vengono trasmessi non in modo continuo ma con ritardi. Più flussi che viaggiano su canali diversi possono essere trasmessi su un unico canale broadcast, sfruttandolo al massimo: la maggior parte delle reti dati digitali è costruita così. Quando i pacchetti vanno da mittenti diversi a destinatari diversi, ogni pacchetto deve contenere l'identità di mittente e destinatario. I nodi ricevitori verificano l'arrivo a destinazione (acknowledgment) e, in caso contrario, reinoltrano il pacchetto. Il prezzo è il maggior ritardo (occorre iterare ricezione e inoltro); il vantaggio è il miglior utilizzo dei canali e la possibilità di tariffare in base ai dati trasmessi e non al tempo. Si hanno quindi \textbf{diversi flussi} di pacchetti indipendenti che seguono percorsi indipendenti.
+\index{commutazione di pacchetto}\textbf{Reti a commutazione di pacchetto.} I pacchetti vengono trasmessi non in modo continuo ma con ritardi. Più flussi che viaggiano su canali diversi possono essere trasmessi su un unico canale broadcast, sfruttandolo al massimo: la maggior parte delle reti dati digitali è costruita così. Quando i pacchetti vanno da mittenti diversi a destinatari diversi, ogni pacchetto deve contenere l'identità di mittente e destinatario. I nodi ricevitori verificano l'arrivo a destinazione (acknowledgment) e, in caso contrario, reinoltrano il pacchetto. Il prezzo è il maggior ritardo (occorre iterare ricezione e inoltro); il vantaggio è il miglior utilizzo dei canali e la possibilità di tariffare in base ai dati trasmessi e non al tempo. Si hanno quindi \textbf{diversi flussi} di pacchetti indipendenti che seguono percorsi indipendenti.
 
 \textbf{Servizi orientati alla connessione e non.} I dati sono spediti in pacchetti, ognuno con mittente e destinatario indicati esplicitamente. Quasi sempre i due non sono collegati fisicamente: il pacchetto viaggia attraverso intermediari che lo immagazzinano, leggono indirizzo MAC e IP e decidono il percorso (\textbf{instradamento}). Le strade non sono tutte uguali, quindi l'arrivo dei pacchetti non è omogeneo: il pacchetto X può arrivare prima del pacchetto Y. Nasce l'esigenza di un servizio orientato alla connessione.
 \begin{itemize}
@@ -161,25 +163,25 @@ di ``tutti gli host di una rete'' (togliendo l'IP).
 \noindent\hfill{\footnotesize\color{gray}[p.7]}\\
 All'interno di una rete a maglia (simile a Internet) si comunica con \textbf{commutazione a pacchetto}, lo standard usato oggi. Il pacchetto parte dal mittente e arriva a un \textbf{nodo}, che lo \textbf{instrada} sulla strada più consona per garantirne l'inoltro. L'instradamento non è casuale, ma segue una \textbf{tabella di instradamento} decisa da un protocollo (detto \textbf{Routing}).
 
-Nel servizio \emph{connectionless} un pacchetto perso non viene reinviato e non sarà mai ricevuto. Nel servizio \emph{connection-oriented} il pacchetto viene riconsegnato: ogni volta che il mittente invia un pacchetto si aspetta un \textbf{ack} (acknowledgment) che ne conferma la corretta trasmissione. Se l'ack manca e scatta il \textbf{timeout} (tempo limite di attesa), il mittente fa ripartire il pacchetto mancante. Questo può creare problemi (pacchetti duplicati) quando il mittente reinvia proprio mentre arriva l'ack: la rete si appesantisce e il pacchetto duplicato viene scartato perché già presente nel \textbf{buffer} del destinatario.
+\index{connection-oriented}\index{connectionless}Nel servizio \emph{connectionless} un pacchetto perso non viene reinviato e non sarà mai ricevuto. Nel servizio \emph{connection-oriented} il pacchetto viene riconsegnato: ogni volta che il mittente invia un pacchetto si aspetta un \textbf{ack} (acknowledgment) che ne conferma la corretta trasmissione. Se l'ack manca e scatta il \textbf{timeout} (tempo limite di attesa), il mittente fa ripartire il pacchetto mancante. Questo può creare problemi (pacchetti duplicati) quando il mittente reinvia proprio mentre arriva l'ack: la rete si appesantisce e il pacchetto duplicato viene scartato perché già presente nel \textbf{buffer} del destinatario.
 
-Il \textbf{buffer} è una memoria tampone che permette al destinatario di riordinare i pacchetti e comporre il messaggio: in un servizio connection-oriented, se manca anche un solo pacchetto il messaggio non viene consegnato all'applicativo finché non arriva. Questa attesa può favorire attacchi \textbf{DoS} (Denial of Service): inviando messaggi enormi senza far mai arrivare il primo pacchetto, il buffer si satura e il servizio si interrompe, perché i pacchetti successivi non hanno più spazio. (Connection-oriented: TCP/IP; connectionless: UDP.)
+\index{UDP}Il \textbf{buffer} è una memoria tampone che permette al destinatario di riordinare i pacchetti e comporre il messaggio: in un servizio connection-oriented, se manca anche un solo pacchetto il messaggio non viene consegnato all'applicativo finché non arriva. Questa attesa può favorire attacchi \textbf{DoS} (Denial of Service): inviando messaggi enormi senza far mai arrivare il primo pacchetto, il buffer si satura e il servizio si interrompe, perché i pacchetti successivi non hanno più spazio. (Connection-oriented: TCP/IP; connectionless: UDP.)
 
 \textbf{Protocolli di rete organizzati a livelli.} L'\textbf{architettura dei protocolli di rete} deve essere \textbf{rigida} e \textbf{ordinata}: i protocolli non devono essere ``spaghetti'', ma modulari, facili da modificare e aggiornare senza intaccare gli altri. Un \textbf{protocollo} è un insieme di regole \textbf{semantiche} (gestione dei processi di comunicazione) e \textbf{sintattiche} (formato non ambiguo per lo scambio di messaggi), che garantisce la \textbf{compatibilità} dei sistemi conformi allo stesso standard.
 
 Architettura a livelli: ogni livello risolve un solo problema; i livelli superiori effettuano richieste ai livelli inferiori; i livelli inferiori forniscono servizi ai superiori. Andando verso il basso (frecce dette \textbf{API}) si pongono domande, andando verso l'alto si danno risposte. Ogni livello lavora su un'astrazione del livello sottostante.
 \figura{p07_1.png}{0.82}
 
-\section{Architettura standard dei protocolli (ISO/OSI)}\pagemark{8}
+\index{OSI modello}\section{Architettura standard dei protocolli (ISO/OSI)}\pagemark{8}
 \textbf{Architettura standard dei protocolli (ISO/OSI).} Lo standard \textbf{ISO/OSI} definisce un'architettura in \textbf{7 livelli}: ogni livello fornisce un servizio al livello superiore nascondendo la complessità di quelli inferiori, e dialoga virtualmente in modo paritario con il suo omologo dall'altra parte.
 \begin{itemize}
 \item \textbf{Livello Fisico (1)}: trasmissione dei bit tramite segnali.
-\item \textbf{Livello MAC/LLC (2)}: decide formato, sintassi e momento di invio del frame. Comprende indirizzo del mittente e del destinatario, il dato, e il \textbf{CRC} (controllo che individua errori di trasmissione). LLC esegue un controllo logico del canale, individua errori e invia l'ack.
+\index{IPv4}\index{IPv6}\index{frammentazione}\index{CRC}\item \textbf{Livello MAC/LLC (2)}: decide formato, sintassi e momento di invio del frame. Comprende indirizzo del mittente e del destinatario, il dato, e il \textbf{CRC} (controllo che individua errori di trasmissione). LLC esegue un controllo logico del canale, individua errori e invia l'ack.
 \item \hl{\textbf{Livello Rete (3)}}: si occupa di frammentazione, indirizzamento e instradamento. Unifica le reti locali rendendo omogeneo ciò che è eterogeneo, tramite \textbf{router} che usano indirizzi gerarchici (IPv4/IPv6). A questo livello si decide anche il ritmo di invio dei pacchetti (\emph{segmenti}), con buffer per non congestionare la rete. Implementa l'\textbf{internetworking}.
-\item \textbf{Livello Trasporto (4)}: connessione affidabile e controllo della congestione. Gestisce il protocollo di trasmissione: \textbf{TCP} (connection-oriented, con ack) o \textbf{UDP} (connectionless).
+\index{congestione}\item \textbf{Livello Trasporto (4)}: connessione affidabile e controllo della congestione. Gestisce il protocollo di trasmissione: \textbf{TCP} (connection-oriented, con ack) o \textbf{UDP} (connectionless).
 \item \textbf{Livello Sessione (5)}: oggi obsoleto; manteneva la sessione attiva e, in caso di interruzione, ricordava da dove riprendere; gestito lato server e dalle applicazioni.
 \item \textbf{Livello Presentazione (6)}: obsoleto; conversione dei dati (es. da little-endian a big-endian).
-\item \textbf{Livello Applicazione (7)}: protocolli che permettono alle applicazioni di comunicare (lato browser/web service), es. HTTP/HTTPS. Definisce le primitive dati applicazione.
+\index{HTTP}\index{HTTPS}\item \textbf{Livello Applicazione (7)}: protocolli che permettono alle applicazioni di comunicare (lato browser/web service), es. HTTP/HTTPS. Definisce le primitive dati applicazione.
 \end{itemize}
 
 \textbf{Architettura dei protocolli di Internet.} Usa solo \textbf{5} dei 7 livelli ISO/OSI. In trasmissione ogni livello riceve i dati dai livelli superiori e li \textbf{incapsula} in buste, aggiungendo dati utili a istruire lo stesso livello del dispositivo ricevente. In ricezione ogni livello verifica la busta e passa il contenuto ai livelli superiori (\textbf{decapsulamento}).
@@ -195,7 +197,7 @@ Poi la busta passa al \textbf{livello MAC/LLC}, che esegue la consegna finale su
 
 Durante la trasmissione, a ogni passo il contenuto della busta MAC viene aperto: si guarda se il destinatario sono io. Se siamo un \textbf{router} (destinatario parziale, intermediario), si guarda l'IP del destinatario, si consulta la tabella di routing, si ricompone la busta di rete e si passa al livello inferiore che ricompone la busta MAC con il MAC del router corrente e del router successivo, identificato tramite \textbf{ARP} (protocollo che fornisce il MAC del router successivo). Poi il frame riparte. Se siamo i destinatari finali, arrivati al livello trasporto siamo sicuri di esserlo e viene inviato l'ack; nella busta di trasporto è indicato a quale applicazione serve il dato, tramite il \textbf{numero di porta}.
 
-Il numero di porta è un \textbf{socket}: contiene indirizzo IP + numero di porta, e permette a qualsiasi processo di parlare con qualsiasi altro processo.
+\index{socket}Il numero di porta è un \textbf{socket}: contiene indirizzo IP + numero di porta, e permette a qualsiasi processo di parlare con qualsiasi altro processo.
 
 \textbf{Livelli e integrazione delle reti.} Nelle prossime pagine si esaminano i problemi gestiti a ogni livello, dal più basso (fisico) al più alto (applicazione):
 \begin{itemize}
@@ -209,17 +211,17 @@ Il numero di porta è un \textbf{socket}: contiene indirizzo IP + numero di port
 \item \textbf{Livello di trasporto}: collezione di reti organizzata gerarchicamente; attua i protocolli per la spedizione affidabile e il controllo della congestione.
 \item \textbf{Livello applicazione}: ultimo livello; tutto appare come una ``scatola magica''.
 \end{itemize}
-In sintesi: l'\textbf{Hub} rigenera i segnali e li reinoltra su tutte le porte; lo \textbf{Switch} lavora sulla rete locale indirizzando correttamente il pacchetto; il \textbf{router} è il ponte tra rete locale e Internet e separa le reti secondo indirizzi logici. Il router più vicino a una rete locale attua il \textbf{firewall} (regole di filtraggio).
+\index{firewall}In sintesi: l'\textbf{Hub} rigenera i segnali e li reinoltra su tutte le porte; lo \textbf{Switch} lavora sulla rete locale indirizzando correttamente il pacchetto; il \textbf{router} è il ponte tra rete locale e Internet e separa le reti secondo indirizzi logici. Il router più vicino a una rete locale attua il \textbf{firewall} (regole di filtraggio).
 
 \textbf{Il livello giallo — Fisico e MAC/LLC.} La trasmissione dei dati digitali richiede codifica e decodifica dei bit sul mezzo, da parte di una scheda di rete. Per ``velocità'' non si intende quanto tempo serve a coprire una distanza (tutti i segnali viaggiano a circa 300\,000 km/s), ma la \textbf{durata della rappresentazione di un bit}: più lo stato permane, più bassa è la velocità. La \textbf{capacità massima di trasmissione} è il numero massimo di bit al secondo trasmissibili. Nell'esempio il canale B trasmette al doppio della velocità del canale A: ogni bit permane metà del tempo.
 
-In un segmento di rete locale c'è un \textbf{mezzo condiviso} ad \textbf{accesso multiplo}: tutte le schede ricevono le trasmissioni. Ogni scheda ha un \textbf{indirizzo MAC} univoco. Il livello 2 gestisce l'\textbf{accesso} al mezzo (arbitraggio), l'\textbf{indirizzamento} (quale scheda è destinataria del frame) e la \textbf{ricezione} (confronto tra indirizzo destinatario e proprio indirizzo), passando poi ai livelli superiori. Nel \textbf{frame} di dati, ``D'' è il MAC del destinatario, ``M'' il MAC del mittente, e il trailer (parte gialla finale) è il bit di controllo errore per la \textbf{parità incrociata}.
+\index{parità incrociata}In un segmento di rete locale c'è un \textbf{mezzo condiviso} ad \textbf{accesso multiplo}: tutte le schede ricevono le trasmissioni. Ogni scheda ha un \textbf{indirizzo MAC} univoco. Il livello 2 gestisce l'\textbf{accesso} al mezzo (arbitraggio), l'\textbf{indirizzamento} (quale scheda è destinataria del frame) e la \textbf{ricezione} (confronto tra indirizzo destinatario e proprio indirizzo), passando poi ai livelli superiori. Nel \textbf{frame} di dati, ``D'' è il MAC del destinatario, ``M'' il MAC del mittente, e il trailer (parte gialla finale) è il bit di controllo errore per la \textbf{parità incrociata}.
 \figura{p10_1.png}{0.82}
 
 \section{Parità incrociata e autocorrezione}\pagemark{11}
 La parità incrociata rileva un frame errato fino a 3 bit sbagliati per frame e l'auto-correzione fino a 1 bit errato per frame. Senza parità incrociata, ogni frame con anche un solo bit errato va gettato; con questo algoritmo si ammette un frame con 1 bit errato e si è in grado di autocorreggerlo, riducendo la probabilità di insuccesso a un valore bassissimo. All'intersezione (riga e colonna di parità) si individua il bit errato, che va corretto con il suo complementare.
 
-In un segmento di rete LAN (canale condiviso) con una collisione tra frame, per evitarla si elegge un \textbf{rappresentante}, un super-calcolatore con il potere di gestire la politica di accesso al canale. La politica di \textbf{scheduling} garantisce l'assenza di collisioni grazie a un protocollo tra tutte le macchine: ogni macchina può trasmettere a ogni intervallo di tempo, e il tempo inutilizzato può essere ``donato'' a un'altra.
+\index{scheduling}In un segmento di rete LAN (canale condiviso) con una collisione tra frame, per evitarla si elegge un \textbf{rappresentante}, un super-calcolatore con il potere di gestire la politica di accesso al canale. La politica di \textbf{scheduling} garantisce l'assenza di collisioni grazie a un protocollo tra tutte le macchine: ogni macchina può trasmettere a ogni intervallo di tempo, e il tempo inutilizzato può essere ``donato'' a un'altra.
 
 \textbf{Piccola digressione.} Questo protocollo non viene usato per Ethernet e Wi-Fi. Per Ethernet è possibile ascoltare il canale durante la trasmissione: se ci si accorge che è occupato la trasmissione viene subito interrotta (si spreca un po' di canale ma si evita la collisione) e si sconta una \textbf{finestra di contesa}, un tempo da aspettare prima di ritrasmettere. Così ogni volta che il canale è libero si genera un'attesa ordinata che evita le collisioni, dando accesso a chi deve aspettare meno.
 
@@ -250,7 +252,7 @@ Il \emph{Ritardo di Propagazione} è molto basso: è quanto i bit impiegano a vi
 Il \emph{Ritardo di Trasmissione} è il tempo fisico che la scheda impiega a ``sparare'' i bit fuori dal calcolatore:
 \[ \text{Ritardo di Trasmissione} = \frac{\text{Dimensione del frame (o pacchetto)}}{\text{Capacità del canale di trasmissione}} \]
 
-\textbf{Throughput e Utilizzo percentuale.} Detta \emph{bandwidth} la larghezza di banda (il ``diametro'' del link) e \emph{throughput} la quantità di dati utili trasferiti con successo da un nodo all'altro in un dato tempo:
+\index{throughput}\textbf{Throughput e Utilizzo percentuale.} Detta \emph{bandwidth} la larghezza di banda (il ``diametro'' del link) e \emph{throughput} la quantità di dati utili trasferiti con successo da un nodo all'altro in un dato tempo:
 \[ \text{Throughput (Mbps)} = \frac{D\ (\text{bit})}{T\ (\text{secondi})} \]
 dove $D$ è la quantità totale di dati trasferiti e $T$ il tempo impiegato. Riadattata per TCP:
 \[ \text{Throughput (Mbps)} \le \frac{W}{RTT\ (\text{secondi})} \]
@@ -307,7 +309,7 @@ La comunicazione tra calcolatori non sempre avviene in una rete locale, ma in \t
 
 Ogni rete locale ha un rappresentante, il \textbf{router}, collegato agli altri router. Il problema è il \textbf{percorso} (\textbf{instradamento}) che il pacchetto deve seguire, risolto dalle \textbf{tabelle di routing} (strutture di livello 3 che contengono il cammino da A a B). Esempio (router Z): se il pacchetto è destinato alla rete locale X, lo consegna direttamente (collegamento diretto); se è destinato a Y, lo passa al router della rete K che lo instrada verso Y. Se in tabella non c'è il percorso, esiste un \textbf{default router}: quando non si ha una strada diretta si risale la gerarchia dei router sperando di trovarne una.
 
-\textbf{Internet Protocol (IP).} Protocollo che usa un indirizzamento globale e \textbf{gerarchico} (\textbf{indirizzamento IP}), fornendo indirizzi alla rete locale e ai suoi nodi. Si avvale del \textbf{forwarding} dei pacchetti tramite i \textbf{router} (amministratori di livello 3) e delle tabelle di instradamento, celando i dettagli interni della LAN. Si occupa anche di imbustare la busta arancione e di frammentare i dati in pacchetti.
+\index{forwarding}\textbf{Internet Protocol (IP).} Protocollo che usa un indirizzamento globale e \textbf{gerarchico} (\textbf{indirizzamento IP}), fornendo indirizzi alla rete locale e ai suoi nodi. Si avvale del \textbf{forwarding} dei pacchetti tramite i \textbf{router} (amministratori di livello 3) e delle tabelle di instradamento, celando i dettagli interni della LAN. Si occupa anche di imbustare la busta arancione e di frammentare i dati in pacchetti.
 
 \textbf{Indirizzamento IPv4.} L'IP definisce gli \textbf{indirizzi IP}, identificatori associati univocamente a una scheda di rete: ogni calcolatore acceso ha un IP diverso. Connettersi significa attribuire un IP, che può essere \textbf{statico} (non cambia mai, per risorse note chiamate di frequente) o \textbf{dinamico} (l'IP si ricicla).
 \figura{p16_1.png}{0.82}
@@ -331,7 +333,7 @@ La lunghezza di Network e Host Number varia in base alla \textbf{classe}. Si pu�
 
 Con gli IP si può creare un \textbf{broadcast logico} ponendo a 1 tutti i bit di host: per la rete 130.136 (classe B) il broadcast logico è $130.136.255.255$. Inoltre $130.136.0.0$ è riservato all'identificazione della rete stessa, mentre il penultimo $130.136.255.254$ identifica di solito il router. Ora vogliamo dividere una rete grande in \textbf{sottoreti} indipendenti.
 
-\textbf{Sottoreti.} Reti IP e router sono organizzati gerarchicamente (rete e sottorete). Tramite la \textbf{maschera di rete (netmask)} l'IP viene spezzato in \textbf{indirizzo di sottorete (o rete)} e \textbf{host number}. La struttura è \textbf{gerarchica ad albero}: la rete primaria ha un default router e ogni sottorete ha un proprio sotto-router di riferimento.
+\index{netmask}\textbf{Sottoreti.} Reti IP e router sono organizzati gerarchicamente (rete e sottorete). Tramite la \textbf{maschera di rete (netmask)} l'IP viene spezzato in \textbf{indirizzo di sottorete (o rete)} e \textbf{host number}. La struttura è \textbf{gerarchica ad albero}: la rete primaria ha un default router e ogni sottorete ha un proprio sotto-router di riferimento.
 \figura{p17_1.png}{0.82}
 \figura{p17_2.png}{0.82}
 \figura{p17_3.png}{0.82}
@@ -377,15 +379,15 @@ L'AND bit a bit dà lo stesso risultato ($10000010.10001000.10100000.00000000$) 
 \noindent\hfill{\footnotesize\color{gray}[p.20]}\\
 $130.136.8.0/21$ è la \textbf{sottorete 1} delle $2^5 = 32$ sottoreti disponibili (da 0 a 31), avendo rubato 5 bit di host dalla rete $130.136.0.0/16$. La macchina $130.136.9.1/21$ è il 257° host della sottorete $130.136.8.0/21$. (Nel numero $130.136.0000\,1001.0000\,0001$ la parte ``host'' sono i bit più a destra; i bit centrali indicano la sottorete e quanti bit sono stati rubati.)
 
-\textbf{Routing.} Le tabelle di forwarding sono il cuore del protocollo di rete: decidono su quale porta del router far uscire il pacchetto. Possono essere statiche o dinamiche; l'obiettivo è il \textbf{cammino di costo minimo}. Le tabelle dinamiche si adattano a: mobilità degli host (wireless), accordi commerciali, relazioni tra router (protocolli \textbf{RIP}, \textbf{OSPF}, \textbf{BGP}).
+\index{OSPF}\index{RIP}\index{BGP}\textbf{Routing.} Le tabelle di forwarding sono il cuore del protocollo di rete: decidono su quale porta del router far uscire il pacchetto. Possono essere statiche o dinamiche; l'obiettivo è il \textbf{cammino di costo minimo}. Le tabelle dinamiche si adattano a: mobilità degli host (wireless), accordi commerciali, relazioni tra router (protocolli \textbf{RIP}, \textbf{OSPF}, \textbf{BGP}).
 
 I router scoprono nuovi cammini con \textbf{algoritmi di routing}; comunicano solo con i router adiacenti e scelgono sempre il cammino di costo minore (pur non conoscendo la correttezza globale). Esempio: un pacchetto da Bologna a Milano può seguire Bologna--Rimini--Verona--Milano se la via diretta è troppo trafficata. In una comunicazione i pacchetti possono andare persi, seguire strade diverse e arrivare disordinati: tutto è gestito da \textbf{TCP} (ordine e instradamento).
 
-\textbf{Protocollo ICMP.} Protocollo dei messaggi di controllo per segnalare problemi di comunicazione: destinazione non raggiungibile, destinazione sconosciuta (indirizzo mal specificato), host non raggiungibile, ecc. \textbf{ping} e \textbf{traceroute} sono basati su ICMP: il primo calcola l'RTT tra due host, il secondo identifica la sequenza di router attraversati.
+\index{ICMP}\index{traceroute}\textbf{Protocollo ICMP.} Protocollo dei messaggi di controllo per segnalare problemi di comunicazione: destinazione non raggiungibile, destinazione sconosciuta (indirizzo mal specificato), host non raggiungibile, ecc. \textbf{ping} e \textbf{traceroute} sono basati su ICMP: il primo calcola l'RTT tra due host, il secondo identifica la sequenza di router attraversati.
 
 \textbf{Nota (TTL).} Ogni pacchetto ha un \textbf{TTL}, il numero massimo di router che può attraversare; a ogni passaggio diminuisce di uno e a zero il pacchetto viene scartato, evitando pacchetti ``zombie'' che girano all'infinito.
 
-\section{Subnetting e Super-netting}
+\index{supernetting}\section{Subnetting e Super-netting}
  Sono due operazioni opposte che agiscono
 sul confine tra parte \emph{network} e parte \emph{host} di un indirizzo IPv4,
 spostando bit dall'una all'altra.
@@ -408,17 +410,17 @@ $/n$ se condividono i primi $n$ bit: si cerca il \textbf{prefisso comune più
 lungo} (bit uguali da sinistra fino al primo che diverge), e quello è il prefisso
 della super-rete. Più gli indirizzi differiscono presto (bit alti diversi), più
 corto è il prefisso e più grande la super-rete. L'aggregazione che supera il
-confine di classe è alla base del \textbf{CIDR} (Classless Inter-Domain Routing).
+\index{CIDR}confine di classe è alla base del \textbf{CIDR} (Classless Inter-Domain Routing).
 
 \textbf{In sintesi.} Subnetting allunga il prefisso (network$\to$host diventa
 network$\leftarrow$host: più reti, meno host ciascuna); super-netting lo accorcia
 (meno reti, più host ciascuna). In entrambi i casi la maschera segna il confine:
 spostarla a destra divide, a sinistra aggrega.
 
-\section{Protocollo ARP e RARP}\pagemark{21}
+\index{RARP}\section{Protocollo ARP e RARP}\pagemark{21}
 \textbf{Protocollo ARP e RARP.} Quando un pacchetto partito dalla rete 140.217 arriva alla rete 130.136.2, deve essere imbustato nella busta gialla per raggiungere il destinatario via rete locale (frame). Il problema è che il router della sottorete potrebbe non conoscere il \textbf{MAC} del destinatario. Lo risolve il protocollo \textbf{ARP} (Address Resolution Protocol): il router produce un frame broadcast a tutti gli host chiedendo ``qual è il MAC dell'host con IP X?''. Se il dispositivo esiste, risponde e il pacchetto viene consegnato. Il \textbf{RARP} è la versione opposta di ARP.
 
-\textbf{DHCP} (Dynamic Host Configuration Protocol). Comprando una rete (es.\ classe C da 256 host), nel tempo si connettono quasi sempre meno di 256 dispositivi: dare a ognuno un IP statico non ha senso. L'IP statico si assegna a macchine sempre accessibili, agli altri si assegna un IP \textbf{dinamico}, riciclando gli indirizzi inutilizzati. DHCP è usato in reti wireless, locali e domestiche, ed è il protocollo che assegna l'IP agli host su richiesta. Quando un dispositivo si connette è ``spaesato'': necessita almeno di maschera di rete, indirizzo IP, default router e server DNS. Appena connesso, inonda la rete di richieste; il server DHCP raccoglie le richieste, compila un'offerta e la manda in broadcast; il client riceve l'offerta e invia l'accettazione, ottenendo un IP dinamico (che cambierà probabilmente a ogni riconnessione).
+\index{DNS}\textbf{DHCP} (Dynamic Host Configuration Protocol). Comprando una rete (es.\ classe C da 256 host), nel tempo si connettono quasi sempre meno di 256 dispositivi: dare a ognuno un IP statico non ha senso. L'IP statico si assegna a macchine sempre accessibili, agli altri si assegna un IP \textbf{dinamico}, riciclando gli indirizzi inutilizzati. DHCP è usato in reti wireless, locali e domestiche, ed è il protocollo che assegna l'IP agli host su richiesta. Quando un dispositivo si connette è ``spaesato'': necessita almeno di maschera di rete, indirizzo IP, default router e server DNS. Appena connesso, inonda la rete di richieste; il server DHCP raccoglie le richieste, compila un'offerta e la manda in broadcast; il client riceve l'offerta e invia l'accettazione, ottenendo un IP dinamico (che cambierà probabilmente a ogni riconnessione).
 \figura{p21_1.png}{0.82}
 \figura{p21_2.png}{0.82}
 
@@ -444,7 +446,7 @@ Uso tipico & Web, file, email, SSH, DB & VoIP, streaming, giochi, DNS\\
 \end{tabular}
 \end{center}
 
-Una \textbf{porta} è un identificativo a \textbf{16 bit} (0--65535) che individua l'applicazione in un host: se l'IP individua la macchina, la porta individua il \textbf{processo}. \emph{Well-known ports}: 80 (HTTP), 443 (HTTPS), 22 (SSH), 25 (SMTP).
+\index{SMTP}Una \textbf{porta} è un identificativo a \textbf{16 bit} (0--65535) che individua l'applicazione in un host: se l'IP individua la macchina, la porta individua il \textbf{processo}. \emph{Well-known ports}: 80 (HTTP), 443 (HTTPS), 22 (SSH), 25 (SMTP).
 
 Prima di scambiare dati TCP crea una connessione logica (non un cavo dedicato) tramite \textbf{handshaking}. Il socket è $(\text{indirizzo IP} + \text{numero di porta})$.
 
@@ -467,7 +469,7 @@ Politiche di (Re)Transmit quando un pacchetto della finestra non arriva:
 \item \textbf{Selective}: ritrasmette solo il segmento in timeout; mantiene nel buffer i segmenti già inviati e ``ackati''. Debole per attacchi DDoS.
 \item \textbf{Cumulative}: al timeout di un solo pacchetto, scarta tutti i pacchetti del buffer; tutti quelli della finestra vengono ritrasmessi e richiedono nuovo ACK. Carica la rete ma non il buffer del server.
 \end{itemize}
-\textbf{Nota}: la finestra scorrevole si blocca finché tutti i pacchetti della finestra corrente non sono consegnati e ``ackati''. \textbf{Riassumendo}: il controllo di flusso evita il sovraccarico del ricevente, il controllo di congestione evita la saturazione della rete; un metodo è la sliding window.
+\index{controllo di flusso}\index{finestra scorrevole}\textbf{Nota}: la finestra scorrevole si blocca finché tutti i pacchetti della finestra corrente non sono consegnati e ``ackati''. \textbf{Riassumendo}: il controllo di flusso evita il sovraccarico del ricevente, il controllo di congestione evita la saturazione della rete; un metodo è la sliding window.
 
 \textbf{Differenze in sintesi.}
 \[
@@ -481,7 +483,7 @@ Politiche di (Re)Transmit quando un pacchetto della finestra non arriva:
 \end{array}
 \]
 In una frase: il controllo di \textbf{flusso} affronta un problema \emph{locale} (il singolo ricevente), il controllo di \textbf{congestione} un problema \emph{globale} (la rete condivisa). Entrambi usano la \emph{stessa} sliding window, ma con vincoli diversi: il flusso non supera lo spazio nel buffer del ricevente, la congestione cresce/decresce in base alle conferme e ai timeout.
-\section{Slow Start e Congestion Avoidance.}
+\index{slow start}\index{congestion avoidance}\section{Slow Start e Congestion Avoidance.}
 \hl{\textbf{Slow Start e Congestion Avoidance.}} Il controllo di congestione di TCP
 gestisce la finestra $cwnd$ in due fasi, perché la capacità della rete non è nota
 a priori e va ``scoperta'' dinamicamente.
@@ -504,7 +506,7 @@ di invio alla capacità reale della rete (Slow Start trova in fretta l'ordine di
 grandezza, Congestion Avoidance lo affina), usando la banda al massimo senza
 saturare i router.
 
-\section{Approfondimento: Go-Back-N vs Selective Repeat}
+\index{Go-Back-N}\index{Selective Repeat}\section{Approfondimento: Go-Back-N vs Selective Repeat}
 Entrambi sono protocolli a finestra scorrevole per la consegna affidabile (la stessa idea della sliding window vista sopra), e differiscono nella politica di ritrasmissione:
 \begin{itemize}[noitemsep]
 \item \textbf{Go-Back-N}: il ricevente accetta solo i pacchetti in ordine e scarta i fuori-sequenza; un timeout ritrasmette \emph{tutti} i pacchetti dalla finestra in poi. Buffer ricevente minimo; conviene quando gli errori sono rari (è la politica ``cumulative'' vista sopra).
@@ -513,7 +515,7 @@ Entrambi sono protocolli a finestra scorrevole per la consegna affidabile (la st
 
 
 
-\section{Approfondimento: Congestion Window (CWND) ideale}
+\index{CWND}\section{Approfondimento: Congestion Window (CWND) ideale}
 Per saturare il canale senza congestionarlo, la finestra ideale vale circa il \emph{prodotto banda-ritardo}:
 \[ CWND_{ideale} \approx Banda \times RTT \quad (\text{in byte}). \]
 In Stop\&Wait il throughput è $T = \dfrac{\text{dim. pacchetto}}{RTT}$ e l'utilizzo $\% = \dfrac{T}{Banda}\times100$.
@@ -527,7 +529,7 @@ In Stop\&Wait il throughput è $T = \dfrac{\text{dim. pacchetto}}{RTT}$ e l'util
 \end{itemize}
 \textbf{Nota}: le richieste DNS viaggiano spesso in locale e usano \textbf{UDP} per velocità e semplicità. Cercando \texttt{www.google.com} si interpella un server DNS.
 
-\textbf{Livello Applicazione (introduzione).} È la busta ``blu'' (livello 7): le primitive sono effettuate dalle applicazioni seguendo protocolli specifici. Si appoggia sul livello di trasporto (TCP) e usa un \textbf{numero di porta} (16 bit) per identificare il protocollo del processo; il socket è $(\text{IP dest} + \text{numero porta})$. Esempio e-mail: entra in gioco TCP con \textbf{SMTP} (invio) e \textbf{POP3/IMAP} (visualizzazione). SMTP usa la porta 25:
+\index{POP3}\index{IMAP}\textbf{Livello Applicazione (introduzione).} È la busta ``blu'' (livello 7): le primitive sono effettuate dalle applicazioni seguendo protocolli specifici. Si appoggia sul livello di trasporto (TCP) e usa un \textbf{numero di porta} (16 bit) per identificare il protocollo del processo; il socket è $(\text{IP dest} + \text{numero porta})$. Esempio e-mail: entra in gioco TCP con \textbf{SMTP} (invio) e \textbf{POP3/IMAP} (visualizzazione). SMTP usa la porta 25:
 \begin{itemize}[noitemsep]
 \item \textbf{HELO}: identifica la macchina mittente.
 \item \textbf{FROM}: mittente.
@@ -578,7 +580,7 @@ FTP                     & no  & \cellcolor{yellow}s\`i & trasferimento integro d
 Transazioni bancarie    & no  & \cellcolor{yellow}s\`i & nessuna perdita ammessa, serve affidabilit\`a \\
 \hline
 \end{tabular}
-\end{minipage}
+\index{SNMP}\end{minipage}
  
 \medskip
 \noindent\textbf{Regola generale:}
@@ -587,7 +589,7 @@ Transazioni bancarie    & no  & \cellcolor{yellow}s\`i & nessuna perdita ammessa
 \item \textbf{TCP} $\to$ applicazioni che richiedono \emph{consegna affidabile, ordinata e senza errori} (connessione, controllo di flusso e di congestione, ritrasmissione automatica).
 \end{itemize}
 
-\section{Multiplexing e Demultiplexing tra mittente e destinatario}
+\index{multiplexing}\index{demultiplexing}\section{Multiplexing e Demultiplexing tra mittente e destinatario}
 \hl{\textbf{Multiplexing e Demultiplexing.}} Su uno stesso host più processi
 applicativi (browser, client mail, SSH\dots) comunicano contemporaneamente, ma
 condividono un'unica interfaccia verso il livello di rete. Il livello trasporto
@@ -614,19 +616,19 @@ permette al servizio \textbf{end-to-end} del trasporto di collegare non due
 comunicazione.
 
 \chapter{Approfondimenti Capitolo 2 — Internet Protocol (IP)}\pagemark{26}
-\textbf{Internet Protocol (IP).} Protocollo di rete che costruisce un indirizzamento globale e gerarchico (\textbf{indirizzo IP}), fornisce il \textbf{forwarding} e servizi connectionless e introduce nuovi dispositivi del livello di rete, i \textbf{router}.
+\index{tunnelling}\textbf{Internet Protocol (IP).} Protocollo di rete che costruisce un indirizzamento globale e gerarchico (\textbf{indirizzo IP}), fornisce il \textbf{forwarding} e servizi connectionless e introduce nuovi dispositivi del livello di rete, i \textbf{router}.
 
 \hl{\textbf{IPv6 e IPv4.}} Gli indirizzi \textbf{IPv6} sono logici (strutturati e gerarchici) con uno spazio gigantesco: 128 bit (16 byte). Non sono retrocompatibili: i router che ``parlano'' IPv4 non sanno decifrare 128 bit, perché usano tabelle diverse. Il problema è il \textbf{binding} (far coesistere indirizzi interpretabili da infrastrutture diverse). La soluzione è il \textbf{tunnel}: quando un pacchetto IPv6 deve attraversare una porzione ``vecchia'' (router IPv4), il router di confine incapsula l'intero pacchetto IPv6 dentro un normale pacchetto IPv4; viaggia ``sotto-copertura'' fino al router di confine successivo. Permette una transizione lenta e graduale.
 
 \textbf{Algoritmi di Routing.} Decidono la strada migliore; la comunicazione tra router avviene tramite ICMP.
 \begin{itemize}[noitemsep]
-\item \textbf{OSPF}: ogni router studia l'intera topologia (tutti i percorsi, banda dei cavi, guasti) e calcola la rotta più breve/meno costosa. Usato dentro un \textbf{Autonomous System (AS)}: standard per reti interne complesse, rapido nel ricalcolo.
+\index{Autonomous System}\item \textbf{OSPF}: ogni router studia l'intera topologia (tutti i percorsi, banda dei cavi, guasti) e calcola la rotta più breve/meno costosa. Usato dentro un \textbf{Autonomous System (AS)}: standard per reti interne complesse, rapido nel ricalcolo.
 \item \textbf{RIP}: protocollo vecchio, non conosce la rete; unica metrica è il numero di \emph{salti}. Se la strada A è più veloce ma a 4 salti, sceglie la B (più lenta) a 2 salti.
 \item \textbf{BGP}: routing basato su accordi commerciali tra \textbf{AS}: il traffico è instradato verso il provider che offre il servizio migliore, non per efficienza.
 \end{itemize}
 \figura{p26_1.png}{0.82}
 
-\section{Approfondimento: Routing Link State (Dijkstra)}
+\index{Dijkstra}\index{link state}\section{Approfondimento: Routing Link State (Dijkstra)}
 È l'algoritmo alla base di \textbf{OSPF}. Ogni nodo conosce la mappa completa della rete (Link State Advertisement in flooding) e calcola il cammino di costo minimo con \textbf{Dijkstra}:
 \begin{enumerate}[noitemsep]
 \item $S=\{sorgente\}$; $D(v)=$ costo del link diretto, $\infty$ se assente.
@@ -636,10 +638,10 @@ comunicazione.
 \end{enumerate}
 La \emph{tabella di instradamento} di un nodo ha righe [destinazione $R_x$, prossimo router $R_y$]: $R_y$ è il primo hop sul cammino minimo verso $R_x$.
 
-\section{Approfondimento: Distance Vector (Bellman-Ford)}
+\index{Bellman-Ford}\index{distance vector}\section{Approfondimento: Distance Vector (Bellman-Ford)}
 È l'algoritmo alla base di \textbf{RIP}. Ogni nodo conosce solo i vicini e scambia periodicamente il proprio vettore delle distanze:
 \[ D_x(y) = \min_{v\in vicini(x)}\big\{ c(x,v) + D_v(y) \big\}. \]
-Si costruiscono una tabella iniziale (solo vicini diretti) e una finale (a convergenza). Il problema del \emph{count-to-infinity} si mitiga con split horizon / poisoned reverse.
+\index{count-to-infinity}Si costruiscono una tabella iniziale (solo vicini diretti) e una finale (a convergenza). Il problema del \emph{count-to-infinity} si mitiga con split horizon / poisoned reverse.
 
 
 \noindent\hfill{\footnotesize\color{gray}[p.27]}\\
@@ -647,7 +649,7 @@ Si costruiscono una tabella iniziale (solo vicini diretti) e una finale (a conve
 
 \textbf{ICMP.} Protocollo dei messaggi di controllo, usato da host, router e gateway per scambiare informazioni di livello rete con pacchetti IP. Interviene per: percorso interrotto, indirizzo IP sbagliato, dispersione del pacchetto (TTL azzerato).
 \begin{itemize}[noitemsep]
-\item \textbf{PING}: basato su ICMP, misura l'\textbf{RTT}. Invia un pacchetto ICMP speciale, fa partire un cronometro; la destinazione risponde con un ``eco''; la differenza tra partenza e ritorno è l'RTT.
+\index{ping}\item \textbf{PING}: basato su ICMP, misura l'\textbf{RTT}. Invia un pacchetto ICMP speciale, fa partire un cronometro; la destinazione risponde con un ``eco''; la differenza tra partenza e ritorno è l'RTT.
 \item \textbf{TRACEROUTE}: invia pacchetti con TTL crescente a ogni iterazione; dagli errori di ``uccisione'' del pacchetto capisce quale router lo ha scartato e quindi il percorso. Se l'host non riceve risposta entro un timeout, ripete fino a 3 volte; il TTL viene incrementato e parte del percorso può restare nascosta (router configurati per non inviare ICMP, per sicurezza o prestazioni).
 \end{itemize}
 \textbf{Nota}: traceroute non è affidabile per valutare la congestione di un router (misura in istanti diversi, soggetta alla fluttuazione delle code). Per testare la vera congestione si usa \textbf{ping}, che invia 64 byte ICMP in modo continuo e ne fa la media: se la media è alta, il router è congestionato.
@@ -657,8 +659,8 @@ Si costruiscono una tabella iniziale (solo vicini diretti) e una finale (a conve
 \section{DNS: server locali e root}\pagemark{28}
 Un host deve conoscere almeno un DNS server, e ogni DNS server almeno uno superiore.
 \begin{itemize}[noitemsep]
-\item \textbf{DNS locali}: non appartengono alla gerarchia, sono una cache/proxy locale delle traduzioni recenti \emph{name-to-address} (default name server); è quello fornito dal DHCP quando l'host si collega a una rete sconosciuta.
-\item \textbf{Root name server}: contattati dai DNS locali che non riescono a risolvere un nome; non conoscono l'indirizzo finale ma sanno a quale \textbf{TLD} reindirizzare in base all'estensione del dominio.
+\index{proxy}\item \textbf{DNS locali}: non appartengono alla gerarchia, sono una cache/proxy locale delle traduzioni recenti \emph{name-to-address} (default name server); è quello fornito dal DHCP quando l'host si collega a una rete sconosciuta.
+\index{DNS authoritative}\index{DNS TLD}\item \textbf{Root name server}: contattati dai DNS locali che non riescono a risolvere un nome; non conoscono l'indirizzo finale ma sanno a quale \textbf{TLD} reindirizzare in base all'estensione del dominio.
 \item \hl{\textbf{TLD Server} (Top Level Domain)}: responsabili del primo livello (desinenza finale); conoscono l'authoritative DNS dei nomi che finiscono in \emph{.com .org .net .edu} e country names come \emph{.uk .fr .ca .it}.
 \item \hl{\textbf{Authoritative DNS}}: il capolinea, il server autorevole che possiede i registri ufficiali e definitivi (i veri IP) per uno specifico dominio; consulta i propri file e restituisce l'IP esatto.
 \end{itemize}
@@ -671,17 +673,17 @@ Significato di \texttt{name} e \texttt{value} secondo il \texttt{type} del recor
 \begin{itemize}[noitemsep]
 \item \texttt{type = A}: \texttt{name} è l'hostname, \texttt{value} è l'indirizzo IP.
 \item \texttt{type = NS}: \texttt{name} è il dominio (es. \emph{pippo.com}), \texttt{value} è l'hostname dell'authoritative DNS per quel dominio.
-\item \texttt{type = CNAME}: \texttt{name} è un alias per il nome canonico, \texttt{value} è il nome canonico.
+\index{record DNS}\item \texttt{type = CNAME}: \texttt{name} è un alias per il nome canonico, \texttt{value} è il nome canonico.
 \item \texttt{type = MX}: \texttt{value} è il nome del mail server associato a quel nome.
 \end{itemize}
 Generalmente le richieste verso i server DNS sono connection-less (\textbf{UDP}), per migliorarne le prestazioni.
 
 \chapter{Approfondimenti Capitolo 3 — Socket TCP}\pagemark{30}
-\textbf{Socket TCP.} Esempio: avviare una connessione SSH tra l'host $192.100.1.20/24$ e \texttt{pancrazio.cs.unibo.it} (IP $130.136.1.100/16$). Nella fase di \textbf{handshake} PC1 invia un \textbf{SYN} alla porta 22 (well-known per SSH); pancrazio riceve, prende in considerazione e risponde con \textbf{SYN-ACK}; PC1 invia l'\textbf{ACK} finale e la connessione è aperta (\emph{established}). A connessione aperta la porta 22 non è più quella usata nella quadrupla: viene creata una ``sala riunioni privata'' tra PC1 e pancrazio con le stesse caratteristiche SSH ma su un'altra porta. La porta 22 è come la reception di un hotel: serve solo per il \emph{check-in}, poi il servizio avviene altrove.
+\index{handshake}\textbf{Socket TCP.} Esempio: avviare una connessione SSH tra l'host $192.100.1.20/24$ e \texttt{pancrazio.cs.unibo.it} (IP $130.136.1.100/16$). Nella fase di \textbf{handshake} PC1 invia un \textbf{SYN} alla porta 22 (well-known per SSH); pancrazio riceve, prende in considerazione e risponde con \textbf{SYN-ACK}; PC1 invia l'\textbf{ACK} finale e la connessione è aperta (\emph{established}). A connessione aperta la porta 22 non è più quella usata nella quadrupla: viene creata una ``sala riunioni privata'' tra PC1 e pancrazio con le stesse caratteristiche SSH ma su un'altra porta. La porta 22 è come la reception di un hotel: serve solo per il \emph{check-in}, poi il servizio avviene altrove.
 
 \textbf{Formalmente} un socket è un'astrazione software che rappresenta un \emph{endpoint} per la comunicazione bidirezionale tra due processi: il processo applicativo è la casa, il socket è la porta d'ingresso.
 
-\textbf{TCP/UDP.} TCP e UDP non hanno \emph{encryption}: la comunicazione client-server passa in chiaro. \textbf{SSL} è posizionato a livello applicazione e usa librerie che parlano con TCP, fornendo comunicazione \emph{encrypted}, \emph{data-integrity} ed \emph{end-to-end authentication}.
+\index{SSL e TLS}\textbf{TCP/UDP.} TCP e UDP non hanno \emph{encryption}: la comunicazione client-server passa in chiaro. \textbf{SSL} è posizionato a livello applicazione e usa librerie che parlano con TCP, fornendo comunicazione \emph{encrypted}, \emph{data-integrity} ed \emph{end-to-end authentication}.
 
 \textbf{Dettagli su ACK di TCP.} Gli ACK non vengono inviati uno per pacchetto, ma per blocchi: in una sliding window di 5 si invia un solo ACK che conferma un set di pacchetti. Una regola consente però l'ACK di un singolo pacchetto quando c'è un \textbf{buco}: arrivano tutti i pacchetti fino a $x$, poi arriva $x+2$; il destinatario manda un ACK segnalando che manca $x+1$.
 \figura{p30_1.png}{0.82}
@@ -724,7 +726,7 @@ Al termine della sessione di comunicazione, una delle due entità (indifferentem
 \textbf{Architetture.} Un'applicazione che funziona su più dispositivi e comunica via Internet può usare diverse architetture:
 \begin{itemize}[noitemsep]
 \item \textbf{Client--Server}: uno o più server (per scalabilità, velocità e servizio), ognuno con indirizzo IP permanente (\emph{always-on}). I client comunicano col server in modo intermittente, con IP dinamico. I client comunicano solo con i server.
-\item \textbf{P2P}: non esistono server sempre accesi; ogni utente è sia client sia server e la scalabilità dipende dal numero di utenti. La comunicazione avviene direttamente tra \emph{peer}, in modo intermittente e con IP diversi. Ogni client ha una piccola tabella dei ``server'' vicini, che in realtà sono altri client. Alcuni servizi P2P hanno un server con l'elenco dei client partecipanti.
+\index{P2P}\item \textbf{P2P}: non esistono server sempre accesi; ogni utente è sia client sia server e la scalabilità dipende dal numero di utenti. La comunicazione avviene direttamente tra \emph{peer}, in modo intermittente e con IP diversi. Ogni client ha una piccola tabella dei ``server'' vicini, che in realtà sono altri client. Alcuni servizi P2P hanno un server con l'elenco dei client partecipanti.
 \end{itemize}
 Un \textbf{processo cliente} inizia la comunicazione; un \textbf{processo server} aspetta di essere contattato.
 
@@ -760,7 +762,7 @@ Stored audio/video & loss-tolerant & come sopra & no\\
 
 HTTP si basa su richieste e risposte tra client e server: il client richiede una risorsa e il server la ritorna nella \emph{response}. Usa il trasporto \textbf{TCP}; il \emph{welcoming socket} è la porta 80, poi cambiata in una porta alta dopo l'handshake. Caratteristiche:
 \begin{itemize}[noitemsep]
-\item \textbf{Stateless}: il server non salva informazioni sulle richieste passate (oggi si usano i cookie).
+\index{cookie}\item \textbf{Stateless}: il server non salva informazioni sulle richieste passate (oggi si usano i cookie).
 \item \textbf{Non-Persistent}: di base la connessione si apre e si richiude a ogni risorsa (le versioni successive sono \emph{persistent} ma per un tempo limitato). Fa viaggiare più pacchetti e alza l'RTT, ma non sovraccarica il server.
 \item \textbf{Metodi}: GET, PUT, POST, DELETE.
 \item \textbf{Status Code}: comunicano lo stato della trasmissione (riuscita o errore).
@@ -770,7 +772,7 @@ Ogni richiesta e risposta è divisa in tre parti: \textbf{Request/Response Line}
 \noindent\hfill{\footnotesize\color{gray}[p.33]}\\
 \textbf{Cookie HTTP.} I cookie sono inseriti nelle \emph{header line} di richieste e risposte HTTP e servono per il tracciamento tra client e server. HTTP di base è stateless, ma molti servizi necessitano uno storico: il cookie (identificativo) memorizza lo storico e lo trasmette al server, così HTTP rimane stateless ma la comunicazione riprende dal punto in cui si era conclusa, senza ritrasmettere ogni informazione. Esempio: le ultime ricerche di Amazon ritrovate cambiando dispositivo. I cookie sono usati per autorizzazioni, carrelli e-commerce e \emph{user-session state}; HTTP resta stateless perché è il cookie trasmesso a portare le informazioni.
 
-\textbf{Web Cache -- Server Proxy.} Il \textbf{proxy} è un server che fa da ponte tra client e \emph{origin server}. Quando il client chiede un'informazione, non la chiede direttamente all'origin server, ma al proxy, che esegue la ricerca per conto del client, la salva in \textbf{cache} e la restituisce. Così un secondo client che cerca la stessa cosa ha l'informazione già vicino (in cache), senza interpellare i router e le buste arancioni. Se la pagina in cache è troppo vecchia, il proxy la riscarica, aggiorna la cache e la restituisce. Il vantaggio è la velocità (abbattimento del ritardo di connessione), a discapito di un possibile rischio di sicurezza: un proxy mal configurato è di fatto uno \emph{spyware}, perché tutto il traffico passa da quel nodo (informazioni sensibili). Il proxy agisce sia da client sia da server, ed è usato da enti grandi (università, aziende) per ridurre tempo di risposta e traffico; servono politiche per aggiornare le risorse obsolete.
+\index{web cache}\textbf{Web Cache -- Server Proxy.} Il \textbf{proxy} è un server che fa da ponte tra client e \emph{origin server}. Quando il client chiede un'informazione, non la chiede direttamente all'origin server, ma al proxy, che esegue la ricerca per conto del client, la salva in \textbf{cache} e la restituisce. Così un secondo client che cerca la stessa cosa ha l'informazione già vicino (in cache), senza interpellare i router e le buste arancioni. Se la pagina in cache è troppo vecchia, il proxy la riscarica, aggiorna la cache e la restituisce. Il vantaggio è la velocità (abbattimento del ritardo di connessione), a discapito di un possibile rischio di sicurezza: un proxy mal configurato è di fatto uno \emph{spyware}, perché tutto il traffico passa da quel nodo (informazioni sensibili). Il proxy agisce sia da client sia da server, ed è usato da enti grandi (università, aziende) per ridurre tempo di risposta e traffico; servono politiche per aggiornare le risorse obsolete.
 \figura{p33_1.png}{0.82}
 \figura{p33_2.png}{0.82}
 \figura{p33_3.png}{0.82}
@@ -784,7 +786,7 @@ Ogni richiesta e risposta è divisa in tre parti: \textbf{Request/Response Line}
 \figura{p34_1.png}{0.82}
 \figura{p34_2.png}{0.82}
 
-\section{NAT — Network Address Translator}\pagemark{35}
+\index{NAT}\section{NAT — Network Address Translator}\pagemark{35}
 \textbf{NAT -- Network Address Translator.} All'interno di una rete locale si creano violazioni volute e controllate per ``estinguere'' parzialmente lo \emph{shortage} degli indirizzi IPv4. Avendo pochi IPv4, se tutti i dispositivi di un'abitazione (es. 256) usassero un proprio IP servirebbe una rete di classe C, costosa. Con il NAT basta comprare un solo IP (statico o dinamico) e associarlo al router di casa: dall'esterno la rete locale e tutti i dispositivi sono visti con un \emph{unico} IP. Dall'interno esiste invece una rete fittizia di classe A o C che assegna IP falsi a ogni dispositivo (uno strato di sicurezza).
 
 Usare un solo IP per centinaia di dispositivi è però un problema: se il telefono in LAN (es. $10.1.1.32$) provasse ad accedere all'esterno dialogando con quell'IP, si identificherebbe in ``Pippo'' quando in realtà è ``Pluto'', e il pacchetto non gli verrebbe mai recapitato. Bisogna tradurre l'IP ``violato'' con un IP effettivo: il router NAT prende l'IP del dispositivo in LAN, lo traduce in un IP regolare, apre la comunicazione e trasmette. Il dispositivo in LAN acquisisce temporaneamente l'IP del router con una \textbf{porta alta}, comunicando in WAN con un IP legale, visibile e riconosciuto.
@@ -807,15 +809,15 @@ dove $F/u_s$ è il tempo per inviare una copia, $NF/u_s$ per inviarne $N$, $d_{m
 
 Nelle reti \textbf{P2P} il tempo minimo è il massimo tra l'upload del server (almeno una copia), la velocità di download del client e la somma degli upload di tutti i ``server/client'':
 \[ D_{p2p} \ge \max\{\, F/u_s,\; F/d_{min},\; NF/(u_s + \textstyle\sum u_i) \,\} \]
-dove $NF/(u_s+\sum u_i)$ è il max upload rate, caratteristica specifica delle reti P2P. Le P2P hanno un \textbf{tracker}, un server che conosce tutti gli utenti del \emph{torrent} (il gruppo di peer che si scambiano frammenti di file). Le P2P possono collassare se tutti scaricano e nessuno carica: ogni peer scarica in misura equivalente a quanto ha caricato (\textbf{tit-for-tat}); si può rallentare il download di un peer che non condivide.
+\index{tit-for-tat}dove $NF/(u_s+\sum u_i)$ è il max upload rate, caratteristica specifica delle reti P2P. Le P2P hanno un \textbf{tracker}, un server che conosce tutti gli utenti del \emph{torrent} (il gruppo di peer che si scambiano frammenti di file). Le P2P possono collassare se tutti scaricano e nessuno carica: ogni peer scarica in misura equivalente a quanto ha caricato (\textbf{tit-for-tat}); si può rallentare il download di un peer che non condivide.
 
-\textbf{CDN.} I \emph{content delivery network} sono piattaforme distribuite di livello applicazione per il content delivery: server geograficamente distribuiti (non uno centrale sovraccarico, ma tanti veloci) con diverse qualità di scaricamento (un televisore scarica immagini di qualità elevata, un telefono di qualità inferiore). \textbf{DASH} è il nome di questo servizio: formati diversi (\emph{chunk}) con diversa qualità, che con un bitrate variabile risparmia traffico dati.
+\index{CDN}\index{DASH}\textbf{CDN.} I \emph{content delivery network} sono piattaforme distribuite di livello applicazione per il content delivery: server geograficamente distribuiti (non uno centrale sovraccarico, ma tanti veloci) con diverse qualità di scaricamento (un televisore scarica immagini di qualità elevata, un telefono di qualità inferiore). \textbf{DASH} è il nome di questo servizio: formati diversi (\emph{chunk}) con diversa qualità, che con un bitrate variabile risparmia traffico dati.
 \figura{p37_1.png}{0.82}
 
-\section{DASH, Spatial e Temporal Coding}\pagemark{38}
+\index{temporal coding}\section{DASH, Spatial e Temporal Coding}\pagemark{38}
 DASH viene attivato anche con banda scarsa: sul televisore, se il bitrate è basso, si invia un'immagine di qualità inferiore.
 
-\textbf{Spatial Coding} e \textbf{Temporal Coding} sono meccanismi di invio dati che riducono la dimensione del pacchetto mantenendo una buona qualità visiva, sfruttando la ridondanza nei dati.
+\index{spatial coding}\textbf{Spatial Coding} e \textbf{Temporal Coding} sono meccanismi di invio dati che riducono la dimensione del pacchetto mantenendo una buona qualità visiva, sfruttando la ridondanza nei dati.
 \begin{itemize}[noitemsep]
 \item \textbf{Spatial Coding}: sfrutta la ridondanza \emph{spaziale}, cioè le informazioni ripetute o prevedibili all'interno della stessa immagine. Invece di memorizzare ogni pixel, si creano algoritmicamente schemi e blocchi di colore uniforme (invece di inviare 7 volte ``pixel nero'', si invia un'istruzione: ``i primi 7 pixel sono neri'').
 \item \textbf{Temporal Coding}: sfrutta la ridondanza \emph{temporale}, cioè le informazioni che restano identiche da un fotogramma al successivo. Permette i tassi di compressione più elevati, per uno streaming fluido ed economico in banda.
@@ -856,26 +858,26 @@ Sia $m$ il \textbf{messaggio cifrato}, $K_a$ una chiave di cifratura e $K_b$ una
 \figura{p39_1.png}{0.82}
 \figura{p39_2.png}{0.82}
 
-\section{Crittografia: chiave simmetrica e DES}\pagemark{40}
-Ci sono due metodi di crittografia: \textbf{chiave simmetrica} ($K_a = K_b = K_s$, chiave segreta uguale e condivisa) e \textbf{chiave pubblica + chiave privata}.
+\index{chiave simmetrica}\index{DES}\section{Crittografia: chiave simmetrica e DES}\pagemark{40}
+\index{crittografia}\index{chiave pubblica}Ci sono due metodi di crittografia: \textbf{chiave simmetrica} ($K_a = K_b = K_s$, chiave segreta uguale e condivisa) e \textbf{chiave pubblica + chiave privata}.
 
 Il metodo a \textbf{chiave simmetrica} ha seguito vari standard:
 \begin{itemize}[noitemsep]
 \item \textbf{DES} (Data Encryption Standard): chiave simmetrica da 56 bit, cifra a blocchi di 64 bit. Oggi $2^{56}$ combinazioni si calcolano in pochi secondi: DES è considerato attaccabile in meno di un giorno.
 \item \textbf{3DES}: stesso concetto, ma il messaggio è cifrato tre volte con tre chiavi diverse: $K_{3a}(K_{2a}(K_{1a}(m)))$, più sicuro di DES.
-\item \textbf{AES}: oggi il più sicuro; suddivide in blocchi da 128 bit e cifra con chiavi da 128/192/256 bit. Se DES fosse \emph{crackable} in 1 secondo, AES impiegherebbe $\sim$149 trilioni di anni.
+\index{AES}\item \textbf{AES}: oggi il più sicuro; suddivide in blocchi da 128 bit e cifra con chiavi da 128/192/256 bit. Se DES fosse \emph{crackable} in 1 secondo, AES impiegherebbe $\sim$149 trilioni di anni.
 \end{itemize}
 La vera soluzione è l'uso di \textbf{sessioni temporanee} con una \textbf{chiave temporanea diversa} per ogni sessione: cambiare la chiave ogni 30/60/90 giorni innalza la sicurezza.
 
-\textbf{Chiave pubblica e privata.} Come condividere la chiave simmetrica a una persona mai vista? Non in chiaro. La soluzione è la cifratura \textbf{asimmetrica}: la \textbf{chiave pubblica} è nota a chiunque, la \textbf{chiave privata} solo al proprietario. La pubblica cifra, la privata è l'unico antidoto per decifrare. Se Alice manda $m=$``pippo'' a Bob, usa la pubblica di Bob: $K_b^{+}(m)$; Bob decifra con $K_b^{-}(K_b^{+}(m)) = pippo$. Questo è lo standard \textbf{RSA}, sicuro ma fragile per messaggi molto brevi: con messaggi corti l'attaccante potrebbe risalire alla chiave. Con caratteri di \textbf{padding} il messaggio si allarga, lo spazio di ricerca cresce e l'attacco diventa impossibile.
+\index{RSA}\textbf{Chiave pubblica e privata.} Come condividere la chiave simmetrica a una persona mai vista? Non in chiaro. La soluzione è la cifratura \textbf{asimmetrica}: la \textbf{chiave pubblica} è nota a chiunque, la \textbf{chiave privata} solo al proprietario. La pubblica cifra, la privata è l'unico antidoto per decifrare. Se Alice manda $m=$``pippo'' a Bob, usa la pubblica di Bob: $K_b^{+}(m)$; Bob decifra con $K_b^{-}(K_b^{+}(m)) = pippo$. Questo è lo standard \textbf{RSA}, sicuro ma fragile per messaggi molto brevi: con messaggi corti l'attaccante potrebbe risalire alla chiave. Con caratteri di \textbf{padding} il messaggio si allarga, lo spazio di ricerca cresce e l'attacco diventa impossibile.
 \figura{p40_1.png}{0.82}
 
 \section{RSA}\pagemark{41}
 La chiave pubblica è disponibile per tutti e usata per cifrare; la chiave privata è l'unico ``antidoto''. Inoltre RSA permette anche l'\textbf{autenticazione}, in quanto $K_b^{-}(K_b^{+}(m)) = m = K_b^{+}(K_b^{-}(m))$.
 
-\textbf{Autenticazione.} Vogliamo essere sicuri che il messaggio provenga dalla persona giusta, cioè \textbf{autenticarci}. Scenario di attacco (man in the middle): Alice comunica con Bob; Bob richiede un \textbf{Nonce} (numero casuale e non riusato) per confermare di parlare con Alice. \textbf{Trudy} intercetta, cripta il Nonce con la \emph{sua} chiave privata e lo manda verso Bob, e intanto invia a Bob la propria chiave pubblica. Morale: Bob comunicherà criptando con la chiave pubblica di Trudy, che legge e manipola tutti i messaggi e li rispedisce verso Alice. Per Bob e Alice nulla sta accadendo, in realtà Trudy legge tutto.
+\index{man-in-the-middle}\textbf{Autenticazione.} Vogliamo essere sicuri che il messaggio provenga dalla persona giusta, cioè \textbf{autenticarci}. Scenario di attacco (man in the middle): Alice comunica con Bob; Bob richiede un \textbf{Nonce} (numero casuale e non riusato) per confermare di parlare con Alice. \textbf{Trudy} intercetta, cripta il Nonce con la \emph{sua} chiave privata e lo manda verso Bob, e intanto invia a Bob la propria chiave pubblica. Morale: Bob comunicherà criptando con la chiave pubblica di Trudy, che legge e manipola tutti i messaggi e li rispedisce verso Alice. Per Bob e Alice nulla sta accadendo, in realtà Trudy legge tutto.
 
-L'anello debole è l'\textbf{invio della chiave pubblica}. La chiave pubblica non va diffusa con leggerezza: serve un'azienda, la \textbf{Certification Authority (CoA/CA)}, che fa da tramite garantendo l'identità digitale di Bob e Alice, legando in modo certo una chiave pubblica a una persona (processo con verifiche, che richiede tempo).
+\index{Certification Authority}L'anello debole è l'\textbf{invio della chiave pubblica}. La chiave pubblica non va diffusa con leggerezza: serve un'azienda, la \textbf{Certification Authority (CoA/CA)}, che fa da tramite garantendo l'identità digitale di Bob e Alice, legando in modo certo una chiave pubblica a una persona (processo con verifiche, che richiede tempo).
 
 La chiave pubblica di Bob viene creata dalla \emph{CoA} a seguito di verifiche, ed è criptata con la chiave privata della \emph{CoA}, garantendo \textbf{autenticità}. (Ricorda: criptare con la chiave privata garantisce autenticità.)
 \figura{p41_1.png}{0.82}
@@ -889,13 +891,13 @@ Quando la chiave pubblica di Bob viene richiesta, non è Bob a inviarla, ma la \
 \item Criptarlo con la chiave privata del mittente.
 \item Inviare al destinatario sia il messaggio criptato sia quello in chiaro.
 \end{enumerate}
-Il destinatario decripta con la chiave pubblica del mittente: se i due combaciano, il messaggio non è stato alterato. Poiché RSA è laborioso, si usa un \textbf{Hashing}: si applica al messaggio una funzione di hash (randomica, con proprietà matematiche potenti) che ne riduce la lunghezza. Quindi:
+\index{hash}Il destinatario decripta con la chiave pubblica del mittente: se i due combaciano, il messaggio non è stato alterato. Poiché RSA è laborioso, si usa un \textbf{Hashing}: si applica al messaggio una funzione di hash (randomica, con proprietà matematiche potenti) che ne riduce la lunghezza. Quindi:
 \begin{enumerate}[noitemsep]
 \item Si spedisce il messaggio in chiaro.
 \item Si invia in forma criptata il messaggio ridotto dalla funzione di hashing.
 \item Il destinatario applica l'hashing al messaggio in chiaro e decripta il messaggio ``hashato''; se combaciano, la comunicazione è sicura.
 \end{enumerate}
-La \textbf{firma digitale} è quindi \textbf{hash + criptatura RSA} e garantisce \textbf{integrità, autenticazione e non ripudiabilità}.
+\index{firma digitale}\index{non ripudio}La \textbf{firma digitale} è quindi \textbf{hash + criptatura RSA} e garantisce \textbf{integrità, autenticazione e non ripudiabilità}.
 \figura{p42_1.png}{0.82}
 \figura{p42_2.png}{0.82}
 
@@ -910,7 +912,7 @@ A questo punto si compongono tutti i tasselli per una comunicazione \textbf{conf
 \item \textbf{Connection Closure}: alla chiusura (anche per errore temporaneo) la comunicazione viene riaperta e le chiavi temporanee di sessione vengono rigenerate.
 \end{enumerate}
 
-\textbf{Network Layer Security -- IPsec} (lavora a livello di rete, proteggendo direttamente i pacchetti IP). Le aziende userebbero una rete privata cablata, ma è costosa: l'alternativa è la \textbf{VPN} (Virtual Private Network), che usa \textbf{IPsec} per cifrare tutto il contenuto dei pacchetti (contenuto, header e trailer), logicamente separati dal traffico comune. IPsec protegge i pacchetti IP tra gli endpoint a prescindere dall'applicazione, e fa vedere calcolatori in reti effettivamente diverse come ``uniti'' sotto un'unica rete LAN.
+\index{IPsec}\index{VPN}\textbf{Network Layer Security -- IPsec} (lavora a livello di rete, proteggendo direttamente i pacchetti IP). Le aziende userebbero una rete privata cablata, ma è costosa: l'alternativa è la \textbf{VPN} (Virtual Private Network), che usa \textbf{IPsec} per cifrare tutto il contenuto dei pacchetti (contenuto, header e trailer), logicamente separati dal traffico comune. IPsec protegge i pacchetti IP tra gli endpoint a prescindere dall'applicazione, e fa vedere calcolatori in reti effettivamente diverse come ``uniti'' sotto un'unica rete LAN.
 \figura{p43_1.png}{0.82}
 \figura{p43_2.png}{0.82}
 
@@ -918,21 +920,21 @@ A questo punto si compongono tutti i tasselli per una comunicazione \textbf{conf
 Poiché si crea una rete logica unica, due filiali che usano NAT non possono fornire gli stessi IP: dovrebbero cambiarli (altrimenti, come in una rete locale, ci sarebbe conflitto tra indirizzi uguali). \textbf{IPsec fornisce}: integrità del messaggio, autenticazione, prevenzione contro \textbf{Replay Attack}, confidenzialità. Due protocolli:
 \begin{itemize}[noitemsep]
 \item \textbf{Authentication Header (AH)}: non fornisce confidenzialità.
-\item \textbf{Encapsulation Security Protocol (ESP)}: autenticazione, integrità e confidenzialità.
+\index{IPsec ESP}\item \textbf{Encapsulation Security Protocol (ESP)}: autenticazione, integrità e confidenzialità.
 \end{itemize}
 Due tipi di incapsulamento:
 \begin{itemize}[noitemsep]
 \item \textbf{Transport Mode}: payload e header dei protocolli superiori cifrati, l'header IP originale resta visibile. Usato nelle comunicazioni host-to-host. Originale: $IP \mid DATI$; Transport: $IP \mid ESP\text{-}Header \mid DATI \mid ESP\text{-}Trailer$.
 \item \textbf{Tunnel Mode}: l'intero pacchetto originale ($IP+Payload+header+trailer$) viene cifrato e incapsulato in un nuovo pacchetto IP. Standard delle VPN (Gateway-to-Gateway o host-to-gateway): i reali IP vengono nascosti, evitando net scanning/mapping. Tunnel: $New\text{-}IP \mid ESP\text{-}Header \mid IP \mid DATI \mid ESP\text{-}Trailer$.
 \end{itemize}
-Il tunnel tra i router R1 e R2 si chiama \textbf{security association}. \textbf{SPI} è il security index, \textbf{SEQ\#} il numero di sequenza; il MAC (meccanismo di autenticazione del contenuto) è in ESP-auth ed è creato con una chiave simmetrica. \textbf{Nota}: IP è connectionless, IPsec è connection-oriented.
+\index{Security Association}Il tunnel tra i router R1 e R2 si chiama \textbf{security association}. \textbf{SPI} è il security index, \textbf{SEQ\#} il numero di sequenza; il MAC (meccanismo di autenticazione del contenuto) è in ESP-auth ed è creato con una chiave simmetrica. \textbf{Nota}: IP è connectionless, IPsec è connection-oriented.
 \figura{p44_1.png}{0.82}
 \figura{p44_2.png}{0.82}
 
 \section{Firewall}\pagemark{45}
 \textbf{Firewall.} Soluzioni adottate per mantenere la LAN interna il più sicura possibile: un ``muro di fuoco'' che separa la rete aziendale da Internet. Agisce a livello di rete e di trasporto. A sinistra la rete aziendale (\emph{trusted ``good guys''}, presunta sicura), a destra Internet (\emph{untrusted ``bad guys''}). Il firewall lascia transitare in ingresso e uscita determinati pacchetti, discriminati con vari algoritmi.
 
-Se il sito aziendale è ospitato su una macchina interna alla LAN e un utente, accedendo al sito, fa partire un attacco, la sicurezza interna viene meno. Per questo si aggiunge una \textbf{DMZ} (zona demilitarizzata): non sicura come la LAN, ma dove stanno i servizi accessibili da terzi (es. la macchina che ospita il sito). I terzi accedono alla DMZ, mai alla LAN.
+\index{DMZ}Se il sito aziendale è ospitato su una macchina interna alla LAN e un utente, accedendo al sito, fa partire un attacco, la sicurezza interna viene meno. Per questo si aggiunge una \textbf{DMZ} (zona demilitarizzata): non sicura come la LAN, ma dove stanno i servizi accessibili da terzi (es. la macchina che ospita il sito). I terzi accedono alla DMZ, mai alla LAN.
 
 I firewall evitano: \textbf{DoS} (bloccando le richieste sospette di un host), \textbf{modifiche non autorizzate} a servizi nevralgici, \textbf{ingresso di persone non autorizzate}. Tre tipi:
 \begin{itemize}[noitemsep]
@@ -950,7 +952,7 @@ Si preferisce di solito la selezione \textbf{stateful}, per due motivi: un filtr
 
 Per non rallentare anche il traffico in uscita, si usa un \textbf{gateway} che gestisce le richieste client-server: se approvate, il firewall lascia transitare verso l'esterno; se rigettate, i pacchetti non passano. Per il firewall la rete interna è sempre sicura e il lavoro ``sporco'' è fatto dal gateway; il firewall gestisce solo $esterno \to interno$.
 
-I firewall non sono invalicabili: se un IP considerato sicuro è stato rubato con \textbf{spoofing}, entra una persona disonesta. Per questo si inseriscono gli \textbf{IDS} (Intrusion Detection Systems), che fanno uno scan approfondito (anche invasivo) dei singoli pacchetti: guardano il payload, esaminano la correlazione tra pacchetti multipli e cercano port scanning, network mapping e attacchi DoS.
+\index{IDS}I firewall non sono invalicabili: se un IP considerato sicuro è stato rubato con \textbf{spoofing}, entra una persona disonesta. Per questo si inseriscono gli \textbf{IDS} (Intrusion Detection Systems), che fanno uno scan approfondito (anche invasivo) dei singoli pacchetti: guardano il payload, esaminano la correlazione tra pacchetti multipli e cercano port scanning, network mapping e attacchi DoS.
 \figura{p46_1.png}{0.82}
 \figura{p46_2.png}{0.82}
 
@@ -976,7 +978,7 @@ I firewall non sono invalicabili: se un IP considerato sicuro è stato rubato co
 \begin{itemize}[noitemsep]
 \item \textbf{Mail confidenziale (Alice $\to$ Bob)}: si cifra $m$ con una chiave simmetrica di sessione $K_s$, e $K_s$ con la chiave pubblica di Bob $K_b^{+}$.
 \item \textbf{Firma digitale} (integrità + non ripudiabilità): $K_a^{-}(H(m))$, cioè hash del messaggio cifrato con la chiave privata del mittente.
-\item \textbf{Autenticazione (challenge-response)}: si aggiunge il \textbf{nonce} $R$, criptato con la chiave RSA privata del mittente.
+\index{nonce}\item \textbf{Autenticazione (challenge-response)}: si aggiunge il \textbf{nonce} $R$, criptato con la chiave RSA privata del mittente.
 \item \textbf{Confidenziale + autenticazione + integrità}: si combina hash cifrato con la privata del mittente (autenticità/integrità), concatenazione con il nonce $R$, cifratura con la chiave simmetrica di sessione (confidenzialità) e cifratura di $K_s$ con la pubblica di Bob.
 \end{itemize}
 \textbf{Nota}: $R$ si aggiunge solo per evitare il \emph{replay attack} o per l'autenticazione; ogni altro uso è eccessivo. Si suppone sempre l'uso di \textbf{AES} per la chiave simmetrica e \textbf{RSA} per la chiave pubblica/privata, perché sono gli unici metodi che aggiungono automaticamente del padding al messaggio cifrato.
@@ -1000,7 +1002,7 @@ Nell'handshake si invia anche una copia criptata di tutti i messaggi scambiati d
 
 \textbf{Forwarding e Routing.} Il \textbf{forwarding} è quando un pacchetto arriva da una porta di ingresso del router ed esce dalla porta di uscita: è il passo che il pacchetto compie dall'input all'output dello stesso router, implementato nel \textbf{data plane}. Il \textbf{routing} è la decisione del router su quale strada far fare al pacchetto: è la visione della rete che ha il router, implementata nel \textbf{control plane}.
 
-Il \textbf{Data Plane} opera nel forwarding (funzione locale): determina su quale porta far uscire un pacchetto con un certo header. Il \textbf{Control Plane} opera \emph{network-wide}: determina come il datagram è instradato tra i router lungo il percorso end-to-end. Due approcci: locale e centralizzato (\textbf{SDN}). Intuitivamente, il Data Plane è il singolo svincolo autostradale, il Control Plane è il navigatore.
+\index{SDN}Il \textbf{Data Plane} opera nel forwarding (funzione locale): determina su quale porta far uscire un pacchetto con un certo header. Il \textbf{Control Plane} opera \emph{network-wide}: determina come il datagram è instradato tra i router lungo il percorso end-to-end. Due approcci: locale e centralizzato (\textbf{SDN}). Intuitivamente, il Data Plane è il singolo svincolo autostradale, il Control Plane è il navigatore.
 
 In ogni router c'è la \textbf{forwarding table}, consultata a ogni pacchetto in input: in base ai primi bit dell'header, il router decide la porta di uscita. Control e data plane lavorano in sinergia: il control ha la visione della rete e aggiorna la forwarding table in base alle irregolarità (colli di bottiglia, malfunzionamenti), comunicate dall'hardware di rete. Il Data Plane è basilare e veloce: prende i pacchetti, legge l'header, guarda la tabella e li spara sulla porta di output, senza logica per dialogare sui malfunzionamenti.
 
@@ -1013,7 +1015,7 @@ In ogni router c'è la \textbf{forwarding table}, consultata a ogni pacchetto in
 
 Oggi è molto usata una \textbf{forwarding table condivisa (SDN)}: tutti i router hanno una copia locale di una tabella calcolata globalmente da un \textbf{server esterno} che prende lo stato della rete da una serie di router. Vantaggi: visione e ottimizzazione globale perfetta (il \emph{remote controller} vede l'intera rete in tempo reale); i router diventano economici (eseguono solo ordini); si separa il \emph{meccanismo} (del router) dalla \emph{politica} (del remote controller): per cambiare il comportamento basta cambiare la politica del controller. Contro: se il controller si blocca o cade la connessione, i router restano in panne (serve un'infrastruttura di backup costosa); inoltre c'è latenza nella copia delle tabelle.
 
-\textbf{Analisi della struttura di un router.} Le porte di ingresso sono fatte di tre blocchi: il \emph{layer fisico} (bit-level reception, dove arrivano i segnali), il \emph{layer di binding} (da segnale a bit), e la \emph{coda} dei pacchetti in attesa di essere instradati. Le porte di uscita sono speculari. Lo \textbf{switch fabric} è il collegamento tra porte di entrata e uscita (una rete dentro la rete) che smista i pacchetti. Il \textbf{routing processor} è il control plane: nei router tradizionali è fisico e individuale, nei router moderni è centralizzato.
+\index{switching fabric}\textbf{Analisi della struttura di un router.} Le porte di ingresso sono fatte di tre blocchi: il \emph{layer fisico} (bit-level reception, dove arrivano i segnali), il \emph{layer di binding} (da segnale a bit), e la \emph{coda} dei pacchetti in attesa di essere instradati. Le porte di uscita sono speculari. Lo \textbf{switch fabric} è il collegamento tra porte di entrata e uscita (una rete dentro la rete) che smista i pacchetti. Il \textbf{routing processor} è il control plane: nei router tradizionali è fisico e individuale, nei router moderni è centralizzato.
 \figura{p51_1.png}{0.82}
 
 \section{Porta di ingresso del router}\pagemark{52}
@@ -1022,7 +1024,7 @@ La \textbf{line termination} è dove il cavo si innesta fisicamente al router (t
 \item \textbf{Destination-based}: i pacchetti sono instradati guardando l'IP del destinatario.
 \item \textbf{Generalized forwarding}: il router si comporta da ispettore doganale, analizzando molti campi del datagram.
 \end{itemize}
-Studiamo il \textbf{destination-based} in due modalità: \textbf{Address Range} e \textbf{longest prefix method}.
+\index{longest prefix matching}Studiamo il \textbf{destination-based} in due modalità: \textbf{Address Range} e \textbf{longest prefix method}.
 
 Nel \textbf{destination based forwarding} (per range), all'arrivo del pacchetto il router cerca in quale range della tabella risiede l'IP di destinazione. Il \textbf{longest prefix method} si basa invece sui prefissi (non su intervalli di indirizzo) e in alcuni casi può essere non deterministico. Esempio: con i due pacchetti
 \[ 11001000\ 00010111\ 000\mathbf{11110}\ 10100001 \quad\text{e}\quad 11001000\ 00010111\ 000\mathbf{11000}\ 10101010, \]
@@ -1037,7 +1039,7 @@ Esistono diverse tipologie di \textbf{switching fabric}, ognuna con pro e contro
 \end{itemize}
 Una switching fabric troppo veloce non è sempre positiva: se processa più velocemente di quanto la porta di output sopporti, i buffer di output si riempiono e si perdono pacchetti dopo $k$ in coda. In un \textbf{router è necessario}:
 \begin{itemize}[noitemsep]
-\item Meno \textbf{Head-of-Line Blocking (HOL)} possibile (dovuto a switching fabric lenta o a contesa della porta).
+\index{head-of-line blocking}\item Meno \textbf{Head-of-Line Blocking (HOL)} possibile (dovuto a switching fabric lenta o a contesa della porta).
 \item \textbf{Buffering ridotto}: la porta di uscita sta al passo con la fabric senza over-buffering. Il buffering necessario è $\dfrac{RTT \cdot C}{\sqrt{N}}$, dove $C$ = capacità e $N$ = numero di flussi.
 \item Un buon algoritmo di \textbf{scheduling} per gestire la coda della porta di uscita.
 \end{itemize}
@@ -1050,18 +1052,18 @@ Una switching fabric troppo veloce non è sempre positiva: se processa più velo
 \item \textbf{FIFO} (First In First Out) con \emph{discard policy} per coda piena: \textbf{Tail Drop} (si droppa l'ultimo arrivato), \textbf{Priority} (drop su base prioritaria), \textbf{Random} (drop randomico).
 \item \textbf{Priority Scheduling}: si processano per primi i pacchetti a priorità alta.
 \item \textbf{Round Robin}: pacchetti ordinati per classe e priorità; lo scheduler estrae il primo della prima classe, poi della seconda, e così via. Non è \emph{fair}: una classe con un pacchetto lungo fa attendere molto le altre.
-\item \textbf{WFQ} (Weighted Fair Queuing): come Round Robin, ma assegna una priorità a ogni classe, dando più banda alle classi con priorità più alta.
+\index{WFQ}\item \textbf{WFQ} (Weighted Fair Queuing): come Round Robin, ma assegna una priorità a ogni classe, dando più banda alle classi con priorità più alta.
 \end{itemize}
 \figura{p54_1.png}{0.82}
 
 \section{IPv4 datagram e frammentazione}\pagemark{55}
-\textbf{IPv4.} La struttura del pacchetto IPv4 (\emph{IPv4 datagram}) comprende: Version, Header length, Type of service, Datagram length; Identifier (16 bit), Flags e Fragmentation offset (13 bit); Time-to-live, Upper-layer protocol, Header checksum; Source IP address (32 bit); Destination IP address (32 bit); Options; Data.
+\index{checksum}\textbf{IPv4.} La struttura del pacchetto IPv4 (\emph{IPv4 datagram}) comprende: Version, Header length, Type of service, Datagram length; Identifier (16 bit), Flags e Fragmentation offset (13 bit); Time-to-live, Upper-layer protocol, Header checksum; Source IP address (32 bit); Destination IP address (32 bit); Options; Data.
 
 Queste informazioni possono pesare molto, quindi la rete non riesce a trasmettere un pacchetto di dimensioni esorbitanti: le informazioni vengono \textbf{frammentate} in pacchetti (non si spedisce una cosa grande, ma la stessa cosa frammentata). La frammentazione è effettuata dagli host, che hanno anche il compito di ricomporre l'unico grande pacchetto.
 
 \subsection*{Funzionamento in 5 punti (\hl{Fragmentation e Reassembly})}
 \begin{enumerate}[noitemsep]
-\item \textbf{A cosa serve}: Permette di superare il limite della \textbf{MTU} (\emph{Maximum Transmission Unit}) dei link fisici, frammentando i datagrammi troppo grandi per evitare che i router li scartino.
+\index{MTU}\item \textbf{A cosa serve}: Permette di superare il limite della \textbf{MTU} (\emph{Maximum Transmission Unit}) dei link fisici, frammentando i datagrammi troppo grandi per evitare che i router li scartino.
 \item \textbf{Processo di Fragmentation (ID)}: Il mittente assegna un \textbf{Identifier} (ID a 16 bit) univoco nell'header IP. Tutti i frammenti generati dallo stesso pacchetto mantengono lo stesso identico ID.
 \item \textbf{Flag MF (More Fragments)}: Durante la frammentazione, questo bit viene impostato a $1$ in tutti i frammenti intermedi per indicare che seguono altri pezzi. Viene messo a $0$ solo nell'ultimo frammento.
 \item \textbf{Dati per il riassemblaggio (Offset)}: Il campo \textbf{Fragmentation Offset} (13 bit) indica la posizione dei dati del frammento rispetto al payload originale, misurato in \textbf{unità di 8 byte}.
@@ -1085,7 +1087,7 @@ Le \textbf{interfacce di rete} sono il confine che divide host e livello fisico,
 \item \textbf{Fase}: shift dell'onda verso destra o sinistra (fase positiva = shift a sinistra, \emph{early wavefront}; fase negativa = shift a destra, \emph{late wavefront}).
 \item \textbf{Lunghezza d'onda}: $\lambda = c/f$, con $c$ velocità della luce (in metri).
 \end{itemize}
-Le antenne convertono la corrente in radiofrequenze (e viceversa) e funzionano al massimo con lunghezze d'onda pari a $1$, $\tfrac{1}{2}$ e $\tfrac{1}{4}$.
+\index{antenne}Le antenne convertono la corrente in radiofrequenze (e viceversa) e funzionano al massimo con lunghezze d'onda pari a $1$, $\tfrac{1}{2}$ e $\tfrac{1}{4}$.
 
 \textbf{Copertura del segnale radio} (riconducibile a un esponenziale), in tre casi:
 \begin{itemize}[noitemsep]
@@ -1106,7 +1108,7 @@ Interferenze & Molte (Bluetooth, microonde) & Poche (più spazio)\\
 \figura{p56_1.png}{0.82}
 \figura{p56_2.png}{0.82}
 
-\section{Polarizzazione e Multipath Propagation}\pagemark{57}
+\index{polarizzazione}\index{multipath}\section{Polarizzazione e Multipath Propagation}\pagemark{57}
 \textbf{Caso costruttivo e distruttivo.} Quando due segnali sfasati si sommano, il risultato può essere additivo (\textbf{costruttivo}) o sottrattivo (\textbf{distruttivo}).
 
 \textbf{Polarizzazione.} Riguarda il posizionamento dell'antenna: il campo magnetico è perpendicolare all'antenna, il campo elettrico è parallelo. L'orientamento permette di intercettare radiofrequenze diverse o di riceverle meglio.
@@ -1115,16 +1117,16 @@ Interferenze & Molte (Bluetooth, microonde) & Poche (più spazio)\\
 
 Si parla di \textbf{fading} quando due segnali sfasati entrano in sottrazione: \emph{short term fading} (fasi sottrattive forti ma di breve durata) e \emph{long term fading} (il segnale scende lentamente nel tempo).
 
-\textbf{Voltage Standing Wave Ratio (VSWR).} Si verifica quando dispositivi con diversa \textbf{impedenza} (in Ohm) dialogano. Si vorrebbe un rapporto $1{:}1$, non sempre possibile: la dispersione di energia genera calore, rotture e corrente instabile. Il VSWR è il rapporto tra l'impedenza alla posizione $n-1$ e $n$. Nelle reti lo standard di impedenza è $50$ Ohm, che dà la più bassa perdita di segnale.
+\index{VSWR}\textbf{Voltage Standing Wave Ratio (VSWR).} Si verifica quando dispositivi con diversa \textbf{impedenza} (in Ohm) dialogano. Si vorrebbe un rapporto $1{:}1$, non sempre possibile: la dispersione di energia genera calore, rotture e corrente instabile. Il VSWR è il rapporto tra l'impedenza alla posizione $n-1$ e $n$. Nelle reti lo standard di impedenza è $50$ Ohm, che dà la più bassa perdita di segnale.
 \figura{p57_1.png}{0.82}
 \figura{p57_2.png}{0.82}
 
-\section{EIRP e IR Power Output}\pagemark{58}
+\index{EIRP}\section{EIRP e IR Power Output}\pagemark{58}
 \textbf{IR Power Output.} Dato un trasmettitore che trasmette 30 mW e una serie di connettori e cavi, la potenza reale che arriva all'antenna è inferiore. Nell'esempio il trasmettitore ha 30 mW e all'antenna ne arrivano 16 (perse 14 unità nel tragitto fisico). L'\textbf{IR Power Out} è quindi la potenza in output dell'ultimo connettore appena prima dell'antenna.
 
 \textbf{EIRP} è invece la \textbf{potenza radiata dall'antenna} (includendo il vantaggio passivo guadagnato dalle antenne direzionali): in base alla posizione del destinatario si gira il fascio dell'antenna direzionale, guadagnando potenza grazie alla concentrazione del fascio. Per progettare un sistema si considerano: potenza del trasmettitore, Loss/Gain dei mezzi (invio), IR Power Output, EIRP, proprietà di propagazione, Loss/Gain dei mezzi (ricezione).
 
-\textbf{Power Measurement.} $Watt$: unità elettrica, $1\,Watt = 1\,Ampere \cdot 1\,Volt$, $P=V\cdot I$. La corrente ($Ampere$) è la quantità di carica che scorre; il voltaggio ($Volt$) è la ``pressione''; la resistenza (impedenza) è l'ostacolo al flusso. Per la potenza assoluta si usano $Watt$ e $dBm$. Il \textbf{Decibel} ($dB$) esprime la perdita di potenza; $1\,dB = \tfrac{1}{10}\,BEL$.
+\index{dBm}\index{decibel}\textbf{Power Measurement.} $Watt$: unità elettrica, $1\,Watt = 1\,Ampere \cdot 1\,Volt$, $P=V\cdot I$. La corrente ($Ampere$) è la quantità di carica che scorre; il voltaggio ($Volt$) è la ``pressione''; la resistenza (impedenza) è l'ostacolo al flusso. Per la potenza assoluta si usano $Watt$ e $dBm$. Il \textbf{Decibel} ($dB$) esprime la perdita di potenza; $1\,dB = \tfrac{1}{10}\,BEL$.
 
 \begin{center}\footnotesize
 \begin{tabular}{ccccc}
@@ -1166,7 +1168,7 @@ $+2$ & $1{,}585$ & $+30$ & $1\,$W\\
 \end{tabular}
 \end{center}
 
-\textbf{Decibel-isotropico (dBi)}: misura normalizzata del guadagno passivo di un'antenna (concentrazione rispetto all'antenna isotropica). L'antenna \textbf{isotropica} (impossibile da costruire) irradia il 100\% dell'energia in modo uniforme in ogni direzione (una sfera). L'antenna \textbf{di polo} concentra la potenza in un punto specifico, quindi nel punto X ha una potenza maggiore dell'isotropica.
+\index{dBi}\textbf{Decibel-isotropico (dBi)}: misura normalizzata del guadagno passivo di un'antenna (concentrazione rispetto all'antenna isotropica). L'antenna \textbf{isotropica} (impossibile da costruire) irradia il 100\% dell'energia in modo uniforme in ogni direzione (una sfera). L'antenna \textbf{di polo} concentra la potenza in un punto specifico, quindi nel punto X ha una potenza maggiore dell'isotropica.
 
 Se in direzione preferita un'antenna di polo ha guadagno $7\,dBi$ e arriva energia pari a $2\,mW$, si calcola l'\textbf{EIRP}:
 \[ EIRP = \text{Potenza Tx (dBm)} + \text{guadagno (dBi)}. \]
@@ -1187,7 +1189,7 @@ Nel caso \emph{indoor} le radiofrequenze rimbalzano su pareti e oggetti, disturb
 \section{Antenne direzionali e linea di visuale}\pagemark{62}
 Le antenne altamente-direzionali hanno una larghezza del fascio tra $4$ e $25$ gradi: è essenziale posizionarle correttamente, con una \textbf{linea di visuale} tra le antenne il più pulita possibile (per questo molte parabole sono in alto, prima di ostruzioni).
 
-Le antenne devono avere libero un raggio detto \textbf{zona di Fresnel}, la zona in cui i segnali sono additivi e che consente la massima qualità. Anche un minimo ostacolo fa rimbalzare le radiofrequenze e distrugge le fasi additive. Il raggio deve essere almeno il $60\%$, meglio il $100\%$:
+\index{zona di Fresnel}Le antenne devono avere libero un raggio detto \textbf{zona di Fresnel}, la zona in cui i segnali sono additivi e che consente la massima qualità. Anche un minimo ostacolo fa rimbalzare le radiofrequenze e distrugge le fasi additive. Il raggio deve essere almeno il $60\%$, meglio il $100\%$:
 \[ R_{60\%}(Ft) = 43{,}3\sqrt{\frac{d}{4f}}, \qquad R_{100\%}(Ft) = 72{,}2\sqrt{\frac{d}{4f}} \]
 dove $d$ = distanza in miglia, $f$ = frequenza del segnale in GHz, $Ft$ = distanza (raggio) in piedi.
 
@@ -1195,14 +1197,14 @@ dove $d$ = distanza in miglia, $f$ = frequenza del segnale in GHz, $Ft$ = distan
 \figura{p62_1.png}{0.82}
 \figura{p62_2.png}{0.82}
 
-\section{Antenne settorizzate, Azimuth ed Elevation}\pagemark{63}
+\index{azimuth}\section{Antenne settorizzate, Azimuth ed Elevation}\pagemark{63}
 \textbf{Antenne direzionali settorizzate.} Sono disposte ``a fiore'': un array della stessa tipologia di antenna che trasmette alla stessa frequenza, diffondendo segnali su canali diversi.
 
 \textbf{Azimuth ed Elevation antenna charts.} Grafici per comprendere il pattern di copertura. Il grafico \textbf{azimuth} si ottiene ruotando di 360° sull'asse \emph{orizzontale} attorno all'antenna (vista davanti/destra/dietro/sinistra). Il grafico \textbf{elevation} si ottiene ruotando di 360° sull'asse \emph{verticale} (vista davanti/sopra/dietro/sotto). Dato uno standard di potenza, mostrano di quanti \textbf{dBi} si perde o guadagna ruotando attorno all'antenna.
 
 \textbf{Diversità di antenne.} Un'antenna è di dimensione $\tfrac{\lambda}{4}$ o $\tfrac{\lambda}{2}$, per intercettare una frazione accettabile della lunghezza d'onda (puntando alla fase additiva). Poiché ci sono rimbalzi e ritardi, conviene disporre più antenne sfalsate nello spazio (es.\ $\tfrac{\lambda}{4}, \tfrac{\lambda}{2}, \tfrac{\lambda}{4}$). Questa diversità riduce il \textbf{fading}: se la prima antenna ascolta una fase sottrattiva, la seconda (sfalsata) ne ascolta una additiva, captando meglio il segnale. Richiede però un co-processore che calcoli il segnale migliore. Con antenne sfalsate si ottiene la maggiore differenza di potenziale.
 
-\section{Path Loss e Link Budget}\pagemark{64}
+\index{path loss}\section{Path Loss e Link Budget}\pagemark{64}
 \textbf{Path Loss.} La dispersione (attenuazione) dovuta alla distanza è un problema serio. Due formule per la perdita in dB:
 \[ \text{Loss (dB)} = 36{,}6 + 20\log_{10}(F) + 20\log_{10}(D) \quad\to\quad \text{formula ottimista} \]
 \[ \text{Loss (dB)} = 32{,}4 + 20\log_{10}(F) + 20\log_{10}(D) \quad\to\quad \text{formula pessimista} \]
@@ -1218,7 +1220,7 @@ $3\,dB$ raddoppia/dimezza la potenza ($-3\,dB \Rightarrow \tfrac{1}{2}$,
 $-6\,dB \Rightarrow \tfrac{1}{4}$).
 
 \emph{Utilità pratica}: permette di stimare \textbf{a mente} come varia la
-potenza ricevuta (o il link budget) al variare della distanza, senza ricalcolare
+\index{link budget}potenza ricevuta (o il link budget) al variare della distanza, senza ricalcolare
 la formula completa. Per esempio, per coprire il \emph{doppio} della distanza
 servono $+6\,dB$ recuperati altrove, cioè $\sim 4\times$ in potenza (mW) oppure
 guadagno aggiuntivo sulle antenne. È lo strumento rapido per capire se un
@@ -1252,10 +1254,10 @@ Il \textbf{simbolo} è la caratteristica dell'onda radio (a una certa frequenza)
 \figura{p65_1.png}{0.82}
 \figura{p65_2.png}{0.82}
 
-\section{Frequency Hopping}\pagemark{66}
+\index{frequency hopping}\section{Frequency Hopping}\pagemark{66}
 \textbf{Frequency Hopping.} Mittente e destinatario saltano di frequenza in frequenza, permanendovi per un tempo limitato: è la tecnologia di condivisione dello spettro usata dal \textbf{Bluetooth}. L'ascolto di terzi è impossibile perché l'algoritmo di salti è deciso bilateralmente e mantenuto valido da un algoritmo. L'unica cosa pericolosa è quando i clock di mittente e destinatario non sono allineati. Il canale è condiviso tra tutti gli utenti che usano il Bluetooth in quel luogo.
 
-\textbf{Direct Sequence Spread Spectrum.} Permette una comunicazione corretta anche se più persone usano la stessa frequenza: non c'è separazione dello spettro, ma diversi mittenti/destinatari ascoltano lo stesso canale e tramite un \textbf{chip code} ci si isola dal rumore ed si estrae l'informazione. È una \textbf{TAAC} (tecnica di accesso a condivisione del codice). Il destinatario interessato a un mittente ascolta quell'esatto chip-code. La lunghezza del chip-code è variabile (es.\ 10 bit di chip-code per 1 bit di informazione, oppure 5 per 1), in base a quanto è rumoroso il canale.
+\index{spread spectrum}\textbf{Direct Sequence Spread Spectrum.} Permette una comunicazione corretta anche se più persone usano la stessa frequenza: non c'è separazione dello spettro, ma diversi mittenti/destinatari ascoltano lo stesso canale e tramite un \textbf{chip code} ci si isola dal rumore ed si estrae l'informazione. È una \textbf{TAAC} (tecnica di accesso a condivisione del codice). Il destinatario interessato a un mittente ascolta quell'esatto chip-code. La lunghezza del chip-code è variabile (es.\ 10 bit di chip-code per 1 bit di informazione, oppure 5 per 1), in base a quanto è rumoroso il canale.
 
 \textbf{Satelliti.} I satelliti a \textbf{bassa orbita terrestre} (LEO) sono più veloci della rotazione terrestre (reti mobili e cellulari); i satelliti \textbf{geostazionari} sono veloci quanto la rotazione terrestre (telecomunicazioni).
 \figura{p66_1.png}{0.82}
@@ -1297,13 +1299,13 @@ Il \textbf{simbolo} è la caratteristica dell'onda radio (a una certa frequenza)
 \figura{p69_1.png}{0.82}
 \figura{p69_2.png}{0.82}
 
-\section{Frequency Planning}\pagemark{70}
+\index{frequency planning}\section{Frequency Planning}\pagemark{70}
 \textbf{Frequency Planning.} Le frequenze sono limitate: il territorio viene suddiviso in \textbf{esagoni} convessi, dove ogni esagono è l'area di copertura di una \textbf{base station}. Ogni frequenza (un colore) può essere riutilizzata non in modo adiacente, ma solo se c'è una certa distanza fisica tra le base station. L'assegnamento può essere \textbf{statico} (esagono con frequenza immutabile) o \textbf{dinamico} (la base station sceglie le frequenze momento per momento in base alle celle vicine, dando più capacità dove c'è un picco di traffico).
 
-\textbf{Modulazione.} È la conversione dei bit in radiofrequenze. L'informazione digitale passa per la \textbf{digital modulation}, che crea una sinusoide in banda base (\emph{baseband}) leggendo i bit; questa sinusoide ``grezza'' usa frequenze troppo basse per essere trasmessa. Poi passa per la \textbf{modulazione analogica}, che aggiunge il \textbf{carrier} (l'onda fisica che oscilla nell'aria alla frequenza del canale trasmissivo): il carrier trasporta l'informazione digitale e l'onda viene trasmessa dall'antenna. Al destinatario, tramite un \textbf{filtro passabanda} e la topologia di multiplexing, si separa il carrier dal dato, si interpreta l'onda e si recupera la sequenza di bit originaria.
+\index{modulazione}\textbf{Modulazione.} È la conversione dei bit in radiofrequenze. L'informazione digitale passa per la \textbf{digital modulation}, che crea una sinusoide in banda base (\emph{baseband}) leggendo i bit; questa sinusoide ``grezza'' usa frequenze troppo basse per essere trasmessa. Poi passa per la \textbf{modulazione analogica}, che aggiunge il \textbf{carrier} (l'onda fisica che oscilla nell'aria alla frequenza del canale trasmissivo): il carrier trasporta l'informazione digitale e l'onda viene trasmessa dall'antenna. Al destinatario, tramite un \textbf{filtro passabanda} e la topologia di multiplexing, si separa il carrier dal dato, si interpreta l'onda e si recupera la sequenza di bit originaria.
 \figura{p70_1.png}{0.82}
 
-\section{Modulazione Digitale (ASK, FSK, PSK)}\pagemark{71}
+\index{ASK}\index{FSK}\index{PSK}\section{Modulazione Digitale (ASK, FSK, PSK)}\pagemark{71}
 \hl{\textbf{Digital Modulation -- Tecniche.}} La modulazione digitale porta dal bit grezzo alla \textbf{base band}. Tecniche principali: ASK, FSK, PSK.
 \begin{itemize}[noitemsep]
 \item \textbf{ASK} (Amplitude Shift Keying): il più semplice, un on/off (basta un transistor); economico (una sola frequenza), ma molto sensibile alle interferenze. Es.\ il bit ``1'' ha la sinusoide, il bit ``0'' è spento (OFF): un disturbo sullo ``0'' può farlo interpretare come ``1''.
@@ -1316,18 +1318,18 @@ Il segnale si può rappresentare modificando ampiezza, frequenza, fase, o fase e
 \noindent\hfill{\footnotesize\color{gray}[p.72]}\\
 Nel diagramma in coordinate polari $M$ = ampiezza e $\varphi$ = fase. Associando punti e valori si ottengono modelli di \textbf{Phase Shift Keying}.
 
-\textbf{BPSK} (sottoinsieme del PSK): il bit \textbf{0} è trasmesso con $\sin(t)$ a fase $0°$, il bit \textbf{1} con $\sin(t)$ a fase $180°$. È il PSK più semplice e robusto, usato nelle comunicazioni satellitari, ma lento (bit-rate basso: 1 bit per simbolo, 2 fasi).
+\index{BPSK}\textbf{BPSK} (sottoinsieme del PSK): il bit \textbf{0} è trasmesso con $\sin(t)$ a fase $0°$, il bit \textbf{1} con $\sin(t)$ a fase $180°$. È il PSK più semplice e robusto, usato nelle comunicazioni satellitari, ma lento (bit-rate basso: 1 bit per simbolo, 2 fasi).
 
-\textbf{QPSK} (Quadrature Shift Keying): più punti sulle coordinate polari (2 bit per simbolo, 4 fasi), quindi più veloce ma più vulnerabile. Un simbolo che arriva vicino all'origine può avere qualsiasi interpretazione; il ricevente, in base al quadrante su cui cade il simbolo, ridetermina il simbolo trasmesso. Nel canale radio c'è un rumore gaussiano nelle direzioni $I$ e $Q$: il ricevente applica la regola del \textbf{nearest-neighbour}, trovata con la \textbf{distanza euclidea minima} tra simbolo ricevuto e simbolo codificato.
+\index{QPSK}\textbf{QPSK} (Quadrature Shift Keying): più punti sulle coordinate polari (2 bit per simbolo, 4 fasi), quindi più veloce ma più vulnerabile. Un simbolo che arriva vicino all'origine può avere qualsiasi interpretazione; il ricevente, in base al quadrante su cui cade il simbolo, ridetermina il simbolo trasmesso. Nel canale radio c'è un rumore gaussiano nelle direzioni $I$ e $Q$: il ricevente applica la regola del \textbf{nearest-neighbour}, trovata con la \textbf{distanza euclidea minima} tra simbolo ricevuto e simbolo codificato.
 
-La disposizione dei simboli segue la \textbf{codifica di Gray}: simboli adiacenti differiscono di esattamente \textbf{1} bit (\textbf{distanza di Hamming} $=1$). Poiché il rumore spinge un simbolo verso il vicino più prossimo, un errore produce un solo bit errato e non due.
+\index{Hamming distanza}\index{codifica di Gray}La disposizione dei simboli segue la \textbf{codifica di Gray}: simboli adiacenti differiscono di esattamente \textbf{1} bit (\textbf{distanza di Hamming} $=1$). Poiché il rumore spinge un simbolo verso il vicino più prossimo, un errore produce un solo bit errato e non due.
 
 \noindent\hfill{\footnotesize\color{gray}[p.73]}\\
 Non tutte le associazioni simbolo-coordinata vanno bene: di solito se ne usano due (una riportata, l'altra con le etichette sulla diagonale scambiate). L'importanza della distanza di Hamming pari a \textbf{1} è rafforzata dal \textbf{bit di parità}: si usa la parità per trovare l'errore e la parità incrociata per autocorreggerlo (1 bit errato). Questo meccanismo è implementato nel livello MAC/LLC, accorgendosi dell'errore prima del livello trasporto e riducendo le ritrasmissioni.
 
-\textbf{QAM.} Con un canale di qualità migliore si spinge oltre la codifica: QAM combina la modulazione di \textbf{ampiezza} e di \textbf{fase} per ogni simbolo. Nell'esempio \textbf{16-QAM} ci sono 16 simboli (un simbolo = 4 bit), ma l'area del simbolo target si riduce all'aumentare dei bit. Si può arrivare a \textbf{64-QAM}, dove $\#simboli = 64$ (un'area suddivisa in 4) e ogni simbolo ha $\log_2(64) = 6$ bit. 64-QAM è molto prestazionale, ma con canale rumoroso la ricezione presenta troppi errori (area target troppo piccola).
+\index{QAM}\textbf{QAM.} Con un canale di qualità migliore si spinge oltre la codifica: QAM combina la modulazione di \textbf{ampiezza} e di \textbf{fase} per ogni simbolo. Nell'esempio \textbf{16-QAM} ci sono 16 simboli (un simbolo = 4 bit), ma l'area del simbolo target si riduce all'aumentare dei bit. Si può arrivare a \textbf{64-QAM}, dove $\#simboli = 64$ (un'area suddivisa in 4) e ogni simbolo ha $\log_2(64) = 6$ bit. 64-QAM è molto prestazionale, ma con canale rumoroso la ricezione presenta troppi errori (area target troppo piccola).
 
-La soluzione: tenere i 64 simboli per contenuti tolleranti agli errori (immagini, video) e usare 4 simboli (uno per quadrante) per informazioni che non possono contenerne. Con i \textbf{multicarrier OFDM} (sotto-canali) si ottengono bitrate molto elevati:
+\index{OFDM}La soluzione: tenere i 64 simboli per contenuti tolleranti agli errori (immagini, video) e usare 4 simboli (uno per quadrante) per informazioni che non possono contenerne. Con i \textbf{multicarrier OFDM} (sotto-canali) si ottengono bitrate molto elevati:
 \[ \text{Bitrate} = \#subCarrier \times \#simboli/s \times \#bit\ codificati. \]
 
 \section{QAM}\pagemark{74}
@@ -1397,7 +1399,7 @@ Intuitivamente, applicando la stessa interferenza ai tre metodi:
 \item \textbf{Frequency Hopping}: messaggio parzialmente alterato (es.\ ``He\dots lo W\dots rld'').
 \item \textbf{Spread Spectrum}: messaggio completamente corretto (``Hello World'').
 \end{itemize}
-Con il \textbf{DSSS} (Direct Sequence Spread Spectrum) è possibile ridurre le frequenze con fading selettivo e riutilizzare frequenze già usate, comunicando correttamente su di esse.
+\index{DSSS}Con il \textbf{DSSS} (Direct Sequence Spread Spectrum) è possibile ridurre le frequenze con fading selettivo e riutilizzare frequenze già usate, comunicando correttamente su di esse.
 \figura{p75_1.png}{0.82}
 
 \noindent\hfill{\footnotesize\color{gray}[p.76]}\\
@@ -1433,7 +1435,7 @@ Vantaggi: interferenze e fading limitati a un breve periodo, implementazione sem
 \figura{p78_2.png}{0.82}
 
 \section{OFDM}\pagemark{79}
-\textbf{OFDM -- Orthogonal Frequency Division Multiplexing.} Usa il multiplexing a divisione di frequenza ortogonale (versione potenziata del frequency multiplexing). Lavora con più \textbf{subcarrier}: invece di un unico carrier veloce che trasporta tutte le informazioni, le distribuisce su più carrier più lenti. Se un carrier incontra un'interferenza, solo quel carrier subisce ritardi, mentre gli altri portano correttamente il payload.
+\index{subcarrier}\textbf{OFDM -- Orthogonal Frequency Division Multiplexing.} Usa il multiplexing a divisione di frequenza ortogonale (versione potenziata del frequency multiplexing). Lavora con più \textbf{subcarrier}: invece di un unico carrier veloce che trasporta tutte le informazioni, le distribuisce su più carrier più lenti. Se un carrier incontra un'interferenza, solo quel carrier subisce ritardi, mentre gli altri portano correttamente il payload.
 Solitamente i canali OFDM hanno una dimensione di $20$ MHz, divisi in \textbf{52 subcarrier} (ognuno occupa $\sim 300$ kHz): 4 per il management, 48 per il dato. È efficiente e scalabile (si trasmettono più simboli in parallelo; per più bitrate basta aumentare i subcarrier) e necessita uno spazio di guardia inferiore, perché le frequenze sono \textbf{ortogonali}: ogni frequenza raggiunge il picco massimo quando le altre adiacenti sono esattamente a zero. Di solito è combinato col Time/Frequency multiplexing (un ibrido).
 \textbf{Nota}: con OFDM si possono usare tutte le tecniche di modulazione (BPSK, QPSK, 16-QAM, 64-QAM). Per subcarrier ortogonale si intende:
 \[ \int_0^T \sin(t)\sin(kt)\,dt = 0, \]
@@ -1473,7 +1475,7 @@ $R$ \emph{moltiplica} il bitrate. \textbf{Trade-off}: $R$ basso ($1/2$) = più r
 \subsection*{Formule (con le variabili)}
 
 \begin{center}\footnotesize
-\begin{tabular}{ll}
+\index{symbol rate}\begin{tabular}{ll}
 \textbf{Simbolo} & \textbf{Significato} \\\hline
 $N_{sc}$ & numero di subcarrier \emph{dati} (tipico: $48$ su $52$) \\
 $S$ & symbol rate (simboli/s, es.\ $250$k o $500$k) \\
@@ -1561,7 +1563,7 @@ Con $S = 250$k sym/s e $N_{sc}=48$:
 \textbf{4. Quale PSK:} $M = 2^b = 2^2 = 4 \Rightarrow \boxed{\text{QPSK (4 simboli)}}$.
 
 \textbf{Perché QPSK e non di più (massima robustezza):} in PSK più simboli $\Rightarrow$ fasi più vicine $\Rightarrow$ più errori. Per massimizzare la resistenza si prende il \emph{minimo} $b$ che rispetta il vincolo. BPSK ($b=1$) darebbe $9$ Mbps $\Rightarrow 54/9 = 6$ s $> 4$ s (troppo lento, scartato); QPSK ($b=2$) dà $18$ Mbps $\Rightarrow 54/18 = 3$ s $\le 4$ s (OK). $8$-PSK sarebbe più veloce ma inutilmente fragile. Quindi \textbf{QPSK} è la PSK più robusta che rispetta i $4$ s.
-\section{Terminali Esposti e Nascosti — RTS/CTS}\pagemark{81}
+\index{RTS-CTS}\section{Terminali Esposti e Nascosti — RTS/CTS}\pagemark{81}
 \textbf{Terminali wireless Esposti e Nascosti -- RTS/CTS.} Finora si è parlato del primo livello (suddivisione dei canali); qui si accenna al secondo livello, il \textbf{MAC} (Medium Access Control), che regola la coesistenza dei client in uno specifico canale. All'interno di uno stesso canale servono protocolli interni, altrimenti si distrugge ciò che è stato costruito al livello uno.
 
 Col protocollo Ethernet, chi vuole trasmettere aspetta qualche millisecondo e, se non sente nessuno parlare, trasmette; in caso di collisione aspetta un timeout. Nel wireless c'è un problema in più: se A comunica con C e B vuole comunicare con D, e B non è nella sfera di ricezione di A, ma C è nelle sfere di ricezione di A e B, si ha una collisione su C, perché:
@@ -1570,10 +1572,10 @@ Col protocollo Ethernet, chi vuole trasmettere aspetta qualche millisecondo e, s
 \item B non sente traffico e inizia a trasmettere verso D.
 \item C in quell'istante sente sia A sia B $\Rightarrow$ collisione.
 \end{itemize}
-La soluzione è l'accordo \textbf{CDMA/CA}: chi vuole trasmettere invia al destinatario un \emph{request to send} (RTS); se il destinatario è libero invia un \emph{clear to send} (CTS), requisendo il canale e dicendo a chiunque sia nella sua sfera di influenza di stare in silenzio. Così B non inizierà la comunicazione verso D e rimarrà in silenzio.
+\index{CDMA}La soluzione è l'accordo \textbf{CDMA/CA}: chi vuole trasmettere invia al destinatario un \emph{request to send} (RTS); se il destinatario è libero invia un \emph{clear to send} (CTS), requisendo il canale e dicendo a chiunque sia nella sua sfera di influenza di stare in silenzio. Così B non inizierà la comunicazione verso D e rimarrà in silenzio.
 \figura{p81_1.png}{0.82}
 \figura{p81_2.png}{0.42}
-\subsection{Vulnerabilità del frame (Random Access wireless)}
+\index{ALOHA}\index{CSMA}\subsection{Vulnerabilità del frame (Random Access wireless)}
 
 \hl{\textbf{Periodo di vulnerabilità.} Nei protocolli MAC ad \textbf{accesso casuale}
 (random access: ALOHA, CSMA) le stazioni trasmettono senza una coordinazione
@@ -1606,7 +1608,7 @@ mentre trasmette. Senza collision detection, la collisione viene scoperta solo
 wireless si usa \textbf{CSMA/CA} (Collision \emph{Avoidance}): si cerca di
 \emph{evitare} la collisione invece di rilevarla.
 
-\textbf{Aggravante del terminale nascosto.} Il \emph{carrier sense} da solo non
+\index{terminale nascosto}\textbf{Aggravante del terminale nascosto.} Il \emph{carrier sense} da solo non
 basta, perché due stazioni fuori dalla portata reciproca (terminali nascosti)
 ascoltano il canale libero e trasmettono entrambe verso un ricevitore comune,
 estendendo di fatto il periodo di vulnerabilità a situazioni che il sender non
@@ -1622,7 +1624,7 @@ terminale nascosto potrebbe collidere.
 
 \textbf{Tipologie di disturbi}: \emph{shadowing}, \emph{reflection}, \emph{refraction}, \emph{scattering}, \emph{diffraction}.
 
-\textbf{RSSI} (Received Signal Strength Indicator). È una misura non standard, cambia da produttore a produttore e non è indicativa. In fase di acquisto dei dispositivi, oltre all'RSSI bisogna considerare il \emph{Signal Detection Limit}, il bitrate, e i dBm in cui si raggiunge il massimo bitrate.
+\index{RSSI}\textbf{RSSI} (Received Signal Strength Indicator). È una misura non standard, cambia da produttore a produttore e non è indicativa. In fase di acquisto dei dispositivi, oltre all'RSSI bisogna considerare il \emph{Signal Detection Limit}, il bitrate, e i dBm in cui si raggiunge il massimo bitrate.
 \figura{p82_1.png}{0.82}
 
 \chapter{Riepilogo dei Protocolli di Rete}
@@ -1763,7 +1765,7 @@ chiavi). Negozia una \emph{cipher suite} tra client e server.
 Argomenti standard del corso (stile Kurose/Tanenbaum) per non lasciare buchi:
 ritardi, multiplexing, trasferimento affidabile, capacità di canale.
 
-\section{I quattro ritardi di un nodo}
+\index{ritardo nodale}\section{I quattro ritardi di un nodo}
 \label{th:ritardi}
 Ogni pacchetto, attraversando un router/nodo, accumula \textbf{quattro} ritardi:
 \[ d_{nodo}=d_{elab}+d_{acc}+d_{trasm}+d_{prop}. \]
@@ -1792,7 +1794,7 @@ La commutazione di circuito usa FDM o TDM per riservare risorse; spreca capacit�
 se l'utente tace (lo slot/la banda resta assegnata ma vuota). La commutazione di
 pacchetto invece condivide statisticamente (nessuna prenotazione).
 
-\section{Trasferimento affidabile dei dati (rdt)}
+\index{rdt}\section{Trasferimento affidabile dei dati (rdt)}
 \label{th:rdt}
 Come si costruisce un canale \textbf{affidabile} su uno inaffidabile, per passi:
 \begin{itemize}[noitemsep]
@@ -1822,7 +1824,7 @@ una media mobile esponenziale:
 \[ \text{DevRTT}=(1-\beta)\,\text{DevRTT}+\beta\,|\text{SampleRTT}-\text{EstimatedRTT}|,\quad \beta=\tfrac{1}{4}. \]
 \[ \text{Timeout}=\text{EstimatedRTT}+4\cdot\text{DevRTT}. \]
 Il margine $4\cdot$DevRTT evita ritrasmissioni premature quando l'RTT oscilla.
-\item \textbf{Fast retransmit}: senza aspettare il timeout, se il mittente riceve
+\index{fast retransmit}\item \textbf{Fast retransmit}: senza aspettare il timeout, se il mittente riceve
 \textbf{3 ACK duplicati} (stesso numero) deduce che il segmento successivo è
 perso e lo ritrasmette subito.
 \item \textbf{Piggybacking}: l'ACK viaggia ``a cavallo'' di un segmento dati nel
@@ -1839,7 +1841,7 @@ del risultato (inverti $0\leftrightarrow1$). Ricevitore: somma tutte le parole
 pacchetto è integro, altrimenti c'è un errore $\Rightarrow$ scarta. Più debole del
 CRC (\S\ref{teoria:crc}) ma economico da calcolare in software.
 
-\section{Capacità di canale: Nyquist e Shannon}
+\index{Nyquist}\index{Shannon}\section{Capacità di canale: Nyquist e Shannon}
 \label{th:capacita}
 Quanti bit/s può portare \emph{al massimo} un canale?
 \begin{itemize}[noitemsep]
@@ -1860,14 +1862,14 @@ $S/N = 10^{(\text{dB}/10)}$; Shannon usa $\log_2$, il dB usa $\log_{10}$.
 $V=2^{C/2B}=2^{30000/6000}=2^5=32$ livelli.
 
 \section{Complementi sparsi}
-\textbf{AIMD (Additive Increase, Multiplicative Decrease).} È la dinamica della
+\index{AIMD}\textbf{AIMD (Additive Increase, Multiplicative Decrease).} È la dinamica della
 finestra di congestione TCP in regime stabile: cresce \emph{linearmente} ($+1$
 segmento per RTT, additive increase) finché non c'è perdita, poi si
 \emph{dimezza} (multiplicative decrease). Ne risulta il tipico andamento a
 \textbf{dente di sega}: TCP sonda con prudenza la banda disponibile e arretra
 bruscamente al primo segnale di congestione.
 
-\textbf{Codifica di linea: Manchester.} A livello fisico i bit vanno tradotti in
+\index{Manchester}\textbf{Codifica di linea: Manchester.} A livello fisico i bit vanno tradotti in
 segnale. Nella codifica \textbf{Manchester} ogni bit è una \emph{transizione} a
 metà intervallo: $1=$ alto$\to$basso, $0=$ basso$\to$alto (o viceversa). Il
 vantaggio è l'\textbf{auto-sincronizzazione}: ogni bit ha un fronte, quindi il
@@ -1894,7 +1896,7 @@ $\to$ root $\to$ TLD $\to$ autoritativo, \S\ref{teoria:smtp}).
 connessione TCP \emph{per oggetto} $\Rightarrow$ $2$ RTT a oggetto (uno per
 l'handshake, uno per la richiesta) $+$ tempo di trasmissione; pesante con molti
 oggetti. \textbf{Persistente} (HTTP/1.1): una sola connessione riusata per più
-oggetti $\Rightarrow$ si paga l'handshake una volta. \textbf{Conditional GET}: il
+\index{conditional GET}oggetti $\Rightarrow$ si paga l'handshake una volta. \textbf{Conditional GET}: il
 client invia \texttt{If-Modified-Since}; se la risorsa non è cambiata il server
 risponde \texttt{304 Not Modified} senza ri-trasmetterla (chiave dell'efficienza
 delle cache/proxy, \S\ref{teoria:proxy}). I \textbf{cookie} aggiungono stato a un
@@ -1917,7 +1919,7 @@ $k=10$, intervallo $\{0..1023\}$). Raddoppiando l'intervallo a ogni collisione, 
 riduce la probabilità che le stesse stazioni ricollidano: si adatta al carico
 (poche stazioni $\to$ attese brevi; molte $\to$ attese più lunghe).
 
-\textbf{VLAN (Virtual LAN).} Uno stesso switch fisico può essere partizionato in
+\index{VLAN}\textbf{VLAN (Virtual LAN).} Uno stesso switch fisico può essere partizionato in
 più LAN \emph{logiche} indipendenti (VLAN): le porte sono raggruppate e il
 traffico di una VLAN non raggiunge le altre, come se fossero switch separati
 (isolamento e sicurezza senza cablaggi distinti). Il traffico tra VLAN diverse
@@ -1940,12 +1942,12 @@ risultato $\Rightarrow$ si lavora con numeri piccoli invece che con $a^d$ enorme
 $ed\bmod z=1$. Cifratura $c=m^e\bmod n$, decifratura $m=c^d\bmod n$. Funziona
 perché $m^{ed}\bmod n = m^{ed\bmod z}\bmod n = m^1\bmod n = m$.
 
-\section{Qualità del servizio: servizi differenziati e Internet2}
+\index{Internet2}\section{Qualità del servizio: servizi differenziati e Internet2}
 \label{th:qos}
 Internet ``best effort'' \textbf{non garantisce} i \emph{tempi} di consegna:
 puoi imporre che i pacchetti arrivino \emph{tutti} (TCP), ma non che arrivino
 \emph{entro} una scadenza. Per applicazioni real-time (voce, video) questo è un
-limite. \textbf{Servizi differenziati / QoS}: i router \emph{classificano} il
+\index{QoS}limite. \textbf{Servizi differenziati / QoS}: i router \emph{classificano} il
 traffico e spediscono \textbf{prima i pacchetti urgenti} (alta priorità), poi gli
 altri, e/o \textbf{riservano risorse} (banda) lungo il cammino mittente--
 destinatario per garantire la qualità. \textbf{Internet2}: infrastruttura
@@ -1953,10 +1955,10 @@ sperimentale con nuove dorsali e router progettati per questa gestione delle
 priorità e della QoS. Collega al \emph{packet scheduling} dei router (FIFO vs a
 priorità) già visto a livello rete.
 
-\section{Sicurezza delle LAN wireless: WEP e WPA}
+\index{WEP}\index{WPA}\section{Sicurezza delle LAN wireless: WEP e WPA}
 \label{th:wep}
 Proteggere il traffico $802.11$ (chiunque nel raggio può ascoltare). \textbf{WEP}
-(Wired Equivalent Privacy) usa il cifrario a flusso \textbf{RC4}:
+\index{RC4}(Wired Equivalent Privacy) usa il cifrario a flusso \textbf{RC4}:
 \begin{itemize}[noitemsep]
 \item Da una \textbf{chiave condivisa} (es.\ $104$ bit) $+$ un \textbf{IV}
 (Initialization Vector) di $24$ bit, \emph{nuovo per ogni frame}, si genera un
@@ -1992,14 +1994,14 @@ del destinatario; per \emph{leggere} servono: \textbf{POP3} (scarica;
 ``download-and-keep''; è stateless tra sessioni) o \textbf{IMAP} (tiene tutto sul
 server, cartelle, stato tra sessioni). HTTP per le webmail.
 
-\textbf{BitTorrent.} File in \emph{chunk}; un \textbf{tracker} dà la lista dei
+\index{BitTorrent}\textbf{BitTorrent.} File in \emph{chunk}; un \textbf{tracker} dà la lista dei
 peer. Si richiedono i chunk \textbf{rarest first} (i più rari prima). Invio
 \textbf{tit-for-tat}: si inviano chunk ai 4 peer che danno di più (gli altri
 ``choked''), più un \textbf{optimistic unchoke} casuale ogni 30\,s per provare
 nuovi peer.
 
 \subsection*{Sicurezza}
-\textbf{Funzioni di hash.} \textbf{MD5} (digest $128$ bit), \textbf{SHA-1}
+\index{MD5}\index{SHA-1}\textbf{Funzioni di hash.} \textbf{MD5} (digest $128$ bit), \textbf{SHA-1}
 ($160$ bit): da $H(m)$ è infattibile risalire a $m$ o trovare collisioni.
 L'Internet checksum è una \emph{pessima} hash crittografica (facile trovare
 collisioni), va bene solo per errori casuali.
@@ -2060,7 +2062,7 @@ del percorso: prima la \emph{policy} (Local Preference), poi AS-PATH più corto,
 poi \textbf{hot-potato} (uscita più vicina, costo intra-AS minimo). Il routing
 inter-AS è guidato dalle \emph{politiche} commerciali, non solo dalla performance.
 
-\textbf{OpenFlow --- messaggi.} Controller$\to$switch: \emph{features},
+\index{OpenFlow}\textbf{OpenFlow --- messaggi.} Controller$\to$switch: \emph{features},
 \emph{configure}, \emph{modify-state} (installa/rimuove flow entry),
 \emph{packet-out}. Switch$\to$controller: \emph{packet-in} (pacchetto senza match
 $\Rightarrow$ chiede al controller), \emph{flow-removed}, \emph{port-status}.
@@ -2097,7 +2099,7 @@ raggruppati per raccolta tematica.
 \renewcommand{\arraystretch}{1.15}
 \small
 \begin{center}
-\begin{tabular}{|p{8.4cm}|c|c|}
+\index{VLSM}\begin{tabular}{|p{8.4cm}|c|c|}
 \hline
 \textbf{Tipo di problema (parole-chiave nel testo)} & \textbf{Sez.} & \textbf{Pag.} \\ \hline
 Schema di cifratura Alice/Bob, privacy, firma, non ripudio, nonce, $N$ messaggi, notaio & \ref{teoria:alicebob} & \pageref{teoria:alicebob} \\ \hline
@@ -2169,7 +2171,7 @@ CWND_{ideale}\approx \dfrac{\text{BDP}}{\text{dim.\ segmento}} & \text{[in numer
 \end{array}
 \]
 
-\subsection*{3) IPv4 / subnetting}
+\index{subnetting}\subsection*{3) IPv4 / subnetting}
 \[
 \begin{array}{ll}
 \text{bit di host } \hat n = 32-n & n=\text{prefisso } /n.\\[4pt]
@@ -3070,7 +3072,7 @@ $109 = 36{,}6 + 65{,}10 + 20\log_{10}(X) \Rightarrow 109 = 101{,}7 + 20\log_{10}
 Quindi $\log_{10}(X) = 7{,}3 / 20 = 0{,}365 \Rightarrow X = 10^{0,365} \approx \boxed{2{,}32 \text{ miglia}}$.
 \end{enumerate}
 
-\subsection{Guadagno antenne dato il bitrate}
+\index{IRPO}\subsection{Guadagno antenne dato il bitrate}
 \hl{\textbf{Esempio (guadagno antenne dato il bitrate).}} IRPO $=20$ mW,
 path loss $=-110$ dB, antenne Tx/Rx con guadagno uguale $G$. Quale $G$ minimo
 serve per sostenere almeno $40$ Mbps? Tabella receiver sensitivity:
@@ -3228,7 +3230,7 @@ $T_{prop}=1\,\mu s$, frame MAC da $P=1$ KB. Tempo totale minimo con topologia a
 
 \textbf{1) Bus condiviso} ($k=1$, link diretto host $\to$ destinatario).
 Il mezzo è condiviso e half-duplex, ma c'è \emph{un solo trasmettitore}: niente
-collisioni né backoff. L'host serializza i $200$ MB sull'unico mezzo:
+\index{backoff esponenziale}collisioni né backoff. L'host serializza i $200$ MB sull'unico mezzo:
 \[
 T_{bus}=2\cdot\frac{S}{B}+T_{prop}=16\text{ s}+1\,\mu s \approx 16\text{ s}.
 \]
@@ -4011,7 +4013,7 @@ con \textbf{un} IP pubblico fa accedere a Internet molti host con IP
 proprio IP pubblico e una porta scelta, e annota la coppia in una \textbf{tabella}
 di traduzione; in entrata, la risposta arriva al pubblico:porta, il router
 consulta la tabella e ripristina IP:porta privati del vero destinatario. Permette
-il riuso degli indirizzi (scarsità IPv4) e nasconde la rete interna.
+\index{Diffie-Hellman}il riuso degli indirizzi (scarsità IPv4) e nasconde la rete interna.
 
 \textbf{25. Cos'è Diffie-Hellman.} Protocollo per \emph{accordarsi su una chiave
 simmetrica segreta} comunicando su un canale pubblico, \textbf{senza mai
@@ -4196,5 +4198,9 @@ nell'indice).
 
 \normalsize
 \renewcommand{\arraystretch}{1}
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Indice analitico}
+\printindex
 
 \end{document}
