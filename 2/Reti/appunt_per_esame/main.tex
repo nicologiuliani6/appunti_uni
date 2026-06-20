@@ -109,11 +109,44 @@ Su un unico mezzo (es. fibra) si possono realizzare più canali punto a punto: t
 
 Lo stesso mezzo può anche realizzare un unico \textbf{canale ad accesso multiplo (broadcast)} che collega più stazioni: se due sequenze di bit vengono trasmesse contemporaneamente sullo stesso canale si ha una \textbf{collisione} che distrugge l'informazione. In broadcast serve quindi un \textbf{protocollo di arbitraggio} del canale, per regolare gli accessi dei molti utenti.
 
-Il \textbf{MAC broadcast} (FF:FF:FF:FF:FF:FF) è un indirizzo speciale che indica tutte le schede di rete: la comunicazione viaggia ovunque e arriva a tutti.
-
+\hl{Il \textbf{MAC broadcast} (FF:FF:FF:FF:FF:FF) è un indirizzo speciale che indica tutte le schede di rete: la comunicazione viaggia ovunque e arriva a tutti.
+}\\
 \textbf{Reti a commutazione di circuito.} I dati vengono trasmessi tra mittente e destinatario posti agli estremi di un \textbf{cammino (circuito)} di canali punto a punto. Il circuito viene negoziato e riservato a priori: una volta fissato, i dati viaggiano come un'unica sequenza di bit senza interruzioni. Il ritardo di trasmissione è ridotto, ma i costi sono elevati perché si occupa un canale virtuale appoggiandosi ad altre reti: il servizio non si paga ad utilizzo, ma a tempo di permanenza del circuito. Esempio classico: la linea telefonica di un tempo.
 \figura{p05_1.png}{0.82}
 \figura{p05_2.png}{0.82}
+
+\hl{\textbf{Broadcast: livello MAC vs livello Rete.}} Esistono due indirizzi di
+broadcast, uno per livello, e servono \emph{entrambi}.
+\begin{itemize}[noitemsep]
+\item \textbf{Broadcast MAC} ($\mathtt{FF{:}FF{:}FF{:}FF{:}FF{:}FF}$): raggiunge
+\emph{tutte le schede fisiche dello stesso segmento} (LAN). È confinato alla rete
+locale: switch e router non lo propagano oltre.
+\item \textbf{Broadcast IP} (tutti i bit di host a $1$, es.\ $130.136.255.255$):
+raggiunge \emph{tutti gli host logici di una specifica sottorete}. È un concetto
+di indirizzamento gerarchico, non fisico.
+\end{itemize}
+\textbf{Non basterebbe uno solo}, perché operano in ambiti e momenti diversi:
+\begin{enumerate}[noitemsep]
+\item \emph{Il broadcast MAC è l'unico possibile quando non si conoscono ancora
+gli IP.} Un dispositivo appena acceso (ARP, DHCP) non ha un IP né conosce il MAC
+del destinatario: non può usare un broadcast IP (che presuppone di sapere
+indirizzi di rete). Solo $\mathtt{FF{:}FF{:}\dots}$ funziona ``al buio'',
+raggiungendo fisicamente tutte le schede. Senza di esso, ARP e DHCP non potrebbero
+nemmeno partire.
+\item \emph{Il broadcast IP serve perché il MAC non attraversa i router.} Il
+broadcast MAC muore sul segmento locale (altrimenti inonderebbe tutta Internet).
+Per indirizzare ``tutti gli host di una sottorete'' come entità logica serve il
+broadcast di rete.
+\item \emph{Agiscono a livelli di astrazione diversi}: il MAC è fisico (``tutte le
+schede su questo filo''), l'IP è logico (``tutti gli host di questa rete
+numerata''). Il livello rete non sa nulla di schede, il livello MAC non sa nulla
+di reti IP: ognuno deve poter fare broadcast nel proprio dominio.
+\end{enumerate}
+\textbf{In sintesi}: il broadcast MAC è indispensabile quando gli IP non sono
+ancora noti (ARP/DHCP) e opera sul segmento fisico; il broadcast IP raggiunge tutti
+gli host di una sottorete come entità di indirizzamento logico. Eliminandone uno si
+perderebbe o la comunicazione prima di avere un IP (togliendo il MAC), o il concetto
+di ``tutti gli host di una rete'' (togliendo l'IP).
 
 \section{Reti a Commutazione di Pacchetto}\pagemark{6}
 \textbf{Reti a commutazione di pacchetto.} I pacchetti vengono trasmessi non in modo continuo ma con ritardi. Più flussi che viaggiano su canali diversi possono essere trasmessi su un unico canale broadcast, sfruttandolo al massimo: la maggior parte delle reti dati digitali è costruita così. Quando i pacchetti vanno da mittenti diversi a destinatari diversi, ogni pacchetto deve contenere l'identità di mittente e destinatario. I nodi ricevitori verificano l'arrivo a destinazione (acknowledgment) e, in caso contrario, reinoltrano il pacchetto. Il prezzo è il maggior ritardo (occorre iterare ricezione e inoltro); il vantaggio è il miglior utilizzo dei canali e la possibilità di tariffare in base ai dati trasmessi e non al tempo. Si hanno quindi \textbf{diversi flussi} di pacchetti indipendenti che seguono percorsi indipendenti.
@@ -142,7 +175,7 @@ Architettura a livelli: ogni livello risolve un solo problema; i livelli superio
 \begin{itemize}
 \item \textbf{Livello Fisico (1)}: trasmissione dei bit tramite segnali.
 \item \textbf{Livello MAC/LLC (2)}: decide formato, sintassi e momento di invio del frame. Comprende indirizzo del mittente e del destinatario, il dato, e il \textbf{CRC} (controllo che individua errori di trasmissione). LLC esegue un controllo logico del canale, individua errori e invia l'ack.
-\item \textbf{Livello Rete (3)}: si occupa di frammentazione, indirizzamento e instradamento. Unifica le reti locali rendendo omogeneo ciò che è eterogeneo, tramite \textbf{router} che usano indirizzi gerarchici (IPv4/IPv6). A questo livello si decide anche il ritmo di invio dei pacchetti (\emph{segmenti}), con buffer per non congestionare la rete. Implementa l'\textbf{internetworking}.
+\item \hl{\textbf{Livello Rete (3)}}: si occupa di frammentazione, indirizzamento e instradamento. Unifica le reti locali rendendo omogeneo ciò che è eterogeneo, tramite \textbf{router} che usano indirizzi gerarchici (IPv4/IPv6). A questo livello si decide anche il ritmo di invio dei pacchetti (\emph{segmenti}), con buffer per non congestionare la rete. Implementa l'\textbf{internetworking}.
 \item \textbf{Livello Trasporto (4)}: connessione affidabile e controllo della congestione. Gestisce il protocollo di trasmissione: \textbf{TCP} (connection-oriented, con ack) o \textbf{UDP} (connectionless).
 \item \textbf{Livello Sessione (5)}: oggi obsoleto; manteneva la sessione attiva e, in caso di interruzione, ricordava da dove riprendere; gestito lato server e dalle applicazioni.
 \item \textbf{Livello Presentazione (6)}: obsoleto; conversione dei dati (es. da little-endian a big-endian).
@@ -448,12 +481,37 @@ Politiche di (Re)Transmit quando un pacchetto della finestra non arriva:
 \end{array}
 \]
 In una frase: il controllo di \textbf{flusso} affronta un problema \emph{locale} (il singolo ricevente), il controllo di \textbf{congestione} un problema \emph{globale} (la rete condivisa). Entrambi usano la \emph{stessa} sliding window, ma con vincoli diversi: il flusso non supera lo spazio nel buffer del ricevente, la congestione cresce/decresce in base alle conferme e ai timeout.
+\section{Slow Start e Congestion Avoidance.}
+\hl{\textbf{Slow Start e Congestion Avoidance.}} Il controllo di congestione di TCP
+gestisce la finestra $cwnd$ in due fasi, perché la capacità della rete non è nota
+a priori e va ``scoperta'' dinamicamente.
+\begin{itemize}[noitemsep]
+\item \textbf{Slow Start (partenza lenta).} All'inizio $cwnd$ è piccola ($1$
+segmento) e \textbf{raddoppia a ogni RTT} (crescita \emph{esponenziale}:
+$1,2,4,8,16\dots$). Serve a sondare \emph{rapidamente} la banda disponibile
+partendo cauti, senza sapere quanta ne regge la rete. (``Slow'' perché parte da
+poco, ma sale in fretta.)
+\item \textbf{Congestion Avoidance.} Raggiunta una soglia $ssthresh$, TCP smette
+di raddoppiare e cresce \textbf{linearmente} ($+1$ segmento per RTT:
+$16,17,18\dots$). Serve ad avvicinarsi al limite della rete con \emph{prudenza},
+sfruttando la banda residua senza superare bruscamente la saturazione.
+\end{itemize}
+\textbf{Transizioni}: si parte in Slow Start (esponenziale) fino a $ssthresh$, poi
+si passa a Congestion Avoidance (lineare). A una \textbf{perdita} (timeout) TCP
+assume congestione, abbassa $ssthresh$ e \emph{riparte da Slow Start} con $cwnd$
+minima. \textbf{Insieme} realizzano il controllo di congestione: adattano il ritmo
+di invio alla capacità reale della rete (Slow Start trova in fretta l'ordine di
+grandezza, Congestion Avoidance lo affina), usando la banda al massimo senza
+saturare i router.
+
 \section{Approfondimento d'esame: Go-Back-N vs Selective Repeat}
 Entrambi sono protocolli a finestra scorrevole per la consegna affidabile (la stessa idea della sliding window vista sopra), e differiscono nella politica di ritrasmissione:
 \begin{itemize}[noitemsep]
 \item \textbf{Go-Back-N}: il ricevente accetta solo i pacchetti in ordine e scarta i fuori-sequenza; un timeout ritrasmette \emph{tutti} i pacchetti dalla finestra in poi. Buffer ricevente minimo; conviene quando gli errori sono rari (è la politica ``cumulative'' vista sopra).
 \item \textbf{Selective Repeat}: il ricevente bufferizza i fuori-sequenza e li ACK-a singolarmente; si ritrasmette solo il pacchetto perso. Più efficiente con tasso d'errore alto o RTT grande, ma richiede più buffer e logica (è la politica ``selective'').
 \end{itemize}
+
+
 
 \section{Approfondimento d'esame: Congestion Window (CWND) ideale}
 Per saturare il canale senza congestionarlo, la finestra ideale vale circa il \emph{prodotto banda-ritardo}:
@@ -987,8 +1045,8 @@ Una switching fabric troppo veloce non è sempre positiva: se processa più velo
 \figura{p53_2.png}{0.82}
 
 \section{Scheduling (FIFO, Priority)}\pagemark{54}
-Ci sono molti algoritmi di \textbf{scheduling}, simili a quelli dei sistemi operativi (i processi del SO sono i pacchetti del router):
-\begin{itemize}[noitemsep]
+\hl{Ci sono molti algoritmi di \textbf{scheduling}, simili a quelli dei sistemi operativi (i processi del SO sono i pacchetti del router):
+}\begin{itemize}[noitemsep]
 \item \textbf{FIFO} (First In First Out) con \emph{discard policy} per coda piena: \textbf{Tail Drop} (si droppa l'ultimo arrivato), \textbf{Priority} (drop su base prioritaria), \textbf{Random} (drop randomico).
 \item \textbf{Priority Scheduling}: si processano per primi i pacchetti a priorità alta.
 \item \textbf{Round Robin}: pacchetti ordinati per classe e priorità; lo scheduler estrae il primo della prima classe, poi della seconda, e così via. Non è \emph{fair}: una classe con un pacchetto lungo fa attendere molto le altre.
@@ -1000,6 +1058,17 @@ Ci sono molti algoritmi di \textbf{scheduling}, simili a quelli dei sistemi oper
 \textbf{IPv4.} La struttura del pacchetto IPv4 (\emph{IPv4 datagram}) comprende: Version, Header length, Type of service, Datagram length; Identifier (16 bit), Flags e Fragmentation offset (13 bit); Time-to-live, Upper-layer protocol, Header checksum; Source IP address (32 bit); Destination IP address (32 bit); Options; Data.
 
 Queste informazioni possono pesare molto, quindi la rete non riesce a trasmettere un pacchetto di dimensioni esorbitanti: le informazioni vengono \textbf{frammentate} in pacchetti (non si spedisce una cosa grande, ma la stessa cosa frammentata). La frammentazione è effettuata dagli host, che hanno anche il compito di ricomporre l'unico grande pacchetto.
+
+\subsection*{Funzionamento in 5 punti (\hl{Fragmentation e Reassembly})}
+\begin{enumerate}[noitemsep]
+\item \textbf{A cosa serve}: Permette di superare il limite della \textbf{MTU} (\emph{Maximum Transmission Unit}) dei link fisici, frammentando i datagrammi troppo grandi per evitare che i router li scartino.
+\item \textbf{Processo di Fragmentation (ID)}: Il mittente assegna un \textbf{Identifier} (ID a 16 bit) univoco nell'header IP. Tutti i frammenti generati dallo stesso pacchetto mantengono lo stesso identico ID.
+\item \textbf{Flag MF (More Fragments)}: Durante la frammentazione, questo bit viene impostato a $1$ in tutti i frammenti intermedi per indicare che seguono altri pezzi. Viene messo a $0$ solo nell'ultimo frammento.
+\item \textbf{Dati per il riassemblaggio (Offset)}: Il campo \textbf{Fragmentation Offset} (13 bit) indica la posizione dei dati del frammento rispetto al payload originale, misurato in \textbf{unità di 8 byte}.
+\item \textbf{Meccanismo di Reassembly}: Viene eseguito \textbf{solo dall'host di destinazione} (non dai router). Ricevuti i pezzi, l'host usa l'ID per raggrupparli, l'Offset per ordinarli e il flag MF $=0$ per capire che il pacchetto è completo. Se manca anche un solo frammento, l'intero datagramma viene scartato.
+\end{enumerate}
+
+\vspace{0.3cm} % Spazio per staccare dai punti prima di riprendere il testo
 
 Le \textbf{interfacce di rete} sono il confine che divide host e livello fisico, rappresentato da un indirizzo IP che riunisce il confine host/rete. Un host normale ha due interfacce (una wireless e una LAN); un router ne ha più di una, ognuna per una sottorete collegata direttamente a una sua porta.
 
@@ -1365,21 +1434,89 @@ Vantaggi: interferenze e fading limitati a un breve periodo, implementazione sem
 
 \section{OFDM}\pagemark{79}
 \textbf{OFDM -- Orthogonal Frequency Division Multiplexing.} Usa il multiplexing a divisione di frequenza ortogonale (versione potenziata del frequency multiplexing). Lavora con più \textbf{subcarrier}: invece di un unico carrier veloce che trasporta tutte le informazioni, le distribuisce su più carrier più lenti. Se un carrier incontra un'interferenza, solo quel carrier subisce ritardi, mentre gli altri portano correttamente il payload.
-
 Solitamente i canali OFDM hanno una dimensione di $20$ MHz, divisi in \textbf{52 subcarrier} (ognuno occupa $\sim 300$ kHz): 4 per il management, 48 per il dato. È efficiente e scalabile (si trasmettono più simboli in parallelo; per più bitrate basta aumentare i subcarrier) e necessita uno spazio di guardia inferiore, perché le frequenze sono \textbf{ortogonali}: ogni frequenza raggiunge il picco massimo quando le altre adiacenti sono esattamente a zero. Di solito è combinato col Time/Frequency multiplexing (un ibrido).
-
 \textbf{Nota}: con OFDM si possono usare tutte le tecniche di modulazione (BPSK, QPSK, 16-QAM, 64-QAM). Per subcarrier ortogonale si intende:
 \[ \int_0^T \sin(t)\sin(kt)\,dt = 0, \]
 con $k$ scelto in modo matematicamente accurato.
 \figura{p79_1.png}{0.82}
-
 \noindent\hfill{\footnotesize\color{gray}[p.80]}\\
 \textbf{Esempio OFDM.} Per trasmettere una sequenza, si divide in più subcarrier (ognuno a una frequenza precisa, es.\ C1 a 1 Hz, C2 a 2 Hz, \dots). Sommando vettorialmente le sinusoidi di tutti i subcarrier si ottiene un segnale complessivo incomprensibile; ma poiché i subcarrier sono ortogonali, un circuito che implementa la \textbf{trasformata di Fourier} riesce a visualizzare e interpretare l'informazione.
 
-Con un OFDM a $250$k modulazioni/s e 48 subcarrier, $\text{Bitrate} = \dfrac{48\cdot \#bit \cdot R \cdot 250\text{k}}{10^6}$:
+\subsection*{I due parametri che determinano la velocità}
+
+La velocità di un sistema OFDM dipende da \textbf{due manopole indipendenti}; la velocità finale è il loro prodotto.
+
+\textbf{1. Modulazione --- quanti bit per simbolo ($b$).} Ogni simbolo trasporta $b$ bit. Più alto è $b$, più dati per simbolo (più veloce), ma i simboli sono più ``vicini'' nello spazio di decisione e quindi più fragili al rumore:
+\begin{center}\footnotesize
+\begin{tabular}{lcl}
+\textbf{Modulazione} & $b$ (bit/sym) & \textbf{Robustezza} \\\hline
+(D)BPSK & $1$ & massima (più lenta) \\
+(D)QPSK & $2$ & alta \\
+16-QAM & $4$ & media \\
+64-QAM & $6$ & minima (più veloce) \\
+$M$-PSK / $M$-QAM & $\log_2 M$ & $M$ = numero di simboli \\
+\end{tabular}
+\end{center}
+\emph{Relazione chiave}: $b = \log_2 M$, dove $M$ è il numero di simboli. Quindi $M = 2^b$ (es.\ QPSK: $b=2 \Rightarrow M=4$ simboli).
+
+\textbf{2. Coding rate $R$ --- protezione FEC.} Oltre alla parità incrociata (che rileva/corregge a destinazione), a livello fisico si usa la \textbf{Forward Error Correction (FEC)} con \textbf{codifica convoluzionale}: aggiunge bit ridondanti \emph{prima} di trasmettere, così il ricevente corregge gli errori \emph{senza ritrasmissioni} (essenziale nel wireless). Il prezzo è banda occupata dalla ridondanza. Il \textbf{coding rate} $R$ è la frazione di bit \emph{utili} su quelli trasmessi:
+\begin{center}\footnotesize
+\begin{tabular}{cll}
+$R$ & \textbf{Significato} & \textbf{Effetto} \\\hline
+$1/2$ & $1$ dato ogni $2$ trasmessi & dimezza il bitrate ($\times 0{,}5$), max protezione \\
+$2/3$ & $2$ dati ogni $3$ & $\times 0{,}667$ \\
+$3/4$ & $3$ dati ogni $4$ & $\times 0{,}75$, min protezione \\
+\end{tabular}
+\end{center}
+$R$ \emph{moltiplica} il bitrate. \textbf{Trade-off}: $R$ basso ($1/2$) = più robustezza ma metà velocità; $R$ alto ($3/4$) = più veloce ma serve canale pulito. Canale rumoroso $\Rightarrow$ $R$ basso; canale buono $\Rightarrow$ $R$ alto. È lo stesso principio del fade margin: in condizioni avverse si sacrifica prestazione per affidabilità.
+
+\subsection*{Formule (con le variabili)}
+
+\begin{center}\footnotesize
+\begin{tabular}{ll}
+\textbf{Simbolo} & \textbf{Significato} \\\hline
+$N_{sc}$ & numero di subcarrier \emph{dati} (tipico: $48$ su $52$) \\
+$S$ & symbol rate (simboli/s, es.\ $250$k o $500$k) \\
+$b$ & bit per simbolo della modulazione ($=\log_2 M$) \\
+$R$ & coding rate FEC ($1$ se non c'è codifica) \\
+$F$ & dimensione del file \\
+$T$ & tempo di trasmissione \\
+\end{tabular}
+\end{center}
+
+\begin{align*}
+\text{Bitrate lordo} &= N_{sc}\cdot S\cdot b \\
+\text{Bitrate utile} &= N_{sc}\cdot S\cdot b\cdot R \\
+\text{Tempo} \quad T &= \frac{F_{\text{bit}}}{N_{sc}\cdot S\cdot b\cdot R}
+\qquad (F_{\text{bit}} = F_{\text{byte}}\times 8)
+\end{align*}
+
+\textbf{Le tre direzioni del problema} (a seconda di cosa chiede la traccia):
+\begin{itemize}[noitemsep]
+\item \emph{Dato $b$ e $R$, trova $T$}: applica la formula del tempo direttamente.
+\item \emph{Dato $T$ richiesto, trova $b$ (quale modulazione)}: imponi
+$\text{Bitrate} \ge F/T$ e ricava $b \ge \dfrac{F}{T\cdot N_{sc}\cdot S\cdot R}$,
+poi arrotonda all'intero (e a $\log_2 M$ valido).
+\item \emph{Massimizzare la robustezza}: scegli il \textbf{più piccolo} $b$ (o $R$)
+che soddisfa il vincolo --- meno simboli/meno velocità = più resistenza all'errore.
+\end{itemize}
+
+\textbf{Attenzione (errori tipici):}
+\begin{itemize}[noitemsep]
+\item Il vincolo di tempo si traduce in $\text{Bitrate}\ge \dfrac{F}{T}$, \emph{non}
+in ``Bitrate $\ge F$''. Bisogna dividere il file per il tempo.
+\item Se la traccia \textbf{non} parla di coding/convoluzione, $R=1$ (non inventarlo).
+\item $b$ deve essere intero e corrispondere a una modulazione reale ($b=\log_2 M$).
+\end{itemize}
+
+\subsection*{Tabella di codifica IEEE 802.11g}
+
+Lo standard mette a disposizione un insieme di coppie (modulazione, $R$): il dispositivo \textbf{sceglie} la combinazione più veloce che il canale riesce a sostenere. \emph{Regola di scelta}: si parte dalla più veloce (64-QAM $3/4$ = $54$ Mbps) e si scende finché il canale regge; se il rumore impedisce una modulazione, la si esclude e si prende la più veloce tra le rimaste.
+
+Con $S = 250$k sym/s e $N_{sc}=48$:
 \begin{center}\footnotesize
 \begin{tabular}{cccccc}
-\textbf{Mbps} & \textbf{Modulazione} & \textbf{bit/transiz.} & \textbf{R} & \textbf{Lung. simbolo} & \textbf{Data bit/simbolo}\\\hline
+\textbf{Mbps} & \textbf{Modulazione} & \textbf{$b$} & \textbf{R} & \textbf{Lung. simbolo} & \textbf{Data bit/simbolo}\\\hline
 6 & DBPSK & 1 & 1/2 & 48 & 24\\
 9 & DBPSK & 1 & 3/4 & 48 & 36\\
 12 & DQPSK & 2 & 1/2 & 96 & 48\\
@@ -1393,6 +1530,37 @@ Con un OFDM a $250$k modulazioni/s e 48 subcarrier, $\text{Bitrate} = \dfrac{48\
 \figura{p80_1.png}{0.82}
 \figura{p80_2.png}{0.82}
 
+\subsection*{Esercizio A: tempo dato modulazione e R}
+
+\hl{\textbf{Traccia.}} File da $36$ MB, OFDM ($N_{sc}=48$, $S=250$k sym/s), canale troppo rumoroso per \emph{qualsiasi} QAM. Tempo di trasmissione? Argomentare la scelta di $R$ ($1/2$ o $3/4$).
+
+\textbf{1. Modulazione.} Escluse 16-QAM e 64-QAM, restano BPSK ($b=1$) e QPSK ($b=2$). La più veloce è \textbf{QPSK}, $b=2$.
+
+\textbf{2. Bitrate lordo:} $48\times 250\,000\times 2 = 24$ Mbps.
+
+\textbf{3. Bitrate utile:} $R=1/2 \Rightarrow 12$ Mbps; $\ R=3/4 \Rightarrow 18$ Mbps.
+
+\textbf{4. Tempo} ($F = 36\times 8 = 288$ Mbit):
+\[ \frac{288}{12} = \boxed{24\text{ s}}\ (R=1/2), \qquad \frac{288}{18} = \boxed{16\text{ s}}\ (R=3/4). \]
+
+\textbf{Scelta di $R$:} il canale è ``troppo rumoroso per la QAM'', quindi di qualità scarsa $\Rightarrow$ conviene $R=1/2$, che sacrifica velocità per robustezza (la trasmissione regge nonostante il rumore). Si accettano i $24$ s in cambio dell'affidabilità.
+
+\subsection*{Esercizio B: quale modulazione dato il tempo (massima robustezza)}
+
+\hl{\textbf{Traccia.}} OFDM con $N_{sc}=18$ subcarrier e $S=500$k sym/s. Quanti simboli PSK servono per trasferire $54$ Mbit in \emph{non più di} $4$ s, \textbf{massimizzando la resistenza all'errore}? (Nessun coding $\Rightarrow R=1$.)
+
+\textbf{1. Bitrate minimo richiesto:}
+\[ \text{Bitrate} \ge \frac{F}{T} = \frac{54}{4} = 13{,}5 \text{ Mbps}. \]
+
+\textbf{2. Bitrate in funzione di $b$:}
+\[ N_{sc}\cdot S\cdot b = 18\times 500\,000\times b = 9b \text{ Mbps}. \]
+
+\textbf{3. Vincolo:}
+\[ 9b \ge 13{,}5 \;\Rightarrow\; b \ge 1{,}5 \;\Rightarrow\; b = 2 \ (\text{intero}). \]
+
+\textbf{4. Quale PSK:} $M = 2^b = 2^2 = 4 \Rightarrow \boxed{\text{QPSK (4 simboli)}}$.
+
+\textbf{Perché QPSK e non di più (massima robustezza):} in PSK più simboli $\Rightarrow$ fasi più vicine $\Rightarrow$ più errori. Per massimizzare la resistenza si prende il \emph{minimo} $b$ che rispetta il vincolo. BPSK ($b=1$) darebbe $9$ Mbps $\Rightarrow 54/9 = 6$ s $> 4$ s (troppo lento, scartato); QPSK ($b=2$) dà $18$ Mbps $\Rightarrow 54/18 = 3$ s $\le 4$ s (OK). $8$-PSK sarebbe più veloce ma inutilmente fragile. Quindi \textbf{QPSK} è la PSK più robusta che rispetta i $4$ s.
 \section{Terminali Esposti e Nascosti — RTS/CTS}\pagemark{81}
 \textbf{Terminali wireless Esposti e Nascosti -- RTS/CTS.} Finora si è parlato del primo livello (suddivisione dei canali); qui si accenna al secondo livello, il \textbf{MAC} (Medium Access Control), che regola la coesistenza dei client in uno specifico canale. All'interno di uno stesso canale servono protocolli interni, altrimenti si distrugge ciò che è stato costruito al livello uno.
 
@@ -1595,176 +1763,289 @@ chiavi). Negozia una \emph{cipher suite} tra client e server.
 \chapter{TEORIA (how-to)}
 Procedure passo-passo per i tipi pratici ricorrenti, con i numeri tipici degli esami Bononi.
 
-\section{Alice-Bob (Due Nodi e Tre Nodi con Intermediario)}
+\section{Alice-Bob: protocolli di comunicazione sicura}
 
-\subsection{Regole Generali e Principi di Base}
-\begin{itemize}
-\item \textbf{Non ripudiabilità mittente:} (Hash del messaggio) + chiave privata del mittente ($K_a^-$).
-\item \textbf{Non ripudiabilità destinatario:} Cifratura della ricevuta/messaggio con la chiave pubblica del destinatario ($K_b^+$).
-\item \textbf{Garanzia mittente / Autenticazione:} (Hash) + chiave privata del mittente ($K_a^-$).
-\item \textbf{Privacy / Confidenzialità:} Cifratura con la chiave pubblica del destinatario ($K_b^+$).
-\item \textbf{Integrità:} Hash del messaggio ($H(m)$).
-\item \textbf{Autenticazione delle chiavi:} La CA (Certificate Authority) certifica le chiavi pubbliche.
-\item \textbf{Anti-replay:} Utilizzo di un nonce (o timestamp) unico per sessione.
-\item \textbf{Efficienza:} Utilizzo di funzioni Hash per evitare operazioni asimmetriche su testi lunghi.
-\item \textbf{Non falsificazione:} data da $H(m)$ (integrità) $+$ firma $K_a^-$ (autenticazione del mittente), nel blocco $\langle K_a^-[H(m)],\, m\rangle$: alterare $m$ rompe l'hash, e nessuno tranne Alice può produrre la firma.
-\end{itemize}
+L'obiettivo di questa sezione è imparare a \emph{costruire} uno schema di
+comunicazione sicura a partire dai requisiti richiesti (privacy, integrità,
+autenticità, anti-replay, efficienza), invece di memorizzare formule a memoria.
+Si parte dai mattoni di base, si stabilisce un metodo di composizione, e si
+applica a casi via via più complessi: due nodi, tre nodi con intermediario,
+sequenze di messaggi, verifica di contenimento.
 
-\textit{Regola aurea:} Si usa la chiave privata per firmare (garanzia/non ripudio) e la chiave pubblica per cifrare (privacy).\\
-\textit{Regola di efficienza:} Si firma o si cifra asimmetricamente sempre e solo l'hash o la chiave simmetrica, mai il corpo del messaggio intero se questo è grande.
+\subsection{I mattoni di base}
 
-\subsection{Esempi Classici a Due Nodi (Alice-Bob)}
-
-\noindent \textbf{Esempio 1: Msg GRANDE + non ripudiabilità (senza privacy):}
-\begin{align*}
-  \langle \underbrace{K_a^-}_\text{firma mittente (non ripudio)}[\underbrace{H(m)}_\text{HASH}],\ \underbrace{m}_\text{msg in chiaro (no privacy)} \rangle
-\end{align*}
-
-\noindent \textbf{Esempio 2: Msg MOLTO grande + non ripudiabilità + privacy:}
-\begin{align*}
-  \langle \underbrace{K_b^+}_\text{privacy (pubblica dest.)}[\ \underbrace{K_a^-}_\text{firma mittente (non ripudio)}[\underbrace{H(m)}_\text{HASH}],\ m\ ] \rangle
-\end{align*}
-
-\noindent \textbf{Esempio 3: Msg MOLTO piccolo + garanzia di mittente + privacy + non replay:}
-\begin{align*}
-  \langle \underbrace{K_b^+}_\text{privacy (pubblica dest.)}[\ \underbrace{K_a^-}_\text{garanzia mittente}[\ \underbrace{m}_\text{PICCOLO},\ \underbrace{\text{nonce}}_\text{no replay}\ ]\ ] \rangle
-\end{align*}
-
-\subsection{Estensione a Tre Nodi (Alice - Intermediario/Notaio Claire - Bob)}
-
-Quando nella comunicazione si inserisce un terzo attore (\textbf{Claire}, un intermediario o notaio), le regole logiche si applicano a ciascuna tratta della comunicazione ($A \to C$ e $C \to B$), introducendo vincoli architetturali specifici:
+Ogni schema si costruisce combinando pochi blocchi elementari. Ciascuno fornisce
+\emph{una} garanzia precisa:
 
 \begin{itemize}
-\item \textbf{Privacy end-to-end con intermediario "cieco":} Se l'intermediario non deve comprendere il contenuto del messaggio $m$, questo deve essere cifrato all'origine con la chiave di Bob ($K_b^+$) o con una chiave simmetrica $K_s$ a sua volta protetta da $K_b^+$. Claire vedrà solo un blocco cifrato opaco.
-\item \textbf{Firma dell'intermediario:} Se il notaio deve garantire l'inoltro o la validità del transito, appone la propria firma privata ($K_c^-$) sull'intero pacchetto ricevuto o sul suo hash, senza necessità di decifrare i dati interni.
-\item \textbf{Anti-replay multilivello:} I replay attack possono essere iniettati da Trudy sia sulla tratta $A \to C$ sia sulla tratta $C \to B$. Sono necessari nonce (o timestamp) separati e opportunamente firmati per ciascun canale logico.
+\item \hl{\textbf{Privacy / Confidenzialità}} --- cifrare con la chiave
+\emph{pubblica} del destinatario $K_b^+[\,\cdot\,]$: solo lui, con la propria
+privata $K_b^-$, può decifrare. Nessun altro legge il contenuto.
+\item \hl{\textbf{Chiave simmetrica di sessione ($K_s$)}} --- per messaggi
+\emph{lunghi} la cifratura asimmetrica diretta è troppo lenta: si cifra il corpo
+con $K_s$ (simmetrica, AES, velocissima) e si protegge $K_s$ cifrandola
+\emph{una sola volta} con la pubblica del destinatario, $K_b^+(K_s)$. L'operazione
+asimmetrica (lenta) tocca solo la chiavetta $K_s$, mai il corpo.
+\item \hl{\textbf{Garanzia mittente / Autenticazione}} --- firmare con la chiave
+\emph{privata} del mittente $K_a^-[\,\cdot\,]$: solo Alice può produrre quella
+firma, quindi prova che il messaggio viene da lei.
+\item \hl{\textbf{Integrità}} --- l'hash $H(m)$: se anche un solo bit di $m$
+cambia, l'hash cambia del tutto. Rivela ogni manomissione.
+\item \hl{\textbf{Non ripudiabilità mittente}} --- $K_a^-[H(m)]$: Alice firma
+l'hash; non potrà negare di averlo fatto (solo lei ha $K_a^-$).
+\item \textbf{Non ripudiabilità destinatario} --- cifrare la ricevuta con $K_b^+$:
+prova che il destinatario ha ricevuto.
+\item \hl{\textbf{Anti-replay}} --- un \textbf{nonce} $R$ (numero casuale unico per
+sessione/messaggio): Trudy non può ri-inviare un vecchio pacchetto, perché il suo
+nonce risulterebbe già visto.
+\item \textbf{Autenticazione delle chiavi} --- la \textbf{CA} (Certificate
+Authority) certifica le chiavi pubbliche, impedendo a Trudy il man-in-the-middle
+sullo scambio delle chiavi.
 \end{itemize}
 
-\subsubsection{Casi Banali con Intermediario}
+\subsection{Le due regole per comporre i mattoni}
 
-\noindent \textbf{1. Solo Inoltro Certificato da Claire (No privacy, No replay):} \\
-Alice manda il messaggio in chiaro a Claire; Claire lo firma per dimostrare a Bob che è transitato sotto il suo controllo.
+\textbf{Regola aurea (cosa fa cosa).} La chiave \emph{privata} si usa per
+\textbf{firmare} (garanzia / non ripudio); la chiave \emph{pubblica} si usa per
+\textbf{cifrare} (privacy). Sono usi speculari della stessa coppia.
+
+\textbf{Regola di efficienza (su cosa operare).} L'asimmetrica è lenta: si firma o
+si cifra asimmetricamente \emph{sempre e solo} un oggetto piccolo e di dimensione
+fissa --- l'hash $H(m)$ (per firmare) o la chiave $K_s$ (per scambiarla) --- mai
+il corpo del messaggio se è grande.
+
+\medskip
+\noindent\textbf{Perché l'hash con l'asimmetrica e non con la simmetrica.} È la
+domanda che chiarisce tutto il resto:
+\begin{itemize}[noitemsep]
+\item \emph{Asimmetrica (RSA) $\to$ lenta, e serve a firmare/scambiare.} Esponenzia
+numeri enormi ($1024^+$ bit). Firmare un messaggio lungo significherebbe
+un'operazione RSA pesante su ogni blocco. Si firma allora solo $H(m)$ ($256$ bit
+fissi): una sola RSA leggera. L'hash è un sostituto fedele del messaggio (cambia
+$1$ bit $\Rightarrow$ cambia l'hash), quindi firmarlo equivale a firmare $m$ per
+integrità e autenticità.
+\item \emph{Simmetrica (AES) $\to$ veloce, e serve a nascondere.} Per la privacy
+si deve cifrare \emph{tutto} il contenuto, perché l'hash è \textbf{a senso unico}:
+da $H(m)$ non si torna a $m$, quindi il destinatario non potrebbe leggere nulla.
+E va bene cifrare tutto, perché AES è velocissimo.
+\end{itemize}
+\textbf{Pattern di ogni schema ibrido}: l'asimmetrica tocca solo cose piccole
+($H(m)$, $K_s$); la roba grande (il messaggio) è gestita solo da operazioni veloci
+(AES per cifrarla, hash per comprimerla). \emph{Spedire solo $H(m)$ non basta mai}:
+l'hash serve a \emph{verificare}, non a trasmettere --- il messaggio (in chiaro o
+cifrato) deve sempre viaggiare accanto, perché è da lì che il destinatario ricava
+$m$.
+
+\medskip
+\noindent\textbf{Metodo pratico.} Davanti a una traccia, ci si chiede \emph{quali
+garanzie servono} e si aggiunge il mattone corrispondente:
+privacy $\to K_b^+$ (o $K_s$ se lungo); autenticità/integrità $\to K_a^-[H(m)]$;
+anti-replay $\to$ nonce; niente garanzia richiesta $\to$ niente blocco (ogni
+cifratura non necessaria è solo costo sprecato).
+
+\subsection{Due nodi (Alice $\to$ Bob)}
+
+I tre casi canonici, in ordine di garanzie crescenti.
+
+\medskip
+\noindent\textbf{Caso 1 --- messaggio grande, non ripudiabilità (senza privacy).}
+Serve solo provare che il messaggio è di Alice e non è stato alterato; il
+contenuto può viaggiare in chiaro.
 \begin{align*}
-  \text{Da A a C:} \quad & \langle m \rangle \\
-  \text{Da C a B:} \quad & \langle m, \ K_c^-[H(m)] \rangle
+  \langle \underbrace{K_a^-[\,\underbrace{H(m)}_\text{integrità}\,]}_\text{firma di Alice (autenticità, non ripudio)},\ \underbrace{m}_\text{in chiaro} \rangle
+\end{align*}
+Bob ricalcola $H(m)$ dal messaggio ricevuto e lo confronta con
+$K_a^+(K_a^-[H(m)])$: se combaciano, $m$ è integro e di Alice.
+
+\medskip
+\noindent\textbf{Caso 2 --- messaggio molto grande, non ripudiabilità + privacy.}
+Si aggiunge la privacy. Poiché $m$ è grande, si usa la chiave di sessione $K_s$ e
+si cifra solo $K_s$ con la pubblica di Bob (regola di efficienza).
+\begin{align*}
+  \langle \underbrace{K_s(m)}_\text{privacy (veloce)},\ \underbrace{K_b^+(K_s)}_\text{scambio chiave},\ \underbrace{K_a^-[H(m)]}_\text{firma di Alice} \rangle
+\end{align*}
+\emph{Variante didattica} (se $m$ non è enorme, senza $K_s$): si cifra tutto il
+blocco con $K_b^+$: $\ \langle K_b^+[\,K_a^-[H(m)],\, m\,]\rangle$. Funziona, ma è
+più costosa e non scala su file grandi.
+
+\medskip
+\noindent\textbf{Caso 3 --- messaggio piccolo, autenticità + privacy + anti-replay.}
+Il messaggio è piccolo, quindi cifratura asimmetrica diretta; si aggiunge il nonce
+contro i replay.
+\begin{align*}
+  \langle \underbrace{K_b^+[\ \underbrace{K_a^-[\,\underbrace{m}_\text{piccolo},\ \underbrace{R}_\text{nonce}\,]}_\text{firma di Alice}\ ]}_\text{privacy} \rangle
 \end{align*}
 
-\noindent \textbf{2. Solo Privacy verso Bob con transito da Claire (No firme, No replay):} \\
-Claire funge da puro vettore instradatore. Non può leggere il messaggio poiché esso è cifrato end-to-end per Bob.
-\begin{align*}
-  \text{Da A a C:} \quad & \langle K_b^+[m] \rangle \\
-  \text{Da C a B:} \quad & \langle K_b^+[m] \rangle
-\end{align*}
+\subsection{Tre nodi: Alice -- Claire (notaio) -- Bob}
 
-\subsubsection{Casi Combinati Complessi}
+Con un intermediario \textbf{Claire}, i ragionamenti si applicano a \emph{ciascuna
+tratta} ($A\to C$ e $C\to B$). Tre principi guida:
 
-\noindent \textbf{Esempio 1: Msg MOLTO GRANDE + Non ripudiabilità di A + Privacy end-to-end + Firma del Notaio Claire (cieco) + Anti-replay su entrambe le tratte (Massima Efficienza)}
-
-Per garantire l'efficienza computazionale su file massivi, \textbf{non si eseguono mai doppie cifrature asimmetriche annidate sul testo chiaro}. Si adotta un approccio ibrido: cifratura simmetrica ($K_s$) per il payload pesante e cifratura asimmetrica esclusivamente per i blocchi di controllo (hash, chiavi e nonce).
-
-\bigskip
-\noindent \textbf{Fase 1: Da Alice a Claire ($A \to C$)}
 \begin{itemize}
-    \item \textit{Sintassi computazionale:}
-    \begin{itemize}
-        \item Cifratura simmetrica del messaggio: $K_s(M_1)$
-        \item Integrità e non ripudio dell'origine: $K_a^-[H(M_1)]$
-        \item Protezione della chiave simmetrica per Bob: $K_b^+(K_s)$
-        \item Anti-replay per la prima tratta: $K_a^-(R_1)$
-    \end{itemize}
+\item \textbf{Intermediario "cieco":} se Claire non deve leggere $m$, lo si cifra
+all'origine per Bob ($K_b^+$, o $K_s$ protetta da $K_b^+$). Claire vede solo un
+blocco opaco.
+\item \textbf{Firma del notaio:} se Claire deve garantire il transito, firma il
+pacchetto (o il suo hash) con $K_c^-$, \emph{senza} doverlo decifrare.
+\item \textbf{Anti-replay multilivello:} Trudy può colpire su \emph{entrambe} le
+tratte $\Rightarrow$ servono nonce separati e firmati per ciascuna ($R_1$ su
+$A\to C$, $R_2$ su $C\to B$).
 \end{itemize}
-Il pacchetto complessivo $P$ inviato a Claire è:
+
+\subsubsection*{Casi banali}
+\noindent\textit{Solo inoltro certificato (no privacy, no replay):}
 \begin{align*}
-  P = \Big\langle K_s(M_1), \ K_a^-[H(M_1)], \ K_b^+(K_s), \ K_a^-(R_1) \Big\rangle
+  A \to C:\ \langle m \rangle \qquad
+  C \to B:\ \langle m,\ K_c^-[H(m)] \rangle
+\end{align*}
+\noindent\textit{Solo privacy end-to-end (Claire puro vettore):}
+\begin{align*}
+  A \to C:\ \langle K_b^+[m] \rangle \qquad
+  C \to B:\ \langle K_b^+[m] \rangle
 \end{align*}
 
-\bigskip
-\noindent \textbf{Fase 2: Da Claire a Bob ($C \to B$)}
-\begin{itemize}
-    \item Claire riceve $P$ e verifica l'originalità del nonce applicando $K_a^+$ su $K_a^-(R_1)$ (blocco del replay su tratta 1). Claire non può accedere a $M_1$ perché non possiede $K_b^-$ per estrarre $K_s$.
-    \item Claire calcola l'hash del pacchetto intero $H(P)$ e lo firma con la propria chiave privata $K_c^-[H(P)]$, garantendo l'immutabilità del transito.
-    \item Genera un secondo nonce $R_2$ controfirmato $K_c^-(R_2)$ per proteggere la tratta verso Bob.
-\end{itemize}
-Il pacchetto finale $P'$ iniettato sul canale è:
+\subsubsection*{Caso completo: msg grande + non ripudio di A + privacy end-to-end
++ firma del notaio cieco + anti-replay bilaterale}
+
+Approccio ibrido: $K_s$ per il payload pesante, asimmetrica solo su hash, chiavi e
+nonce.
+
+\noindent\textbf{Fase 1 ($A \to C$).} Alice costruisce:
 \begin{align*}
-  P' = \Big\langle P, \ K_c^-[H(P)], \ R_2, \ K_c^-(R_2) \Big\rangle
+  P = \Big\langle \underbrace{K_s(M)}_\text{privacy},\ \underbrace{K_a^-[H(M)]}_\text{non ripudio A},\ \underbrace{K_b^+(K_s)}_\text{$K_s$ solo per Bob},\ \underbrace{K_a^-(R_1)}_\text{anti-replay A--C} \Big\rangle
 \end{align*}
 
-\bigskip
-\noindent \textbf{Fase 3: Algoritmo di Verifica Lato Bob}
-\begin{enumerate}
-    \item Verifica di $K_c^-(R_2)$ mediante $K_c^+$ $\to$ \textbf{Validazione Anti-replay Tratta C-B}.
-    \item Calcolo di $H(P)$ e confronto con la firma di Claire $\to$ \textbf{Integrità del transito e Autenticità del Notaio}.
-    \item Estrazione e verifica di $K_a^-(R_1)$ mediante $K_a^+$ $\to$ \textbf{Validazione Anti-replay Tratta A-C} (Bob non si fida ciecamente di Claire).
-    \item Decifratura asimmetrica della chiave di sessione: $K_b^-(K_b^+(K_s)) = K_s$ $\to$ \textbf{Confidenzialità}.
-    \item Decifratura simmetrica del payload: $K_s(K_s(M_1)) = M_1$.
-    \item Calcolo di $H(M_1)$ e confronto con $K_a^-[H(M_1)]$ $\to$ \textbf{Non ripudiabilità dell'Autore ed Integrità end-to-end}.
+\noindent\textbf{Fase 2 ($C \to B$).} Claire verifica $R_1$ con $K_a^+$ (non può
+leggere $M$: non ha $K_b^-$ per estrarre $K_s$), firma l'intero pacchetto e
+aggiunge un nuovo nonce:
+\begin{align*}
+  P' = \Big\langle P,\ \underbrace{K_c^-[H(P)]}_\text{firma del notaio},\ R_2,\ \underbrace{K_c^-(R_2)}_\text{anti-replay C--B} \Big\rangle
+\end{align*}
+
+\noindent\textbf{Fase 3 (verifica di Bob).}
+\begin{enumerate}[noitemsep]
+\item $K_c^+(K_c^-(R_2))$ $\to$ anti-replay tratta C--B.
+\item $H(P)$ vs firma di Claire $\to$ integrità del transito e autenticità del notaio.
+\item $K_a^+(K_a^-(R_1))$ $\to$ anti-replay tratta A--C (\emph{Bob non si fida
+ciecamente di Claire}).
+\item $K_b^-(K_b^+(K_s)) = K_s$ $\to$ confidenzialità.
+\item $K_s(K_s(M)) = M$ $\to$ recupera il messaggio.
+\item $H(M)$ vs $K_a^-[H(M)]$ $\to$ non ripudio e integrità end-to-end.
 \end{enumerate}
 
-\bigskip
-\noindent \textbf{Esempio 2: Msg PICCOLO + Autenticazione Mittente + Firma del Notaio + Anti-replay bilaterale (Senza Privacy)}
+\textit{Nota chiave:} un nonce sulla prima tratta \emph{non} protegge la seconda
+--- Trudy può catturare l'intero pacchetto e re-inviarlo su $C\to B$. Per questo
+Claire deve \emph{rigenerare} una prova di freschezza ($R_2$). Questo è il punto su
+cui si gioca gran parte del voto nei tre nodi.
 
-Dato che il payload è ridotto e non è richiesta riservatezza, è possibile omettere la crittografia simmetrica, validando direttamente i componenti tramite algebra asimmetrica nativa.
+\subsection{Sequenza di N messaggi ($N$ ignoto a priori)}
 
-\begin{align*}
-  \text{Da A a C:} \quad P &= \Big\langle m, \ K_a^-[H(m)], \ K_a^-(R_1) \Big\rangle \\
-  \text{Da C a B:} \quad P' &= \Big\langle P, \ K_c^-[H(P)], \ K_c^-(R_2) \Big\rangle
-\end{align*}
+\hl{\textbf{Traccia tipo.}} Alice invia $N$ messaggi brevi $m_1,\dots,m_N$ a Bob.
+Nessuno conosce $N$ a priori (Alice decide \emph{quando} è l'ultimo). Servono:
+privacy (anche \emph{su} $N$), integrità, ordinamento corretto, conferma
+affidabile dell'ultimo. Trudy può ritardare, duplicare, aggiungere, riordinare
+(\emph{non cancellare}, ritardi finiti).
 
-\textit{Nota per la risoluzione dei problemi d'esame:} Presta sempre massima attenzione a dove si possono generare i replay attack. Un nonce iniettato nella prima tratta decade se il pacchetto intero viene catturato e re-inviato da Trudy sulla seconda tratta; per questa ragione l'intermediario deve tassativamente rigenerare un'ulteriore prova di freschezza ($R_2$) o racchiudere tutto sotto una nuova firma temporale.
-
-\subsection{Sequenza di N messaggi segreti (N ignoto a priori)}
-
-\hl{\textbf{Traccia tipo.}} Alice invia $N$ messaggi brevi $m_1,\dots,m_N$ a Bob. Né Alice né Bob conoscono $N$ a priori (Alice decide \emph{quando} è l'ultimo). Servono: \textbf{privacy} (nessuno tranne Bob conosce i contenuti \emph{né} $N$), \textbf{integrità} e \textbf{ordinamento} corretto, conferma \textbf{affidabile} di quale sia l'ultimo. Trudy può ritardare, duplicare, aggiungere e riordinare pacchetti (\emph{ma non cancellarli}, e con ritardi finiti).
-
-\subsubsection*{Idee chiave}
+\subsubsection*{Come nascono le scelte dai requisiti}
 \begin{itemize}[noitemsep]
-\item \textbf{Chiave di sessione $K_s$} (efficienza): il payload pesante è cifrato con $K_s$ (simmetrica, veloce); solo $K_s$ è cifrata asimmetricamente, una volta, con $K_b^+$. Le firme operano sempre su hash, mai sul corpo.
-\item \textbf{Numerazione $i$ + nonce $R_i$}: ogni messaggio porta il suo indice $i$ (per l'ordinamento) e un nonce $R_i$ unico (anti-replay: Bob rifiuta un $R_i$ già visto $\Rightarrow$ niente duplicati né riordini iniettati).
-\item \textbf{Hash unico che lega tutto}: si firma un solo hash $H(m_i, i, R_i, \texttt{last})$ che vincola \emph{insieme} contenuto, posizione, freschezza e flag di fine. Così Trudy non può ricombinare la firma dell'indice di un pacchetto col messaggio di un altro.
-\item \textbf{Flag \texttt{last} firmato}: l'ultimo messaggio porta $\texttt{last}=1$ \emph{dentro} l'hash firmato. È l'unico modo affidabile e non falsificabile per dire ``questo è $m_N$'': Trudy non può anticiparlo né nasconderlo.
+\item \emph{Tanti messaggi $\to$ efficienza}: una sola chiave di sessione $K_s$
+(scambiata una volta con $K_b^+$), poi ogni $m_i$ cifrato con $K_s$.
+\item \emph{Ordinamento}: indice $i$ in ogni messaggio.
+\item \emph{No duplicati/replay}: nonce $R_i$ unico; Bob scarta i nonce già visti.
+\item \emph{No manomissione del legame}: un \textbf{solo} hash
+$H(m_i, i, R_i, \texttt{last})$ lega insieme contenuto, posizione, freschezza e
+flag di fine $\Rightarrow$ Trudy non può ricombinare pezzi di pacchetti diversi.
+\item \emph{Ultimo affidabile}: il flag $\texttt{last}$ è \emph{dentro} l'hash
+firmato; Trudy non può né anticiparlo né sopprimerlo. Bob non ha bisogno di sapere
+$N$ in anticipo.
 \end{itemize}
 
 \subsubsection*{Protocollo}
-\noindent\textbf{Setup (una volta):}
-\begin{align*}
-  \text{Alice} \to \text{Bob:}\quad \langle\, K_b^+(K_s)\, \rangle
-\end{align*}
-La chiave di sessione $K_s$ è consegnata a Bob in modo confidenziale. Da qui in poi tutto il contenuto viaggia cifrato con $K_s$.
+\noindent\textbf{Setup:}\quad $A \to B:\ \langle K_b^+(K_s) \rangle$ \quad (consegna
+la chiave di sessione).
 
-\noindent\textbf{Invio (per $i = 1,\dots,N$):}
+\noindent\textbf{Invio} (per $i = 1,\dots,N$, con $\texttt{last}_i=1$ se $i=N$):
 \begin{align*}
-  P_i = \Big\langle\, \underbrace{K_s(m_i)}_{\text{privacy}},\ \underbrace{i}_{\text{ordine}},\ \underbrace{R_i}_{\text{anti-replay}},\ \underbrace{K_a^-\big[H(m_i,\, i,\, R_i,\, \texttt{last}_i)\big]}_{\text{integrità + autenticità + legame}} \Big\rangle
+  P_i = \Big\langle \underbrace{K_s(m_i)}_\text{privacy},\ \underbrace{i}_\text{ordine},\ \underbrace{R_i}_\text{anti-replay},\ \underbrace{K_a^-[H(m_i, i, R_i, \texttt{last}_i)]}_\text{integrità + autenticità + legame} \Big\rangle
 \end{align*}
-con $\texttt{last}_i = 1$ se $i = N$, altrimenti $0$.
 
-\noindent\textbf{Ritrasmissione (affidabilità):} dopo aver inviato $P_i$, Alice attende l'ACK; se scade il timeout senza ACK, ritrasmette $P_i$ (stesso $R_i$):
+\noindent\textbf{Affidabilità:} dopo $P_i$, Alice attende l'ACK; al timeout
+ritrasmette (stesso $R_i$):
 \begin{verbatim}
 invia P_i
 while (true) {
-    if (ricevuto ACK di i)  then break;       // confermato, passo a i+1
+    if (ricevuto ACK di i)  then break;       // confermato
     if (timeout)            then reinvia P_i;  // riprova
 }
 \end{verbatim}
 
-\noindent\textbf{Ricezione lato Bob (per ogni $P_i$):}
-\begin{enumerate}[noitemsep]
-\item Se $R_i$ è già stato visto $\to$ scarta (duplicato/replay di Trudy).
-\item Decifra $K_s(m_i)$ con $K_s$ $\to$ ottiene $m_i$.
-\item Calcola $H(m_i, i, R_i, \texttt{last}_i)$ e lo confronta con $K_a^+\!\big(K_a^-[H(\cdot)]\big)$: se coincidono, il messaggio è integro, autentico e l'indice $i$ è quello firmato da Alice (non manomesso).
-\item Inserisce $m_i$ nel buffer alla posizione $i$ (ordinamento).
-\item Invia ad Alice un ACK firmato: $\langle K_b^-[\,\text{ACK},\, i,\, R_i\,]\rangle$.
-\item Se $\texttt{last}_i = 1$ $\to$ Bob sa che $m_i$ è l'ultimo; quando ha ricevuto tutti gli indici $1..i$ senza buchi, la sequenza è completa.
-\end{enumerate}
+\noindent\textbf{Ricezione (Bob, per ogni $P_i$):} (1) se $R_i$ già visto $\to$
+scarta; (2) decifra $m_i$ con $K_s$; (3) verifica l'hash firmato con $K_a^+$
+$\to$ integrità + autenticità + indice corretto; (4) inserisce $m_i$ in posizione
+$i$; (5) ACK firmato $\langle K_b^-[\text{ACK}, i, R_i]\rangle$; (6) se
+$\texttt{last}_i=1$ e tutti gli indici $1..i$ sono presenti $\to$ sequenza completa.
 
-\subsubsection*{Attacchi di Trudy e contromisure}
+\subsubsection*{Attacchi di Trudy}
 \begin{itemize}[noitemsep]
-\item \textbf{Duplicare un pacchetto}: bloccato dal nonce $R_i$ (Bob scarta i nonce già visti).
-\item \textbf{Riordinare i messaggi}: l'indice $i$ è dentro l'hash firmato $\to$ Bob li rimette in ordine e rileva alterazioni della posizione.
-\item \textbf{Modificare un contenuto}: rompe $H(m_i,\dots)$ $\to$ firma non valida.
-\item \textbf{Fingere un falso ``ultimo''} (anticipare/ritardare $m_N$): il flag \texttt{last} è dentro l'hash firmato da Alice $\to$ Trudy non può produrlo né sopprimerlo.
-\item \textbf{Ritardare pacchetti}: tollerato dall'affidabilità (timeout + ritrasmissione); poiché Trudy non può \emph{cancellare} e i ritardi sono finiti, ogni messaggio prima o poi arriva.
-\item \textbf{Contare $N$ osservando il traffico}: \emph{attacco residuo}. Anche se $i$ e $N$ sono cifrati, Trudy può stimare $N$ contando i pacchetti sul filo. Difesa: Alice inserisce \textbf{pacchetti dummy} cifrati e indistinguibili (o padding a lunghezza fissa), così il numero di pacchetti osservati non rivela $N$. Senza questa accortezza, la riservatezza \emph{sul valore} $N$ non è garantita contro un osservatore del traffico.
+\item \textbf{Duplicare}: bloccato dal nonce $R_i$.
+\item \textbf{Riordinare}: l'indice $i$ è nell'hash firmato $\to$ Bob riordina e rileva.
+\item \textbf{Modificare}: rompe $H(\cdot)$ $\to$ firma non valida.
+\item \textbf{Falso "ultimo"}: $\texttt{last}$ è nell'hash firmato $\to$ non
+producibile né sopprimibile.
+\item \textbf{Ritardare}: tollerato da timeout + ritrasmissione (Trudy non cancella,
+ritardi finiti).
+\item \textbf{Contare $N$ dal traffico} (\emph{attacco residuo}): anche con $i$ e
+$N$ cifrati, Trudy stima $N$ contando i pacchetti. Difesa: \textbf{pacchetti dummy}
+indistinguibili / padding a lunghezza fissa, così il conteggio non rivela $N$.
+\end{itemize}
+
+\subsection{Tre nodi con verifica di contenimento (Alice / Bob / Charlie)}
+
+\hl{\textbf{Traccia tipo.}} Oggi Alice $\to$ Bob un messaggio segreto $m$ (breve).
+Domani Alice $\to$ Charlie un messaggio molto lungo $L$. Charlie vuole verificare
+che $m$ \textbf{non} sia contenuto in $L$; per farlo chiede a Bob di inviargli $m$
+(in modo segreto). Garantire privacy e integrità di $m$ e $L$, prevenendo Trudy.
+
+\subsubsection*{Il nodo concettuale}
+Ci sono \textbf{tre} scambi: $A\to B$ ($m$), $A\to C$ ($L$), $B\to C$ ($m$
+inoltrato). Non sono indipendenti: Charlie deve potersi \emph{fidare} che il $m$
+ricevuto da Bob sia \emph{esattamente} quello originale di Alice --- altrimenti un
+Bob disonesto, o Trudy, potrebbe sostituirlo con un $m'$ falso e falsare la
+verifica. La soluzione è \textbf{propagare la firma di Alice su $m$} fino a Charlie.
+Inoltre: $m$ breve $\to$ asimmetrica diretta; $L$ lungo $\to$ ibrido $K_s$.
+
+\subsubsection*{Protocollo}
+\noindent\textbf{Scambio 1 ($A \to B$, oggi).} Bob \emph{conserva} la firma di Alice.
+\begin{align*}
+  A \to B:\ K_b^+\Big[\, m,\ \underbrace{K_a^-[H(m, R_1)]}_\text{firma di Alice},\ R_1 \,\Big]
+\end{align*}
+
+\noindent\textbf{Scambio 2 ($A \to C$, domani).} $L$ lungo $\to$ ibrido.
+\begin{align*}
+  A \to C:\ \Big\langle K_c^+(K_s),\ K_s(L),\ K_a^-[H(L, R_2)],\ R_2 \Big\rangle
+\end{align*}
+
+\noindent\textbf{Scambio 3 ($B \to C$).} Bob inoltra $m$ \emph{con} la firma
+originale di Alice, più la propria firma di transito.
+\begin{align*}
+  B \to C:\ K_c^+\Big[\, m,\ \underbrace{K_a^-[H(m, R_1)]}_\text{prova: $m$ è di Alice},\ R_1,\ \underbrace{K_b^-[H(m, R_3)]}_\text{prova: inoltro di Bob},\ R_3 \,\Big]
+\end{align*}
+
+\subsubsection*{Verifica di Charlie}
+(1) decifra con $K_c^-$ $\to$ ottiene $m$; (2) $K_a^+(K_a^-[H(m,R_1)])$ $\to$ $m$
+è davvero di Alice; (3) $K_b^+(K_b^-[H(m,R_3)])$ $\to$ inoltrato da Bob; (4) avendo
+$m$ e $L$ autentici, cerca $m$ in $L$ e conclude se $m \subseteq L$.
+
+\subsubsection*{Attacchi di Trudy}
+\begin{itemize}[noitemsep]
+\item \textbf{Leggere $m$ o $L$}: bloccato da $K_b^+$, $K_c^+$, $K_s$ protetta da $K_c^+$.
+\item \textbf{Modificare $m$ o $L$}: rompe l'hash firmato.
+\item \textbf{Sostituire $m$ con un falso $m'$ nello scambio 3}: bloccato dalla
+firma di Alice propagata --- Trudy non può produrla per un $m'$ diverso.
+\emph{È il punto cruciale}: senza propagare la firma di Alice, la verifica sarebbe
+falsificabile.
+\item \textbf{Replay}: bloccato dai nonce distinti $R_1, R_2, R_3$.
+\item \textbf{Fingersi Charlie}: solo lui ha $K_c^-$, solo lui decifra lo scambio 3.
 \end{itemize}
 
 \section{Calcolo Ipv4 valido, host, classe, sottoreti}
@@ -2065,6 +2346,19 @@ sarà completata la tabella NAT indicata in figura e gli Header dei quattro pacc
 \item \textbf{Potenza Tx richiesta}: $P_{tx}=RS+L-G_{tx}-G_{rx}=-97+116{,}2-7-7\approx 5{,}2$ dBm $\Rightarrow P_{mW}=10^{0,52}\approx 3{,}3$ mW (in chiaro). Con nebbia si aggiunge il margine di attenuazione richiesto.
 \item \textbf{Distanza doppia}: $20\log_{10}2\approx 6$ dB in più di path loss $\Rightarrow$ servono circa $+6$ dB di potenza ($\sim 4\times$ in mW). Possibile se il margine lo consente.
 \item \textbf{Raggio Fresnel} (formula degli appunti, p.62): $R_{100\%}=72{,}2\sqrt{d/(4f)}=72{,}2\sqrt{5/(4\cdot 1{,}9)}=72{,}2\sqrt{0{,}658}\approx 58{,}6$ ft $\approx 17{,}9$ m.
+\end{enumerate}
+
+\subsection{Frequenza inversa e Distanza Max con Fade Margin}
+\hl{\textbf{Traccia tipo (frequenza e distanza max).}} $RS = -96$ dBm, antenna isotropica ($G = 0$ dBi), $P_{tx} = 200$ mW. Formula data: $\text{Free space Loss (dB)} = 36{,}6 + (65{,}10) + 20\log_{10}(X)$. Garantire un Fade Operating Margin $\ge +10$ dB.
+\begin{enumerate}[noitemsep]
+\item \textbf{Calcolo Frequenza $F$}: sapendo che la formula generale del path loss in miglia/MHz è $L = 36{,}6 + 20\log_{10}(F) + 20\log_{10}(X)$, isoliamo la costante legata alla frequenza:
+$20\log_{10}(F) = 65{,}10 \Rightarrow \log_{10}(F) = 3{,}255 \Rightarrow F = 10^{3,255} \approx \boxed{1800 \text{ MHz}}$ ($1{,}8$ GHz).
+\item \textbf{Condizione $P_{rx}$ target}: per garantire un margine di $+10$ dB rispetto alla sensibilità del ricevitore, deve essere $\text{FOM} = P_{rx} - RS \ge 10 \Rightarrow P_{rx} \ge -96 + 10 = -86$ dBm.
+\item \textbf{Potenza Tx in dBm}: $P_{tx} = 200$ mW $\Rightarrow 10\log_{10}(200) = 10 \cdot 2{,}301 \approx 23$ dBm.
+\item \textbf{Path Loss massimo consentito}: dal bilancio $P_{rx} = P_{tx} + G_{tx} + G_{rx} - L \Rightarrow -86 = 23 + 0 + 0 - L \Rightarrow L_{\text{max}} = 23 + 86 = 109$ dB.
+\item \textbf{Calcolo Distanza Massima $X$}: sostituiamo $L_{\text{max}}$ nella formula data:
+$109 = 36{,}6 + 65{,}10 + 20\log_{10}(X) \Rightarrow 109 = 101{,}7 + 20\log_{10}(X) \Rightarrow 20\log_{10}(X) = 7{,}3$.
+Quindi $\log_{10}(X) = 7{,}3 / 20 = 0{,}365 \Rightarrow X = 10^{0,365} \approx \boxed{2{,}32 \text{ miglia}}$.
 \end{enumerate}
 
 \subsection{Guadagno antenne dato il bitrate}

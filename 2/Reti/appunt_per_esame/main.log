@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  19 JUN 2026 11:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) (preloaded format=pdflatex 2026.3.6)  20 JUN 2026 10:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -510,12 +510,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.46 ...€” Crittografia (dettagli)}{47}{chapter.8}
+l.46 ...ccess Control List (ACL)}{46}{section.7.7}
                                                   % [1
 
 ]
 
-[2])
+[2{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}])
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
@@ -532,20 +532,20 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 
 
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}]
-<figs/p03_1.png, id=581, 374.39874pt x 113.42375pt>
+<figs/p03_1.png, id=603, 374.39874pt x 113.42375pt>
 File: figs/p03_1.png Graphic file (type png)
 <use figs/p03_1.png>
 Package pdftex.def Info: figs/p03_1.png  used on input line 82.
 (pdftex.def)             Requested size: 382.65862pt x 115.92606pt.
-<figs/p03_2.png, id=582, 761.84625pt x 718.685pt>
+<figs/p03_2.png, id=604, 761.84625pt x 718.685pt>
 File: figs/p03_2.png Graphic file (type png)
 <use figs/p03_2.png>
 Package pdftex.def Info: figs/p03_2.png  used on input line 83.
 (pdftex.def)             Requested size: 382.63104pt x 360.95364pt.
 
 
-[5{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc} <./figs/p03_1.png (PNG copy)>]
-<figs/p04_1.png, id=590, 536.0025pt x 100.375pt>
+[5{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc} <./figs/p03_1.png (PNG copy)>]
+<figs/p04_1.png, id=610, 536.0025pt x 100.375pt>
 File: figs/p04_1.png Graphic file (type png)
 <use figs/p04_1.png>
 Package pdftex.def Info: figs/p04_1.png  used on input line 101.
@@ -553,22 +553,22 @@ Package pdftex.def Info: figs/p04_1.png  used on input line 101.
 
 
 [6 <./figs/p03_2.png (PNG copy)>]
-<figs/p04_2.png, id=596, 474.77374pt x 107.40125pt>
+<figs/p04_2.png, id=616, 474.77374pt x 107.40125pt>
 File: figs/p04_2.png Graphic file (type png)
 <use figs/p04_2.png>
 Package pdftex.def Info: figs/p04_2.png  used on input line 102.
 (pdftex.def)             Requested size: 382.65208pt x 86.56187pt.
-<figs/p04_3.png, id=597, 437.635pt x 81.30376pt>
+<figs/p04_3.png, id=617, 437.635pt x 81.30376pt>
 File: figs/p04_3.png Graphic file (type png)
 <use figs/p04_3.png>
 Package pdftex.def Info: figs/p04_3.png  used on input line 103.
 (pdftex.def)             Requested size: 382.64253pt x 71.08725pt.
-<figs/p05_1.png, id=598, 762.85pt x 253.94875pt>
+<figs/p05_1.png, id=618, 762.85pt x 253.94875pt>
 File: figs/p05_1.png Graphic file (type png)
 <use figs/p05_1.png>
 Package pdftex.def Info: figs/p05_1.png  used on input line 115.
 (pdftex.def)             Requested size: 382.63464pt x 127.37704pt.
-<figs/p05_2.png, id=599, 750.805pt x 235.88126pt>
+<figs/p05_2.png, id=619, 750.805pt x 235.88126pt>
 File: figs/p05_2.png Graphic file (type png)
 <use figs/p05_2.png>
 Package pdftex.def Info: figs/p05_2.png  used on input line 116.
@@ -576,75 +576,77 @@ Package pdftex.def Info: figs/p05_2.png  used on input line 116.
 
 
 [7 <./figs/p04_1.png (PNG copy)> <./figs/p04_2.png (PNG copy)> <./figs/p04_3.png (PNG copy)>]
-<figs/p06_1.png, id=604, 304.13625pt x 91.34125pt>
+LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 121.
+ (/usr/share/texmf/tex/latex/lm/ot1lmtt.fd
+File: ot1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+
+[8{/usr/share/texmf/fonts/enc/dvips/lm/lm-rmtt.enc} <./figs/p05_1.png (PNG copy)> <./figs/p05_2.png (PNG copy)>]
+<figs/p06_1.png, id=632, 304.13625pt x 91.34125pt>
 File: figs/p06_1.png Graphic file (type png)
 <use figs/p06_1.png>
-Package pdftex.def Info: figs/p06_1.png  used on input line 126.
+Package pdftex.def Info: figs/p06_1.png  used on input line 159.
 (pdftex.def)             Requested size: 382.64752pt x 114.92053pt.
 
 
-[8 <./figs/p05_1.png (PNG copy)> <./figs/p05_2.png (PNG copy)>]
-<figs/p07_1.png, id=609, 370.38374pt x 100.375pt>
+[9 <./figs/p06_1.png (PNG copy)>]
+<figs/p07_1.png, id=637, 370.38374pt x 100.375pt>
 File: figs/p07_1.png Graphic file (type png)
 <use figs/p07_1.png>
-Package pdftex.def Info: figs/p07_1.png  used on input line 138.
+Package pdftex.def Info: figs/p07_1.png  used on input line 171.
 (pdftex.def)             Requested size: 382.64113pt x 103.69676pt.
 
-Overfull \hbox (20.45015pt too wide) in paragraph at lines 141--143
+Overfull \hbox (20.45015pt too wide) in paragraph at lines 174--176
 \T1/lmr/bx/n/10.95 Architettura stan-dard dei pro-to-colli (ISO/OSI). \T1/lmr/m/n/10.95 Lo stan-dard \T1/lmr/bx/n/10.95 ISO/OSI \T1/lmr/m/n/10.95 definisce un'architettura
  []
 
-
-
-[9 <./figs/p06_1.png (PNG copy)> <./figs/p07_1.png (PNG copy)>]
-<figs/p08_1.png, id=614, 763.85374pt x 455.7025pt>
+<figs/p08_1.png, id=638, 763.85374pt x 455.7025pt>
 File: figs/p08_1.png Graphic file (type png)
 <use figs/p08_1.png>
-Package pdftex.def Info: figs/p08_1.png  used on input line 153.
+Package pdftex.def Info: figs/p08_1.png  used on input line 186.
 (pdftex.def)             Requested size: 382.6369pt x 228.27484pt.
-<figs/p08_2.png, id=615, 762.85pt x 507.8975pt>
+<figs/p08_2.png, id=639, 762.85pt x 507.8975pt>
 File: figs/p08_2.png Graphic file (type png)
 <use figs/p08_2.png>
-Package pdftex.def Info: figs/p08_2.png  used on input line 154.
+Package pdftex.def Info: figs/p08_2.png  used on input line 187.
 (pdftex.def)             Requested size: 382.63464pt x 254.75412pt.
 
 
-[10 <./figs/p08_1.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 172--174
+[10 <./figs/p07_1.png (PNG copy)>]
+
+[11 <./figs/p08_1.png (PNG copy)> <./figs/p08_2.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 205--207
 
  []
 
-
-
-[11 <./figs/p08_2.png (PNG copy)>]
-<figs/p10_1.png, id=624, 762.85pt x 321.2pt>
+<figs/p10_1.png, id=648, 762.85pt x 321.2pt>
 File: figs/p10_1.png Graphic file (type png)
 <use figs/p10_1.png>
-Package pdftex.def Info: figs/p10_1.png  used on input line 184.
+Package pdftex.def Info: figs/p10_1.png  used on input line 217.
 (pdftex.def)             Requested size: 382.63464pt x 161.10931pt.
 
 
-[12 <./figs/p10_1.png (PNG copy)>]
-<figs/p11_1.png, id=630, 767.86874pt x 231.86626pt>
+[12]
+<figs/p11_1.png, id=654, 767.86874pt x 231.86626pt>
 File: figs/p11_1.png Graphic file (type png)
 <use figs/p11_1.png>
-Package pdftex.def Info: figs/p11_1.png  used on input line 194.
+Package pdftex.def Info: figs/p11_1.png  used on input line 227.
 (pdftex.def)             Requested size: 382.64459pt x 115.54366pt.
-<figs/p11_2.png, id=631, 759.83875pt x 385.44pt>
+<figs/p11_2.png, id=655, 759.83875pt x 385.44pt>
 File: figs/p11_2.png Graphic file (type png)
 <use figs/p11_2.png>
-Package pdftex.def Info: figs/p11_2.png  used on input line 195.
+Package pdftex.def Info: figs/p11_2.png  used on input line 228.
 (pdftex.def)             Requested size: 382.64307pt x 194.10164pt.
 
 
-[13 <./figs/p11_1.png (PNG copy)> <./figs/p11_2.png (PNG copy)>]
+[13 <./figs/p10_1.png (PNG copy)> <./figs/p11_1.png (PNG copy)>]
 
-[14]
+[14 <./figs/p11_2.png (PNG copy)>]
 
 [15]
 Chapter 2.
 
-Overfull \hbox (33.1973pt too wide) in paragraph at lines 239--239
+Overfull \hbox (33.1973pt too wide) in paragraph at lines 272--272
 |[]\T1/lmr/bx/n/24.88 Approfondimenti Capi-tolo 1 ^^V Topolo-
  []
 
@@ -653,90 +655,90 @@ Overfull \hbox (33.1973pt too wide) in paragraph at lines 239--239
 [16
 
 ]
-Overfull \hbox (22.38037pt too wide) in paragraph at lines 277--278
+Overfull \hbox (22.38037pt too wide) in paragraph at lines 310--311
 []\T1/lmr/bx/n/10.95 Internet Pro-to-col (IP). \T1/lmr/m/n/10.95 Pro-to-collo che usa un in-d-i-riz-za-mento glob-ale e \T1/lmr/bx/n/10.95 ger-ar-chico \T1/lmr/m/n/10.95 (\T1/lmr/bx/n/10.95 indirizzamento
  []
 
-<figs/p16_1.png, id=650, 763.85374pt x 630.355pt>
+<figs/p16_1.png, id=675, 763.85374pt x 630.355pt>
 File: figs/p16_1.png Graphic file (type png)
 <use figs/p16_1.png>
-Package pdftex.def Info: figs/p16_1.png  used on input line 280.
+Package pdftex.def Info: figs/p16_1.png  used on input line 313.
 (pdftex.def)             Requested size: 382.6369pt x 315.76344pt.
 
 
 [17]
-<figs/p17_1.png, id=655, 506.89375pt x 81.30376pt>
+<figs/p17_1.png, id=680, 506.89375pt x 81.30376pt>
 File: figs/p17_1.png Graphic file (type png)
 <use figs/p17_1.png>
-Package pdftex.def Info: figs/p17_1.png  used on input line 302.
+Package pdftex.def Info: figs/p17_1.png  used on input line 335.
 (pdftex.def)             Requested size: 382.64444pt x 61.37463pt.
-<figs/p17_2.png, id=656, 510.90875pt x 87.32625pt>
+<figs/p17_2.png, id=681, 510.90875pt x 87.32625pt>
 File: figs/p17_2.png Graphic file (type png)
 <use figs/p17_2.png>
-Package pdftex.def Info: figs/p17_2.png  used on input line 303.
+Package pdftex.def Info: figs/p17_2.png  used on input line 336.
 (pdftex.def)             Requested size: 382.6349pt x 65.40125pt.
 
 
 [18 <./figs/p16_1.png (PNG copy)>]
-<figs/p17_3.png, id=663, 510.90875pt x 101.37875pt>
+<figs/p17_3.png, id=687, 510.90875pt x 101.37875pt>
 File: figs/p17_3.png Graphic file (type png)
 <use figs/p17_3.png>
-Package pdftex.def Info: figs/p17_3.png  used on input line 304.
+Package pdftex.def Info: figs/p17_3.png  used on input line 337.
 (pdftex.def)             Requested size: 382.6349pt x 75.92558pt.
 
-Overfull \hbox (6.51497pt too wide) in paragraph at lines 307--308
+Overfull \hbox (6.51497pt too wide) in paragraph at lines 340--341
 \T1/lmr/m/n/10.95 I 4 byte si com-pon-gono di \T1/lmr/bx/n/10.95 Net-work Num-ber \T1/lmr/m/n/10.95 (es. 130.136) e \T1/lmr/bx/n/10.95 Host Num-ber \T1/lmr/m/n/10.95 (xxxxxxxx.xxxxxxxx). 
  []
 
-<figs/p18_1.png, id=664, 682.55pt x 108.405pt>
+<figs/p18_1.png, id=688, 682.55pt x 108.405pt>
 File: figs/p18_1.png Graphic file (type png)
 <use figs/p18_1.png>
-Package pdftex.def Info: figs/p18_1.png  used on input line 321.
+Package pdftex.def Info: figs/p18_1.png  used on input line 354.
 (pdftex.def)             Requested size: 382.642pt x 60.77254pt.
-<figs/p18_2.png, id=665, 751.80875pt x 169.63374pt>
+<figs/p18_2.png, id=689, 751.80875pt x 169.63374pt>
 File: figs/p18_2.png Graphic file (type png)
 <use figs/p18_2.png>
-Package pdftex.def Info: figs/p18_2.png  used on input line 322.
+Package pdftex.def Info: figs/p18_2.png  used on input line 355.
 (pdftex.def)             Requested size: 382.64877pt x 86.33862pt.
 
 
 [19 <./figs/p17_1.png (PNG copy)> <./figs/p17_2.png (PNG copy)> <./figs/p17_3.png (PNG copy)> <./figs/p18_1.png (PNG copy)>]
-<figs/p19_1.png, id=674, 715.67375pt x 310.15875pt>
+<figs/p19_1.png, id=698, 715.67375pt x 310.15875pt>
 File: figs/p19_1.png Graphic file (type png)
 <use figs/p19_1.png>
-Package pdftex.def Info: figs/p19_1.png  used on input line 342.
+Package pdftex.def Info: figs/p19_1.png  used on input line 375.
 (pdftex.def)             Requested size: 382.63597pt x 165.8268pt.
 
 
 [20 <./figs/p18_2.png (PNG copy)> <./figs/p19_1.png (PNG copy)>]
-<figs/p21_1.png, id=679, 762.85pt x 253.94875pt>
+<figs/p21_1.png, id=703, 762.85pt x 253.94875pt>
 File: figs/p21_1.png Graphic file (type png)
 <use figs/p21_1.png>
-Package pdftex.def Info: figs/p21_1.png  used on input line 389.
+Package pdftex.def Info: figs/p21_1.png  used on input line 422.
 (pdftex.def)             Requested size: 382.63464pt x 127.37704pt.
 
 
 [21]
-<figs/p21_2.png, id=685, 449.68pt x 162.6075pt>
+<figs/p21_2.png, id=709, 449.68pt x 162.6075pt>
 File: figs/p21_2.png Graphic file (type png)
 <use figs/p21_2.png>
-Package pdftex.def Info: figs/p21_2.png  used on input line 390.
+Package pdftex.def Info: figs/p21_2.png  used on input line 423.
 (pdftex.def)             Requested size: 382.64835pt x 138.36838pt.
 
 
 [22 <./figs/p21_1.png (PNG copy)> <./figs/p21_2.png (PNG copy)>]
 Chapter 3.
 
-Overfull \hbox (1.94969pt too wide) in paragraph at lines 395--396
+Overfull \hbox (1.94969pt too wide) in paragraph at lines 428--429
 []\T1/lmr/bx/n/10.95 TCP \T1/lmr/m/n/10.95 (Trans-mis-sion Con-trol Pro-to-col): servizio \T1/lmr/bx/n/10.95 af-fid-abile \T1/lmr/m/n/10.95 connection-oriented, us-ato quando
  []
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 401.
+(Font)              <9> on input line 434.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 401.
+(Font)              <5> on input line 434.
 
-Underfull \hbox (badness 10000) in paragraph at lines 421--422
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
 
  []
 
@@ -747,600 +749,602 @@ Underfull \hbox (badness 10000) in paragraph at lines 421--422
 ]
 
 [24]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 470.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 528.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<figs/p24_1.png, id=700, 345.29pt x 72.27pt>
+<figs/p24_1.png, id=724, 345.29pt x 72.27pt>
 File: figs/p24_1.png Graphic file (type png)
 <use figs/p24_1.png>
-Package pdftex.def Info: figs/p24_1.png  used on input line 480.
+Package pdftex.def Info: figs/p24_1.png  used on input line 538.
 (pdftex.def)             Requested size: 382.64417pt x 80.08829pt.
-<figs/p25_1.png, id=701, 454.69875pt x 146.5475pt>
+
+
+[25]
+<figs/p25_1.png, id=730, 454.69875pt x 146.5475pt>
 File: figs/p25_1.png Graphic file (type png)
 <use figs/p25_1.png>
-Package pdftex.def Info: figs/p25_1.png  used on input line 494.
+Package pdftex.def Info: figs/p25_1.png  used on input line 552.
 (pdftex.def)             Requested size: 382.63815pt x 123.32265pt.
 
 
-[25 <./figs/p24_1.png (PNG copy)>]
-
-[26 <./figs/p25_1.png (PNG copy)>]
+[26 <./figs/p24_1.png (PNG copy)> <./figs/p25_1.png (PNG copy)>]
 
 [27]
+
+[28]
 Chapter 4.
-<figs/p26_1.png, id=716, 569.12625pt x 101.37875pt>
+<figs/p26_1.png, id=744, 569.12625pt x 101.37875pt>
 File: figs/p26_1.png Graphic file (type png)
 <use figs/p26_1.png>
-Package pdftex.def Info: figs/p26_1.png  used on input line 569.
+Package pdftex.def Info: figs/p26_1.png  used on input line 627.
 (pdftex.def)             Requested size: 382.64996pt x 68.16162pt.
 
 
-[28
+[29
 
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathex.enc} <./figs/p26_1.png (PNG copy)>]
-Overfull \hbox (1.04076pt too wide) in paragraph at lines 604--605
+Overfull \hbox (1.04076pt too wide) in paragraph at lines 662--663
 [][]\T1/lmr/bx/n/10.95 TLD[] [][][]Server[] [][][]\T1/lmr/m/n/10.95 (Top[] [][][]Level[] [][][]Do[]-[]main): re-spon-s-abili del primo liv-ello (desinenza fi-nale); conoscono
  []
 
 
 
-[29]
-
 [30]
+
+[31]
 Chapter 5.
 
-Overfull \hbox (20.28247pt too wide) in paragraph at lines 621--621
+Overfull \hbox (20.28247pt too wide) in paragraph at lines 679--679
 |[]\T1/lmr/bx/n/24.88 Approfondimenti Capi-tolo 3 ^^V Socket
  []
 
 
-Overfull \hbox (39.05818pt too wide) in paragraph at lines 622--623
+Overfull \hbox (39.05818pt too wide) in paragraph at lines 680--681
 \T1/lmr/bx/n/10.95 Socket TCP. \T1/lmr/m/n/10.95 Es-em-pio: avviare una con-nes-sione SSH tra l'host $\OT1/lmr/m/n/10.95 192\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 100\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 1\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 20\OML/lmm/m/it/10.95 =\OT1/lmr/m/n/10.95 24$ \T1/lmr/m/n/10.95 e \T1/lmtt/m/n/10.95 pancrazio.cs.unibo.it
  []
 
-<figs/p30_1.png, id=735, 765.86125pt x 200.75pt>
+<figs/p30_1.png, id=763, 765.86125pt x 200.75pt>
 File: figs/p30_1.png Graphic file (type png)
 <use figs/p30_1.png>
-Package pdftex.def Info: figs/p30_1.png  used on input line 629.
+Package pdftex.def Info: figs/p30_1.png  used on input line 687.
 (pdftex.def)             Requested size: 382.63753pt x 100.29816pt.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 631.
+(hyperref)                than one, level fixed on input line 689.
 
 
 
-[31
+[32
 
  <./figs/p30_1.png (PNG copy)>]
 
-[32]
+[33]
 Chapter 6.
 
-Overfull \hbox (30.13025pt too wide) in paragraph at lines 701--702
+Overfull \hbox (30.13025pt too wide) in paragraph at lines 759--760
 \T1/lmr/bx/n/10.95 URI \T1/lmr/m/n/10.95 (in par-ti-co-lare un \T1/lmr/bx/n/10.95 URL\T1/lmr/m/n/10.95 ). Strut-tura di un URL: $\OML/lmm/m/it/10.95 nome protocollo=hostname[]portnumber=pathname$\T1/lmr/m/n/10.95 ,
  []
 
 
 
-[33
+[34
 
 ]
-<figs/p33_1.png, id=755, 765.86125pt x 215.80624pt>
+<figs/p33_1.png, id=783, 765.86125pt x 215.80624pt>
 File: figs/p33_1.png Graphic file (type png)
 <use figs/p33_1.png>
-Package pdftex.def Info: figs/p33_1.png  used on input line 716.
+Package pdftex.def Info: figs/p33_1.png  used on input line 774.
 (pdftex.def)             Requested size: 382.63753pt x 107.82053pt.
-<figs/p33_2.png, id=756, 392.46625pt x 173.64874pt>
+<figs/p33_2.png, id=784, 392.46625pt x 173.64874pt>
 File: figs/p33_2.png Graphic file (type png)
 <use figs/p33_2.png>
-Package pdftex.def Info: figs/p33_2.png  used on input line 717.
+Package pdftex.def Info: figs/p33_2.png  used on input line 775.
 (pdftex.def)             Requested size: 382.66202pt x 169.3108pt.
-<figs/p33_3.png, id=757, 762.85pt x 316.18124pt>
+<figs/p33_3.png, id=785, 762.85pt x 316.18124pt>
 File: figs/p33_3.png Graphic file (type png)
 <use figs/p33_3.png>
-Package pdftex.def Info: figs/p33_3.png  used on input line 718.
+Package pdftex.def Info: figs/p33_3.png  used on input line 776.
 (pdftex.def)             Requested size: 382.63464pt x 158.59198pt.
 
 
-[34 <./figs/p33_1.png (PNG copy)> <./figs/p33_2.png (PNG copy)>]
-<figs/p34_1.png, id=762, 656.4525pt x 104.39pt>
+[35 <./figs/p33_1.png (PNG copy)> <./figs/p33_2.png (PNG copy)>]
+<figs/p34_1.png, id=790, 656.4525pt x 104.39pt>
 File: figs/p34_1.png Graphic file (type png)
 <use figs/p34_1.png>
-Package pdftex.def Info: figs/p34_1.png  used on input line 726.
+Package pdftex.def Info: figs/p34_1.png  used on input line 784.
 (pdftex.def)             Requested size: 382.63586pt x 60.84727pt.
-<figs/p34_2.png, id=763, 523.9575pt x 86.3225pt>
+<figs/p34_2.png, id=791, 523.9575pt x 86.3225pt>
 File: figs/p34_2.png Graphic file (type png)
 <use figs/p34_2.png>
-Package pdftex.def Info: figs/p34_2.png  used on input line 727.
+Package pdftex.def Info: figs/p34_2.png  used on input line 785.
 (pdftex.def)             Requested size: 382.64569pt x 63.04121pt.
-<figs/p35_1.png, id=764, 439.6425pt x 157.58875pt>
+<figs/p35_1.png, id=792, 439.6425pt x 157.58875pt>
 File: figs/p35_1.png Graphic file (type png)
 <use figs/p35_1.png>
-Package pdftex.def Info: figs/p35_1.png  used on input line 733.
+Package pdftex.def Info: figs/p35_1.png  used on input line 791.
 (pdftex.def)             Requested size: 382.64688pt x 137.1588pt.
-<figs/p35_2.png, id=765, 593.21625pt x 312.16624pt>
+<figs/p35_2.png, id=793, 593.21625pt x 312.16624pt>
 File: figs/p35_2.png Graphic file (type png)
 <use figs/p35_2.png>
-Package pdftex.def Info: figs/p35_2.png  used on input line 734.
+Package pdftex.def Info: figs/p35_2.png  used on input line 792.
 (pdftex.def)             Requested size: 382.65323pt x 201.36235pt.
 
 
-[35 <./figs/p33_3.png (PNG copy)> <./figs/p34_1.png (PNG copy)> <./figs/p34_2.png (PNG copy)>]
+[36 <./figs/p33_3.png (PNG copy)> <./figs/p34_1.png (PNG copy)> <./figs/p34_2.png (PNG copy)>]
 
-[36 <./figs/p35_1.png (PNG copy)> <./figs/p35_2.png (PNG copy)>]
-<figs/p37_1.png, id=775, 428.60126pt x 168.63pt>
+[37 <./figs/p35_1.png (PNG copy)> <./figs/p35_2.png (PNG copy)>]
+<figs/p37_1.png, id=804, 428.60126pt x 168.63pt>
 File: figs/p37_1.png Graphic file (type png)
 <use figs/p37_1.png>
-Package pdftex.def Info: figs/p37_1.png  used on input line 755.
+Package pdftex.def Info: figs/p37_1.png  used on input line 813.
 (pdftex.def)             Requested size: 382.63763pt x 150.54594pt.
 
-Overfull \hbox (6.0491pt too wide) in paragraph at lines 758--759
+Overfull \hbox (6.0491pt too wide) in paragraph at lines 816--817
 \T1/lmr/m/n/10.95 DASH viene at-ti-vato an-che con banda scarsa: sul tele-vi-sore, se il bi-trate è basso, si in-via un'immagine
  []
 
-<figs/p38_1.png, id=776, 469.755pt x 277.035pt>
+<figs/p38_1.png, id=805, 469.755pt x 277.035pt>
 File: figs/p38_1.png Graphic file (type png)
 <use figs/p38_1.png>
-Package pdftex.def Info: figs/p38_1.png  used on input line 769.
+Package pdftex.def Info: figs/p38_1.png  used on input line 827.
 (pdftex.def)             Requested size: 382.6355pt x 225.65681pt.
 
 
-[37 <./figs/p37_1.png (PNG copy)>]
+[38 <./figs/p37_1.png (PNG copy)>]
 
-[38 <./figs/p38_1.png (PNG copy)>]
+[39 <./figs/p38_1.png (PNG copy)>]
 Chapter 7.
-<figs/p39_1.png, id=785, 317.185pt x 88.33pt>
+<figs/p39_1.png, id=814, 317.185pt x 88.33pt>
 File: figs/p39_1.png Graphic file (type png)
 <use figs/p39_1.png>
-Package pdftex.def Info: figs/p39_1.png  used on input line 798.
+Package pdftex.def Info: figs/p39_1.png  used on input line 856.
 (pdftex.def)             Requested size: 382.66733pt x 106.56557pt.
-<figs/p39_2.png, id=786, 753.81625pt x 246.9225pt>
+<figs/p39_2.png, id=815, 753.81625pt x 246.9225pt>
 File: figs/p39_2.png Graphic file (type png)
 <use figs/p39_2.png>
-Package pdftex.def Info: figs/p39_2.png  used on input line 799.
+Package pdftex.def Info: figs/p39_2.png  used on input line 857.
 (pdftex.def)             Requested size: 382.63535pt x 125.33727pt.
 
 
-[39
+[40
 
  <./figs/p39_1.png (PNG copy)>]
-Overfull \hbox (29.70427pt too wide) in paragraph at lines 807--808
+Overfull \hbox (29.70427pt too wide) in paragraph at lines 865--866
 []\T1/lmr/bx/n/10.95 3DES\T1/lmr/m/n/10.95 : stesso con-cetto, ma il mes-sag-gio è cifrato tre volte con tre chi-avi di-verse: $\OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 (\OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 (\OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 (\OML/lmm/m/it/10.95 m\OT1/lmr/m/n/10.95 )))$\T1/lmr/m/n/10.95 ,
  []
 
-<figs/p40_1.png, id=796, 760.8425pt x 321.2pt>
+<figs/p40_1.png, id=824, 760.8425pt x 321.2pt>
 File: figs/p40_1.png Graphic file (type png)
 <use figs/p40_1.png>
-Package pdftex.def Info: figs/p40_1.png  used on input line 813.
+Package pdftex.def Info: figs/p40_1.png  used on input line 871.
 (pdftex.def)             Requested size: 382.64934pt x 161.54062pt.
 
 
-[40 <./figs/p39_2.png (PNG copy)> <./figs/p40_1.png (PNG copy)>]
-<figs/p41_1.png, id=801, 755.82375pt x 182.6825pt>
+[41 <./figs/p39_2.png (PNG copy)> <./figs/p40_1.png (PNG copy)>]
+<figs/p41_1.png, id=829, 755.82375pt x 182.6825pt>
 File: figs/p41_1.png Graphic file (type png)
 <use figs/p41_1.png>
-Package pdftex.def Info: figs/p41_1.png  used on input line 823.
+Package pdftex.def Info: figs/p41_1.png  used on input line 881.
 (pdftex.def)             Requested size: 382.63943pt x 92.48389pt.
-<figs/p42_1.png, id=802, 765.86125pt x 165.61874pt>
+<figs/p42_1.png, id=830, 765.86125pt x 165.61874pt>
 File: figs/p42_1.png Graphic file (type png)
 <use figs/p42_1.png>
-Package pdftex.def Info: figs/p42_1.png  used on input line 841.
+Package pdftex.def Info: figs/p42_1.png  used on input line 899.
 (pdftex.def)             Requested size: 382.63753pt x 82.74599pt.
-<figs/p42_2.png, id=803, 441.65pt x 175.65625pt>
+<figs/p42_2.png, id=831, 441.65pt x 175.65625pt>
 File: figs/p42_2.png Graphic file (type png)
 <use figs/p42_2.png>
-Package pdftex.def Info: figs/p42_2.png  used on input line 842.
+Package pdftex.def Info: figs/p42_2.png  used on input line 900.
 (pdftex.def)             Requested size: 382.65546pt x 152.1925pt.
 
 
-[41 <./figs/p41_1.png (PNG copy)>]
-<figs/p43_1.png, id=814, 500.87125pt x 105.39375pt>
+[42 <./figs/p41_1.png (PNG copy)>]
+<figs/p43_1.png, id=843, 500.87125pt x 105.39375pt>
 File: figs/p43_1.png Graphic file (type png)
 <use figs/p43_1.png>
-Package pdftex.def Info: figs/p43_1.png  used on input line 856.
+Package pdftex.def Info: figs/p43_1.png  used on input line 914.
 (pdftex.def)             Requested size: 382.65318pt x 80.51819pt.
-<figs/p43_2.png, id=815, 761.84625pt x 497.86pt>
+<figs/p43_2.png, id=844, 761.84625pt x 497.86pt>
 File: figs/p43_2.png Graphic file (type png)
 <use figs/p43_2.png>
-Package pdftex.def Info: figs/p43_2.png  used on input line 857.
+Package pdftex.def Info: figs/p43_2.png  used on input line 915.
 (pdftex.def)             Requested size: 382.63104pt x 250.0461pt.
 
 
-[42 <./figs/p42_1.png (PNG copy)> <./figs/p42_2.png (PNG copy)> <./figs/p43_1.png (PNG copy)>]
-<figs/p44_1.png, id=825, 318.18875pt x 106.3975pt>
+[43 <./figs/p42_1.png (PNG copy)> <./figs/p42_2.png (PNG copy)> <./figs/p43_1.png (PNG copy)>]
+<figs/p44_1.png, id=853, 318.18875pt x 106.3975pt>
 File: figs/p44_1.png Graphic file (type png)
 <use figs/p44_1.png>
-Package pdftex.def Info: figs/p44_1.png  used on input line 871.
+Package pdftex.def Info: figs/p44_1.png  used on input line 929.
 (pdftex.def)             Requested size: 382.63538pt x 127.94746pt.
-<figs/p44_2.png, id=826, 318.18875pt x 86.3225pt>
+<figs/p44_2.png, id=854, 318.18875pt x 86.3225pt>
 File: figs/p44_2.png Graphic file (type png)
 <use figs/p44_2.png>
-Package pdftex.def Info: figs/p44_2.png  used on input line 872.
+Package pdftex.def Info: figs/p44_2.png  used on input line 930.
 (pdftex.def)             Requested size: 382.63538pt x 103.80641pt.
 
 
-[43 <./figs/p43_2.png (PNG copy)> <./figs/p44_1.png (PNG copy)>]
-<figs/p45_1.png, id=831, 759.83875pt x 528.97626pt>
+[44 <./figs/p43_2.png (PNG copy)> <./figs/p44_1.png (PNG copy)>]
+<figs/p45_1.png, id=859, 759.83875pt x 528.97626pt>
 File: figs/p45_1.png Graphic file (type png)
 <use figs/p45_1.png>
-Package pdftex.def Info: figs/p45_1.png  used on input line 885.
+Package pdftex.def Info: figs/p45_1.png  used on input line 943.
 (pdftex.def)             Requested size: 382.64307pt x 266.38428pt.
-<figs/p45_2.png, id=832, 302.12875pt x 187.70125pt>
+<figs/p45_2.png, id=860, 302.12875pt x 187.70125pt>
 File: figs/p45_2.png Graphic file (type png)
 <use figs/p45_2.png>
-Package pdftex.def Info: figs/p45_2.png  used on input line 886.
+Package pdftex.def Info: figs/p45_2.png  used on input line 944.
 (pdftex.def)             Requested size: 382.63892pt x 237.7192pt.
 
 
-[44 <./figs/p44_2.png (PNG copy)> <./figs/p45_1.png (PNG copy)>]
-<figs/p46_1.png, id=837, 764.8575pt x 463.7325pt>
+[45 <./figs/p44_2.png (PNG copy)> <./figs/p45_1.png (PNG copy)>]
+<figs/p46_1.png, id=865, 764.8575pt x 463.7325pt>
 File: figs/p46_1.png Graphic file (type png)
 <use figs/p46_1.png>
-Package pdftex.def Info: figs/p46_1.png  used on input line 896.
+Package pdftex.def Info: figs/p46_1.png  used on input line 954.
 (pdftex.def)             Requested size: 382.63788pt x 231.99304pt.
-<figs/p46_2.png, id=838, 750.805pt x 214.8025pt>
+<figs/p46_2.png, id=866, 750.805pt x 214.8025pt>
 File: figs/p46_2.png Graphic file (type png)
 <use figs/p46_2.png>
-Package pdftex.def Info: figs/p46_2.png  used on input line 897.
+Package pdftex.def Info: figs/p46_2.png  used on input line 955.
 (pdftex.def)             Requested size: 382.64198pt x 109.47243pt.
 
 
-[45 <./figs/p45_2.png (PNG copy)>]
+[46 <./figs/p45_2.png (PNG copy)>]
 
-[46 <./figs/p46_1.png (PNG copy)> <./figs/p46_2.png (PNG copy)>]
+[47 <./figs/p46_1.png (PNG copy)> <./figs/p46_2.png (PNG copy)>]
 Chapter 8.
 
-Overfull \hbox (0.28313pt too wide) in paragraph at lines 899--899
+Overfull \hbox (0.28313pt too wide) in paragraph at lines 957--957
 |[]\T1/lmr/bx/n/24.88 Approfondimenti Capi-tolo 4 ^^V Crit-
  []
 
-<figs/p48_1.png, id=847, 493.845pt x 86.3225pt>
+<figs/p48_1.png, id=875, 493.845pt x 86.3225pt>
 File: figs/p48_1.png Graphic file (type png)
 <use figs/p48_1.png>
-Package pdftex.def Info: figs/p48_1.png  used on input line 925.
+Package pdftex.def Info: figs/p48_1.png  used on input line 983.
 (pdftex.def)             Requested size: 382.63548pt x 66.88342pt.
 
 
-[47
+[48
 
 ]
-<figs/p48_2.png, id=852, 500.87125pt x 106.3975pt>
+<figs/p48_2.png, id=881, 500.87125pt x 106.3975pt>
 File: figs/p48_2.png Graphic file (type png)
 <use figs/p48_2.png>
-Package pdftex.def Info: figs/p48_2.png  used on input line 926.
+Package pdftex.def Info: figs/p48_2.png  used on input line 984.
 (pdftex.def)             Requested size: 382.65318pt x 81.28503pt.
 
 
-[48 <./figs/p48_1.png (PNG copy)> <./figs/p48_2.png (PNG copy)>]
+[49 <./figs/p48_1.png (PNG copy)> <./figs/p48_2.png (PNG copy)>]
 Chapter 9.
 
-Overfull \hbox (12.94284pt too wide) in paragraph at lines 940--940
+Overfull \hbox (12.94284pt too wide) in paragraph at lines 998--998
 |[]\T1/lmr/bx/n/24.88 Network Layer ^^V Rout-ing dei Router| 
  []
 
-<figs/p50_1.png, id=858, 757.83125pt x 129.48375pt>
+<figs/p50_1.png, id=886, 757.83125pt x 129.48375pt>
 File: figs/p50_1.png Graphic file (type png)
 <use figs/p50_1.png>
-Package pdftex.def Info: figs/p50_1.png  used on input line 950.
+Package pdftex.def Info: figs/p50_1.png  used on input line 1008.
 (pdftex.def)             Requested size: 382.63817pt x 65.3779pt.
-<figs/p50_2.png, id=859, 762.85pt x 204.765pt>
+<figs/p50_2.png, id=887, 762.85pt x 204.765pt>
 File: figs/p50_2.png Graphic file (type png)
 <use figs/p50_2.png>
-Package pdftex.def Info: figs/p50_2.png  used on input line 951.
+Package pdftex.def Info: figs/p50_2.png  used on input line 1009.
 (pdftex.def)             Requested size: 382.63464pt x 102.70718pt.
 
 
-[49
+[50
 
  <./figs/p50_1.png (PNG copy)> <./figs/p50_2.png (PNG copy)>]
-<figs/p51_1.png, id=864, 759.83875pt x 438.63875pt>
+<figs/p51_1.png, id=892, 759.83875pt x 438.63875pt>
 File: figs/p51_1.png Graphic file (type png)
 <use figs/p51_1.png>
-Package pdftex.def Info: figs/p51_1.png  used on input line 959.
+Package pdftex.def Info: figs/p51_1.png  used on input line 1017.
 (pdftex.def)             Requested size: 382.64307pt x 220.8917pt.
 
 
-[50 <./figs/p51_1.png (PNG copy)>]
-<figs/p53_1.png, id=869, 752.8125pt x 94.3525pt>
+[51 <./figs/p51_1.png (PNG copy)>]
+<figs/p53_1.png, id=897, 752.8125pt x 94.3525pt>
 File: figs/p53_1.png Graphic file (type png)
 <use figs/p53_1.png>
-Package pdftex.def Info: figs/p53_1.png  used on input line 986.
+Package pdftex.def Info: figs/p53_1.png  used on input line 1044.
 (pdftex.def)             Requested size: 382.64275pt x 47.95787pt.
-<figs/p53_2.png, id=870, 418.56375pt x 113.42375pt>
+<figs/p53_2.png, id=898, 418.56375pt x 113.42375pt>
 File: figs/p53_2.png Graphic file (type png)
 <use figs/p53_2.png>
-Package pdftex.def Info: figs/p53_2.png  used on input line 987.
+Package pdftex.def Info: figs/p53_2.png  used on input line 1045.
 (pdftex.def)             Requested size: 382.6308pt x 103.68651pt.
-<figs/p54_1.png, id=871, 671.50874pt x 108.405pt>
+<figs/p54_1.png, id=899, 671.50874pt x 108.405pt>
 File: figs/p54_1.png Graphic file (type png)
 <use figs/p54_1.png>
-Package pdftex.def Info: figs/p54_1.png  used on input line 997.
+Package pdftex.def Info: figs/p54_1.png  used on input line 1055.
 (pdftex.def)             Requested size: 382.63077pt x 61.76997pt.
 
 
-[51 <./figs/p53_1.png (PNG copy)> <./figs/p53_2.png (PNG copy)>]
-<figs/p55_1.png, id=876, 734.745pt x 168.63pt>
+[52 <./figs/p53_1.png (PNG copy)> <./figs/p53_2.png (PNG copy)>]
+<figs/p55_1.png, id=904, 734.745pt x 168.63pt>
 File: figs/p55_1.png Graphic file (type png)
 <use figs/p55_1.png>
-Package pdftex.def Info: figs/p55_1.png  used on input line 1007.
+Package pdftex.def Info: figs/p55_1.png  used on input line 1076.
 (pdftex.def)             Requested size: 382.64137pt x 87.81932pt.
 
 
-[52 <./figs/p54_1.png (PNG copy)> <./figs/p55_1.png (PNG copy)>]
+[53 <./figs/p54_1.png (PNG copy)> <./figs/p55_1.png (PNG copy)>]
 Chapter 10.
-<figs/p56_1.png, id=881, 765.86125pt x 210.7875pt>
+<figs/p56_1.png, id=914, 765.86125pt x 210.7875pt>
 File: figs/p56_1.png Graphic file (type png)
 <use figs/p56_1.png>
-Package pdftex.def Info: figs/p56_1.png  used on input line 1037.
+Package pdftex.def Info: figs/p56_1.png  used on input line 1106.
 (pdftex.def)             Requested size: 382.63753pt x 105.31308pt.
-<figs/p56_2.png, id=882, 679.53876pt x 85.31876pt>
+<figs/p56_2.png, id=915, 679.53876pt x 85.31876pt>
 File: figs/p56_2.png Graphic file (type png)
 <use figs/p56_2.png>
-Package pdftex.def Info: figs/p56_2.png  used on input line 1038.
+Package pdftex.def Info: figs/p56_2.png  used on input line 1107.
 (pdftex.def)             Requested size: 382.63364pt x 48.04114pt.
 
 
-[53
+[54
 
  <./figs/p56_1.png (PNG copy)> <./figs/p56_2.png (PNG copy)>]
-<figs/p57_1.png, id=887, 765.86125pt x 127.47626pt>
+<figs/p57_1.png, id=921, 765.86125pt x 127.47626pt>
 File: figs/p57_1.png Graphic file (type png)
 <use figs/p57_1.png>
-Package pdftex.def Info: figs/p57_1.png  used on input line 1050.
+Package pdftex.def Info: figs/p57_1.png  used on input line 1119.
 (pdftex.def)             Requested size: 382.63753pt x 63.68933pt.
-<figs/p57_2.png, id=888, 646.415pt x 83.31125pt>
+<figs/p57_2.png, id=922, 646.415pt x 83.31125pt>
 File: figs/p57_2.png Graphic file (type png)
 <use figs/p57_2.png>
-Package pdftex.def Info: figs/p57_2.png  used on input line 1051.
+Package pdftex.def Info: figs/p57_2.png  used on input line 1120.
 (pdftex.def)             Requested size: 382.6342pt x 49.31464pt.
-<figs/p58_1.png, id=889, 581.17125pt x 190.7125pt>
+<figs/p58_1.png, id=923, 581.17125pt x 190.7125pt>
 File: figs/p58_1.png Graphic file (type png)
 <use figs/p58_1.png>
-Package pdftex.def Info: figs/p58_1.png  used on input line 1070.
+Package pdftex.def Info: figs/p58_1.png  used on input line 1139.
 (pdftex.def)             Requested size: 382.64308pt x 125.56506pt.
 
 
-[54 <./figs/p57_1.png (PNG copy)> <./figs/p57_2.png (PNG copy)>]
+[55 <./figs/p57_1.png (PNG copy)> <./figs/p57_2.png (PNG copy)>]
 
-[55 <./figs/p58_1.png (PNG copy)>]
-<figs/p61_1.png, id=903, 765.86125pt x 104.39pt>
+[56 <./figs/p58_1.png (PNG copy)>]
+<figs/p61_1.png, id=937, 765.86125pt x 104.39pt>
 File: figs/p61_1.png Graphic file (type png)
 <use figs/p61_1.png>
-Package pdftex.def Info: figs/p61_1.png  used on input line 1116.
+Package pdftex.def Info: figs/p61_1.png  used on input line 1185.
 (pdftex.def)             Requested size: 382.63753pt x 52.15503pt.
-<figs/p62_1.png, id=904, 538.01pt x 104.39pt>
+<figs/p62_1.png, id=938, 538.01pt x 104.39pt>
 File: figs/p62_1.png Graphic file (type png)
 <use figs/p62_1.png>
-Package pdftex.def Info: figs/p62_1.png  used on input line 1126.
+Package pdftex.def Info: figs/p62_1.png  used on input line 1195.
 (pdftex.def)             Requested size: 382.6383pt x 74.24324pt.
-<figs/p62_2.png, id=905, 384.43625pt x 114.4275pt>
+<figs/p62_2.png, id=939, 384.43625pt x 114.4275pt>
 File: figs/p62_2.png Graphic file (type png)
 <use figs/p62_2.png>
-Package pdftex.def Info: figs/p62_2.png  used on input line 1127.
+Package pdftex.def Info: figs/p62_2.png  used on input line 1196.
 (pdftex.def)             Requested size: 382.66376pt x 113.8999pt.
 
 
-[56 <./figs/p61_1.png (PNG copy)> <./figs/p62_1.png (PNG copy)>]
+[57 <./figs/p61_1.png (PNG copy)> <./figs/p62_1.png (PNG copy)>]
 
-[57 <./figs/p62_2.png (PNG copy)>]
-<figs/p64_1.png, id=914, 496.85625pt x 228.855pt>
+[58 <./figs/p62_2.png (PNG copy)>]
+<figs/p64_1.png, id=948, 496.85625pt x 228.855pt>
 File: figs/p64_1.png Graphic file (type png)
 <use figs/p64_1.png>
-Package pdftex.def Info: figs/p64_1.png  used on input line 1166.
+Package pdftex.def Info: figs/p64_1.png  used on input line 1235.
 (pdftex.def)             Requested size: 382.64114pt x 176.24681pt.
-<figs/p64_2.png, id=915, 571.13374pt x 284.06125pt>
+<figs/p64_2.png, id=949, 571.13374pt x 284.06125pt>
 File: figs/p64_2.png Graphic file (type png)
 <use figs/p64_2.png>
-Package pdftex.def Info: figs/p64_2.png  used on input line 1167.
+Package pdftex.def Info: figs/p64_2.png  used on input line 1236.
 (pdftex.def)             Requested size: 382.6402pt x 190.31136pt.
 
 
-[58 <./figs/p64_1.png (PNG copy)> <./figs/p64_2.png (PNG copy)>]
-<figs/p65_1.png, id=920, 278.03876pt x 78.2925pt>
+[59 <./figs/p64_1.png (PNG copy)> <./figs/p64_2.png (PNG copy)>]
+<figs/p65_1.png, id=954, 278.03876pt x 78.2925pt>
 File: figs/p65_1.png Graphic file (type png)
 <use figs/p65_1.png>
-Package pdftex.def Info: figs/p65_1.png  used on input line 1183.
+Package pdftex.def Info: figs/p65_1.png  used on input line 1252.
 (pdftex.def)             Requested size: 382.64174pt x 107.74747pt.
-<figs/p65_2.png, id=921, 755.82375pt x 148.555pt>
+<figs/p65_2.png, id=955, 755.82375pt x 148.555pt>
 File: figs/p65_2.png Graphic file (type png)
 <use figs/p65_2.png>
-Package pdftex.def Info: figs/p65_2.png  used on input line 1184.
+Package pdftex.def Info: figs/p65_2.png  used on input line 1253.
 (pdftex.def)             Requested size: 382.63943pt x 75.20668pt.
-<figs/p66_1.png, id=922, 739.76375pt x 141.52875pt>
+<figs/p66_1.png, id=956, 739.76375pt x 141.52875pt>
 File: figs/p66_1.png Graphic file (type png)
 <use figs/p66_1.png>
-Package pdftex.def Info: figs/p66_1.png  used on input line 1192.
+Package pdftex.def Info: figs/p66_1.png  used on input line 1261.
 (pdftex.def)             Requested size: 382.63625pt x 73.20448pt.
 
 
-[59 <./figs/p65_1.png (PNG copy)> <./figs/p65_2.png (PNG copy)>]
-<figs/p68_1.png, id=927, 294.09875pt x 121.45375pt>
+[60 <./figs/p65_1.png (PNG copy)> <./figs/p65_2.png (PNG copy)>]
+<figs/p68_1.png, id=962, 294.09875pt x 121.45375pt>
 File: figs/p68_1.png Graphic file (type png)
 <use figs/p68_1.png>
-Package pdftex.def Info: figs/p68_1.png  used on input line 1221.
+Package pdftex.def Info: figs/p68_1.png  used on input line 1290.
 (pdftex.def)             Requested size: 382.63795pt x 158.0177pt.
-<figs/p68_2.png, id=928, 305.14pt x 99.37125pt>
+<figs/p68_2.png, id=963, 305.14pt x 99.37125pt>
 File: figs/p68_2.png Graphic file (type png)
 <use figs/p68_2.png>
-Package pdftex.def Info: figs/p68_2.png  used on input line 1222.
+Package pdftex.def Info: figs/p68_2.png  used on input line 1291.
 (pdftex.def)             Requested size: 382.65324pt x 124.61404pt.
 
 
-[60 <./figs/p66_1.png (PNG copy)>]
-<figs/p69_1.png, id=935, 412.54124pt x 144.54pt>
+[61 <./figs/p66_1.png (PNG copy)>]
+<figs/p69_1.png, id=968, 412.54124pt x 144.54pt>
 File: figs/p69_1.png Graphic file (type png)
 <use figs/p69_1.png>
-Package pdftex.def Info: figs/p69_1.png  used on input line 1228.
+Package pdftex.def Info: figs/p69_1.png  used on input line 1297.
 (pdftex.def)             Requested size: 382.63962pt x 134.06349pt.
-<figs/p69_2.png, id=936, 192.72pt x 219.82124pt>
+<figs/p69_2.png, id=969, 192.72pt x 219.82124pt>
 File: figs/p69_2.png Graphic file (type png)
 <use figs/p69_2.png>
-Package pdftex.def Info: figs/p69_2.png  used on input line 1229.
+Package pdftex.def Info: figs/p69_2.png  used on input line 1298.
 (pdftex.def)             Requested size: 382.63657pt x 436.44482pt.
 
 
-[61 <./figs/p68_1.png (PNG copy)> <./figs/p68_2.png (PNG copy)> <./figs/p69_1.png (PNG copy)>]
-<figs/p70_1.png, id=941, 746.79pt x 199.74625pt>
+[62 <./figs/p68_1.png (PNG copy)> <./figs/p68_2.png (PNG copy)> <./figs/p69_1.png (PNG copy)>]
+<figs/p70_1.png, id=974, 746.79pt x 199.74625pt>
 File: figs/p70_1.png Graphic file (type png)
 <use figs/p70_1.png>
-Package pdftex.def Info: figs/p70_1.png  used on input line 1235.
+Package pdftex.def Info: figs/p70_1.png  used on input line 1304.
 (pdftex.def)             Requested size: 382.63548pt x 102.3447pt.
 
 
-[62 <./figs/p69_2.png (PNG copy)>]
-<figs/p71_1.png, id=946, 735.74875pt x 106.3975pt>
+[63 <./figs/p69_2.png (PNG copy)>]
+<figs/p71_1.png, id=979, 735.74875pt x 106.3975pt>
 File: figs/p71_1.png Graphic file (type png)
 <use figs/p71_1.png>
-Package pdftex.def Info: figs/p71_1.png  used on input line 1245.
+Package pdftex.def Info: figs/p71_1.png  used on input line 1314.
 (pdftex.def)             Requested size: 382.64767pt x 55.33513pt.
 
 
-LaTeX Warning: Command \textdegree invalid in math mode on input line 1250.
+LaTeX Warning: Command \textdegree invalid in math mode on input line 1319.
 
 
-LaTeX Warning: Command \textdegree invalid in math mode on input line 1250.
+LaTeX Warning: Command \textdegree invalid in math mode on input line 1319.
 
 
-LaTeX Warning: Command \textdegree invalid in math mode on input line 1250.
+LaTeX Warning: Command \textdegree invalid in math mode on input line 1319.
 
 
-LaTeX Warning: Command \textdegree invalid in math mode on input line 1250.
+LaTeX Warning: Command \textdegree invalid in math mode on input line 1319.
 
 
 
-[63 <./figs/p70_1.png (PNG copy)> <./figs/p71_1.png (PNG copy)>]
-<figs/p74_1.png, id=951, 663.47874pt x 77.28876pt>
+[64 <./figs/p70_1.png (PNG copy)> <./figs/p71_1.png (PNG copy)>]
+<figs/p74_1.png, id=984, 663.47874pt x 77.28876pt>
 File: figs/p74_1.png Graphic file (type png)
 <use figs/p74_1.png>
-Package pdftex.def Info: figs/p74_1.png  used on input line 1273.
+Package pdftex.def Info: figs/p74_1.png  used on input line 1342.
 (pdftex.def)             Requested size: 382.63118pt x 44.57277pt.
-<figs/p74_2.png, id=952, 738.76pt x 108.405pt>
+<figs/p74_2.png, id=985, 738.76pt x 108.405pt>
 File: figs/p74_2.png Graphic file (type png)
 <use figs/p74_2.png>
-Package pdftex.def Info: figs/p74_2.png  used on input line 1274.
+Package pdftex.def Info: figs/p74_2.png  used on input line 1343.
 (pdftex.def)             Requested size: 382.6356pt x 56.1476pt.
-<figs/p74_3.png, id=953, 668.4975pt x 129.48375pt>
+<figs/p74_3.png, id=986, 668.4975pt x 129.48375pt>
 File: figs/p74_3.png Graphic file (type png)
 <use figs/p74_3.png>
-Package pdftex.def Info: figs/p74_3.png  used on input line 1275.
+Package pdftex.def Info: figs/p74_3.png  used on input line 1344.
 (pdftex.def)             Requested size: 382.649pt x 74.11668pt.
-<figs/segnale.png, id=954, 916.42375pt x 386.44376pt>
+<figs/segnale.png, id=987, 916.42375pt x 386.44376pt>
 File: figs/segnale.png Graphic file (type png)
 <use figs/segnale.png>
-Package pdftex.def Info: figs/segnale.png  used on input line 1278.
+Package pdftex.def Info: figs/segnale.png  used on input line 1347.
 (pdftex.def)             Requested size: 382.63004pt x 161.35pt.
 
 
-[64 <./figs/p74_1.png (PNG copy)> <./figs/p74_2.png (PNG copy)> <./figs/p74_3.png (PNG copy)>]
-<figs/codifica.png, id=960, 296.10625pt x 483.8075pt>
+[65 <./figs/p74_1.png (PNG copy)> <./figs/p74_2.png (PNG copy)> <./figs/p74_3.png (PNG copy)>]
+<figs/codifica.png, id=993, 296.10625pt x 483.8075pt>
 File: figs/codifica.png Graphic file (type png)
 <use figs/codifica.png>
-Package pdftex.def Info: figs/codifica.png  used on input line 1284.
+Package pdftex.def Info: figs/codifica.png  used on input line 1353.
 (pdftex.def)             Requested size: 93.32365pt x 152.48137pt.
 
 
-[65 <./figs/segnale.png> <./figs/codifica.png>]
-<figs/p75_1.png, id=967, 647.41875pt x 100.375pt>
+[66 <./figs/segnale.png> <./figs/codifica.png>]
+<figs/p75_1.png, id=1001, 647.41875pt x 100.375pt>
 File: figs/p75_1.png Graphic file (type png)
 <use figs/p75_1.png>
-Package pdftex.def Info: figs/p75_1.png  used on input line 1332.
+Package pdftex.def Info: figs/p75_1.png  used on input line 1401.
 (pdftex.def)             Requested size: 382.63562pt x 59.32333pt.
 
 
-[66 <./figs/p75_1.png (PNG copy)>]
-<figs/p77_1.png, id=973, 471.7625pt x 77.28876pt>
+[67 <./figs/p75_1.png (PNG copy)>]
+<figs/p77_1.png, id=1006, 471.7625pt x 77.28876pt>
 File: figs/p77_1.png Graphic file (type png)
 <use figs/p77_1.png>
-Package pdftex.def Info: figs/p77_1.png  used on input line 1349.
+Package pdftex.def Info: figs/p77_1.png  used on input line 1418.
 (pdftex.def)             Requested size: 382.64381pt x 62.68845pt.
-<figs/p77_2.png, id=974, 459.7175pt x 122.4575pt>
+<figs/p77_2.png, id=1007, 459.7175pt x 122.4575pt>
 File: figs/p77_2.png Graphic file (type png)
 <use figs/p77_2.png>
-Package pdftex.def Info: figs/p77_2.png  used on input line 1350.
+Package pdftex.def Info: figs/p77_2.png  used on input line 1419.
 (pdftex.def)             Requested size: 382.65971pt x 101.93117pt.
-<figs/p77_3.png, id=975, 724.7075pt x 178.6675pt>
+<figs/p77_3.png, id=1008, 724.7075pt x 178.6675pt>
 File: figs/p77_3.png Graphic file (type png)
 <use figs/p77_3.png>
-Package pdftex.def Info: figs/p77_3.png  used on input line 1351.
+Package pdftex.def Info: figs/p77_3.png  used on input line 1420.
 (pdftex.def)             Requested size: 382.64453pt x 94.33618pt.
-<figs/p77_4.png, id=976, 763.85374pt x 207.77625pt>
+<figs/p77_4.png, id=1009, 763.85374pt x 207.77625pt>
 File: figs/p77_4.png Graphic file (type png)
 <use figs/p77_4.png>
-Package pdftex.def Info: figs/p77_4.png  used on input line 1352.
+Package pdftex.def Info: figs/p77_4.png  used on input line 1421.
 (pdftex.def)             Requested size: 382.6369pt x 104.08125pt.
 
 
-[67 <./figs/p77_1.png (PNG copy)> <./figs/p77_2.png (PNG copy)> <./figs/p77_3.png (PNG copy)>]
-<figs/p78_1.png, id=981, 759.83875pt x 379.4175pt>
+[68 <./figs/p77_1.png (PNG copy)> <./figs/p77_2.png (PNG copy)> <./figs/p77_3.png (PNG copy)>]
+<figs/p78_1.png, id=1014, 759.83875pt x 379.4175pt>
 File: figs/p78_1.png Graphic file (type png)
 <use figs/p78_1.png>
-Package pdftex.def Info: figs/p78_1.png  used on input line 1363.
+Package pdftex.def Info: figs/p78_1.png  used on input line 1432.
 (pdftex.def)             Requested size: 382.64307pt x 191.06879pt.
-<figs/p78_2.png, id=982, 218.8175pt x 84.315pt>
+<figs/p78_2.png, id=1015, 218.8175pt x 84.315pt>
 File: figs/p78_2.png Graphic file (type png)
 <use figs/p78_2.png>
-Package pdftex.def Info: figs/p78_2.png  used on input line 1364.
+Package pdftex.def Info: figs/p78_2.png  used on input line 1433.
 (pdftex.def)             Requested size: 382.64252pt x 147.4402pt.
 
 
-[68 <./figs/p77_4.png (PNG copy)> <./figs/p78_1.png (PNG copy)>]
-<figs/p79_1.png, id=987, 729.72626pt x 107.40125pt>
+[69 <./figs/p77_4.png (PNG copy)> <./figs/p78_1.png (PNG copy)>]
+<figs/p79_1.png, id=1020, 729.72626pt x 107.40125pt>
 File: figs/p79_1.png Graphic file (type png)
 <use figs/p79_1.png>
-Package pdftex.def Info: figs/p79_1.png  used on input line 1374.
+Package pdftex.def Info: figs/p79_1.png  used on input line 1441.
 (pdftex.def)             Requested size: 382.63324pt x 56.31601pt.
 
 
-[69 <./figs/p78_2.png (PNG copy)> <./figs/p79_1.png (PNG copy)>]
-<figs/p80_1.png, id=992, 765.86125pt x 92.345pt>
+[70 <./figs/p78_2.png (PNG copy)> <./figs/p79_1.png (PNG copy)>]
+Overfull \hbox (15.27585pt too wide) in paragraph at lines 1497--1500
+[]\T1/lmr/m/it/10.95 Dato $\OML/lmm/m/it/10.95 T$ \T1/lmr/m/it/10.95 richiesto, trova $\OML/lmm/m/it/10.95 b$ \T1/lmr/m/it/10.95 (quale mod-u-lazione)\T1/lmr/m/n/10.95 : im-poni $[] \OMS/lmsy/m/n/10.95 ^^U \OML/lmm/m/it/10.95 F=T$ \T1/lmr/m/n/10.95 e ri-cava $\OML/lmm/m/it/10.95 b \OMS/lmsy/m/n/10.95 ^^U []$\T1/lmr/m/n/10.95 ,
+ []
+
+
+
+[71]
+<figs/p80_1.png, id=1030, 765.86125pt x 92.345pt>
 File: figs/p80_1.png Graphic file (type png)
 <use figs/p80_1.png>
-Package pdftex.def Info: figs/p80_1.png  used on input line 1393.
+Package pdftex.def Info: figs/p80_1.png  used on input line 1530.
 (pdftex.def)             Requested size: 382.63753pt x 46.13715pt.
-<figs/p80_2.png, id=993, 759.83875pt x 532.99126pt>
+<figs/p80_2.png, id=1031, 759.83875pt x 532.99126pt>
 File: figs/p80_2.png Graphic file (type png)
 <use figs/p80_2.png>
-Package pdftex.def Info: figs/p80_2.png  used on input line 1394.
+Package pdftex.def Info: figs/p80_2.png  used on input line 1531.
 (pdftex.def)             Requested size: 382.64307pt x 268.40617pt.
-<figs/p81_1.png, id=994, 758.835pt x 231.86626pt>
+
+
+[72 <./figs/p80_1.png (PNG copy)> <./figs/p80_2.png (PNG copy)>]
+<figs/p81_1.png, id=1037, 758.835pt x 231.86626pt>
 File: figs/p81_1.png Graphic file (type png)
 <use figs/p81_1.png>
-Package pdftex.def Info: figs/p81_1.png  used on input line 1406.
+Package pdftex.def Info: figs/p81_1.png  used on input line 1574.
 (pdftex.def)             Requested size: 382.6355pt x 116.9164pt.
-
-
-[70 <./figs/p80_1.png (PNG copy)> <./figs/p80_2.png (PNG copy)>]
-<figs/p81_2.png, id=999, 334.24875pt x 166.6225pt>
+<figs/p81_2.png, id=1038, 334.24875pt x 166.6225pt>
 File: figs/p81_2.png Graphic file (type png)
 <use figs/p81_2.png>
-Package pdftex.def Info: figs/p81_2.png  used on input line 1407.
+Package pdftex.def Info: figs/p81_2.png  used on input line 1575.
 (pdftex.def)             Requested size: 195.9861pt x 97.69876pt.
 
 
-[71 <./figs/p81_1.png (PNG copy)> <./figs/p81_2.png (PNG copy)>]
+[73]
+
+[74 <./figs/p81_1.png (PNG copy)> <./figs/p81_2.png (PNG copy)>]
 Chapter 11.
-<figs/p82_1.png, id=1004, 761.84625pt x 337.26pt>
+<figs/p82_1.png, id=1047, 761.84625pt x 337.26pt>
 File: figs/p82_1.png Graphic file (type png)
 <use figs/p82_1.png>
-Package pdftex.def Info: figs/p82_1.png  used on input line 1458.
+Package pdftex.def Info: figs/p82_1.png  used on input line 1626.
 (pdftex.def)             Requested size: 382.63104pt x 169.38606pt.
 
 
-[72
+[75
 
  <./figs/p82_1.png (PNG copy)>]
 Chapter 12.
-
-
-[73
-
-]
-
-[74]
-
-[75]
-Appendix A.
 
 
 [76
@@ -1350,74 +1354,94 @@ Appendix A.
 [77]
 
 [78]
-LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 1725.
+Appendix A.
 
 
-[79]
-Overfull \hbox (2.10179pt too wide) in paragraph at lines 1798--1799
-[]\T1/lmr/bx/n/10.95 Ultimo IP valido $\OT1/lmr/m/n/10.95 =$ \T1/lmr/m/n/10.95 broad-cast $\OMS/lmsy/m/n/10.95 ^^@\OT1/lmr/m/n/10.95 1 = 131\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 118\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 127\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 254$ \T1/lmr/m/n/10.95 (di solito as-seg-nato al router/gateway). 
+[79
+
+]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 1846.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1846.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\to' on input line 1846.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1846.
+
+
+Overfull \hbox (23.43562pt too wide) in paragraph at lines 1866--1870
+\T1/lmr/m/it/10.95 Variante di-dat-tica \T1/lmr/m/n/10.95 (se $\OML/lmm/m/it/10.95 m$ \T1/lmr/m/n/10.95 non è enorme, senza $\OML/lmm/m/it/10.95 K[]$\T1/lmr/m/n/10.95 ): si cifra tutto il blocco con $\OML/lmm/m/it/10.95 K[]$\T1/lmr/m/n/10.95 : $ \OMS/lmsy/m/n/10.95 h\OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 [ \OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 [\OML/lmm/m/it/10.95 H\OT1/lmr/m/n/10.95 (\OML/lmm/m/it/10.95 m\OT1/lmr/m/n/10.95 )]\OML/lmm/m/it/10.95 ;  m \OT1/lmr/m/n/10.95 ]\OMS/lmsy/m/n/10.95 i$\T1/lmr/m/n/10.95 .
  []
 
 
 
 [80]
-<figs/rete.png, id=1064, 1039.885pt x 514.92375pt>
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1941.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1941.
+
+
+
+[81]
+
+[82]
+Overfull \hbox (26.09879pt too wide) in paragraph at lines 2035--2038
+\T1/lmr/m/n/10.95 (1) de-cifra con $\OML/lmm/m/it/10.95 K[]$ $\OMS/lmsy/m/n/10.95 !$ \T1/lmr/m/n/10.95 ot-tiene $\OML/lmm/m/it/10.95 m$\T1/lmr/m/n/10.95 ; (2) $\OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 (\OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 [\OML/lmm/m/it/10.95 H\OT1/lmr/m/n/10.95 (\OML/lmm/m/it/10.95 m; R[]\OT1/lmr/m/n/10.95 )])$ $\OMS/lmsy/m/n/10.95 !$ $\OML/lmm/m/it/10.95 m$ \T1/lmr/m/n/10.95 è davvero di Al-ice; (3) $\OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 (\OML/lmm/m/it/10.95 K[]\OT1/lmr/m/n/10.95 [\OML/lmm/m/it/10.95 H\OT1/lmr/m/n/10.95 (\OML/lmm/m/it/10.95 m; R[]\OT1/lmr/m/n/10.95 )])$
+ []
+
+
+
+[83]
+Overfull \hbox (2.10179pt too wide) in paragraph at lines 2079--2080
+[]\T1/lmr/bx/n/10.95 Ultimo IP valido $\OT1/lmr/m/n/10.95 =$ \T1/lmr/m/n/10.95 broad-cast $\OMS/lmsy/m/n/10.95 ^^@\OT1/lmr/m/n/10.95 1 = 131\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 118\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 127\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 254$ \T1/lmr/m/n/10.95 (di solito as-seg-nato al router/gateway). 
+ []
+
+<figs/rete.png, id=1093, 1039.885pt x 514.92375pt>
 File: figs/rete.png Graphic file (type png)
 <use figs/rete.png>
-Package pdftex.def Info: figs/rete.png  used on input line 1805.
+Package pdftex.def Info: figs/rete.png  used on input line 2086.
 (pdftex.def)             Requested size: 373.2952pt x 184.84598pt.
 
 
-[81 <./figs/rete.png>]
-Overfull \hbox (0.6277pt too wide) in paragraph at lines 1856--1858
+[84 <./figs/rete.png>]
+Overfull \hbox (0.6277pt too wide) in paragraph at lines 2137--2139
 []\T1/lmr/bx/n/10.95 Subnet A2 (max 29 host $\OMS/lmsy/m/n/10.95 ) \OML/lmm/m/it/10.95 =\OT1/lmr/m/n/10.95 27$\T1/lmr/bx/n/10.95 ): \T1/lmr/m/n/10.95 In-izia subito dopo A1, a par-tire da $\OT1/lmr/m/n/10.95 10\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 24\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 140\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 64\OML/lmm/m/it/10.95 =\OT1/lmr/m/n/10.95 27$\T1/lmr/m/n/10.95 . 
  []
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 1867.
+(Font)              <10> on input line 2148.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 1867.
+(Font)              <7> on input line 2148.
 
 
-[82]
-
-[83]
-LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 2032.
- (/usr/share/texmf/tex/latex/lm/ot1lmtt.fd
-File: ot1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-
-[84{/usr/share/texmf/fonts/enc/dvips/lm/lm-rmtt.enc}]
-<figs/NAT.png, id=1095, 1074.0125pt x 592.2125pt>
-File: figs/NAT.png Graphic file (type png)
-<use figs/NAT.png>
-Package pdftex.def Info: figs/NAT.png  used on input line 2058.
-(pdftex.def)             Requested size: 466.61809pt x 257.29408pt.
-
-
-[85 <./figs/NAT.png>]
-Overfull \hbox (4.5318pt too wide) in paragraph at lines 2116--2117
-[]\T1/lmr/bx/n/10.95 Parità in-cro-ci-ata\T1/lmr/m/n/10.95 : disponi i byte in ma-trice, cal-cola i bit di par-ità riga/colonna; l'intersezione
- []
-
-
+[85]
 
 [86]
 
 [87]
+<figs/NAT.png, id=1124, 1074.0125pt x 592.2125pt>
+File: figs/NAT.png Graphic file (type png)
+<use figs/NAT.png>
+Package pdftex.def Info: figs/NAT.png  used on input line 2339.
+(pdftex.def)             Requested size: 466.61809pt x 257.29408pt.
+
 
 [88]
-<figs/dj.png, id=1143, 817.0525pt x 410.53375pt>
-File: figs/dj.png Graphic file (type png)
-<use figs/dj.png>
-Package pdftex.def Info: figs/dj.png  used on input line 2227.
-(pdftex.def)             Requested size: 466.63487pt x 234.46396pt.
 
-
-[89 <./figs/dj.png>]
-Overfull \hbox (1.25748pt too wide) in paragraph at lines 2260--2263
-[]\T1/lmr/bx/n/10.95 DNS\T1/lmr/m/n/10.95 : us-ato \T1/lmr/m/it/10.95 una sola volta \T1/lmr/m/n/10.95 all'inizio per ri-sol-vere \T1/lmtt/m/n/10.95 flora.cs.unibo.it $\OMS/lmsy/m/n/10.95 ! \OT1/lmr/m/n/10.95 130\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 136\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 5\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 36$ \T1/lmr/m/n/10.95 (UDP).
+[89 <./figs/NAT.png>]
+Overfull \hbox (4.5318pt too wide) in paragraph at lines 2410--2411
+[]\T1/lmr/bx/n/10.95 Parità in-cro-ci-ata\T1/lmr/m/n/10.95 : disponi i byte in ma-trice, cal-cola i bit di par-ità riga/colonna; l'intersezione
  []
 
 
@@ -1426,27 +1450,46 @@ Overfull \hbox (1.25748pt too wide) in paragraph at lines 2260--2263
 
 [91]
 
-[92] (./main.aux)
+[92]
+<figs/dj.png, id=1186, 817.0525pt x 410.53375pt>
+File: figs/dj.png Graphic file (type png)
+<use figs/dj.png>
+Package pdftex.def Info: figs/dj.png  used on input line 2521.
+(pdftex.def)             Requested size: 466.63487pt x 234.46396pt.
+
+
+[93 <./figs/dj.png>]
+Overfull \hbox (1.25748pt too wide) in paragraph at lines 2554--2557
+[]\T1/lmr/bx/n/10.95 DNS\T1/lmr/m/n/10.95 : us-ato \T1/lmr/m/it/10.95 una sola volta \T1/lmr/m/n/10.95 all'inizio per ri-sol-vere \T1/lmtt/m/n/10.95 flora.cs.unibo.it $\OMS/lmsy/m/n/10.95 ! \OT1/lmr/m/n/10.95 130\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 136\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 5\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 36$ \T1/lmr/m/n/10.95 (UDP).
+ []
+
+
+
+[94]
+
+[95]
+
+[96] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 82EC088773B32B751F9B2E85900C12A5;25397.
+(rerunfilecheck)             Checksum: 97D7BFC77998156651242277F44748BD;26237.
  ) 
 Here is how much of TeX's memory you used:
- 13803 strings out of 473197
- 212451 string characters out of 5718606
- 643543 words of memory out of 5000000
- 36531 multiletter control sequences out of 15000+600000
- 665535 words of font info for 108 fonts, out of 8000000 for 9000
+ 13834 strings out of 473197
+ 212788 string characters out of 5718606
+ 643388 words of memory out of 5000000
+ 36545 multiletter control sequences out of 15000+600000
+ 673738 words of font info for 118 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,19n,83p,1240b,644s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri9.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb></usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on main.pdf (93 pages, 15141895 bytes).
+ 69i,29n,79p,1240b,630s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi9.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri9.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy9.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
+Output written on main.pdf (97 pages, 15152799 bytes).
 PDF statistics:
- 1337 PDF objects out of 1440 (max. 8388607)
- 1080 compressed objects within 11 object streams
- 288 named destinations out of 1000 (max. 500000)
- 1368 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1384 PDF objects out of 1440 (max. 8388607)
+ 1122 compressed objects within 12 object streams
+ 301 named destinations out of 1000 (max. 500000)
+ 1400 words of extra memory for PDF output out of 10000 (max. 10000000)
 
