@@ -1,0 +1,40 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# C / C++ build
+cmake-build-debug/
+*.o
+*.obj
+
+# Editor / IDE
+.vscode/
+.idea/
+.obsidian/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Trash / scratch
+.trash/
+
+# Tooling
+.claude/
