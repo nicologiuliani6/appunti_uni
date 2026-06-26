@@ -163,6 +163,10 @@
     <div><div class="k">Anno</div><span id="c-anno"></span></div>
   </div>
   <div id="c-body" class="body"></div>
+  <div id="c-actions" class="links" style="display:none">
+    <div id="c-actions-row" class="row"></div>
+    <div id="c-spiega" class="body" style="display:none"></div>
+  </div>
   <div id="c-links" class="links" style="display:none">
     <p class="k">Collegamenti</p><div id="c-links-row" class="row"></div>
   </div>
@@ -367,7 +371,98 @@ const DATA = {
     {from:"tesi-sos",to:"lp-sem",tipo:"trasversale"},     // SOS ↔ semantica operazionale (corso LP)
     {from:"tesi-vm",to:"arch-vm",tipo:"trasversale"},     // KairosVM ↔ virtual machine
     {from:"tesi-conc",to:"so-conc",tipo:"trasversale"}    // concorrenza reversibile ↔ concorrenza OS
-  ]
+  ],
+  // file di appunti per materia (path nel repo); il bottone apre il sorgente su GitHub.
+  // La tesi è volutamente assente: i suoi file non stanno su GitHub.
+  fonti:{
+    alg :"1/Algebra e Geometria/ORALE_VERO/orale_algebra.tex",
+    ana :"1/Analisi matematica/riassunto_analisi/riassunto_analisi.tex",
+    asd :"1/Algoritmi e strutture di dati/appunti_tex/algoritmi.tex",
+    arch:"1/Architettura degli elaboratori/Architettura degli elaboratori.md",
+    log :"1/Logica per l'informatica/Logica per l'informatica.md",
+    prog:"1/Programazione",
+    ott :"2/ottimizzazione/appunti/ottimizzazione.tex",
+    reti:"2/Reti/appunti_lex/RetiDiCalcolatori.tex",
+    so  :"2/so/tex/so.tex",
+    lp  :"2/linguaggi/tex/programmazione.tex",
+    cn  :"2/calcolo_num/tex/hello.tex",
+    prob:"2/prob/appunti/prob.tex",
+    web :"2/web/tex/web.tex"
+  },
+  // spiegazione estesa per nodo (mostrata dal bottone "Spiega"), basata sugli appunti.
+  spiega:{
+    "alg-mat":"Le matrici rappresentano e risolvono sistemi lineari: operazioni (somma, prodotto, trasposta), rango e teorema di Rouché-Capelli per discutere esistenza e unicità delle soluzioni.",
+    "alg-vsp":"Struttura di spazio vettoriale, sottospazi e indipendenza lineare; una base è un insieme minimo di generatori e la sua cardinalità è la dimensione.",
+    "alg-app":"Funzioni lineari tra spazi: il kernel misura ciò che va a zero, l'immagine ciò che si raggiunge, legati dal teorema della dimensione (dim ker + dim im = dim dominio).",
+    "alg-det":"Il determinante decide l'invertibilità di una matrice (det≠0); il cambio di base riscrive vettori e applicazioni in coordinate diverse.",
+    "alg-aut":"Autovalori e autovettori sono le direzioni invarianti di un'applicazione; gli autospazi permettono la diagonalizzazione quando esiste una base di autovettori.",
+    "alg-ps":"Prodotto scalare, norme e ortogonalità; il processo di Gram-Schmidt costruisce una base ortonormale a partire da una qualunque.",
+    "ana-der":"Derivata come tasso di variazione e pendenza della tangente; usata per monotonia, massimi/minimi e studio di funzione.",
+    "ana-int":"Integrale indefinito (antiderivata) e definito (area con segno); integrazione per parti e per sostituzione, teorema fondamentale del calcolo.",
+    "ana-tay":"Polinomio di Taylor/Maclaurin per approssimare una funzione vicino a un punto usando le sue derivate, con stima dell'errore.",
+    "ana-multi":"Estensione a più variabili: gradiente, matrice Hessiana per classificare i punti critici, Taylor multivariato, curve e superfici di livello.",
+    "ana-vet":"Campi vettoriali e integrali su curve/superfici; i teoremi di Stokes e della divergenza legano integrali di bordo e di volume.",
+    "asd-cost":"Analisi asintotica del costo di tempo e spazio (O, Θ, Ω) per confrontare algoritmi indipendentemente dalla macchina.",
+    "asd-tree":"Alberi binari e loro visite (profondità/ampiezza), BST per ricerca ordinata, AVL per mantenerli bilanciati; alberi n-ari con minimax e alpha-beta pruning.",
+    "asd-hash":"Tabelle hash per accesso medio O(1) con gestione delle collisioni; heap (binary/array) per code di priorità.",
+    "asd-graph":"Grafi orientati/non orientati e pesati, grado e cammini: base per problemi di percorsi e connettività.",
+    "asd-greedy":"Tecnica greedy (scelte localmente ottime) e programmazione dinamica (sottoproblemi sovrapposti): problema dello zaino, sottovettore di somma massima.",
+    "asd-uf":"Struttura union-find per insiemi disgiunti con union by rank e path compression; usata in Kruskal e per la connettività.",
+    "arch-gates":"Costruzione bottom-up dei circuiti combinatori partendo dalla sola porta NAND fino alla ALU (corso nand2tetris).",
+    "arch-cpu":"Registri, RAM e unità di controllo assemblati nel processore Hack che esegue il linguaggio macchina.",
+    "arch-asm":"Linguaggio assembly Hack e assemblatore che traduce simboli e istruzioni in codice binario.",
+    "arch-vm":"Macchina virtuale a stack come livello intermedio: traduce comandi VM (push/pop, aritmetica, funzioni) in assembly.",
+    "arch-comp":"Compilatore a due fasi (analisi sintattica + generazione codice) dal linguaggio Jack a VM code per la piattaforma Hack.",
+    "log-syn":"Sintassi delle formule, regole di precedenza e di associazione degli operatori logici.",
+    "log-ded":"Deduzione naturale: regole di introduzione/eliminazione per quantificatori e implicazione (la 'tecnica del maestro di sci' per ∀).",
+    "log-set":"Teoria ingenua degli insiemi e paradosso di Russell, risolto dall'assiomatica di Zermelo-Fraenkel (estensionalità, separazione, insieme vuoto…).",
+    "prog-base":"Primi programmi in C++: variabili, tipi, input/output e costrutti di ciclo.",
+    "prog-arr":"Array, ricerca lineare e binaria, e algoritmi di ordinamento.",
+    "prog-rec":"Ricorsione su esempi classici: triangolo di Tartaglia, conversione binario↔decimale.",
+    "prog-ds":"Implementazione manuale di liste concatenate e alberi in C++ con i puntatori.",
+    "ott-mod":"Traduzione di problemi reali in modelli di PL/PLI: variabili, vincoli, funzione obiettivo, relazioni logiche e variabili discrete.",
+    "ott-splx":"Geometria dei poliedri, algoritmo del simplesso per spostarsi tra vertici, e dualità con interpretazione dei prezzi ombra.",
+    "ott-flow":"Problemi su rete: flusso massimo e flusso di costo minimo, con i relativi algoritmi.",
+    "ott-bb":"Branch-and-bound: enumerazione con potatura tramite rilassamento lineare per risolvere problemi interi.",
+    "ott-net":"Problemi di accoppiamento (matching) e albero di copertura minimo (MST).",
+    "reti-arch":"Modello a livelli (pila protocollare), topologie, mezzi trasmissivi e prestazioni di una rete.",
+    "reti-ip":"Livello rete: indirizzamento IPv4/IPv6, subnetting, forwarding e routing, protocolli ARP, DHCP, ICMP e tunnelling.",
+    "reti-tcp":"Livello trasporto: TCP affidabile vs UDP, controllo di flusso e controllo di congestione.",
+    "reti-dns":"Risoluzione gerarchica dei nomi (DNS) e livello applicazione con modelli client/server e peer-to-peer.",
+    "reti-sec":"Crittografia RSA, autenticazione, sicurezza di email, SSL/TLS, IPsec, WLAN, firewall e IDS.",
+    "reti-sdn":"Data plane vs control plane: com'è fatto un router, forwarding generalizzato e Software Defined Networking.",
+    "so-conc":"Processi concorrenti, sezioni critiche e meccanismi di sincronizzazione: semafori, monitor, message passing.",
+    "so-sched":"Politiche di scheduling della CPU (es. Round Robin) per assegnare il processore ai processi.",
+    "so-dead":"Deadlock: condizioni di Coffman, prevenzione, evitamento e rilevamento sui grafi di allocazione delle risorse.",
+    "so-mem":"Gestione della memoria (paginazione/segmentazione), I/O, memoria secondaria e file system.",
+    "so-posix":"Programmazione di sistema in C su Unix, standard POSIX e strumenti GNU.",
+    "lp-ma":"Macchine astratte, interpreti e compilatori; cosa significa realizzare e implementare un linguaggio.",
+    "lp-gram":"Grammatiche libere, derivazioni e alberi di parsing, ambiguità; analisi lessicale con espressioni regolari e automi finiti.",
+    "lp-sem":"Semantica operazionale strutturale: regole di transizione per espressioni e comandi, induzione strutturale, nondeterminismo e parallelismo.",
+    "lp-types":"Sistemi di tipi: tipi base, algebra dei tipi e polimorfismo per garantire la correttezza dei programmi.",
+    "lp-mem":"Sicurezza della memoria con garbage collection e borrow-checking; gestione delle eccezioni.",
+    "lp-oop":"Tipi di dato astratto e orientamento agli oggetti come meccanismi di astrazione.",
+    "cn-zeri":"Metodi numerici per trovare zeri di funzione: bisezione, iterazione di punto fisso, metodo di Newton.",
+    "cn-opt":"Ottimizzazione numerica: discesa del gradiente, metodo di Newton e gradiente stocastico (SGD) usato nel machine learning.",
+    "cn-lin":"Risoluzione numerica di sistemi lineari con fattorizzazioni LU e Cholesky; condizionamento e stabilità.",
+    "cn-svd":"Decomposizione ai valori singolari (SVD), soluzione di problemi ai minimi quadrati e compressione di dati.",
+    "cn-inv":"Problemi inversi e imaging (es. deblur), con regolarizzazione di Tikhonov e a variazione totale per stabilizzare la soluzione.",
+    "prob-sp":"Modellazione di esperimenti aleatori: spazio campionario, eventi e assiomi di Kolmogorov.",
+    "prob-cond":"Probabilità condizionata, indipendenza, regola della catena e formula di Bayes per aggiornare le credenze.",
+    "prob-comb":"Calcolo combinatorio: fattoriale, coefficiente binomiale, disposizioni e combinazioni col metodo delle scelte successive.",
+    "prob-va":"Variabili aleatorie discrete e continue, funzione di ripartizione e densità, distribuzioni notevoli, vettori aleatori.",
+    "prob-stat":"Statistica descrittiva, correlazione e regressione, teoremi limite (legge dei grandi numeri, teorema centrale del limite).",
+    "prob-mark":"Processi stocastici e catene di Markov a tempo discreto, omogenee e a stati finiti.",
+    "web-http":"Protocollo HTTP (1.1/2/3), URI, API REST e meccanismi di caching.",
+    "web-auth":"Autenticazione e sicurezza lato web: JSON Web Token, CORS, codifica Base64.",
+    "web-html":"Struttura delle pagine con HTML5 e presentazione con CSS (regole e specificità/priorità).",
+    "web-js":"JavaScript nel browser: oggetti, JSON e manipolazione del DOM.",
+    "web-node":"Lato server con TypeScript, runtime Node.js e framework Express.js.",
+    "tesi-mnemo":"Mnemo definisce come tradurre ogni costrutto C in Kairos: modello di memoria unificato, mappatura dei tipi, ed emulazione di aritmetica e operatori bit-a-bit che Kairos non ha nativamente.",
+    "tesi-vm":"KairosVM interpreta direttamente il testo del programma: scelte su risoluzione di nomi/salti, heap ibrido dei puntatori, realloc a raddoppio e il costo della reversibilità.",
+    "tesi-sos":"La semantica operazionale strutturale di Kairos: store, assegnamenti reversibili, scope local/delocal, ciclo from…loop…until e chiamate con inversa.",
+    "tesi-conc":"Concorrenza in stile π-calcolo (non lock arbitrari): canali ssend/srecv, composizione parallela par/and/rap, commit/rollback con try per il backtracking."
+  }
 };
 
 /* =========================  VIEWER  (non toccare)  ====================== */
@@ -414,6 +509,8 @@ function showCard(id){
   const ms = document.getElementById("c-mat"); ms.textContent = mat.nome; ms.style.color = mat.colore;
   document.getElementById("c-anno").textContent = n._anno;
   document.getElementById("c-body").textContent = n._det;
+  // azioni: spiega + apri appunti
+  setupActions(id, n._mat);
   // collegamenti
   const linked = DATA.archi.filter(e=>e.from===id||e.to===id).map(e=>e.from===id?e.to:e.from);
   const box = document.getElementById("c-links"), row = document.getElementById("c-links-row");
@@ -428,6 +525,30 @@ function showCard(id){
     });
   } else box.style.display="none";
   document.getElementById("card").classList.add("show");
+}
+const GH = "https://github.com/nicologiuliani6/appunti_uni/blob/main/";
+function setupActions(id, mat){
+  const row = document.getElementById("c-actions-row");
+  const box = document.getElementById("c-spiega");
+  row.innerHTML = ""; box.style.display = "none"; box.textContent = "";
+  const sp = DATA.spiega[id], src = DATA.fonti[mat];
+  if(sp){
+    const b = document.createElement("button");
+    b.textContent = "Spiega";
+    b.onclick = () => {
+      const open = box.style.display === "block";
+      box.textContent = sp; box.style.display = open ? "none" : "block";
+      b.textContent = open ? "Spiega" : "Nascondi";
+    };
+    row.appendChild(b);
+  }
+  if(src){
+    const a = document.createElement("button");
+    a.textContent = "📄 Apri appunti";
+    a.onclick = () => window.open(GH + encodeURI(src), "_blank");
+    row.appendChild(a);
+  }
+  document.getElementById("c-actions").style.display = (sp || src) ? "block" : "none";
 }
 function hideCard(){ document.getElementById("card").classList.remove("show"); network.unselectAll(); }
 function focusNode(id){ network.focus(id,{scale:1.15, animation:{duration:420, easingFunction:"easeInOutQuad"}}); }
