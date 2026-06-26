@@ -1,0 +1,481 @@
+<!--
+  ATLANTE UNI — mappa interattiva del percorso universitario
+  ----------------------------------------------------------
+  Tutto ciò che devi rigenerare è il blocco  const DATA = {...}  più sotto.
+  Il resto (viewer) non va toccato. Fai rigenerare DATA a Claude Code
+  leggendo le tue cartelle anno/materia. Schema dei dati documentato lì.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atlante · percorso universitario</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.9/styles/vis-network.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.9/dist/vis-network.min.js"></script>
+
+<style>
+  :root{
+    --bg:#0c1422;            /* notte / carta da atlante */
+    --bg-soft:#121d31;
+    --ink:#e8eef7;
+    --ink-dim:#8497b4;
+    --hair:#23344f;
+    --card:#0f1a2c;
+    --card-edge:#2a3f5f;
+    --signature:#f3d27a;     /* oro: la tesi/Mnemo */
+    --shadow:0 24px 60px -20px rgba(0,0,0,.7);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"SF Mono","JetBrains Mono","DejaVu Sans Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{
+    background:
+      radial-gradient(1200px 800px at 78% -10%, #15233c 0%, transparent 60%),
+      radial-gradient(900px 700px at 8% 110%, #101a2e 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:var(--sans); overflow:hidden;
+  }
+  #net{position:fixed; inset:0}
+
+  /* ---- intestazione ---- */
+  header{
+    position:fixed; top:22px; left:26px; z-index:5; pointer-events:none;
+    max-width:46ch;
+  }
+  header .kicker{
+    font-family:var(--mono); font-size:11px; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--ink-dim); margin:0 0 6px;
+  }
+  header h1{
+    font-family:var(--serif); font-weight:600; font-size:30px; line-height:1;
+    margin:0; letter-spacing:.01em;
+  }
+  header h1 em{color:var(--signature); font-style:italic}
+  header p{font-size:12.5px; color:var(--ink-dim); margin:8px 0 0; line-height:1.5}
+
+  /* ---- pannello controlli ---- */
+  .controls{
+    position:fixed; top:22px; right:22px; z-index:5; width:248px;
+    background:linear-gradient(180deg,rgba(18,29,49,.92),rgba(12,20,34,.92));
+    border:1px solid var(--hair); border-radius:14px; padding:14px 14px 12px;
+    backdrop-filter:blur(10px); box-shadow:var(--shadow);
+  }
+  .controls .lab{
+    font-family:var(--mono); font-size:10px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--ink-dim); margin:0 0 8px;
+  }
+  .search{
+    width:100%; background:var(--bg); border:1px solid var(--hair);
+    color:var(--ink); border-radius:9px; padding:8px 10px; font-size:13px;
+    font-family:var(--sans); outline:none; margin-bottom:14px;
+  }
+  .search:focus{border-color:var(--card-edge)}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px}
+  .chip{
+    font:500 11.5px/1 var(--sans); padding:6px 9px; border-radius:999px;
+    border:1px solid var(--hair); background:transparent; color:var(--ink-dim);
+    cursor:pointer; transition:.15s; user-select:none;
+  }
+  .chip:hover{color:var(--ink)}
+  .chip[data-on="1"]{color:#0c1422; border-color:transparent}
+  .legend{display:flex; flex-direction:column; gap:7px}
+  .leg{
+    display:flex; align-items:center; gap:9px; cursor:pointer;
+    font-size:12px; color:var(--ink); padding:2px 0; user-select:none;
+  }
+  .leg .dot{width:11px; height:11px; border-radius:50%; flex:none; box-shadow:0 0 0 3px rgba(255,255,255,.04)}
+  .leg[data-off="1"]{opacity:.32}
+  .leg:hover{opacity:1; filter:brightness(1.1)}
+
+  /* ---- scheda di catalogo (signature) ---- */
+  .card{
+    position:fixed; left:26px; bottom:24px; z-index:6; width:340px;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 27px, rgba(255,255,255,.025) 27px 28px),
+      var(--card);
+    border:1px solid var(--card-edge); border-left:4px solid var(--signature);
+    border-radius:4px; box-shadow:var(--shadow);
+    transform:translateY(18px); opacity:0; pointer-events:none;
+    transition:transform .22s ease, opacity .22s ease;
+    font-family:var(--serif);
+  }
+  .card.show{transform:none; opacity:1; pointer-events:auto}
+  .card .top{display:flex; justify-content:space-between; align-items:flex-start;
+    padding:14px 16px 8px; border-bottom:1px solid var(--hair)}
+  .card .ref{font-family:var(--mono); font-size:10px; letter-spacing:.18em;
+    color:var(--ink-dim); text-transform:uppercase}
+  .card .x{font-family:var(--sans); cursor:pointer; color:var(--ink-dim);
+    font-size:18px; line-height:1; padding:0 2px}
+  .card .x:hover{color:var(--ink)}
+  .card .title{font-size:21px; line-height:1.15; padding:12px 16px 6px; font-weight:600}
+  .card .meta{display:flex; gap:18px; padding:0 16px 12px; font-family:var(--sans)}
+  .card .meta div{font-size:12px}
+  .card .meta .k{font-family:var(--mono); font-size:9px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px}
+  .card .body{padding:0 16px 14px; font-size:14px; line-height:1.5; color:#d4ddec;
+    font-family:var(--sans); border-top:1px solid var(--hair); padding-top:12px}
+  .card .links{padding:0 16px 16px}
+  .card .links .k{font-family:var(--mono); font-size:9px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--ink-dim); margin:0 0 8px}
+  .card .links .row{display:flex; flex-wrap:wrap; gap:6px}
+  .card .links button{
+    font:500 12px/1 var(--sans); cursor:pointer; padding:6px 10px; border-radius:7px;
+    background:var(--bg-soft); border:1px solid var(--hair); color:var(--ink); transition:.15s}
+  .card .links button:hover{border-color:var(--signature); color:var(--signature)}
+
+  /* ---- mini barra in basso a destra ---- */
+  .tools{position:fixed; right:22px; bottom:24px; z-index:5; display:flex; gap:8px}
+  .tools button{
+    font:500 12px/1 var(--sans); cursor:pointer; color:var(--ink-dim);
+    background:rgba(18,29,49,.9); border:1px solid var(--hair); border-radius:9px;
+    padding:9px 12px; backdrop-filter:blur(8px)}
+  .tools button:hover{color:var(--ink); border-color:var(--card-edge)}
+
+  @media (max-width:720px){
+    header{max-width:none; right:26px}
+    .controls{display:none}
+    .card{left:14px; right:14px; width:auto; bottom:14px}
+  }
+</style>
+
+<div id="net"></div>
+
+<header>
+  <p class="kicker">archivio del sapere · unibo</p>
+  <h1>Atlante del <em>percorso</em></h1>
+  <p>Ogni nodo è un argomento. Le linee piene legano i temi dentro una materia, quelle tratteggiate i ponti tra materie e con la tesi. Clicca un nodo per la scheda.</p>
+</header>
+
+<div class="controls">
+  <input id="q" class="search" placeholder="Cerca argomento…" autocomplete="off">
+  <p class="lab">Anni</p>
+  <div id="years" class="chips"></div>
+  <p class="lab">Materie</p>
+  <div id="legend" class="legend"></div>
+</div>
+
+<div id="card" class="card">
+  <div class="top"><span id="c-ref" class="ref"></span><span class="x" onclick="hideCard()">✕</span></div>
+  <div id="c-title" class="title"></div>
+  <div class="meta">
+    <div><div class="k">Materia</div><span id="c-mat"></span></div>
+    <div><div class="k">Anno</div><span id="c-anno"></span></div>
+  </div>
+  <div id="c-body" class="body"></div>
+  <div id="c-links" class="links" style="display:none">
+    <p class="k">Collegamenti</p><div id="c-links-row" class="row"></div>
+  </div>
+</div>
+
+<div class="tools">
+  <button onclick="network.fit({animation:true})">Adatta vista</button>
+  <button id="physBtn" onclick="togglePhysics()">Ferma fisica</button>
+</div>
+
+<script>
+/* =========================================================================
+   DATI  —  unico blocco da rigenerare con Claude Code.
+   Schema:
+     materie : { id : { nome, colore } }
+     nodi    : [ { id, label, materia, anno, dettagli } ]
+     archi   : [ { from, to, tipo:"interno"|"trasversale" } ]
+   Regole per la rigenerazione:
+     - 1 nodo = 1 argomento; tieni le label brevi (≤ ~28 caratteri)
+     - "interno" = stesso corso ; "trasversale" = tra materie/anni o verso la tesi
+     - non inventare argomenti assenti dai file; se un corso è vuoto, salta o segnala
+   ========================================================================= */
+const DATA = {
+  materie:{
+    // — Anno 1 —
+    alg  :{nome:"Algebra e Geometria",         colore:"#e8b04b"},
+    ana  :{nome:"Analisi Matematica",          colore:"#ff7e6b"},
+    asd  :{nome:"Algoritmi e Strutture Dati",  colore:"#6fcf97"},
+    arch :{nome:"Architettura Elaboratori",    colore:"#5b8def"},
+    log  :{nome:"Logica per l'Informatica",    colore:"#b06bd6"},
+    prog :{nome:"Programmazione (C++)",         colore:"#e86fa9"},
+    // — Anno 2 —
+    ott  :{nome:"Ottimizzazione Combinatoria", colore:"#d8c34a"},
+    reti :{nome:"Reti di Calcolatori",         colore:"#48c4c0"},
+    so   :{nome:"Sistemi Operativi",           colore:"#ef6f6c"},
+    lp   :{nome:"Linguaggi di Programmazione", colore:"#9b7dff"},
+    cn   :{nome:"Calcolo Numerico",            colore:"#3fb9d4"},
+    prob :{nome:"Probabilità e Statistica",    colore:"#93c54b"},
+    web  :{nome:"Tecnologie Web",              colore:"#f0934b"},
+    // — Tesi —
+    tesi :{nome:"Tesi · Kairos / Mnemo",       colore:"#f3d27a"}
+  },
+  nodi:[
+    // ===== Anno 1 =====
+    // — Algebra e Geometria —
+    {id:"alg-mat", label:"Matrici e sistemi lineari", materia:"alg", anno:"Anno 1", dettagli:"Operazioni sulle matrici, risoluzione di sistemi, teorema di Rouché-Capelli."},
+    {id:"alg-vsp", label:"Spazi vettoriali",          materia:"alg", anno:"Anno 1", dettagli:"Sottospazi, combinazioni lineari, basi e dimensione."},
+    {id:"alg-app", label:"Applicazioni lineari",      materia:"alg", anno:"Anno 1", dettagli:"Kernel, immagine, teorema della dimensione."},
+    {id:"alg-det", label:"Determinante e inversa",    materia:"alg", anno:"Anno 1", dettagli:"Criterio di invertibilità, cambio di base."},
+    {id:"alg-aut", label:"Autovalori e autovettori",  materia:"alg", anno:"Anno 1", dettagli:"Autospazi, diagonalizzazione."},
+    {id:"alg-ps",  label:"Prodotto scalare",          materia:"alg", anno:"Anno 1", dettagli:"Ortogonalità, processo di Gram-Schmidt."},
+    // — Analisi Matematica —
+    {id:"ana-der",   label:"Derivate",                materia:"ana", anno:"Anno 1", dettagli:"Calcolo differenziale e studio di funzione."},
+    {id:"ana-int",   label:"Integrali",               materia:"ana", anno:"Anno 1", dettagli:"Integrale definito e indefinito, tecniche di integrazione."},
+    {id:"ana-tay",   label:"Taylor e Maclaurin",      materia:"ana", anno:"Anno 1", dettagli:"Approssimazione polinomiale di funzioni."},
+    {id:"ana-multi", label:"Funzioni a più variabili",materia:"ana", anno:"Anno 1", dettagli:"Hessiana, punti critici, Taylor multivariato, superfici di livello."},
+    {id:"ana-vet",   label:"Calcolo vettoriale",      materia:"ana", anno:"Anno 1", dettagli:"Teoremi di Stokes e della divergenza, piano tangente."},
+    // — Algoritmi e Strutture Dati —
+    {id:"asd-cost",   label:"Costo computazionale",    materia:"asd", anno:"Anno 1", dettagli:"Analisi della complessità degli algoritmi."},
+    {id:"asd-tree",   label:"Alberi: BST e AVL",       materia:"asd", anno:"Anno 1", dettagli:"Alberi binari, visite, alberi di ricerca, bilanciamento AVL, n-ari, minimax."},
+    {id:"asd-hash",   label:"Hash table e Heap",       materia:"asd", anno:"Anno 1", dettagli:"Tabelle hash, binary/array heap."},
+    {id:"asd-graph",  label:"Grafi",                   materia:"asd", anno:"Anno 1", dettagli:"Grafi orientati/pesati, gradi, cammini."},
+    {id:"asd-greedy", label:"Greedy e Prog. dinamica", materia:"asd", anno:"Anno 1", dettagli:"Problema dello zaino, sottovettore di valore massimo."},
+    {id:"asd-uf",     label:"Union-Find",              materia:"asd", anno:"Anno 1", dettagli:"Strutture per insiemi disgiunti."},
+    // — Architettura degli Elaboratori (nand2tetris) —
+    {id:"arch-gates", label:"Logica booleana e gate",  materia:"arch", anno:"Anno 1", dettagli:"Dai NAND alle porte logiche e alla ALU."},
+    {id:"arch-cpu",   label:"CPU e memoria Hack",      materia:"arch", anno:"Anno 1", dettagli:"Registri, RAM, costruzione del processore."},
+    {id:"arch-asm",   label:"Assembler",               materia:"arch", anno:"Anno 1", dettagli:"Linguaggio macchina Hack e traduzione assembly."},
+    {id:"arch-vm",    label:"Virtual Machine",         materia:"arch", anno:"Anno 1", dettagli:"Macchina a stack, gestione di funzioni e chiamate."},
+    {id:"arch-comp",  label:"Compilatore Jack",        materia:"arch", anno:"Anno 1", dettagli:"Parsing del linguaggio Jack e generazione di VM code per la piattaforma Hack."},
+    // — Logica per l'Informatica —
+    {id:"log-syn", label:"Sintassi e semantica",       materia:"log", anno:"Anno 1", dettagli:"Precedenza e associazione degli operatori."},
+    {id:"log-ded", label:"Deduzione naturale",         materia:"log", anno:"Anno 1", dettagli:"Regole per quantificatori e implicazione."},
+    {id:"log-set", label:"Teoria assiomatica insiemi", materia:"log", anno:"Anno 1", dettagli:"Paradosso di Russell, assiomi di Zermelo-Fraenkel."},
+    // — Programmazione (C++) —
+    {id:"prog-base", label:"Basi C++ e cicli",         materia:"prog", anno:"Anno 1", dettagli:"Variabili, cicli, primi programmi in C++."},
+    {id:"prog-arr",  label:"Array e ordinamento",      materia:"prog", anno:"Anno 1", dettagli:"Ricerca e algoritmi di sort su array."},
+    {id:"prog-rec",  label:"Ricorsione",               materia:"prog", anno:"Anno 1", dettagli:"Triangolo di Tartaglia, conversioni di base."},
+    {id:"prog-ds",   label:"Liste e alberi in C++",    materia:"prog", anno:"Anno 1", dettagli:"Implementazione di strutture dati dinamiche."},
+    // ===== Anno 2 =====
+    // — Ottimizzazione Combinatoria —
+    {id:"ott-mod",  label:"Modelli PL / PLI",          materia:"ott", anno:"Anno 2", dettagli:"Formulazione di problemi, variabili discrete, relazioni logiche."},
+    {id:"ott-splx", label:"Simplesso e dualità",       materia:"ott", anno:"Anno 2", dettagli:"Geometria della PL, dualità, direzioni di crescita."},
+    {id:"ott-flow", label:"Flussi su rete",            materia:"ott", anno:"Anno 2", dettagli:"Flusso massimo e flusso di costo minimo."},
+    {id:"ott-bb",   label:"Branch-and-Bound",          materia:"ott", anno:"Anno 2", dettagli:"Risoluzione di problemi interi per enumerazione."},
+    {id:"ott-net",  label:"Accoppiamento e MST",       materia:"ott", anno:"Anno 2", dettagli:"Matching e minimum spanning tree."},
+    // — Reti di Calcolatori —
+    {id:"reti-arch", label:"Architettura a livelli",   materia:"reti", anno:"Anno 2", dettagli:"Pila protocollare, topologie, mezzi di trasmissione."},
+    {id:"reti-ip",   label:"IP, subnet e routing",     materia:"reti", anno:"Anno 2", dettagli:"IPv4/IPv6, subnetting, forwarding, ARP, DHCP, ICMP."},
+    {id:"reti-tcp",  label:"TCP/UDP e congestione",    materia:"reti", anno:"Anno 2", dettagli:"Controllo di flusso e congestione, livello trasporto."},
+    {id:"reti-dns",  label:"DNS e applicazione",       materia:"reti", anno:"Anno 2", dettagli:"Nomi di dominio, servizi client/server e peer-to-peer."},
+    {id:"reti-sec",  label:"Sicurezza di rete",        materia:"reti", anno:"Anno 2", dettagli:"RSA, autenticazione, SSL, IPsec, firewall e IDS."},
+    {id:"reti-sdn",  label:"Data/Control plane e SDN", materia:"reti", anno:"Anno 2", dettagli:"Struttura dei router, forwarding generalizzato, SDN."},
+    // — Sistemi Operativi —
+    {id:"so-conc",  label:"Concorrenza e semafori",    materia:"so", anno:"Anno 2", dettagli:"Sezioni critiche, semafori, monitor, message passing."},
+    {id:"so-sched", label:"Scheduling",                materia:"so", anno:"Anno 2", dettagli:"Algoritmi di scheduling dei processi."},
+    {id:"so-dead",  label:"Deadlock",                  materia:"so", anno:"Anno 2", dettagli:"Gestione delle risorse, rilevamento e prevenzione."},
+    {id:"so-mem",   label:"Memoria e file system",     materia:"so", anno:"Anno 2", dettagli:"Gestione della memoria, I/O, memoria secondaria, file system."},
+    {id:"so-posix", label:"C POSIX e Unix",            materia:"so", anno:"Anno 2", dettagli:"Linguaggio C per SO, standard POSIX, ambiente Unix/GNU."},
+    // — Linguaggi di Programmazione —
+    {id:"lp-ma",    label:"Macchine astratte",         materia:"lp", anno:"Anno 2", dettagli:"Interpreti, compilatori e realizzazione di un linguaggio."},
+    {id:"lp-gram",  label:"Grammatiche e parsing",     materia:"lp", anno:"Anno 2", dettagli:"Derivazioni, alberi di parsing, ambiguità, automi finiti."},
+    {id:"lp-sem",   label:"Semantica operazionale",    materia:"lp", anno:"Anno 2", dettagli:"Induzione strutturale, nondeterminismo e parallelismo."},
+    {id:"lp-types", label:"Sistemi di tipi",           materia:"lp", anno:"Anno 2", dettagli:"Algebra dei tipi, polimorfismo."},
+    {id:"lp-mem",   label:"Memoria e GC",              materia:"lp", anno:"Anno 2", dettagli:"Garbage collection, borrow-checking, exceptions."},
+    {id:"lp-oop",   label:"ADT e Object Orientation",  materia:"lp", anno:"Anno 2", dettagli:"Tipi di dato astratto e orientamento agli oggetti."},
+    // — Calcolo Numerico —
+    {id:"cn-zeri", label:"Zeri di funzione",           materia:"cn", anno:"Anno 2", dettagli:"Bisezione, punto fisso, metodo di Newton."},
+    {id:"cn-opt",  label:"Ottimizzazione numerica",    materia:"cn", anno:"Anno 2", dettagli:"Metodo del gradiente, Newton, gradiente stocastico (SGD)."},
+    {id:"cn-lin",  label:"Sistemi lineari",            materia:"cn", anno:"Anno 2", dettagli:"Fattorizzazioni LU e Cholesky, condizionamento."},
+    {id:"cn-svd",  label:"SVD e minimi quadrati",      materia:"cn", anno:"Anno 2", dettagli:"Decomposizione SVD, problema LSQ, compressione."},
+    {id:"cn-inv",  label:"Problemi inversi e imaging",  materia:"cn", anno:"Anno 2", dettagli:"Deblur, regolarizzazione di Tikhonov e a variazione totale."},
+    // — Probabilità e Statistica —
+    {id:"prob-sp",   label:"Spazi di probabilità",     materia:"prob", anno:"Anno 2", dettagli:"Modello di esperimento aleatorio, assiomi della probabilità."},
+    {id:"prob-cond", label:"Condizionata e Bayes",     materia:"prob", anno:"Anno 2", dettagli:"Indipendenza, regola della catena, formula di Bayes."},
+    {id:"prob-comb", label:"Calcolo combinatorio",     materia:"prob", anno:"Anno 2", dettagli:"Fattoriale, coefficiente binomiale, disposizioni e combinazioni."},
+    {id:"prob-va",   label:"Variabili aleatorie",      materia:"prob", anno:"Anno 2", dettagli:"V.a. discrete e continue, distribuzioni notevoli, vettori aleatori."},
+    {id:"prob-stat", label:"Statistica e teoremi limite", materia:"prob", anno:"Anno 2", dettagli:"Statistica descrittiva, correlazione e regressione, teoremi limite."},
+    {id:"prob-mark", label:"Catene di Markov",         materia:"prob", anno:"Anno 2", dettagli:"Processi stocastici, catene a tempo discreto e stati finiti."},
+    // — Tecnologie Web —
+    {id:"web-http", label:"HTTP e REST",               materia:"web", anno:"Anno 2", dettagli:"HTTP/1-2-3, URI, API REST, caching."},
+    {id:"web-auth", label:"Auth: JWT, CORS, Base64",   materia:"web", anno:"Anno 2", dettagli:"JSON Web Token, CORS, codifica Base64."},
+    {id:"web-html", label:"HTML e CSS",                materia:"web", anno:"Anno 2", dettagli:"Markup, elementi HTML5, regole e priorità CSS."},
+    {id:"web-js",   label:"JavaScript e DOM",          materia:"web", anno:"Anno 2", dettagli:"Oggetti JS, JSON, manipolazione del DOM."},
+    {id:"web-node", label:"TypeScript, Node, Express", materia:"web", anno:"Anno 2", dettagli:"TypeScript, runtime Node.js, framework Express.js."},
+    // ===== Tesi (documentazione) =====
+    {id:"tesi-mnemo", label:"Mnemo: traduzione C → Kairos", materia:"tesi", anno:"Tesi", dettagli:"Logica di traduzione da C a Kairos: modello di memoria unificato, tipi, aritmetica e operatori bit-a-bit."},
+    {id:"tesi-vm",    label:"KairosVM: implementazione",     materia:"tesi", anno:"Tesi", dettagli:"Interprete sul testo, risoluzione di nomi e salti, heap ibrido, realloc a raddoppio, costi della reversibilità."},
+    {id:"tesi-sos",   label:"Kairos: semantica SOS",         materia:"tesi", anno:"Tesi", dettagli:"Semantica operazionale strutturale: store, assegnamenti reversibili, scope local/delocal, cicli from…loop…until."},
+    {id:"tesi-conc",  label:"Concorrenza reversibile",       materia:"tesi", anno:"Tesi", dettagli:"π-calcolo, canali ssend/srecv, composizione parallela par/and, commit/rollback con try."}
+  ],
+  archi:[
+    // ===== interni =====
+    // Algebra
+    {from:"alg-mat",to:"alg-vsp",tipo:"interno"},{from:"alg-vsp",to:"alg-app",tipo:"interno"},
+    {from:"alg-app",to:"alg-det",tipo:"interno"},{from:"alg-det",to:"alg-aut",tipo:"interno"},
+    {from:"alg-vsp",to:"alg-ps",tipo:"interno"},
+    // Analisi
+    {from:"ana-der",to:"ana-int",tipo:"interno"},{from:"ana-der",to:"ana-tay",tipo:"interno"},
+    {from:"ana-tay",to:"ana-multi",tipo:"interno"},{from:"ana-multi",to:"ana-vet",tipo:"interno"},
+    // ASD
+    {from:"asd-cost",to:"asd-tree",tipo:"interno"},{from:"asd-tree",to:"asd-hash",tipo:"interno"},
+    {from:"asd-tree",to:"asd-graph",tipo:"interno"},{from:"asd-graph",to:"asd-greedy",tipo:"interno"},
+    {from:"asd-tree",to:"asd-uf",tipo:"interno"},
+    // Architettura
+    {from:"arch-gates",to:"arch-cpu",tipo:"interno"},{from:"arch-cpu",to:"arch-asm",tipo:"interno"},
+    {from:"arch-asm",to:"arch-vm",tipo:"interno"},{from:"arch-vm",to:"arch-comp",tipo:"interno"},
+    // Logica
+    {from:"log-syn",to:"log-ded",tipo:"interno"},{from:"log-ded",to:"log-set",tipo:"interno"},
+    // Programmazione
+    {from:"prog-base",to:"prog-arr",tipo:"interno"},{from:"prog-arr",to:"prog-rec",tipo:"interno"},
+    {from:"prog-arr",to:"prog-ds",tipo:"interno"},{from:"prog-rec",to:"prog-ds",tipo:"interno"},
+    // Ottimizzazione
+    {from:"ott-mod",to:"ott-splx",tipo:"interno"},{from:"ott-mod",to:"ott-flow",tipo:"interno"},
+    {from:"ott-flow",to:"ott-net",tipo:"interno"},{from:"ott-splx",to:"ott-bb",tipo:"interno"},
+    // Reti
+    {from:"reti-arch",to:"reti-ip",tipo:"interno"},{from:"reti-ip",to:"reti-tcp",tipo:"interno"},
+    {from:"reti-tcp",to:"reti-dns",tipo:"interno"},{from:"reti-ip",to:"reti-sec",tipo:"interno"},
+    {from:"reti-ip",to:"reti-sdn",tipo:"interno"},
+    // Sistemi Operativi
+    {from:"so-conc",to:"so-sched",tipo:"interno"},{from:"so-sched",to:"so-dead",tipo:"interno"},
+    {from:"so-dead",to:"so-mem",tipo:"interno"},{from:"so-conc",to:"so-posix",tipo:"interno"},
+    {from:"so-mem",to:"so-posix",tipo:"interno"},
+    // Linguaggi di Programmazione
+    {from:"lp-ma",to:"lp-gram",tipo:"interno"},{from:"lp-gram",to:"lp-sem",tipo:"interno"},
+    {from:"lp-sem",to:"lp-types",tipo:"interno"},{from:"lp-types",to:"lp-mem",tipo:"interno"},
+    {from:"lp-mem",to:"lp-oop",tipo:"interno"},
+    // Calcolo Numerico
+    {from:"cn-zeri",to:"cn-opt",tipo:"interno"},{from:"cn-zeri",to:"cn-lin",tipo:"interno"},
+    {from:"cn-lin",to:"cn-svd",tipo:"interno"},{from:"cn-svd",to:"cn-inv",tipo:"interno"},
+    // Probabilità
+    {from:"prob-sp",to:"prob-cond",tipo:"interno"},{from:"prob-cond",to:"prob-comb",tipo:"interno"},
+    {from:"prob-comb",to:"prob-va",tipo:"interno"},{from:"prob-va",to:"prob-stat",tipo:"interno"},
+    {from:"prob-stat",to:"prob-mark",tipo:"interno"},
+    // Web
+    {from:"web-http",to:"web-auth",tipo:"interno"},{from:"web-http",to:"web-html",tipo:"interno"},
+    {from:"web-html",to:"web-js",tipo:"interno"},{from:"web-js",to:"web-node",tipo:"interno"},
+    // Tesi
+    {from:"tesi-sos",to:"tesi-vm",tipo:"interno"},{from:"tesi-mnemo",to:"tesi-vm",tipo:"interno"},
+    {from:"tesi-mnemo",to:"tesi-sos",tipo:"interno"},{from:"tesi-sos",to:"tesi-conc",tipo:"interno"},
+    // ===== trasversali (ponti tra materie/anni) =====
+    {from:"alg-mat",to:"ana-multi",tipo:"trasversale"},   // matrici ↔ Hessiana
+    {from:"alg-app",to:"cn-lin",tipo:"trasversale"},      // applicazioni lineari ↔ algebra lineare numerica
+    {from:"alg-aut",to:"cn-svd",tipo:"trasversale"},      // autovalori ↔ SVD
+    {from:"ana-int",to:"prob-va",tipo:"trasversale"},     // integrali ↔ densità continue
+    {from:"asd-graph",to:"ott-flow",tipo:"trasversale"},  // grafi ↔ flussi su rete
+    {from:"asd-graph",to:"reti-ip",tipo:"trasversale"},   // cammini ↔ routing
+    {from:"asd-greedy",to:"ott-net",tipo:"trasversale"},  // greedy ↔ MST
+    {from:"prog-ds",to:"asd-tree",tipo:"trasversale"},    // strutture dati: implementazione ↔ teoria
+    {from:"arch-vm",to:"lp-ma",tipo:"trasversale"},       // VM a stack ↔ macchine astratte
+    {from:"arch-comp",to:"lp-gram",tipo:"trasversale"},   // compilatore Jack ↔ parsing/grammatiche
+    {from:"log-ded",to:"lp-sem",tipo:"trasversale"},      // deduzione/induzione ↔ semantica operazionale
+    {from:"log-set",to:"prob-sp",tipo:"trasversale"},     // teoria insiemi ↔ spazi di probabilità
+    {from:"reti-tcp",to:"web-http",tipo:"trasversale"},   // TCP ↔ HTTP
+    {from:"reti-sec",to:"web-auth",tipo:"trasversale"},   // sicurezza di rete ↔ auth web
+    {from:"so-conc",to:"lp-sem",tipo:"trasversale"},      // concorrenza ↔ nondeterminismo/parallelismo
+    {from:"ott-splx",to:"cn-opt",tipo:"trasversale"},     // simplesso ↔ ottimizzazione numerica
+    {from:"cn-svd",to:"prob-stat",tipo:"trasversale"},    // minimi quadrati ↔ regressione
+    // verso la tesi
+    {from:"tesi-mnemo",to:"so-posix",tipo:"trasversale"}, // Mnemo traduce C ↔ C/POSIX
+    {from:"tesi-mnemo",to:"lp-gram",tipo:"trasversale"},  // traduzione ↔ compilazione/parsing
+    {from:"tesi-sos",to:"lp-sem",tipo:"trasversale"},     // SOS ↔ semantica operazionale (corso LP)
+    {from:"tesi-vm",to:"arch-vm",tipo:"trasversale"},     // KairosVM ↔ virtual machine
+    {from:"tesi-conc",to:"so-conc",tipo:"trasversale"}    // concorrenza reversibile ↔ concorrenza OS
+  ]
+};
+
+/* =========================  VIEWER  (non toccare)  ====================== */
+const M = DATA.materie;
+const nodeColor = id => M[DATA.nodi.find(n=>n.id===id).materia].colore;
+
+const nodes = new vis.DataSet(DATA.nodi.map(n=>{
+  const c = M[n.materia].colore, big = n.materia==="tesi";
+  return {
+    id:n.id, label:n.label, group:n.materia,
+    shape:"dot", size: big?20:13,
+    color:{background:c, border:c, highlight:{background:c,border:"#fff"}, hover:{background:c,border:"#fff"}},
+    font:{color:"#dfe7f3", size:13, face:'ui-sans-serif, system-ui', strokeWidth:0,
+          vadjust:2, bold: big?{color:"#f3d27a"}:undefined},
+    borderWidth: big?2:1,
+    _mat:n.materia, _anno:n.anno, _det:n.dettagli, _label:n.label
+  };
+}));
+const edges = new vis.DataSet(DATA.archi.map((e,i)=>{
+  const tr = e.tipo==="trasversale";
+  return {
+    id:"e"+i, from:e.from, to:e.to,
+    dashes: tr?[4,5]:false,
+    width: tr?1.2:1.6,
+    color:{color: tr? "#5b7099" : nodeColor(e.from), opacity: tr?.55:.45,
+           highlight:"#f3d27a", hover:"#aab8d4"},
+    smooth:{type:"continuous", roundness:.25}, _tr:tr
+  };
+}));
+
+const network = new vis.Network(document.getElementById("net"), {nodes,edges}, {
+  physics:{ solver:"forceAtlas2Based",
+    forceAtlas2Based:{gravitationalConstant:-48, centralGravity:.012, springLength:110, springConstant:.06, damping:.5},
+    stabilization:{iterations:220}},
+  interaction:{hover:true, tooltipDelay:120, navigationButtons:false, keyboard:false},
+  edges:{selectionWidth:1.4},
+});
+
+/* ---- scheda al click ---- */
+function showCard(id){
+  const n = nodes.get(id), mat = M[n._mat];
+  document.getElementById("c-ref").textContent = n._mat.toUpperCase()+" · "+id;
+  document.getElementById("c-title").textContent = n._label;
+  const ms = document.getElementById("c-mat"); ms.textContent = mat.nome; ms.style.color = mat.colore;
+  document.getElementById("c-anno").textContent = n._anno;
+  document.getElementById("c-body").textContent = n._det;
+  // collegamenti
+  const linked = DATA.archi.filter(e=>e.from===id||e.to===id).map(e=>e.from===id?e.to:e.from);
+  const box = document.getElementById("c-links"), row = document.getElementById("c-links-row");
+  row.innerHTML="";
+  if(linked.length){
+    box.style.display="block";
+    [...new Set(linked)].forEach(t=>{
+      const b=document.createElement("button");
+      b.textContent = nodes.get(t)._label;
+      b.onclick=()=>{ network.selectNodes([t]); focusNode(t); showCard(t); };
+      row.appendChild(b);
+    });
+  } else box.style.display="none";
+  document.getElementById("card").classList.add("show");
+}
+function hideCard(){ document.getElementById("card").classList.remove("show"); network.unselectAll(); }
+function focusNode(id){ network.focus(id,{scale:1.15, animation:{duration:420, easingFunction:"easeInOutQuad"}}); }
+
+network.on("click", p=>{ if(p.nodes.length){ showCard(p.nodes[0]); } else hideCard(); });
+network.on("doubleClick", p=>{ if(p.nodes.length) focusNode(p.nodes[0]); });
+
+/* ---- filtri anno ---- */
+const annoSet = [...new Set(DATA.nodi.map(n=>n.anno))];
+const offYears = new Set();
+const yearsBox = document.getElementById("years");
+annoSet.forEach(a=>{
+  const c=document.createElement("span"); c.className="chip"; c.textContent=a; c.dataset.on="1";
+  c.style.background="#22344f"; c.style.color="#e8eef7";
+  c.onclick=()=>{ if(offYears.has(a)){offYears.delete(a);c.dataset.on="1";c.style.background="#22344f";c.style.color="#e8eef7";}
+                  else{offYears.add(a);c.dataset.on="0";c.style.background="transparent";c.style.color="#8497b4";}
+                  applyFilters(); };
+  yearsBox.appendChild(c);
+});
+
+/* ---- legenda materie (click = isola) ---- */
+const offMat = new Set();
+const legend = document.getElementById("legend");
+Object.entries(M).forEach(([id,m])=>{
+  const r=document.createElement("div"); r.className="leg";
+  r.innerHTML=`<span class="dot" style="background:${m.colore}"></span>${m.nome}`;
+  r.onclick=()=>{ if(offMat.has(id)){offMat.delete(id);r.dataset.off="0";}
+                  else{offMat.add(id);r.dataset.off="1";} applyFilters(); };
+  legend.appendChild(r);
+});
+
+function applyFilters(){
+  nodes.update(DATA.nodi.map(n=>({
+    id:n.id, hidden: offYears.has(n.anno) || offMat.has(n.materia)
+  })));
+}
+
+/* ---- ricerca ---- */
+document.getElementById("q").addEventListener("input", e=>{
+  const v=e.target.value.trim().toLowerCase(); if(!v) return;
+  const hit = DATA.nodi.find(n=>n._label?.toLowerCase().includes(v) || n.label.toLowerCase().includes(v));
+  if(hit){ network.selectNodes([hit.id]); focusNode(hit.id); showCard(hit.id); }
+});
+document.getElementById("q").addEventListener("keydown", e=>{ if(e.key==="Escape") hideCard(); });
+
+/* ---- fisica on/off ---- */
+let phys=true;
+function togglePhysics(){ phys=!phys; network.setOptions({physics:{enabled:phys}});
+  document.getElementById("physBtn").textContent = phys?"Ferma fisica":"Avvia fisica"; }
+network.once("stabilizationIterationsDone", ()=>{ network.fit({animation:false}); });
+</script>
