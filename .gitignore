@@ -36,5 +36,8 @@ Thumbs.db
 # Trash / scratch
 .trash/
 
+# Documentazione tesi: symlink fuori repo, NON deve finire su GitHub
+tesi/
+
 # Tooling
 .claude/
