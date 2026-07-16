@@ -385,15 +385,17 @@ La verifica principale \`e che l'\textbf{integrale (area totale) faccia 1}:
 \end{concetto}
 
 \begin{concetto}[barGreen]{Ripartizione $F_X$ da una densit\`a a tratti (metodo)}
-$F_X(x)=P(X\le x)=\int_{-\infty}^{x} f(t)\,dt$ si costruisce intervallo per intervallo, \textbf{accumulando l'area}:
-\begin{itemize}[leftmargin=1.2em,itemsep=2pt,topsep=2pt]
+$F_X(x)=P(X\le x)=\int_{-\infty}^{x} f(t)\,dt$ si costruisce intervallo per intervallo, \textbf{accumulando l'area}.
+\begin{enumerate}
 \item Prima del supporto: $F_X(x)=0$.
 \item Primo pezzo $[a_0,a_1]$: $\ F_X(x)=\displaystyle\int_{a_0}^{x} f(t)\,dt$.
 \item Pezzo successivo $[a_1,a_2]$: si \emph{riparte dal valore gi\`a accumulato} $F_X(a_1)$ (= il pezzo precedente valutato nel suo estremo destro) e si aggiunge l'integrale sul nuovo pezzo:
 \[ F_X(x)=F_X(a_1)+\int_{a_1}^{x} f(t)\,dt \]
+(si ripete per ogni pezzo successivo, sempre ripartendo dal valore accumulato).
 \item Dopo il supporto: $F_X(x)=1$.
-\end{itemize}
-\emph{In pratica:} l'estremo sinistro del nuovo pezzo, messo nella formula del pezzo precedente, d\`a la costante di partenza. $F_X$ deve venire \textbf{continua} e crescente da $0$ a $1$ (controllo finale).
+\item \textbf{Controllo finale:} $F_X$ deve venire \textbf{continua} e crescente da $0$ a $1$.
+\end{enumerate}
+\emph{In pratica:} l'estremo sinistro del nuovo pezzo, messo nella formula del pezzo precedente, d\`a la costante di partenza.
 
 \textbf{Esempio (triangolare):} $f(x)=x$ su $[0,1]$, $\ f(x)=2-x$ su $(1,2]$, $\ 0$ altrove.
 \begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=2pt]
@@ -408,29 +410,29 @@ $F_X(x)=P(X\le x)=\int_{-\infty}^{x} f(t)\,dt$ si costruisce intervallo per inte
 \[ E[X] = \int_{-\infty}^{+\infty} x\,f_X(x)\,dx, \quad E[X^2] = \int_{-\infty}^{+\infty} x^2 f_X(x)\,dx, \quad \mathrm{Var}(X) = E[X^2]-(E[X])^2 \]
 \end{concetto}
 
-\begin{concetto}[barGreen]{Come trovare la densit\`a e funzione di riparizione di $Y=g(X)$}
-\begin{enumerate}[leftmargin=1.4em,itemsep=1pt,topsep=2pt]
-\item \textbf{Supporto} $S_Y=[\min(g(x)), \max(g(x))]$ (per i valori di $S_x$).
-\item \textbf{Ripartizione} $F_Y(y)=P(Y\le y)=P(g(X)\le y) \Rightarrow P(X > \dots)$ (stai attento a risolvere bene, guarda sotto) .
-\item \textbf{Esprimi con $F_X$} (che conosci o calcoli sul momento).
-\item \textbf{Deriva:} $f_Y(y)=F_Y'(y)$. Controllo: $f_Y\ge0$ e $\int f_Y = 1$.
-\end{enumerate}
+\begin{concetto}[barGreen]{Metodo generale: legge di $Y=g(X)$}
+Su $S_X=[p,q]$, $S_Y=[\min_{x\in S_X} g(x),\ \max_{x\in S_X} g(x)]$.
+\begin{enumerate}
+\item Calcolare (se non lo si ha gia') $F_X(x) =  \begin{cases}
+0 \quad & x < p \\
+\int_{p}^x f_x(t) \, dt \quad & x \in [p,q]\\
+1 \quad & x \geq q
+  \end{cases}$
 
-\textbf{Schema esplicito} (caso $g$ crescente, $g(X)\le y \iff X\le g^{-1}(y)$):
-\[ F_Y(y) = P(g(X)\le y) = P\big(X \le g^{-1}(y)\big) = F_X\big(g^{-1}(y)\big) \]
-\[ \Rightarrow\ f_Y(y) = F_Y'(y) = \Big[F_X\big(g^{-1}(y)\big)\Big]' = \big(g^{-1}(y)\big)'\cdot F_X'\big(g^{-1}(y)\big) = \big(g^{-1}(y)\big)'\cdot f_X\big(g^{-1}(y)\big) \]
-\emph{Regola della catena:} la derivata di $F_X(\text{qualcosa})$ \`e $(\text{qualcosa})' \cdot f_X(\text{qualcosa})$. (Se $g$ \`e decrescente compare un segno: si usa il valore assoluto $|(g^{-1})'|$.)
+\item $F_Y(y)=0 \quad y < \min g \qquad F_Y(y)=1 \quad y \geq \max g$
 
-\textbf{Scorciatoie} (se riconosci la forma di $g$, salti direttamente a $f_Y$):
-\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=2pt]
-\item $g$ \emph{lineare} $Y=aX+b$: $\ f_Y(y)=\frac{1}{|a|}f_X\!\left(\frac{y-b}{a}\right)$.
-\item $g$ \emph{monotona} (invertibile): $\ f_Y(y)=f_X(g^{-1}(y))\cdot\left|\frac{d}{dy}g^{-1}(y)\right|$.
-\item $Y=X^2$: $\ F_Y(y)=F_X(\sqrt{y})-F_X(-\sqrt{y})$ \; (vedi box).
-\item $Y=|X-a|$: $\ F_Y(y)=F_X(a+y)-F_X(a-y)$ \; (vedi box).
+\item Per $y$ nel range di $S_Y$, isolare $X$ nella disuguaglianza $g(X)\le y$:
+\begin{itemize}
+\item se $g$ \`e \textbf{crescente} su $S_X$: $g(X)\le y \iff X\le g^{-1}(y)$, quindi
+\[ F_Y(y)=F_X\big(g^{-1}(y)\big) \]
+\item se $g$ \`e \textbf{decrescente} su $S_X$: la disuguaglianza si ribalta, $g(X)\le y \iff X\ge g^{-1}(y)$, quindi
+\[ F_Y(y)=1-F_X\big(g^{-1}(y)\big) \]
+\item se $g$ \textbf{non \`e monotona} (es.\ $X^2$, $|X-a|$): la condizione si spezza in \textbf{due lati}, e la \textbf{cases} nasce da come questo intervallo interseca $S_X=[p,q]$: si individua la soglia $y^*$ in cui un bordo esce dal supporto (vedi i box specifici per $Y=X^2$ e $Y=|X-a|$).
 \end{itemize}
-Se $g$ non \`e monotona (es.\ $X^2$, $|X-1|$): \emph{non} usare la scorciatoia monotona; torna al metodo universale (passi 1--4), spezzando in cases dove serve.
-\end{concetto}
 
+\item Infine calcoliamo $f_Y(y)=F_Y'(y)$ derivando ogni pezzo separatamente (regola della catena: $\big(F_X(h(y))\big)'=h'(y)\,f_X(h(y))$). Controllo: $f_Y\ge0$, $\int f_Y=1$.
+\end{enumerate}
+\end{concetto}
 
 \begin{concetto}[barGreen]{Svolgere $P(g(X)\le y)$: isolare $X$ (casi comuni)}
 Il cuore del metodo \`e trasformare $g(X)\le y$ in una condizione su $X$. Regola:
@@ -459,22 +461,89 @@ $|X|$ & $-y\le X\le y\ (y\ge0)$ & $F_X(y)-F_X(-y)$ \\
 \emph{Attenzione al ribaltamento:} ogni volta che dividi per un numero negativo o applichi una funzione decrescente, il verso della disuguaglianza si inverte ($\le$ diventa $\ge$).
 \end{concetto}
 
-\begin{concetto}[barGreen]{Caso $Y=X^2$ (non monotona)}
-Su $S_X=[-a,b]$, $S_Y=[0,\max(a^2,b^2)]$. Per $y\in[0,\min(a^2,b^2))$:
+\begin{concetto}[barGreen]{Determinare la legge della variabile aleatoria $Y=X^2$}
+Su $S_X=[-a,b]$, $S_Y=[0,\max(a^2,b^2)]$. 
+\begin{enumerate}
+\item Calcolare (se non lo si ha gia') $F_X(x) =  \begin{cases}
+0 \quad & x < (-a) \\
+\int_{(-a)}^x f_x(t) \, dt \quad & x \in [-a,b]\\
+1 \quad & x \geq b
+  \end{cases}$ 
+\item $F_Y(y)=0 \quad y < 0 \qquad F_Y(y)=1 \quad y \geq \max(a^2,b^2)$
+\item Per $y\in[0,a^2)$:
 \[ F_Y(y)=P(-\sqrt{y}\le X\le\sqrt{y})=F_X(\sqrt{y})-F_X(-\sqrt{y}) \]
-Oltre $\min(a^2,b^2)$ solo un lato \`e attivo; poi $f_Y(y)=F_Y'(y)$.
+Altrimenti $y \in [a^2, \max(a^2,b^2))$
+\begin{align*}
+  F_Y(y)=P(X\le\sqrt{y})=F_X(\sqrt{y})
+\end{align*}
+Quindi avremo
+\begin{align*}
+  F_Y(y)= \begin{cases}
+    0 & y < 0\\
+    F_X(\sqrt{y})-F_X(-\sqrt{y}) & y\in[0,a^2)\\
+    F_X(\sqrt{y}) &y \in [a^2, \max(a^2,b^2))\\
+    1 & y \geq \max(a^2,b^2)
+  \end{cases}
+\end{align*}
+\item Infine calcoliamo 
+\begin{align*}
+  f_Y(y) = \begin{cases}
+0 \quad & y < 0 \land y \geq \max(a^2,b^2)\\
+    \dfrac{d(F_X(\sqrt{y})-F_X(-\sqrt{y}))}{dy} \quad & y \in [0, a^2]\\
+    \dfrac{d(F_X(\sqrt{y}))}{dy} \quad & \text{ nel restante}
+\end{cases}
+\end{align*}
+\end{enumerate}
 \end{concetto}
 
 \begin{concetto}[barGreen]{Caso $Y=|X-a|$ (valore assoluto)}
-$Y\ge0$. L'idea \`e togliere il modulo trasformando la disuguaglianza: per $y\ge0$
-\[ |X-a|\le y \iff a-y \le X \le a+y \]
-quindi
-\[ F_Y(y) = P(a-y \le X \le a+y) = F_X(a+y) - F_X(a-y), \qquad f_Y(y) = f_X(a+y) + f_X(a-y) \]
-Le \textbf{cases} nascono da come l'intervallo $[a-y,\,a+y]$ interseca il supporto di $X$: si spezza in intervalli di $y$ e in ognuno si usa il pezzo giusto di $F_X$. (Per $y<0$: $F_Y(y)=0$.)
+Su $S_X=[p,q]$ (con $a\in[p,q]$), $Y=|X-a|\ge0$, $S_Y=[0,\max(a-p,\,q-a)]$.
+\begin{enumerate}
+\item Calcolare (se non lo si ha gia') $F_X(x) =  \begin{cases}
+0 \quad & x < p \\
+\int_{p}^x f_x(t) \, dt \quad & x \in [p,q]\\
+1 \quad & x \geq q
+  \end{cases}$
 
-\emph{Esempio} ($X$ triangolare su $[0,2]$, $a=1$): $Y=|X-1|\in[0,1]$. Con la $F_X$ trovata prima,
-\[ F_Y(y)=F_X(1+y)-F_X(1-y) = 2y - y^2 \ \ (0\le y\le1), \qquad f_Y(y)=2-2y \]
+\item $F_Y(y)=0 \quad y < 0 \qquad F_Y(y)=1 \quad y \geq \max(a-p,\,q-a)$
+
+\item Per $y\ge0$ togliamo il modulo: $|X-a|\le y \iff a-y\le X\le a+y$. La \textbf{cases} nasce da come $[a-y,a+y]$ interseca $S_X=[p,q]$: il bordo sinistro $a-y$ esce da $S_X$ quando $y\ge a-p$, il bordo destro $a+y$ esce quando $y\ge q-a$. Sia $m=\min(a-p,\,q-a)$, $M=\max(a-p,\,q-a)$.
+
+Per $y\in[0,m)$ (nessun bordo satura):
+\[ F_Y(y)=P(a-y\le X\le a+y)=F_X(a+y)-F_X(a-y) \]
+
+Per $y\in[m,M)$ (un bordo satura — dipende da chi tra $a-p$ e $q-a$ è più piccolo):
+\[
+F_Y(y)=
+\begin{cases}
+F_X(a+y) & \text{se } m=a-p \ \ (\text{cio\`e } F_X(a-y)=0)\\
+1-F_X(a-y) & \text{se } m=q-a \ \ (\text{cio\`e } F_X(a+y)=1)
+\end{cases}
+\]
+
+Quindi avremo
+\begin{align*}
+  F_Y(y)= \begin{cases}
+    0 & y < 0\\
+    F_X(a+y)-F_X(a-y) & y\in[0,m)\\
+    F_X(a+y) \ \text{oppure} \ 1-F_X(a-y) & y \in [m, M)\\
+    1 & y \geq M
+\end{cases}
+\end{align*}
+
+\item Infine calcoliamo
+\begin{align*}
+  f_Y(y) = \begin{cases}
+0 \quad & y < 0 \lor y \geq M\\
+    f_X(a+y)+f_X(a-y) \quad & y \in [0, m)\\
+    f_X(a+y) \ \text{oppure} \ f_X(a-y) \quad & y \in [m,M)
+\end{cases}
+\end{align*}
+
+\emph{Esempio} ($X$ triangolare su $[0,2]$, $a=1$): qui $p=0,q=2$, quindi $a-p=1=q-a=1$, cio\`e $m=M=1$ (caso simmetrico, non serve la fascia intermedia). Con la $F_X$ trovata prima,
+\[ F_Y(y)=F_X(1+y)-F_X(1-y) = 2y - y^2 \ \ (0\le y\le1) \qquad f_Y(y)=2-2y \]
 \[ F_Y(y)=\begin{cases} 0 & y<0 \\ 2y-y^2 & 0\le y\le 1 \\ 1 & y>1 \end{cases} \]
+\end{enumerate}
 \end{concetto}
 
 \begin{concetto}[barGreen]{Distribuzioni miste (n\'e continue n\'e discrete)}
@@ -496,6 +565,26 @@ Per $Z=\frac{X-c}{d}$ scrivi $a=\frac1d$, $b=-\frac cd$. Media e varianza (per q
 Se $X\sim\mathcal{N}(\mu,\sigma^2)$ resta normale: $Z\sim\mathcal{N}\!\left(\frac{\mu-c}{d},\frac{\sigma^2}{d^2}\right)$.
 
 \emph{Esempio:} $Z=\frac{X-100}{5}$ con $X\sim\mathcal{N}(100,25)$ $\Rightarrow Z\sim\mathcal{N}(0,1)$ (standardizzazione); $f_Z(z)=5f_X(5z+100)$.
+\end{concetto}
+
+\begin{concetto}[barGreen]{Costruire una densit\`a congiunta compatibile con una marginale data}
+\inparole{se conosci $f_X$ e ti chiedono ``una possibile'' densit\`a congiunta $f_{(X,Y)}(x,y)$ compatibile con essa, la scelta pi\`u semplice \`e imporre l'indipendenza.}
+\begin{enumerate}
+\item \textbf{Vincolo da rispettare} (la congiunta deve avere $f_X$ come marginale):
+\[ \int_{-\infty}^{+\infty} f_{(X,Y)}(x,y)\,dy = f_X(x), \qquad \forall x \in \mathbb{R} \]
+
+\item \textbf{Scorciatoia standard:} se $Y$ ha densit\`a nota $f_Y$ (es.\ $Y\sim U(0,1)$, $f_Y(y)=1$ su $[0,1]$), una possibile congiunta \`e
+\[ f_{(X,Y)}(x,y) = f_X(x)\cdot f_Y(y) \]
+cio\`e si prendono $X$ e $Y$ \textbf{indipendenti}.
+
+\item \textbf{Verifica rapida} che soddisfi il vincolo:
+\[ \int_{-\infty}^{+\infty} f_X(x)f_Y(y)\,dy = f_X(x)\underbrace{\int_{-\infty}^{+\infty} f_Y(y)\,dy}_{=1} = f_X(x) \ \checkmark \]
+
+\item \textbf{Attenzione:} la richiesta dice ``\emph{una possibile}'' densit\`a $\Rightarrow$ non \`e unica! L'indipendenza \`e solo la scelta pi\`u comoda da verificare; qualsiasi altra $f_{(X,Y)}\ge0$ con la marginale corretta in $x$ andrebbe bene ugualmente.
+\end{enumerate}
+
+\emph{Esempio:} $Y\sim U(0,1)$ (quindi $f_Y(y)=1$ per $y\in[0,1]$, $0$ altrove) e $f_X$ la densit\`a trovata in precedenza per $X$:
+\[ f_{(X,Y)}(x,y) = f_X(x)\cdot \mathbf{1}_{[0,1]}(y) \]
 \end{concetto}
 
 \begin{concetto}[barGreen]{Standardizzazione della Normale}
@@ -626,12 +715,64 @@ Catena \textbf{regolare} = irriducibile + aperiodica $\iff \exists\, n_0$ con $\
 \end{concetto}
 
 \begin{concetto}[barPurple]{Distribuzione invariante (stazionaria)}
-$\vec v$ tale che $\ \vec v = \vec v\,\Pi\ $ e $\ \sum_j v_j = 1,\ v_j\ge0$.
+Vettore riga $\vec v=(v_0,v_1,\dots)$ tale che $\ \vec v = \vec v\,\Pi\ $ e $\ \sum_j v_j = 1,\ v_j\ge0$.
+
+\textbf{Procedimento (vale sempre, anche con stati assorbenti/transitori):}
 \begin{enumerate}[leftmargin=1.4em,itemsep=1pt,topsep=2pt]
-\item Scrivere $v_j = \sum_i v_i\pi_{ij}$ per ogni $j$.
-\item Aggiungere $\sum_j v_j = 1$ (sostituendo un'equazione: il sistema \`e ridondante).
+\item Assegnare un'incognita a ogni stato: $\vec v=(a,b,c,\dots)$.
+\item Scrivere il sistema, \textbf{una equazione per COLONNA} $j$ di $\Pi$: moltiplico ogni elemento della colonna per la variabile della sua riga, sommo, e pongo $=$ alla variabile dello stato $j$:
+\begin{align*}
+\begin{cases}
+    x_1a+y_1b+z_1c= a\\
+    x_2a+y_2b+z_2c=b\\
+\quad\vdots
+\end{cases}
+\end{align*}
+(cio\`e: $v_j = \sum_i v_i\,\pi_{ij}$).
+\item Il sistema \`e ridondante (le righe di $\Pi$ sommano a 1 $\Rightarrow$ un'equazione \`e combinazione delle altre): scartarne una qualsiasi.
+\item Risolvere le equazioni rimanenti esprimendo tutte le incognite in funzione di una sola (es. $b=\alpha a$, $c=\beta a$, \dots). \textbf{Nota:} alcune variabili possono uscire direttamente $=0$ (es. da $\frac14 a=a \Rightarrow a=0$): \`e normale, significa che quello stato \`e transitorio (la catena lo abbandona per sempre, quindi niente massa stazionaria).
+\item Scrivere $a+b+c+d+\dots=1$ e sostituirci i valori trovati al punto 4: resta un'equazione in una sola incognita, la si risolve, e poi si sostituisce all'indietro per ottenere il valore numerico di tutte le altre (vedi esempi sotto).
 \end{enumerate}
-Se irriducibile: $\vec v$ unica. \textbf{Teorema ergodico}: se regolare, $\pi_{ij}^{(n)}\to v_j$ per ogni $i,j$.
+
+Se la catena \`e \textbf{irriducibile}: $\vec v$ esiste ed \`e unica.
+
+\textbf{Teorema ergodico}: se la catena \`e \textbf{regolare} (irriducibile + aperiodica), allora
+$$\pi_{ij}^{(n)} \xrightarrow[n\to\infty]{} v_j \quad \forall i,j$$
+cio\`e ogni riga di $\Pi^n$ converge a $\vec v$, indipendentemente dallo stato di partenza.
+
+\textbf{Esempio 1 (irriducibile):} stati $0,1,2$, $\vec v=(a,b,c)$,
+$$\Pi = \begin{pmatrix} \frac23 & \frac13 & 0 \\ \frac13 & \frac12 & \frac16 \\ 0 & \frac13 & \frac23 \end{pmatrix}$$
+Sistema (una equazione per colonna, scarto la colonna 1):
+$$\begin{cases}
+\frac23a+\frac13b=a & \text{(col. 0)}\\[2pt]
+\frac16b+\frac23c=c & \text{(col. 2)}
+\end{cases}$$
+Colonna 0: $\frac23a+\frac13b=a \Rightarrow \frac13b=\frac13a \Rightarrow b=a$.
+
+Colonna 2: $\frac16b+\frac23c=c \Rightarrow \frac16b=\frac13c \Rightarrow c=\frac{b}{2}=\frac{a}{2}$.
+
+Normalizzo: $a+b+c=1 \Rightarrow a+a+\frac{a}{2}=1 \Rightarrow \frac52a=1 \Rightarrow a=\frac25$.
+
+Sostituisco indietro: $b=a=\frac25$, $c=\frac a2=\frac15$.
+$$\vec v=\left(\tfrac25,\tfrac25,\tfrac15\right)$$
+
+\textbf{Esempio 2 (con stati transitori):} stati $H,C,P,U$, $\vec v=(a,b,c,d)$,
+$$\Pi = \begin{pmatrix} \frac14 & \frac12 & 0 & \frac14 \\ 0 & \frac13 & \frac13 & \frac13 \\ 0 & \frac12 & 0 & \frac12 \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
+Sistema (una equazione per colonna, scarto l'ultima):
+$$\begin{cases}
+\frac14 a = a & \text{(col. } H\text{)}\\[2pt]
+\frac12 a + \frac13 b + \frac12 c = b & \text{(col. } C\text{)}\\[2pt]
+\frac13 b = c & \text{(col. } P\text{)}
+\end{cases}$$
+Colonna $H$: $\frac14 a = a \Rightarrow -\frac34a=0 \Rightarrow a=0$.
+
+Colonna $P$: $c=\frac{b}{3}$.
+
+Colonna $C$ (sostituendo $a=0$, $c=\frac b3$): $\frac13 b + \frac16 b = b \Rightarrow \frac12 b = b \Rightarrow b=0$, quindi $c=0$.
+
+Normalizzo: $a+b+c+d=1 \Rightarrow 0+0+0+d=1 \Rightarrow d=1$.
+$$\vec v = (0,0,0,1)$$
+($H,C,P$ escono $=0$ perch\'e transitori; tutta la massa finisce sull'assorbente $U$.)
 \end{concetto}
 
 \begin{concetto}[barPurple]{Probabilit\`a di assorbimento}
