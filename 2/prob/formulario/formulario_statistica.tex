@@ -9,6 +9,8 @@
 \setlength{\parskip}{4pt}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
 \hypersetup{
   colorlinks=true,
   linkcolor={blue!55!black},
@@ -53,6 +55,21 @@
 \titlespacing*{\section}{0pt}{14pt}{8pt}
 
 \newcommand{\inparole}[1]{\emph{In parole:} #1}
+
+% ---- stile per l'albero delle probabilita' (CORRETTO: distanze per livello) ----
+\tikzset{
+  albero/.style={
+    grow=right,
+    level distance=3.3cm,
+    edge from parent/.style={draw,-{Latex[length=2mm]}},
+    every node/.style={font=\small},
+    level 1/.style={sibling distance=3.6cm},
+    level 2/.style={sibling distance=1.7cm},
+    level 3/.style={sibling distance=0.9cm}
+  },
+  etichetta/.style={midway,above,font=\scriptsize,text=blue!55!black},
+  etichettaR/.style={midway,above,font=\scriptsize,text=red!60!black}
+}
 
 \begin{document}
 \begin{center}
@@ -202,6 +219,56 @@ Caso in 2 (pi\`u frequente): $P(A) = P(A \mid B)\, P(B) + P(A \mid B^c)\, P(B^c)
 $P(E_j)$ = prob.\ a priori; $\ P(E_j \mid A)$ = prob.\ a posteriori (dopo aver osservato $A$).
 \end{concetto}
 
+\begin{concetto}[barBlue]{Diagramma ad albero (albero delle probabilit\`a)}
+\inparole{\`e il modo pi\`u naturale per ``disegnare'' un esperimento che si svolge in \emph{fasi successive} (prima capita questo, poi quest'altro, \dots): ogni fase \`e un livello dell'albero, ogni ramo un esito possibile con la sua probabilit\`a.}
+
+\textbf{Come si costruisce:}
+\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+\item Si parte da $\Omega$ (la radice) e si individua la \textbf{prima fase} dell'esperimento: i suoi esiti diventano i \textbf{primi rami}, etichettati con la probabilit\`a \emph{non condizionata} (es. $P(A)$, $P(A^c)$).
+\item Da ciascun nodo raggiunto si apre un nuovo livello di rami per la \textbf{fase successiva}: le etichette sono ora probabilit\`a \textbf{condizionate} a \emph{tutto il cammino percorso finora} (es. $P(R_1\mid A)$, poi $P(R_2 \mid A\cap R_1)$).
+\item Si ripete un livello per ogni fase, finch\'e l'esperimento non \`e completamente descritto.
+\item \textbf{Controllo ad ogni nodo:} i rami che escono dallo stesso nodo devono sempre sommare a $1$ (\`e una partizione di ci\`o che pu\`o succedere da l\`i in poi).
+\end{enumerate}
+
+\textbf{Come si usa (una volta disegnato):}
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt,topsep=2pt]
+\item \textbf{Probabilit\`a di un cammino (foglia)} = \textbf{prodotto} delle etichette lungo i rami percorsi (regola della catena):
+\[ P(\text{esito finale del cammino}) = \prod_{\text{rami del cammino}} P(\text{ramo} \mid \text{cammino fin l\`i}) \]
+\item \textbf{Probabilit\`a di un evento finale} (es. ``esce $R_2$'', che pu\`o arrivare da pi\`u cammini diversi) = \textbf{somma} delle probabilit\`a di \emph{tutti} i cammini/foglie che portano a quell'esito (\`e la formula delle probabilit\`a totali letta sull'albero).
+\item \textbf{Bayes sull'albero:} per $P(\text{causa}\mid \text{esito finale})$ si divide la probabilit\`a del cammino di interesse per la somma di tutti i cammini che arrivano a quell'esito.
+\end{itemize}
+
+\emph{Esempio (2 urne, 2 estrazioni):} $\Omega$ si divide prima in $A/A^c$ (scelta dell'urna), poi ogni ramo si divide in $R_1/B_1$ (prima estrazione, prob.\ condizionata all'urna), poi ogni foglia raggiunta si divide ancora in $R_2/B_2$ (seconda estrazione, prob.\ condizionata a \emph{tutto} il cammino: urna \emph{e} colore gi\`a estratto).
+
+\begin{center}
+\begin{tikzpicture}[albero]
+\node {$\Omega$}
+  child { node {$A$}
+    child { node {$R_1$}
+      child { node {$R_2$} edge from parent node[etichetta]{$\mathbb{P}(R_2\mid A\cap R_1)=1$} }
+      child { node {$B_2$} edge from parent node[etichetta,below]{$\mathbb{P}(B_2\mid A\cap R_1)=0$} }
+      edge from parent node[etichettaR]{$\mathbb{P}(R_1\mid A)=1$}
+    }
+    child { node {$B_1$} edge from parent node[etichettaR,below]{$\mathbb{P}(B_1\mid A)=0$} }
+    edge from parent node[etichetta]{$\mathbb{P}(A)=\frac12$}
+  }
+  child { node {$A^c$}
+    child { node {$R_1$}
+      child { node {$B_2$} edge from parent node[etichetta]{$\mathbb{P}(B_2\mid A^c\cap R_1)=1$} }
+      edge from parent node[etichettaR]{$\mathbb{P}(R_1\mid A^c)=\frac12$}
+    }
+    child { node {$B_1$}
+      child { node {$R_2$} edge from parent node[etichetta,below]{$\mathbb{P}(R_2\mid A^c\cap B_1)=1$} }
+      edge from parent node[etichettaR,below]{$\mathbb{P}(B_1\mid A^c)=\frac12$}
+    }
+    edge from parent node[etichetta,below]{$\mathbb{P}(A^c)=\frac12$}
+  };
+\end{tikzpicture}
+\end{center}
+
+\emph{Lettura del disegno:} il cammino $\Omega\to A\to R_1\to R_2$ ha probabilit\`a $\frac12\cdot1\cdot1=\frac12$; l'evento ``esce $R_2$'' \`e dato dai due cammini che finiscono in $R_2$ (via $A\cap R_1$ e via $A^c\cap B_1$), quindi $P(R_2)=\frac12\cdot1\cdot1+\frac12\cdot\frac12\cdot1=\frac34$.
+\end{concetto}
+
 \begin{concetto}{Indipendenza}
 \inparole{$A$ e $B$ sono indipendenti se sapere che uno \`e accaduto non cambia la probabilit\`a dell'altro.}
 \[ A, B \text{ indipendenti} \iff P(A \cap B) = P(A)\, P(B) \]
@@ -232,12 +299,42 @@ Ripeto $n$ volte una prova indipendente con probabilit\`a $p$ di successo. La pr
 \item Se chiede ``sapendo $A$\dots'': Bayes $P(E_j\mid A)$.
 \item Due eventi indipendenti: moltiplica. Unione: $P(A\cup B)=P(A)+P(B)-P(A\cap B)$.
 \item $k$ successi su $n$ prove indipendenti: binomio.
+\item Se l'esperimento ha pi\`u fasi in sequenza: conviene \textbf{disegnare l'albero} (v. box sopra), moltiplicare lungo i rami e sommare le foglie che interessano.
 \end{enumerate}
 \end{trucco}
 
 % ======================================================
 \newpage
 \section{Variabili Aleatorie Discrete}
+
+\begin{concetto}[barBlue]{Determinare $(\Omega, P)$ per un esperimento aleatorio}
+\inparole{$\Omega$ \`e l'insieme di tutti i possibili esiti elementari dell'esperimento; $P$ \`e la regola che assegna una probabilit\`a a ciascun esito (o evento).}
+
+\textbf{Passi per costruire $(\Omega, P)$:}
+\begin{enumerate}[leftmargin=1.4em,itemsep=2pt,topsep=2pt]
+\item \textbf{Identificare l'esperimento elementare}: cosa viene effettivamente osservato/estratto/lanciato (es.\ un dado, una pallina, un lancio di moneta).
+\item \textbf{Definire $\Omega$}: l'insieme di \emph{tutti} gli esiti possibili, elementari e mutuamente esclusivi.
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+\item Se ci sono pi\`u prove/estrazioni, $\Omega$ \`e tipicamente un prodotto cartesiano: $\Omega=\{1,\dots,6\}^2$ (due dadi), oppure sequenze ordinate $\Omega=\{(a_1,\dots,a_n)\}$.
+\item Attenzione a \textbf{ordine} e \textbf{ripetizione}: estrazioni con/senza reinserimento, ordinate/non ordinate cambiano la cardinalit\`a di $\Omega$.
+\end{itemize}
+\item \textbf{Assegnare $P$ sugli esiti elementari}:
+\begin{itemize}[leftmargin=1.2em,itemsep=1pt,topsep=1pt]
+\item Se gli esiti sono \textbf{equiprobabili} (dadi non truccati, palline indistinguibili estratte a caso): $P(\omega) = \dfrac{1}{|\Omega|}$ per ogni $\omega$, e per un evento $A$: $P(A) = \dfrac{|A|}{|\Omega|}$ (calcolo combinatorio).
+\item Se gli esiti \textbf{non} sono equiprobabili, assegnare $P(\omega)$ singolarmente in base ai dati del problema (es.\ moneta truccata con $P(\text{testa})=p$).
+\end{itemize}
+\item \textbf{Verificare gli assiomi}: $P(\omega) \ge 0$ per ogni $\omega$, e $\displaystyle\sum_{\omega \in \Omega} P(\omega) = 1$.
+\item \textbf{Esprimere gli eventi di interesse come sottoinsiemi di $\Omega$}: un evento $A$ \`e un insieme di esiti, $A \subseteq \Omega$, e $P(A) = \sum_{\omega \in A} P(\omega)$.
+\end{enumerate}
+\end{concetto}
+
+\begin{trucco}
+\textbf{Riconoscimento:} qualunque problema che descrive un esperimento fisico (lanci, estrazioni, code, guasti) va \emph{sempre} tradotto per primo in $(\Omega,P)$ esplicito, anche se poi si useranno v.a.\ per semplificare i calcoli.
+
+\textbf{Errore comune:} confondere $\Omega$ (esiti elementari) con il \textbf{supporto} di una v.a.\ $X$ definita su $\Omega$ -- sono due insiemi diversi collegati da $X:\Omega\to\mathbb{R}$.
+
+\textbf{Esempio minimo:} lancio due dadi equi. $\Omega=\{(i,j): i,j\in\{1,\dots,6\}\}$, $|\Omega|=36$, $P(\omega)=\tfrac{1}{36}$ per ogni $\omega$. Evento $A=$``somma $=7$'' $\Rightarrow A=\{(1,6),(2,5),\dots,(6,1)\}$, $|A|=6$, $P(A)=\tfrac{6}{36}=\tfrac{1}{6}$.
+\end{trucco}
 
 \begin{concetto}[barBlue]{Cos'\`e una variabile aleatoria}
 \inparole{una variabile aleatoria (v.a.) $X$ \`e un \emph{numero} che dipende dall'esito: una funzione $X:\Omega \to \mathbb{R}$.}
@@ -418,19 +515,27 @@ Su $S_X=[p,q]$, $S_Y=[\min_{x\in S_X} g(x),\ \max_{x\in S_X} g(x)]$.
 \int_{p}^x f_x(t) \, dt \quad & x \in [p,q]\\
 1 \quad & x \geq q
   \end{cases}$
-
 \item $F_Y(y)=0 \quad y < \min g \qquad F_Y(y)=1 \quad y \geq \max g$
-
-\item Per $y$ nel range di $S_Y$, isolare $X$ nella disuguaglianza $g(X)\le y$:
+\item Per $y$ nel range di $S_Y$, isolare $X$ nella disuguaglianza $g(X)\le y$.
 \begin{itemize}
-\item se $g$ \`e \textbf{crescente} su $S_X$: $g(X)\le y \iff X\le g^{-1}(y)$, quindi
-\[ F_Y(y)=F_X\big(g^{-1}(y)\big) \]
-\item se $g$ \`e \textbf{decrescente} su $S_X$: la disuguaglianza si ribalta, $g(X)\le y \iff X\ge g^{-1}(y)$, quindi
-\[ F_Y(y)=1-F_X\big(g^{-1}(y)\big) \]
-\item se $g$ \textbf{non \`e monotona} (es.\ $X^2$, $|X-a|$): la condizione si spezza in \textbf{due lati}, e la \textbf{cases} nasce da come questo intervallo interseca $S_X=[p,q]$: si individua la soglia $y^*$ in cui un bordo esce dal supporto (vedi i box specifici per $Y=X^2$ e $Y=|X-a|$).
+\item se $g$ \`e \textbf{monotona} su $S_X$ (crescente o decrescente), la condizione $g(X)\le y$ ha un solo lato: $X\le g^{-1}(y)$ (crescente, $F_Y=F_X(g^{-1}(y))$) oppure $X\ge g^{-1}(y)$ (decrescente, la disuguaglianza si ribalta, $F_Y=1-F_X(g^{-1}(y))$), \textbf{per ogni} $y\in S_Y$.
+\item se $g$ \textbf{non \`e monotona} (es.\ $X^2$, $|X-a|$): la condizione si spezza in \textbf{due lati}, $h_1(y)\le X\le h_2(y)$. Esiste una soglia $y^*\in S_Y$ in cui uno dei due bordi $h_1(y)$, $h_2(y)$ esce da $S_X=[p,q]$ (cio\`e $F_X$ vale gi\`a $0$ o $1$ l\`i): per $y<y^*$ (nessun bordo satura) $F_Y(y)=F_X(h_2(y))-F_X(h_1(y))$; per $y\ge y^*$ (un bordo saturo) resta solo l'altro pezzo.
 \end{itemize}
-
-\item Infine calcoliamo $f_Y(y)=F_Y'(y)$ derivando ogni pezzo separatamente (regola della catena: $\big(F_X(h(y))\big)'=h'(y)\,f_X(h(y))$). Controllo: $f_Y\ge0$, $\int f_Y=1$.
+Quindi, nel caso non monotono, in generale
+\[ F_Y(y)= \begin{cases}
+0 & y < \min g\\
+F_X(h_2(y))-F_X(h_1(y)) & y\in[\min g,\, y^*)\\
+F_X(h_2(y))\ \text{oppure}\ 1-F_X(h_1(y)) & y\in[y^*,\, \max g)\\
+1 & y \geq \max g
+\end{cases} \]
+(vedi i box specifici per $Y=X^2$ e $Y=|X-a|$ per l'individuazione concreta di $y^*$).
+\item Infine calcoliamo $f_Y(y)=F_Y'(y)$ derivando ogni pezzo separatamente (regola della catena: $\big(F_X(h(y))\big)'=h'(y)\,f_X(h(y))$):
+\[ f_Y(y) = \begin{cases}
+0 \quad & y < \min g \lor y \geq \max g\\
+h_2'(y)\,f_X(h_2(y)) - h_1'(y)\,f_X(h_1(y)) \quad & y \in [\min g,\, y^*)\\
+\text{derivata del pezzo restante} \quad & y \in [y^*,\, \max g)
+\end{cases} \]
+Controllo: $f_Y\ge0$, $\int f_Y=1$.
 \end{enumerate}
 \end{concetto}
 
@@ -803,6 +908,15 @@ Propriet\`a di Markov: si usa \emph{solo l'ultimo stato noto}. Es.\ $P(X_7{=}4\m
 \newpage
 \section{Richiami di calcolo: derivate e integrali}
 
+\begin{concetto}[barSlate]{Propriet\`a di potenze, radici e logaritmi}
+\textbf{Potenze} ($a,b>0$, $x,y\in\mathbb{R}$):
+\[ a^x a^y = a^{x+y} \qquad \frac{a^x}{a^y}=a^{x-y} \qquad (a^x)^y=a^{xy} \qquad (ab)^x=a^x b^x \qquad a^{-x}=\frac{1}{a^x} \qquad a^0=1 \]
+\textbf{Radici} (come potenze a esponente frazionario): $\sqrt[n]{a}=a^{1/n}$, \quad $\sqrt[n]{a^m}=a^{m/n}$, \quad $\sqrt{ab}=\sqrt a\sqrt b$, \quad $\sqrt{a/b}=\sqrt a/\sqrt b$.
+\textbf{Logaritmi} ($a,b>0$, $a\neq1$): $\log_a(xy)=\log_a x+\log_a y$, \; $\log_a(x/y)=\log_a x-\log_a y$, \; $\log_a(x^n)=n\log_a x$,
+\[ \log_a x = \frac{\ln x}{\ln a}\ (\text{cambio base}) \qquad a^{\log_a x}=x \qquad \ln(e^x)=x \qquad e^{\ln x}=x \qquad \log_a 1 = 0,\ \log_a a = 1 \]
+\emph{Uso tipico:} risolvere $F_X(x)=p$ per $x$ (percentili) spesso richiede invertire un $\ln$ o una potenza; nelle densit\`a esponenziali ricordare che $e^{x}e^{y}=e^{x+y}$ semplifica i prodotti di densit\`a indipendenti.
+\end{concetto}
+
 \begin{concetto}[barSlate]{Regole di derivazione}
 \[ (f\pm g)' = f'\pm g' \qquad (c\,f)' = c\,f' \]
 \[ \text{prodotto:}\ (fg)' = f'g + fg' \qquad \text{quoziente:}\ \left(\frac{f}{g}\right)' = \frac{f'g - fg'}{g^2} \]
@@ -901,6 +1015,43 @@ Si calcolano come limite: $\displaystyle\int_a^{+\infty} f = \lim_{b\to+\infty}\
 \textbf{Limiti utili} (per valutare i bordi):
 \[ e^{-\infty}=0,\quad e^{+\infty}=+\infty,\quad e^{0}=1,\quad \ln(0^+)=-\infty,\quad \lim_{x\to+\infty} x^n e^{-\lambda x}=0 \]
 (l'esponenziale ``vince'' sul polinomio: all'infinito il termine si annulla).
+\end{concetto}
+
+\begin{concetto}[barSlate]{Legge di $Y=g(X)$ --- metodo generale (funzione di ripartizione)}
+Data $X$ continua di densit\`a $f_X$, per trovare la legge di $Y=g(X)$:
+\begin{enumerate}[leftmargin=1.3em,itemsep=2pt,topsep=2pt]
+\item Trovare il supporto $S_Y$ di $Y$ (immagine di $g$ sul supporto di $X$); fuori da $S_Y$, $F_Y=0$ oppure $F_Y=1$.
+\item Per $y\in S_Y$: $F_Y(y)=P(Y\le y)=P\big(g(X)\le y\big)$, riscrivendo l'evento $\{g(X)\le y\}$ come evento su $X$ (invertendo $g$).
+\item Calcolare $P(\cdot)$ tramite $F_X$ (l'integrale di $f_X$ \`e gi\`a fatto: basta valutare $F_X$).
+\item Se $Y$ \`e continua: derivare, $f_Y(y)=F_Y'(y)$.
+\end{enumerate}
+\emph{Controllo:} se $F_Y$ ha un salto (discontinuit\`a) in un punto, $Y$ non \`e (solo) continua: quel punto ha massa $P(Y=y_0)=F_Y(y_0)-F_Y(y_0^-)>0$ (legge mista, come $Z=TX$ o $Y=\min(X,a)$).
+\end{concetto}
+
+\begin{concetto}[barSlate]{Caso $g$ monotona (formula diretta dello jacobiano)}
+Se $g$ \`e strettamente monotona e derivabile su $S_X$, con inversa $h=g^{-1}$:
+\[ f_Y(y) = f_X\big(h(y)\big)\cdot \big|h'(y)\big| \]
+\textbf{Caso lineare} $Y=aX+b$ ($a\neq0$), il pi\`u comune:
+\[ F_Y(y)=\begin{cases} F_X\!\left(\dfrac{y-b}{a}\right) & a>0 \\[4pt] 1-F_X\!\left(\dfrac{y-b}{a}\right) & a<0 \end{cases} \qquad f_Y(y)=\frac{1}{|a|}\,f_X\!\left(\frac{y-b}{a}\right) \]
+(per $a<0$ si inverte perch\'e $\{aX+b\le y\}=\{X\ge \frac{y-b}{a}\}$; es.\ $Y=c(1-X)$ ha $a=-c$).
+\end{concetto}
+
+\begin{concetto}[barSlate]{Casi non-monotoni notevoli ($X$ con densit\`a $f_X$, supporto $S_X$)}
+\renewcommand{\arraystretch}{2.1}
+\begin{center}
+\small
+\begin{tabular}{c|c}
+Trasformazione & $F_Y(y)$ per $y$ nel supporto \\
+\hline
+$Y=X^2$ & $F_Y(y)=F_X(\sqrt{y})-F_X(-\sqrt{y})$,\quad $f_Y(y)=\dfrac{f_X(\sqrt y)+f_X(-\sqrt y)}{2\sqrt y}$ \\
+$Y=|X|$ & $F_Y(y)=F_X(y)-F_X(-y)$,\quad $f_Y(y)=f_X(y)+f_X(-y)$ \\
+$Y=|X-a|$ & $F_Y(y)=F_X(a+y)-F_X(a-y)$ \\
+$Y=\min(X,a)$ & $F_Y(y)=F_X(y)$ se $y<a$; \ $F_Y(y)=1$ se $y\ge a$ (salto: $P(Y{=}a)=1-F_X(a^-)$) \\
+$Y=\max(X,a)$ & $F_Y(y)=0$ se $y<a$; \ $F_Y(y)=F_X(y)$ se $y\ge a$ (salto: $P(Y{=}a)=F_X(a)$) \\
+\end{tabular}
+\end{center}
+\renewcommand{\arraystretch}{1}
+\emph{Idea comune:} riscrivere sempre $\{g(X)\le y\}$ come unione/intersezione di eventi su $X$ (es.\ $\{X^2\le y\}=\{-\sqrt y\le X\le \sqrt y\}$), poi tradurre in $F_X$. Attenzione ai punti dove $g$ cambia ramo (qui il supporto di $Y$ va spezzato, come per $\min/\max$).
 \end{concetto}
 
 \end{document}
