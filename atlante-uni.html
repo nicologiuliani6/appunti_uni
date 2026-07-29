@@ -206,6 +206,8 @@ const DATA = {
     cn   :{nome:"Calcolo Numerico",            colore:"#3fb9d4"},
     prob :{nome:"Probabilità e Statistica",    colore:"#93c54b"},
     web  :{nome:"Tecnologie Web",              colore:"#f0934b"},
+    // — Trasversale —
+    met  :{nome:"Metodi (studio di funzione)", colore:"#8fa3b8"},
     // — Tesi —
     tesi :{nome:"Tesi · Kairos / Mnemo",       colore:"#f3d27a"}
   },
@@ -292,6 +294,11 @@ const DATA = {
     {id:"web-html", label:"HTML e CSS",                materia:"web", anno:"Anno 2", dettagli:"Markup, elementi HTML5, regole e priorità CSS."},
     {id:"web-js",   label:"JavaScript e DOM",          materia:"web", anno:"Anno 2", dettagli:"Oggetti JS, JSON, manipolazione del DOM."},
     {id:"web-node", label:"TypeScript, Node, Express", materia:"web", anno:"Anno 2", dettagli:"TypeScript, runtime Node.js, framework Express.js."},
+    // ===== Metodi (promemoria trasversale) =====
+    {id:"met-dom",   label:"Dominio e monotonia",       materia:"met", anno:"Metodi", dettagli:"Studio del dominio, monotonia e continuità con parametro."},
+    {id:"met-segno", label:"Studio del segno",          materia:"met", anno:"Metodi", dettagli:"Passi per determinare il segno di una funzione."},
+    {id:"met-int",   label:"Integrale def. e tangente", materia:"met", anno:"Metodi", dettagli:"Integrale definito su [a,b] e retta tangente nel punto di ascissa x₀."},
+    {id:"met-fun",   label:"Codominio e biettività",   materia:"met", anno:"Metodi", dettagli:"Calcolo del codominio, iniettività, suriettività e biettività."},
     // ===== Tesi (documentazione) =====
     {id:"tesi-mnemo", label:"Mnemo: traduzione C → Kairos", materia:"tesi", anno:"Tesi", dettagli:"Logica di traduzione da C a Kairos: modello di memoria unificato, tipi, aritmetica e operatori bit-a-bit."},
     {id:"tesi-vm",    label:"KairosVM: implementazione",     materia:"tesi", anno:"Tesi", dettagli:"Interprete sul testo, risoluzione di nomi e salti, heap ibrido, realloc a raddoppio, costi della reversibilità."},
@@ -344,6 +351,9 @@ const DATA = {
     // Web
     {from:"web-http",to:"web-auth",tipo:"interno"},{from:"web-http",to:"web-html",tipo:"interno"},
     {from:"web-html",to:"web-js",tipo:"interno"},{from:"web-js",to:"web-node",tipo:"interno"},
+    // Metodi
+    {from:"met-dom",to:"met-segno",tipo:"interno"},{from:"met-segno",to:"met-int",tipo:"interno"},
+    {from:"met-dom",to:"met-fun",tipo:"interno"},
     // Tesi
     {from:"tesi-sos",to:"tesi-vm",tipo:"interno"},{from:"tesi-mnemo",to:"tesi-vm",tipo:"interno"},
     {from:"tesi-mnemo",to:"tesi-sos",tipo:"interno"},{from:"tesi-sos",to:"tesi-conc",tipo:"interno"},
@@ -365,6 +375,9 @@ const DATA = {
     {from:"so-conc",to:"lp-sem",tipo:"trasversale"},      // concorrenza ↔ nondeterminismo/parallelismo
     {from:"ott-splx",to:"cn-opt",tipo:"trasversale"},     // simplesso ↔ ottimizzazione numerica
     {from:"cn-svd",to:"prob-stat",tipo:"trasversale"},    // minimi quadrati ↔ regressione
+    {from:"met-dom",to:"ana-der",tipo:"trasversale"},     // monotonia ↔ derivate
+    {from:"met-int",to:"ana-int",tipo:"trasversale"},     // integrale definito ↔ integrali
+    {from:"met-fun",to:"alg-app",tipo:"trasversale"},     // iniettiva/suriettiva ↔ kernel/immagine
     // verso la tesi
     {from:"tesi-mnemo",to:"so-posix",tipo:"trasversale"}, // Mnemo traduce C ↔ C/POSIX
     {from:"tesi-mnemo",to:"lp-gram",tipo:"trasversale"},  // traduzione ↔ compilazione/parsing
@@ -387,7 +400,8 @@ const DATA = {
     lp  :"2/linguaggi/tex/programmazione.pdf",
     cn  :"2/calcolo_num/tex/hello.pdf",
     prob:"2/prob/appunti/prob.pdf",
-    web :"2/web/tex/web.pdf"
+    web :"2/web/tex/web.pdf",
+    met :"metodi/how_to_metodi.pdf"
   },
   // spiegazione estesa per nodo (mostrata dal bottone "Spiega"), basata sugli appunti.
   spiega:{
@@ -458,6 +472,10 @@ const DATA = {
     "web-html":"Struttura delle pagine con HTML5 e presentazione con CSS (regole e specificità/priorità).",
     "web-js":"JavaScript nel browser: oggetti, JSON e manipolazione del DOM.",
     "web-node":"Lato server con TypeScript, runtime Node.js e framework Express.js.",
+    "met-dom":"Primo passo dello studio di funzione: dominio di esistenza, monotonia dal segno della derivata prima e scelta del parametro che rende la funzione continua.",
+    "met-segno":"Procedura per studiare il segno di una funzione e individuare gli intervalli di positività e negatività.",
+    "met-int":"Calcolo dell'integrale definito su [a,b] e determinazione della retta tangente al grafico nel punto di ascissa x₀.",
+    "met-fun":"Calcolo del codominio e verifica di iniettività, suriettività e biettività della funzione.",
     "tesi-mnemo":"Mnemo definisce come tradurre ogni costrutto C in Kairos: modello di memoria unificato, mappatura dei tipi, ed emulazione di aritmetica e operatori bit-a-bit che Kairos non ha nativamente.",
     "tesi-vm":"KairosVM interpreta direttamente il testo del programma: scelte su risoluzione di nomi/salti, heap ibrido dei puntatori, realloc a raddoppio e il costo della reversibilità.",
     "tesi-sos":"La semantica operazionale strutturale di Kairos: store, assegnamenti reversibili, scope local/delocal, ciclo from…loop…until e chiamate con inversa.",

@@ -785,6 +785,16 @@ Propriet\`a di Markov: $P(X_{n+1}=j \mid X_1,\dots,X_n=i) = P(X_{n+1}=j\mid X_n=
 \emph{La numerazione degli stati \`e indifferente}: rinominare/riordinare gli stati permuta righe \emph{e} colonne allo stesso modo, ma la catena \`e la stessa (classi, ricorrenza, invariante non cambiano). Conta solo che riga $i$ e colonna $i$ siano lo stesso stato.
 \end{concetto}
 
+\begin{concetto}[barPurple]{Distribuzione iniziale $\vec p_{X_1}$ --- come trovarla}
+$\vec p_{X_1}=\big(P(X_1{=}1),\,P(X_1{=}2),\dots\big)$ \`e semplicemente \textbf{la legge di $X_1$}: si legge dal testo, non si calcola con la matrice.
+\begin{itemize}[leftmargin=1.2em,itemsep=2pt,topsep=2pt]
+\item \textbf{Partenza deterministica} (caso pi\`u comune: ``all'inizio si \`e nello stato $i_0$'', es.\ un cliente parte in classe $C$, un venditore parte con $3$ oggetti): $\vec p_{X_1}=\vec e_{i_0}$, cio\`e tutto $1$ in posizione $i_0$ e $0$ altrove. Es.\ $S=\{A,B,C\}$, si parte da $C$ $\Rightarrow \vec p_{X_1}=(0,0,1)$.
+\item \textbf{Partenza aleatoria} (es.\ ``lo stato iniziale \`e scelto lanciando un dado / con probabilit\`a uniforme / secondo una legge nota''): le componenti di $\vec p_{X_1}$ sono \emph{esattamente} le probabilit\`a date nel testo per ciascuno stato (nessun calcolo: sono gi\`a la legge di $X_1$).
+\item \textbf{Non specificata esplicitamente}: se il problema chiede solo propriet\`a della catena (classi, ricorrenza, distribuzione invariante) $\vec p_{X_1}$ non serve; serve solo per calcolare $\vec p_{X_n}=\vec p_{X_1}\Pi^{n-1}$ o probabilit\`a del tipo $P(X_n=j)$.
+\end{itemize}
+\emph{Controllo:} le componenti di $\vec p_{X_1}$ devono sommare a $1$ (\`e una legge di probabilit\`a).
+\end{concetto}
+
 \begin{concetto}[barPurple]{Probabilit\`a in $n$ passi (somma sui cammini)}
 \[ \pi_{ij}^{(n)} = P(X_{n+k}=j\mid X_k=i) = (\Pi^n)_{ij}, \qquad \vec p_{X_n} = \vec p_{X_1}\cdot\Pi^{n-1} \]
 \textbf{A mano} (senza elevare la matrice a potenza): $\pi_{ij}^{(n)}$ \`e la somma, su \emph{tutti i cammini di $n$ archi} da $i$ a $j$, del prodotto delle probabilit\`a lungo il cammino:
@@ -830,7 +840,8 @@ Vettore riga $\vec v=(v_0,v_1,\dots)$ tale che $\ \vec v = \vec v\,\Pi\ $ e $\ \
 \begin{cases}
     x_1a+y_1b+z_1c= a\\
     x_2a+y_2b+z_2c=b\\
-\quad\vdots
+\quad\vdots\\
+    a + b + c = 1
 \end{cases}
 \end{align*}
 (cio\`e: $v_j = \sum_i v_i\,\pi_{ij}$).
@@ -839,7 +850,7 @@ Vettore riga $\vec v=(v_0,v_1,\dots)$ tale che $\ \vec v = \vec v\,\Pi\ $ e $\ \
 \item Scrivere $a+b+c+d+\dots=1$ e sostituirci i valori trovati al punto 4: resta un'equazione in una sola incognita, la si risolve, e poi si sostituisce all'indietro per ottenere il valore numerico di tutte le altre (vedi esempi sotto).
 \end{enumerate}
 
-Se la catena \`e \textbf{irriducibile}: $\vec v$ esiste ed \`e unica.
+Se la catena \`e \textbf{irriducibile}: $\vec v$ esiste ed \`e unica, e \textbf{tutte} le $v_j>0$ (nessuno stato transitorio, quindi nessuna incognita esce $=0$). Si pu\`o quindi scrivere direttamente il sistema colonne (una equazione a scelta scartata) + $a+b+c+\dots=1$ e risolvere, senza doversi preoccupare di variabili nulle.
 
 \textbf{Teorema ergodico}: se la catena \`e \textbf{regolare} (irriducibile + aperiodica), allora
 $$\pi_{ij}^{(n)} \xrightarrow[n\to\infty]{} v_j \quad \forall i,j$$
@@ -880,10 +891,37 @@ $$\vec v = (0,0,0,1)$$
 ($H,C,P$ escono $=0$ perch\'e transitori; tutta la massa finisce sull'assorbente $U$.)
 \end{concetto}
 
-\begin{concetto}[barPurple]{Probabilit\`a di assorbimento}
-$h_i^l = P(\text{finire in } R_l \mid X_1=i)$:
-\[ h_i^l = \begin{cases} 1 & i\in R_l \\ 0 & i\in R_p,\ p\neq l \\ \sum_k \pi_{ik}h_k^l & i \text{ transitorio} \end{cases} \]
-Se c'\`e una sola classe ricorrente, $h_i=1$ per ogni $i$ (assorbimento certo).
+\begin{concetto}[barPurple]{Valore atteso per $n$ grande (corollario del Teorema Ergodico)}
+Se serve $E[g(X_n)]$ (o di una v.a.\ funzione di $X_n$, es.\ un costo/premio che dipende dallo stato) \textbf{per $n\to\infty$} (``per $n$ grande'', ``a regime'', ``dopo molti passi''):
+\begin{enumerate}[leftmargin=1.4em,itemsep=1pt,topsep=2pt]
+\item Scrivere $E[g(X_n)]=\sum_j g(j)\,p_{X_n}(j)$ (somma sui valori $j\in S$, pesati con la legge di $X_n$).
+\item Verificare che la catena \`e \textbf{irriducibile e aperiodica} (regolare): allora vale il Teorema Ergodico, quindi $p_{X_n}(j)=\pi_{i_0 j}^{(n-1)}\xrightarrow[n\to\infty]{} v_j$ per ogni stato di partenza $i_0$ (il limite \emph{non dipende} dalla distribuzione iniziale).
+\item Calcolare la distribuzione stazionaria $\vec v$ risolvendo $\vec v=\vec v\Pi$, $\sum_j v_j=1$ (vedi box sopra).
+\item Concludere $E[g(X_n)] \xrightarrow[n\to\infty]{} \sum_j g(j)\,v_j$: si passa al limite \textbf{dentro} la somma (somma finita, lecito), sostituendo $p_{X_n}(j)$ con $v_j$.
+\end{enumerate}
+\emph{Esempio:} $S=\{A,B,C\}$, $Y_n=200\cdot\mathbb{1}_{X_n=A}+500\cdot\mathbb{1}_{X_n=B}+1000\cdot\mathbb{1}_{X_n=C}$ (un premio che dipende dallo stato). Si ha $E[Y_n]=200\,p_{X_n}(A)+500\,p_{X_n}(B)+1000\,p_{X_n}(C)$. Trovata $\vec v=(\tfrac27,\tfrac27,\tfrac37)$ (catena irriducibile e aperiodica), per $n\to\infty$:
+\[ E[Y_n] \to 200\,v_A+500\,v_B+1000\,v_C = 200\cdot\tfrac27+500\cdot\tfrac27+1000\cdot\tfrac37 \approx 628{,}57. \]
+\end{concetto}
+
+\begin{concetto}[barPurple]{Probabilità di assorbimento}
+Data una catena di Markov con classi ricorrenti $R_1, R_2, \dots$ (eventualmente singoletti, cioè stati assorbenti) e stati transitori $T$, definiamo
+\[ h_i^l = P(\text{la catena finisce assorbita in } R_l \mid X_0 = i). \]
+
+\textbf{Equazioni (first-step analysis):}
+\[ h_i^l = \begin{cases} 1 & i \in R_l \\ 0 & i \in R_p,\ p\neq l \\ \displaystyle\sum_k \pi_{ik}\, h_k^l & i \text{ transitorio} \end{cases} \]
+
+L'ultima riga si ottiene condizionando sul primo passo: partendo da uno stato transitorio $i$, con probabilità $\pi_{ik}$ si va in $k$, e da lì la probabilità di finire in $R_l$ è $h_k^l$.
+
+\textbf{Procedura pratica:}
+\begin{enumerate}
+\item Identificare le classi ricorrenti (chiuse) $R_1, R_2, \dots$ e gli stati transitori.
+\item Per ogni stato transitorio $i$, scrivere l'equazione $h_i^l = \sum_k \pi_{ik} h_k^l$, usando $h_k^l=1$ se $k\in R_l$ e $h_k^l=0$ se $k$ appartiene a un'altra classe ricorrente.
+\item Risolvere il sistema lineare risultante (tante equazioni quanti stati transitori).
+\end{enumerate}
+
+\textbf{Caso particolare:} se c'è \emph{una sola} classe ricorrente (catena che finisce sempre lì), allora $h_i^l=1$ per ogni $i$: l'assorbimento in quella classe è certo, e non serve risolvere nulla.
+
+\textbf{Attenzione:} questo va tenuto distinto dalla distribuzione stazionaria $\pi\Pi=\pi$. Se ci sono più classi ricorrenti, la stazionaria non è unica (è combinazione convessa delle stazionarie di ciascuna classe pesate con gli $h_i^l$), quindi il sistema $\pi\Pi=\pi,\ \sum\pi_i=1$ da solo non basta a determinare le probabilità di assorbimento.
 \end{concetto}
 
 \begin{trucco}
