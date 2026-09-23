@@ -11,6 +11,32 @@
 \usepackage{amssymb} % oppure amsfonts
 \usepackage{float}
 \usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+% --- Carte Essence (Alpha State Cards), estratte dal PDF ufficiale ---
+\definecolor{areaCustomer}{HTML}{2E8B57}   % verde  - Customer
+\definecolor{areaSolution}{HTML}{B8860B}   % giallo - Solution
+\definecolor{areaEndeavor}{HTML}{3A6BBF}   % blu    - Endeavor
+
+\newcommand{\cardcolor}{areaCustomer}
+\newcommand{\setarea}[1]{\renewcommand{\cardcolor}{#1}}
+
+% #1 = nome file immagine, #2 = titolo, #3 = contenuto tradotto
+\newcommand{\ecard}[3]{%
+\begin{tcolorbox}[enhanced, breakable, colback=\cardcolor!4, colframe=\cardcolor,
+    coltitle=white, colbacktitle=\cardcolor, title=#2,
+    fonttitle=\bfseries\small, arc=2mm, boxrule=0.7pt,
+    left=1.5mm, right=1.5mm, top=1mm, bottom=1mm,
+    before skip=3mm, after skip=3mm]
+  \begin{minipage}[t]{0.27\linewidth}\vspace{0pt}%
+    \includegraphics[width=\linewidth]{img/essence/#1.png}%
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.69\linewidth}\vspace{0pt}\small #3\end{minipage}%
+\end{tcolorbox}%
+}
+\newcommand{\chk}[1]{\begin{itemize}[nosep,leftmargin=*,topsep=2pt,label=$\square$]#1\end{itemize}}
+\newcommand{\sts}[1]{\begin{enumerate}[nosep,leftmargin=*,topsep=2pt]#1\end{enumerate}}
 
 % Informazioni sul documento
 \title{Ingegneria del Software}
@@ -24,11 +50,1051 @@
 \tableofcontents   % <-- genera automaticamente la pagina dell'indice
 \newpage
 
-\section{Introduzione}
-La base del software engineering è la progettazione e lo sviluppo di software di alta qualità, affidabile e manutenibile. Questo documento esplora i principi fondamentali dell'ingegneria del software, le metodologie di sviluppo, e le best practice per garantire il successo dei progetti software.
+\section{Modulo 1}
+
+\subsection{Introduzione al corso}
+
+Il corso presenta metodi e strumenti di \textbf{analisi}, \textbf{modellazione},
+\textbf{progettazione} e \textbf{misura} utili allo sviluppo di prodotti software,
+con particolare riguardo ai metodi di sviluppo agili.
+
+I nove argomenti principali dell'ingegneria del software sono: requisiti, design,
+costruzione, processo di sviluppo, testing, evoluzione, qualità, strumenti e metodi,
+gestione del progetto e gestione delle configurazioni.
+
+Creare software fatto bene è difficile: è difficile progettarlo, scriverlo, leggerlo,
+descriverlo, modificarlo, misurarlo e decidere se è fatto bene.
+
+\subsection{La produzione del software}
+
+\subsubsection{Il software come prodotto}
+
+Il software può essere definito in quattro modi complementari:
+\begin{itemize}
+  \item \textbf{Opera dell'ingegno}: prodotto invisibile, intangibile, facilmente
+        duplicabile ma costosissimo, protetto dalle leggi sul diritto d'autore.
+  \item \textbf{Servizio digitale}: ha un'interfaccia (API), si basa su
+        un'infrastruttura hw/sw/virtuale e garantisce per contratto una specifica
+        qualità del servizio.
+  \item \textbf{Componente di un sistema di elaborazione}: può essere di larga
+        diffusione (\emph{off the shelf}) oppure commissionato da un singolo committente.
+  \item \textbf{Macchina astratta}: trasforma il computer realizzando funzioni utili
+        per qualche scopo; ha un'architettura (struttura del codice) e un comportamento.
+\end{itemize}
+
+Il software è un prodotto \textbf{speciale} perché:
+\begin{itemize}
+  \item è invisibile e intangibile;
+  \item ogni prodotto ha molte dipendenze;
+  \item è facilmente duplicabile e distribuibile in rete;
+  \item in Europa non è brevettabile (ma è protetto dal diritto d'autore);
+  \item il software di consumo non è garantito;
+  \item viene acquisito su licenza (proprietaria, public domain, open source).
+\end{itemize}
+
+\subsubsection{Prodotti, sistemi e servizi}
+
+\begin{itemize}
+  \item \textbf{Prodotti generici} (OTS, \emph{off the shelf}): creati da un produttore
+        e venduti sul mercato a molti clienti. Es.\ un videogioco.
+  \item \textbf{Sistemi commissionati} (customizzati): commissionati da un cliente
+        specifico e sviluppati apposta da un fornitore. Es.\ il portale dell'Università.
+  \item \textbf{Servizi in perpetuo sviluppo}: offrono servizi 24/7 in continuo
+        cambiamento. Es.\ Facebook, Amazon, chatbot.
+\end{itemize}
+
+Categorie (nuove) di software: apps ed ecosistemi software, servizi software, nuovi
+strumenti di sviluppo, social software, scraping/mining di big data, software embedded
+e IoT, software AI-native (agenti, chatbot, orchestratori).
+
+Un \textbf{ecosistema software} è un mercato in cui si vendono prodotti (AppStore,
+PlayStore) o componenti e servizi (Amazon Elastic Computing): una collezione di
+prodotti software su una piattaforma definita da un'azienda, sviluppati ed evoluti
+nello stesso ambiente.
+
+\subsubsection{Requisiti e feature}
+
+\begin{itemize}
+  \item \textbf{Requisito software}: funzione o qualità controllabile (testabile) che
+        deve possedere l'implementazione di un prodotto software. È importante per il
+        \emph{cliente}.
+  \item \textbf{Feature software}: insieme di funzioni che permettono di usare un
+        prodotto software in un servizio o prodotto. È importante per il \emph{fornitore}.
+\end{itemize}
+
+Esempio: i \emph{requisiti} di un servizio di commercio elettronico sono che l'utente
+possa registrarsi, aggiungere o togliere elementi al carrello, specificare indirizzi
+alternativi, pagare; la \emph{feature} è il carrello per negozio elettronico
+(es.\ opencart).
+
+\subsubsection{Dipendenze}
+
+Ogni prodotto software dipende da altri prodotti software, che a loro volta dipendono
+da altro software. A ciascun prodotto si associa un \textbf{grafo delle dipendenze},
+i cui nodi sono pacchetti software (es.\ librerie) in diverse versioni.
+
+\subsubsection{Agenti e orchestratori}
+
+\begin{itemize}
+  \item \textbf{Agente}: entità autonoma che prende decisioni ed esegue compiti
+        specifici sfruttando l'intelligenza artificiale.
+  \item \textbf{Orchestratore}: sistema che coordina, monitora e gestisce il flusso di
+        lavoro di più agenti o strumenti.
+  \item \textbf{Modello di collaborazione}: gli agenti operano in modo verticale sulla
+        singola attività, mentre l'orchestratore garantisce la visione d'insieme e
+        l'allineamento degli obiettivi.
+\end{itemize}
+
+\subsubsection{Aspetti economici}
+
+Gli aspetti economici di un prodotto software sono: ambito d'uso (dimensione in righe),
+piano di sviluppo (durata), sforzo di sviluppo (costo), qualità (difetti) e produttività
+del team.
+
+Il software è sempre il prodotto di un \textbf{processo di sviluppo}, che inizia con
+un'idea e termina quando il software viene ritirato. Il costo di sviluppo tende a
+crescere in proporzione al \emph{quadrato} delle dimensioni: gli assistenti AI abbassano
+il costo di scrivere ogni singola riga, ma non quello di capire, integrare e mantenere
+un sistema che cresce, perché la curva quadratica riguarda la complessità delle
+interazioni tra le parti.
+
+Due leggi classiche:
+\begin{itemize}
+  \item \textbf{Legge di Wirth}: «il software diventa lento più rapidamente di quanto
+        l'hardware diventi più veloce».
+  \item \textbf{Legge di Eagleson}: qualsiasi codice che non hai rivisto negli ultimi
+        sei mesi o più ti sembrerà estraneo, come se l'avesse scritto qualcun altro.
+\end{itemize}
+
+\subsubsection{Garanzie e protezione legale}
+
+\begin{itemize}
+  \item La \textbf{verifica} garantisce l'aderenza a una specifica.
+  \item La \textbf{validazione} garantisce l'accettazione da parte del cliente.
+  \item La \textbf{certificazione} garantisce l'aderenza a specifiche definite dalla legge.
+\end{itemize}
+Il software commerciale di solito viene venduto senza garanzie (\emph{as is}): nel
+software di consumo in teoria NON c'è alcuna garanzia, come dichiarato dal contratto di
+licenza mostrato al primo uso.
+
+Il software è un'opera dell'ingegno: chi lo produce ha diritto a un compenso e copiarlo
+abusivamente è illegale; in Italia la legge 248/2000 punisce con il carcere da 6 mesi a
+3 anni chi duplica abusivamente software.
+
+Il \textbf{software libero} (non gratis) garantisce quattro libertà:
+\begin{enumerate}
+  \setcounter{enumi}{-1}
+  \item il programma può essere eseguito per qualsiasi scopo;
+  \item il programma può essere studiato e modificato per adattarlo a nuove esigenze;
+  \item il programma può essere liberamente distribuito;
+  \item il programma può essere liberamente migliorato e i miglioramenti possono essere
+        liberamente distribuiti.
+\end{enumerate}
+
+\subsubsection{Rischi e qualità}
+
+I rischi riguardano lo sviluppo dei sistemi software, i difetti nel software operativo,
+l'esercizio dei sistemi software e le allucinazioni durante la generazione AI.
+
+Esempi di incidenti: l'aggiornamento difettoso di CrowdStrike Falcon Sensor
+(19 luglio 2024) ha bloccato circa 8,5 milioni di sistemi Windows, con danni globali
+stimati in almeno 10 miliardi di dollari; un difetto nel sistema di gestione dei dati
+di volo di NATS ha bloccato quasi 3.000 voli e circa 150.000 passeggeri.
+
+Alcune qualità del software:
+\begin{itemize}
+  \item \textbf{Robustezza}: capacità di sopportare errori durante l'esecuzione.
+  \item \textbf{Sostenibilità}: software duraturo, modificabile economicamente.
+  \item \textbf{Riproducibilità}: controllo delle versioni.
+\end{itemize}
+
+Difetti rilevati durante l'esercizio:
+\begin{itemize}
+  \item peggiori sistemi militari: 55 difetti/KLoC;
+  \item migliori sistemi militari: 5 difetti/KLoC;
+  \item sviluppo agile (XP): 1,4 difetti/KLoC;
+  \item Apache web server (open source): 0,5 difetti/KLoC;
+  \item NASA Space Shuttle: 0,1 difetti/KLoC.
+\end{itemize}
+
+\subsubsection{Aspetti sociali}
+
+Lo sviluppo software è un lavoro di collaborazione: gli sviluppatori operano in team
+interdisciplinari, dove comunicazione efficace, empatia e comprensione delle diverse
+prospettive sono cruciali. Il software è costruito per le persone, quindi la
+\emph{user experience} e il feedback continuo sono essenziali. Il software non è solo
+codice: è una costruzione sociale che influenza e viene influenzata dalle persone che
+lo sviluppano e lo usano. Chi lo sviluppa ha una responsabilità etica, perché il
+software non è neutrale.
+
+\subsection{Essence: gli Alpha del Kernel}
+
+\textbf{Essence} (standard OMG) definisce un \emph{kernel} di concetti comuni a
+qualunque progetto software. Gli elementi essenziali da tenere sotto controllo si
+chiamano \textbf{Alpha} (\emph{Abstract-Level Progress Health Attribute}): ogni Alpha
+attraversa una sequenza di \textbf{stati}, e ciascuno stato ha una lista di
+\emph{checkpoint} da verificare. Gli Alpha sono rappresentati da carte
+(\emph{Alpha State Cards}) usate dal team per valutare lo stato di avanzamento.
+
+I 7 Alpha sono raggruppati in tre aree di interesse (\emph{areas of concern}):
+\begin{itemize}
+  \item \textbf{Customer}: Stakeholders, Opportunity;
+  \item \textbf{Solution}: Requirements, Software System;
+  \item \textbf{Endeavor}: Team, Work, Way of Working.
+\end{itemize}
+
+\subsubsection{Le carte degli Alpha}
+
+Le carte ufficiali (\emph{Alpha State Cards}, Ivar Jacobson International, 2018), con
+accanto la traduzione dei \emph{checkpoint}. Il colore indica l'area di interesse:
+verde = Customer, giallo = Solution, blu = Endeavor.
+
+\paragraph{Stakeholders (Customer)}
+
+\ecard{stakeholders-00}{Stakeholders}{%
+Le persone, i gruppi o le organizzazioni che influenzano o sono influenzati da un
+sistema software.
+\sts{
+  \item Recognized --- riconosciuti
+  \item Represented --- rappresentati
+  \item Involved --- coinvolti
+  \item In Agreement --- d'accordo
+  \item Satisfied for Deployment --- soddisfatti per il rilascio
+  \item Satisfied in Use --- soddisfatti nell'uso
+}}
+
+\ecard{stakeholders-01}{Recognized --- 1/6}{%
+\chk{
+  \item Gruppi di stakeholder identificati
+  \item Gruppi di stakeholder chiave rappresentati
+  \item Responsabilità definite
+}}
+
+\ecard{stakeholders-02}{Represented --- 2/6}{%
+\chk{
+  \item Responsabilità concordate
+  \item Rappresentanti autorizzati
+  \item Approccio collaborativo concordato
+  \item Way of working supportato e rispettato
+}}
+
+\ecard{stakeholders-03}{Involved --- 3/6}{%
+\chk{
+  \item I rappresentanti assistono il team
+  \item Feedback e decisioni forniti per tempo
+  \item Cambiamenti comunicati prontamente
+}}
+
+\ecard{stakeholders-04}{In Agreement --- 4/6}{%
+\chk{
+  \item Aspettative minime concordate
+  \item I rappresentanti sono soddisfatti del proprio coinvolgimento
+  \item Il contributo dei rappresentanti è valorizzato
+  \item Il contributo del team è valorizzato
+  \item Priorità chiare e prospettive bilanciate
+}}
+
+\ecard{stakeholders-05}{Satisfied for Deployment --- 5/6}{%
+\chk{
+  \item Feedback degli stakeholder fornito
+  \item Sistema pronto per il rilascio
+}}
+
+\ecard{stakeholders-06}{Satisfied in Use --- 6/6}{%
+\chk{
+  \item Feedback sull'uso del sistema disponibile
+  \item Il sistema soddisfa le aspettative
+}}
+
+\paragraph{Opportunity (Customer)}
+
+\ecard{opportunity-00}{Opportunity}{%
+L'insieme di circostanze che rende appropriato sviluppare o modificare un sistema
+software.
+\sts{
+  \item Identified --- identificata
+  \item Solution Needed --- serve una soluzione
+  \item Value Established --- valore stabilito
+  \item Viable --- perseguibile
+  \item Addressed --- affrontata
+  \item Benefit Accrued --- benefici maturati
+}}
+
+\ecard{opportunity-01}{Identified --- 1/6}{%
+\chk{
+  \item Idea dietro l'opportunità identificata
+  \item Almeno uno stakeholder investitore interessato
+  \item Altri stakeholder identificati
+}}
+
+\ecard{opportunity-02}{Solution Needed --- 2/6}{%
+\chk{
+  \item Soluzione identificata
+  \item Bisogni degli stakeholder stabiliti
+  \item Problemi e cause radice identificati
+  \item Necessità di una soluzione confermata
+  \item Almeno una soluzione proposta
+}}
+
+\ecard{opportunity-03}{Value Established --- 3/6}{%
+\chk{
+  \item Valore dell'opportunità quantificato
+  \item Impatto della soluzione compreso
+  \item Valore del sistema compreso
+  \item Criteri di successo chiari
+  \item Risultati attesi chiari e quantificati
+}}
+
+\ecard{opportunity-04}{Viable --- 4/6}{%
+\chk{
+  \item Soluzione delineata
+  \item Soluzione possibile entro i vincoli
+  \item Rischi accettabili e gestibili
+  \item Soluzione profittevole
+  \item Ragioni per sviluppare la soluzione comprese
+  \item Il perseguimento è sostenibile
+}}
+
+\ecard{opportunity-05}{Addressed --- 5/6}{%
+\chk{
+  \item Opportunità affrontata
+  \item Soluzione degna di essere rilasciata
+  \item Stakeholder soddisfatti
+}}
+
+\ecard{opportunity-06}{Benefit Accrued --- 6/6}{%
+\chk{
+  \item La soluzione produce benefici
+  \item ROI accettabile
+}}
+
+\setarea{areaSolution}
+\paragraph{Requirements (Solution)}
+
+\ecard{requirements-00}{Requirements}{%
+Ciò che il sistema software deve fare per sfruttare l'opportunità e soddisfare gli
+stakeholder.
+\sts{
+  \item Conceived --- concepiti
+  \item Bounded --- delimitati
+  \item Coherent --- coerenti
+  \item Acceptable --- accettabili
+  \item Addressed --- affrontati
+  \item Fulfilled --- soddisfatti
+}}
+
+\ecard{requirements-01}{Conceived --- 1/6}{%
+\chk{
+  \item Gli stakeholder concordano che il sistema va prodotto
+  \item Utenti identificati
+  \item Stakeholder finanziatori identificati
+  \item Opportunità chiara
+}}
+
+\ecard{requirements-02}{Bounded --- 2/6}{%
+\chk{
+  \item Stakeholder dello sviluppo identificati
+  \item Scopo del sistema concordato
+  \item Successo del sistema chiaro
+  \item Esiste una comprensione condivisa della soluzione
+  \item Formato dei requisiti concordato
+  \item Gestione dei requisiti attiva
+  \item Schema di prioritizzazione chiaro
+  \item Vincoli identificati e considerati
+  \item Assunzioni chiare
+}}
+
+\ecard{requirements-03}{Coherent --- 3/6}{%
+\chk{
+  \item Requisiti condivisi
+  \item Origine dei requisiti chiara
+  \item Motivazione chiara
+  \item Conflitti risolti
+  \item Caratteristiche essenziali chiare
+  \item Scenari d'uso chiave spiegati
+  \item Priorità chiare
+  \item Impatto compreso
+  \item Il team sa e concorda su cosa consegnare
+}}
+
+\ecard{requirements-04}{Acceptable --- 4/6}{%
+\chk{
+  \item Soluzione accettabile descritta
+  \item Cambiamento sotto controllo
+  \item Valore da realizzare chiaro
+  \item Chiaro come viene sfruttata l'opportunità
+  \item Testabile
+}}
+
+\ecard{requirements-05}{Addressed --- 5/6}{%
+\chk{
+  \item Affrontati abbastanza da essere accettabili
+  \item Requisiti e sistema coincidono
+  \item Valore realizzato chiaro
+  \item Sistema degno di essere reso operativo
+}}
+
+\ecard{requirements-06}{Fulfilled --- 6/6}{%
+\chk{
+  \item Gli stakeholder accettano i requisiti
+  \item Nessun requisito di ostacolo
+  \item Requisiti pienamente soddisfatti
+}}
+
+\setarea{areaSolution}
+\paragraph{Software System (Solution)}
+
+\ecard{system-00}{Software System}{%
+Un sistema fatto di software, hardware e dati, che fornisce il suo valore primario
+attraverso l'esecuzione del software.
+\sts{
+  \item Architecture Selected --- architettura scelta
+  \item Demonstrable --- dimostrabile
+  \item Usable --- usabile
+  \item Ready --- pronto
+  \item Operational --- operativo
+  \item Retired --- dismesso
+}}
+
+\ecard{system-01}{Architecture Selected --- 1/6}{%
+\chk{
+  \item Criteri di scelta dell'architettura concordati
+  \item Piattaforme hardware identificate
+  \item Tecnologie selezionate
+  \item Confine del sistema noto
+  \item Decisioni sull'organizzazione del sistema prese
+  \item Decisioni \emph{buy, build, reuse} prese
+  \item Rischi tecnici chiave concordati
+}}
+
+\ecard{system-02}{Demonstrable --- 2/6}{%
+\chk{
+  \item Caratteristiche architetturali chiave dimostrate
+  \item Sistema esercitato e prestazioni misurate
+  \item Configurazioni hardware critiche dimostrate
+  \item Interfacce critiche dimostrate
+  \item Integrazione con l'ambiente dimostrata
+  \item Architettura accettata come adeguata allo scopo
+}}
+
+\ecard{system-03}{Usable --- 3/6}{%
+\chk{
+  \item Il sistema può essere messo in esercizio
+  \item Funzionalità del sistema testate
+  \item Prestazioni del sistema accettabili
+  \item Livelli di difetti accettabili
+  \item Sistema completamente documentato
+  \item Contenuto della release noto
+  \item Valore aggiunto chiaro
+}}
+
+\ecard{system-04}{Ready --- 4/6}{%
+\chk{
+  \item Documentazione utente disponibile
+  \item Sistema accettato come adeguato allo scopo
+  \item Gli stakeholder vogliono il sistema
+  \item Supporto operativo predisposto
+}}
+
+\ecard{system-05}{Operational --- 5/6}{%
+\chk{
+  \item Sistema disponibile all'uso
+  \item Sistema in esercizio (\emph{live})
+  \item Livelli di servizio concordati supportati
+}}
+
+\ecard{system-06}{Retired --- 6/6}{%
+\chk{
+  \item Sostituito o dismesso
+  \item Non più supportato
+  \item Nessun utente autorizzato
+  \item Aggiornamenti interrotti
+}}
+
+\setarea{areaEndeavor}
+\paragraph{Team (Endeavor)}
+
+\ecard{team-00}{Team}{%
+Un gruppo di persone attivamente impegnate nello sviluppo, manutenzione, consegna o
+supporto di uno specifico sistema software.
+\sts{
+  \item Seeded --- avviato
+  \item Formed --- formato
+  \item Collaborating --- collaborante
+  \item Performing --- performante
+  \item Adjourned --- sciolto
+}}
+
+\ecard{team-01}{Seeded --- 1/5}{%
+\chk{
+  \item Missione definita
+  \item Vincoli noti e definiti
+  \item Meccanismi di crescita predisposti
+  \item Composizione definita
+  \item Responsabilità delineate
+  \item Livello di impegno richiesto chiaro
+  \item Competenze richieste identificate
+  \item Dimensione determinata
+  \item Regole di governance definite
+  \item Modello di leadership scelto
+}}
+
+\ecard{team-02}{Formed --- 2/5}{%
+\chk{
+  \item Membri reclutati a sufficienza
+  \item Ruoli compresi
+  \item Modo di lavorare compreso
+  \item Membri presentati
+  \item Responsabilità individuali accettate e allineate alle competenze
+  \item I membri accettano il lavoro
+  \item Collaboratori esterni identificati
+  \item Meccanismi di comunicazione definiti
+  \item I membri si impegnano verso il team
+}}
+
+\ecard{team-03}{Collaborating --- 3/5}{%
+\chk{
+  \item Lavora come un'unica unità
+  \item Comunicazione aperta e onesta
+  \item Focalizzato sulla missione
+  \item I membri si conoscono tra loro
+}}
+
+\ecard{team-04}{Performing --- 4/5}{%
+\chk{
+  \item Rispetta costantemente gli impegni
+  \item Si adatta di continuo al cambiamento
+  \item Affronta i problemi
+  \item Rilavorazioni e passi indietro minimizzati
+  \item Sprechi eliminati di continuo
+}}
+
+\ecard{team-05}{Adjourned --- 5/5}{%
+\chk{
+  \item Responsabilità assolte
+  \item Membri disponibili per altri team
+  \item Missione conclusa
+}}
+
+\setarea{areaEndeavor}
+\paragraph{Work (Endeavor)}
+
+\ecard{work-00}{Work}{%
+Attività che comporta sforzo mentale o fisico svolto per ottenere un risultato.
+\sts{
+  \item Initiated --- avviato
+  \item Prepared --- preparato
+  \item Started --- iniziato
+  \item Under Control --- sotto controllo
+  \item Concluded --- concluso
+  \item Closed --- chiuso
+}}
+
+\ecard{work-01}{Initiated --- 1/6}{%
+\chk{
+  \item Risultato richiesto chiaro
+  \item Vincoli chiari
+  \item Stakeholder finanziatori noti
+  \item Iniziatore identificato
+  \item Stakeholder che accettano il risultato noti
+  \item Fonte del finanziamento chiara
+  \item Priorità chiara
+}}
+
+\ecard{work-02}{Prepared --- 2/6}{%
+\chk{
+  \item Impegno assunto
+  \item Costo e sforzo stimati
+  \item Disponibilità di risorse compresa
+  \item Esposizione al rischio compresa
+  \item Criteri di accettazione stabiliti
+  \item Scomposto abbastanza da poter iniziare
+  \item Task identificati e prioritizzati
+  \item Piano credibile predisposto
+  \item Finanziamento disponibile
+  \item Almeno un membro del team pronto
+  \item Punti di integrazione definiti
+}}
+
+\ecard{work-03}{Started --- 3/6}{%
+\chk{
+  \item Sviluppo iniziato
+  \item Avanzamento monitorato
+  \item \emph{Definition of done} stabilita
+  \item Task in avanzamento
+}}
+
+\ecard{work-04}{Under Control --- 4/6}{%
+\chk{
+  \item Task in via di completamento
+  \item Lavoro non pianificato sotto controllo
+  \item Rischi sotto controllo
+  \item Stime riviste in base alle prestazioni
+  \item Avanzamento misurato
+  \item Rilavorazioni sotto controllo
+  \item Impegni rispettati con costanza
+}}
+
+\ecard{work-05}{Concluded --- 5/6}{%
+\chk{
+  \item Restano solo task amministrativi
+  \item Risultati raggiunti
+  \item Sistema risultante accettato
+}}
+
+\ecard{work-06}{Closed --- 6/6}{%
+\chk{
+  \item Lezioni apprese
+  \item Metriche disponibili
+  \item Tutto archiviato
+  \item Budget riconciliato e chiuso
+  \item Team rilasciato
+  \item Nessun task in sospeso o incompleto
+}}
+
+\setarea{areaEndeavor}
+\paragraph{Way of Working (Endeavor)}
+
+\ecard{wow-00}{Way of Working}{%
+L'insieme di pratiche e strumenti, adattato al contesto, usato dal team per guidare e
+supportare il proprio lavoro.
+\sts{
+  \item Principles Established --- principi stabiliti
+  \item Foundation Established --- fondamenta stabilite
+  \item In Use --- in uso
+  \item In Place --- consolidato
+  \item Working Well --- funziona bene
+  \item Retired --- dismesso
+}}
+
+\ecard{wow-01}{Principles Established --- 1/6}{%
+\chk{
+  \item Il team sostiene attivamente i principi
+  \item Gli stakeholder concordano con i principi
+  \item Esigenze di strumenti concordate
+  \item Approccio raccomandato
+  \item Contesto operativo compreso
+  \item Vincoli di pratiche e strumenti noti
+}}
+
+\ecard{wow-02}{Foundation Established --- 2/6}{%
+\chk{
+  \item Pratiche e strumenti chiave selezionati
+  \item Pratiche necessarie per iniziare concordate
+  \item Pratiche e strumenti non negoziabili identificati
+  \item Divari tra way of working disponibile e necessario compresi
+  \item Divari di capacità compresi
+  \item Way of working integrato disponibile
+}}
+
+\ecard{wow-03}{In Use --- 3/6}{%
+\chk{
+  \item Pratiche e strumenti in uso
+  \item Ispezionati regolarmente
+  \item Adattati al contesto
+  \item Supportati dal team
+  \item Meccanismi di feedback predisposti
+  \item Pratiche e strumenti supportano la collaborazione
+}}
+
+\ecard{wow-04}{In Place --- 4/6}{%
+\chk{
+  \item Usato da tutto il team
+  \item Accessibile a tutto il team
+  \item Ispezionato e adattato da tutto il team
+}}
+
+\ecard{wow-05}{Working Well --- 5/6}{%
+\chk{
+  \item Avanzamento prevedibile
+  \item Pratiche applicate con naturalezza
+  \item Gli strumenti supportano naturalmente il way of working
+  \item Messo a punto di continuo
+}}
+
+\ecard{wow-06}{Retired --- 6/6}{%
+\chk{
+  \item Non più in uso
+  \item Lezioni apprese condivise
+}}
+
+\subsubsection{Relazioni tra gli Alpha}
+
+Gli Alpha non sono indipendenti: gli \emph{Stakeholders} forniscono l'\emph{Opportunity}
+e usano il \emph{Software System}, che a sua volta soddisfa (\emph{fulfils}) i
+\emph{Requirements}; l'\emph{Opportunity} si focalizza sui \emph{Requirements}, che
+delimitano (\emph{scope and constrain}) il \emph{Work}; il \emph{Team} produce il
+\emph{Software System} ed esegue il \emph{Work}, guidato dal \emph{Way of Working}.
+
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{img/Alpha Cards.png}
+\centering
+\includegraphics[angle=-90,width=0.85\textwidth]{img/essence/kernel.png}
+\caption{Il grafo degli Alpha del kernel di Essence.}
 \end{figure}
+
+
+\section{Modulo 2}
+
+\subsection{Controllo di versione e Git}
+
+\subsubsection{Il problema}
+
+Quando un progetto software diventa complesso, anche la sua gestione è complicata.
+Senza uno strumento di controllo delle revisioni:
+\begin{itemize}
+  \item \emph{programming in the small}: è difficile recuperare le versioni più vecchie
+        basandosi sulla data ed è difficile stabilire le differenze tra le versioni di
+        uno stesso file;
+  \item \emph{programming in the large/many}: non c'è modo di recuperare le versioni
+        precedenti né di vederne le differenze, la fusione delle versioni è manuale,
+        lenta e di dubbio successo, e sono possibili sovrascritture accidentali.
+\end{itemize}
+
+\subsubsection{Version Control System}
+
+Un \textbf{VCS} (detto anche \emph{versioning}, \emph{revision control system} o
+\emph{source code management}, SCM) è la gestione delle modifiche a documenti, programmi
+e altre informazioni memorizzate come file.
+
+In pratica un VCS fornisce:
+\begin{itemize}
+  \item un posto dove memorizzare le varie versioni del codice e dei documenti correlati
+        (backup multiplo e flessibile);
+  \item la possibilità di «tornare indietro» in caso di errore e di tracciare le
+        modifiche;
+  \item lo sviluppo parallelo facilitato, potendo lavorare su più versioni
+        contemporaneamente.
+\end{itemize}
+
+Evoluzione storica: SCCS e RCS (1982) $\rightarrow$ CVS (1986) $\rightarrow$
+Subversion (2000) $\rightarrow$ Git (2005).
+
+\subsubsection{Storia di Git}
+
+Git nasce dal kernel Linux. Fino al 2002 le modifiche al kernel venivano passate come
+file compressi; poi si iniziò a usare il DVCS proprietario \textbf{BitKeeper}. Nel 2005
+ne fu revocato l'uso gratuito, e ciò indusse Linus Torvalds a sviluppare uno strumento
+proprio: dopo 15 giorni di sviluppo Git era pronto. Git è veloce ed efficiente anche per
+grandi progetti e ha un ottimo sistema di ramificazioni per lo sviluppo non lineare;
+oggi si stima lo usi almeno l'85\% dei professionisti.
+
+\subsubsection{Glossario minimo}
+
+\begin{itemize}
+  \item \textbf{Repository} (deposito): un insieme di oggetti (file) e i riferimenti
+        necessari, in pratica una «foto» del progetto. Può essere online o offline.
+  \item \textbf{Clone}: l'atto di duplicare localmente un repository.
+  \item \textbf{Commit}: l'invio al repository delle modifiche effettuate.
+  \item \textbf{Checkout}: il ripristino di una particolare versione del progetto.
+\end{itemize}
+
+\subsubsection{Il ciclo di lavoro base}
+
+Il flusso tipico attraversa gli stati dei file:
+\[
+\text{Non tracciato} \xrightarrow{\;\texttt{git add}\;} \text{Staging area}
+\xrightarrow{\;\texttt{git commit}\;} \text{Tracciato / Non modificato}
+\]
+
+\paragraph{Configurazione iniziale}
+\begin{itemize}
+  \item \verb|git --version| --- verifica dell'installazione.
+  \item identificazione (one-shot), controllabile con \verb|git config --list|:
+\begin{verbatim}
+git config --global user.name "Alex York"
+git config --global user.email alex@example.com
+\end{verbatim}
+  \item \verb|git config --global init.defaultBranch main| --- semplifica l'interazione
+        con GitHub e GitLab.
+\end{itemize}
+
+\paragraph{Comandi base}
+\begin{itemize}
+  \item \verb|git init| --- inizializza il repository nella cartella corrente.
+  \item \verb|git add .| --- aggiunge i file alla staging area.
+  \item \verb|git commit -m "messaggio"| --- registra le modifiche
+        (\verb|-m| evita di finire nell'editor).
+  \item \verb|git commit -am "messaggio"| --- commit veloce: add + commit per i file già
+        tracciati.
+  \item \verb|git status| --- stato dell'albero di lavoro.
+  \item \verb|git log| --- storia delle modifiche: identificativo esadecimale, autore,
+        data, commento, posizione di HEAD e del branch. Utile \verb|git log --oneline|.
+  \item \verb|git reflog| --- storia sintetica degli spostamenti di HEAD.
+\end{itemize}
+
+\subsubsection{Tornare indietro}
+
+\begin{itemize}
+  \item \verb|git checkout <checksum>| --- ripristina \emph{tutti} i file a una versione
+        precedente e porta in stato di \textbf{detached HEAD}.
+        \verb|git checkout main| riporta HEAD all'ultimo commit.
+        \emph{Non committare in stato di detached HEAD}: si rischia di perdere il lavoro.
+        \verb|git switch -| torna al branch precedente.
+  \item \verb|git restore -s <checksum> <nomefile>| --- ripristina un \emph{solo} file
+        dal passato (nelle vecchie versioni: \verb|git checkout <checksum> -- nomefile|).
+  \item \verb|git revert <commit id>| --- ricostruisce un commit precedente creando un
+        \emph{nuovo} commit: più sicuro perché non distrugge la storia, ma appesantisce
+        il log.
+  \item \verb|git reset| --- è l'\emph{undo} di \verb|git add| (toglie dalla staging
+        area).
+  \item \verb|git reset --hard| --- cancella le modifiche non committate e ripristina
+        l'ultima versione salvata.
+\end{itemize}
+
+\subsubsection{Ignorare file: .gitignore}
+
+Git si basa sulle differenze di testo con le versioni precedenti, quindi non funziona
+bene con i file binari (\texttt{.pdf}, \texttt{.png}, \texttt{.docx}, \texttt{.exe},
+\texttt{.class}): ogni versione viene salvata integralmente, con perdita di spazio e di
+tempo.
+
+Il file \texttt{.gitignore} (col punto iniziale) elenca file e percorsi che NON sono mai
+inseriti nella staging area. Esempio:
+
+\begin{verbatim}
+# ignora i file eseguibili e png
+*.exe
+*.png
+
+# ignora tutti i file nelle cartelle indicate
+temp/
+img/
+\end{verbatim}
+
+Lo switch \verb|-f| (\verb|--force|) elimina il controllo di \texttt{.gitignore}:\\
+\verb|git add temp/antipatico.txt -f|.
+
+\subsubsection{Repository remoti}
+
+Schema di base: \verb|git clone| per duplicare un repository remoto, \verb|git push| per
+inviare i commit, \verb|git pull| per riceverli. Schema alternativo, partendo da un repo
+locale già esistente: \verb|git remote add origin <URL>|, poi push e pull.
+
+Sequenza tipica di collegamento a un remoto vuoto:
+\begin{verbatim}
+git config pull.rebase false
+git remote add origin [URL]
+git pull origin main --allow-unrelated-histories
+git push -u origin --all --force
+\end{verbatim}
+
+\paragraph{Sicurezza} I protocolli remoti di Git usano spesso crittografia a chiave
+pubblica. Le chiavi si generano con:
+\begin{verbatim}
+ssh-keygen -t rsa -b 4096 -C "commento"
+\end{verbatim}
+Il contenuto di \texttt{.ssh/id\_rsa.pub} va incollato nelle impostazioni SSH del
+servizio remoto. La verifica si fa con \verb|ssh -T git@gitlab.com|.
+
+\paragraph{Collaboratori} Se il repo è pubblico tutti possono clonarlo ma nessuno può
+modificarlo; se è privato nessuno lo può vedere. Per consentire la modifica occorre
+autorizzare esplicitamente gli utenti (\emph{project members}).
+
+\subsubsection{Social coding}
+
+L'arrivo del Web 2.0 e il bisogno di condividere codice hanno portato ai primi siti di
+condivisione (Sourceforge, 1999), poi evoluti in vere comunità di social networking
+grazie alle potenzialità di networking di Git.
+
+\begin{itemize}
+  \item \textbf{GitHub} (2008, comprato da Microsoft nel 2018): riferimento per community
+        e open source, il più vasto ecosistema di progetti e sviluppatori, comprensivo di
+        piattaforma DevOps.
+  \item \textbf{GitLab} (2014): open source, ottimizzato per il modello DevOps, focus su
+        DevSecOps dal repository alla CI/CD, sicurezza e deployment; disponibile anche
+        \emph{self-managed}, favorito dalle aziende con problemi di privacy.
+  \item \textbf{Bitbucket} (Atlassian): orientato ai team che usano l'ecosistema
+        Atlassian (Jira, Confluence, Bamboo); disponibile in cloud e come Data Center.
+\end{itemize}
+
+\subsubsection{Conflitti}
+
+Un conflitto nasce quando due sviluppatori modificano la stessa porzione di file. Il
+push viene rifiutato (\emph{rejected, fetch first}) e il successivo \verb|git pull|
+genera il conflitto, segnalato nel file con i marcatori:
+
+\begin{verbatim}
+<<<<<<< HEAD
+Un file di Bill Gates
+=======
+Un file di Alex York
+>>>>>>> d19a0f36141bb4a03281330a0cf02cce7533c869
+\end{verbatim}
+
+Metodi di risoluzione:
+\begin{enumerate}
+  \item \textbf{Manuale}: editare il file rimuovendo i marcatori, poi \verb|git add|,
+        \verb|git commit|, \verb|git push|.
+  \item \textbf{Forzante}: \verb|git reset --hard HEAD| e poi
+        \verb|git pull -X theirs| (accetta le modifiche remote) oppure
+        \verb|-X ours| (accetta le proprie).
+  \item \textbf{Distruttivo}: \verb|git reset --hard HEAD| seguito da
+        \verb|git push -f|. Elimina per sempre le modifiche non accettate.
+\end{enumerate}
+
+\subsubsection{Git come filesystem}
+
+Linus Torvalds aveva in mente un filesystem quando lavorava su Git:
+\begin{itemize}
+  \item \verb|git rm| --- equivale a \texttt{rm} di Unix;
+  \item \verb|git mv| --- equivale a \texttt{mv}, serve anche a rinominare mantenendo il
+        tracciamento;
+  \item \verb|git clean --force| --- elimina tutti i file NON tracciati dalla directory
+        di lavoro.
+\end{itemize}
+Le directory non esistono in Git: spariscono se sono vuote. Per tenerle la convenzione è
+inserire un file fittizio chiamato \texttt{.gitkeep}.
+
+\subsection{Branch, merge e fork}
+
+\subsubsection{I branch}
+
+Un \textbf{branch} è una diramazione del codice: i commit relativi alla diramazione
+restano isolati rispetto alla versione principale (\texttt{main} o \texttt{master}),
+dando totale libertà di lavorare, provare e «sporcare» il codice senza compromettere il
+lavoro degli altri. Quando si è pronti si ricongiunge la diramazione al tronco
+principale, e solo in quel momento ci si occupa degli eventuali conflitti. I branch sono
+veloci da creare e occupano pochissimo spazio.
+
+\begin{itemize}
+  \item \verb|git checkout -b branch1| --- crea il branch e vi si posiziona; da quel
+        momento i comandi hanno effetto solo su quel branch.
+  \item \verb|git branch| --- elenca i branch, marcando con \texttt{*} quello attivo.
+  \item \verb|git branch -d <nome>| --- cancella un branch locale.
+  \item \verb|git push origin --delete <nome>| --- cancella un branch remoto.
+  \item \verb|git branch -M <nome>| --- rinomina un branch locale.
+  \item \verb|git push -u origin branch1| --- fa tracciare il branch anche sul remoto.
+  \item \verb|git log --oneline --decorate --graph --all| --- log grafico di tutti i
+        branch.
+\end{itemize}
+
+\subsubsection{Merge e rebase}
+
+Al termine di una porzione significativa di lavoro si ricongiungono i rami: l'operazione
+è il \textbf{merge} (fusione). Come per il pull (che è di fatto un merge) si possono
+generare conflitti da risolvere.
+
+\begin{itemize}
+  \item \textbf{Merge} (\verb|git checkout main; git merge branch2|): riceve nel ramo
+        corrente i commit dell'altro ramo. Non è invasivo sulla struttura pre-esistente
+        dei rami, ma il risultato può essere di non facile interpretazione per il team,
+        perché servono numerosi merge per allineare il branch.
+  \item \textbf{Rebase} (\verb|git checkout feature; git rebase master|): accoda l'intero
+        ramo \texttt{feature} a \texttt{master}, di fatto «riscrivendo la storia» dei
+        commit. Il risultato è un flusso molto più lineare, ma si perde lo storico delle
+        modifiche precedenti all'operazione: \emph{mai eseguire un rebase su rami
+        pubblici}.
+\end{itemize}
+
+Altre operazioni:
+\begin{itemize}
+  \item \verb|git cherry-pick| --- «pesca» un commit da qualsiasi branch e lo applica al
+        branch attuale.
+  \item \verb|git rebase -i HEAD~5| --- sessione interattiva per comprimere gli ultimi
+        cinque commit.
+  \item \verb|git merge --squash feature/login| --- combina i commit del branch in un
+        unico commit (da effettuare successivamente).
+  \item \verb|git commit --amend| --- modifica l'ultimo commit, ideale per correzioni.
+\end{itemize}
+
+\subsubsection{Stash}
+
+Se un merge sovrascriverebbe modifiche locali non committate, Git lo interrompe. Le
+soluzioni sono: committare le modifiche, eliminarle con \verb|git reset --hard|, oppure
+«nasconderle sotto il tappeto» con \verb|git stash|. Dopo il merge si recuperano con
+\verb|git stash pop| (che può a sua volta generare conflitti) e si eliminano con
+\verb|git stash drop|.
+
+\subsubsection{Tag}
+
+I tag «marcano» un particolare commit: milestone, fine sprint, eventi particolari.
+\begin{itemize}
+  \item \textbf{Lightweight}: \verb|git tag pippo|, semplice puntatore a un commit,
+        analogo allo snapshot di un filesystem.
+  \item \textbf{Annotated}: \verb|git tag -a pluto -m "messaggio"|, ha un messaggio
+        associato, può essere firmato; \verb|git show pluto| mostra molte informazioni.
+\end{itemize}
+I tag \emph{non} vengono pushati automaticamente: servono
+\verb|git push origin <tagname>| oppure \verb|git push origin --tags|.
+
+\subsubsection{Fork e merge/pull request}
+
+Il \textbf{forking} è una caratteristica dei siti di social coding che permette di
+duplicare un repository esistente inserendolo tra i propri progetti (con libertà totale
+di accesso) pur mantenendo un legame con il repository originario, detto
+\textbf{upstream}.
+
+Su questa relazione si basa il sistema delle \textbf{pull request} (GitHub, Bitbucket) o
+\textbf{merge request} (GitLab): dopo aver forkato un repository e realizzato le
+modifiche, si invia una richiesta di inserimento invece di applicarla direttamente; il
+responsabile può accettarla o rifiutarla, eventualmente con un commento.
+
+\subsubsection{Flussi di lavoro}
+
+\paragraph{Centralized Workflow} Il server remoto è il riferimento («custode della
+verità»). Ogni sviluppatore clona il repository e sviluppa localmente; terminata una
+sezione significativa pulla, integra localmente e reinvia al repo remoto.\\
+\emph{Vantaggi}: facile da capire, ottimo per team piccoli.
+\emph{Svantaggi}: alla lunga gestire i conflitti diventa problematico, non sfrutta la
+natura distribuita di Git.
+
+\paragraph{Gitflow} Proposto da Vincent Driessen nel 2010. Prevede due branch di durata
+infinita:
+\begin{itemize}
+  \item \texttt{master}/\texttt{main} --- contiene il codice di produzione, pronto;
+  \item \texttt{develop} --- branch di sviluppo.
+\end{itemize}
+E branch temporanei con terminologia precisa:
+\begin{itemize}
+  \item \texttt{feature-*} --- nuove funzionalità, figlia di \texttt{develop};
+  \item \texttt{hotfix-*} --- riparazione di errori del master, da mergiare in
+        \texttt{master} o \texttt{develop};
+  \item \texttt{release-*} --- preparazione di un rilascio, figlia di \texttt{develop},
+        da riunire a \texttt{master} e \texttt{develop}.
+\end{itemize}
+\emph{Vantaggi}: ideale se occorrono rilasci regolari, presenza di tool, master con solo
+codice stabile.
+\emph{Svantaggi}: la storia passata diventa intricata e illeggibile, non funziona bene
+con versioni multiple, rischio di «merge hell».
+
+\paragraph{Feature branch workflow} Il repo remoto è il riferimento. Ogni sviluppatore
+forka il repository e lo clona localmente; se è fuori sincronia si ribasa alla situazione
+corrente. Crea un branch locale (replicato sul server remoto) e, quando ha finito,
+chiede conferma ai colleghi prima del push.\\
+\emph{Vantaggi}: promuove la collaborazione e la proprietà condivisa, master resta
+stabile.
+\emph{Svantaggi}: i branch più vecchi tendono ad avere problemi di merge.
+
+\paragraph{Forking workflow} Esiste un server \emph{upstream} di riferimento. Ogni
+sviluppatore lo forka, clona localmente il proprio repository e lavora indisturbato;
+quando si sente pronto invia una pull request al \emph{project master}.\\
+\emph{Vantaggi}: il repo upstream resta impeccabile grazie a un ferreo controllo degli
+accessi in scrittura.
+\emph{Svantaggi}: più complicato, implica una struttura gerarchica.
+
+\subsubsection{Tracciare la produttività}
+
+\begin{itemize}
+  \item \verb|git shortlog -sn --all| --- numero di commit per autore.
+  \item \textbf{git-quick-stats} --- offre molte opzioni oltre al semplice conteggio.
+  \item \textbf{Gitinspector} --- genera un grafico riassuntivo.
+  \item \textbf{Gource} --- genera un'animazione dei commit (attenzione alle dimensioni
+        del video).
+\end{itemize}
+
+Il numero di commit non è mai una metrica troppo significativa: «\emph{Git mente}». La
+fotografia può essere infedele se gli autori non committano in prima persona ma delegano
+a un'unica persona, se si inseriscono librerie corpose o codice trovato in rete, o se si
+lavora in \emph{pair}/\emph{mob programming}. Rimedi:
+\begin{enumerate}
+  \item \textbf{Manuale}: ogni autore committa solo il codice che ha davvero scritto,
+        eventualmente modificando temporaneamente il proprio username con
+        \verb|git config|.
+  \item \textbf{Co-author}: nel messaggio di commit, dopo almeno una riga vuota,
+        aggiungere la riga \verb|Co-authored-by: nome <email>|.
+        È rilevata da GitHub e GitLab, ma non da \texttt{git log} e Gitinspector.
+  \item \textbf{git-pair}: configurare gli utenti con \verb|git users| e committare con
+        \verb|gitp commit -m "..."|.
+\end{enumerate}
 
 \end{document}

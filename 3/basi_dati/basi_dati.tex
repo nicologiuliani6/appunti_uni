@@ -1,0 +1,336 @@
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2cm]{geometry}
+
+% Pacchetti utili di base
+\usepackage[utf8]{inputenc}   % codifica dei caratteri
+\usepackage[T1]{fontenc}      % font encoding
+\usepackage[italian]{babel}   % lingua italiana
+\usepackage{graphicx}         % immagini
+\usepackage{hyperref}         % link cliccabili
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{enumitem}
+
+% Informazioni sul documento
+\title{Basi di Dati}
+\author{Nicolò Giuliani}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduzione}
+
+\subsection{Sistema informativo e sistema informatico}
+
+\textbf{Base di dati} (significato generico): insieme organizzato di dati che
+supporta lo svolgimento delle attività specifiche di un ente (istituzione,
+azienda, ufficio, persona).\\
+\textbf{Base di dati} (significato specifico): insieme di dati gestito da un
+DBMS.
+
+\begin{description}[style=nextline]
+  \item[Sistema informativo] componente di un ente che gestisce le informazioni
+    di interesse. Ogni ente ha il proprio sistema informativo, anche se non
+    esplicitamente identificabile nella sua organizzazione; va studiato nel suo
+    contesto operativo. È un concetto \emph{indipendente} dall'automazione:
+    esistono da secoli organizzazioni la cui unica missione è gestire dati
+    (anagrafi, banche).
+  \item[Sistema informatico] la porzione automatizzata del sistema informativo,
+    cioè la componente che gestisce le informazioni con tecnologie
+    informatiche.
+\end{description}
+
+Gerarchia di inclusione: Azienda $\supset$ Organizzazione $\supset$ Sistema
+informativo $\supset$ Sistema informatico.
+
+Gestione dell'informazione: raccolta/acquisizione, archiviazione/conservazione,
+elaborazione/trasformazione/produzione, distribuzione/comunicazione/scambio.
+
+\subsection{Informazione e dati}
+
+Le attività umane rappresentano l'informazione in molti modi (idee informali,
+linguaggio naturale, disegni e diagrammi, numeri e codici) su supporti diversi
+(mente umana, carta, dispositivi elettronici). Nei sistemi informatici invece
+l'informazione è rappresentata in modo povero ma essenziale: come \textbf{dati}.
+
+\begin{itemize}
+  \item \emph{informazione}: fatti forniti o appresi su qualcosa o qualcuno.
+  \item \emph{dato}: elemento di informazione, punto di partenza fissato di un
+    procedimento.
+\end{itemize}
+
+Il dato è il risultato del processo di organizzazione, codifica e memorizzazione
+dell'informazione. \textbf{Il dato da solo è inutile senza la sua
+interpretazione} (es.\ i numeri su un cartello stradale non dicono nulla se non
+si sa che sono orari, e quale orario vale in quale giorno).
+
+\paragraph{Perché i dati?} È difficile rappresentare con precisione informazione
+e conoscenza ricche. I dati sono una \emph{risorsa strategica} perché sono più
+stabili delle altre componenti (processi aziendali, tecnologie, ruoli): es.\ i
+dati di banche e anagrafi.
+
+\subsection{DBMS}
+
+\textbf{DBMS} (DataBase Management System): sistema che gestisce collezioni di
+dati
+\begin{itemize}
+  \item \textbf{grandi}
+  \item \textbf{persistenti}
+  \item \textbf{condivise}
+\end{itemize}
+garantendo
+\begin{itemize}
+  \item \textbf{privatezza}
+  \item \textbf{affidabilità}
+  \item \textbf{efficienza}
+  \item \textbf{efficacia}
+\end{itemize}
+
+Esempi: DB2, Oracle, SQLServer, MySQL, PostgreSQL, Access, BigQuery, SQLite.
+
+\paragraph{Grandi} dimensioni molto maggiori della memoria centrale; il solo
+limite considerato è quello fisico dei dispositivi. Ordini di grandezza: 1--5 TB
+(dati transazionali), 30--50 TB (dati decisionali), 500--800 TB (dati
+scientifici), $10^{11}$ record.
+
+\paragraph{Persistenti} il loro tempo di vita è indipendente da quello dei
+processi che li usano.
+
+\paragraph{Condivise} ogni (grande) azienda è divisa in settori, ognuno con un
+proprio sotto-sistema informativo. Senza condivisione nascono
+\textbf{ridondanza} (stessi dati ripetuti) e quindi possibile
+\textbf{incoerenza} (descrizioni diverse non coincidono). La base di dati è una
+risorsa \emph{integrata e condivisa}, da cui la necessità di
+\textbf{meccanismi di autorizzazione} (attività diverse sugli stessi dati) e
+\textbf{controllo della concorrenza} (più utenti sugli stessi dati).
+
+\paragraph{Privatezza} si definiscono autorizzazioni del tipo ``l'utente A può
+leggere tutti i dati e modificare il dato X''.
+
+\paragraph{Affidabilità} resistenza a malfunzionamenti hardware e software. La
+base di dati è una risorsa preziosa e va conservata a lungo termine. Tecnica
+fondamentale: la gestione delle \textbf{transazioni}.
+
+\paragraph{Efficienza} uso proficuo delle risorse di memoria (primaria e
+secondaria) e di tempo (esecuzione e risposta). Poiché i DBMS offrono moltissime
+funzioni, potrebbero risultare inefficienti: da qui grandi investimenti e
+concorrenza fra prodotti. L'efficienza è anche frutto della qualità del
+software.
+
+\paragraph{Efficacia} rendere produttive le attività degli utenti, offrendo
+funzionalità potenti e flessibili.
+
+\subsection{Transazioni}
+
+Una \textbf{transazione} è un insieme di operazioni non separabili
+(\emph{atomiche}), corrette anche in presenza di concorrenza, con effetti
+definitivi.
+
+\begin{description}[style=nextline]
+  \item[Atomicità] o si esegue tutta la sequenza o non se ne esegue nulla. Es.:
+    ``sposta denaro dal conto A al conto B: o si preleva da A e si versa su B, o
+    non si fa nulla''.
+  \item[Concorrenza] transazioni concorrenti devono restare coerenti: due assegni
+    sullo stesso conto incassati contemporaneamente non devono perdersi; due
+    agenzie non devono prenotare due volte lo stesso posto sul treno.
+  \item[Durabilità] il \texttt{commit} garantisce che il risultato finale sia
+    registrato e conservato, anche in caso di concorrenza o guasti.
+\end{description}
+
+Due punti di vista sulle transazioni:
+\begin{itemize}
+  \item \emph{utente}: un programma che realizza una funzione utile, frequente e
+    predefinita, con poche eccezioni previste (versamento in conto, emissione di
+    un certificato di nascita, iscrizione all'anagrafe, prenotazione di un volo).
+    Sono scritte in un linguaggio ospite, noto o \emph{ad hoc}.
+  \item \emph{sistema}: sequenza indivisibile di operazioni (cfr.\ affidabilità).
+\end{itemize}
+
+\subsection{Evoluzione storica}
+
+\begin{description}[style=nextline]
+  \item[Anni '70 --- nessun DBMS] le applicazioni accedono direttamente ai file
+    del sistema operativo; i dati comuni vengono duplicati nelle applicazioni.
+  \item[Anni '80 --- primi DBMS] fra le applicazioni (Pascal, C) e i file si
+    interpone il DBMS, che offre tabelle.
+  \item[Anni '90 --- DBMS attivi] il comportamento procedurale comune viene
+    condiviso fra le applicazioni. Nascono le \textbf{stored procedure}, che però
+    non sono standardizzate e soffrono di \emph{impedance mismatch} con il
+    linguaggio usato per esprimerle; si introducono quindi i \textbf{trigger},
+    regole che modellano il comportamento procedurale condiviso e sono gestite
+    dal DBMS stesso.
+  \item[Anni 2000] architettura client/server su Internet: front-end
+    (Javascript) sul client, Web Application Server e back-end (Java), database
+    attivo con tabelle e trigger sul server.
+  \item[Anni 2010] app mobili: front-end in Java, Objective-C, HTML5; il resto
+    dell'architettura resta invariato.
+\end{description}
+
+\subsection{DBMS e file system}
+
+Anche un file system può gestire grandi collezioni di dati, ma offre un accesso
+a grana grossa: ``tutto o niente''. I DBMS estendono le funzionalità del file
+system, offrendo più servizi in modo integrato.
+
+\paragraph{Descrizione dei dati} ogni programma che non usa un DBMS contiene al
+proprio interno la descrizione della struttura dei file che tratta: programmi
+diversi possono avere descrizioni diverse, generando incoerenza fra le
+rappresentazioni. Nei DBMS una porzione della base di dati (il \textbf{catalogo}
+o \emph{dizionario}) contiene una descrizione centralizzata dei dati, condivisa
+da tutte le applicazioni.
+
+\subsection{Modelli dei dati}
+
+Nei DBMS i dati sono descritti a diversi \textbf{livelli di astrazione}: i
+programmi usano una rappresentazione di alto livello indipendente da quella di
+livello più basso, così una modifica al livello basso non richiede di modificare
+i programmi. Questo è ottenuto attraverso il concetto di \textbf{modello dei
+dati}.
+
+\textbf{Modello dei dati}: insieme di costrutti utilizzati per organizzare i dati
+e descriverne il comportamento. Componente fondamentale: dare struttura ai dati
+tramite \textbf{costruttori di tipo}. Es.: il \textbf{modello relazionale}
+fornisce il costruttore \emph{relazione}, che permette di definire insiemi di
+record omogenei.
+
+\paragraph{Schema e istanza} in ogni base di dati esistono
+\begin{itemize}
+  \item lo \textbf{schema}: invariante nel tempo, descrive la struttura dei dati
+    (aspetto \emph{intensionale}) --- es.\ l'intestazione delle tabelle;
+  \item l'\textbf{istanza}: i valori effettivi, che possono cambiare rapidamente
+    (aspetto \emph{estensionale}) --- es.\ il corpo delle tabelle.
+\end{itemize}
+
+\paragraph{Due tipologie di modelli}
+\begin{description}[style=nextline]
+  \item[Modelli logici] usati dai DBMS per organizzare e memorizzare i dati;
+    usati dai programmi, indipendenti dalla rappresentazione fisica. Es.:
+    relazionale, reticolare, gerarchico, a oggetti, XML.
+  \item[Modelli concettuali] rappresentano i dati indipendentemente da ogni
+    sistema specifico; descrivono concetti del mondo reale e si usano nella fase
+    preliminare di progettazione. Il più diffuso è \textbf{Entity-Relationship}.
+\end{description}
+
+\subsection{Architettura di un DBMS}
+
+Architettura semplificata (a due livelli): utente $\to$ \emph{schema logico}
+$\to$ \emph{schema interno} $\to$ DB.
+
+\begin{description}[style=nextline]
+  \item[Schema logico] descrive la struttura della base di dati tramite il
+    modello logico dei dati (es.\ la struttura delle tabelle).
+  \item[Schema interno (o fisico)] rappresenta lo schema logico a livello di
+    memorizzazione, con strutture dati \emph{raw} (file, record, puntatori).
+\end{description}
+
+Poiché la rappresentazione logica è indipendente da quella fisica --- una tabella
+si usa ``così com'è'', indipendentemente dalla rappresentazione sottostante, che
+può anche variare nel tempo --- nel corso si considera solo il livello logico.
+
+\paragraph{Architettura standard ANSI/SPARC a tre livelli} aggiunge sopra lo
+schema logico uno o più \textbf{schemi esterni}, ciascuno usato da un gruppo di
+utenti:
+\begin{itemize}
+  \item \textbf{schema logico}: struttura della base di dati secondo il modello
+    logico ``principale'';
+  \item \textbf{schema interno}: rappresentazione a livello di memorizzazione;
+  \item \textbf{schema esterno}: descrive una parte della base di dati in un
+    modello logico (\emph{viste} parziali, tabelle derivate, anche da modelli
+    diversi).
+\end{itemize}
+
+\paragraph{Indipendenza dei dati} è conseguenza della stratificazione;
+l'accesso ai dati avviene sempre a livello esterno (che può coincidere con
+quello logico).
+\begin{description}[style=nextline]
+  \item[Indipendenza fisica] livello logico ed esterno sono indipendenti dal
+    livello fisico: una relazione è usata allo stesso modo qualunque sia la sua
+    realizzazione fisica, che può cambiare senza modificare i programmi.
+  \item[Indipendenza logica] il livello esterno è indipendente da quello logico:
+    si può operare su una vista senza modificare il livello logico, e modifiche
+    ``trasparenti'' allo schema logico lasciano inalterato lo schema esterno.
+\end{description}
+
+\subsection{Linguaggi per basi di dati}
+
+Un altro aspetto dell'efficacia è la disponibilità di linguaggi e interfacce
+diverse:
+\begin{itemize}
+  \item linguaggi testuali \emph{interattivi} (\textbf{SQL});
+  \item comandi SQL immersi in un linguaggio \textbf{ospite} (Pascal, Java, C);
+  \item comandi SQL immersi in un linguaggio \emph{ad hoc} con altre
+    funzionalità (grafici, stampa di tabelle) --- es.\ Oracle PL/SQL;
+  \item interfacce amichevoli, senza linguaggio testuale.
+\end{itemize}
+
+\paragraph{Esempio SQL interattivo} date le tabelle \texttt{Corsi(Corso,
+Docente, Aula)} e \texttt{Aule(Nome, Edificio, Piano)}, per ottenere i corsi che
+si tengono al piano terra:
+\begin{verbatim}
+SELECT Corso, Aula, Piano
+FROM Aule, Corsi
+WHERE Nome = Aula
+  AND Piano = 'Terra'
+\end{verbatim}
+
+\paragraph{Separazione fra dati e programmi}
+\begin{description}[style=nextline]
+  \item[DML] \emph{data manipulation language}: interrogazione e aggiornamento
+    delle \emph{istanze} della base di dati.
+  \item[DDL] \emph{data definition language}: definizione degli \emph{schemi}
+    (logico, esterno, fisico) e altre operazioni. Es.:
+\end{description}
+\begin{verbatim}
+CREATE TABLE orario (
+  corso    CHAR(20),
+  docente  CHAR(20),
+  aula     CHAR(4),
+  ora      CHAR(5) )
+\end{verbatim}
+
+\subsection{Attori e utenti}
+
+\begin{itemize}
+  \item progettisti e realizzatori di DBMS;
+  \item progettisti della base di dati e amministratori (\textbf{DBA});
+  \item progettisti e programmatori di applicazioni;
+  \item utenti:
+    \begin{itemize}
+      \item \emph{utenti finali} (terminalisti): eseguono operazioni predefinite
+        (transazioni);
+      \item \emph{utenti casuali}: eseguono operazioni non previste a priori,
+        usando linguaggi interattivi.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{DBA} persona o gruppo responsabile del controllo e della gestione
+centralizzata della base di dati (efficienza, affidabilità, autorizzazioni).
+Spesso il DBA si occupa anche della progettazione, tranne che nei progetti
+complessi.
+
+\subsection{Pregi e difetti dei DBMS}
+
+\paragraph{Pregi}
+\begin{itemize}
+  \item dati come risorsa comune, base di dati come modello della realtà;
+  \item gestione dei dati centralizzata, standardizzabile ed economia di scala;
+  \item disponibilità di servizi integrati;
+  \item riduzione di ridondanze e incoerenze;
+  \item indipendenza dei dati (favorisce sviluppo e manutenzione delle
+    applicazioni).
+\end{itemize}
+
+\paragraph{Difetti}
+\begin{itemize}
+  \item costo dei prodotti e della loro adozione;
+  \item funzionalità non separabili (con conseguente riduzione di efficienza).
+\end{itemize}
+
+\end{document}
