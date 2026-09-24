@@ -1,0 +1,436 @@
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=2cm]{geometry}
+
+% Pacchetti utili di base
+\usepackage[utf8]{inputenc}   % codifica dei caratteri
+\usepackage[T1]{fontenc}      % font encoding
+\usepackage[italian]{babel}   % lingua italiana
+\usepackage{graphicx}         % immagini
+\usepackage{hyperref}         % link cliccabili
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{bm}               % vettori e matrici in grassetto
+\usepackage{array}            % tabelle
+\usepackage{xcolor}
+\usepackage{tikz}             % disegni e alberi
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\graphicspath{{img/}}
+
+% Liste piu' compatte e allineate al testo
+\setlist[itemize]{topsep=0.4em, itemsep=0.25em, parsep=0pt, leftmargin=1.6em}
+\setlist[enumerate]{topsep=0.4em, itemsep=0.25em, parsep=0pt, leftmargin=1.9em}
+
+% Notazione ricorrente
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\x}{\bm{x}}
+\newcommand{\w}{\bm{w}}
+\newcommand{\X}{\bm{X}}
+\newcommand{\yhat}{\hat{y}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\argmin}{\operatorname*{arg\,min}}
+\newcommand{\argmax}{\operatorname*{arg\,max}}
+
+% --- Presentazione uniforme delle figure -------------------------------------
+% Stessa aria sopra/sotto per ogni immagine o disegno, centratura che funziona
+% anche dentro le liste, nessuno spostamento dovuto ai float.
+\newlength{\figgap}
+\setlength{\figgap}{1.1em}
+
+\newcommand{\figura}[1]{%
+  \par\addvspace{\figgap}%
+  {\centering\noindent#1\par}%
+  \addvspace{\figgap}%
+  \noindent\ignorespaces
+}
+\newcommand{\imgfig}[2][0.55]{\figura{\includegraphics[width=#1\linewidth]{#2}}}
+
+% Voce di elenco con testo a sinistra e immagine a destra:
+% #1 = larghezza relativa dell'immagine, #2 = testo, #3 = file immagine
+\newcommand{\itemimg}[3][0.85]{%
+  \begin{minipage}[t]{0.70\linewidth}%
+    #2%
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.26\linewidth}%
+    \vspace{0pt}\centering\includegraphics[width=#1\linewidth]{#3}%
+  \end{minipage}%
+}
+
+% Evidenziatura usata nelle slide
+\newcommand{\hl}[1]{\textcolor{orange}{#1}}
+
+% --- Albero di decisione di esempio (Play Tennis) ----------------------------
+\newcommand{\alberoTennis}{%
+\begin{tikzpicture}[
+    level 1/.style={sibling distance=42mm, level distance=15mm},
+    level 2/.style={sibling distance=22mm, level distance=15mm},
+    attr/.style={draw, rounded corners=2pt, text=blue, font=\footnotesize,
+                 inner sep=2pt},
+    si/.style={text=green!50!black, font=\footnotesize},
+    no/.style={text=red, font=\footnotesize},
+    el/.style={font=\scriptsize, midway, fill=white, inner sep=1pt}
+  ]
+  \node[attr] {Outlook}
+    child { node[attr] {Humidity}
+      child { node[no] {No}   edge from parent node[el,left]  {High}   }
+      child { node[si] {Yes}  edge from parent node[el,right] {Normal} }
+      edge from parent node[el,left] {Sunny} }
+    child { node[si] {Yes} edge from parent node[el,left,xshift=-2mm] {Overcast} }
+    child { node[attr] {Wind}
+      child { node[no] {No}  edge from parent node[el,left]  {Strong} }
+      child { node[si] {Yes} edge from parent node[el,right] {Weak}   }
+      edge from parent node[el,right] {Rain} };
+\end{tikzpicture}%
+}
+
+% --- I due alberi candidati A e B --------------------------------------------
+\newcommand{\alberiAB}{%
+\begin{tikzpicture}[
+    nd/.style={circle, draw, minimum size=7mm, inner sep=0pt, font=\small},
+    cnt/.style={font=\scriptsize},
+    el/.style={font=\scriptsize, midway, fill=white, inner sep=1pt}
+  ]
+  % albero con radice A
+  \node[nd] (a)  at (0,0)       {A};
+  \node[cnt, left=2mm of a] {$[29+,35-]$};
+  \node[nd] (al) at (-1.3,-1.7) {};
+  \node[nd] (ar) at ( 1.3,-1.7) {};
+  \node[cnt, left=2mm of al] {$[21+,5-]$};
+  \node[cnt, left=2mm of ar] {$[8+,30-]$};
+  \draw (a) -- (al) node[el, left]  {T};
+  \draw (a) -- (ar) node[el, right] {F};
+
+  % albero con radice B
+  \node[nd] (b)  at (7,0)       {B};
+  \node[cnt, left=2mm of b] {$[29+,35-]$};
+  \node[nd] (bl) at (5.7,-1.7) {};
+  \node[nd] (br) at (8.3,-1.7) {};
+  \node[cnt, left=2mm of bl] {$[18+,33-]$};
+  \node[cnt, left=2mm of br] {$[11+,2-]$};
+  \draw (b) -- (bl) node[el, left]  {T};
+  \draw (b) -- (br) node[el, right] {F};
+\end{tikzpicture}%
+}
+
+% Informazioni sul documento
+\title{Introduzione all'apprendimento automatico}
+\author{Nicolò Giuliani}
+\date{}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\setcounter{section}{-1}   % la prima \section è numerata 0
+
+\section{Introduzione}
+
+\subsection{Di cosa si occupa il Machine Learning?}
+Si occupa di risolvere problemi complessi tramite tecniche algoritmiche specifiche. L'approccio generale del ML è
+\begin{itemize}
+    \item definire una classe di modelli del problema su insieme di \textbf{parametri} $\Theta$
+    \item definire una metrica di valutazione, ovvero una misura dell'\textbf{errore} dei modelli
+    \item modificare i parametri $\Theta$ per minimizzare l'errore sui \textbf{dati di training}
+\end{itemize}
+Quindi possiamo dire che \texttt{il machine learning è un procedimento di ottimizzazione}.
+\imgfig[0.3]{2026-09-24_11-35-45.png}
+Il ML tratta di problemi di \textbf{ottimizzazione}!
+\begin{itemize}
+    \item Il \texttt{training set} fa sì che il tuning dei parametri è dato dalla esperienza passata, quindi una sorta di \textbf{apprendimento}.
+    \item La \texttt{soluzione} spesso non esiste una soluzione in forma chiusa
+\end{itemize}
+Utilizziamo \textbf{tecniche iterative} per approssimare iterativamente la soluzione.
+
+\subsubsection{Predizioni}
+Attraverso modelli di ML possiamo anche stabilire correlazioni, clusters, $\dots$
+\imgfig[0.55]{2026-09-24_11-45-42.png}
+
+\subsubsection{Classi di problemi di apprendimento}
+\begin{itemize}
+    \item \itemimg{%
+        Approfondimento supervisionato: inputs + outputs (etichette)
+        \begin{itemize}[topsep=0.2em, partopsep=0pt]
+            \item classificazione
+            \item regressione
+        \end{itemize}}{2026-09-24_11-49-31.png}
+
+    \item \itemimg{%
+        Approfondimento non supervisionato: inputs
+        \begin{itemize}[topsep=0.2em, partopsep=0pt]
+            \item clustering
+            \item analisi delle componenti
+            \item autoencoding
+        \end{itemize}}{2026-09-24_11-49-58.png}
+
+    \item \itemimg{%
+        Approfondimento con rinforzo
+        \begin{itemize}[topsep=0.2em, partopsep=0pt]
+            \item apprendere comportamenti
+            \item ``model free'' planning
+        \end{itemize}}{2026-09-24_11-50-22.png}
+\end{itemize}
+
+\subsubsection*{Molte tecniche differenti}
+\begin{itemize}
+    \item Modi diversi per definire i modelli
+    \begin{itemize}
+        \item alberi di decisione
+        \item modelli lineari
+        \item reti neurali
+    \end{itemize}
+    \item Differenti funzioni di loss
+    \begin{itemize}
+        \item errore quadratico
+        \item logistic loss
+        \item cross entropy
+        \item similarità del coseno
+        \item margine massimo
+    \end{itemize}
+\end{itemize}
+\imgfig[0.50]{2026-09-24_11-53-02.png}
+
+\subsection{Features}
+Ogni informazione realativa a un dato che ne descrive una sua proprietà è feature (caratteristica).
+\begin{itemize}
+    \item Le features sono gli input del processo di apprendimento.
+    \item L'apprendimento è molto sensibile alla scelta delle features.
+\end{itemize}
+Determinare delle buone caratteristiche è complesso.
+\begin{itemize}
+    \item \textbf{Approccio tradizionale}: determinare durante il preprocessing delle buone features, e applicare un metodo semplice ma robusto di apprendimento, ad esempio qualche tecnica lineare.
+    \item \textbf{Approccio ``deep''}: fornire in input dati grezzi e delegare alla macchina il compito di sintetizzare nuove features (rappresentatione interna).
+\end{itemize}
+\texttt{Deep learning} è implementato attraverso reti neurali profonde.\\
+La rete neurale è profonda quando si hanno layers multipli:
+\imgfig[0.55]{2026-09-24_11-59-11.png}
+Ogni layer sintetizza nuove features in funzione delle precedenti.
+
+\subsubsection*{Relazione tra le aree di ricerca}
+\imgfig[0.55]{2026-09-24_12-00-05.png}
+L'AI, machine learning, deep learning:
+\begin{itemize}
+    \item \textbf{Sistemi basati su conoscenza}: prendete un esperto, chiedetegli come risolverebbe il problema e poi provate a mimare il suo comportamento mediante regole logiche
+    \item \textbf{Machine-Learning tradizionale}: prendete un esperto, chiedetegli di quali features avrebbe bisogno per risolvere un dato problema, raccogliete un insieme di osservazioni e lasciate alla macchina il compito di apprendere l'associazione
+    \item \textbf{Deep-Learning}: liberatevi dell'esperto
+\end{itemize}
+
+\subsubsection*{Componenti addestrati mediante apprendimento}
+\imgfig[0.55]{2026-09-24_12-01-52.png}
+
+\subsection{Alberi di decisione}
+Definiamo \textbf{traning set} un insieme di \texttt{esempi di allenamento}
+\begin{align*}
+    \langle x^{(i)}, y^{(i)}\rangle
+\end{align*}
+con
+\begin{itemize}
+    \item $x^{(i)} \in X$ insieme degli inputs
+    \item $y^{(i)} \in Y$ insieme delgi outputs, \textbf{groudn truth}
+    \item $i$ indice dell'istanza di training
+\end{itemize}
+Definiamo \textbf{problema} trovare la funzione che ``mappa'' $x^{(i)}$ a $y^{(i)}$
+\begin{itemize}
+    \item $Y$ discreto: problema di classificazione (predizione di una classe)
+    \item $Y$ continuo: problema di regressione (predizione di un valore)
+\end{itemize}
+Le tecniche di Machine Learning richiedono la scelta preliminare di uno \texttt{spazio di funzioni} $H$, all'interno del quale cercare la soluzione che \texttt{meglio approssima} i dati di training. \\
+\underline{Un modello è un modo di specificare e calcolare una funzione nello}\\
+\underline{spazio delle ipotesi $H$.}
+
+\subsubsection{Alberi di decisione: un esempio}
+È un buon giorno per giocare a tennis?
+\begin{align*}
+    H : \text{Outlook} \times \text{Humidity} \times \text{Wind} \times \text{Temp} \to \text{Play Tennis?}
+\end{align*}
+\figura{\alberoTennis}
+Ogni nodo testa un attributo (feature) $X$\\
+Ogni arco uscente da un nodo corrisponde a uno dei possibili valori \hl{discreti} di $X$\\
+Ogni foglia predice la riposta $Y$ (o un probabilità $P(Y|X)$)
+\begin{itemize}
+    \item Insieme di input $X$:\\
+    ogni istanza $x \in X$ è un vettore di features del seguente tipo:\\
+    $\langle\, \text{Humidity=high},\ \text{Wind=weak},\ \text{Outlook=rain},\ \text{Temp=hot} \,\rangle$
+    \item Funzione target $f : X \to Y$\\
+    $Y$ assume valori discreti (booleani)
+    \item Spazio delle ipotesi $H = \{h \mid h : X \to Y\}$ (nessuna restrizione)
+    \begin{itemize}
+        \item vogliamo modellare $h \in H$ con un albero di decisione
+        \item ogni istanza $x \in X$ definisce un cammino nell'albero che conduce a una foglia etichettata con $y \in Y$, corrispondente alla soluzione predetta
+    \end{itemize}
+\end{itemize}
+\figura{%
+  \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    Outlook  & Temp & Humidity & Wind   & Play \\
+    \hline
+    Sunny    & Hot  & High     & Weak   & No  \\
+    \hline
+    Sunny    & Hot  & High     & Strong & No  \\
+    \hline
+    Overcast & Hot  & High     & Weak   & Yes \\
+    \hline
+    Rain     & Mild & High     & Weak   & Yes \\
+    \hline
+    Rain     & Cool & Normal   & Weak   & Yes \\
+    \hline
+    Rain     & Cool & Normal   & Strong & No  \\
+    \hline
+    Overcast & Cool & Normal   & Strong & Yes \\
+    \hline
+    Sunny    & Mild & High     & Weak   & No  \\
+    \hline
+    Sunny    & Cool & Normal   & Weak   & Yes \\
+    \hline
+    Rain     & Mild & Normal   & Weak   & Yes \\
+    \hline
+    Sunny    & Mild & Normal   & Strong & Yes \\
+    \hline
+    Overcast & Mild & High     & Strong & Yes \\
+    \hline
+    Overcast & Hot  & Normal   & Weak   & Yes \\
+    \hline
+    Rain     & Mild & High     & Strong & No  \\
+    \hline
+  \end{tabular}%
+}
+
+\paragraph{Expressività del modello}
+Definiamo $X_1 \times X_2 \times \dots \times X_n$ con $X_i = \{\text{true, false}\}$ \\
+Possiamo esprimere $Y=X_2 \lor X_5$?
+
+\subsubsection{Costruzione Top-down induttiva}
+Main loop:
+\begin{enumerate}
+    \item assegnare al nodo corrente il ``miglior'' attributo $X_i$
+    \item creare un nodo figlio per ogni possibile valore di $X_i$ e propagare i dati verso i figli a seconda del loro valore
+    \item per ogni nodo figlio, se tutti i dati del training set associati al nodo hanno una stessa etichetta $y$, marcare il nodo come foglia con etichetta $y$, altrimenti ripetere dal primo punto
+\end{enumerate}
+Ma quale è il ``miglior'' attributo?
+\figura{\alberiAB}
+Definiamo \textbf{entropia} di una variabile aleatoria $X$
+\begin{align*}
+    H(X)=- \sum_{i=1}^{n} P(X=i)\log_2 P(X=i)
+\end{align*}
+dove $n$ è il numero dei possibili valori di $n$.
+
+\figura{%
+  \begin{minipage}[c]{0.48\linewidth}
+    L'entropia misura il \hl{grado di impurità} (disordine) della informazione.
+    È massima ($\log n$) quando $X$ è uniformemente distribuita tra tutti i
+    suoi $n$ valori, e minima ($0$) quando è concentrata su un singolo valore.
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.46\linewidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=\linewidth, height=0.72\linewidth,
+          xlabel={$\Pr(X=1)$}, ylabel={$H(X)$},
+          xmin=0, xmax=1, ymin=0, ymax=1,
+          xtick={0,0.5,1}, ytick={0,0.5,1},
+          grid=both, grid style={gray!25, very thin},
+          tick label style={font=\scriptsize},
+          label style={font=\scriptsize},
+          axis lines=box,
+        ]
+        \addplot[blue, thick, samples=200, domain=0.0005:0.9995]
+          {-x*log2(x)-(1-x)*log2(1-x)};
+      \end{axis}
+    \end{tikzpicture}
+  \end{minipage}%
+}
+
+\subsubsection{Teoria della Informazione (Shannon)}
+L'Entropia è la quantità media di informazione prodotta da una sorgente stocastica di dati.
+\begin{itemize}
+    \item Un evento con entropia 1 non trasmette Informazioni
+    \begin{align*}
+        I(1)=0
+    \end{align*}
+    \item Dati due evento indipendenti con probabilità $p_1, p_2$ la probabilità congiunta è $p_1p_2$ ma l'informazione acquisita è la somma delle informazioni dei due eventi indipendenti
+    \begin{align*}
+        I(p_1p_2)= I(p_1)+I(p_2)
+    \end{align*}
+    \item Ci aspettiamo che l'informazione sia antimonotona rispetto alla probabilità ed è quindi naturale definire
+    \begin{align*}
+        I(p)=-\log(p)
+    \end{align*}
+\end{itemize}
+
+\subsubsection*{Teoria dei codici (Shannon)}
+L'Entropia misura il numero medio di bits richiesti per trasmettere il valore prodotto da una sorgente stocastica $X$. \\
+\underline{Se gli eventi non hanno la stessa probabilità possiamo migliorare la codifica!!}
+
+\paragraph{Entropia di $X$}
+\begin{align*}
+    H(X) = -\sum_{i=1}^{n} P(X=i)\log_2 P(X=i)
+\end{align*}
+
+\paragraph{Entropia Condizionale di $X$ dato uno specifico $Y=v$}
+\begin{align*}
+    H(X|Y=v) = -\sum_{i=1}^{n} P(X=i|Y=v)\log_2 P(X=i|Y=v)
+\end{align*}
+
+\paragraph{Entropia Condizionale di $X$ dato $Y$}
+(media ponderata sugli $m$ possibili valori di $Y$)
+\begin{align*}
+    H(X|Y) = \sum_{v=1}^{m} P(Y=v)H(X|Y=v)
+\end{align*}
+
+\paragraph{Guadagno Informativo tra $X$ e $Y$}
+\begin{align*}
+    I(X,Y) = H(X)-H(X|Y) = H(Y)-H(Y|X)
+\end{align*}
+
+\subsubsection{Meglio A o B?}
+Misuriamo la riduzione di entropia della variabile target $Y$ conseguente alla conoscenza di un qualche attributo $X$, cioè il guadagno informativo $I(Y,X)$ tra $Y$ e $X$.
+\figura{\alberiAB}
+\begin{align*}
+    H(Y)       &= -(29/64)\cdot\log_2(29/64)-(35/64)\cdot\log_2(35/64) = .994\\
+    H(Y|A=T)   &= -(21/26)\cdot\log_2(21/26)-(5/26)\cdot\log_2(5/26)   = .706\\
+    H(Y|A=F)   &= -(8/38)\cdot\log_2(8/38)-(30/38)\cdot\log_2(30/38)   = .742\\
+    H(Y|A)     &= .706\cdot 26/64 + .742\cdot 38/64 = .726\\
+    I(Y,A)     &= H(Y)-H(Y|A) = .994-.726 = .288
+\end{align*}
+Per $B$ otteniamo $H(Y|B) = .872$ e $I(Y,B) = .122$
+\begin{center}
+    \textcolor{red}{Quindi, A è migliore!}
+\end{center}
+
+\subsubsection{Il caso continuo}
+Quando gli attibuti sono continui, prendiamo le decisioni in base a opportune \hl{soglie} (thresholds):
+\figura{%
+  \begin{tikzpicture}[
+      nd/.style={ellipse, draw, minimum width=16mm, minimum height=11mm,
+                 inner sep=1pt, font=\small},
+      el/.style={font=\small}
+    ]
+    \node[nd] (t) at (0,0) {$A<\Theta$};
+    \draw[-{Stealth[length=2.5mm]}] (t) -- (-1.6,-1.6)
+      node[el, text=green!50!black, pos=0.15, left] {T};
+    \draw[-{Stealth[length=2.5mm]}] (t) -- ( 1.6,-1.6)
+      node[el, text=red, pos=0.15, right] {F};
+  \end{tikzpicture}%
+}
+\begin{itemize}
+    \item confrontiamo le varie soglie in base al loro guadagno informativo
+    \item ma come scegliere le soglie candidate?
+    \begin{itemize}
+        \item sampling a intervalli discreti prefissati
+        \item ordinare il train set rispetto a un dato attributo e scegliere come soglie i valori medi tra dati consecutivi
+    \end{itemize}
+\end{itemize}
+
+\subsection{Overfitting}
+\end{document}
