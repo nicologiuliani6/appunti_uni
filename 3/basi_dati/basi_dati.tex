@@ -333,4 +333,346 @@ complessi.
   \item funzionalità non separabili (con conseguente riduzione di efficienza).
 \end{itemize}
 
+\section{Il modello relazionale}
+
+\subsection{Modelli logici}
+
+Esistono tre modelli logici \emph{tradizionali}:
+\begin{itemize}
+  \item \textbf{gerarchico};
+  \item \textbf{reticolare} (network);
+  \item \textbf{relazionale}.
+\end{itemize}
+Più recenti sono il modello a \emph{oggetti} (poco diffuso) e i modelli su
+\emph{XML} (considerati complementari al relazionale).
+
+\paragraph{Caratteristica distintiva}
+\begin{description}[style=nextline]
+  \item[Gerarchico e reticolare] usano \textbf{riferimenti espliciti}
+    (puntatori) fra i record.
+  \item[Relazionale] è \textbf{value based}: i riferimenti fra dati memorizzati
+    in relazioni diverse sono rappresentati tramite \emph{valori} (non
+    puntatori).
+\end{description}
+
+\subsection{Il modello relazionale}
+
+Definito da \textbf{E.\ F.\ Codd} nel 1970 per garantire l'indipendenza dei
+dati. Implementato in DBMS reali solo a partire dal 1981: realizzare
+indipendenza dei dati in modo efficiente e affidabile non è banale. Il modello
+si basa sulla definizione logica di \emph{relazione} (con alcune differenze) e
+le relazioni sono rappresentate tramite \textbf{tabelle}.
+
+\paragraph{Relazione, relation, relationship} tre concetti da tenere distinti:
+\begin{itemize}
+  \item \emph{relazione logica}: nel senso della teoria degli insiemi;
+  \item \emph{relazione} nel modello relazionale;
+  \item \emph{relationship}: esprime una specifica classe di fatti nel modello
+    Entity-Relationship.
+\end{itemize}
+
+\subsection{Relazione logica}
+
+Dati $n$ insiemi $D_1, \ldots, D_n$ (non necessariamente distinti):
+\begin{itemize}
+  \item il \textbf{prodotto cartesiano} $D_1 \times \cdots \times D_n$ è
+    l'insieme di tutte le n-uple $(d_1, \ldots, d_n)$ tali che $d_1 \in D_1,
+    \ldots, d_n \in D_n$;
+  \item una \textbf{relazione logica} su $D_1, \ldots, D_n$ è un
+    \emph{sottoinsieme} $r \subseteq D_1 \times \cdots \times D_n$;
+  \item i $D_i$ sono i \textbf{domini} della relazione.
+\end{itemize}
+
+\paragraph{Proprietà}
+\begin{itemize}
+  \item è un \emph{insieme} di n-uple: non c'è ordine fra le tuple;
+  \item le tuple sono tutte \emph{distinte};
+  \item ogni n-upla è \emph{ordinata}: l'$i$-esimo valore proviene
+    dall'$i$-esimo dominio.
+\end{itemize}
+
+\paragraph{Struttura posizionale} in \texttt{Matches} $\subseteq$ \emph{string}
+$\times$ \emph{string} $\times$ \emph{int} $\times$ \emph{int} lo stesso
+dominio compare con \textbf{ruoli} diversi, distinti solo dalla \emph{posizione}
+(1$^\text{a}$ colonna = squadra di casa, 2$^\text{a}$ = ospite, ecc.). Questa è
+una struttura \textbf{posizionale}.
+
+\subsection{Struttura non posizionale}
+
+Nel modello relazionale a ciascun dominio si associa un \textbf{attributo}, un
+nome unico che ne esprime il ``ruolo''. La posizione delle colonne diventa
+irrilevante: la struttura è \textbf{non posizionale}. Es.\
+\texttt{(Home, Away, GoalsH, GoalsA)}: scambiando l'ordine delle colonne (con
+le relative intestazioni) l'informazione non cambia; scambiare \emph{solo} le
+intestazioni cambia invece il significato.
+
+\paragraph{Tabelle e relazioni} una tabella rappresenta una relazione se
+\begin{itemize}
+  \item tutte le righe sono \emph{diverse};
+  \item tutte le intestazioni di colonna sono \emph{diverse};
+  \item i valori all'interno di ogni colonna sono \emph{omogenei} (stesso
+    dominio).
+\end{itemize}
+Righe e colonne possono assumere qualunque posizione.
+
+\subsection{Modello value based}
+
+I riferimenti fra dati in relazioni diverse sono espressi tramite \textbf{valori}
+nelle tuple (es.\ \texttt{Exams.Student} = \texttt{Students.Number}), non tramite
+puntatori. Altri modelli (reticolare, gerarchico, a oggetti) usano invece
+riferimenti espliciti gestiti dal sistema.
+
+\paragraph{Pregi del modello value based}
+\begin{itemize}
+  \item indipendenza dalla struttura fisica, che può cambiare dinamicamente
+    (una cosa analoga si può ottenere con puntatori ``di alto livello'');
+  \item si memorizza solo ciò che è rilevante dal punto di vista applicativo;
+  \item utente e programmatore vedono gli stessi dati;
+  \item i dati possono essere facilmente condivisi fra ambienti diversi;
+  \item i puntatori sono direzionali, i valori no.
+\end{itemize}
+
+\subsection{Schemi e istanze}
+
+\paragraph{Schema di una relazione} un nome di relazione $R$ con un insieme di
+attributi $A_1, \ldots, A_n$:
+\[
+  R(A_1, \ldots, A_n)
+\]
+Es.\ \texttt{STUDENTS(Number, Surname, Name, Year of Birth)}.
+
+\paragraph{Schema di database relazionale} insieme di schemi di relazione:
+\[
+  \mathcal{R} = \{R_1(X_1), \ldots, R_k(X_k)\}
+\]
+
+\paragraph{Tupla} una tupla su un insieme di attributi $X$ è un
+\textbf{mapping} che associa a ogni attributo $A \in X$ un valore nel dominio
+di $A$. Con $t[A]$ si indica il valore della tupla $t$ sull'attributo $A$
+(es.\ $t[\texttt{Name}] = \text{Mario}$).
+
+\paragraph{Istanze}
+\begin{itemize}
+  \item una \textbf{istanza di relazione} $r$ è un insieme finito di tuple con
+    schema $R(X)$;
+  \item una \textbf{istanza di database relazionale} su
+    $\mathcal{R} = \{R_1(X_1), \ldots, R_n(X_n)\}$ è un insieme
+    $r = \{r_1, \ldots, r_n\}$ di istanze di relazione ($r_i$ istanza di $R_i$).
+\end{itemize}
+
+\subsection{Casi particolari}
+
+\paragraph{Relazioni con un solo attributo} sono ammesse: es.\
+\texttt{WorkerStudents(Number)}, che elenca soltanto le matricole degli
+studenti lavoratori.
+
+\paragraph{Strutture annidate} molti dati reali (es.\ scontrini, fatture) sono
+naturalmente \emph{annidati}: un'intestazione con vari campi ripetuti (righe di
+prodotto). Il modello relazionale è \emph{piatto}: le strutture annidate si
+rappresentano con più relazioni collegate da valori. Es.\
+\texttt{Receipts(Number, Date, Total)} e
+\texttt{Courses(Receipt, Row, No, Description, Price)}. La rappresentazione
+scelta dipende dagli obiettivi: righe ripetute ammesse? ordine delle righe
+significativo? esistono più rappresentazioni possibili.
+
+\subsection{Informazione parziale}
+
+Il modello relazionale ha una struttura \emph{rigida}: l'informazione è
+espressa in tuple che devono rispettare uno schema. Ma i dati reali possono non
+combaciare con il formato atteso (es.\ un ``secondo nome'' non sempre
+esistente).
+
+\paragraph{Perché non usare valori speciali} scegliere un valore del dominio (0,
+stringa vuota, ``99'', $\ldots$) per marcare l'assenza è pericoloso:
+\begin{itemize}
+  \item potrebbero non esserci valori ``inutilizzati'' disponibili;
+  \item quei valori potrebbero in seguito diventare significativi;
+  \item bisognerebbe comunque tracciare a livello di software questi valori
+    ``non rappresentabili''.
+\end{itemize}
+
+\paragraph{Valore NULL} tecnica grezza ma efficace: introdurre un valore
+speciale \textbf{NULL} che indica l'assenza di un valore atteso e non appartiene
+al dominio. Formalmente, per ogni attributo $A$, $t[A]$ è o un valore in
+$\text{dom}(A)$ oppure \texttt{NULL}. Servono vincoli specifici per stabilire
+quando \texttt{NULL} non è ammesso.
+
+\paragraph{Tipi di NULL} ci sono almeno tre casi diversi di valore mancante:
+\begin{itemize}
+  \item valore \emph{sconosciuto} (esiste ma non lo conosciamo);
+  \item valore \emph{inesistente} (non esiste per quella tupla);
+  \item valore \emph{non informativo} (non sappiamo se esiste).
+\end{itemize}
+I DBMS moderni non distinguono fra questi casi.
+
+\paragraph{Troppi NULL} una istanza con troppi \texttt{NULL} (specialmente nelle
+chiavi o nei riferimenti) perde valore informativo: l'uso di \texttt{NULL} va
+limitato.
+
+\subsection{Vincoli di integrità}
+
+Alcune istanze sintatticamente corrette possono non rappresentare informazione
+corretta per l'applicazione (es.\ un voto ``32'', una \emph{laude} con voto
+$<30$, un riferimento a uno studente inesistente).
+
+\paragraph{Vincolo di integrità} proprietà che deve valere sulle istanze per
+rappresentare informazione corretta. Formalmente è una funzione booleana
+(\textbf{predicato}) che associa a ogni istanza \emph{true} o \emph{false}.
+
+\paragraph{Perché}
+\begin{itemize}
+  \item descrizione più accurata del dominio reale;
+  \item supporto alla \emph{data quality};
+  \item utili in fase di progettazione;
+  \item usati nella valutazione delle interrogazioni.
+\end{itemize}
+
+\paragraph{Osservazione} i DBMS non supportano tutti i tipi di vincolo: si
+dichiarano quelli supportati e il DBMS ne impedisce la violazione; per gli
+altri il programmatore deve implementarli fuori dal DBMS.
+
+\paragraph{Classificazione}
+\begin{description}[style=nextline]
+  \item[Intra-relazionali] coinvolgono una sola relazione:
+    \begin{itemize}
+      \item su valori (\emph{domain constraints});
+      \item su tuple.
+    \end{itemize}
+  \item[Inter-relazionali] coinvolgono più relazioni.
+\end{description}
+
+\subsection{Vincoli di tupla}
+
+Esprimono regole sui valori di ogni singola tupla, indipendentemente dalle
+altre. Caso specifico: i \textbf{domain constraints} coinvolgono un solo
+attributo.
+
+\paragraph{Sintassi} espressione booleana di atomi che confrontano:
+\begin{itemize}
+  \item valori del dominio degli attributi, es.\
+    \texttt{(Grade $\geq$ 18) AND (Grade $\leq$ 30)};
+  \item espressioni aritmetiche su tali valori, es.\
+    \texttt{GrossPay = (Deductions + Net)}.
+\end{itemize}
+Una tupla \texttt{(Bruni, 50.000, 11.000, 36.000)} viola il vincolo perché
+$11.000 + 36.000 \neq 50.000$.
+
+\subsection{Chiavi}
+
+Nel mondo reale ogni entità è identificabile: nella tabella \texttt{Students}
+ogni tupla ha un \texttt{Number} unico e non esistono tuple con stessi
+\texttt{Surname, Name, Date of Birth}. Formalizziamo:
+
+\begin{description}[style=nextline]
+  \item[Superchiave] un insieme $K$ di attributi di $r$ tale che non esistono
+    due tuple distinte $t_1, t_2 \in r$ con $t_1[K] = t_2[K]$.
+  \item[Chiave] una superchiave \emph{minimale}: nessun suo sottoinsieme
+    proprio è già superchiave.
+\end{description}
+
+\paragraph{Esempi} in \texttt{Students(Number, Surname, Name, Curriculum,
+Birth)}:
+\begin{itemize}
+  \item \texttt{Number} è chiave: è superchiave (identifica ciascuna tupla) e
+    contiene un solo attributo, quindi è minimale;
+  \item \texttt{\{Surname, Name, Birth\}} è un'altra chiave: è superchiave ed
+    è minimale;
+  \item \texttt{\{Surname, Curriculum\}} potrebbe essere superchiave in
+    un'istanza particolare ma non nel caso generale.
+\end{itemize}
+
+\paragraph{Vincoli, schema e stati}
+\begin{itemize}
+  \item i vincoli corrispondono a proprietà del mondo reale, modellate nel DB;
+  \item sono modellati sullo \emph{schema} (si applicano a tutte le tuple);
+  \item ogni schema può avere un insieme di vincoli: le tuple memorizzate sono
+    \textbf{corrette} (valide) se soddisfano tutti i vincoli;
+  \item un'istanza può soddisfare \emph{per caso} altri vincoli non dichiarati.
+\end{itemize}
+
+\paragraph{Esistenza delle chiavi} ogni relazione:
+\begin{itemize}
+  \item non può contenere tuple con tutti i valori uguali (è un insieme);
+  \item ha come superchiave l'insieme di tutti i suoi attributi;
+  \item quindi ha almeno una chiave.
+\end{itemize}
+
+\paragraph{Importanza}
+\begin{itemize}
+  \item l'esistenza di almeno una chiave garantisce l'\emph{accessibilità} di
+    ogni tupla;
+  \item le chiavi permettono di correlare tuple fra relazioni diverse: il
+    modello relazionale è \emph{value based}.
+\end{itemize}
+
+\subsection{Chiavi e valori nulli}
+
+Se una tupla contiene \texttt{NULL} sugli attributi della chiave, i suoi
+valori non permettono di:
+\begin{itemize}
+  \item identificare la tupla;
+  \item creare facilmente riferimenti esterni da altre relazioni.
+\end{itemize}
+L'uso di \texttt{NULL} sulle chiavi va limitato.
+
+\paragraph{Chiave primaria} fra le chiavi di una relazione se ne sceglie una
+(\textbf{primary key}) che \emph{non ammette valori NULL}. Convenzionalmente si
+indica con la sottolineatura degli attributi nello schema.
+
+\subsection{Integrità referenziale}
+
+Le informazioni fra relazioni diverse sono correlate tramite valori comuni, in
+particolare valori di chiavi (primarie). Tali correlazioni devono essere
+\emph{coerenti}: es.\ il codice del vigile in \texttt{Infringement.Policeman}
+deve corrispondere a un \texttt{ID} esistente in \texttt{Policemen}.
+
+\paragraph{Vincolo di integrità referenziale} (\emph{foreign key}) fra gli
+attributi $X$ di una relazione $R_1$ e una relazione $R_2$: i valori di $X$
+in $R_1$ devono comparire come valori della chiave primaria di $R_2$.
+
+\paragraph{Esempio} in un DB con \texttt{Infringement(Code, Date, Policeman,
+Country, Plate)}, \texttt{Policemen(ID, Surname, Name)},
+\texttt{Car(Country, Plate, Surname, Name)}:
+\begin{itemize}
+  \item \texttt{Policeman} $\to$ \texttt{Policemen(ID)};
+  \item \texttt{(Country, Plate)} in \texttt{Infringement} $\to$
+    \texttt{Car(Country, Plate)}.
+\end{itemize}
+Una tupla \texttt{Infringement} con \texttt{(Italy, AJ046EZ)}, mentre in
+\texttt{Car} \texttt{AJ046EZ} appartiene alla \texttt{France}, viola il
+vincolo.
+
+\paragraph{Osservazioni}
+\begin{itemize}
+  \item ruolo cruciale nel modello value based;
+  \item i vincoli possono essere \emph{rilassati} in presenza di \texttt{NULL};
+  \item le violazioni causate da operazioni possono essere gestite tramite
+    \emph{azioni compensative};
+  \item attenzione ai vincoli definiti su più attributi: l'\emph{ordine} degli
+    attributi è rilevante (in \texttt{Crashes(Code, CountryA, PlateA, CountryB,
+    PlateB)} servono due vincoli distinti verso \texttt{Car(Country, Plate)},
+    uno per $(A,A)$ e uno per $(B,B)$).
+\end{itemize}
+
+\subsection{Azioni compensative}
+
+Quando una modifica (es.\ cancellazione di una tupla referenziata) violerebbe
+un vincolo referenziale, il DBMS può reagire in modi diversi.
+
+\paragraph{Comportamento standard}
+\begin{description}[style=nextline]
+  \item[Restrict] rifiuta la cancellazione.
+\end{description}
+
+\paragraph{Azioni compensative possibili}
+\begin{description}[style=nextline]
+  \item[Cascade] rimuove ``a catena'' le tuple referenzianti (es.\ eliminando
+    il progetto \texttt{XYZ} da \texttt{Projects} si eliminano anche i
+    dipendenti in \texttt{Employees} con \texttt{Project = XYZ}).
+  \item[Set NULL] pone \texttt{NULL} nell'attributo referenziante
+    (\texttt{Employees.Project} diventa \texttt{NULL} per chi lavorava a
+    \texttt{XYZ}).
+  \item[Set default] introduce un valore di default.
+\end{description}
+
 \end{document}
