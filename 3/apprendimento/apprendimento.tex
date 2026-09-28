@@ -132,7 +132,7 @@
 \tableofcontents
 \newpage
 
-\setcounter{section}{-1}   % la prima \section è numerata 0
+\setcounter{section}{0}   % la prima \section è numerata 0
 
 \section{Introduzione}
 
@@ -144,7 +144,17 @@ Si occupa di risolvere problemi complessi tramite tecniche algoritmiche specific
     \item modificare i parametri $\Theta$ per minimizzare l'errore sui \textbf{dati di training}
 \end{itemize}
 Quindi possiamo dire che \texttt{il machine learning è un procedimento di ottimizzazione}.
-\imgfig[0.3]{2026-09-24_11-35-45.png}
+\figura{%
+  \begin{minipage}[t]{0.22\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{2026-09-24_11-35-45_classificazione.png}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.22\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{2026-09-24_11-35-45_regressione.png}
+  \end{minipage}%
+}
 Il ML tratta di problemi di \textbf{ottimizzazione}!
 \begin{itemize}
     \item Il \texttt{training set} fa sì che il tuning dei parametri è dato dalla esperienza passata, quindi una sorta di \textbf{apprendimento}.
@@ -154,7 +164,17 @@ Utilizziamo \textbf{tecniche iterative} per approssimare iterativamente la soluz
 
 \subsubsection{Predizioni}
 Attraverso modelli di ML possiamo anche stabilire correlazioni, clusters, $\dots$
-\imgfig[0.55]{2026-09-24_11-45-42.png}
+\figura{%
+  \begin{minipage}[t]{0.46\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{2026-09-24_11-45-42_classificazione.png}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.46\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{2026-09-24_11-45-42_regressione.png}
+  \end{minipage}%
+}
 
 \subsubsection{Classi di problemi di apprendimento}
 \begin{itemize}
@@ -433,4 +453,403 @@ Quando gli attibuti sono continui, prendiamo le decisioni in base a opportune \h
 \end{itemize}
 
 \subsection{Overfitting}
+Consideriamo l'errore relativo all'ipotesi $h \in H$
+\begin{itemize}
+    \item sul training set: $\text{error}_{train}(h)$
+    \item sul data set (globale): $\text{error}_{\mathcal{D}}(h)$
+\end{itemize}
+Definiamo \texttt{overfitting} quando esiste un'ipotesi $h' \in H$ tale che
+\begin{align*}
+    \text{error}_{train}(h') < \text{error}_{train}(h) \quad\text{ma}\quad
+    \text{error}_{\mathcal{D}}(h') > \text{error}_{\mathcal{D}}(h)
+\end{align*}
+\imgfig[0.8]{img/overfitt.png}
+Il problema? Non conosciamo $\mathcal{D}$! Quindi semplicement eprendiamo i dati a noi disposizione e li dividiamo in:
+\begin{itemize}
+    \item   training set: per costruire l'ipotesi $h$
+    \item   test set: utilizzato per misurare accuracy e overfitting $h$
+\end{itemize}
+Tipicamente si riserva una ulteriore porzione, il \textbf{test set}, per la valutazione finale.
+\subsubsection{Evitare overfitting sugli alberi di decisione}
+\begin{itemize}
+    \item \texttt{early stopping}: terminare la costruzione dell'albero non appena il miglioramento del modello non è più statisticamente significativo. Ad esempio, quando il guadagno informativo è inferiore ad una certa soglia, o il numero dei dati relativo al nodo è troppo piccolo.
+    \item \texttt{post-pruning}: si sviluppa l'intero albero e quindi si procede a potarlo all'indietro.
+    \begin{itemize}
+        \item \underline{post-pruning finalizzato alla riduzione dell'errore}: costruire un albero di decisione completo per il training set, quindi ripetere la seguente operazione finché ogni ulteriore pruning non migliora l'accuratezza della predizione:
+        \begin{enumerate}
+            \item per ogni sottoalbero, valutare (sul validation set) l'impatto della sua rimozione sulla accuratezza della classificazione
+            \item effettuare (in modo greedy) il pruning del sottoalbero che ottimizza l'accuracy
+        \end{enumerate}
+    \end{itemize}
+\end{itemize}
+\subsubsection{Gini's impurity}
+Gini's impurity (coefficiente di Gini) misura la probabilità che un generico elemento sia mal classificato in base alla classificazione corrente (è una possibile alternativa alla nozione di entropia).\\
+Date $m$ categorie, sia $f_i$ la frazione dei dati con etichetta $i$. Questa è pari alla probabilità che un qualche input appartenga alla categoria $i$. La probabilità che venga classificato in modo errato è dunque $1-f_i$, e il coefficiente di Gini è semplicemente la media pesata di questa quantità su tutte le possibili categorie, cioè
+\begin{align*}
+    I_G(f) & = \sum_{i=1}^{m} f_i(1-f_i) \\
+    & = \sum_{i=1}^{m}\left(f_i - f_i^2\right) \\
+    & = \sum_{i=1}^{m} f_i - \sum_{i=1}^{m} f_i^2 \\
+    & = \boxed{1 - \sum_{i=1}^{m} f_i^2}
+\end{align*}
+La metrica è applicata su ogni nodo figlio, e i valori sono sommati in modo pesato, in modo del tutto analogo a quanto avviene per l'entropia, al fine di ottenere una misura della qualità dell'attributo.
+\subsubsection*{Gini: Meglio A o B?}
+Valutiamo gli split utilizzando il coefficiente di Gini.
+\figura{\alberiAB}
+\begin{align*}
+    I_G(A=T) &= 1-(21/26)^2-(5/26)^2 = .310\\
+    I_G(A=F) &= 1-(8/38)^2-(30/38)^2 = .332\\
+    I_G(A)   &= .310\cdot 26/64 + .332\cdot 38/64 = .323
+\end{align*}
+\begin{align*}
+    I_G(B=T) &= 1-(18/51)^2-(33/51)^2 = .456\\
+    I_G(B=F) &= 1-(11/13)^2-(2/13)^2 = .260\\
+    I_G(B)   &= .456\cdot 51/64 + .260\cdot 13/64 = .416
+\end{align*}
+\begin{center}
+    \textcolor{red}{Quindi, anche con Gini, A è migliore!}
+\end{center}
+
+\subsubsection*{Vantaggi e svantaggi degli alberi di decisione}
+\figura{%
+  \begin{minipage}[t]{0.48\linewidth}
+    \textbf{Aspetti positivi}
+    \begin{itemize}
+        \item facili da capire: semplici regole logiche, gli alberi possono essere visualizzati
+        \item poco preprocessing è di solito necessario (attenzione però al bilanciamento delle classi)
+        \item costo predittivo molto basso
+        \item può essere utilizzato sia con features discrete che continue
+    \end{itemize}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.48\linewidth}
+    \textbf{Aspetti negativi}
+    \begin{itemize}
+        \item rischio elevato di overfitting
+        \item selezione degli attributi piuttosto instabile al variare del dataset
+        \item facile costruire alberi profondamente sbilanciati, specialmente in presenza di una classe dominante
+    \end{itemize}
+  \end{minipage}%
+}
+\subsubsection{Foreste (Random Forests)}
+Gli alberi di decisione sono abitualmente utilizzati come componenti delle cosiddette Random Forests, dove sono utilizzati con una tecnica ad \textbf{ensemble}.\\
+Le tecniche ad ``ensemble'' sfruttano il principio che un \textbf{gran numero} di modelli \textbf{sufficientemente scorrelati} che operano come un comitato forniscono di solito risultati predittivi migliori dei singoli componenti.
+\paragraph{Garantire la differenziazione degli alberi}
+\begin{itemize}
+    \item \textbf{Bagging}: allenare i modelli su sottoinsiemi random (bags) dei dati di input
+    \item \textbf{Feature Randomness}: costruire gli alberi a partire da sottoinsiemi random delle features
+\end{itemize}
+
+\subsection{Approccio probabilistico}
+Siamo interessati ad approssimare funzioni. Invece di calcolare
+\begin{align*}
+    f : X \to Y
+\end{align*}
+possiamo calcolare
+\begin{align*}
+    p : X \to P(Y|X)
+\end{align*}
+
+
+\subsubsection{Variabile aleatoria}
+Una \textbf{variabile aleatoria} $X$ denota l'esito di un fenomeno riguardo al quale sussiste incertezza, come ad esempio il risultato di un processo stocastico. Ad esempio
+\begin{itemize}
+    \item $X = \text{true}$ se uno studente scelto a caso in aula è biondo
+    \item $X = $ nome dello studente
+    \item $X = \text{true}$ se due studenti scelti a caso sono nati lo stesso giorno dell'anno
+\end{itemize}
+Definiamo $P(X)$ come la frazione di volte in cui $X$ è vero, in esecuzioni ripetute dell'esperimento.
+
+\subsubsection{Spazio campionario ed eventi}
+\begin{itemize}
+    \item l'insieme $\Omega$ dei possibili esiti di un esperimento casuale è detto \textbf{spazio campionario} (sample space)
+    \item una variabile aleatoria è una funzione misurabile su $\Omega$: discreta (es. $\Omega \to \{m,f\}$) o continua (es. $\Omega \to \R$)
+    \item un \textbf{evento} è un qualche sottoinsieme di $\Omega$; siamo interessati alla probabilità di eventi specifici, anche condizionati da altri eventi
+\end{itemize}
+La scelta dello spazio campionario richiede cautela: spesso l'intuizione presuppone (erroneamente) che gli eventi elementari abbiano tutti la stessa probabilità.\\
+\textbf{Esempio}: nel lancio di due dadi il risultato è un numero tra 2 e 12, ma questi valori non hanno tutti la stessa probabilità; conviene invece considerare come spazio campionario tutte le coppie dei valori dei due dadi, e definire $X$ come la somma dei due risultati.
+\figura{%
+  \begin{tikzpicture}
+    \draw[fill=cyan!25] (0,0) rectangle (5,3);
+    \draw[fill=red!45] (3.3,1.5) circle (1.1);
+    \node[font=\footnotesize] at (1.2,2.7) {Sample space};
+    \node[font=\footnotesize] at (3.35,1.55) {Event A};
+  \end{tikzpicture}%
+}
+La probabilità $P(A)$ dell'evento $A$ è il rapporto tra l'area di $A$ e l'area dell'intero spazio campionario (supposto uniforme).
+
+\subsubsection{Assiomi della teoria della probabilità}
+\begin{align*}
+    0 &\le P(A) \le 1\\
+    P(\text{True}) &= 1 \qquad P(\text{False}) = 0\\
+    P(A \lor B) &= P(A) + P(B) - P(A \land B)
+\end{align*}
+\figura{%
+  \begin{tikzpicture}
+    \draw[fill=cyan!25] (0,0) rectangle (6,3.2);
+    \draw[fill=yellow!70] (2,1.5) circle (1.1);
+    \draw[fill=red!45, fill opacity=0.65] (3,1.5) circle (1.1);
+    \node[font=\footnotesize] at (1.2,3) {Sample space};
+    \node[font=\small] at (1.4,1.5) {B};
+    \node[font=\small] at (3.6,1.5) {A};
+  \end{tikzpicture}%
+}
+
+\subsubsection{Teoremi derivati}
+\textit{Dimostrazioni omesse.}
+\begin{align*}
+\boxed{P(\lnot A) = 1-P(A)}\end{align*}
+\begin{align*}
+\boxed{P(A) = P(A \land B) + P(A \land \lnot B)}\end{align*}
+
+\subsubsection{Variabili aleatorie multivalore}
+$A$ è una variabile aleatoria discreta a $k$ valori se può assumere esattamente uno dei valori $\{\nu_1,\nu_2,\dots,\nu_k\}$.
+\begin{align*}
+    P(A=\nu_i \land A=\nu_j) &= 0 \quad \text{se } i\neq j\\
+    P(A=\nu_1 \lor A=\nu_2 \lor \dots \lor A=\nu_k) &= 1
+\end{align*}
+
+\subsubsection{Probabilità condizionata}
+La probabilità condizionata dell'evento $A$ dato l'evento $B$ è definita come
+\begin{align*}
+    P(A|B) = \frac{P(A\land B)}{P(B)}
+\end{align*}
+\figura{%
+  \begin{tikzpicture}
+    \draw[fill=cyan!25] (0,0) rectangle (6,3.2);
+    \draw[fill=yellow!70] (2,1.5) circle (1.1);
+    \draw[fill=red!45, fill opacity=0.65] (3,1.5) circle (1.1);
+    \node[font=\footnotesize] at (1.2,3) {Sample space};
+    \node[font=\small] at (1.4,1.5) {B};
+    \node[font=\small] at (3.6,1.5) {A};
+  \end{tikzpicture}%
+}
+\textbf{Corollario (chain rule)}:
+\begin{align*}
+    P(A\land B) = P(B)\cdot P(A|B) = P(A)\cdot P(B|A)
+\end{align*}
+
+\subsubsection{Eventi indipendenti}
+Due eventi $A$ e $B$ sono detti \textbf{indipendenti} se
+\begin{align*}
+    P(A|B) = P(A)
+\end{align*}
+ovvero l'evento $B$ non ha influenza sull'evento $A$. Come corollario
+\begin{align*}
+    P(A\land B) = P(A)\cdot P(B)
+\end{align*}
+e, siccome $P(A\land B) = P(B|A)\cdot P(A)$, abbiamo anche $P(B|A)=P(B)$: cioè anche $B$ è indipendente da $A$.
+
+\subsubsection{Regola di Bayes}
+\begin{align*}
+    P(A|B) = \frac{P(A)\cdot P(B|A)}{P(B)}
+\end{align*}
+
+
+\subsubsection{Posterior, likelihood, prior e marginale}
+In generale, per ogni $i,j$
+\begin{align*}
+    P(Y=y_i|X=x_j) = \frac{P(Y=y_i)\cdot P(X=x_j|Y=y_i)}{\sum_i P(Y=y_i)\cdot P(X=x_j|Y=y_i)}
+\end{align*}
+dove il denominatore si ottiene marginalizzando (sommando su $Y$) $P(X=x_j) = \sum_i P(X=x_j,Y=y_i)$. In notazione compatta
+\begin{align*}
+    \underbrace{P(Y|X)}_{\text{posterior}} = \frac{\overbrace{P(X|Y)}^{\text{likelihood}}\cdot\overbrace{P(Y)}^{\text{prior}}}{\underbrace{P(X)}_{\text{marginal likelihood}}}
+\end{align*}
+``Marginale'' in quanto stiamo marginalizzando (sommando/integrando) su $Y$.
+\subsection{Distribuzione congiunta e classificatori Bayesiani}
+
+\subsubsection{La distribuzione congiunta}
+\figura{%
+  \begin{minipage}[t]{0.4\linewidth}
+    \begin{enumerate}
+        \item costruire una tabella con tutte le possibili combinazioni dei valori delle features
+        \item stimare la probabilità per ogni combinazione di valori
+    \end{enumerate}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[t]{0.52\linewidth}
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+      \hline
+      gender & working hours & health & prob (params) \\
+      \hline
+      F & $\le 40$ & poor & 0.25 \\
+      \hline
+      F & $\le 40$ & rich & 0.03 \\
+      \hline
+      F & $> 40$   & poor & 0.04 \\
+      \hline
+      F & $> 40$   & rich & 0.01 \\
+      \hline
+      M & $\le 40$ & poor & 0.33 \\
+      \hline
+      M & $\le 40$ & rich & 0.10 \\
+      \hline
+      M & $> 40$   & poor & 0.13 \\
+      \hline
+      M & $> 40$   & rich & 0.11 \\
+      \hline
+    \end{tabular}
+  \end{minipage}%
+}
+Date $n$ features booleane, dobbiamo stimare $2^n-1$ parametri.
+
+\subsubsection{Uso della distribuzione congiunta}
+Disponendo della distribuzione congiunta possiamo stimare la probabilità di \textbf{qualunque evento} esprimibile come combinazione logica delle features.
+\begin{align*}
+    P(E) = \sum_{\text{row} \in E} P(\text{row})
+\end{align*}
+\textbf{Esempio}: calcoliamo $P(M, \text{poor})$ dalla tabella precedente
+\begin{align*}
+    P(M, \text{poor}) &= P(M, \text{poor}, \le 40) + P(M, \text{poor}, > 40)\\
+    &= 0.33 + 0.13 = 0.46
+\end{align*}
+
+\subsubsection{Inferenza con la distribuzione congiunta}
+È altrettanto semplice calcolare la probabilità condizionata di un evento $E_1$ dato un altro evento $E_2$
+\begin{align*}
+    P(E_1|E_2) = \frac{P(E_1 \land E_2)}{P(E_2)} = \frac{\sum_{\text{row}\in E_1\land E_2} P(\text{row})}{\sum_{\text{row}\in E_2} P(\text{row})}
+\end{align*}
+Riprendiamo l'esempio precedente e calcoliamo $P(\text{M}|\text{poor})$
+\begin{align*}
+    P(\text{M}|\text{poor}) = \frac{P(\text{M}, \text{poor})}{P(\text{poor})} = \frac{0.46}{0.75} = 0.61
+\end{align*}
+
+\subsubsection*{Probabilità condizionata vs. learning}
+Abbiamo appena visto che la conoscenza della distribuzione congiunta permette di calcolare la probabilità condizionata. \textcolor{red}{Fine della storia?}
+
+\subsubsection*{Esempio: il caso di MNIST}
+\imgfig[0.5]{img/mist.png}
+\begin{itemize}
+    \item immagini di $28\times 28$ pixels in scala di grigi che rappresentano esempi di cifre da 0 a 9 scritte a mano
+    \item 60.000 immagini di training più altre 10.000 immagini di testing
+\end{itemize}
+Nel caso delle immagini ogni pixel è una feature, quindi una immagine di $28\times 28$ pixels è rappresentata da un vettore di 784 features.\\
+$\Rightarrow$ Abbiamo molte più righe che esempi di training. Un sacco di configurazioni non sono coperte dal training set.
+
+\subsubsection*{Indipendenza condizionale}
+Due eventi $X_i$ e $X_j$ sono \textbf{indipendenti dato} $Y$ se
+\begin{align*}
+    P(X_i|X_j, Y) = P(X_i|Y)
+\end{align*}
+
+\subsubsection*{Naïve Bayes}
+Per la \textbf{chain rule}
+\begin{align*}
+    P(X_1,X_2|Y) = P(X_1|X_2,Y)\cdot P(X_2|Y)
+\end{align*}
+e per l'\textbf{indipendenza condizionale}
+\begin{align*}
+    P(X_1,X_2|Y) = P(X_1|Y)\cdot P(X_2|Y)
+\end{align*}
+In generale
+\begin{align*}
+    P(X_1,X_2,\dots,X_n|Y) = \prod_{i} P(X_i|Y)
+\end{align*}
+Quanti parametri per $P(X_1,\dots,X_n|Y)$ (nel caso booleano)?
+\begin{itemize}
+    \item senza indipendenza condizionale
+    \item per Naïve Bayes
+\end{itemize}
+
+\subsubsection{Naïve Bayes: riassunto}
+\textbf{Bayes rule}
+\begin{align*}
+    P(Y=y_i|X_1,\dots,X_n) = \frac{P(Y=y_i)\cdot P(X_1,\dots,X_n|Y=y_i)}{P(X_1,\dots,X_n)}
+\end{align*}
+\textbf{Naïve Bayes}
+\begin{align*}
+    P(Y=y_i|X_1,\dots,X_n) = \frac{P(Y=y_i)\cdot \prod_j P(X_j|Y=y_i)}{P(X_1,\dots,X_n)}
+\end{align*}
+Classificazione di un nuovo dato $x_{\text{new}} = \langle x_1,\dots,x_n\rangle$
+\begin{align*}
+    Y_{\text{new}} = \argmax_{y_i}\ P(Y=y_i)\cdot \prod_j P(X_j=x_j|Y=y_i)
+\end{align*}
+\subsubsection{Tecnica di apprendimento: stima dei parametri (MLE’s)}
+Variabili aleatorie discrete $X_i$, $Y$.\\
+\textbf{Training} (\textit{maximum likelihood estimates}): per tutti i valori $y_k$ di $Y$, stimare
+\begin{align*}
+    \pi_k = P(Y=y_k) = \frac{\#_D\{Y=y_k\}}{|D|}
+\end{align*}
+per ogni possibile valore $x_{ij}$ di $X_i$, stimare
+\begin{align*}
+    \theta_{ijk} = P(X_i = x_{ij} \mid Y = y_k) = \frac{\#_D\{X_i=x_{ij} \land Y=y_k\}}{\#_D\{Y=y_k\}}
+\end{align*}
+dove $\#_D\{\cdot\}$ indica il numero di istanze del dataset $D$ che soddisfano la condizione, e $|D|$ è la dimensione del dataset.
+
+\textbf{Classificazione} di $a_{\text{new}} = \langle a_1,\dots,a_n\rangle$
+\begin{align*}
+    Y_{\text{new}} &= \argmax_{y_k}\ P(Y=y_k)\cdot \prod_i P(X_i=a_i|Y=y_k)\\
+    &= \argmax_{k}\ \pi_k \cdot \prod_i \theta_{ijk}
+\end{align*}
+supponendo che $a_i = x_{ij}$, cioè che $a_i$ sia il $j$-esimo tra i possibili valori discreti dell'attributo $X_i$.
+
+\subsubsection{Esempio: Naïve Bayes su Play Tennis}
+Riprendiamo il training set visto per gli alberi di decisione (Outlook, Temp, Humidity, Wind $\to$ Play).
+\figura{%
+  \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    Outlook  & Temp & Humidity & Wind   & Play \\
+    \hline
+    Sunny    & Hot  & High     & Weak   & No  \\
+    \hline
+    Sunny    & Hot  & High     & Strong & No  \\
+    \hline
+    Overcast & Hot  & High     & Weak   & Yes \\
+    \hline
+    Rain     & Mild & High     & Weak   & Yes \\
+    \hline
+    Rain     & Cool & Normal   & Weak   & Yes \\
+    \hline
+    Rain     & Cool & Normal   & Strong & No  \\
+    \hline
+    Overcast & Cool & Normal   & Strong & Yes \\
+    \hline
+    Sunny    & Mild & High     & Weak   & No  \\
+    \hline
+    Sunny    & Cool & Normal   & Weak   & Yes \\
+    \hline
+    Rain     & Mild & Normal   & Weak   & Yes \\
+    \hline
+    Sunny    & Mild & Normal   & Strong & Yes \\
+    \hline
+    Overcast & Mild & High     & Strong & Yes \\
+    \hline
+    Overcast & Hot  & Normal   & Weak   & Yes \\
+    \hline
+    Rain     & Mild & High     & Strong & No  \\
+    \hline
+  \end{tabular}%
+}
+
+\paragraph{Stima dei parametri}
+\begin{align*}
+    \pi_{\text{yes}} = 9/14 \qquad \pi_{\text{no}} = 5/14
+\end{align*}
+\begin{center}
+\begin{tabular}{lcc}
+     & $Y=\text{yes}$ & $Y=\text{no}$\\
+    \hline
+    $\theta_{\text{sunny}}$  & $2/9$ & $3/5$\\
+    $\theta_{\text{cool}}$   & $3/9$ & $1/5$\\
+    $\theta_{\text{high}}$   & $3/9$ & $4/5$\\
+    $\theta_{\text{strong}}$ & $3/9$ & $3/5$\\
+\end{tabular}
+\end{center}
+
+\paragraph{Predizione}
+Nuova istanza: $\text{Outlook=Sunny}$, $\text{Temp=Cool}$, $\text{Humidity=High}$, $\text{Wind=Strong}$.\\
+Dobbiamo calcolare
+\begin{align*}
+    \argmax_{y\in\{\text{yes,no}\}} p(y)\cdot p(\text{sunny}|y)\cdot p(\text{cool}|y)\cdot p(\text{high}|y)\cdot p(\text{strong}|y)
+\end{align*}
+ovvero confrontare
+\begin{align*}
+    \pi_{\text{yes}}\cdot \theta_{\text{sunny,yes}}\cdot \theta_{\text{cool,yes}}\cdot \theta_{\text{high,yes}}\cdot \theta_{\text{strong,yes}} &= \tfrac{9}{14}\cdot\tfrac{2}{9}\cdot\tfrac{3}{9}\cdot\tfrac{3}{9}\cdot\tfrac{3}{9} = .0053\\
+    \pi_{\text{no}}\cdot \theta_{\text{sunny,no}}\cdot \theta_{\text{cool,no}}\cdot \theta_{\text{high,no}}\cdot \theta_{\text{strong,no}} &= \tfrac{5}{14}\cdot\tfrac{3}{5}\cdot\tfrac{1}{5}\cdot\tfrac{4}{5}\cdot\tfrac{3}{5} = .0205
+\end{align*}
+\begin{center}
+    \textcolor{red}{No!}
+\end{center}
+\subsection{Modelli generativi}
+pag 93
 \end{document}

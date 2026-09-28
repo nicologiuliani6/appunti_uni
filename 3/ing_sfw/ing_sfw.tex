@@ -28,11 +28,11 @@
     coltitle=white, colbacktitle=\cardcolor, title=#2,
     fonttitle=\bfseries\small, arc=2mm, boxrule=0.7pt,
     left=1.5mm, right=1.5mm, top=1mm, bottom=1mm,
-    before skip=3mm, after skip=3mm]
-  \begin{minipage}[t]{0.27\linewidth}\vspace{0pt}%
+    before skip=1.5mm, after skip=1.5mm]
+  \begin{minipage}[t]{0.13\linewidth}\vspace{0pt}%
     \includegraphics[width=\linewidth]{img/essence/#1.png}%
   \end{minipage}\hfill
-  \begin{minipage}[t]{0.69\linewidth}\vspace{0pt}\small #3\end{minipage}%
+  \begin{minipage}[t]{0.83\linewidth}\vspace{0pt}\small #3\end{minipage}%
 \end{tcolorbox}%
 }
 \newcommand{\chk}[1]{\begin{itemize}[nosep,leftmargin=*,topsep=2pt,label=$\square$]#1\end{itemize}}
@@ -249,6 +249,7 @@ Le carte ufficiali (\emph{Alpha State Cards}, Ivar Jacobson International, 2018)
 accanto la traduzione dei \emph{checkpoint}. Il colore indica l'area di interesse:
 verde = Customer, giallo = Solution, blu = Endeavor.
 
+\begin{samepage}
 \paragraph{Stakeholders (Customer)}
 
 \ecard{stakeholders-00}{Stakeholders}{%
@@ -262,6 +263,7 @@ sistema software.
   \item Satisfied for Deployment --- soddisfatti per il rilascio
   \item Satisfied in Use --- soddisfatti nell'uso
 }}
+\end{samepage}
 
 \ecard{stakeholders-01}{Recognized --- 1/6}{%
 \chk{
@@ -306,6 +308,7 @@ sistema software.
   \item Il sistema soddisfa le aspettative
 }}
 
+\begin{samepage}
 \paragraph{Opportunity (Customer)}
 
 \ecard{opportunity-00}{Opportunity}{%
@@ -319,6 +322,7 @@ software.
   \item Addressed --- affrontata
   \item Benefit Accrued --- benefici maturati
 }}
+\end{samepage}
 
 \ecard{opportunity-01}{Identified --- 1/6}{%
 \chk{
@@ -369,6 +373,7 @@ software.
 }}
 
 \setarea{areaSolution}
+\begin{samepage}
 \paragraph{Requirements (Solution)}
 
 \ecard{requirements-00}{Requirements}{%
@@ -382,6 +387,7 @@ stakeholder.
   \item Addressed --- affrontati
   \item Fulfilled --- soddisfatti
 }}
+\end{samepage}
 
 \ecard{requirements-01}{Conceived --- 1/6}{%
 \chk{
@@ -442,6 +448,7 @@ stakeholder.
 }}
 
 \setarea{areaSolution}
+\begin{samepage}
 \paragraph{Software System (Solution)}
 
 \ecard{system-00}{Software System}{%
@@ -455,6 +462,7 @@ attraverso l'esecuzione del software.
   \item Operational --- operativo
   \item Retired --- dismesso
 }}
+\end{samepage}
 
 \ecard{system-01}{Architecture Selected --- 1/6}{%
 \chk{
@@ -512,6 +520,7 @@ attraverso l'esecuzione del software.
 }}
 
 \setarea{areaEndeavor}
+\begin{samepage}
 \paragraph{Team (Endeavor)}
 
 \ecard{team-00}{Team}{%
@@ -524,6 +533,7 @@ supporto di uno specifico sistema software.
   \item Performing --- performante
   \item Adjourned --- sciolto
 }}
+\end{samepage}
 
 \ecard{team-01}{Seeded --- 1/5}{%
 \chk{
@@ -577,6 +587,7 @@ supporto di uno specifico sistema software.
 }}
 
 \setarea{areaEndeavor}
+\begin{samepage}
 \paragraph{Work (Endeavor)}
 
 \ecard{work-00}{Work}{%
@@ -589,6 +600,7 @@ Attività che comporta sforzo mentale o fisico svolto per ottenere un risultato.
   \item Concluded --- concluso
   \item Closed --- chiuso
 }}
+\end{samepage}
 
 \ecard{work-01}{Initiated --- 1/6}{%
 \chk{
@@ -653,6 +665,7 @@ Attività che comporta sforzo mentale o fisico svolto per ottenere un risultato.
 }}
 
 \setarea{areaEndeavor}
+\begin{samepage}
 \paragraph{Way of Working (Endeavor)}
 
 \ecard{wow-00}{Way of Working}{%
@@ -666,6 +679,7 @@ supportare il proprio lavoro.
   \item Working Well --- funziona bene
   \item Retired --- dismesso
 }}
+\end{samepage}
 
 \ecard{wow-01}{Principles Established --- 1/6}{%
 \chk{
