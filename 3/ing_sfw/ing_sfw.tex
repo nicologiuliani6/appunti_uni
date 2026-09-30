@@ -799,13 +799,67 @@ Il \texttt{polimorfismo} è l'abilità di utilizzare lo stesso nome per metodi c
   \item Polimorfismo ereditario (overriding)
 \end{itemize}
 \subsubsection{Dettagli UML}
+I diagrammi UML si dividono in due famiglie.\\
+\vspace{1px}\\
+$\left.\begin{array}{l}
+  \text{1. Class Diagram}\\
+  \text{2. Object Diagram}\\
+  \text{3. Component Diagram}\\
+  \text{4. Deployment Diagram}
+\end{array}\right\}$ \textbf{\textcolor{red}{Structural Diagrams}}\\[1em]
+$\left.\begin{array}{l}
+  \text{5. Use Case Diagram}\\
+  \text{6. Sequence Diagram}\\
+  \text{7. Collaboration Diagram}\\
+  \text{8. Statechart Diagram}\\
+  \text{9. Activity Diagram}
+\end{array}\right\}$ \textbf{\textcolor{green!50!black}{Behavioral Diagrams}}
+\subsection{Modellazione concetto OO}
+Obbiettivo: capire il contesto operazionale del sistma (OO context analysis), capire i requisiti reali del sistema (OO requirementi analysis).\\
+\paragraph{Use case} Un \texttt{Use case description} e' uno scenario che descrive un utilizzo di un sistema. Include un \textbf{diagramma} con attori che rappresentao ruoli o dispositivi; una descrizione testuale della sequenza delle attivita'.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{img/usecase.png}
+\end{figure}
+\paragraph{Cosa e' un Use case?}
+Interazione tipica tra attori e il sitema, processa a soddisfare il bisogno degli utenti, descrivendo uno scenario nel quale il sistema e' utilizzato.\\
+\begin{itemize}
+  \item Granularita': grande o piccola
+  \item Spresso: funzioni user-visible
+  \item Sempre: puntato a un obbiettivo discreto
+  \item Sempre: descrivono una funziona requisito esterna
+\end{itemize}
+\paragraph{Quando e come?} 
+\begin{itemize}
+  \item Contest capture: prima cosa da fare
+  \item Use case: tutte le cose discrete che il clcinete vuole fare con il sistema (nome, descrizione, dettagli futuri, $\dots$)
+\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{img/usecase_relazioni.png}
+\end{figure}
+\paragraph{Attori} Ruoli che gli utenti fanno nel sisytema, gli attori applicano gli use case. Gli attori non devono per forza essere umani, e possono ricevere ricompensa in caso di partecipazione.\\
+\paragraph{Relazioni estese} Un use case puo' estendere un altro use case, aggiungendo funzionalita' opzionali.\\
+\paragraph{Relazioni include} Un use case puo' includere un altro o piu' use case.\\
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Estese} & \textbf{Incluse} \\
+\hline
+lo stesso attore esegue lo use case e tutte le estensioni
+& spesso nessun attore è associato allo use case comune \\
+\hline
+l'attore è collegato allo use case "base"
+& sono possibili attori diversi per gli use case "caller" \\
+\hline
+\end{tabular}
+\end{center}
+\paragraph{Descrizione testuale} Step by step delle interazione tra attori e use case (corto, preciso)\\
+\subsection{Analisi OO}
+pagi 65
 
 
-
-
-
-
-
+\newpage
 \section{Modulo 2}
 \subsection{Controllo di versione e Git}
 \subsubsection{Il problema}
