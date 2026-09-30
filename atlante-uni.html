@@ -206,6 +206,10 @@ const DATA = {
     cn   :{nome:"Calcolo Numerico",            colore:"#3fb9d4"},
     prob :{nome:"Probabilità e Statistica",    colore:"#93c54b"},
     web  :{nome:"Tecnologie Web",              colore:"#f0934b"},
+    // — Anno 3 —
+    bd   :{nome:"Basi di Dati",                colore:"#4bd8a0"},
+    ml   :{nome:"Apprendimento Automatico",    colore:"#ff9ec4"},
+    se   :{nome:"Ingegneria del Software",     colore:"#7fb8ff"},
     // — Trasversale —
     met  :{nome:"Metodi (studio di funzione)", colore:"#8fa3b8"},
     // — Tesi —
@@ -294,6 +298,27 @@ const DATA = {
     {id:"web-html", label:"HTML e CSS",                materia:"web", anno:"Anno 2", dettagli:"Markup, elementi HTML5, regole e priorità CSS."},
     {id:"web-js",   label:"JavaScript e DOM",          materia:"web", anno:"Anno 2", dettagli:"Oggetti JS, JSON, manipolazione del DOM."},
     {id:"web-node", label:"TypeScript, Node, Express", materia:"web", anno:"Anno 2", dettagli:"TypeScript, runtime Node.js, framework Express.js."},
+    // ===== Anno 3 =====
+    // — Basi di Dati —
+    {id:"bd-sis",   label:"Sistemi informativi e dati", materia:"bd", anno:"Anno 3", dettagli:"Sistema informativo vs informatico, informazione e dati, evoluzione storica."},
+    {id:"bd-dbms",  label:"DBMS e transazioni",         materia:"bd", anno:"Anno 3", dettagli:"Ruolo del DBMS, transazioni, differenze con il file system, pregi e difetti."},
+    {id:"bd-arch",  label:"Architettura e linguaggi",   materia:"bd", anno:"Anno 3", dettagli:"Modelli dei dati, architettura di un DBMS, linguaggi per basi di dati, attori e utenti."},
+    {id:"bd-rel",   label:"Modello relazionale",        materia:"bd", anno:"Anno 3", dettagli:"Relazioni, struttura non posizionale, modello value based, schemi e istanze, informazione parziale."},
+    {id:"bd-vinc",  label:"Vincoli e chiavi",           materia:"bd", anno:"Anno 3", dettagli:"Vincoli di integrità e di tupla, chiavi e valori nulli."},
+    {id:"bd-ref",   label:"Integrità referenziale",     materia:"bd", anno:"Anno 3", dettagli:"Vincoli di integrità referenziale e azioni compensative."},
+    // — Apprendimento Automatico —
+    {id:"ml-intro", label:"Introduzione al ML",         materia:"ml", anno:"Anno 3", dettagli:"Di cosa si occupa il machine learning: classificazione e regressione."},
+    {id:"ml-feat",  label:"Features e deep learning",   materia:"ml", anno:"Anno 3", dettagli:"Scelta delle features, approccio tradizionale vs deep, reti neurali profonde."},
+    {id:"ml-dt",    label:"Alberi di decisione",        materia:"ml", anno:"Anno 3", dettagli:"Apprendimento di alberi di decisione per classificazione."},
+    {id:"ml-over",  label:"Overfitting",                materia:"ml", anno:"Anno 3", dettagli:"Sovradattamento ai dati di training e come riconoscerlo."},
+    {id:"ml-prob",  label:"Approccio probabilistico",   materia:"ml", anno:"Anno 3", dettagli:"Apprendimento formulato in termini di probabilità."},
+    {id:"ml-bayes", label:"Classificatori Bayesiani",   materia:"ml", anno:"Anno 3", dettagli:"Distribuzione congiunta, classificatori Bayesiani e modelli generativi."},
+    // — Ingegneria del Software —
+    {id:"se-prod",  label:"Produzione del software",    materia:"se", anno:"Anno 3", dettagli:"Introduzione al corso e processi di produzione del software."},
+    {id:"se-ess",   label:"Essence: Alpha del Kernel",  materia:"se", anno:"Anno 3", dettagli:"Gli Alpha del Kernel Essence: opportunity, stakeholders, requirements, system, team, work, way of working."},
+    {id:"se-uml",   label:"UML e analisi OO",           materia:"se", anno:"Anno 3", dettagli:"Introduzione a UML, modellazione a oggetti, use case e analisi OO."},
+    {id:"se-git",   label:"Controllo di versione, Git", materia:"se", anno:"Anno 3", dettagli:"Controllo di versione e Git."},
+    {id:"se-branch",label:"Branch, merge e fork",       materia:"se", anno:"Anno 3", dettagli:"Diramazioni isolate del codice, ricongiungimento con merge, fork."},
     // ===== Metodi (promemoria trasversale) =====
     {id:"met-dom",   label:"Dominio e monotonia",       materia:"met", anno:"Metodi", dettagli:"Studio del dominio, monotonia e continuità con parametro."},
     {id:"met-segno", label:"Studio del segno",          materia:"met", anno:"Metodi", dettagli:"Passi per determinare il segno di una funzione."},
@@ -351,6 +376,17 @@ const DATA = {
     // Web
     {from:"web-http",to:"web-auth",tipo:"interno"},{from:"web-http",to:"web-html",tipo:"interno"},
     {from:"web-html",to:"web-js",tipo:"interno"},{from:"web-js",to:"web-node",tipo:"interno"},
+    // Basi di Dati
+    {from:"bd-sis",to:"bd-dbms",tipo:"interno"},{from:"bd-dbms",to:"bd-arch",tipo:"interno"},
+    {from:"bd-arch",to:"bd-rel",tipo:"interno"},{from:"bd-rel",to:"bd-vinc",tipo:"interno"},
+    {from:"bd-vinc",to:"bd-ref",tipo:"interno"},
+    // Apprendimento
+    {from:"ml-intro",to:"ml-feat",tipo:"interno"},{from:"ml-intro",to:"ml-dt",tipo:"interno"},
+    {from:"ml-dt",to:"ml-over",tipo:"interno"},{from:"ml-over",to:"ml-prob",tipo:"interno"},
+    {from:"ml-prob",to:"ml-bayes",tipo:"interno"},
+    // Ingegneria del Software
+    {from:"se-prod",to:"se-ess",tipo:"interno"},{from:"se-ess",to:"se-uml",tipo:"interno"},
+    {from:"se-prod",to:"se-git",tipo:"interno"},{from:"se-git",to:"se-branch",tipo:"interno"},
     // Metodi
     {from:"met-dom",to:"met-segno",tipo:"interno"},{from:"met-segno",to:"met-int",tipo:"interno"},
     {from:"met-dom",to:"met-fun",tipo:"interno"},
@@ -378,6 +414,13 @@ const DATA = {
     {from:"met-dom",to:"ana-der",tipo:"trasversale"},     // monotonia ↔ derivate
     {from:"met-int",to:"ana-int",tipo:"trasversale"},     // integrale definito ↔ integrali
     {from:"met-fun",to:"alg-app",tipo:"trasversale"},     // iniettiva/suriettiva ↔ kernel/immagine
+    // Anno 3
+    {from:"ml-prob",to:"prob-cond",tipo:"trasversale"},   // approccio probabilistico ↔ Bayes
+    {from:"ml-bayes",to:"prob-va",tipo:"trasversale"},    // distribuzione congiunta ↔ vettori aleatori
+    {from:"ml-dt",to:"asd-tree",tipo:"trasversale"},      // alberi di decisione ↔ alberi
+    {from:"bd-rel",to:"log-set",tipo:"trasversale"},      // relazioni ↔ teoria degli insiemi
+    {from:"bd-dbms",to:"so-conc",tipo:"trasversale"},     // transazioni ↔ concorrenza
+    {from:"se-uml",to:"lp-oop",tipo:"trasversale"},       // modellazione OO ↔ object orientation
     // verso la tesi
     {from:"tesi-mnemo",to:"so-posix",tipo:"trasversale"}, // Mnemo traduce C ↔ C/POSIX
     {from:"tesi-mnemo",to:"lp-gram",tipo:"trasversale"},  // traduzione ↔ compilazione/parsing
@@ -401,6 +444,9 @@ const DATA = {
     cn  :"2/calcolo_num/tex/hello.pdf",
     prob:"2/prob/appunti/prob.pdf",
     web :"2/web/tex/web.pdf",
+    bd  :"3/basi_dati/basi_dati.pdf",
+    ml  :"3/apprendimento/apprendimento.pdf",
+    se  :"3/ing_sfw/ing_sfw.pdf",
     met :"metodi/how_to_metodi.pdf"
   },
   // spiegazione estesa per nodo (mostrata dal bottone "Spiega"), basata sugli appunti.
@@ -479,6 +525,23 @@ const DATA = {
     "tesi-mnemo":"Mnemo definisce come tradurre ogni costrutto C in Kairos: modello di memoria unificato, mappatura dei tipi, ed emulazione di aritmetica e operatori bit-a-bit che Kairos non ha nativamente.",
     "tesi-vm":"KairosVM interpreta direttamente il testo del programma: scelte su risoluzione di nomi/salti, heap ibrido dei puntatori, realloc a raddoppio e il costo della reversibilità.",
     "tesi-sos":"La semantica operazionale strutturale di Kairos: store, assegnamenti reversibili, scope local/delocal, ciclo from…loop…until e chiamate con inversa.",
+    "bd-sis":"Distingue sistema informativo (organizzazione dell'informazione) e sistema informatico (la parte automatizzata), e informazione da dato; ripercorre l'evoluzione storica delle basi di dati.",
+    "bd-dbms":"Il DBMS gestisce grandi collezioni di dati persistenti e condivise; le transazioni ne garantiscono la consistenza. Confronto con il file system e pregi/difetti.",
+    "bd-arch":"Modelli dei dati, architettura a livelli di un DBMS, linguaggi (definizione e manipolazione) e attori coinvolti.",
+    "bd-rel":"Modello logico basato su relazioni: strutture non posizionali, riferimenti tramite valori, distinzione fra schema e istanza, gestione dell'informazione parziale.",
+    "bd-vinc":"Vincoli di integrità, di tupla e chiavi come garanzia di correttezza dei dati; trattamento dei valori nulli nelle chiavi.",
+    "bd-ref":"Integrità referenziale tra relazioni tramite chiavi esterne, con azioni compensative in caso di violazione.",
+    "ml-intro":"Il machine learning apprende dai dati; distingue problemi di classificazione e regressione.",
+    "ml-feat":"Le features sono gli input dell'apprendimento e la loro scelta è critica: approccio tradizionale (preprocessing + metodo semplice) contro deep (dati grezzi, features apprese da reti profonde).",
+    "ml-dt":"Alberi di decisione: classificatori interpretabili costruiti scegliendo ricorsivamente le features che dividono meglio i dati.",
+    "ml-over":"Overfitting: il modello si adatta troppo al training set e generalizza male.",
+    "ml-prob":"Ricostruisce l'apprendimento in termini probabilistici, come stima di distribuzioni sui dati.",
+    "ml-bayes":"Usa la distribuzione congiunta per classificare con la regola di Bayes; i modelli generativi modellano come i dati vengono prodotti.",
+    "se-prod":"Introduzione al corso e alla produzione del software come attività strutturata.",
+    "se-ess":"Essence descrive un progetto tramite Alpha del Kernel (opportunity, stakeholders, requirements, system, team, work, way of working) e i loro stati.",
+    "se-uml":"UML per modellare il software: concetti a oggetti, diagrammi dei casi d'uso e relazioni, analisi orientata agli oggetti.",
+    "se-git":"Il controllo di versione traccia le modifiche al codice; Git ne è lo strumento distribuito.",
+    "se-branch":"I branch isolano il lavoro dalla linea principale; merge ricongiunge le diramazioni, fork copia un repository per lavorarci in autonomia.",
     "tesi-conc":"Concorrenza in stile π-calcolo (non lock arbitrari): canali ssend/srecv, composizione parallela par/and/rap, commit/rollback con try per il backtracking."
   }
 };
