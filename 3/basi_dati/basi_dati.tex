@@ -13,6 +13,13 @@
 \usepackage{amsmath}
 \usepackage{enumitem}
 
+% Simboli per i join esterni
+\newcommand{\ojoin}{\setbox0=\hbox{$\bowtie$}%
+  \rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\newcommand{\leftouterjoin}{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\newcommand{\rightouterjoin}{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\newcommand{\fullouterjoin}{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
 % Informazioni sul documento
 \title{Basi di Dati}
 \author{Nicolò Giuliani}
@@ -674,5 +681,940 @@ un vincolo referenziale, il DBMS può reagire in modi diversi.
     \texttt{XYZ}).
   \item[Set default] introduce un valore di default.
 \end{description}
+\section{Algebra relazionale e calcolo relazionale}
+
+\subsection{Linguaggi di interrogazione}
+
+I linguaggi per basi di dati operano sullo schema (\textbf{DDL}) o sui dati
+(\textbf{DML}); il DML comprende istruzioni di \emph{interrogazione} (query) e
+di \emph{aggiornamento} (inserimento e modifica dei dati).
+
+\begin{description}[style=nextline]
+  \item[Dichiarativi] specificano \emph{che cosa} si vuole ottenere, cioè le
+    proprietà del risultato.
+  \item[Procedurali] specificano \emph{come} il risultato viene ottenuto.
+\end{description}
+
+\begin{itemize}
+  \item \textbf{Algebra relazionale}: procedurale;
+  \item \textbf{Calcolo relazionale}: dichiarativo (teorico, non implementato);
+  \item \textbf{SQL} (Structured Query Language): parzialmente dichiarativo
+    (implementato);
+  \item \textbf{QBE} (Query by Example): dichiarativo (implementato).
+\end{itemize}
+
+\subsection{Algebra relazionale}
+
+È definita da un insieme di \textbf{operatori} che agiscono su relazioni,
+producono relazioni come risultato e sono quindi \emph{componibili} fra loro.
+
+Operatori:
+\begin{itemize}
+  \item unione, intersezione, differenza;
+  \item ridenominazione ($\rho$);
+  \item selezione ($\sigma$);
+  \item proiezione ($\pi$);
+  \item join (join naturale, prodotto cartesiano, theta-join).
+\end{itemize}
+
+\subsection{Operatori insiemistici}
+
+Le relazioni sono insiemi e anche i risultati devono esserlo: si possono usare
+\textbf{unione} ($\cup$), \textbf{intersezione} ($\cap$) e \textbf{differenza}
+($-$), ma solo fra relazioni con lo \emph{stesso schema}.
+
+\begin{center}
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{\texttt{Graduated}}\\ \hline
+Number & Name & Age\\ \hline
+7274 & Rossi & 42\\
+7432 & Neri & 54\\
+9824 & Verdi & 45\\ \hline
+\end{tabular}
+\qquad
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{\texttt{Technicians}}\\ \hline
+Number & Name & Age\\ \hline
+9297 & Neri & 33\\
+7432 & Neri & 54\\
+9824 & Verdi & 45\\ \hline
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+  \item $\text{Graduated} \cup \text{Technicians}$: 4 tuple (7274, 7432, 9824,
+    9297) --- le tuple comuni compaiono una volta sola;
+  \item $\text{Graduated} \cap \text{Technicians}$: le tuple 7432 e 9824;
+  \item $\text{Graduated} - \text{Technicians}$: la sola tupla 7274.
+\end{itemize}
+
+\paragraph{Un'unione sensata ma impossibile} l'unione di \texttt{Fatherhood}
+(attributi \texttt{Father}, \texttt{Child}) e \texttt{Motherhood} (attributi
+\texttt{Mother}, \texttt{Child}) avrebbe senso (l'insieme dei genitori) ma gli
+schemi sono diversi: serve prima una ridenominazione.
+
+\subsection{Ridenominazione}
+
+Operatore \emph{unario}: ``cambia lo schema'' lasciando inalterati i dati.
+\[
+  \rho_{\text{NewName} \leftarrow \text{OldName}}(\text{Relation})
+\]
+rinomina l'attributo \texttt{OldName} in \texttt{NewName}. Si possono
+rinominare più attributi insieme.
+
+\paragraph{Esempi}
+\[
+  \rho_{\text{Parent} \leftarrow \text{Father}}(\text{Fatherhood}) \;\cup\;
+  \rho_{\text{Parent} \leftarrow \text{Mother}}(\text{Motherhood})
+\]
+produce una relazione \texttt{(Parent, Child)} con tutte le coppie
+genitore-figlio. Analogamente, con \texttt{Employee(Surname, Office, Salary)} e
+\texttt{Worker(Surname, Factory, Wage)}:
+\[
+  \rho_{\text{Office},\text{Pay} \leftarrow \text{Office},\text{Salary}}
+    (\text{Employee}) \;\cup\;
+  \rho_{\text{Office},\text{Pay} \leftarrow \text{Factory},\text{Wage}}
+    (\text{Worker})
+\]
+ha schema \texttt{(Surname, Office, Pay)}.
+
+\subsection{Selezione}
+
+Operatore \emph{unario}. Il risultato:
+\begin{itemize}
+  \item ha lo \emph{stesso schema} dell'operando;
+  \item contiene un \emph{sottoinsieme} delle tuple dell'operando;
+  \item contiene le sole tuple che soddisfano un \textbf{predicato}.
+\end{itemize}
+\[
+  \sigma_{\text{Predicate}}(\text{Relation})
+\]
+dove \emph{Predicate} è un'espressione booleana valutata su ogni tupla della
+relazione.
+
+\paragraph{Esempi} su \texttt{Employee(Number, Surname, Office, Salary)}:
+\begin{itemize}
+  \item chi guadagna più di 50:
+    $\sigma_{\text{Salary} > 50}(\text{Employee})$;
+  \item chi guadagna più di 50 e lavora a Milano:
+    $\sigma_{\text{Salary} > 50 \,\wedge\, \text{Office} = \text{'Milan'}}
+    (\text{Employee})$;
+  \item chi ha il cognome uguale al nome della sede (confronto fra due
+    attributi della stessa tupla):
+    $\sigma_{\text{Surname} = \text{Office}}(\text{Employee})$.
+\end{itemize}
+
+\subsection{Proiezione}
+
+Operatore \emph{unario}. Il risultato:
+\begin{itemize}
+  \item ha come schema un \emph{sottoinsieme} degli attributi dell'operando;
+  \item è costruito a partire da \emph{tutte} le tuple dell'operando.
+\end{itemize}
+\[
+  \pi_{\text{AttributeList}}(\text{Relation})
+\]
+contiene tutte le tuple della relazione, ristrette agli attributi in
+\emph{AttributeList}.
+
+\paragraph{Cardinalità} il risultato di una proiezione
+\begin{itemize}
+  \item contiene \emph{al più} tante tuple quante l'operando;
+  \item può contenerne meno: restringendo gli attributi alcune tuple possono
+    diventare uguali, e i duplicati vengono eliminati (una relazione è un
+    insieme);
+  \item se $X$ è una \textbf{superchiave} di $R$, allora $\pi_X(R)$ contiene
+    esattamente tante tuple quante $R$.
+\end{itemize}
+Es.: se \texttt{Employee} contiene due \texttt{Rossi} entrambi a \texttt{Rome},
+$\pi_{\text{Surname},\text{Office}}(\text{Employee})$ ha una tupla in meno;
+$\pi_{\text{Number},\text{Surname}}(\text{Employee})$ invece le conserva tutte
+perché \texttt{Number} è chiave.
+
+\subsection{Selezione e proiezione}
+
+Sono operatori ``ortogonali'':
+\begin{itemize}
+  \item \textbf{selezione}: decomposizione \emph{orizzontale} (sceglie righe);
+  \item \textbf{proiezione}: decomposizione \emph{verticale} (sceglie colonne).
+\end{itemize}
+Combinandole si estrae da una relazione solo l'informazione di interesse:
+\[
+  \pi_{\text{Number},\text{Surname}}
+    (\sigma_{\text{Salary} > 50}(\text{Employee}))
+\]
+
+\paragraph{Limite} con questi soli operatori si estrae informazione da
+\emph{una sola} relazione: non si possono correlare tuple di relazioni diverse,
+né tuple diverse della stessa relazione.
+
+\subsection{Join naturale}
+
+Il \textbf{join} è l'operatore più interessante dell'algebra relazionale:
+permette di correlare tuple di relazioni diverse. Es.\ in un concorso i compiti
+sono anonimi e associati a una busta chiusa col nome del candidato; compito e
+busta hanno lo stesso \texttt{ID}: da \texttt{(ID, Grade)} e
+\texttt{(ID, Candidate)} si ottiene \texttt{(ID, Candidate, Grade)}.
+
+Il join naturale è un operatore \emph{binario} (generalizzabile a $n$ operandi
+per associatività). Il risultato:
+\begin{itemize}
+  \item ha come schema l'\emph{unione} degli attributi dei due operandi;
+  \item ogni sua tupla è ottenuta combinando due tuple, una per operando, che
+    coincidono sugli attributi comuni.
+\end{itemize}
+
+\paragraph{Definizione} dati $R_1(X_1)$ e $R_2(X_2)$, $R_1 \bowtie R_2$ è una
+relazione su $X_1 X_2$:
+\[
+  R_1 \bowtie R_2 = \{\, t \text{ su } X_1X_2 \mid
+    \exists\, t_1 \in R_1,\ t_2 \in R_2 \text{ con }
+    t[X_1] = t_1 \text{ e } t[X_2] = t_2 \,\}
+\]
+
+\paragraph{Casi}
+\begin{center}
+\begin{tabular}{cc}
+\hline Employee & Dept\\ \hline
+Rossi & A\\ Neri & B\\ Bianchi & B\\ \hline
+\end{tabular}
+$\;\bowtie\;$
+\begin{tabular}{cc}
+\hline Dept & Chief\\ \hline
+A & Mori\\ B & Bruni\\ \hline
+\end{tabular}
+$\;=\;$
+\begin{tabular}{ccc}
+\hline Employee & Dept & Chief\\ \hline
+Rossi & A & Mori\\ Neri & B & Bruni\\ Bianchi & B & Bruni\\ \hline
+\end{tabular}
+\end{center}
+\begin{description}[style=nextline]
+  \item[Join completo] ogni tupla di entrambi gli operandi contribuisce al
+    risultato (esempio sopra).
+  \item[Join non completo] alcune tuple non trovano corrispondenza e restano
+    escluse (tuple \emph{dangling}): con \texttt{Dept} $\in \{B, C\}$ nel
+    secondo operando, \texttt{Rossi/A} e il dipartimento \texttt{C} spariscono.
+  \item[Join vuoto] nessuna tupla trova corrispondenza (dipartimenti
+    \texttt{D, C} a destra): il risultato ha lo schema ma nessuna tupla.
+  \item[Join con $n \times m$ tuple] se tutte le tuple hanno lo stesso valore
+    sull'attributo comune, ogni tupla si combina con tutte quelle dell'altro
+    operando.
+\end{description}
+
+\subsection{Cardinalità del join}
+
+\begin{itemize}
+  \item In generale:
+    \[ 0 \leq |R_1 \bowtie R_2| \leq |R_1| \times |R_2| \]
+  \item se il join coinvolge una \textbf{chiave} di $R_2$:
+    \[ 0 \leq |R_1 \bowtie R_2| \leq |R_1| \]
+    perché i valori della chiave sono unici: ogni tupla di $R_1$ si combina con
+    al più una tupla di $R_2$ (mentre una tupla di $R_2$ può combinarsi con più
+    tuple di $R_1$);
+  \item se il join coinvolge una chiave di $R_2$ \emph{e} c'è un
+    \textbf{vincolo di integrità referenziale} fra gli attributi di $R_1$ e la
+    chiave di $R_2$:
+    \[ |R_1 \bowtie R_2| = |R_1| \]
+    perché ogni tupla di $R_1$ è associata a esattamente una tupla di $R_2$.
+\end{itemize}
+
+Es.: $R_1(\text{Employee}, \text{Dept})$ e $R_2(\text{Room}, \text{Dept})$ con
+3 tuple ciascuna, dove \texttt{Dept} non è chiave: il join può arrivare a
+$3 \times 3 = 9$ tuple (con due impiegati in \texttt{B} e due stanze in
+\texttt{B} se ne ottengono 4).
+
+\subsection{Join esterno}
+
+Nel join ``normale'' (\emph{interno}) le tuple senza corrispondenza vengono
+scartate. Il \textbf{join esterno} (\emph{outer join}) le conserva,
+completandole con valori \texttt{NULL}. Ne esistono tre varianti:
+
+\begin{description}[style=nextline]
+  \item[Sinistro ($\leftouterjoin$)] mantiene tutte le tuple del \emph{primo}
+    operando, anche se non hanno corrispondenza nel secondo; gli attributi
+    mancanti valgono \texttt{NULL}.
+  \item[Destro ($\rightouterjoin$)] mantiene tutte le tuple del \emph{secondo}
+    operando: $A \rightouterjoin B$ equivale a $B \leftouterjoin A$.
+  \item[Completo ($\fullouterjoin$)] mantiene tutte le tuple di entrambi:
+    è l'unione del sinistro e del destro.
+\end{description}
+
+\begin{center}
+\begin{tabular}{cc}
+\multicolumn{2}{c}{\texttt{Employee}}\\ \hline
+Employee & Dept\\ \hline
+Rossi & A\\ Neri & B\\ Bianchi & B\\ \hline
+\end{tabular}
+\qquad
+\begin{tabular}{cc}
+\multicolumn{2}{c}{\texttt{Department}}\\ \hline
+Dept & Chief\\ \hline
+B & Mori\\ C & Bruni\\ \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{$\text{Employee} \fullouterjoin \text{Department}$}\\ \hline
+Employee & Dept & Chief\\ \hline
+Neri & B & Mori\\
+Bianchi & B & Mori\\
+Rossi & A & \texttt{NULL}\\
+\texttt{NULL} & C & Bruni\\ \hline
+\end{tabular}
+\end{center}
+Il join sinistro contiene le prime tre righe, il destro le prime due e
+l'ultima.
+
+\subsection{Prodotto cartesiano e theta-join}
+
+\paragraph{Prodotto cartesiano} è il join naturale fra due relazioni
+\emph{senza attributi in comune}: ogni tupla del primo operando si combina con
+ogni tupla del secondo, quindi la cardinalità del risultato è il prodotto delle
+cardinalità. In pratica è utile solo se seguito da una selezione:
+\[
+  \sigma_{\text{condition}}(R_1 \bowtie R_2)
+\]
+
+\paragraph{Theta-join} questa combinazione ha un nome e una notazione propri:
+\[
+  R_1 \bowtie_{\text{condition}} R_2 \;=\;
+  \sigma_{\text{condition}}(R_1 \bowtie R_2)
+\]
+La condizione è di solito una congiunzione (\texttt{AND}) di atomi di
+confronto $A_1 \,\mathcal{R}\, A_2$, con $\mathcal{R}$ operatore di confronto
+($=, >, <, \ldots$).
+
+\paragraph{Equi-join} un theta-join in cui tutti gli atomi sono uguaglianze. È
+molto più usato del theta-join generale: permette di indicare su quali
+attributi fare il join senza ricorrere a ridenominazioni.
+
+Es.\ con \texttt{Employee(Employee, Dept)} e \texttt{Department(Code, Chief)}:
+\[
+  \text{Employee} \bowtie_{\text{Dept} = \text{Code}} \text{Department}
+\]
+ha schema \texttt{(Employee, Dept, Code, Chief)}. Il risultato è analogo a
+quello del join naturale con ridenominazione, che però ha un attributo in meno:
+\[
+  \text{Employee} \bowtie \rho_{\text{Dept} \leftarrow \text{Code}}
+    (\text{Department})
+  \qquad \text{schema \texttt{(Employee, Dept, Chief)}}
+\]
+
+\subsection{Esempi di interrogazioni}
+
+\begin{center}
+\begin{tabular}{cccc}
+\multicolumn{4}{c}{\texttt{Employee}}\\ \hline
+Number & Name & Age & Wage\\ \hline
+7309 & Rossi & 34 & 45\\
+5998 & Bianchi & 37 & 38\\
+9553 & Neri & 42 & 35\\
+5698 & Bruni & 43 & 42\\
+4076 & Mori & 45 & 50\\
+8123 & Lupi & 46 & 60\\ \hline
+\end{tabular}
+\qquad
+\begin{tabular}{cc}
+\multicolumn{2}{c}{\texttt{Supervisor}}\\ \hline
+Employee & Chief\\ \hline
+7309 & 5698\\
+5998 & 5698\\
+9553 & 4076\\
+5698 & 4076\\
+4076 & 8123\\ \hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+  \item Numero, nome, età e stipendio degli impiegati che guadagnano più di 40:
+    \[ \sigma_{\text{Wage} > 40}(\text{Employee}) \]
+  \item Numero, nome ed età degli impiegati che guadagnano più di 40:
+    \[ \pi_{\text{Number},\text{Name},\text{Age}}
+       (\sigma_{\text{Wage} > 40}(\text{Employee})) \]
+  \item Capi degli impiegati che guadagnano più di 40:
+    \[ \pi_{\text{Chief}}(\text{Supervisor}
+       \bowtie_{\text{Employee} = \text{Number}}
+       \sigma_{\text{Wage} > 40}(\text{Employee})) \]
+    (risultato: 5698, 4076, 8123).
+  \item Nome e stipendio dei capi degli impiegati che guadagnano più di 40:
+    \begin{align*}
+      \pi_{\text{Name},\text{Wage}}\bigl(\text{Employee}
+        \bowtie_{\text{Number} = \text{Chief}}{}
+      & \pi_{\text{Chief}}(\text{Supervisor}\\
+      & \quad \bowtie_{\text{Employee} = \text{Number}}
+        \sigma_{\text{Wage} > 40}(\text{Employee}))\bigr)
+    \end{align*}
+  \item Impiegati che guadagnano più del proprio capo, con numero, nome e
+    stipendio di entrambi. \texttt{Employee} serve due volte (come impiegato e
+    come capo), quindi una copia va ridenominata:
+    \begin{align*}
+      & \pi_{\text{Number},\text{Name},\text{Wage},\text{NoC},\text{NameC},
+        \text{WageC}}\bigl(
+        \sigma_{\text{Wage} > \text{WageC}}\bigl(\\
+      & \quad \rho_{\text{NoC},\text{NameC},\text{WageC},\text{AgeC} \leftarrow
+          \text{Number},\text{Name},\text{Wage},\text{Age}}(\text{Employee})\\
+      & \quad \bowtie_{\text{NoC} = \text{Chief}}
+        (\text{Supervisor} \bowtie_{\text{Employee} = \text{Number}}
+         \text{Employee})\bigr)\bigr)
+    \end{align*}
+    (risultato: Rossi, 45, con capo Bruni, 42).
+  \item Capi i cui impiegati guadagnano \textbf{tutti} più di 40. Il ``per
+    ogni'' si esprime con la \emph{differenza}: tutti i capi meno quelli che
+    hanno almeno un impiegato che guadagna $\leq 40$:
+    \[ \pi_{\text{Chief}}(\text{Supervisor}) \;-\;
+       \pi_{\text{Chief}}(\text{Supervisor}
+       \bowtie_{\text{Employee} = \text{Number}}
+       \sigma_{\text{Wage} \leq 40}(\text{Employee})) \]
+    (risultato: 8123).
+\end{enumerate}
+
+\subsection{Equivalenza di espressioni}
+
+Due espressioni $E_1$ ed $E_2$ sono \textbf{equivalenti} se producono lo stesso
+risultato \emph{qualunque sia} l'istanza della base di dati. Le regole di
+equivalenza sono importanti perché i DBMS riscrivono le interrogazioni in
+espressioni equivalenti ma più efficienti.
+
+\begin{enumerate}
+  \item \textbf{Atomizzazione delle selezioni} (cascata di selezioni):
+    \[ \sigma_{A > 20}(\sigma_{B = \text{'Jones'}}(R)) =
+       \sigma_{A > 20 \,\wedge\, B = \text{'Jones'}}(R) \]
+  \item \textbf{Idempotenza delle proiezioni} ($X$, $Y$ attributi di $R$):
+    \[ \pi_X(R) = \pi_X(\pi_{XY}(R)) \]
+  \item \textbf{Anticipazione della selezione} rispetto al join (\emph{push
+    selections}), con $A$ attributo di $R_2$:
+    \[ \sigma_{A = 10}(R_1 \bowtie R_2) = R_1 \bowtie \sigma_{A = 10}(R_2) \]
+    Riduce drasticamente la dimensione del risultato intermedio (e quindi il
+    costo dell'operazione).
+  \item \textbf{Anticipazione della proiezione} rispetto al join (\emph{push
+    projections}), con $R_1(X_1)$, $R_2(X_2)$ e $Y_2 \subseteq X_2$:
+    \[ \pi_{X_1 Y_2}(R_1 \bowtie R_2) = R_1 \bowtie \pi_{Y_2}(R_2) \]
+    Vale se $Y_2 \supseteq X_1 \cap X_2$, cioè se gli attributi eliminati
+    ($X_2 - Y_2$) non sono coinvolti nel join.
+  \item \textbf{Definizione di theta-join}:
+    \[ \sigma_{A = 10}(R_1 \bowtie R_2) = R_1 \bowtie_{A = 10} R_2 \]
+    \[ \sigma_{A = 10 \,\wedge\, B = \text{'Jones'}}(R_1 \bowtie R_2) =
+       \sigma_{A = 10}(R_1 \bowtie_{B = \text{'Jones'}} R_2) =
+       \sigma_{B = \text{'Jones'}}(R_1 \bowtie_{A = 10} R_2) \]
+  \item[6--8.] \textbf{Distributività}:
+    \begin{align*}
+      \sigma_{A = 10}(R_1 \cup R_2) &=
+        \sigma_{A = 10}(R_1) \cup \sigma_{A = 10}(R_2)\\
+      \sigma_{A = 10}(R_1 - R_2) &=
+        \sigma_{A = 10}(R_1) - \sigma_{A = 10}(R_2)\\
+      \pi_X(R_1 \cup R_2) &= \pi_X(R_1) \cup \pi_X(R_2)
+    \end{align*}
+    Attenzione: la proiezione \emph{non} è distributiva rispetto alla
+    differenza.
+  \item[9--11.] \textbf{Selezione e operatori insiemistici}:
+    \begin{align*}
+      \sigma_{A = 10 \,\vee\, B = \text{'Jones'}}(R) &=
+        \sigma_{A = 10}(R) \cup \sigma_{B = \text{'Jones'}}(R)\\
+      \sigma_{A = 10 \,\wedge\, B = \text{'Jones'}}(R) &=
+        \sigma_{A = 10}(R) \cap \sigma_{B = \text{'Jones'}}(R)\\
+      \sigma_{A = 10 \,\wedge\, \neg(B = \text{'Jones'})}(R) &=
+        \sigma_{A = 10}(R) - \sigma_{B = \text{'Jones'}}(R)
+    \end{align*}
+  \item[12.] \textbf{Distributività del join rispetto all'unione}:
+    \[ R \bowtie (R_1 \cup R_2) = (R \bowtie R_1) \cup (R \bowtie R_2) \]
+\end{enumerate}
+
+\paragraph{Esempio di ottimizzazione} numeri dei capi degli impiegati con meno
+di 30 anni (\texttt{No} = \texttt{Number}, \texttt{Emp} = \texttt{Employee}):
+\[
+  \pi_{\text{Chief}}(\sigma_{\text{No} = \text{Emp} \,\wedge\, \text{Age} < 30}
+    (\text{Employee} \bowtie \text{Supervisor}))
+\]
+\begin{itemize}
+  \item regola 1, si spezza la selezione:
+    \[ \pi_{\text{Chief}}(\sigma_{\text{No} = \text{Emp}}
+       (\sigma_{\text{Age} < 30}(\text{Employee} \bowtie \text{Supervisor}))) \]
+  \item regola 5 per \texttt{No = Emp} e regola 3 per \texttt{Age < 30}:
+    \[ \pi_{\text{Chief}}(\sigma_{\text{Age} < 30}(\text{Employee})
+       \bowtie_{\text{No} = \text{Emp}} \text{Supervisor}) \]
+  \item regola 4, si eliminano gli attributi inutili:
+    \[ \pi_{\text{Chief}}(\pi_{\text{No}}(\sigma_{\text{Age} < 30}
+       (\text{Employee})) \bowtie_{\text{No} = \text{Emp}} \text{Supervisor}) \]
+\end{itemize}
+
+\paragraph{Nota} nel corso non è richiesto scrivere interrogazioni efficienti:
+conta che siano \emph{corrette e chiare}, perché all'ottimizzazione pensa il
+DBMS.
+
+\subsection{Selezione con valori nulli}
+
+Una condizione atomica come \texttt{Age > 40} è soddisfatta solo da valori
+\emph{non nulli}: una tupla con \texttt{Age = NULL} non compare nel risultato di
+$\sigma_{\text{Age} > 40}(\text{Employee})$.
+
+\paragraph{Conseguenze indesiderate} selezioni e condizioni atomiche sono
+valutate separatamente, quindi in presenza di \texttt{NULL}
+\[
+  \sigma_{\text{Age} > 30}(\text{People}) \cup
+  \sigma_{\text{Age} \leq 30}(\text{People}) \neq \text{People}
+  \qquad
+  \sigma_{\text{Age} > 30 \,\vee\, \text{Age} \leq 30}(\text{People})
+  \neq \text{People}
+\]
+
+\paragraph{IS NULL / IS NOT NULL} per riferirsi ai valori nulli si usano
+condizioni atomiche apposite (si potrebbe definire una logica a tre valori
+\emph{true}, \emph{false}, \emph{unknown}, ma non è necessario):
+\begin{align*}
+  & \sigma_{\text{Age} > 30}(\text{People}) \cup
+    \sigma_{\text{Age} \leq 30}(\text{People}) \cup
+    \sigma_{\text{Age IS NULL}}(\text{People})\\
+  & \quad = \sigma_{\text{Age} > 30 \,\vee\, \text{Age} \leq 30 \,\vee\,
+    \text{Age IS NULL}}(\text{People}) = \text{People}
+\end{align*}
+Es.: la selezione
+\[
+  \sigma_{(\text{Age} > 40) \,\vee\, (\text{Age IS NULL})}(\text{Employee})
+\]
+restituisce anche l'impiegato di cui non si conosce l'età.
+
+\subsection{Viste}
+
+Le viste sono rappresentazioni diverse degli stessi dati: corrispondono allo
+\emph{schema esterno} dell'architettura ANSI/SPARC.
+\begin{description}[style=nextline]
+  \item[Relazioni di base] hanno contenuto autonomo (originale).
+  \item[Relazioni derivate] il loro contenuto è definito tramite
+    un'interrogazione; possono essere definite anche a partire da altre
+    relazioni derivate (ma senza ricorsione).
+\end{description}
+
+\paragraph{Esempio} con \texttt{Concern(Employee, Dept)} e
+\texttt{Manage(Dept, Chief)}:
+\[
+  \text{Supervisor} = \pi_{\text{Employee},\text{Chief}}
+    (\text{Concern} \bowtie \text{Manage})
+\]
+
+\paragraph{Due tipi di relazioni derivate}
+\begin{description}[style=nextline]
+  \item[Viste materializzate] la relazione derivata è memorizzata fisicamente
+    (in modo temporaneo o permanente).
+    \begin{itemize}
+      \item pro: i dati sono immediatamente disponibili per le interrogazioni;
+      \item contro: ridondanza, aggiornamenti rallentati, raramente supportate
+        dai DBMS.
+    \end{itemize}
+  \item[Relazioni virtuali (o viste)] supportate da tutti i DBMS.
+    Un'interrogazione su una vista viene trasformata in un'interrogazione sulla
+    base di dati sottostante, sostituendo al nome della vista la sua
+    definizione:
+    \[ \sigma_{\text{Chief} = \text{'Leoni'}}(\text{Supervisor})
+       \;\leadsto\;
+       \sigma_{\text{Chief} = \text{'Leoni'}}(\pi_{\text{Employee},\text{Chief}}
+       (\text{Concern} \bowtie \text{Manage})) \]
+\end{description}
+
+\paragraph{Perché le viste}
+\begin{itemize}
+  \item \emph{schema esterno}: ogni utente vede ciò che gli interessa, nel modo
+    in cui gli interessa, senza distrazioni, e solo ciò che è autorizzato a
+    vedere;
+  \item \emph{strumento di programmazione}: semplificano la scrittura di
+    interrogazioni complesse, soprattutto se ci sono sottoespressioni ripetute;
+  \item permettono di usare programmi esistenti su schemi ristrutturati.
+\end{itemize}
+Le viste però \emph{non} influiscono sull'efficienza delle interrogazioni.
+
+\paragraph{Viste come strumento di programmazione} impiegati che hanno lo
+stesso capo di Jones.
+\begin{itemize}
+  \item senza vista:
+    \begin{align*}
+      \pi_{\text{Employee}}\bigl(
+      & (\text{Concern} \bowtie \text{Manage}) \bowtie{}\\
+      & \rho_{\text{EmpR},\text{DeptR} \leftarrow \text{Employee},\text{Dept}}
+        (\sigma_{\text{Employee} = \text{'Jones'}}
+        (\text{Concern} \bowtie \text{Manage}))\bigr)
+    \end{align*}
+  \item con la vista \texttt{Supervisor}:
+    \[ \pi_{\text{Employee}}\bigl(\text{Supervisor} \bowtie
+       \rho_{\text{EmpR} \leftarrow \text{Employee}}
+       (\sigma_{\text{Employee} = \text{'Jones'}}(\text{Supervisor}))\bigr) \]
+\end{itemize}
+
+\paragraph{Aggiornamento delle viste} ``aggiornare una vista'' significa
+modificare le relazioni di base in modo che la vista, ricalcolata, rifletta
+l'aggiornamento. A ogni aggiornamento sulla vista deve corrispondere un
+aggiornamento sulle relazioni di base, ma questo può \emph{non essere univoco}.
+Es.: inserire in \texttt{Supervisor} il fatto che Bruni è capo di Lupi è
+ambiguo se Bruni dirige due dipartimenti (in quale va Lupi?); inserire che
+Falchi è capo di Belli è impossibile senza inventare un dipartimento diretto
+da Falchi. Per questo sulle viste sono ammessi solo pochi tipi di
+aggiornamento.
+
+\subsection{Notazione alternativa per i join}
+
+È l'approccio adottato di solito in SQL:
+\begin{itemize}
+  \item si ignora il join naturale (non si assumono implicitamente condizioni
+    sugli attributi con lo stesso nome);
+  \item con la sintassi \texttt{Relazione.Attributo} si distinguono gli
+    attributi omonimi di relazioni diverse;
+  \item le relazioni si ``rinominano'' definendo viste (assegnazione
+    $:=$), e gli attributi si ridenominano solo quando serve per l'unione.
+\end{itemize}
+
+Es.\ (impiegati che guadagnano più del proprio capo), con
+$\text{Chief} := \text{Emp}$:
+\begin{align*}
+  & \pi_{\text{Emp.No},\,\text{Emp.Name},\,\text{Emp.Wage},\,\text{Chief.No},\,
+    \text{Chief.Name},\,\text{Chief.Wage}}\bigl(\\
+  & \quad \sigma_{\text{Emp.Wage} > \text{Chief.Wage}}(
+    \text{Chief} \bowtie_{\text{Chief.No} = \text{Sup.Chief}}
+    (\text{Sup} \bowtie_{\text{Sup.Emp} = \text{Emp.No}} \text{Emp}))\bigr)
+\end{align*}
+
+\subsection{Calcolo relazionale}
+
+Famiglia di linguaggi \textbf{dichiarativi} basati sulla logica del primo
+ordine. Due versioni:
+\begin{itemize}
+  \item calcolo relazionale \textbf{su domini};
+  \item calcolo \textbf{su tuple con dichiarazioni di range}.
+\end{itemize}
+
+Negli esempi si usano le relazioni
+\begin{center}
+\texttt{Employee(\underline{Number}, Name, Age, Salary)} \qquad
+\texttt{Supervisor(Chief, \underline{Employee})}
+\end{center}
+
+\subsection{Calcolo su domini}
+
+Un'espressione ha la forma
+\[
+  \{\, A_1 : x_1, \ldots, A_k : x_k \mid f \,\}
+\]
+\begin{itemize}
+  \item $f$ è una \textbf{formula} (con operatori booleani e quantificatori);
+  \item $A_1 : x_1, \ldots, A_k : x_k$ è la \textbf{target list}: $A_1, \ldots,
+    A_k$ sono attributi distinti (anche non presenti nella base di dati),
+    $x_1, \ldots, x_k$ variabili distinte.
+\end{itemize}
+\textbf{Semantica}: il risultato è una relazione su $A_1, \ldots, A_k$ che
+contiene le tuple di valori per $x_1, \ldots, x_k$ che rendono vera $f$.
+
+\paragraph{Differenze rispetto al calcolo dei predicati}
+\begin{itemize}
+  \item i simboli di predicato corrispondono alle relazioni della base di dati,
+    più i predicati ``standard'' predefiniti ($=, >, \ldots$);
+  \item non ci sono simboli di funzione;
+  \item interessano soprattutto le formule \emph{aperte} (con variabili
+    libere);
+  \item la notazione è \emph{non posizionale}.
+\end{itemize}
+
+\paragraph{Esempi}
+\begin{enumerate}
+  \item[0a.] Numero, nome, età e stipendio di chi guadagna più di 40
+    ($\sigma_{\text{Salary} > 40}(\text{Employee})$):
+    \begin{align*}
+      \{\, & \text{Number}: m, \text{Name}: n, \text{Age}: a, \text{Salary}: s
+        \mid\\
+      & \text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: a, \text{Salary}: s) \wedge s > 40 \,\}
+    \end{align*}
+  \item[0b.] Numero, nome ed età di tutti gli impiegati
+    ($\pi_{\text{Number},\text{Name},\text{Age}}(\text{Employee})$):
+    \begin{align*}
+      \{\, & \text{Number}: m, \text{Name}: n, \text{Age}: a \mid\\
+      & \exists s\,(\text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: a, \text{Salary}: s)) \,\}
+    \end{align*}
+    Il quantificatore esistenziale sulle variabili che non compaiono nella
+    target list si può sottintendere.
+  \item[1.] Numero, nome ed età di chi guadagna più di 40:
+    \begin{align*}
+      \{\, & \text{Number}: m, \text{Name}: n, \text{Age}: a \mid\\
+      & \text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: a, \text{Salary}: s) \wedge s > 40 \,\}
+    \end{align*}
+  \item[2.] Capi degli impiegati che guadagnano più di 40 (il join si esprime
+    usando la \emph{stessa variabile} $e$ nei due predicati):
+    \begin{align*}
+      \{\, \text{Chief}: c \mid{}
+      & \text{Supervisor}(\text{Chief}: c, \text{Employee}: e)\\
+      & \wedge \text{Employee}(\text{Number}: e, \text{Name}: n, \text{Age}: a, \text{Salary}: s) \wedge s > 40 \,\}
+    \end{align*}
+  \item[3.] Nome e stipendio dei capi degli impiegati che guadagnano più
+    di 40:
+    \begin{align*}
+      \{\, \text{NameC}: nc, \text{WageC}: sc \mid\;
+      & \text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: a,
+        \text{Salary}: s) \wedge s > 40\\
+      & \wedge \text{Supervisor}(\text{Chief}: c, \text{Employee}: m)\\
+      & \wedge \text{Employee}(\text{Number}: c, \text{Name}: nc,
+        \text{Age}: ac, \text{Salary}: sc) \,\}
+    \end{align*}
+  \item[4.] Impiegati che guadagnano più del proprio capo:
+    \begin{align*}
+      \{\, & \text{No}: m, \text{Name}: n, \text{Wage}: s, \text{NoC}: c,
+        \text{NameC}: nc, \text{WageC}: sc \mid\\
+      & \text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: a,
+        \text{Salary}: s)\\
+      & \wedge \text{Supervisor}(\text{Chief}: c, \text{Employee}: m)\\
+      & \wedge \text{Employee}(\text{Number}: c, \text{Name}: nc,
+        \text{Age}: ac, \text{Salary}: sc)\\
+      & \wedge s > sc \,\}
+    \end{align*}
+  \item[5.] Numero e nome dei capi i cui impiegati guadagnano \emph{tutti} più
+    di 40:
+    \begin{align*}
+      \{\, \text{Number}: c, \text{Name}: n \mid{}
+      & \text{Employee}(\text{Number}: c, \text{Name}: n, \text{Age}: e, \text{Salary}: s)\\
+      & \wedge \text{Supervisor}(\text{Chief}: c, \text{Employee}: m)\\
+      & \wedge \neg\, \exists m' (\exists n' (\exists e' (\exists s' (\\
+      & \qquad \text{Employee}(\text{Number}: m', \text{Name}: n', \text{Age}: e', \text{Salary}: s')\\
+      & \qquad \wedge \text{Supervisor}(\text{Chief}: c, \text{Employee}: m')
+        \wedge s' \leq 40)))) \,\}
+    \end{align*}
+\end{enumerate}
+
+\paragraph{Quantificatori e De Morgan} esistenziale e universale sono
+intercambiabili:
+\[
+  \neg(A \wedge B) = \neg A \vee \neg B \qquad
+  \neg(A \vee B) = \neg A \wedge \neg B
+\]
+\[
+  \neg \exists x\, A = \forall x\, \neg A \qquad
+  \neg \forall x\, A = \exists x\, \neg A \qquad
+  \exists x\, A = \neg \forall x\, \neg A
+\]
+Nell'esempio 5 la negazione dell'esistenziale si può quindi riscrivere come
+\begin{align*}
+  & \forall m' (\forall n' (\forall e' (\forall s' (\\
+  & \quad \neg(\text{Employee}(\text{Number}: m', \text{Name}: n', \text{Age}: e', \text{Salary}: s')\\
+  & \quad \phantom{\neg(} \wedge
+    \text{Supervisor}(\text{Chief}: c, \text{Employee}: m'))\\
+  & \quad \vee s' > 40))))
+\end{align*}
+
+\paragraph{Pregi e difetti}
+\begin{itemize}
+  \item pregio: è dichiarativo;
+  \item difetto: è ``verboso'' (moltissime variabili);
+  \item difetto: ammette espressioni senza senso, come
+    \[ \{ A: x \mid \neg R(A: x) \} \qquad
+       \{ A: x, B: y \mid R(A: x) \} \qquad
+       \{ A: x, B: y \mid R(A: x) \wedge y = y \} \]
+    il cui risultato dipende dal dominio delle variabili e non solo
+    dall'istanza: sono espressioni \textbf{dipendenti dal dominio}, da evitare.
+    In algebra relazionale non si possono scrivere, perché l'algebra è
+    \emph{indipendente dal dominio}.
+\end{itemize}
+
+\paragraph{Calcolo su domini e algebra} sono ``equivalenti'':
+\begin{itemize}
+  \item per ogni espressione del calcolo indipendente dal dominio esiste
+    un'espressione dell'algebra equivalente;
+  \item per ogni espressione dell'algebra esiste un'espressione del calcolo
+    equivalente e indipendente dal dominio.
+\end{itemize}
+
+\subsection{Calcolo su tuple con dichiarazioni di range}
+
+Nasce per superare i limiti del calcolo su domini:
+\begin{itemize}
+  \item ridurre il numero di variabili: le variabili denotano \emph{tuple}
+    (una variabile per ciascuna tupla coinvolta) anziché singoli valori;
+  \item garantire che tutti i valori provengano dalla base di dati.
+\end{itemize}
+
+\paragraph{Sintassi}
+\[
+  \{\, \textit{TargetList} \mid \textit{RangeList} \mid \textit{Formula} \,\}
+\]
+\begin{itemize}
+  \item \emph{RangeList} elenca le variabili libere della formula, indicando
+    per ciascuna la relazione da cui proviene: $x(R)$;
+  \item \emph{TargetList} ha elementi della forma $Y : x.Z$ (oppure $x.Z$, o
+    $x.*$ per tutti gli attributi);
+  \item \emph{Formula} è costruita con:
+    \begin{itemize}
+      \item atomi di confronto $x.A \,\mathcal{R}\, c$ e
+        $x.A \,\mathcal{R}\, y.B$;
+      \item connettivi logici;
+      \item quantificatori che associano un range alle variabili:
+        $\exists x(R)(\ldots)$, $\forall x(R)(\ldots)$.
+    \end{itemize}
+\end{itemize}
+
+\paragraph{Esempi} (le stesse interrogazioni del calcolo su domini)
+\begin{enumerate}
+  \item[0a.] $\{\, i.* \mid i(\text{Employee}) \mid i.\text{Salary} > 40 \,\}$
+  \item[0b.] $\{\, i.(\text{Number}, \text{Name}, \text{Age}) \mid
+    i(\text{Employee}) \mid \ \}$
+  \item[1.] $\{\, i.(\text{Number}, \text{Name}, \text{Age}) \mid
+    i(\text{Employee}) \mid i.\text{Salary} > 40 \,\}$
+  \item[2.] $\{\, s.\text{Chief} \mid i(\text{Employee}), s(\text{Supervisor})
+    \mid i.\text{Number} = s.\text{Employee} \wedge i.\text{Salary} > 40 \,\}$
+  \item[3.] Nome e stipendio dei capi degli impiegati che guadagnano più
+    di 40:
+    \begin{align*}
+      \{\, & \text{NameC}, \text{WageC}: i'.(\text{Name}, \text{Salary}) \mid\\
+      & i'(\text{Employee}), s(\text{Supervisor}), i(\text{Employee}) \mid\\
+      & i'.\text{Number} = s.\text{Chief} \wedge
+        i.\text{Number} = s.\text{Employee} \wedge i.\text{Salary} > 40 \,\}
+    \end{align*}
+  \item[4.] Impiegati che guadagnano più del proprio capo:
+    \begin{align*}
+      \{\, & i.(\text{Name}, \text{Number}, \text{Salary}),\;
+        \text{NameC}, \text{NoC}, \text{WageC}:
+        i'.(\text{Name}, \text{Number}, \text{Salary}) \mid\\
+      & i'(\text{Employee}), s(\text{Supervisor}), i(\text{Employee}) \mid\\
+      & i'.\text{Number} = s.\text{Chief} \wedge
+        i.\text{Number} = s.\text{Employee} \wedge
+        i.\text{Salary} > i'.\text{Salary} \,\}
+    \end{align*}
+  \item[5.] Capi i cui impiegati guadagnano tutti più di 40:
+    \begin{align*}
+      \{\, i.(\text{Number}, \text{Name}) \mid\;
+      & s(\text{Supervisor}), i(\text{Employee}) \mid
+        i.\text{Number} = s.\text{Chief}\\
+      & \wedge \neg(\exists i'(\text{Employee})(\exists s'(\text{Supervisor})
+        (s.\text{Chief} = s'.\text{Chief}\\
+      & \qquad \wedge s'.\text{Employee} = i'.\text{Number}
+        \wedge i'.\text{Salary} \leq 40))) \,\}
+    \end{align*}
+\end{enumerate}
+
+\paragraph{Limite: l'unione} questo calcolo non permette di esprimere alcune
+interrogazioni importanti, in particolare le \textbf{unioni}
+$R_1(AB) \cup R_2(AB)$: ogni variabile ha un solo range, mentre il risultato
+dovrebbe provenire da due relazioni diverse (né una né due variabili bastano).
+Intersezione e differenza invece si possono esprimere. Per questo SQL, che si
+basa su questo calcolo, ha un operatore esplicito di unione, mentre
+intersezione e differenza non sono presenti in tutte le implementazioni.
+
+\subsection{Limiti di algebra e calcolo}
+
+Algebra e calcolo sono sostanzialmente equivalenti ed esprimono un insieme
+significativo di operazioni, ma alcune interrogazioni utili restano fuori:
+\begin{itemize}
+  \item si possono solo \emph{estrarre} valori, non \emph{calcolarne} di nuovi:
+    \begin{itemize}
+      \item a livello di tupla (conversioni, somme, differenze, $\ldots$);
+      \item su insiemi di tuple (somme, medie, $\ldots$);
+    \end{itemize}
+    queste estensioni sono presenti in SQL;
+  \item interrogazioni \textbf{ricorsive}, come la \textbf{chiusura
+    transitiva}.
+\end{itemize}
+
+\paragraph{Chiusura transitiva} data
+\texttt{Supervisor(\underline{Employee}, Chief)}, trovare per ogni impiegato
+\emph{tutti} i suoi superiori (il capo, il capo del capo, e così via).
+
+\begin{center}
+\begin{tabular}{cc}
+\hline Employee & Chief\\ \hline
+Rossi & Lupi\\ Neri & Bruni\\ Lupi & Falchi\\ Falchi & Leoni\\ \hline
+\end{tabular}
+\qquad$\Rightarrow$\qquad
+\begin{tabular}{ccl}
+\hline Employee & Superior & \\ \hline
+Rossi & Lupi & \\ Neri & Bruni & \\ Lupi & Falchi & \\ Falchi & Leoni & \\
+Rossi & Falchi & (1 join)\\ Lupi & Leoni & (1 join)\\
+Rossi & Leoni & (2 join)\\ \hline
+\end{tabular}
+\end{center}
+
+Con un join della relazione con se stessa (più ridenominazione) si ottengono i
+superiori di secondo livello, con due join quelli di terzo, e così via: il
+numero di join necessari dipende dall'\emph{istanza} e non è limitato a priori.
+In algebra relazionale quindi \textbf{non} è possibile scrivere un'unica
+espressione che calcoli la chiusura transitiva di una qualunque relazione
+binaria.
+
+\subsection{Datalog}
+
+Linguaggio di programmazione logica per basi di dati, derivato dal Prolog. Usa
+due tipi di predicati:
+\begin{itemize}
+  \item \textbf{estensionali}: le relazioni della base di dati;
+  \item \textbf{intensionali}: corrispondono alle viste, e sono definiti
+    tramite \textbf{regole}.
+\end{itemize}
+
+\paragraph{Sintassi}
+\[
+  \textit{head} \leftarrow \textit{body}
+\]
+\begin{itemize}
+  \item \emph{head} (testa) è un predicato atomico intensionale;
+  \item \emph{body} (corpo) è una lista (congiunzione) di predicati atomici;
+  \item le interrogazioni sono predicati atomici preceduti da \texttt{?}.
+\end{itemize}
+
+\paragraph{Esempi}
+\begin{itemize}
+  \item Impiegati di 30 anni (basta un predicato estensionale con una
+    costante):
+    \[ ?\ \text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: 30,
+       \text{Salary}: s) \]
+  \item Impiegati che guadagnano più di 40 (serve un predicato intensionale):
+    \begin{align*}
+      & \text{RichE}(\text{Number}: m, \text{Name}: n, \text{Age}: e,
+        \text{Salary}: s) \leftarrow\\
+      & \qquad \text{Employee}(\text{Number}: m, \text{Name}: n,
+        \text{Age}: e, \text{Salary}: s),\ s > 40\\
+      & ?\ \text{RichE}(\text{Number}: m, \text{Name}: n, \text{Age}: e,
+        \text{Salary}: s)
+    \end{align*}
+  \item Numero, nome ed età di tutti gli impiegati (proiezione):
+    \begin{align*}
+      & \text{PublicInfos}(\text{Number}: m, \text{Name}: n, \text{Age}: e)
+        \leftarrow\\
+      & \qquad \text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: e, \text{Salary}: s)\\
+      & ?\ \text{PublicInfos}(\text{Number}: m, \text{Name}: n, \text{Age}: e)
+    \end{align*}
+  \item Capi degli impiegati che guadagnano più di 40 (join):
+    \begin{align*}
+      & \text{ChiefsOfRichE}(\text{Chief}: c) \leftarrow\\
+      & \qquad \text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: e, \text{Salary}: s),\ s > 40,\\
+      & \qquad \text{Supervisor}(\text{Chief}: c, \text{Employee}: m)\\
+      & ?\ \text{ChiefsOfRichE}(\text{Chief}: c)
+    \end{align*}
+  \item Capi i cui impiegati guadagnano \emph{tutti} più di 40 (serve la
+    \textbf{negazione}):
+    \begin{align*}
+      & \text{ChiefsOfNoRichE}(\text{Chief}: c) \leftarrow\\
+      & \qquad \text{Supervisor}(\text{Chief}: c, \text{Employee}: m),\\
+      & \qquad \text{Employee}(\text{Number}: m, \text{Name}: n, \text{Age}: e, \text{Salary}: s),\ s \leq 40\\
+      & \text{ChiefsOfOnlyRichE}(\text{Number}: c, \text{Name}: n) \leftarrow\\
+      & \qquad \text{Employee}(\text{Number}: c, \text{Name}: n, \text{Age}: e, \text{Salary}: s),\\
+      & \qquad \text{Supervisor}(\text{Chief}: c, \text{Employee}: m),\\
+      & \qquad \text{not ChiefsOfNoRichE}(\text{Chief}: c)\\
+      & ?\ \text{ChiefsOfOnlyRichE}(\text{Number}: c, \text{Name}: n)
+    \end{align*}
+  \item Per ogni impiegato, tutti i suoi superiori (serve la
+    \textbf{ricorsione}: è la chiusura transitiva):
+    \begin{align*}
+      & \text{HighGrade}(\text{Employee}: i, \text{SuperChief}: c) \leftarrow
+        \text{Supervisor}(\text{Employee}: i, \text{Chief}: c)\\
+      & \text{HighGrade}(\text{Employee}: i, \text{SuperChief}: c) \leftarrow\\
+      & \qquad \text{Supervisor}(\text{Employee}: i, \text{Chief}: c'),\
+        \text{HighGrade}(\text{Employee}: c', \text{SuperChief}: c)
+    \end{align*}
+\end{itemize}
+
+\paragraph{Semantica e potere espressivo} la definizione della semantica delle
+interrogazioni ricorsive è delicata, soprattutto in presenza di negazione.
+\begin{itemize}
+  \item Datalog \emph{non ricorsivo senza negazione} equivale al calcolo senza
+    negazione e senza quantificatore universale;
+  \item Datalog \emph{non ricorsivo con negazione} equivale a calcolo e
+    algebra;
+  \item Datalog \emph{ricorsivo senza negazione} e calcolo sono
+    \emph{incomparabili};
+  \item Datalog \emph{ricorsivo con negazione} è più espressivo di calcolo e
+    algebra.
+\end{itemize}
 
 \end{document}
