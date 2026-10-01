@@ -851,5 +851,88 @@ ovvero confrontare
     \textcolor{red}{No!}
 \end{center}
 \subsection{Modelli generativi}
-pag 93
+\subsubsection{Tecniche generative}
+Ci interessa calcolare
+\begin{align*}
+    P(Y=y_i \mid X_1,\dots, X_n)
+\end{align*}
+La regola di Bayes ci permette di invertire il problema in \textbf{data la categoria calcoliamo la distribuzione dei dati}.
+\par\medskip\noindent
+\itemimg{%
+\paragraph{Classificazione di un nuovo dato} Classifichiamo un nuovo dato chiedendoci quale delle distribuzione input è quella che si avvicina di più.
+\paragraph{Joint vs Naive} La distribuzione delle immagini che ci interessa nel esempio mnist consiste in uno spazio da 784 dimensioni. Dato che questo è irrealizzabile utilizziamo l'approccio naive che assemu che tutte le features sono indipendenti, riducendo il problema a
+\begin{align*}
+    P(X_j \mid Y = y_i) \quad j=1,\dots,n
+\end{align*}%
+}{img/esempio.png}
+\subsubsection{Limitazioni}
+\begin{itemize}
+    \item In alcuni casi in MLE possiamo avere $P(X_i \mid Y)=0$
+    \item L'approccio naive assume che due eveni sono indipendenti tra loro, \underline{e se fossero dipendenti?}
+\end{itemize}
+\subsection{Maximum Likelihood Estimation (MLE)}
+\begin{gather*}
+    \pi_k = P(Y=y_k) = \frac{\#\mathcal{D}\{Y=y_k\}}{|\mathcal{D}|}\\[1ex]
+    \theta_{ijk} = P(X_i=x_{ij} \mid Y=y_k) = \frac{\#\mathcal{D}\{X_i=x_{ij} \land Y=y_k\}}{\#\mathcal{D}\{Y=y_k\}}
+\end{gather*}
+\paragraph{Perchè?} Supponiamo di lanciare una moneta (truccata) 10 volte, otteniamo 6 testa ($H$) e 4 code ($T$), possiamo naturalmente concludere che
+\begin{align*}
+    P(H) = .6 \\
+    P(T)=.4
+\end{align*}
+Supponiamo ora di avere due possibilità:
+\begin{enumerate}
+    \item la moneta è reale, quindi $P(H)=.5$ e $P(T)=.5$
+    \item la moneta è false, quindi $P(H)=.7$ e $P(T)=.3$
+\end{enumerate}
+\textit{Basandoci sulle nostre osservazioni, quale è il nostro caso?}\\
+\vspace{1px}\\
+La distribuzione di \textbf{Bernoulli} abbiamo 2 possibili output 0 o 1, con probabilità $\theta$ e $1-\theta$.\\
+Sia $X^n$ il numero di 0 in una sequenza di $n$ lanci: $X^n$ segue una \hl{distribuzione binomiale}
+\begin{align*}
+    P(X^n=\alpha_0 \mid \theta) = \binom{n}{\alpha_0}\cdot \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}
+\end{align*}
+dove $\alpha_1 = n-\alpha_0$ è il numero di 1 nella sequenza (ovvero $\alpha_0+\alpha_1=n$).\\
+\vspace{1px}\\
+\paragraph{Continiamo l'esempio di prima} $n=10$, $\alpha_0=6$ e $\alpha_1=4$.\\
+Se $\theta=.5$ e $1-\theta=.5$
+\begin{align*}
+    P(X^n=6 \mid \theta) = \binom{n}{\alpha_0}\cdot \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1} = \binom{10}{6}\cdot \left(\frac{1}{2}\right)^{6}\cdot \left(\frac{1}{2}\right)^{4} = .205
+\end{align*}
+Se $\theta=.7$ e $1-\theta=.3$
+\begin{align*}
+    P(X^n=6 \mid \theta) = \binom{n}{\alpha_0}\cdot \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1} = \binom{10}{6}\cdot \left(\frac{7}{10}\right)^{6}\cdot \left(\frac{3}{10}\right)^{4} = .200
+\end{align*}
+Quindi $\theta=.5$ è leggermente più verosimile di $\theta=.7$.
+\begin{center}
+    \textcolor{red}{Qual è il valore più verosimile per $\theta$?}
+\end{center}
+\paragraph{Calcoliamo MLE}
+\begin{align*}
+    \hat{\theta} &= \arg\max_{\theta}\; P(X^n=\alpha_0 \mid \theta) =\\
+                 &= \arg\max_{\theta}\; \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}
+\end{align*}
+In modo equivalente possiamo cercare il $\theta$ che massimizza il logaritmo dell'espressione precedente
+\begin{align*}
+    \ln\left(\theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}\right) = \alpha_0\ln(\theta) + \alpha_1\ln(1-\theta)
+\end{align*}
+Derivando rispetto a $\theta$ otteniamo
+\begin{align*}
+    \frac{\alpha_0}{\theta} - \frac{\alpha_1}{1-\theta} = \frac{\alpha_0 - \alpha_0\theta - \alpha_1\theta}{\theta\cdot(1-\theta)}
+\end{align*}
+che si annulla per
+\begin{align*}
+    \theta = \frac{\alpha_0}{\alpha_0+\alpha_1} = \frac{\alpha_0}{n}
+\end{align*}
+\paragraph{Caso mulivariabile} \textbf{Distribuzione discreta} (es. lancio di un dado): $k$ possibili esiti $\{1,2,\dots,k\}$ con probabilità $\theta_i$ dove $\sum_i \theta_i = 1$.\\
+Sequenza di $n$ lanci: \hl{distribuzione multinomiale}
+\begin{align*}
+    P(X^n=\alpha_i \mid \theta) = c_{\alpha_i}\prod_i \theta_i^{\alpha_i}
+\end{align*}
+dove $\alpha_i$ è il numero di $i$ nella sequenza e $c_{\overline{\alpha_i}}$ è una costante combinatoria che non dipende da $\theta$.
+\begin{align*}
+    \textbf{MLE}: \quad \theta_i = \frac{\alpha_i}{\sum_i \alpha_i} = \frac{\alpha_i}{n}
+\end{align*}
+\subsection{Classificazione documento}
+pagina 106
 \end{document}
