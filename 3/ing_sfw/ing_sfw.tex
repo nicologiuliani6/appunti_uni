@@ -12,6 +12,7 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{enumitem}
+\usepackage{needspace}
 \usepackage[most]{tcolorbox}
 
 % --- Carte Essence (Alpha State Cards), estratte dal PDF ufficiale ---
@@ -44,6 +45,7 @@
 \date{}
 
 
+\usetikzlibrary{shapes.multipart,positioning,arrows.meta,calc}
 \begin{document}
 
 \maketitle
@@ -814,6 +816,7 @@ $\left.\begin{array}{l}
   \text{8. Statechart Diagram}\\
   \text{9. Activity Diagram}
 \end{array}\right\}$ \textbf{\textcolor{green!50!black}{Behavioral Diagrams}}
+\Needspace{22\baselineskip}
 \subsubsection{Modellazione concetto OO}
 Obbiettivo: capire il contesto operazionale del sistma (OO context analysis), capire i requisiti reali del sistema (OO requirementi analysis).\\
 \paragraph{Use case} Un \texttt{Use case description} e' uno scenario che descrive un utilizzo di un sistema. Include un \textbf{diagramma} con attori che rappresentao ruoli o dispositivi; una descrizione testuale della sequenza delle attivita'.
@@ -840,6 +843,7 @@ Interazione tipica tra attori e il sitema, processa a soddisfare il bisogno degl
 \end{figure}
 \paragraph{Attori} Ruoli che gli utenti fanno nel sisytema, gli attori applicano gli use case. Gli attori non devono per forza essere umani, e possono ricevere ricompensa in caso di partecipazione.\\
 \paragraph{Relazioni estese} Un use case puo' estendere un altro use case, aggiungendo funzionalita' opzionali.\\
+\Needspace{10\baselineskip}
 \paragraph{Relazioni include} Un use case puo' includere un altro o piu' use case.\\
 \begin{center}
 \begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
@@ -856,7 +860,254 @@ l'attore è collegato allo use case "base"
 \end{center}
 \paragraph{Descrizione testuale} Step by step delle interazione tra attori e use case (corto, preciso)\\
 \subsubsection{Analisi OO}
-pagi 65
+L'OOA possiamo definirla come:
+\begin{itemize}
+  \item estrarre le classi candidate
+  \item stabilire le relazioni di base tra le classi
+  \item definire una gerarchia di classi
+  \item identificare gli attributi di ogni classe
+  \item specificare i metodi che operano sugli attributi
+  \item indicare come classi/oggetti sono in relazione
+  \item costruire un modello comportamentale
+  \item iterare sui primi cinque passi
+\end{itemize}
+\paragraph{Diagrama classe} Ovviamento è centrale nei modelli OO, mostrano la struttura statica del sistema (tipi degli oggetti, relazioni come associazione, sottotipi e dipendenze)\\
+\paragraph{3 punti di vista}
+\begin{itemize}
+  \item Concettuale (OOA)
+  \begin{itemize}
+    \item Mostra i concetti del dominio
+    \item Indipendente dall'implementazione
+  \end{itemize}
+  \item Specifica (OOD)
+  \begin{itemize}
+    \item Struttura generale del sistema in esecuzione
+    \item Interfacce del software (tipi)
+  \end{itemize}
+  \item Implementazione (OOP)
+  \begin{itemize}
+    \item Dettagli dell'implementazione
+    \item Molto spesso l'unico utilizzato
+  \end{itemize}
+\end{itemize}
+Una \textbf{classe} definisce un insieme di oggetti, e definisce \textit{nome, attributi e operazioni}.
+\Needspace{8\baselineskip}
+\paragraph{Classi vs tipi}
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Tipo} & \textbf{Classe} \\
+\hline
+protocollo compreso da un oggetto
+& costrutto orientato all'implementazione \\
+\hline
+insieme delle operazioni utilizzate
+& implementa uno o più tipi \\
+\hline
+\end{tabular}
+\end{center}
+\vspace{1px}
+Definiamo \textbf{associazione} una relazione tra instanze di una classe.
+\Needspace{14\baselineskip}
+\paragraph{Classi e diagrammi} One classe può far parte di diversi diagrammi. Questi dovrebbero illustrale specifici aspetti, quindi omettere attributi/operazioni irrilevanti.
+\begin{center}
+\begin{tikzpicture}[
+  classe/.style={draw, rectangle split, rectangle split parts=3,
+                 rectangle split part align={center,left,left},
+                 align=left, font=\sffamily, inner sep=4pt},
+  nota/.style={font=\itshape},
+  freccia/.style={-{Stealth}, thin}]
+  \node[classe] (order) {Order
+    \nodepart{two}dateReceived\\isPrepaid\\number: String\\price: Money
+    \nodepart{three}dispatch()};
+  \node[classe, right=6cm of order] (customer) {Customer
+    \nodepart{two}name\\address
+    \nodepart{three}creditRating()};
+  \draw (order.east) -- (customer.west)
+    node[pos=0.42, above, font=\sffamily] (nome) {hasCustomer}
+    node[pos=0.72, above=-1pt] (dir) {$\blacktriangleright$}
+    node[pos=0.06, below, font=\sffamily] (m1) {*}
+    node[pos=0.94, below, font=\sffamily] (m2) {1};
+  \node[nota, above left=1.1cm and -1cm of nome] (nnome) {Nome dell'associazione};
+  \node[nota, above right=1.1cm and -1cm of dir] (ndir) {Direzione dell'associazione};
+  \node[nota] (nmol) at ($(m1)!0.5!(m2)+(0,-1.7)$) {Molteplicità di ogni estremo};
+  \draw[freccia] (nnome) -- (nome);
+  \draw[freccia] (ndir) -- (dir);
+  \draw[freccia] (nmol) -- (m1);
+  \draw[freccia] (nmol) -- (m2);
+\end{tikzpicture}
+\end{center}
+Un ordine viene da un cliente, ma un cliente può avere molti ordini.
+\Needspace{14\baselineskip}
+\paragraph{Ruoli} Una associazione ha 2 ruoli, un ruole è una direzione sulla associazione. Un ruolo ha una etichetta esplicita o implicita dentro il nome della classe target.\\
+Un ruolo indica una estremità della associazione:
+\begin{center}
+\begin{tikzpicture}[
+  classe/.style={draw, rectangle split, rectangle split parts=2,
+                 rectangle split part align={center,left},
+                 align=left, font=\sffamily, inner sep=4pt}]
+  \node[classe] (company) {\textbf{Company}
+    \nodepart{two}Name\\Address};
+  \node[classe, right=7cm of company] (person) {\textbf{Person}
+    \nodepart{two}Name\\Insurance no.\\Address};
+  \draw (company.east) -- (person.west)
+    node[pos=0.28, above=-1pt] {$\blacktriangleleft$}
+    node[pos=0.45, above, font=\itshape] {Works for}
+    node[pos=0.95, above, font=\sffamily] {*}
+    node[pos=0.13, below, font=\sffamily] {employer}
+    node[pos=0.86, below, font=\sffamily] {employee};
+\end{tikzpicture}
+\end{center}
+\underline{Il nome del ruolo è obbligatorio per una associazione tra due oggetti della stessa classe}
+\begin{center}
+\begin{tikzpicture}[
+  classe/.style={draw, rectangle split, rectangle split parts=2,
+                 rectangle split part align={center,left},
+                 align=left, font=\sffamily, inner sep=4pt}]
+  \node[classe] (person) {\textbf{Person}
+    \nodepart{two}Name\\Insurance no.\\Address};
+  \coordinate (a) at ($(person.west)+(0,0.15)$);
+  \coordinate (b) at ($(person.south)+(0.6,0)$);
+  \draw (a) -- ++(-3,0) coordinate (c) |- ($(b)+(0,-1)$) -- (b);
+  \node[above, font=\sffamily] at ($(a)!0.35!(c)$) {Manager};
+  \node[left, font=\sffamily, align=center] at ($(c)+(0,-1.1)$) {Supervises\\$\blacktriangledown$};
+  \node[right, font=\sffamily] at ($(b)+(0,-0.6)$) {Salesperson};
+\end{tikzpicture}
+\end{center}
+\Needspace{14\baselineskip}
+\paragraph{Molteplicità} Indicano quanti oggetti possono partecipare in una
+\begin{center}
+\begin{tikzpicture}[
+  classe/.style={draw, rectangle split, rectangle split parts=3,
+                 rectangle split part align={center,left,left},
+                 align=left, font=\sffamily, inner sep=4pt}]
+  \node[classe] (order) {Order
+    \nodepart{two}dateReceived\\isPrepaid\\number: String\\price: Money
+    \nodepart{three}dispatch()};
+  \node[classe, right=6cm of order] (customer) {Customer
+    \nodepart{two}name\\address
+    \nodepart{three}creditRating()};
+  \draw (order.east) -- (customer.west)
+    node[pos=0.06, below, font=\sffamily\bfseries\Large, text=red] {*}
+    node[pos=0.94, below, font=\sffamily\bfseries\Large, text=red] {1};
+\end{tikzpicture}
+\end{center}
+\Needspace{14\baselineskip}
+\paragraph{Navigabilità} indicata dalla freccia
+\begin{center}
+\begin{tikzpicture}[
+  classe/.style={draw, rectangle split, rectangle split parts=3,
+                 rectangle split part align={center,left,left},
+                 align=left, font=\sffamily, inner sep=4pt}]
+  \node[classe] (order) {Order
+    \nodepart{two}dateReceived\\isPrepaid\\number: String\\price: Money
+    \nodepart{three}dispatch()};
+  \node[classe, right=6cm of order] (customer) {Customer
+    \nodepart{two}name\\address
+    \nodepart{three}creditRating()};
+  \draw (order.east) -- ($(order.east)!0.6!(customer.west)$) coordinate (m);
+  \draw[red, line width=2pt, -{Straight Barb[length=8pt, width=14pt]}] (m) -- (customer.west);
+\end{tikzpicture}
+\end{center}
+Dall'ordine dobbiamo poter capire chi è il cliente, il cliente però non sa tutti gli ordini.\\
+\vspace{1px}
+\Needspace{12\baselineskip}
+\paragraph{Associazione bi-direzionale} Navigabilità in entrambe le direzioni.
+\begin{center}
+\begin{tikzpicture}[
+  classe/.style={draw, rectangle split, rectangle split parts=2,
+                 rectangle split part align={center,left},
+                 align=left, font=\rmfamily, inner sep=4pt}]
+  \node[classe, minimum width=2.6cm] (user) {\textbf{User}
+    \nodepart{two}\phantom{x}\\[1.2ex]\phantom{x}};
+  \node[classe, right=7cm of user, minimum width=3.2cm] (ws) {\textbf{Workstation}
+    \nodepart{two}\phantom{x}\\[2ex]\phantom{x}\\[1ex]\phantom{x}};
+  \draw[thick] (user.north east) ++(0,-0.35) coordinate (l) -- (l -| ws.west) coordinate (r);
+  \coordinate (mid) at ($(l)!0.5!(r)$);
+  \node[font=\itshape, above] at ($(mid)+(-0.4,0)$) {Authorized on};
+  \node[above, inner sep=1pt] at ($(mid)+(1.1,0.02)$) {$\blacktriangleright$};
+  \node[classe, rectangle split parts=3, rectangle split part align={center,left,left}, below=1.6cm of mid] (auth) {\textbf{Authorization}
+    \nodepart{two}Priority\\Access rights
+    \nodepart{three}Start session};
+  \draw[thick, dotted] (mid) -- (auth.north);
+  \node[draw, font=\rmfamily\bfseries, below=1cm of auth, inner sep=4pt] (dir) {Directory};
+  \draw[thick] (auth.south) -- (dir.north);
+\end{tikzpicture}
+\end{center}
+\Needspace{16\baselineskip}
+\paragraph{Classi e oggetti} Come abbiamo detto prima le classi definiscono una struttura a gruppo su oggetti, definendo nomi, attriuti e operazioni
+\begin{center}
+\begin{tikzpicture}[
+  classe/.style={draw, rectangle split, rectangle split parts=3,
+                 rectangle split part align={center,left,left},
+                 align=left, font=\sffamily, inner sep=4pt},
+  ogg/.style={draw, rectangle split, rectangle split parts=2,
+              rectangle split part align={center,left},
+              align=left, font=\sffamily\small, inner sep=3pt},
+  inst/.style={dashed, -{Straight Barb[length=6pt, width=8pt]}},
+  lab/.style={font=\rmfamily\small}]
+  \node[classe] (task) {Task
+    \nodepart{two}startDate : Date = 1.1.98\\endDate : Date = 1.1.98
+    \nodepart{three}setStartDate (d : Date = default)\\setEndDate (d : Date = default)};
+  \node[ogg, below left=3.4cm and -2.5cm of task.south] (a1) {\underline{Assignment 1: Task}\strut
+    \nodepart{two}startDate = 1.2.98\\endDate = 23.2.98};
+  \node[ogg, right=1.6cm of a1, yshift=0.3cm] (a2) {\underline{Assignment 2: Task}\strut
+    \nodepart{two}startDate = 1.2.98\\endDate = 23.2.98};
+  \node[ogg, right=1.6cm of a2, yshift=0.3cm] (a3) {\underline{Assignment 3: Task}\strut
+    \nodepart{two}startDate = 1.2.98\\endDate = 23.2.98};
+  \draw[inst] (a1.north) -- (a1.north |- task.south) node[midway, left, lab] {$\ll$instanceOf$\gg$};
+  \draw[inst] (a2.north) -- ($(task.south west)!0.7!(task.south east)$) node[midway, below right=-2pt, lab] {$\ll$instanceOf$\gg$};
+  \draw[inst] (a3.north) -- ($(task.south west)!0.95!(task.south east)$) node[midway, above right, lab] {$\ll$instanceOf$\gg$};
+  \node[anchor=north west, font=\rmfamily, align=left, text width=6cm] at ($(task.north east)+(1.8,0)$)
+    {Gli oggetti mostrano:\\[1.2ex]
+     \hspace*{1em}$\bullet$ nome dell'oggetto\\[0.8ex]
+     \hspace*{1em}$\bullet$ nome della classe (opz.)\\[0.8ex]
+     \hspace*{1em}$\bullet$ valore degli attributi (opz.)};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Esempio: Classe vs Oggetti}
+\Needspace{24\baselineskip}
+\begin{center}
+\begin{tikzpicture}[
+  b/.style={draw, font=\sffamily, inner sep=4pt, minimum width=3cm, align=center},
+  o/.style={b, font=\sffamily},
+  agg/.style={{Diamond[open, length=10pt, width=6pt]}-}]
+  % diagramma delle classi
+  \node[b] (sp) at (0,0) {Salesperson};
+  \node[b] (or) at (7,0) {Order};
+  \node[b] (li) at (13.5,0) {Line};
+  \node[b] (ci) at (7,-1.7) {CustInfo};
+  \draw (sp.east) -- (or.west)
+    node[pos=0.4, above, font=\sffamily\bfseries\small] {Generates}
+    node[pos=0.85, above=-1pt] {$\blacktriangleright$}
+    node[pos=0.93, below=-1pt] {$\star$};
+  \draw[agg] (or.east) -- (li.west) node[pos=0.93, below=-1pt] {$\star$};
+  \draw[agg] (or.south) -- (ci.north);
+  \node[anchor=west] at (-1.4,-1.7) {Diagramma delle classi:};
+  \draw (-1.6,-2.6) -- (15.2,-2.6);
+  % diagrammi degli oggetti
+  \node[o] (cc) at (0,-3.5) {\underline{curtisClyde:}};
+  \node[o] (o1) at (7,-3.5) {\underline{order121:}};
+  \node[o] (af) at (7,-4.9) {\underline{ace furniture:}};
+  \node[o] (o2) at (7,-7.1) {\underline{order122:}};
+  \node[o] (ha) at (7,-8.5) {\underline{harmon assoc:}};
+  \node[o] (l1) at (13.5,-3.5) {\underline{line1:}};
+  \node[o] (l2) at (13.5,-4.6) {\underline{line2:}};
+  \node[o] (l3) at (13.5,-5.7) {\underline{line3:}};
+  \node[o] (l4) at (13.5,-6.8) {\underline{line4:}};
+  \node[o] (m1) at (13.5,-8.0) {\underline{line1:}};
+  \node[o] (m2) at (13.5,-9.1) {\underline{line2:}};
+  \draw (cc.east) -- (o1.west);
+  \draw (cc.south east) -- (o2.west);
+  \draw (o1.south) -- (af.north);
+  \draw (o2.south) -- (ha.north);
+  \foreach \t in {l1,l2,l3,l4} \draw (o1.east) -- (\t.west);
+  \foreach \t in {m1,m2} \draw (o2.east) -- (\t.west);
+  \node[anchor=west] at (-1.4,-6.0) {Diagrammi degli oggetti:};
+\end{tikzpicture}
+\end{center}
+\paragraph{Attributi}
 
 
 \newpage
