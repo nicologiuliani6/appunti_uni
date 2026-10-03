@@ -16,7 +16,7 @@
 \usepackage{array}            % tabelle
 \usepackage{xcolor}
 \usepackage{tikz}             % disegni e alberi
-\usetikzlibrary{positioning,arrows.meta,shapes.geometric}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,decorations.pathreplacing,calc}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 
@@ -65,6 +65,8 @@
 }
 
 % Evidenziatura usata nelle slide
+\usepackage[normalem]{ulem}
+\renewcommand{\underline}[1]{\uline{#1}}   % sottolineato che va a capo (non esce dal margine)
 \newcommand{\hl}[1]{\textcolor{orange}{#1}}
 
 % --- Albero di decisione di esempio (Play Tennis) ----------------------------
@@ -934,5 +936,145 @@ dove $\alpha_i$ è il numero di $i$ nella sequenza e $c_{\overline{\alpha_i}}$ �
     \textbf{MLE}: \quad \theta_i = \frac{\alpha_i}{\sum_i \alpha_i} = \frac{\alpha_i}{n}
 \end{align*}
 \subsection{Classificazione documento}
-pagina 106
+L'evento $X_i$ = \underline{$i$-esima parola nel documento}: una \textbf{variabile aleatoria discreta} che assume tanti valori quante sono le parole del linguaggio.
+\begin{align*}
+    \theta_{i,word,\ell} = P(X_i = word \mid Y=\ell)
+\end{align*}
+è la probabilità che, in un documento della categoria ``$\ell$'', la parola ``$word$'' appaia nella posizione ``$i$''.\\
+\vspace{1px}\\
+Assumiamo che tutti gli eventi siano indipendenti e che abbiano una distribuzione indipendente dalla posizione:
+\begin{align*}
+    \theta_{i,word,\ell} = \theta_{j,word,\ell} = \theta_{word,\ell}
+\end{align*}
+Sono le ipotesi del Naïve Bayes multinomiale: entrambe sono semplificazioni (le parole non sono davvero indipendenti e la loro probabilità dipende dalla posizione), ma servono a ridurre i parametri a uno per parola e per classe.
+\paragraph{Training e classificazione} Variabili aleatorie discrete $X_i$, $Y$.\\
+\vspace{1px}\\
+\textbf{Training}
+\begin{itemize}
+    \item per ogni possibile valore $y_k$ di $Y$ stimiamo
+    \begin{align*}
+        \pi_k = P(Y=y_k)
+    \end{align*}
+    \item per ogni possibile valore $x_{ij}$ dell'attributo $X_i$ stimiamo
+    \begin{align*}
+        \theta_{ijk} = P(X_i=x_{ij} \mid Y=y_k)
+    \end{align*}
+\end{itemize}
+\textbf{Classificazione} di $a^{new}=\langle a_1,\dots,a_n\rangle$ (sequenza di parole)
+\begin{align*}
+    Y^{new} &= \arg\max_{y_k}\; P(Y=y_k)\cdot\prod_i P(X_i=a_i \mid Y=y_k)\\
+            &= \arg\max_{k}\; \pi_k\cdot\prod_i \theta_{ijk}
+\end{align*}
+dove $x_{ij}=a_i$.
+\subsubsection{Maximum likelihood estimates (MLE’s)}
+\begin{itemize}
+    \item $\pi_k = P(Y=y_k)$\\
+    frazione dei documenti nella categoria $y_k$
+    \item $\theta_{i,word,k} = \theta_{word,k} = P(X=word \mid Y=y_k)$\\
+    frequenza della parola ``$word$'' nei documenti della categoria $y_k$
+\end{itemize}
+\subsubsection{Log likelihood}
+Prima abbiamo parlato di classificazione $a^{new}=\langle a_1,\dots,a_n\rangle$ come
+\begin{align*}
+    Y^{new} &= \arg\max_{y_k}\; P(Y=y_k)\cdot\prod_i P(X_i=w_j \mid Y=y_k)\\
+            &= \arg\max_{k}\; \pi_k\cdot\prod_i \theta_{ijk}
+\end{align*}
+Pero' possiamo calcolarlo in \texttt{log}, che ci da qualche vantaggio numerico (arrotondiamo meno su \texttt{double} o \texttt{float}) e matematico grazie alle proprietà dei logatirmi $log(a \cdot b) = log(a)+log(b)$:
+\begin{align*}
+    Y^{new} &= \arg\max_{y_k}\; \log\left(P(Y=y_k)\cdot\prod_i P(X_i=w_j \mid Y=y_k)\right)\\
+            &= \arg\max_{k}\; \log(\pi_k) + \sum_i \log(\theta_{ijk})
+\end{align*}
+Inoltre, se $\theta_{ijk}=\theta_{i'jk}=\theta_{jk}$
+\begin{align*}
+    \underbrace{\sum_i \log(\theta_{ijk})}_{\text{sulle \textbf{posizioni} } i} = \underbrace{\sum_j n_j\cdot\log(\theta_{jk})}_{\text{sulle \textbf{parole} } j}
+\end{align*}
+dove $n_j$ è il numero di occorrenze della parola $w_j$ nel documento da classificare.\\
+\underline{La formula dice che puoi sommare per posizione oppure per parola distinta, e il risultato è lo stesso.}
+\subsubsection{Prodotto scalare, correlation, Cosine similarity}
+Consideriamo vettori della dimensione del vocabolario, cioè ogni parola è una dimensione diversa.\\
+\vspace{1px}\\
+\textbf{Training}\\
+Per ogni categoria $k$ costruiamo un vettore \textit{"spettrale"} (non centra con il teorema spettrale. \underline{Il vettore spettrale di una categoria è la "carta d'identità" di quella categoria.} Per ogni parola dice quanto quella parola è tipica della categoria.)
+\begin{align*}
+    \vec{s}_k = \langle \log(\theta_{jk})\rangle_{j\in words}
+\end{align*}
+dove $\theta_{jk}$ = frequenza della parola $j$ nei documenti della categoria $k$.\\
+\vspace{1px}\\
+Dato un nuovo documento, calcoliamo il vettore \textit{"dei conteggi"} (\underline{Il vettore dei conteggi di un documento è la sua ``lista della spesa''.} Per ogni parola dice quante volte compare nel documento, $0$ se è assente.)
+\begin{align*}
+    \vec{d} = \langle n_j\rangle_{j\in words}
+\end{align*}
+e classifichiamo il documento come
+\begin{align*}
+    \arg\max_k \; \underbrace{\vec{d}\cdot \vec{s}_k}_{\textcolor{red}{\text{prodotto scalare}}} = \sum_j d_j\cdot s_{jk}
+\end{align*}
+\subsection*{Prodotto scalare, geometricamente e analiticamente}
+\paragraph{Definizione geometrica}\mbox{}\\
+\begin{minipage}[c]{0.55\textwidth}
+\begin{align*}
+    \vec{a}\cdot\vec{b} = \|\vec{a}\|\|\vec{b}\|\cos(\theta)
+\end{align*}
+dove $\theta$ è l'angolo tra i due vettori.\\
+\vspace{1px}\\
+Con $\|\vec{a}\|$ indichiamo la \textbf{norma euclidea} (la lunghezza) del vettore
+\begin{align*}
+    \|\vec{a}\| = \sqrt{\sum_i a_i^2} = \sqrt{\vec{a}\cdot\vec{a}}
+\end{align*}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.42\textwidth}
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}
+    \coordinate (O) at (0,0);
+    \coordinate (U) at (15:5);
+    \coordinate (A) at (55:3.5);
+    \coordinate (P) at (15:2.68);
+    \draw[-{Stealth[length=3mm]}, very thick, olive!70!black] (O) -- (U) node[above right] {$\vec{u}$};
+    \draw[-{Stealth[length=3mm]}, very thick, blue!60!black] (O) -- (A) node[above left] {$\vec{a}$};
+    \draw[thin] (A) -- (P);
+    \draw[thin] ($(P)+(105:0.25)$) -- ($(P)+(105:0.25)+(15:-0.25)$) -- ($(P)+(15:-0.25)$);
+    \draw (15:1) arc (15:55:1);
+    \node at (35:1.3) {$\theta$};
+    \draw[decorate,decoration={brace,mirror,amplitude=6pt}] (O) -- (P)
+        node[midway,below=8pt,sloped] {\small $\vec{a}\cdot\vec{u}=\|\vec{a}\|\cos\theta$};
+\end{tikzpicture}}
+\end{minipage}
+\paragraph{Definizione analitica} Dati $\vec{a}=(a_1,a_2,\dots,a_n)$ e $\vec{b}=(b_1,b_2,\dots,b_n)$
+\begin{align*}
+    \vec{a}\cdot\vec{b} = \sum_{i=1}^{n} a_i b_i
+\end{align*}
+\underline{La }\hl{\underline{cosine similarity}}\underline{ tra $\vec{a}$ e $\vec{b}$ è il prodotto scalare normalizzato rispetto alla lunghezza (magnitudine) dei due vettori:}
+\begin{align*}
+    S_C(\vec{a},\vec{b}) = \frac{\vec{a}\cdot\vec{b}}{\|\vec{a}\|\|\vec{b}\|} = \cos(\theta)
+\end{align*}
+\textit{Dimostrazione:} dal teorema del coseno si ricava $\vec{a}\cdot\vec{b}=\frac{\|\vec{a}\|^2+\|\vec{b}\|^2-\|\vec{a}-\vec{b}\|^2}{2}$; sviluppando i quadrati i termini $a_i^2$ e $b_i^2$ si cancellano e resta $\sum_i a_ib_i$, quindi le due definizioni coincidono.
+\subsection{La natura lineare di Naïve Bayes (caso booleano)}
+$X_i$, $Y$ \textcolor{red}{booleane}\\
+\vspace{1px}\\
+Classificazione di $\vec{x}=\langle x_1,\dots,x_n\rangle$ (vediamo se rientra piu' in $Y=0$ oppure $Y=1$):
+\begin{align*}
+    \frac{P(Y=1\mid X_1\dots X_n=\vec{x})}{P(Y=0\mid X_1\dots X_n=\vec{x})} = \frac{P(Y=1)\prod_i P(X_i=x_i\mid Y=1)}{P(Y=0)\prod_i P(X_i=x_i\mid Y=0)} \geq 1
+\end{align*}
+Passando ai logaritmi (per vantaggi matematici come prima)
+\begin{align*}
+    \log\frac{P(Y=1)}{P(Y=0)} + \sum_i \log\frac{P(X_i=x_i\mid Y=1)}{P(X_i=x_i\mid Y=0)} \geq 0
+\end{align*}
+Usiamo il fatto che per una funzione booleana $f(x)$ vale
+\begin{align*}
+    f(x) = x\cdot f(1) + (1-x)\cdot f(0)
+\end{align*}
+Quindi, se $\theta_{ik}=P(X_i=1\mid y=k)$ (di conseguenza $P(X_i=0\mid y=k)=1-\theta_{ik}$), otteniamo
+\begin{align*}
+    \log\frac{P(Y=1)}{P(Y=0)} + \sum_i x_i\cdot\log\frac{\theta_{i1}}{\theta_{i0}} + \sum_i (1-x_i)\cdot\log\frac{1-\theta_{i1}}{1-\theta_{i0}} \geq 0
+\end{align*}
+che è un'espressione \hl{lineare} nell'insieme delle features $x_i$!
+\subsubsection{Classificazione lineare}
+Algoritmi di classificazione basati su una \hl{combinazione lineare} dei valori delle features.\\
+\vspace{1px}\\
+Ogni feature è valutata \hl{indipendentemente dalle altre} e contribuisce al risultato in modo lineare, con un opportuno peso (che è un parametro del modello, da stimare).\\
+\vspace{1px}\\
+Ad esempio, se le features sono i pixel di un'immagine, possiamo usare metodi lineari solo a meno di una \hl{normalizzazione} (in posizione e dimensione) dell'oggetto da riconoscere.
+\subsection{Gaussian Naïve Bayes}
+pag 119
 \end{document}
