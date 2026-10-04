@@ -16,9 +16,32 @@
 \usepackage[most]{tcolorbox}
 
 % --- Carte Essence (Alpha State Cards), estratte dal PDF ufficiale ---
+\definecolor{opVis}{HTML}{E00000}
+\definecolor{opName}{HTML}{0000C8}
+\definecolor{opPar}{HTML}{2E6B00}
+\definecolor{opRet}{HTML}{6B3A00}
+\definecolor{opPub}{HTML}{2E8B2E}
+\definecolor{opProt}{HTML}{F0A040}
 \definecolor{areaCustomer}{HTML}{2E8B57}   % verde  - Customer
 \definecolor{areaSolution}{HTML}{B8860B}   % giallo - Solution
 \definecolor{areaEndeavor}{HTML}{3A6BBF}   % blu    - Endeavor
+
+% --- diagrammi ereditarietà multipla (prima/dopo) ---
+\newcommand{\trib}[3][white]{\draw[fill=#1] (#2,#3) -- ++(-0.2,-0.35) -- ++(0.4,0) -- cycle;}
+\newcommand{\trid}[2]{\draw[fill=blue!50] (#1,#2) -- ++(-0.2,0.35) -- ++(0.4,0) -- cycle;}
+\newcommand{\treeBefore}[5]{%
+  \node[cl] (v) at (4,5) {vehicle};
+  \node[cl] (l) at (1.5,2.4) {#1};
+  \node[cl] (w) at (6.5,2.4) {#2};
+  \node[cl] (c) at (0,-0.2) {#3};
+  \node[cl, minimum height=1.1cm] (a) at (3.4,-0.3) {#4};
+  \node[cl] (s) at (7,-0.2) {#5};
+  \draw (4,4.55) -- (4,4.0); \trib[black]{4}{4.0}
+  \draw (1.5,2.85) -- (1.5,3.65) -- (6.5,3.65) -- (6.5,2.85);
+  \draw (1.5,1.95) -- (1.5,1.5); \trib{1.5}{1.5}
+  \draw (0,0.25) -- (0,1.15) -- (2.9,1.15) -- (2.9,0.25);
+  \draw (6.5,1.95) -- (6.5,1.5); \trib{6.5}{1.5}
+  \draw (3.9,0.25) -- (3.9,1.15) -- (7,1.15) -- (7,0.25);}
 
 \newcommand{\cardcolor}{areaCustomer}
 \newcommand{\setarea}[1]{\renewcommand{\cardcolor}{#1}}
@@ -1108,7 +1131,505 @@ Dall'ordine dobbiamo poter capire chi è il cliente, il cliente però non sa tut
 \end{tikzpicture}
 \end{center}
 \paragraph{Attributi}
-pag 92
+\begin{itemize}
+  \item \textbf{Conceptual}: indicates that customer have names.
+  \item \textbf{Specification}: customer can tell you the name and set it.
+  \item \textbf{Implementation}: an instance variable is available.
+\end{itemize}
+\paragraph{Differenze attributi vs. associazione}
+\begin{itemize}
+  \item \textbf{Prospettiva concettuale}: non c'è molta differenza! Gli attributi sono
+        a valore singolo (0..1).
+  \item \textbf{Prospettiva di specifica/implementazione}:
+  \begin{itemize}
+    \item navigabilità dal tipo all'attributo;
+    \item l'attributo memorizza \emph{valori}, NON riferimenti: non c'è condivisione dei
+          valori degli attributi tra istanze diverse!
+    \item spesso memorizza oggetti semplici: numeri, stringhe, date, oggetti
+          \emph{Money}.
+  \end{itemize}
+\end{itemize}
+\paragraph{Operazioni}
+\begin{itemize}
+  \item Processi che una classe sa eseguire; corrispondono ai messaggi della classe.
+  \item \textbf{Livello concettuale}: le responsabilità principali.
+  \item \textbf{Livello di specifica}: i messaggi pubblici, cioè l'interfaccia della classe.
+  \item Normalmente non si mostrano le operazioni che manipolano gli attributi.
+\end{itemize}
+\paragraph{Sintassi UML per le operazioni}
+\begin{center}
+  {\color{opVis}\textit{visibilità}} {\color{opName}\textit{nome}}
+  {\color{opPar}\textit{(lista parametri)}} : {\color{opRet}\textit{tipo di ritorno}}\\[0.5ex]
+  es.\ {\color{opVis}\texttt{+}} {\color{opName}\texttt{assignAgent}}
+  {\color{opPar}\texttt{(a : Agent)}} : {\color{opRet}\texttt{Boolean}}
+\end{center}
+\begin{itemize}
+  \item {\color{opVis}\textbf{visibilità}}: {\color{opPub}\textbf{pubblica (\texttt{+})}},
+        {\color{opProt}\textbf{protetta (\texttt{\#})}},
+        {\color{opVis}\textbf{privata (\texttt{-})}};
+  \begin{itemize}
+    \item l'interpretazione dipende dal linguaggio;
+    \item non serve a livello concettuale.
+  \end{itemize}
+  \item {\color{opName}\textbf{nome}}: stringa;
+  \item {\color{opPar}\textbf{lista parametri}}: argomenti (stessa sintassi degli attributi);
+  \item {\color{opRet}\textbf{tipo di ritorno}}: specifica dipendente dal linguaggio.
+\end{itemize}
+\paragraph{Tipi di operazioni}
+\begin{itemize}
+  \item \textbf{Query}: restituisce un valore senza modificare lo stato interno della
+        classe.
+  \item \textbf{Modifier}: modifica lo stato interno.
+  \item Le query possono essere eseguite in qualsiasi ordine.
+  \item Messaggi di \emph{getting} e \emph{setting}:
+  \begin{itemize}
+    \item getting: query;
+    \item setting: modifier.
+  \end{itemize}
+\end{itemize}
+\paragraph{Aggregazione}
+\begin{itemize}
+  \item Forma speciale di associazione.
+  \item I componenti sono parti dell'oggetto aggregato: un'auto ha un motore e delle
+        ruote come sue parti.
+  \item L'aggregazione è transitiva.
+  \item Esempi tipici:
+  \begin{itemize}
+    \item esplosione delle parti (\emph{parts explosion});
+    \item struttura organizzativa di un'azienda.
+  \end{itemize}
+\end{itemize}
+\paragraph{Notazione per l'aggregazione} Un rombo vuoto dal lato dell'aggregato, oppure
+le parti disegnate dentro la classe aggregata:
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily, inner sep=4pt},
+  ag/.style={{Diamond[open,length=10pt,width=7pt]}-}]
+  \node[cl, minimum width=4cm] (A) at (0,2.2) {Class A};
+  \node[cl] (B) at (-1.2,0) {Class B};
+  \node[cl] (C) at (1.2,0) {Class C};
+  \draw[ag] ($(A.south)+(-1.2,0)$) -- (B.north);
+  \draw[ag] ($(A.south)+(1.2,0)$) -- (C.north);
+  \node[font=\sffamily] at (3.6,1.2) {oppure};
+  \node[draw, minimum width=3.8cm, minimum height=3.2cm] (BigA) at (6.6,1.1) {};
+  \node[font=\sffamily, anchor=north west] at (BigA.north west) {Class A};
+  \node[cl] at (6.9,1.6) {Class B};
+  \node[cl] at (6.9,0.4) {Class C};
+\end{tikzpicture}
+\end{center}
+\paragraph{Esempio di aggregazione}
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily, inner sep=4pt},
+  ag/.style={{Diamond[open,length=10pt,width=7pt]}-}, m/.style={font=\sffamily}]
+  \node[cl] (co) at (0,0) {Company};
+  \node[cl] (un) at (4.5,0) {Unit};
+  \node[cl] (de) at (9,0) {Department};
+  \node[cl] (gr) at (9,-2.2) {Group};
+  \node[cl] (em) at (0,-3) {Employee};
+  \draw[ag] (co.east) -- (un.west);
+  \draw[ag] (un.east) -- (de.west);
+  \draw[ag] (de.south) -- (gr.north);
+  \node[m, above] at ($(co.east)!0.85!(un.west)$) {*};
+  \node[m, above] at ($(un.east)!0.85!(de.west)$) {*};
+  \node[m, right] at ($(de.south)!0.7!(gr.north)$) {*};
+  \draw (co.south) -- (em.north);
+  \node[m, right] at ($(co.south)!0.85!(em.north)$) {*};
+  \node[right, align=left, font=\itshape] at ($(co.south)!0.4!(em.north)$)
+    {$\blacktriangle$\\works for};
+\end{tikzpicture}
+\end{center}
+\paragraph{Aggregazione e composizione}
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily, inner sep=4pt}, m/.style={font=\sffamily}]
+  \node[cl, minimum width=4.6cm] (po) at (2.3,3.2) {Polygon};
+  \node[cl] (pt) at (0.9,0) {Point};
+  \node[cl, rectangle split, rectangle split parts=2, align=center, minimum width=2cm,
+        rectangle split part align={center,left}] (gb) at (3.7,0)
+    {Graphics\\Bundle \nodepart{two}color\\texture};
+  \node[font=\itshape, above=2pt] at (po.north -| pt) {Aggregazione};
+  \node[font=\itshape, above=2pt] at (po.north -| gb) {Composizione};
+  \draw[{Diamond[open,length=10pt,width=7pt]}-] ($(po.south -| pt.north)$) -- (pt.north);
+  \node[m, anchor=west] at ($(po.south -| pt.north)+(0.15,-0.4)$) {1};
+  \node[m, anchor=west] at ($(pt.north)+(0.15,0.4)$) {3..*};
+  \node[m, anchor=east] at ($(pt.north)+(-0.15,0.4)$) {\{ordered\}};
+  \draw[{Diamond[length=10pt,width=7pt]}-{Stealth[length=7pt]}] ($(po.south -| gb.north)$) -- (gb.north);
+  \node[m, anchor=east] at ($(po.south -| gb.north)+(-0.15,-0.4)$) {1};
+  \node[m, anchor=west] at ($(gb.north)+(0.15,0.4)$) {1};
+\end{tikzpicture}
+\end{center}
+\textbf{Composizione}:
+\begin{itemize}
+  \item i componenti appartengono a un solo intero;
+  \item le parti vivono e muoiono con l'intero:
+  \begin{itemize}
+    \item cancellazione a cascata;
+    \item necessaria anche per le associazioni 1..1;
+  \end{itemize}
+  \item i giocatori possono essere aggregati per le Fiamme, MA non vengono eliminati
+        quando le Fiamme scompaiono.
+\end{itemize}
+\paragraph{Come riconoscere un'aggregazione} Associazione o aggregazione?
+\begin{itemize}
+  \item la descrizione «parte di» è corretta?
+  \item un'operazione sull'intero riguarda anche le parti?
+\end{itemize}
+\paragraph{Generalizzazione vs. estensione}\mbox{}\par\nopagebreak\smallskip\noindent\begin{minipage}[c]{0.45\linewidth}
+\begin{itemize}
+  \item Car
+  \begin{itemize}
+    \item Truck
+    \item Bus
+    \item Station wagon
+  \end{itemize}
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.52\linewidth}\centering
+\begin{tikzpicture}
+  \draw[-{Stealth[open]}, brown!60!black] (0,2.2) -- (0,0);
+  \draw[-{Stealth[open]}, brown!60!black] (2.9,0) -- (2.9,2.2);
+  \node[blue!70!black, font=\itshape\small, left] at (0,1.1) {Extension};
+  \node[blue!70!black, font=\itshape\small, right] at (2.9,1.1) {Generalization};
+\end{tikzpicture}
+\end{minipage}
+\begin{itemize}
+  \item Molte cose in comune.
+  \item Alcune differenze.
+\end{itemize}
+\paragraph{Concetto di generalizzazione}
+\begin{itemize}
+  \item Classe: definisce implicitamente un insieme di oggetti.
+  \begin{itemize}
+    \item $\mathrm{aCar} \in \mathrm{Car}$ = insieme di tutte le auto
+          (\emph{istanziazione});
+  \end{itemize}
+  \item Generalizzazione: relazione di sottoinsieme.
+  \begin{itemize}
+    \item $\mathrm{Truck} \subseteq \mathrm{Car}$ (\emph{generalizzazione}).
+  \end{itemize}
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[obj/.style={draw, fill=yellow!40, minimum width=0.45cm, minimum height=0.3cm}]
+  \draw[fill=red!65!black] (0,0) ellipse (4.2cm and 1.6cm);
+  \draw[fill=orange!80] (1.8,-0.1) ellipse (2.1cm and 1.0cm);
+  \node at (-2.5,0.6) {Car};
+  \node[red!60!black] at (3.4,-1.8) {Truck};
+  \node[obj] (m) at (-1.6,-0.5) {};
+  \node[obj] (f) at (1.5,0.3) {};
+  \node[obj] at (2.3,-0.1) {};
+  \node[obj] at (3.1,-0.1) {};
+  \node[obj] at (1.4,-0.6) {};
+  \node[red!60!black] (am) at (-3.8,-2.1) {aMercedes};
+  \node[red!60!black] (af) at (3.6,2.0) {aFordTruck};
+  \draw[-{Stealth}, thick] (am) -- (m);
+  \draw[-{Stealth}, thick] (af) -- (f);
+\end{tikzpicture}
+\end{center}
+\paragraph{Diagramma delle classi con ereditarietà}
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily, inner sep=5pt, minimum width=2.4cm, minimum height=0.9cm},
+  gen/.style={-{Triangle[open,length=10pt,width=9pt]}}]
+  \node[cl] (mv) at (3.5,4.4) {Motor vehicle};
+  \node[cl, minimum width=4.4cm] (car) at (1.2,2.4) {Car};
+  \node[cl] (tr) at (6,2.4) {Truck};
+  \node[cl] (me) at (-0.2,0) {Mercedes};
+  \node[cl] (fo) at (2.6,0) {Ford};
+  \node[cl] (my) at (6,-1.6) {\underline{myFordEscort}};
+  \draw[gen] (car.north) -- (mv.south west);
+  \draw[gen] (tr.north) -- (mv.south east);
+  \draw[gen] (me.north) -- (me.north |- car.south);
+  \draw[gen] (fo.north) -- (fo.north |- car.south);
+  \draw[dashed, -{Stealth[open]}] (fo.south east) -- (my.north west)
+    node[midway, above right, font=\small] {$\ll$instantiate$\gg$};
+\end{tikzpicture}
+\end{center}
+\paragraph{Come definire le classi (rivisto)}
+\begin{itemize}
+  \item Cercare i nomi (\emph{nouns}) nei casi d'uso.
+  \item Definire una classe per ogni nome (e aggiungerne altre).
+  \item Documentare l'insieme di regole che determina l'insieme di oggetti appartenenti
+        alla classe.
+  \item Aggiungere associazioni per modellare le relazioni.
+  \item Pensare alla relazione di sottoinsieme per costruire le generalizzazioni\dots
+\end{itemize}
+\paragraph{A quale classe appartiene un oggetto?}
+\begin{itemize}
+  \item Definizione dell'appartenenza a una classe:
+  \begin{itemize}
+    \item \textbf{implicita, tramite regole}:
+    \begin{itemize}
+      \item le regole definiscono la condizione per essere membro della classe;
+      \item valori degli attributi disponibili $\Rightarrow$ la classe può essere
+            determinata;
+      \item logica terminologica dell'IA (\emph{subsumption}, \emph{classifier});
+    \end{itemize}
+    \item \textbf{esplicita, per enumerazione}:
+    \begin{itemize}
+      \item l'istanziazione definisce l'appartenenza alla classe;
+      \item problema: vietare le operazioni che violano le restrizioni.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+\paragraph{Cambiare classe}
+\begin{itemize}
+  \item UML dà a un oggetto la possibilità di cambiare dinamicamente la propria classe
+        (usando lo stereotipo \emph{type}).
+  \item In C++ e Java ciò si ottiene avendo una classe base comune e cambiando poi gli
+        oggetti puntati/referenziati tramite costruttori adeguati.
+\end{itemize}
+\paragraph{Generalizzazione: estensione e restrizione}
+\begin{itemize}
+  \item Attributi e operazioni di una classe antenata sono ereditati dalla sottoclasse.
+  \item \textbf{Estensione}: aggiunta di nuovi attributi o operazioni.
+  \item \textbf{Restrizione}: restrizioni aggiuntive sugli attributi dell'antenata.
+  \begin{itemize}
+    \item cerchio = ellisse con gli assi della stessa lunghezza;
+    \item attenzione: la modifica arbitraria della dimensione di un asse del cerchio può
+          violare la restrizione.
+  \end{itemize}
+\end{itemize}
+\paragraph{Prospettive}
+\begin{itemize}
+  \item \textbf{Conceptual}: relazione di sottoinsieme.
+  \item \textbf{Specification}: il sottotipo è conforme all'interfaccia del supertipo.
+  \item \textbf{Implementation}: ereditarietà di implementazione, \emph{subclassing}.
+\end{itemize}
+{\color{magenta}\textbf{ATTENZIONE}}: non creare sottoclassi quando il livello concettuale
+non lo supporta; usare invece l'aggregazione. (Uno \emph{stack} \underline{\textbf{\color{red}non}}
+è una lista con qualche \emph{overriding}!)
+\Needspace{16\baselineskip}
+\paragraph{Ereditarietà multipla} La classe eredita caratteristiche da più superclassi.
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily\bfseries\small, inner sep=5pt, align=center,
+    minimum height=0.9cm, minimum width=2cm}]
+  \def\tri#1#2{\draw[fill=white] (#1,#2) -- ++(-0.2,-0.35) -- ++(0.4,0) -- cycle;}
+  \node[cl] (v) at (4,5) {vehicle};
+  \node[cl] (l) at (1.5,2.4) {land vehicle};
+  \node[cl] (w) at (6.5,2.4) {water vehicle};
+  \node[cl] (c) at (0,-0.2) {car};
+  \node[cl, minimum height=1.1cm] (a) at (3.4,-0.3) {amphibian\\vehicle};
+  \node[cl] (s) at (7,-0.2) {ship};
+  \draw (4,4.55) -- (4,4.0); \tri{4}{4.0}
+  \draw (1.5,2.85) -- (1.5,3.65) -- (6.5,3.65) -- (6.5,2.85);
+  \draw (1.5,1.95) -- (1.5,1.5); \tri{1.5}{1.5}
+  \draw (0,0.25) -- (0,1.15) -- (2.9,1.15) -- (2.9,0.25);
+  \draw (6.5,1.95) -- (6.5,1.5); \tri{6.5}{1.5}
+  \draw (3.9,0.25) -- (3.9,1.15) -- (7,1.15) -- (7,0.25);
+\end{tikzpicture}
+\end{center}
+\paragraph{Ereditarietà virtuale}
+\begin{itemize}
+  \item \texttt{class ItemToSell \{ double price; \};}
+  \item \texttt{class EducationalTool : {\color{red}virtual} public ItemToSell \{ \};}
+  \item \texttt{class Book : {\color{red}virtual} public ItemToSell \{ \};}
+  \item \texttt{class TextBook : public EducationalTool, public Book \{ \};}
+\end{itemize}
+\paragraph{Discussione sull'ereditarietà multipla}
+\begin{itemize}
+  \item \textbf{Vantaggi}:
+  \begin{itemize}
+    \item più vicina al modo di pensare umano;
+    \item maggiore flessibilità nella specifica delle classi;
+    \item maggiori possibilità di riuso.
+  \end{itemize}
+  \item \textbf{Svantaggi}:
+  \begin{itemize}
+    \item perdita di chiarezza $\Rightarrow$ quale metodo viene eseguito?
+    \item implementazione più complicata;
+    \item è necessaria una risoluzione dei conflitti per le caratteristiche ereditate
+          più volte.
+  \end{itemize}
+\end{itemize}
+\paragraph{Evitare l'ereditarietà multipla}
+\begin{itemize}
+  \item Fondamentalmente: una questione di implementazione.
+  \item Spesso il modo più semplice è ristrutturare il modello.
+  \item Tecniche di ristrutturazione:
+  \begin{itemize}
+    \item delegazione e aggregazione;
+    \item ereditarietà basata sulla caratteristica più importante e delegazione del
+          resto;
+    \item generalizzazione basata su dimensioni diverse.
+  \end{itemize}
+\end{itemize}
+\paragraph{Delegazione e aggregazione}
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily\bfseries\small, inner sep=5pt, align=center,
+    minimum height=0.9cm, minimum width=2cm}]
+  \begin{scope}[scale=0.75, transform shape]
+    \treeBefore{land vehicle}{water vehicle}{car}{amphibian\\vehicle}{ship}
+  \end{scope}
+  \fill[red] (6.2,1.4) -- (6.7,1.4) -- (7.1,2.3) -- (6.7,3.2) -- (6.2,3.2) -- (6.6,2.3) -- cycle;
+  \begin{scope}[xshift=7.6cm, scale=0.75, transform shape]
+    \node[cl] (v) at (3,5) {vehicle};
+    \node[cl] (lf) at (0.2,1.5) {LandFeature};
+    \node[cl] (wf) at (6,1.5) {WaterFeature};
+    \node[cl] (vf) at (3,-1.2) {VehicleFeature};
+    \draw[{Diamond[length=14pt,width=10pt,fill=blue!50]}-] (2,4.55) -- (lf.north);
+    \draw[{Diamond[length=14pt,width=10pt,fill=blue!50]}-] (4,4.55) -- (wf.north);
+    \draw (lf.south) -- ++(0,-0.7) -| (wf.south);
+    \trid{3}{0}
+    \draw (3,0) -- (vf.north);
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\paragraph{Caratteristica più importante e aggregazione}
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily\bfseries\small, inner sep=5pt, align=center,
+    minimum height=0.9cm, minimum width=2cm}]
+  \begin{scope}[scale=0.75, transform shape]
+    \treeBefore{land vehicle}{big vehicle}{car}{train}{ship}
+  \end{scope}
+  \fill[red] (6.2,1.4) -- (6.7,1.4) -- (7.1,2.3) -- (6.7,3.2) -- (6.2,3.2) -- (6.6,2.3) -- cycle;
+  \begin{scope}[xshift=7.6cm, scale=0.75, transform shape]
+    \node[cl] (v) at (3,5.5) {vehicle};
+    \node[cl] (l) at (3,3.5) {land vehicle};
+    \node[cl] (c) at (1,1.2) {car};
+    \node[cl] (t) at (5,1.2) {train};
+    \node[cl] (z) at (5,-1.8) {Size};
+    \draw (3,5.05) -- (3,4.6); \trib{3}{4.6}
+    \draw (3,3.05) -- (3,2.5); \trib{3}{2.5}
+    \draw (1,1.65) -- (1,2.15) -- (5,2.15) -- (5,1.65);
+    \draw[{Diamond[length=14pt,width=10pt,fill=blue!50]}-, thick] (t.south) -- (z.north);
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\paragraph{Generalizzazione basata su dimensioni diverse}
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily\bfseries\small, inner sep=5pt, align=center,
+    minimum height=0.9cm, minimum width=2cm}]
+  \node[cl] (v) at (4.5,6.6) {vehicle};
+  \node[cl] (l) at (3.7,4.4) {land vehicle};
+  \node[font=\bfseries] at (7.8,4.3) {. . . . . . . .};
+  \node[cl] (c) at (1.2,2.2) {car};
+  \node[cl] (t) at (6.2,2.2) {train};
+  \node[cl] (sc) at (0,0) {small car};
+  \node[cl] (bc) at (2.4,0) {big car};
+  \node[cl] (st) at (5.0,0) {small train};
+  \node[cl] (bt) at (7.5,0) {big train};
+  \draw (4.5,6.15) -- (4.5,5.6); \trib{4.5}{5.6}
+  \draw (3.7,4.85) -- (3.7,5.25) -- (7.8,5.25) -- (7.8,4.7);
+  \draw (3.7,3.95) -- (3.7,3.45); \trib{3.7}{3.45}
+  \draw (1.2,2.65) -- (1.2,3.1) -- (6.2,3.1) -- (6.2,2.65);
+  \draw (1.2,1.75) -- (1.2,1.25); \trib{1.2}{1.25}
+  \draw (0,0.45) -- (0,0.9) -- (2.4,0.9) -- (2.4,0.45);
+  \draw (6.2,1.75) -- (6.2,1.25); \trib{6.2}{1.25}
+  \draw (5.0,0.45) -- (5.0,0.9) -- (7.5,0.9) -- (7.5,0.45);
+\end{tikzpicture}
+\end{center}
+\paragraph{Quando usare i diagrammi delle classi}
+\begin{itemize}
+  \item I diagrammi delle classi sono la spina dorsale degli approcci di sviluppo a
+        oggetti.
+  \item Non usare tutte le notazioni:
+  \begin{itemize}
+    \item partire dalle cose semplici.
+  \end{itemize}
+  \item Tenere conto della prospettiva:
+  \begin{itemize}
+    \item non troppi dettagli in analisi;
+    \item la specifica è spesso meglio dell'implementazione.
+  \end{itemize}
+  \item Concentrarsi sulle aree chiave:
+  \begin{itemize}
+    \item meglio pochi diagrammi aggiornati che molti modelli obsoleti.
+  \end{itemize}
+\end{itemize}
+\paragraph{Creare un diagramma delle classi}
+\begin{itemize}
+  \item Partire in modo semplice:
+  \begin{itemize}
+    \item classi principali e associazioni ovvie.
+  \end{itemize}
+  \item Poi aggiungere:
+  \begin{itemize}
+    \item attributi;
+    \item molteplicità;
+    \item operazioni.
+  \end{itemize}
+\end{itemize}
+\paragraph{Regole pratiche}
+\begin{itemize}
+  \item Una classe può far parte di più diagrammi.
+  \item I diagrammi devono illustrare aspetti specifici:
+  \begin{itemize}
+    \item non troppe classi;
+    \item non troppe associazioni;
+    \item nascondere attributi/operazioni irrilevanti.
+  \end{itemize}
+  \item Servono più iterazioni per creare un diagramma.
+\end{itemize}
+\Needspace{16\baselineskip}
+\paragraph{Evitare le classi «pesanti»}
+\begin{itemize}
+  \item Il controller fa tutto.
+  \item Le altre classi si limitano all'incapsulamento dei dati.
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[cl/.style={draw, font=\sffamily\scriptsize, rectangle split,
+    rectangle split parts=3, minimum width=1cm, inner sep=2pt}]
+  \draw[fill=green!15] (0,0) rectangle (12,6);
+  \node[cl] (A) at (1,5.2) {A};
+  \node[cl] (D) at (11,4.8) {D};
+  \node[cl] (B) at (1,0.8) {B};
+  \node[cl] (C) at (11,0.6) {C};
+  \node[draw, fill=white, minimum width=5cm, minimum height=3.2cm, anchor=center] (H) at (6,3) {};
+  \node[font=\sffamily\scriptsize] at (6,4.4) {HeavyController};
+  \draw (4.3,4.15) -- (7.7,4.15);
+  \node[font=\sffamily\bfseries\Large, text=black] at (6,3.6) {\underline{doIt( )}};
+  \draw (A) -- (H.north west); \draw (D) -- (H.north east);
+  \draw (B) -- (H.south west); \draw (C) -- (H.south east);
+  \node[font=\Huge, text=blue!80!black] at (6,2.3) {DO NOT DO IT!!!!};
+\end{tikzpicture}
+\end{center}
+\subsection{OO Design in UML}
+\subsubsection{L'idea della progettazione a oggetti (OOD)}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{img/ood_piramide.png}
+\end{center}
+\subsubsection{Problematiche di progetto}
+pag 6
+\subsubsection{OOA vs. OOD}
+\subsubsection{Diagrammi di stato (Statechart)}
+\subsubsection{Diagrammi di attività}
+\subsubsection{Diagrammi di sequenza}
+\subsubsection{Diagrammi di collaborazione}
+\subsubsection{Esempio: mettere insieme tutti i pezzi}
+\subsubsection{Sistemi e sottosistemi}
+\subsubsection{Diagrammi dei package}
+\subsubsection{Design pattern}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \newpage
 \section{Modulo 2}
