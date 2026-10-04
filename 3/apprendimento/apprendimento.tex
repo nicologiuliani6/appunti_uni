@@ -979,7 +979,7 @@ Prima abbiamo parlato di classificazione $a^{new}=\langle a_1,\dots,a_n\rangle$ 
     Y^{new} &= \arg\max_{y_k}\; P(Y=y_k)\cdot\prod_i P(X_i=w_j \mid Y=y_k)\\
             &= \arg\max_{k}\; \pi_k\cdot\prod_i \theta_{ijk}
 \end{align*}
-Pero' possiamo calcolarlo in \texttt{log}, che ci da qualche vantaggio numerico (arrotondiamo meno su \texttt{double} o \texttt{float}) e matematico grazie alle proprietà dei logatirmi $log(a \cdot b) = log(a)+log(b)$:
+Però possiamo calcolarlo in \texttt{log}, che ci da qualche vantaggio numerico (arrotondiamo meno su \texttt{double} o \texttt{float}) e matematico grazie alle proprietà dei logatirmi $log(a \cdot b) = log(a)+log(b)$:
 \begin{align*}
     Y^{new} &= \arg\max_{y_k}\; \log\left(P(Y=y_k)\cdot\prod_i P(X_i=w_j \mid Y=y_k)\right)\\
             &= \arg\max_{k}\; \log(\pi_k) + \sum_i \log(\theta_{ijk})
@@ -1052,7 +1052,7 @@ Con $\|\vec{a}\|$ indichiamo la \textbf{norma euclidea} (la lunghezza) del vetto
 \subsection{La natura lineare di Naïve Bayes (caso booleano)}
 $X_i$, $Y$ \textcolor{red}{booleane}\\
 \vspace{1px}\\
-Classificazione di $\vec{x}=\langle x_1,\dots,x_n\rangle$ (vediamo se rientra piu' in $Y=0$ oppure $Y=1$):
+Classificazione di $\vec{x}=\langle x_1,\dots,x_n\rangle$ (vediamo se rientra più in $Y=0$ oppure $Y=1$):
 \begin{align*}
     \frac{P(Y=1\mid X_1\dots X_n=\vec{x})}{P(Y=0\mid X_1\dots X_n=\vec{x})} = \frac{P(Y=1)\prod_i P(X_i=x_i\mid Y=1)}{P(Y=0)\prod_i P(X_i=x_i\mid Y=0)} \geq 1
 \end{align*}
@@ -1076,5 +1076,389 @@ Ogni feature è valutata \hl{indipendentemente dalle altre} e contribuisce al ri
 \vspace{1px}\\
 Ad esempio, se le features sono i pixel di un'immagine, possiamo usare metodi lineari solo a meno di una \hl{normalizzazione} (in posizione e dimensione) dell'oggetto da riconoscere.
 \subsection{Gaussian Naïve Bayes}
-pag 119
+Un limite del Naïve Bayes è che le features $X_i$ non devono essere continue, perché se lo fossero le probabilità $P(X_i \mid Y)$ sono nulle. Quindi parliamo di \textbf{densità} di distribuzioni.\\
+\vspace{1px} \\
+Un approccio è quello di supporre che $P(X_i \mid Y )$ abbia una distribuzione Gaussiana (detta anche Normale).\\
+\vspace{1px} \\
+\textbf{Densità di probabilità} (con integrale $=1$):
+\[
+p(x \mid \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\]
+\begin{minipage}[c]{0.38\textwidth}
+\centering
+\textbf{valore medio}\\ $E[X] = \mu$\\[1.2em]
+\textbf{varianza}\\ $Var[X] = \sigma^2$\\[1.2em]
+\textbf{deviazione standard}\\ $\sigma_X = \sigma$
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.58\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=6.5cm,
+    domain=-5:5, samples=200, smooth,
+    xmin=-5, xmax=5, ymin=0, ymax=1,
+    xtick={-5,...,5}, ytick={0,0.2,...,1},
+    grid=both, tick label style={font=\scriptsize},
+    xlabel={$x$}, ylabel={$\varphi_{\mu,\sigma^2}(x)$},
+    legend style={font=\scriptsize, at={(0.98,0.98)}, anchor=north east},
+    thick, no markers]
+\addplot[blue!70!black]  {exp(-x^2/(2*0.2))/sqrt(2*pi*0.2)};
+\addplot[red]            {exp(-x^2/(2*1.0))/sqrt(2*pi*1.0)};
+\addplot[orange!80!black]{exp(-x^2/(2*5.0))/sqrt(2*pi*5.0)};
+\addplot[green!50!black] {exp(-(x+2)^2/(2*0.5))/sqrt(2*pi*0.5)};
+\legend{{$\mu=0,\ \sigma^2=0.2$}, {$\mu=0,\ \sigma^2=1.0$}, {$\mu=0,\ \sigma^2=5.0$}, {$\mu=-2,\ \sigma^2=0.5$}}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\subsection{Accuratezza, Precisione e Richiamo}
+\begin{center}
+\begin{tikzpicture}[x=0.011cm,y=-0.011cm,font=\small,every node/.style={align=left,inner sep=1pt}]
+\draw[blue!60!black,line width=1.5pt,domain=170:730,samples=120,smooth] plot (\x,{545-410*exp(-0.5*((\x-425)/60)^2)});
+\draw[orange,line width=1.5pt,domain=170:730,samples=120,smooth] plot (\x,{545-275*exp(-0.5*((\x-525)/100)^2)});
+\draw[dashed,gray!70!black] (506,120)--(506,545);
+\node[anchor=west] at (640,100) {decision\\boundary};
+\draw[-{Stealth[open]}] (630,120)--(508,185);
+\node at (195,200) {\Large $-$};
+\node at (690,200) {\Large $+$};
+\node[anchor=west] at (120,270) {True\\Negatives (TN)};
+\node[anchor=west] at (663,335) {True\\Positive (TP)};
+\node[anchor=west] at (115,430) {False\\Negatives (FN)};
+\node[anchor=west] at (730,458) {False\\Positives (FP)};
+\draw (245,255)--(405,280);
+\draw (645,365)--(558,376);
+\draw (195,480)--(443,480);
+\draw (718,468)--(523,521);
+\foreach \p in {(405,280),(558,376),(443,480),(523,521)} \fill \p circle (9);
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\renewcommand{\arraystretch}{2.4}
+\begin{tabular}{@{}r@{\hspace{0.5em}}l@{\hspace{2em}}l@{}}
+$\text{Accuratezza} =$ & $\dfrac{TP+TN}{All}$ & Quante istanze sono classificate correttamente? \\
+$\text{Precisione} =$ & $\dfrac{TP}{TP+FP}$ & Quanto è precisa la classificazione (sui positivi)? \\
+$\text{Richiamo} =$ & $\dfrac{TP}{TP+FN}$ & Che percentuale dei positivi è recuperata? \\
+$F1 =$ & $2\,\dfrac{\text{Precisione}\cdot\text{Richiamo}}{\text{Precisione}+\text{Richiamo}}$ & Media armonica tra precisione e richiamo. \\
+\end{tabular}
+\end{center}
+
+\subsubsection{Parametri descrittivi del modello}
+Assumiamo che per ogni valore $y_k$ di $Y$ la variabile aleatoria $P(X_i \mid Y = y_k)$ abbia una distribuzione Gaussiana:
+\[
+N(x \mid \mu_{ik}, \sigma_{ik}) = \frac{1}{\sigma_{ik}\sqrt{2\pi}}\, e^{-\frac{(x-\mu_{ik})^2}{2\sigma_{ik}^2}}
+\]
+\textbf{Apprendimento}: stimare i valori dei parametri $\mu_{ik}$, $\sigma_{ik}$ e $\pi_k = P(Y = y_k)$.\\
+\vspace{1px}\\
+\textbf{Classificazione} di $x^{new} = \langle a_1, \dots, a_n \rangle$:
+\begin{align*}
+Y^{new} &= \argmax_{y_k} P(Y = y_k) \cdot \prod_i P(X_i = a_i \mid Y = y_k)\\
+        &= \argmax_{k} \pi_k \cdot \prod_i N(a_i \mid \mu_{ik}, \sigma_{ik})
+\end{align*}
+
+\subsubsection{Maximum Likelihood Estimates}
+$\mu_{ik}$ = \textbf{valore medio} di $X_i$ per i dati con etichetta $Y = y_k$. Formalmente:
+\[
+\mu_{ik} = \frac{\sum_j X_i^j\, \delta(Y^j = y_k)}{\sum_j \delta(Y^j = y_k)}
+\]
+dove $j$ varia sulle istanze del training set e
+\[
+\delta(Y^j = y_k) =
+\begin{cases}
+1 & \text{se } Y^j = y_k\\
+0 & \text{altrimenti}
+\end{cases}
+\]
+$\sigma_{ik}^2$ = \textbf{varianza} di $X_i$ per le istanze con etichetta $Y = y_k$:
+\[
+\sigma_{ik}^2 = \frac{\sum_j (X_i^j - \mu_{ik})^2\, \delta(Y^j = y_k)}{\sum_j \delta(Y^j = y_k)}
+\]
+
+\subsection{Classificatori discriminativi}
+\subsubsection{Regressione Logistica}
+\textbf{Idea}:
+\begin{itemize}
+\item Naïve Bayes ci permette di calcolare $P(Y \mid X)$ dopo aver appreso $P(Y)$ e $P(X \mid Y)$.
+\item Perché non cercare di apprendere \hl{direttamente} $P(Y \mid X)$?
+\end{itemize}
+\textbf{Che forma adottare per $P(Y \mid X)$?} Che forma abbiamo nel caso di Naïve Bayes? Se:
+\begin{itemize}
+\item $Y$ è una variabile aleatoria booleana;
+\item $X_i$ sono variabili aleatorie continue;
+\item gli $X_i$ sono indipendenti l'uno dall'altro data $Y$;
+\item $P(X_i \mid Y = k)$ hanno distribuzioni Gaussiane $N(\mu_{ik}, \sigma_i)$ (attenzione: non $\sigma_{ik}$!);
+\item $Y$ ha una distribuzione di Bernoulli $(\pi)$.
+\end{itemize}
+Allora:
+\[
+P(Y = 1 \mid X = \langle x_1, \dots, x_n \rangle) = \frac{1}{1 + \exp\left(w_0 + \sum_i w_i x_i\right)}
+\]
+\textit{Dimostrazione}: omessa.\\
+\vspace{1px}\\
+Una proprietà interessante è
+\[
+\ln\frac{P(Y = 0 \mid X = \langle x_1, \dots, x_n \rangle)}{P(Y = 1 \mid X = \langle x_1, \dots, x_n \rangle)} = w_0 + \sum_i w_i x_i
+\]
+\hl{Per classificare $X = \langle x_1, \dots, x_n \rangle$ è sufficiente vedere se $w_0 + \sum_i w_i x_i > 0$.}
+\subsubsection{La funzione logistica}
+La Regressione Logistica \textit{assume} che
+\[
+P(Y = 1 \mid X = \langle x_1, \dots, x_n \rangle) = \frac{1}{1 + \exp\left(-w_0 - \sum_i w_i x_i\right)}
+\]
+e cerca direttamente di stimare i parametri $w_i$.\\
+\vspace{1px}\\
+\begin{minipage}[c]{0.45\textwidth}
+La funzione
+\[
+\sigma(x) = \frac{1}{1 + e^{-x}}
+\]
+è detta \hl{funzione logistica}.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.5\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=5cm,
+    domain=-6:6, samples=100, smooth,
+    xmin=-6, xmax=6, ymin=0, ymax=1,
+    xtick={-6,-4,...,6}, ytick={0,0.5,1},
+    grid=both, axis lines=middle, tick label style={font=\scriptsize}]
+\addplot[blue!60, thick, no markers] {1/(1+exp(-x))};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\subsubsection{Training per regressione logistica (caso binario)}
+Sappiamo che
+\[
+P(y = 1 \mid x, w) = \sigma\left(w_0 + \sum_i w_i x_i\right)
+\]
+Dati i campioni (indipendenti) $\langle x^\ell, y^\ell \rangle$, la loro probabilità è
+\[
+\prod_\ell P(y^\ell \mid x^\ell, w) = \prod_\ell P(y^\ell = 1 \mid x^\ell, w)^{y^\ell} \cdot P(y^\ell = 0 \mid x^\ell, w)^{(1 - y^\ell)}
+\]
+Vogliamo trovare i valori dei parametri $w$ che \hl{massimizzano} questa probabilità (MLE).\\
+\vspace{1px}\\
+Analogamente, possiamo passare ai logaritmi e massimizzare
+\begin{align*}
+\sum_\ell \log P(y^\ell \mid x^\ell, w) = \sum_\ell \Big( y^\ell \cdot \log P(Y = 1 \mid x^\ell, w) + (1 - y^\ell) \cdot \log P(Y = 0 \mid x^\ell, w) \Big)
+\end{align*}
+
+\subsubsection{Gradiente}
+Sfortunatamente non esiste una soluzione analitica per il precedente problema di ottimizzazione.\\
+\vspace{1px}\\
+Quindi, utilizziamo dei metodi \hl{iterativi} di ottimizzazione, come la \hl{tecnica del gradiente}:\\
+\vspace{1px}\\
+\begin{minipage}[c]{0.5\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=6cm,
+    view={-30}{30}, domain=-1:3, y domain=-2:2, samples=18,
+    xlabel={$w_1$}, ylabel={$w_0$}, zlabel={$E[w]$},
+    tick label style={font=\scriptsize}, ticks=none]
+\addplot3[mesh, black!70] {(x-1)^2 + 2*y^2 + 1};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.45\textwidth}
+\[
+\nabla_w[E] = \left[\frac{\partial E}{\partial w_1}, \dots, \frac{\partial E}{\partial w_n}\right]
+\]
+training:
+\begin{align*}
+\Delta w_i &= \mu \cdot \frac{\partial E}{\partial w_i}\\
+w_i &= w_i + \Delta w_i
+\end{align*}
+\end{minipage}
+
+\subsection{La tecnica del gradiente}
+\subsubsection{Approccio iterativo}
+L'obiettivo consiste nel minimizzare una qualche funzione di errore $\Theta(w)$ misurata sul training set, aggiustando opportunamente i parametri del modello.\\
+\vspace{1px}\\
+Possiamo raggiungere un minimo per $\Theta(w)$ compiendo \hl{iterativamente} dei \hl{piccoli passi} nella direzione opposta al gradiente (\hl{discesa del gradiente}).\\
+\vspace{1px}\\
+Si tratta di una \textbf{tecnica generale}, tuttavia non garantisce di raggiungere minimi globali.
+
+\subsubsection{La superficie di errore}
+\begin{minipage}[c]{0.52\textwidth}
+Immaginate di avere un asse ``orizzontale'' per ogni parametro e un asse verticale per l'errore.\\
+\vspace{1px}\\
+Il caso ideale si ha quando la superficie è convessa, cosa che garantisce l'esistenza di un unico minimo globale.
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.44\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.9]
+\foreach \a/\b/\c in {2.4/0.9/10, 1.9/0.7/25, 1.4/0.5/45, 0.9/0.33/65, 0.45/0.17/85}
+  \filldraw[rotate=30, fill=cyan!\c!white, draw=black] (0,0) ellipse (\a cm and \b cm);
+\draw[->] (0,-1.6)--(0,1.9) node[above] {\scriptsize $w_1$};
+\draw[->] (-2.2,0)--(2.6,0) node[right] {\scriptsize $w_2$};
+\end{tikzpicture}
+\end{minipage}\\
+\vspace{1px}\\
+La superficie di errore nel caso della regressione logistica (con log-likelihood) è convessa.\\
+\vspace{1px}\\
+Per \textcolor{red}{deep neural networks} la superficie di errore può essere \textcolor{red}{molto più complicata} (molti minimi locali).
+
+\subsubsection{Online vs Batch learning}
+Su quanti punti misurare l'errore.\\
+\vspace{1px}\\
+\begin{minipage}[c]{0.4\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.8]
+\foreach \a/\b/\c in {2.4/0.8/10, 1.9/0.62/25, 1.4/0.45/45, 0.9/0.3/65, 0.45/0.15/85}
+  \filldraw[rotate=25, fill=cyan!\c!white, draw=black] (0,0) ellipse (\a cm and \b cm);
+\draw[->, red] (-1.9,-0.8)--(-1.6,-0.5)--(-1.5,-0.85)--(-1.1,-0.5)--(-0.9,-0.75)--(-0.5,-0.35);
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.56\textwidth}
+\textbf{Full batch}: si calcola l'errore e il suo gradiente sull'intero training set. Il gradiente punta nella direzione di massima ascesa, perpendicolare alle linee di livello.\\
+\vspace{1px}\\
+\textcolor{red}{\textbf{Online}}: si calcola l'errore e il suo gradiente su una istanza del training set alla volta. Veloce ma impreciso: il gradiente induce un cammino a zig-zag attorno alla direzione corretta.
+\end{minipage}\\
+\vspace{1px}\\
+\textbf{Mini-batch}: calcolo dell'errore e del suo gradiente su un sottoinsieme dei dati: un buon compromesso.
+
+\subsubsection{Gradiente per regressione logistica}
+\begin{itemize}
+\item probabilità che una istanza $\ell$ abbia etichetta $Y = 1$:
+\end{itemize}
+\[
+P(Y = 1 \mid x^\ell, w) = \sigma\left(w_0 + \sum_i w_i x_i^\ell\right) = \alpha^\ell
+\]
+\begin{itemize}
+\item Log-likelihood $l(w)$:
+\end{itemize}
+\[
+\sum_\ell \log P(Y = y^\ell \mid x^\ell, w) = \sum_\ell y^\ell \log(\alpha^\ell) + (1 - y^\ell)\log(1 - \alpha^\ell)
+\]
+\begin{itemize}
+\item gradiente (dimostrazione nella prossima slide):
+\end{itemize}
+\[
+\frac{\partial l(w)}{\partial w_i} = \sum_\ell x_i^\ell \cdot (y^\ell - \alpha^\ell)
+\]
+
+\subsubsection{Calcolo del gradiente}
+\[
+\alpha^\ell = \sigma(z) = \frac{1}{1 + \exp(-z)} \quad \text{dove } z = w_0 + \sum_i w_i x_i^\ell
+\]
+\[
+\frac{\partial \log(\alpha^\ell)}{\partial z} = \frac{1}{\alpha^\ell}\frac{\partial \alpha^\ell}{\partial z} = \frac{\exp(-z)}{1 + \exp(-z)} = 1 - \alpha^\ell
+\]
+\[
+\log(1 - \alpha^\ell) = \log\frac{\exp(-z)}{1 + \exp(-z)} = -z + \log(\alpha^\ell)
+\]
+\[
+\frac{\partial \log(1 - \alpha^\ell)}{\partial z} = -1 + 1 - \alpha^\ell = -\alpha^\ell
+\]
+Ricordiamo che $l(w) = \sum_\ell y^\ell \log(\alpha^\ell) + (1 - y^\ell)\log(1 - \alpha^\ell)$, quindi
+\begin{align*}
+\frac{\partial l(w)}{\partial w_i} = \frac{\partial l(w)}{\partial z}\frac{\partial z}{\partial w_i}
+&= \sum_\ell \big( y^\ell (1 - \alpha^\ell) - (1 - y^\ell)\alpha^\ell \big) x_i^\ell\\
+&= \sum_\ell (y^\ell - \alpha^\ell)\, x_i^\ell
+\end{align*}
+
+\subsubsection{Osservazione sulla derivata della sigmoid}
+Nella slide precedente abbiamo visto che
+\[
+\frac{\partial \log(\alpha^\ell)}{\partial z} = \frac{1}{\sigma(z)}\frac{\partial \sigma(z)}{\partial z} = 1 - \sigma(z)
+\]
+Dunque:\\
+\vspace{1px}\\
+\begin{minipage}[c]{0.42\textwidth}
+\[
+\frac{\partial \sigma(z)}{\partial z} = \sigma(z)\left(1 - \sigma(z)\right)
+\]
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.54\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=\linewidth, height=5cm,
+    domain=-10:10, samples=100, smooth, no markers,
+    xmin=-10, xmax=10, ymin=0, ymax=1.05,
+    tick label style={font=\scriptsize},
+    legend style={font=\scriptsize, at={(0.02,0.98)}, anchor=north west}]
+\addplot[blue!70!black] {1/(1+exp(-x))};
+\addplot[orange!90!black] {exp(-x)/(1+exp(-x))^2};
+\legend{sigmoid, derivative}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\\
+\vspace{1px}\\
+La derivata della funzione logistica è molto piatta.
+
+\subsubsection{Il processo di apprendimento}
+Iterare la seguente \hl{operazione di update} finché non si raggiunge l'approssimazione desiderata (ad esempio fino a quando l'accuratezza sul set di validazione è soddisfacente o non sembra aumentare).
+\[
+w_i \leftarrow w_i + \mu \sum_\ell x_i^\ell \cdot \left(y^\ell - P(Y = y^\ell \mid x^\ell, w)\right)
+\]
+Frequentemente si aggiunge un qualche regolarizzatore:
+\[
+w_i \leftarrow w_i - \textcolor{red}{\mu\lambda |w_i|} + \mu \sum_\ell x_i^\ell \cdot \left(y^\ell - P(Y = y^\ell \mid x^\ell, w)\right)
+\]
+\begin{itemize}
+\item cerca di tenere i parametri $w_i$ vicini a 0;
+\item tende a ridurre l'overfitting.
+\end{itemize}
+
+\subsection{Modelli generativi e discriminativi}
+\subsubsection{Generative vs discriminative models}
+\textbf{Discriminativi}: i modelli discriminativi sono utilizzati prevalentemente per problemi di classificazione, dove l'obiettivo consiste nell'apprendere la frontiera (\hl{decision boundary}) che separa le differenti classi.\\
+\vspace{1px}\\
+\textbf{Generativi}: i modelli generativi cercano di apprendere la \hl{distribuzione dei dati}. Oltre che ai fini della classificazione, possono essere usati per data generation, data augmentation (con cautela), anomaly detection, trasferimento di contenuto/stile e molte altre applicazioni.
+
+\subsubsection{Modelli generativi e discriminativi (esempio)}
+Problema: stimare $f: X \to Y$ o $P(Y \mid X)$.\\
+\vspace{1px}\\
+\textbf{Classificatore generativo} (e.g., Naïve Bayes):
+\begin{itemize}
+\item si assume una certa distribuzione per $P(X \mid Y)$, $P(X)$;
+\item si stimano i parametri per $P(X \mid Y)$ e $P(X)$ sui dati di training;
+\item si utilizza la regola di Bayes per inferire $P(Y \mid X)$.
+\end{itemize}
+\textbf{Classificatore discriminativo} (e.g., Regressione Logistica):
+\begin{itemize}
+\item si assume una certa distribuzione per $P(Y \mid X)$;
+\item si stimano i parametri per $P(Y \mid X)$ sui dati di training.
+\end{itemize}
+
+\subsection{Esempio: classificazione di cifre MNIST con Regressione Logistica}
+\subsubsection{I metodi lineari sono potenti}
+Si potrebbe avere l'impressione errata che i metodi lineari non siano di interesse effettivo in quanto troppo deboli.\\
+\vspace{1px}\\
+Quando si hanno molte features a disposizione e i dati sono stati adeguatamente pre-processati anche i metodi lineari funzionano bene.\\
+\vspace{1px}\\
+In uno spazio con molte dimensioni i dati assumono una distribuzione molto sparsa, quindi diventa plausibile discriminare le varie classi con dei semplici \hl{iperpiani}.
+
+\subsubsection{Il dataset MNIST}
+\textbf{M}odified \textbf{N}ational \textbf{I}nstitute of \textbf{S}tandards and \textbf{T}echnology database
+\begin{itemize}
+\item immagini in scala di grigio di cifre numeriche scritte a mano. Bassa risoluzione: $28 \times 28$ pixels;
+\item 60,000 immagini di training e 10,000 immagini di testing.
+\end{itemize}
+\imgfig[0.5]{mnist_esempi.png}
+Nel caso delle immagini ogni pixel è una feature. Una piccola immagine $28 \times 28$ contiene già $784$ features.
+
+\subsection{Classificazione con regressione multinomiale}
+\subsubsection{Classificazione con regressione multinomiale}
+\textbf{DEMO!}
+\begin{verbatim}
+Sparsity with L1 penalty: 25.18%
+Test score with L1 penalty: 0.9257
+Example run in 22.404 s
+\end{verbatim}
+
+\subsubsection{Visualizzazione dei pesi}
+Per ogni classe, i pesi corrispondenti hanno la stessa dimensionalità dell'immagine di input: abbiamo un peso per ogni feature.\\
+\vspace{1px}\\
+Possiamo visualizzare i pesi!
+\imgfig[0.7]{mnist_pesi.png}
+Per ogni classe, le zone \textcolor{red}{rosse} sono quelle dove mi aspetto di avere della scrittura, quelle \textcolor{blue}{blu} dove non mi aspetto di averne.
 \end{document}
