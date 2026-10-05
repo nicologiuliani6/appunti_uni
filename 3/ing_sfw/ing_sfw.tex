@@ -68,7 +68,7 @@
 \date{}
 
 
-\usetikzlibrary{shapes.multipart,positioning,arrows.meta,calc}
+\usetikzlibrary{shapes.multipart,shapes.geometric,positioning,arrows.meta,calc}
 \begin{document}
 
 \maketitle
@@ -1586,16 +1586,617 @@ non lo supporta; usare invece l'aggregazione. (Uno \emph{stack} \underline{\text
 \includegraphics[width=0.55\textwidth]{img/ood_piramide.png}
 \end{center}
 \subsubsection{Problematiche di progetto}
-pag 6
+Un metodo di progettazione è giudicato modulare in base a cinque criteri:
+\begin{itemize}
+  \item \textbf{Decomponibilità} --- la facilità con cui il metodo aiuta il progettista a
+        scomporre un problema grande in sottoproblemi più semplici da risolvere.
+  \item \textbf{Componibilità} --- il grado in cui il metodo garantisce che i componenti
+        (moduli) del programma, una volta progettati e costruiti, possano essere
+        riutilizzati per creare altri sistemi.
+  \item \textbf{Comprensibilità} --- la facilità con cui un componente può essere capito
+        senza far riferimento ad altre informazioni o ad altri moduli.
+  \item \textbf{Continuità} --- la capacità di fare piccole modifiche al programma
+        facendo sì che si riflettano in modifiche in uno solo, o in pochissimi, moduli.
+  \item \textbf{Protezione} --- caratteristica architetturale che riduce la propagazione
+        degli effetti collaterali quando si verifica un errore in un dato modulo.
+\end{itemize}
+
+\paragraph{Ingredienti per OOD}
+\begin{itemize}
+  \item \textbf{Componente del dominio del problema} --- i sottosistemi responsabili di
+        implementare direttamente i requisiti del cliente.
+  \item \textbf{Componente di interazione umana} --- i sottosistemi che implementano
+        l'interfaccia utente (inclusi i sottosistemi GUI riutilizzabili).
+  \item \textbf{Componente di gestione dei task} --- i sottosistemi responsabili di
+        controllare e coordinare i task concorrenti, che possono essere racchiusi in un
+        sottosistema o distribuiti tra sottosistemi diversi.
+  \item \textbf{Componente di gestione dei dati} --- il sottosistema responsabile della
+        memorizzazione e del recupero degli oggetti.
+\end{itemize}
+
 \subsubsection{OOA vs. OOD}
+\begin{itemize}
+  \item \textbf{Livello di dettaglio}:
+  \begin{itemize}
+    \item i nomi sono fissati;
+    \item le firme dei messaggi sono fissate;
+    \item molteplicità e sua realizzazione;
+    \item visibilità;
+    \item algoritmi dei metodi;
+    \item diagrammi di sequenza/collaborazione più dettagliati;
+    \item \ldots
+  \end{itemize}
+  \item \textbf{Notazioni di diagramma aggiuntive}.
+\end{itemize}
+
+\paragraph{Relazione tra OOA e OOD}
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\bfseries,
+  freccia/.style={-{Latex[length=3mm]}, line width=2pt, orange}]
+  \fill[red!50!black] (0,0) rectangle (4.5,6);
+  \fill[green!35!black] (6,0) rectangle (10.5,6);
+  \node[white] at (2.25,5.4) {Modello di analisi};
+  \node[white] at (8.25,5.4) {Modello di progetto};
+  \draw[white, thin] (0.2,4.9) -- (4.3,4.9);
+  \draw[white, thin] (6.2,4.9) -- (10.3,4.9);
+  \foreach \i/\l/\r in {0/classi/classi + oggetti,
+                        1/attributi/tipi di dato,
+                        2/operazioni/metodi,
+                        3/associazioni/link + messaggi,
+                        4/comportamento/controllo} {
+    \node[white, anchor=east] (L\i) at (3.9,4.2-0.8*\i) {\l};
+    \node[white, anchor=west] (R\i) at (6.6,4.2-0.8*\i) {\r};
+    \draw[freccia] (L\i.east) -- (R\i.west);
+  }
+\end{tikzpicture}
+\end{center}
+
+In OOD si usano ancora i diagrammi delle classi, ma raffinati per adattarsi al progetto
+del sistema. Oltre ai diagrammi delle classi ci sono diversi altri diagrammi:
+
+\medskip\noindent
+\begin{minipage}[t]{0.45\textwidth}
+\textbf{Diagrammi strutturali}
+\begin{itemize}
+  \item[\textcolor{red}{\checkmark}] diagrammi degli oggetti;
+  \item[\textcolor{red}{\checkmark}] diagrammi di deployment.
+\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\textbf{Diagrammi comportamentali}
+\begin{itemize}
+  \item[\textcolor{red}{\checkmark}] diagrammi di sequenza;
+  \item[\textcolor{red}{\checkmark}] diagrammi di collaborazione;
+  \item[\textcolor{red}{\checkmark}] diagrammi di stato (statechart);
+  \item[\textcolor{red}{\checkmark}] diagrammi di attività.
+\end{itemize}
+\end{minipage}
+
+\paragraph{Diagrammi strutturali per OOD in UML}
+\begin{itemize}
+  \item \textbf{Diagrammi delle classi}: la struttura è la stessa dell'OOA.
+  \item \textbf{Diagrammi degli oggetti}:
+  \begin{itemize}
+    \item trattano oggetti, cioè istanze delle classi;
+    \item sono del tutto omomorfi ai diagrammi delle classi;
+    \item per questo non li analizzeremo a fondo.
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Diagrammi comportamentali per OOD in UML}
+\begin{itemize}
+  \item \textbf{Diagrammi di stato (statechart)}: descrivono l'evoluzione degli stati di
+        un qualsiasi classificatore; usati comunemente per gli oggetti.
+  \item \textbf{Diagrammi di attività}: descrivono l'evoluzione delle attività nel
+        sistema.
+  \item \textbf{Diagrammi di sequenza}: descrivono le interazioni tra oggetti secondo
+        l'ordine temporale.
+  \item \textbf{Diagrammi di collaborazione}: descrivono le interazioni tra oggetti
+        secondo la loro organizzazione.
+\end{itemize}
+Diagrammi di sequenza e di collaborazione sono detti \emph{diagrammi di interazione}.
+
 \subsubsection{Diagrammi di stato (Statechart)}
+\paragraph{Diagrammi di stato vs.\ diagrammi di interazione}
+\begin{itemize}
+  \item \textbf{Diagrammi di interazione}: mostrano come gli oggetti interagiscono tra
+        loro.
+  \item \textbf{Diagrammi di stato}: mostrano il comportamento di \emph{un solo}
+        oggetto:
+  \begin{itemize}
+    \item come cambia il suo stato in base ai messaggi che riceve;
+    \item focalizzati su un ambito ristretto, a grana fine.
+  \end{itemize}
+  \item \textbf{Altri nomi}: diagrammi di transizione di stato (\emph{state
+        transition}), diagrammi degli stati (\emph{state diagrams}), diagrammi di Harel.
+\end{itemize}
+
+\paragraph{Stati di un oggetto}
+\begin{itemize}
+  \item \textbf{Stato} = insieme dei valori che descrivono un oggetto in uno specifico
+        istante di tempo.
+  \item Lo stato è determinato in base ai valori degli attributi.
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[font=\sffamily,
+  stato/.style={draw, rounded corners=6pt, minimum width=2.6cm, minimum height=1cm}]
+  \node[draw, rectangle split, rectangle split parts=2, minimum width=3cm]
+    at (0,0) {Account \nodepart{second} balance : Float};
+  \node[stato] at (5,1) {overdrafted};
+  \node[stato] at (5,-1) {ok};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Cambi di stato}
+Gli stati possono cambiare quando si verifica un \emph{evento}. Gli eventi sono i
+messaggi ricevuti; un evento può cambiare lo stato oppure no.
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\small, >={Straight Barb[length=2mm]},
+  stato/.style={draw, rounded corners=6pt, minimum width=2.6cm, minimum height=0.9cm}]
+  \node[stato] (O) at (0,3.4) {overdrafted};
+  \node[stato] (K) at (0,0) {ok};
+  \draw[->] (O.south west) -- ++(-1.4,-1.5) node[left] {deposit} -- (K.north west);
+  \draw[->] (K.north east) -- ++(1.4,1.5) node[right] {withdraw} -- (O.south east);
+  \draw[->] ([xshift=-3mm]O.north) to[out=110, in=70, looseness=6]
+    node[above] {deposit} ([xshift=3mm]O.north);
+  \draw[->] ([xshift=-3mm]K.north) to[out=110, in=70, looseness=6]
+    node[above] {withdraw} ([xshift=3mm]K.north);
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Notazione: lo stato}
+Uno stato si disegna come un rettangolo arrotondato con il nome ed eventualmente le
+variabili di stato e le azioni/attività interne:
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\small]
+  \node[draw, rounded corners=6pt, rectangle split, rectangle split parts=3,
+        align=left] {\textbf{Nome stato}
+    \nodepart{second} variabili di stato
+    \nodepart{third} entry: azione di ingresso\\ do: attività-A\\
+                     on evento-A: azione-A\\ exit: azione di uscita};
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+  \item \textbf{Azione}: avviene rapidamente e non è interrompibile (cosa significhi
+        «rapidamente» dipende dal contesto).
+  \item \textbf{Attività}: può durare a lungo e può essere interrotta.
+  \item \texttt{entry} --- azione eseguita all'ingresso nello stato;
+  \item \texttt{do} --- attività in corso finché si resta nello stato (es.\ mostrare
+        una finestra);
+  \item \texttt{on} --- azione eseguita in risposta a uno specifico evento;
+  \item \texttt{exit} --- azione eseguita all'uscita dallo stato.
+\end{itemize}
+
+\paragraph{Notazione: la transizione}
+Una transizione è una freccia tra due stati etichettata con
+\begin{center}
+\texttt{Evento(argomenti) [condizione] / azione}
+\end{center}
+\begin{itemize}
+  \item \textbf{Evento}: l'invio di un messaggio.
+  \item \textbf{Condizione di guardia}: la transizione avviene solo se la guardia è
+        vera; le guardie delle transizioni che escono da uno stesso stato devono essere
+        mutuamente esclusive.
+  \item \textbf{Azione}: processo considerato rapido e non interrompibile.
+\end{itemize}
+Ogni parte dell'etichetta può essere omessa.
+
+Lo \textbf{stato iniziale} si indica con un pallino pieno, lo \textbf{stato finale} con
+un pallino pieno cerchiato:
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\small, >={Straight Barb[length=2mm]},
+  stato/.style={draw, rounded corners=6pt, minimum width=2.4cm, minimum height=0.8cm}]
+  \fill (0,0) circle (1.2mm);
+  \node[stato] (A) at (2.4,0) {Stato iniziale};
+  \node[stato] (B) at (7.6,0) {Stato-B};
+  \draw (9.6,0) circle (1.8mm); \fill (9.6,0) circle (1.1mm);
+  \draw[->] (0.12,0) -- (A);
+  \draw[->] (A) -- node[above] {Evento(attributo)} (B);
+  \draw[->] (B) -- (9.4,0);
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Superstati e sottostati}
+Se più stati condividono la stessa transizione uscente (es.\ poter annullare un ordine
+in qualsiasi momento), invece di disegnare una transizione da ogni stato si
+raggruppano in un \textbf{superstato} e si disegna una sola transizione che esce dal
+superstato. Esempio, gestione di un ordine:
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize, >={Straight Barb[length=2mm]},
+  stato/.style={draw, rounded corners=5pt, minimum width=2.2cm, minimum height=0.8cm,
+                fill=white},
+  lab/.style={align=center}]
+  \draw[rounded corners=8pt] (-0.6,2.9) rectangle (10.4,-4.0);
+  \node[font=\sffamily\bfseries\small, anchor=west] at (-0.4,2.6) {Active};
+  \fill (0,0) circle (1.2mm);
+  \node[stato, rectangle split, rectangle split parts=2] (C) at (3.2,0)
+    {Checking \nodepart{second} do: check item};
+  \node[stato] (W) at (8.8,0) {Waiting};
+  \node[stato, rectangle split, rectangle split parts=2] (D) at (3.2,-3)
+    {Dispatching \nodepart{second} do: initiate delivery};
+  \node[stato] (X) at (12.8,0) {Cancelled};
+  \node[stato] (Y) at (12.8,-3) {Delivered};
+  \draw[->] (0.12,0) -- node[above, lab] {/ get first item} (C);
+  \draw[->] ([xshift=-3mm]C.north) to[out=110, in=70, looseness=5]
+    node[above, lab] {get next item\\{}[not all items checked]} ([xshift=3mm]C.north);
+  \draw[->] (C) -- node[below, lab] {[all items checked \&\&\\ some items not in stock]} (W);
+  \draw[->] ([xshift=-3mm]W.north) to[out=110, in=70, looseness=5]
+    node[above, lab] {item received\\{}[some items not in stock]} ([xshift=3mm]W.north);
+  \draw[->] (C) -- node[left, lab] {[all items checked \&\&\\ all items available]} (D);
+  \draw[->] (W) -- node[right, lab, pos=0.4] {item received\\{}[all items available]} (D);
+  \draw[->] (10.4,0) -- node[above] {cancelled} (X);
+  \draw[->] (D) -- node[above, pos=0.6] {delivered} (Y);
+\end{tikzpicture}
+\end{center}
+L'evento \emph{cancelled} porta in \textsf{Cancelled} da qualunque sottostato di
+\textsf{Active}.
+
+\paragraph{Note}
+\begin{itemize}
+  \item I diagrammi di stato \emph{non} devono per forza riferirsi a classi o oggetti:
+        possono descrivere anche sottosistemi ecc.; l'uso più diffuso resta comunque
+        quello sugli oggetti.
+  \item Argomenti non trattati: stati annidati vs.\ stati concorrenti, stati
+        \emph{history}, transizioni interne.
+\end{itemize}
+
 \subsubsection{Diagrammi di attività}
+I diagrammi di attività si usano per descrivere:
+\begin{itemize}
+  \item \emph{workflow} (flussi di lavoro);
+  \item elaborazioni parallele.
+\end{itemize}
+Un'\textbf{attività} può essere intesa a livello \emph{concettuale} (un compito da
+svolgere) oppure a livello di \emph{specifica/implementazione} (un metodo di una classe).
+Sono simili alle reti di Petri.
+
+\paragraph{Struttura}
+\begin{itemize}
+  \item \textbf{Barra di sincronizzazione}: una barra spessa.
+  \begin{itemize}
+    \item \textbf{Fork} (una freccia entrante, più uscenti): le attività successive
+          possono essere svolte in parallelo, in qualsiasi ordine;
+    \item \textbf{Join} (più frecce entranti): si prosegue solo quando \emph{tutti}
+          i predecessori sono terminati; può avere una
+          \texttt{[condizione di sincronizzazione]}.
+  \end{itemize}
+  \item \textbf{Branch}: un rombo da cui escono più frecce, ciascuna con una
+        \textbf{guardia} \texttt{[condizione]}.
+  \item Inizio e fine si indicano come negli statechart (pallino pieno, pallino
+        cerchiato).
+\end{itemize}
+Un diagramma di attività mostra quindi un \emph{ordine parziale} tra le attività.
+
+Esempio, preparare il caffè:
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\small, >={Straight Barb[length=2mm]},
+  att/.style={draw, rounded corners=8pt, align=center, minimum width=2.6cm,
+              minimum height=0.8cm},
+  barra/.style={fill=black, minimum height=1.2mm, inner sep=0pt}]
+  \node[att] (S) at (0,0) {Start};
+  \node[barra, minimum width=4.5cm] (F) at (1.6,-1.1) {};
+  \node[att] (A1) at (0,-2.2) {Metti caffè\\nel filtro};
+  \node[att] (A2) at (3.4,-2.2) {Controlla acqua\\nel serbatoio};
+  \node[att] (A3) at (0,-3.6) {Metti filtro\\nella macchina};
+  \node[draw, diamond, aspect=1, inner sep=2.5pt] (B) at (3.4,-3.9) {};
+  \node[att] (A4) at (8.6,-3.9) {Metti acqua\\nel serbatoio};
+  \node[barra, minimum width=9.8cm] (J) at (4.1,-5) {};
+  \node[att] (A5) at (0,-6.1) {Accendi\\la macchina};
+  \draw[->] (S) -- (S|-F.north);
+  \draw[->] (A1|-F.south) -- (A1);
+  \draw[->] (A2|-F.south) -- (A2);
+  \draw[->] (A1) -- (A3);
+  \draw[->] (A2) -- (B);
+  \draw[->] (B) -- node[above] {[acqua insufficiente]} (A4);
+  \draw[->] (A3) -- (A3|-J.north);
+  \draw[->] (B) -- (B|-J.north);
+  \draw[->] (A4) -- (A4|-J.north);
+  \draw[->] (A5|-J.south) -- (A5);
+\end{tikzpicture}
+\end{center}
+Dopo il fork le due attività procedono in parallelo; il branch fa eseguire
+«Metti acqua» solo se la guardia è vera; il join attende tutti i rami prima di
+accendere la macchina.
+
+Argomenti non trattati: attività vs.\ azioni, \emph{swimlane} e flussi di oggetti,
+cambi di stato di un oggetto.
+
 \subsubsection{Diagrammi di sequenza}
+I diagrammi di sequenza e di collaborazione sono \textbf{diagrammi di interazione}: si
+concentrano sulle entità «reali», gli oggetti, e descrivono in dettaglio come
+comunicano tra loro. Offrono due viste:
+\begin{itemize}
+  \item vista basata sul \textbf{tempo} $\rightarrow$ diagrammi di sequenza;
+  \item vista basata sull'\textbf{organizzazione} $\rightarrow$ diagrammi di
+        collaborazione.
+\end{itemize}
+
+Un diagramma di sequenza mostra le interazioni tra oggetti ordinate nel tempo,
+concentrandosi sugli oggetti (e classi) e sui messaggi scambiati per realizzare la
+funzionalità di uno scenario. Gli oggetti sono disposti su una linea
+\emph{orizzontale}, gli eventi lungo una linea del tempo \emph{verticale}
+(\emph{lifeline}). I messaggi vanno dal \emph{client} al \emph{supplier}.
+
+\paragraph{Contenuto}
+\begin{itemize}
+  \item \textbf{Oggetti}, che si scambiano messaggi.
+  \item \textbf{Messaggi}:
+  \begin{itemize}
+    \item \emph{sincroni} («call event»): freccia piena;
+    \item \emph{asincroni} («signal»): mezza freccia;
+    \item messaggi «create» e
+          «destroy».
+  \end{itemize}
+\end{itemize}
+Un messaggio \textbf{asincrono} non blocca il chiamante e può: creare un nuovo thread,
+creare un nuovo oggetto, comunicare con un thread già in esecuzione.
+
+\paragraph{Notazione}
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize, >={Triangle[length=2mm]},
+  obj/.style={draw, align=center, minimum height=0.7cm, fill=white},
+  act/.style={draw, fill=white, minimum width=2mm, inner sep=0pt}]
+  \node[obj] (O1) at (0,0) {\underline{an Order}\\\underline{Entry window}};
+  \node[obj] (O2) at (3,0) {\underline{an Order}};
+  \node[obj] (O4) at (11,0) {\underline{a Stock Item}};
+  \node[obj] (O3) at (6.3,-1.5) {\underline{an Order Line}};
+  \foreach \o/\e in {O1/-5.4,O2/-5.4,O3/-5.4} \draw[dashed] (\o.south) -- (\o|-0,\e);
+  \draw[dashed] (O4.south) -- (11,-4.6);
+  \node[font=\Large] at (11,-4.75) {$\times$};
+  \node[act, minimum height=1.2cm] at (0,-1.6) {};
+  \node[act, minimum height=3.6cm] at (3,-2.85) {};
+  \node[act, minimum height=2.4cm] at (6.3,-3.2) {};
+  \node[act, minimum height=2.2cm] at (11,-3.4) {};
+  \draw[-{Straight Barb[left, length=2.5mm]}] (0.1,-1.1) -- node[above] {1: prepare()} (2.9,-1.1);
+  \draw[->] (3.1,-1.5) -- node[above] {2: * prepare()} (O3.west);
+  \draw[->] (6.4,-2.4) -- node[above] {3: check()} (10.9,-2.4);
+  \draw[->] (6.4,-3.0) -- node[above] {4: [check = true] remove()} (10.9,-3.0);
+  \draw[->] (11.1,-3.6) -- ++(0.6,0) -- node[right] {5: needsToReorder()} ++(0,-0.5)
+    -- (11.1,-4.1);
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+  \item \textbf{Attivazione}: il rettangolo sulla lifeline, periodo in cui l'oggetto
+        sta eseguendo un'operazione.
+  \item \textbf{Messaggio asincrono}: mezza freccia (1).
+  \item \textbf{Iterazione}: \texttt{*} davanti al messaggio, inviato più volte (2).
+  \item \textbf{Creazione}: il messaggio punta al riquadro dell'oggetto, disegnato
+        all'altezza in cui viene creato (2).
+  \item \textbf{Condizione}: \texttt{[condizione]} davanti al messaggio, inviato solo
+        se vera (4).
+  \item \textbf{Autodelega}: messaggio che un oggetto invia a sé stesso (5).
+  \item \textbf{Distruzione}: una $\times$ alla fine della lifeline.
+\end{itemize}
+
+\paragraph{Complessità}
+I diagrammi servono a rendere le cose chiare: \textbf{KISS} (\emph{keep it small and
+simple}). Logica condizionale semplice si aggiunge al diagramma; se è complessa si
+disegnano diagrammi separati.
+
+\paragraph{Confini (boundary)}
+Un \emph{boundary} modella la comunicazione tra il sistema e il mondo esterno (es.\
+interfaccia utente o altro sistema). Può essere utile mostrare le classi boundary nei
+diagrammi di interazione per catturare i requisiti di interfaccia, \emph{senza}
+mostrare come l'interfaccia sarà implementata.
+
 \subsubsection{Diagrammi di collaborazione}
+Mostrano come gli oggetti interagiscono rispetto alle unità organizzative (i
+\emph{boundary}). Il contenuto è quasi lo stesso dei diagrammi di sequenza (oggetti,
+messaggi sincroni/asincroni, «create» e
+«destroy», cicli), ma l'ordine dei messaggi è dato dalla
+\textbf{numerazione}:
+\begin{itemize}
+  \item piatta: 1, 2, 3, 4, \ldots
+  \item annidata: 1, 1.1, 1.2, 2, 2.1, 2.1.1, \ldots{} --- mostra quale operazione
+        chiama quale altra.
+\end{itemize}
+
+Esempio (registrazione di un corso):
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize, >={Triangle[length=1.8mm]},
+  obj/.style={draw, minimum height=0.7cm}]
+  \node[obj] (R) at (0,0) {\underline{: Registrar}};
+  \node[obj] (F) at (7,0) {\underline{course form : CourseForm}};
+  \node[obj] (M) at (7,-2.5) {\underline{theManager : CurriculumManager}};
+  \node[obj] (C) at (0,-2.5) {\underline{aCourse : Course}};
+  \draw (R) -- node[above, align=left] {$\rightarrow$ 1: set course info\\
+    $\rightarrow$ 2: process} (F);
+  \draw (F) -- node[right] {$\downarrow$ 3: add course} (M);
+  \draw (M) -- node[above] {$\leftarrow$ 4: new course} (C);
+\end{tikzpicture}
+\end{center}
+Gli oggetti sono collegati da \emph{link}; i messaggi sono scritti lungo il link con una
+freccia che ne indica il verso.
+
+\paragraph{Sequenza vs.\ collaborazione}
+\begin{itemize}
+  \item Il flusso nel \textbf{tempo} si vede meglio nei diagrammi di sequenza; nei
+        diagrammi di collaborazione la sequenza dei messaggi è più difficile da seguire.
+  \item Il flusso di controllo rispetto all'\textbf{organizzazione} si vede meglio nei
+        diagrammi di collaborazione, il cui layout può mostrare le connessioni statiche
+        tra oggetti.
+  \item Un controllo complesso è comunque difficile da esprimere in entrambi; i
+        diagrammi di collaborazione possono diventare \emph{molto} complessi.
+\end{itemize}
+
 \subsubsection{Esempio: mettere insieme tutti i pezzi}
+Un esempio completo che usa tutti i diagrammi visti: un sistema di $n$ ascensori per un
+edificio di $m$ piani.
+
+\paragraph{Caso d'uso} L'utente preme un pulsante dell'ascensore, preme un pulsante del
+piano, entra ed esce attraverso una porta. Dai sostantivi emergono gli oggetti:
+pulsanti, ascensore, porte.
+
+\paragraph{Diagramma delle classi}
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize,
+  cl/.style={draw, rectangle split, rectangle split parts=2, minimum width=2.8cm,
+             fill=white, rectangle split part align={center,left}}]
+  \node[cl] (B) at (3.5,2.2) {\textbf{Button} \nodepart{second} illuminated: boolean};
+  \node[cl] (EB) at (0,0) {\textbf{Elevator Button} \nodepart{second} \phantom{x}};
+  \node[cl] (FB) at (7,0) {\textbf{Floor Button} \nodepart{second} \phantom{x}};
+  \node[cl] (C) at (3.5,-2.2) {\textbf{Elevator Controller} \nodepart{second} \phantom{x}};
+  \node[cl] (D) at (9.6,-2.6) {\textbf{Elevator Doors} \nodepart{second} doors open: boolean};
+  \node[cl] (E) at (3.5,-4.8) {\textbf{Elevator} \nodepart{second} \phantom{x}};
+  \draw (EB.north) |- (3.5,1.1) -| (FB.north);
+  \draw[-{Triangle[open, length=2.5mm, width=3mm]}] (3.5,1.1) -- (B.south);
+  \draw (EB.south) |- (C.west);
+  \draw (FB.south) |- ([yshift=-1.5mm]C.north east);
+  \draw (C.east|-0,-2.5) -- (D.west|-0,-2.5);
+  \draw (C.south) -- (E.north);
+  \node[right] at (0,-0.75) {$mn$};
+  \node[above] at (1.1,-2.2) {controls}; \node[above left] at (C.west) {1};
+  \node[left] at (7,-0.75) {$2m-2$};
+  \node[above] at (6,-1.85) {controls};
+  \node[above right] at ([yshift=-1.5mm]C.north east) {1};
+  \node[above] at (6.9,-2.5) {controls};
+  \node[above right] at (C.east|-0,-2.5) {1}; \node[above left] at (D.west|-0,-2.5) {$n$};
+  \node[right] at (3.5,-3.4) {controls};
+  \node[right] at ([yshift=-1.5mm]C.south) {1}; \node[right] at ([yshift=2mm]E.north) {$n$};
+\end{tikzpicture}
+\end{center}
+\textsf{Elevator Button} e \textsf{Floor Button} specializzano \textsf{Button}. Ci sono
+$mn$ pulsanti nelle cabine ($m$ per ognuno degli $n$ ascensori) e $2m-2$ pulsanti ai
+piani (su e giù, tranne al primo e all'ultimo piano). Il controller gestisce tutti i
+pulsanti, le $n$ porte e gli $n$ ascensori.
+
+\paragraph{Diagramma di stato del controller} Il controller è un ciclo: se un pulsante
+viene premuto e non è acceso, elabora la richiesta (\texttt{do/update request},
+\texttt{do/turn on button}); mentre l'ascensore si muove verso il piano $f$ controlla se
+qualcuno ha chiesto di fermarsi lì: se no continua a muoversi, se sì si ferma, apre le
+porte, aggiorna le richieste e spegne i pulsanti relativi; da fermo, se ci sono altre
+richieste chiude le porte e serve la successiva, altrimenti entra in attesa chiudendo le
+porte dopo un timeout.
+
+\paragraph{Scenario: sequenza e collaborazione}
+Lo stesso scenario si rappresenta sia con un diagramma di sequenza sia con uno di
+collaborazione (oggetti: \textsf{User A}, \textsf{Floor Button}, \textsf{Elevator
+Button}, \textsf{Elevator Controller}, \textsf{Elevator}, \textsf{Elevator Doors}):
+\begin{enumerate}
+  \item l'utente preme il pulsante del piano;
+  \item il pulsante del piano si accende;
+  \item \texttt{*} l'ascensore sale di un piano (ripetuto);
+  \item il pulsante del piano si spegne;
+  \item le porte si aprono;
+  \item l'utente preme il pulsante in cabina;
+  \item il pulsante in cabina si accende;
+  \item le porte si chiudono;
+  \item \texttt{*} l'ascensore sale di un piano;
+  \item il pulsante in cabina si spegne;
+  \item le porte si aprono;
+  \item parte il timer;
+  \item le porte si chiudono;
+  \item \texttt{*} l'ascensore si muove di un piano.
+\end{enumerate}
+Il movimento può essere verso l'alto o verso il basso. Nel diagramma di sequenza si legge
+bene l'ordine temporale; in quello di collaborazione si vede che tutti i messaggi passano
+dall'\textsf{Elevator Controller}, che è il centro dell'organizzazione.
+
 \subsubsection{Sistemi e sottosistemi}
+Un sistema grande si scompone in \textbf{sottosistemi} che comunicano tra loro. Esempio
+(sistema di sicurezza domestica):
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize, >={Straight Barb[length=2mm]},
+  sub/.style={draw, rounded corners=6pt, align=center, minimum width=2.6cm,
+              minimum height=1.4cm, fill=white}]
+  \node[sub] (P) at (0,0) {\textbf{Control panel}\\\textbf{subsystem}};
+  \node[sub] (S) at (6,0) {\textbf{Sensor}\\\textbf{subsystem}};
+  \node[sub] (C) at (0,-3.6) {\textbf{Central}\\\textbf{communication}\\\textbf{subsystem}};
+  \draw[->] (P) -- node[below, align=left] {request for status\\assign to zone\\test status} (S);
+  \draw[->] ([xshift=-4mm]C.north) -- node[left, align=right] {request for system status\\
+    specification of type of alarm\\periodic status check} ([xshift=-4mm]P.south);
+  \draw[->] ([xshift=4mm]P.south) -- node[right, align=left] {request for alarm notification\\
+    periodic check-in\\require for configuration update} ([xshift=4mm]C.north);
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Come scomporre un sistema?}
+\begin{itemize}
+  \item Principio romano: \emph{divide et impera} --- dividere un sistema grande in
+        parti gestibili.
+  \item Metodi strutturati: \textbf{decomposizione funzionale}.
+  \item OO: \textbf{raggruppare le classi} in unità di livello più alto,
+        cioè \emph{package} e \emph{componenti}.
+\end{itemize}
+
 \subsubsection{Diagrammi dei package}
+Un diagramma dei package mostra i package e le \textbf{dipendenze} tra loro. Esiste una
+dipendenza tra due elementi se modificare la definizione di uno può causare modifiche
+all'altro.
+
+Obiettivo (e arte) della progettazione su larga scala: \textbf{minimizzare le
+dipendenze}, così da limitare gli effetti delle modifiche.
+
+\paragraph{Package annidati}
+Esempio, sistema per inviare e gestire ordini:
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize, >={Straight Barb[length=2mm]},
+  pkg/.style={draw, minimum width=2.4cm, minimum height=0.8cm, align=center,
+              fill=white}]
+  \draw (-0.8,-3.0) rectangle (8.3,-5.4); \draw (-0.8,-3.0) rectangle ++(1.2,0.25);
+  \node at (3.75,-3.3) {Domain};
+  \node[pkg] (OU) at (0.5,0) {Order Capture\\UI};
+  \node[pkg] (AWT) at (3.75,0) {AWT};
+  \node[pkg] (MU) at (7,0) {Mailing List\\UI};
+  \node[pkg] (OA) at (0.5,-1.7) {Order Capture\\Application};
+  \node[pkg] (MA) at (7,-1.7) {Mailing List\\Application};
+  \node[pkg] (O) at (1.2,-4.4) {Orders};
+  \node[pkg] (C) at (6.3,-4.4) {Customers};
+  \foreach \n in {OU,AWT,MU,OA,MA,O,C}
+    \draw (\n.north west) rectangle ++(0.7,0.22);
+  \draw[->] (OU) -- (AWT); \draw[->] (MU) -- (AWT);
+  \draw[->] (OU) -- (OA); \draw[->] (MU) -- (MA);
+  \draw[->] (OA) -- (2.5,-2.95); \draw[->] (MA) -- (5,-2.95);
+  \draw[->] (O) -- (C);
+\end{tikzpicture}
+\end{center}
+Una dipendenza verso un package che ne contiene altri ha due interpretazioni:
+\begin{itemize}
+  \item \textbf{trasparente}: è visibile tutto il contenuto dei package contenuti;
+  \item \textbf{opaca}: sono visibili solo le classi del package contenitore.
+\end{itemize}
+
+\paragraph{Limitare la complessità dell'interfaccia di un package}
+\begin{itemize}
+  \item dare a tutte le classi del package visibilità di \emph{package};
+  \item definire una classe pubblica che fornisce il comportamento pubblico del package;
+  \item delegare le operazioni pubbliche alle classi opportune all'interno del package.
+\end{itemize}
+È il pattern \textbf{Facade} [Gamma et al.\ 1994].
+
+\paragraph{Regole pratiche}
+\begin{itemize}
+  \item evitare cicli nella struttura delle dipendenze;
+  \item troppe dipendenze: provare a fare refactoring del sistema;
+  \item usare i package quando il diagramma delle classi del sistema non è leggibile su
+        un singolo foglio A4.
+\end{itemize}
+
+\paragraph{Package vs.\ diagrammi}
+\begin{itemize}
+  \item I \textbf{package} rappresentano divisioni \emph{fisiche} dello sviluppo: servono
+        a definire i \emph{work package} e a sviluppare il sistema.
+  \item I \textbf{diagrammi} rappresentano un'aggregazione \emph{logica}
+        dell'informazione: servono a capire il dominio.
+\end{itemize}
+
 \subsubsection{Design pattern}
+\begin{quote}
+\emph{\ldots\ in molti sistemi object-oriented si trovano pattern ricorrenti di classi e
+di oggetti che comunicano. Questi pattern risolvono specifici problemi di progettazione e
+rendono il design OO più flessibile, elegante e riusabile. Aiutano i progettisti a
+riusare design di successo basando i nuovi sull'esperienza passata. Un progettista che li
+conosce può applicarli subito, senza doverli riscoprire.} --- Gamma et al.
+\end{quote}
+Un design pattern è descritto da:
+\begin{itemize}
+  \item \textbf{nome}: un'astrazione che comunica significato, applicabilità e intento;
+  \item \textbf{descrizione del problema}: l'ambiente e le condizioni che devono esistere
+        perché il pattern sia applicabile;
+  \item \textbf{caratteristiche}: gli attributi del design che si possono adattare per
+        applicare il pattern a problemi diversi;
+  \item \textbf{conseguenze}: le ricadute delle scelte di design fatte usando il pattern.
+\end{itemize}
 
 
 
@@ -1630,6 +2231,241 @@ pag 6
 
 
 
+
+
+\subsubsection{Componenti e nodi}
+\paragraph{Componenti}
+Un \textbf{componente} rappresenta l'impacchettamento \emph{fisico} di elementi
+altrimenti logici (es.\ una \texttt{.dll}). Si disegna come un rettangolo con due
+rettangolini sul lato sinistro. Un componente può esporre \textbf{interfacce}
+(notazione a «lecca-lecca»), da cui altri componenti dipendono:
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize, >={Straight Barb[length=2mm]}]
+  \newcommand{\comp}[3]{%
+    \draw[fill=white] (#1,#2) rectangle ++(2.4,-1.2);
+    \draw[fill=white] (#1-0.2,#2-0.3) rectangle ++(0.4,-0.18);
+    \draw[fill=white] (#1-0.2,#2-0.65) rectangle ++(0.4,-0.18);
+    \node at (#1+1.3,#2-0.25) {\texttt{#3}};}
+  \comp{0}{0.6}{mickeymouse.dll}
+  \comp{6.5}{0.6}{pluto.dll}
+  \draw (2.4,0) -- (3.8,0); \draw[fill=white] (4,0) circle (2mm);
+  \node[below] at (4,-0.2) {Detective};
+  \draw[->, dashed] (6.3,0) -- (4.25,0);
+\end{tikzpicture}
+\end{center}
+\texttt{mickeymouse.dll} \emph{realizza} l'interfaccia \textsf{Detective};
+\texttt{pluto.dll} \emph{dipende} da essa (freccia tratteggiata). Le classi realizzate
+da un componente si collegano a esso con una dipendenza.
+
+UML definisce cinque \textbf{stereotipi} per i componenti: \emph{executable},
+\emph{library}, \emph{table}, \emph{file}, \emph{document}. Si possono anche definire
+icone proprie.
+
+\paragraph{Nodi}
+Un \textbf{nodo} è un elemento fisico che esiste a run-time e rappresenta una risorsa
+computazionale, in genere con almeno un po' di memoria e spesso capacità di
+elaborazione. Si disegna come un parallelepipedo; può avere un nome semplice
+(\texttt{kiosk\_7}) o esteso (\texttt{server::backup}), e può elencare i componenti che
+ospita (\texttt{Deploys pos.exe}).
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize]
+  \draw[fill=white] (0,0) rectangle (2.6,-1.5);
+  \draw (0,0) -- (0.3,0.3) -- (2.9,0.3) -- (2.6,0);
+  \draw (2.9,0.3) -- (2.9,-1.2) -- (2.6,-1.5);
+  \node at (1.3,-0.3) {sales};
+  \draw (0,-0.55) -- (2.6,-0.55);
+  \node[align=center] at (1.3,-1.0) {Deploys\\pos.exe};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Componenti vs.\ nodi}
+\begin{itemize}
+  \item Si somigliano: hanno nomi, partecipano a relazioni di dipendenza,
+        generalizzazione e associazione, possono essere annidati, avere istanze,
+        partecipare a interazioni.
+  \item Però i \textbf{componenti} \emph{partecipano} all'esecuzione del sistema,
+        mentre i \textbf{nodi} \emph{eseguono} i componenti.
+  \item I componenti rappresentano l'impacchettamento fisico di elementi logici; i nodi
+        rappresentano il \emph{deployment} fisico dei componenti.
+\end{itemize}
+Un \textbf{diagramma di deployment} mostra i nodi (es.\ \texttt{: kiosk},
+\texttt{s : server}, \texttt{c : console}), i componenti che ciascuno ospita e i
+collegamenti fisici tra nodi (es.\ «10-T
+Ethernet», «RS-232»).
+
+\subsubsection{UML per sistemi real-time}
+Per i sistemi real-time in UML vanno considerati due aspetti: le caratteristiche di UML
+già utilizzabili e le estensioni proposte (sfruttando la capacità di UML di
+auto-estendersi).
+
+\paragraph{Costrutti real-time in UML}
+\begin{itemize}
+  \item \textbf{Eventi temporali e di cambiamento}: specificano quando un'azione va
+        eseguita.
+  \begin{itemize}
+    \item \texttt{when} indica la data/ora in cui l'evento avverrà:
+          \texttt{when(12:00) / goForLunch()};
+    \item \texttt{after} indica dopo quanto tempo l'evento avverrà:
+          \texttt{after(5 minutes) / put the egg in the pot}.
+  \end{itemize}
+  Si usano come eventi nelle transizioni degli statechart (es.\ da
+  \textsf{Resting}: \texttt{after(1 hour) / check the house},
+  \texttt{when(12:00 noon) / go for lunch}).
+  \item \textbf{Vincoli temporali} sui messaggi:
+  \begin{itemize}
+    \item tre variabili predefinite: \texttt{startTime}, \texttt{stopTime},
+          \texttt{executionTime};
+    \item il costrutto \texttt{every} indica un messaggio rinviato a intervalli
+          regolari.
+  \end{itemize}
+\end{itemize}
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize, >={Triangle[length=1.8mm]},
+  obj/.style={draw, minimum height=0.6cm}]
+  \node[obj] (G) at (0,0) {\underline{g : Owner}};
+  \node[obj] (R) at (4.5,0) {\underline{r : Lazy Dog}};
+  \draw (G) -- (R);
+  \node[align=center] at (2.25,0.6) {\{every 1 hour\}\\1: callToOrder() $\rightarrow$};
+  \draw[->] (R.east) to[out=30, in=-30, looseness=4] (R.east);
+  \node[align=left, anchor=west] at (6.1,0) {\{executionTime $<$ 1 hour\}\\
+    2: checkTheHouse()};
+\end{tikzpicture}
+\end{center}
+Purtroppo nessuno strumento o linguaggio di programmazione esistente fa rispettare questi
+vincoli.
+
+\paragraph{ROOM} (\emph{Real-time Object Oriented Modeling}) è un'estensione per il
+real-time: introduce le «capsule» (oggetti attivi) che
+comunicano attraverso «port» tipizzate da un protocollo
+(es.\ \texttt{portA : ProtocolA::master}).
+
+\subsubsection{Object Constraint Language (OCL)}
+OCL è il linguaggio di espressioni di UML:
+\begin{itemize}
+  \item \textbf{puro}: nessun effetto collaterale;
+  \item di \textbf{modellazione}: non può essere eseguito;
+  \item \textbf{formale}: ha una semantica ben definita.
+\end{itemize}
+Obiettivo: definire in modo pulito e non ambiguo le condizioni (es.\ le guardie) in UML.
+
+Classe di esempio: \textsf{Dog} con \texttt{Real weight}, \texttt{Real age},
+\texttt{eat(f: Real)}, \texttt{bark()}, associata a \textsf{Person} (ruoli
+\texttt{owner} e \texttt{pet}, molteplicità \texttt{*} sui cani); istanze \textsf{Joe}
+(persona) e \textsf{Fido} (cane).
+
+\paragraph{Caratteristiche principali}
+\begin{itemize}
+  \item Gli attributi hanno la stessa sintassi di Java, ma \texttt{this} diventa
+        \texttt{self}: \texttt{self.weight < 100}.
+  \item Le espressioni sono \textbf{fortemente tipate} e la conformità dei tipi viene
+        controllata: \texttt{self.weight < "abc"} è un errore.
+  \item \textbf{Pre- e post-condizioni} sulle operazioni:
+\begin{verbatim}
+Dog::bark()
+  pre:  neighborhood is happy
+  post: neighborhood is angry
+Dog::eat(f: Real)
+  post: weight = weight@pre + f
+\end{verbatim}
+        \texttt{@pre} indica il valore prima dell'esecuzione.
+  \item Le associazioni con cardinalità 1 sono trattate come attributi
+        (\texttt{Fido.owner = Joe}); quelle con cardinalità diversa da 1 come
+        \textbf{insiemi} (\texttt{Joe->pet} è l'insieme dei cani di Joe). \texttt{.} e
+        \texttt{->} si possono usare in modo polimorfo.
+  \item Tipi: \texttt{OCLAny} (radice), \texttt{Real}, \texttt{Integer},
+        \texttt{String}, \texttt{Boolean}, enumerazioni, \texttt{OCLType}, e
+        \texttt{Collection} con le sottoclassi \texttt{Set}, \texttt{Bag},
+        \texttt{Sequence}.
+  \item Metodi delle collezioni: \texttt{size}, \texttt{includes}, \texttt{count},
+        \texttt{includesAll}, \texttt{isEmpty}, \texttt{notEmpty}, \texttt{sum},
+        \texttt{exists}, \texttt{forAll}, \texttt{iterate}, \texttt{select},
+        \texttt{reject}, \texttt{collect}.
+\end{itemize}
+
+\subsubsection{Refactoring}
+I sistemi software evolvono e richiedono aggiornamento e «manutenzione» continui: serve
+renderli semplici (o almeno «non orribilmente difficili»). Da qui lo sviluppo
+incrementale con cicli brevi e \textbf{refactoring costante}.
+
+Fare refactoring dei diagrammi UML significa rivedere il sistema ristrutturandone il
+design e quello dei suoi componenti, puntando alla semplicità e a una maggiore aderenza
+alla struttura del dominio, \textbf{mantenendone il comportamento}.
+
+\paragraph{Esempio}
+\begin{center}
+\begin{tikzpicture}[font=\sffamily\scriptsize,
+  cl/.style={draw, minimum width=1.6cm, minimum height=0.5cm, fill=white},
+  gen/.style={-{Triangle[open, length=2mm, width=2.5mm]}}]
+  \node[cl] (A) at (0,0) {Array};
+  \node[cl] (M) at (0,-1.4) {Matrix};
+  \draw[gen] (M) -- (A);
+  \node at (1.6,-0.7) {$\Rightarrow$};
+  \node[cl] (A2) at (4,0) {Array};
+  \node[cl] (M2) at (4,-1.4) {Matrix};
+  \node[cl] (S) at (3,-2.8) {SparseMatrix};
+  \node[cl] (D) at (5,-2.8) {DenseMatrix};
+  \draw[gen] (M2) -- (A2); \draw[gen] (S) -- (M2); \draw[gen] (D) -- (M2);
+  \node at (6.5,-0.7) {$\Rightarrow$};
+  \node[cl] (I) at (9,0) {IndexedCollection};
+  \node[cl] (A3) at (11.3,-1.4) {«interface» Array};
+  \node[cl] (M3) at (6.9,-1.4) {Matrix};
+  \node[cl] (V3) at (8.7,-1.4) {Vector};
+  \node[cl] (S3) at (10.3,-2.8) {SparseArray};
+  \node[cl] (D3) at (12.3,-2.8) {DenseArray};
+  \draw[gen] (M3) -- (I); \draw[gen] (V3) -- (I);
+  \draw[-{Diamond[open, length=3mm, width=2mm]}] (A3) -- (I);
+  \draw[gen, dashed] (S3) -- (A3); \draw[gen, dashed] (D3) -- (A3);
+\end{tikzpicture}
+\end{center}
+Si parte da \textsf{Matrix} sottoclasse di \textsf{Array}; si aggiungono le
+specializzazioni; infine si separa ciò che si indicizza (\textsf{IndexedCollection},
+con le sottoclassi \textsf{Matrix} e \textsf{Vector}) dalla strategia di memorizzazione
+(interfaccia \textsf{Array}, realizzata da \textsf{SparseArray} e \textsf{DenseArray}).
+
+\paragraph{Tecniche}
+Operazioni applicabili a classi, dati (statici) membro, funzioni (statiche) membro e dati
+temporanei:
+\begin{center}
+\begin{tabular}{lcccc}
+  \hline
+  & Classe & Dati membro & Funzioni membro & Dati temp. \\
+  \hline
+  Aggiungere            & \checkmark & \checkmark & \checkmark & \checkmark \\
+  Eliminare             & \checkmark & \checkmark & \checkmark & \checkmark \\
+  Rinominare            & \checkmark & \checkmark & \checkmark & \checkmark \\
+  Spostare su/giù       & \checkmark & \checkmark & \checkmark & --- \\
+  Scomporre/condensare  & \checkmark & ---        & \checkmark & --- \\
+  Ri-qualificare        & ---        & ---        & \checkmark & \checkmark \\
+  \hline
+\end{tabular}
+\end{center}
+(--- = combinazione non applicabile.)
+
+\paragraph{Design pattern e refactoring}
+I design pattern aiutano il refactoring perché suggeriscono la struttura interna del
+codice, guidano la creazione di nuove strutture di oggetti e classi, e separano le
+strategie di implementazione dall'obiettivo. Guida:
+\begin{itemize}
+  \item creazione coerente tra classi $\rightarrow$ \textbf{Abstract Factory};
+  \item creazione che dipende dall'ambiente $\rightarrow$ \textbf{Factory Method};
+  \item creazione a partire da un'entità prototipo $\rightarrow$ \textbf{Prototype};
+  \item numero variabile di funzionalità $\rightarrow$ \textbf{Decorator};
+  \item struttura ad albero $\rightarrow$ \textbf{Composite};
+  \item double dispatching $\rightarrow$ \textbf{Visitor};
+  \item implementazione flessibile di un algoritmo $\rightarrow$ \textbf{Strategy};
+  \item implementazione flessibile di una classe $\rightarrow$ \textbf{Bridge}.
+\end{itemize}
+
+\paragraph{Criteri}
+\begin{itemize}
+  \item fare refactoring quando il programma mostra carenze, non per «miglioramento
+        concettuale»;
+  \item scrivere il codice esattamente una volta (cfr.\ la relazione
+        «include» nei casi d'uso);
+  \item eliminare entità grandi (metodi, classi, package/namespace).
+\end{itemize}
+\textbf{Inibitori}: «il sistema funziona» e mancano tempo e soldi; dover lavorare con le
+astrazioni di design di qualcun altro.
 
 \newpage
 \section{Modulo 2}
@@ -1995,3 +2831,4 @@ lavora in \emph{pair}/\emph{mob programming}. Rimedi:
 \end{enumerate}
 
 \end{document}
+
