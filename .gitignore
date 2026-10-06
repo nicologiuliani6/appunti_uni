@@ -50,3 +50,6 @@ PandAOSsh/
 
 # Slide e dispense dei docenti: materiale protetto da copyright, non va su GitHub
 pdf/
+
+# Allenamento esami: chiave API personale
+esami/.ai_key
