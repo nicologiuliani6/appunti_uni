@@ -94,15 +94,21 @@ function home() {
   const m = DATA[cur], hist = store.get("hist", {});
   const kind = p => p.key.startsWith("progetto") ? "Progetti" : p.key.startsWith("banca") ? "Banca domande" : "Scritti e quiz";
   let last = "";
-  const ok = studied(m), mir = mirato(m), nq = mir.blocks.filter(b => b.type != "contesto").length;
+  const ok = studied(m), mir = mirato(m), nq = mir.stats.tot, st = mir.stats;
   const count = id => new Set(m.prove.flatMap(p => p.blocks.filter(b => b.topics?.includes(id)).map(b => b.q))).size;
   const top = `<div class="card ctx"><div class="t" style="flex:1"><b>🎯 Allenamento sui tuoi argomenti</b>
-      <div class="small">${nq} domande uniche su ${ok.size} argomenti studiati</div>
+      <div class="small">${nq} domande su ${ok.size} argomenti studiati · <span style="color:var(--ok)">${st.giuste} giuste</span> · <span style="color:var(--ko)">${st.sbagliate} da ripassare</span> · ${st.mai} mai viste</div>
       <details><summary class="small" style="cursor:pointer">Scegli argomenti (default dai tuoi appunti)</summary>
       ${m.topics.map(t => `<label style="display:block"><input type="checkbox" ${ok.has(t.id) ? "checked" : ""} onclick="event.stopPropagation()" onchange="setStudied('${t.id}', this.checked)"> ${esc(t.nome)} <span class="small">(${count(t.id)})</span></label>`).join("")}
       </details></div>
-      <button class="btn pri" ${nq ? "" : "disabled"} onclick="run(mirato(DATA[cur]))">Inizia</button></div>`;
-  $("#app").innerHTML = top + `<div class="list">` + (m.prove.length ? m.prove.map((p, i) => {
+      <div class="row" style="flex-direction:column;align-items:stretch">${[10, 20].filter(n => n < nq).map(n =>
+        `<button class="btn pri" onclick="run(mirato(DATA[cur], ${n}))">${n} domande</button>`).join("")}
+        <button class="btn" ${nq ? "" : "disabled"} onclick="run(mirato(DATA[cur]))">Tutte (${nq})</button></div></div>`;
+  const ps = store.get("pausa", {})[m.slug];
+  const resume = ps ? `<div class="card" style="border-color:var(--acc)"><div class="t" style="flex:1"><b>▶️ Sessione in pausa: ${esc(ps.titolo)}</b>
+      <div class="small">${Object.keys(ps.done).length} domande già fatte${ps.qids ? ` su ${ps.qids.length}` : ""} · ${Math.round(ps.elapsed / 60000)} min · ${new Date(ps.data).toLocaleString("it-IT", { dateStyle: "short", timeStyle: "short" })}</div></div>
+      <div class="row"><button class="btn pri" onclick="riprendi()">Riprendi</button><button class="btn" onclick="if(confirm('Scartare la sessione in pausa?'))scarta()">Scarta</button></div></div>` : "";
+  $("#app").innerHTML = resume + top + `<div class="list">` + (m.prove.length ? m.prove.map((p, i) => {
     const h3 = kind(p) != last ? `<h3 class="small" style="margin:18px 4px 4px">${last = kind(p)}</h3>` : "";
     return h3 + card(p, i);
   }).join("") : `<p class="small">Nessuna prova per questa materia.</p>`) + `</div>`;
@@ -126,21 +132,35 @@ function setStudied(id, on) {
 const inProgram = (b, ok) => b.topics.length > 0 && b.topics.every(t => ok.has(t));
 
 // prova virtuale: tutte le domande (senza duplicati) sugli argomenti studiati, col loro contesto
-function mirato(m) {
-  const ok = studied(m), seen = new Set(), blocks = [];
+// padronanza per domanda (stesso testo in prove diverse = stessa domanda): {ok, data}
+const qid = (m, b) => { let h = 5381; for (const c of b.q + (b.options || []).join("|")) h = (h * 33 ^ c.charCodeAt(0)) >>> 0; return m.slug + ":" + h.toString(36); };
+const stato = (m, b) => { const r = store.get("mastery", {})[qid(m, b)]; return r ? (r.ok ? 2 : 1) : 0; };  // 0 mai vista, 1 sbagliata, 2 giusta
+function segna(j) {
+  if (!exam) return;
+  const b = exam.p.blocks[j], all = store.get("mastery", {});
+  all[qid(exam.m, b)] = { ok: (exam.rub[j] || 0) >= b.pts - 1e-9, data: new Date().toISOString() };
+  store.set("mastery", all);
+}
+
+// prova virtuale sugli argomenti studiati: prima le mai viste, poi le sbagliate, poi le giuste; n = quante
+function mirato(m, n = Infinity, only = null) {
+  const ok = studied(m), seen = new Set(), items = [];
   for (const p of m.prove) {
-    let ctx = null, pushed = null;
+    let ctx = null;
     for (const b of p.blocks) {
       if (b.type == "contesto") { ctx = b; continue; }
-      const k = b.q + (b.options || []).join("|");
-      if (!inProgram(b, ok) || seen.has(k)) continue;
-      seen.add(k);
-      if (ctx && pushed != ctx) blocks.push(pushed = ctx);
-      blocks.push(b);
+      const k = qid(m, b);
+      if ((only ? !only.includes(k) : !inProgram(b, ok)) || seen.has(k)) continue;
+      seen.add(k); items.push({ b, ctx, st: stato(m, b), i: items.length });
     }
   }
+  const pick = [...items].sort((x, y) => x.st - y.st || x.i - y.i).slice(0, n).sort((x, y) => x.i - y.i);
+  const blocks = []; let pushed = null;
+  for (const { b, ctx } of pick) { if (ctx && pushed != ctx) blocks.push(pushed = ctx); blocks.push(b); }
+  const cnt = st => items.filter(x => x.st == st).length;
   return { key: "mirato", titolo: `Allenamento mirato · ${m.name}`, durata: 0, orig: [], blocks,
-           fonte: "Solo domande sugli argomenti che hai già studiato (scegli gli argomenti dalla home)." };
+           stats: { tot: items.length, mai: cnt(0), sbagliate: cnt(1), giuste: cnt(2) },
+           fonte: "Domande sugli argomenti che hai già studiato: prima quelle mai viste, poi quelle sbagliate. Puoi fermarti quando vuoi con ⏸ Termina qui." };
 }
 
 function run(p) {
@@ -152,7 +172,9 @@ function run(p) {
       <div class="row"><button class="btn" onclick="home()">← Indietro</button>
       ${p.durata ? `<button class="btn" id="tbtn" onclick="startClock(${p.durata})">⏱ Avvia timer ${p.durata}'</button>` : ""}</div></div>`
     + p.blocks.map((b, j) => b.type == "contesto" ? `<div class="card ctx">${md(b.md)}</div>` : question(b, j, ++qn)).join("")
-    + `<div id="total"><button class="btn pri" onclick="consegna()">Consegna tutto</button><span id="tot"></span></div>`;
+    + `<div id="total"><button class="btn pri" onclick="consegna()">Consegna tutto</button>
+       <button class="btn" onclick="pausa()" title="Salva tutto e torna alla home: riprendi quando vuoi">⏸ Pausa</button>
+       <button class="btn" onclick="termina()" title="Chiudi qui: conta solo le domande a cui hai risposto">⏹ Termina qui</button><span id="tot"></span></div>`;
   typeset($("#app")); window.scrollTo(0, 0); total();
 }
 
@@ -177,6 +199,44 @@ function save(j) {
   const b = exam.p.blocks[j];
   if (b.type == "mcq") exam.ans[j] = [...document.querySelectorAll(`input[name=q${j}]:checked`)].map(x => +x.value);
   else exam.ans[j] = $((b.type == "num" ? "#n" : "#t") + j).value;
+  persist();
+}
+
+// sessione in corso salvata nel browser (una per materia): si riprende dalla home
+function persist() {
+  if (!exam) return;
+  const all = store.get("pausa", {});
+  if (exam.consegnata) delete all[exam.m.slug];
+  else all[exam.m.slug] = {
+    key: exam.p.key, titolo: exam.p.titolo, ans: exam.ans, done: exam.done, elapsed: Date.now() - exam.t0, data: new Date().toISOString(),
+    qids: exam.p.key == "mirato" ? exam.p.blocks.filter(b => b.type != "contesto").map(b => qid(exam.m, b)) : null,
+    griglia: Object.fromEntries(Object.keys(exam.done).map(j => [j, [...document.querySelectorAll(`[id^="g${j}_"]`)].map(c => c.checked)])),
+  };
+  store.set("pausa", all);
+}
+function pausa() { persist(); home(); }
+function scarta() { const all = store.get("pausa", {}); delete all[DATA[cur].slug]; store.set("pausa", all); home(); }
+function riprendi() {
+  const m = DATA[cur], s = store.get("pausa", {})[m.slug];
+  const p = s.qids ? mirato(m, Infinity, s.qids) : m.prove.find(x => x.key == s.key);
+  if (!p) return scarta();
+  run(p);
+  exam.t0 = Date.now() - s.elapsed;
+  for (const [j, a] of Object.entries(s.ans)) {
+    const b = p.blocks[j];
+    if (!b) continue;
+    if (b.type == "mcq") a.forEach(v => { const el = document.querySelector(`input[name=q${j}][value="${v}"]`); if (el) el.checked = true; });
+    else { const el = $((b.type == "num" ? "#n" : "#t") + j); if (el) el.value = a; }
+    exam.ans[j] = a;
+  }
+  for (const j of Object.keys(s.done)) {
+    if (!p.blocks[j]) continue;
+    check(+j);
+    (s.griglia[j] || []).forEach((v, k) => { const c = $(`#g${j}_${k}`); if (c) c.checked = v; });
+    if (p.blocks[j].type == "aperta") grade(+j);
+  }
+  const first = p.blocks.findIndex((b, j) => b.type != "contesto" && !s.done[j]);
+  if (first >= 0) $("#q" + first).scrollIntoView({ block: "center" });
 }
 
 function check(j) {
@@ -206,6 +266,7 @@ function check(j) {
     html += `<div class="row"><button class="btn" id="ex${j}" onclick="spiega(${j})">🧠 Spiegami${b.type == "aperta" ? " dove sbaglio" : " perché ho sbagliato"}</button></div><div id="exb${j}"></div>`;
   if (b.sol) html += `<div class="sol"><b>Soluzione</b>${md(b.sol)}</div>`;
   r.innerHTML = html;
+  segna(j); persist();
   if (b.type == "aperta") grade(j);
   typeset(r); total();
 }
@@ -214,6 +275,7 @@ function grade(j) {
   const b = exam.p.blocks[j], rubric = b.rubric.length ? b.rubric : [{ pts: b.pts }];
   exam.rub[j] = rubric.reduce((s, r, k) => s + ($(`#g${j}_${k}`)?.checked ? r.pts : 0), 0);
   $("#gs" + j).textContent = `${exam.rub[j]}/${b.pts} pt`;
+  segna(j); persist();
   total();
 }
 
@@ -280,13 +342,24 @@ function copyPrompt(j) {
 }
 
 function total() {
-  const qs = exam.p.blocks.map((b, j) => [b, j]).filter(([b]) => b.type != "contesto");
+  let qs = exam.p.blocks.map((b, j) => [b, j]).filter(([b]) => b.type != "contesto");
+  if (exam.parziale) qs = qs.filter(([, j]) => exam.done[j]);
   const max = qs.reduce((s, [b]) => s + b.pts, 0), got = qs.reduce((s, [, j]) => s + (exam.rub[j] || 0), 0);
   const done = qs.filter(([, j]) => exam.done[j]).length, voto = max ? got / max * 30 : 0;
   $("#tot").innerHTML = done ? `<span class="big score">${got}/${max} pt</span> → <span class="big score">${voto.toFixed(1)}/30</span>
-    <span class="small">(${done}/${qs.length} corrette${done < qs.length ? "; le non verificate valgono 0" : ""})</span>
+    <span class="small">(${exam.parziale ? `terminata a metà: voto su ${done} domande fatte` : `${done}/${qs.length} corrette${done < qs.length ? "; le non verificate valgono 0" : ""}`})</span>
     ${exam.consegnata ? `<span class="small">💾 salvato nello storico${qs.some(([b]) => b.type == "aperta") ? " (si aggiorna mentre correggi le aperte)" : ""}</span>` : ""}` : `<span class="small">${qs.length} domande · ${max} punti</span>`;
-  if (exam.consegnata) salva(voto, got, max);
+  if (exam.consegnata) { salva(voto, got, max); persist(); }
+}
+
+// fermarsi a metà: verifica le risposte date e calcola il voto solo su quelle
+function termina() {
+  const answered = j => { const a = exam.ans[j]; return Array.isArray(a) ? a.length > 0 : !!String(a ?? "").trim(); };
+  exam.p.blocks.forEach((b, j) => { if (b.type != "contesto" && !exam.done[j] && answered(j)) check(j); });
+  if (!exam.p.blocks.some((b, j) => exam.done[j])) return alert("Non hai ancora risposto a nessuna domanda.");
+  stopClock(); exam.parziale = exam.consegnata = true;
+  exam.p.blocks.forEach((b, j) => { if (b.type != "contesto" && !exam.done[j]) $("#q" + j).style.display = "none"; });
+  total(); $("#total").scrollIntoView({ behavior: "smooth" });
 }
 
 function consegna() {

@@ -6,7 +6,7 @@ Chiave: variabile AI_KEY oppure file .ai_key accanto a questo script (non va su 
 Provider di default: Groq. Per Gemini:
   AI_BASE=https://generativelanguage.googleapis.com/v1beta/openai AI_MODEL=gemini-2.5-flash python3 server.py
 """
-import json, os, urllib.request, urllib.error
+import json, os, re, urllib.request, urllib.error
 from functools import partial
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
@@ -38,14 +38,25 @@ Spiega in italiano, in modo chiaro e breve (max 200 parole, markdown, formule in
 1. perché la sua risposta è sbagliata o incompleta (il ragionamento errato più probabile);
 2. perché la risposta corretta è giusta, con l'idea chiave da ricordare;
 3. un piccolo esempio o trucco mnemonico se aiuta.
+La RISPOSTA CORRETTA indicata è quella ufficiale: spiegala. Se ti sembra davvero discutibile, dillo esplicitamente
+("la chiave ufficiale è X, però…") invece di contraddirla senza avvisare. Leggi anche la SOLUZIONE DI RIFERIMENTO, che può già discuterlo.
+Formule LaTeX con i comandi completi di backslash (\\prod, \\sum, \\frac), dentro $...$.
 Rispondi SOLO con JSON: {"spiegazione": "..."}"""
+
+
+LATEX = re.compile(r"(?<![\\a-zA-Z])(prod|sum|frac|sigma|pi|bowtie|mid|log|cdot|neq|leq|geq|theta|mu|infty|wedge|vee|neg|in|cap|cup|sqrt|alpha|beta|lambda)(?=[_{^\s(\\|])")
+
+
+def fix_latex(text):
+    # il modello a volte dimentica il backslash dei comandi (es. $prod_i$): lo rimetto solo dentro $...$
+    return re.sub(r"\$[^$]+\$", lambda m: LATEX.sub(r"\\\1", m.group(0)), text)
 
 
 def explain(req):
     user = (f"MATERIA: {req['materia']}\n\n" + (f"CONTESTO:\n{req['contesto']}\n\n" if req.get("contesto") else "")
             + f"DOMANDA:\n{req['domanda']}\n\nRISPOSTA DELLO STUDENTE:\n{req['risposta'] or '(nessuna)'}\n\n"
             + f"RISPOSTA CORRETTA:\n{req['corretta']}\n\nSOLUZIONE DI RIFERIMENTO:\n{req.get('soluzione', '')}")
-    return {"spiegazione": str(ask(EXPLAIN, user).get("spiegazione", "")), "modello": MODEL}
+    return {"spiegazione": fix_latex(str(ask(EXPLAIN, user).get("spiegazione", ""))), "modello": MODEL}
 
 
 def ask(system, user):
@@ -62,6 +73,11 @@ ROUTES = {"/api/grade": grade, "/api/explain": explain}
 
 
 class Handler(SimpleHTTPRequestHandler):
+    def end_headers(self):
+        # niente cache: dopo ogni modifica a index.html/data.js il browser prende sempre la versione nuova
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
     def do_POST(self):
         if self.path not in ROUTES:
             return self.send_error(404)

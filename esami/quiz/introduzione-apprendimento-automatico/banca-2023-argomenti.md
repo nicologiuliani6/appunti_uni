@@ -249,12 +249,14 @@ Dalla congiunta si ricava tutto (marginali, condizionate), ma il numero di valor
 
 ## [mcq 1] [distribuzione congiunta di probabilità] Selezionare la sentenza errata relativa alla distribuzione congiunta di probabilità per N variabili aleatorie discrete
 - [ ] È la distribuzione di probabilità di tutte le possibili tuple di valori per le variabili
-- [x] Richiede il calcolo di un numero esponenziale di parametri
+- [ ] Richiede il calcolo di un numero esponenziale di parametri
 - [x] Non permette il calcolo di probabilità condizionali tra le features
 - [ ] Consente il calcolo delle probabilità marginali delle singole features
 
 ### Soluzione
-Domanda a risposta multipla secondo Virtuale. 'Non permette il calcolo di probabilità condizionali' è certamente errata: dalla congiunta si ricava qualunque marginale o condizionata. Il quiz segna come errata anche 'richiede un numero esponenziale di parametri', il che è discutibile (servono $\prod_i|X_i|-1$ valori, esponenziale in N): memorizza la risposta ufficiale ma sappi che è contestabile.
+Risposta: **c)**. Dalla distribuzione congiunta si ricava *qualunque* marginale (sommando) e qualunque condizionata ($P(A|B)=P(A,B)/P(B)$), quindi dire che non lo permette è falso.
+
+Attenzione: 'richiede un numero esponenziale di parametri' è **vera** (servono $\prod_i |X_i| - 1$ valori, esponenziale in N: è proprio il motivo per cui si usa Naive Bayes). Il quiz Virtuale però la segnava come errata insieme a c), con risposta multipla: se la ritrovi su Virtuale, la chiave ufficiale vuole **a + c**.
 
 ## [mcq 1] [Probabilità condizionata] Selezionare le sentenza corretta relativa alla probabilità condizionata P(A|B) tra due eventi A e B
 - [x] P(A|B) è sicuramente maggiore o uguale di P(A and B)

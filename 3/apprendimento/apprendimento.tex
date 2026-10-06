@@ -1272,7 +1272,9 @@ training:
 \Delta w_i &= \mu \cdot \frac{\partial E}{\partial w_i}\\
 w_i &= w_i + \Delta w_i
 \end{align*}
-\end{minipage}
+\end{minipage}\\
+\vspace{1px}\\
+\textbf{Perché il segno è $+$?} Qui $E$ è la \hl{log-likelihood}, da \textbf{massimizzare}. Il gradiente punta nella direzione in cui la funzione \textbf{cresce}, quindi per salire ci si muove \textbf{nella} direzione del gradiente: \hl{ascesa del gradiente} $\Rightarrow \Delta w_i = +\mu \cdot \frac{\partial E}{\partial w_i}$.
 
 \subsection{La tecnica del gradiente}
 \subsubsection{Approccio iterativo}
@@ -1281,6 +1283,30 @@ L'obiettivo consiste nel minimizzare una qualche funzione di errore $\Theta(w)$ 
 Possiamo raggiungere un minimo per $\Theta(w)$ compiendo \hl{iterativamente} dei \hl{piccoli passi} nella direzione opposta al gradiente (\hl{discesa del gradiente}).\\
 \vspace{1px}\\
 Si tratta di una \textbf{tecnica generale}, tuttavia non garantisce di raggiungere minimi globali.
+
+\paragraph{Passo e learning rate}
+Il \hl{passo} è lo spostamento dei parametri a ogni iterazione:
+\[
+\Delta w_i = -\mu \cdot \frac{\partial \Theta}{\partial w_i} \qquad\qquad w_i \leftarrow w_i + \Delta w_i
+\]
+\begin{itemize}
+\item il \textbf{gradiente} dà la \textbf{direzione} (si va nel verso opposto, perché si minimizza);
+\item il \hl{learning rate} $\mu$ (spesso indicato con $\eta$) è lo scalare che ne decide l'\textbf{ampiezza}: passo $= \mu \cdot$ gradiente.
+\end{itemize}
+\textbf{Perché qui il segno è $-$?} Qui $\Theta$ è una \hl{funzione di errore}, da \textbf{minimizzare}: per scendere ci si muove \textbf{contro} il gradiente: \hl{discesa del gradiente} $\Rightarrow \Delta w_i = -\mu \cdot \frac{\partial \Theta}{\partial w_i}$.\\
+\vspace{1px}\\
+Nella sezione precedente invece compare $+$ perché lì $E$ è la log-likelihood, da \textbf{massimizzare} (ascesa). Le due cose \textbf{coincidono}: massimizzare la log-likelihood equivale a minimizzare il suo opposto $\Theta = -E$ (\emph{cross-entropy}), e
+\[
+-\mu \cdot \frac{\partial \Theta}{\partial w_i} = -\mu \cdot \frac{\partial (-E)}{\partial w_i} = +\mu \cdot \frac{\partial E}{\partial w_i}
+\]
+\textbf{Regola}: errore/loss (minimizzo) $\Rightarrow -$; likelihood/reward (massimizzo) $\Rightarrow +$.\\
+\vspace{1px}\\
+Il learning rate è un \textbf{iperparametro}: non viene appreso dal training, si sceglie a mano (non è una metrica).
+\begin{itemize}
+\item $\mu$ \textcolor{red}{troppo alto}: training più veloce, ma i passi possono \textbf{saltare sopra al minimo}, oscillare o divergere;
+\item $\mu$ \textcolor{red}{troppo basso}: convergenza molto lenta, e più facile restare bloccati in minimi locali;
+\item può \textbf{variare durante il training} (\emph{learning rate schedule / decay}): conviene partire alto e \textbf{decrementarlo verso la fine}, per avvicinarsi al minimo con passi più fini.
+\end{itemize}
 
 \subsubsection{La superficie di errore}
 \begin{minipage}[c]{0.52\textwidth}
