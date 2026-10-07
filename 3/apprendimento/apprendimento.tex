@@ -483,6 +483,7 @@ Tipicamente si riserva una ulteriore porzione, il \textbf{test set}, per la valu
             \item effettuare (in modo greedy) il pruning del sottoalbero che ottimizza l'accuracy
         \end{enumerate}
     \end{itemize}
+    \item acquisizione di nuovi dati di training 
 \end{itemize}
 \subsubsection{Gini's impurity}
 Gini's impurity (coefficiente di Gini) misura la probabilità che un generico elemento sia mal classificato in base alla classificazione corrente (è una possibile alternativa alla nozione di entropia).\\
@@ -1354,40 +1355,38 @@ Su quanti punti misurare l'errore.\\
 \item probabilità che una istanza $\ell$ abbia etichetta $Y = 1$:
 \end{itemize}
 \[
-P(Y = 1 \mid x^\ell, w) = \sigma\left(w_0 + \sum_i w_i x_i^\ell\right) = \alpha^\ell
+\alpha^\ell = P(Y = 1 \mid x^\ell, w) = \sigma\left(w_0 + \sum_i w_i x_i^\ell\right)
 \]
 \begin{itemize}
-\item Log-likelihood $l(w)$:
+\item Log-likelihood:
 \end{itemize}
 \[
-\sum_\ell \log P(Y = y^\ell \mid x^\ell, w) = \sum_\ell y^\ell \log(\alpha^\ell) + (1 - y^\ell)\log(1 - \alpha^\ell)
+l(w) = \sum_\ell \log P(Y = y^\ell \mid x^\ell, w) = \sum_\ell y^\ell \log(\alpha^\ell) + (1 - y^\ell)\log(1 - \alpha^\ell)
 \]
 \begin{itemize}
-\item gradiente (dimostrazione nella prossima slide):
+\item gradiente (\textit{dimostrazione omessa}):
 \end{itemize}
 \[
 \frac{\partial l(w)}{\partial w_i} = \sum_\ell x_i^\ell \cdot (y^\ell - \alpha^\ell)
 \]
 
-\subsubsection{Calcolo del gradiente}
-\[
-\alpha^\ell = \sigma(z) = \frac{1}{1 + \exp(-z)} \quad \text{dove } z = w_0 + \sum_i w_i x_i^\ell
-\]
-\[
-\frac{\partial \log(\alpha^\ell)}{\partial z} = \frac{1}{\alpha^\ell}\frac{\partial \alpha^\ell}{\partial z} = \frac{\exp(-z)}{1 + \exp(-z)} = 1 - \alpha^\ell
-\]
-\[
-\log(1 - \alpha^\ell) = \log\frac{\exp(-z)}{1 + \exp(-z)} = -z + \log(\alpha^\ell)
-\]
-\[
-\frac{\partial \log(1 - \alpha^\ell)}{\partial z} = -1 + 1 - \alpha^\ell = -\alpha^\ell
-\]
-Ricordiamo che $l(w) = \sum_\ell y^\ell \log(\alpha^\ell) + (1 - y^\ell)\log(1 - \alpha^\ell)$, quindi
+\subsubsection{Il processo di apprendimento}
+Iterare la seguente \hl{operazione di update} finché non si raggiunge l'approssimazione desiderata (ad esempio fino a quando l'accuratezza sul set di validazione è soddisfacente o non sembra aumentare).
 \begin{align*}
-\frac{\partial l(w)}{\partial w_i} = \frac{\partial l(w)}{\partial z}\frac{\partial z}{\partial w_i}
-&= \sum_\ell \big( y^\ell (1 - \alpha^\ell) - (1 - y^\ell)\alpha^\ell \big) x_i^\ell\\
-&= \sum_\ell (y^\ell - \alpha^\ell)\, x_i^\ell
+& w_i \leftarrow w_i + \Delta w_i \\
+& w_i \leftarrow w_i + \mu \frac{\partial l(w)}{\partial w_i} \\
+& w_i \leftarrow w_i + \mu \sum_\ell x_i^\ell \cdot \left(y^\ell - \alpha^\ell\right) \\
+& w_i \leftarrow w_i + \mu \sum_\ell x_i^\ell \cdot \left(y^\ell - P(Y = 1 \mid x^\ell, w)\right)
 \end{align*}
+
+Frequentemente si aggiunge un qualche regolarizzatore:
+\[
+w_i \leftarrow w_i - \textcolor{red}{\mu\lambda w_i} + \mu \sum_\ell x_i^\ell \cdot \left(y^\ell - P(Y = 1 \mid x^\ell, w)\right)
+\]
+\begin{itemize}
+\item cerca di tenere i parametri $w_i$ vicini a 0;
+\item tende a ridurre l'overfitting.
+\end{itemize}
 
 \subsubsection{Osservazione sulla derivata della sigmoid}
 Nella slide precedente abbiamo visto che
@@ -1418,20 +1417,11 @@ Dunque:\\
 \end{tikzpicture}
 \end{minipage}\\
 \vspace{1px}\\
-La derivata della funzione logistica è molto piatta.
-
-\subsubsection{Il processo di apprendimento}
-Iterare la seguente \hl{operazione di update} finché non si raggiunge l'approssimazione desiderata (ad esempio fino a quando l'accuratezza sul set di validazione è soddisfacente o non sembra aumentare).
-\[
-w_i \leftarrow w_i + \mu \sum_\ell x_i^\ell \cdot \left(y^\ell - P(Y = y^\ell \mid x^\ell, w)\right)
-\]
-Frequentemente si aggiunge un qualche regolarizzatore:
-\[
-w_i \leftarrow w_i - \textcolor{red}{\mu\lambda |w_i|} + \mu \sum_\ell x_i^\ell \cdot \left(y^\ell - P(Y = y^\ell \mid x^\ell, w)\right)
-\]
+La derivata della funzione logistica è molto piatta: vale al massimo $\frac{1}{4}$ (in $z = 0$) e tende rapidamente a $0$ al crescere di $|z|$.
+Quando $z$ è lontano da $0$ la sigmoid è \textbf{satura} (output vicino a $0$ o a $1$): modificare i pesi non cambia quasi l'output, quindi il segnale di correzione è molto debole.
 \begin{itemize}
-\item cerca di tenere i parametri $w_i$ vicini a 0;
-\item tende a ridurre l'overfitting.
+\item Nella regressione logistica questo non è un problema: nel gradiente $\sum_\ell x_i^\ell (y^\ell - \alpha^\ell)$ il fattore $\sigma'(z)$ non compare, perché si semplifica con l'$\frac{1}{\alpha^\ell}$ prodotto dal logaritmo.
+\item Nelle reti profonde invece il gradiente attraversa molte sigmoid, e a ogni passaggio viene moltiplicato per un fattore $\le \frac{1}{4}$: dopo pochi layer è quasi nullo (\textit{vanishing gradient}).
 \end{itemize}
 
 \subsection{Modelli generativi e discriminativi}
