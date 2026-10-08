@@ -770,6 +770,605 @@ delimitano (\emph{scope and constrain}) il \emph{Work}; il \emph{Team} produce i
 \includegraphics[angle=-90,width=0.85\textwidth]{img/essence/kernel.png}
 \caption{Il grafo degli Alpha del kernel di Essence.}
 \end{figure}
+
+\subsection{Introduzione a Scrum}
+
+\subsubsection{Contesto: sviluppo agile}
+Certi sviluppi non si pianificano in anticipo: il problema è complesso e richiede il
+contributo di molte persone, la soluzione all'inizio non è chiara, i requisiti
+cambieranno durante lo sviluppo, il lavoro può essere articolato in \emph{incrementi} e
+serve una collaborazione stretta con feedback rapido e continuo degli utenti finali.
+
+Il \textbf{Manifesto agile} dichiara di preferire:
+\begin{itemize}
+  \item individui e interazioni $\succ$ processi e strumenti;
+  \item software che funziona $\succ$ documentazione completa;
+  \item collaborazione del cliente $\succ$ negoziazione contrattuale;
+  \item rispondere al cambiamento $\succ$ seguire un piano.
+\end{itemize}
+
+\paragraph{Dalla staffetta al pacchetto di mischia.} Takeuchi e Nonaka (1986) contrappongono
+l'approccio a \emph{staffetta} (requisiti $\to$ design $\to$ codice $\to$ test, una fase
+alla volta) a quello \emph{rugby}, in cui il team avanza come un'unità passandosi la
+palla. Il team Scrum fa un po' di tutto (requisiti, design, codice, test) in ogni sprint.
+
+\subsubsection{Che cos'è Scrum}
+Scrum è un \textbf{framework di project management} per lo sviluppo \emph{iterativo e
+incrementale} di prodotti, nato per i progetti software. Non è un processo né una
+tecnica: è un contenitore in cui usare processi e tecniche diverse (spesso insieme a XP).
+Rende evidente l'efficacia delle proprie pratiche di product management e sviluppo, così
+da migliorarle: non porta all'eccellenza, ma \emph{mostra il livello di inefficienza}
+(Ken Schwaber).
+
+In sintesi:
+\begin{itemize}
+  \item il cliente può ispezionare versioni funzionanti del software ogni 1--4 settimane;
+  \item il cliente definisce le funzioni e le priorità; il team decide ogni giorno come
+        realizzare al meglio quelle a priorità più alta;
+  \item a ogni sprint nasce una nuova versione, esaminata per decidere se fare un altro
+        sprint o produrre un rilascio;
+  \item team \textbf{auto-organizzante}, metodo agile parzialmente pianificato;
+  \item i requisiti stanno nel \textbf{Backlog}; sviluppo guidato da storie e test;
+  \item il prodotto cresce in \emph{sprint} di durata fissa;
+  \item meeting: review e retrospettive.
+\end{itemize}
+
+\subsubsection{Persone e ruoli}
+Un team ha $5\pm2$ persone (in altre slide $7\pm2$), tutte egualmente responsabili della
+riuscita del progetto. I ruoli sono tre. Si distingue tra ruoli \emph{pig} (coinvolti
+e responsabili del risultato: team, ScrumMaster, Product Owner) e ruoli \emph{chicken}
+(stakeholder esterni, coinvolti ma non responsabili) dalla storiella della gallina e del
+maiale.
+
+\begin{center}
+\begin{tabular}{|p{4.6cm}|p{4.6cm}|p{5.6cm}|}
+\hline
+\textbf{Product Owner (PO)} & \textbf{Scrum Master (SM)} & \textbf{Development Team (DT)}\\
+\hline
+Rappresenta il cliente & Difensore del team & Cross-funzionale\\
+Definisce le feature & Elimina gli ostacoli & Colocalizzato\\
+Stabilisce le priorità & Evita le interruzioni & Auto-organizzato\\
+Fissa le date di rilascio & Facilitatore del team & A tempo pieno\\
+Fornisce feedback & Controllore del processo & Definisce i task, stima lo sforzo\\
+Gestisce gli stakeholder & Gestisce il management & Evolve il processo\\
+Accetta o rifiuta i risultati & & Assicura la qualità\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Pilastri e valori}
+\paragraph{I tre pilastri} guidano tutte le attività:
+\begin{itemize}
+  \item \textbf{Trasparenza}: gli aspetti significativi del processo devono essere
+        visibili ai responsabili del risultato e compresi allo stesso modo (linguaggio
+        comune; la definizione di ``Fatto'' condivisa da chi esegue e da chi accetta).
+  \item \textbf{Ispezione}: gli artefatti vanno ispezionati spesso per rilevare
+        deviazioni dall'obiettivo dello sprint, ma non così spesso da intralciare il
+        lavoro, e da chi ne ha la competenza.
+  \item \textbf{Adattamento}: se l'ispezione rileva aspetti fuori dai limiti accettabili,
+        processo o materiale vanno adattati il più rapidamente possibile.
+\end{itemize}
+
+\paragraph{I cinque valori.}
+\begin{itemize}
+  \item \textbf{Focus}: SM rimuove impedimenti; PO massimizza il valore gestendo il
+        Product Backlog; il Team sviluppa in funzione della Definition of Done.
+  \item \textbf{Coraggio}: proteggere e guidare il Team (SM), fidarsi e dialogare con gli
+        stakeholder (PO), superare i propri limiti in ottica \emph{inspect-and-adapt}
+        (Team).
+  \item \textbf{Apertura}: aperti ai cambiamenti interni ed esterni e a nuove soluzioni,
+        soprattutto tecniche.
+  \item \textbf{Impegno} (commitment): il DT lo dichiara a ogni Sprint Planning; l'SM
+        diffonde la cultura Scrum; il PO si impegna con gli stakeholder a un incremento
+        costante.
+  \item \textbf{Rispetto}, nell'ottica della \emph{Prima Direttiva delle Retrospettive}
+        (Kerth): qualunque cosa si scopra, si crede che ognuno abbia fatto del suo meglio
+        date le conoscenze, le capacità, le risorse e la situazione del momento.
+\end{itemize}
+
+\subsubsection{Il processo: Product Backlog e Sprint}
+Il \textbf{Product Backlog} è la lista prioritizzata delle user story (anche come
+\emph{user story map}, backlog bidimensionale). Il processo si compone di \textbf{Sprint}
+di durata costante (2--4 settimane, per migliorare il ritmo); ogni sprint include
+design, codifica e test, estrae dal product backlog storie \emph{Ready} e aggiunge al
+prodotto codice \emph{Done}. Il risultato è un \textbf{incremento di prodotto
+potenzialmente rilasciabile} (MVP): verificato, testato, rifattorizzato, allineato alla
+DoD.
+
+\paragraph{Sprint planning.} Pianificazione di gruppo (PO, SM, Team) di almeno un'ora per
+ogni settimana di sprint.
+\begin{itemize}
+  \item il Team sceglie, insieme al PO, le user story del product backlog che
+        diventano lo \textbf{sprint backlog} e fissa lo \textbf{sprint goal} (breve
+        descrizione del lavoro dello sprint);
+  \item PO e Team concordano la \emph{Definition of Done} per gli elementi dello sprint;
+  \item il Team stima quanto riuscirà a fare, secondo la propria \emph{velocità};
+  \item si studia l'architettura di alto livello, si definiscono i task e se ne stima lo
+        sforzo in ore (tecnica: \textbf{Planning Poker}).
+\end{itemize}
+\textbf{Durante lo sprint non si cambia}: è compito dello SM pianificare le durate in
+modo che il team non cambi. Il PO può solo \emph{cancellare} lo sprint se l'obiettivo
+diventa obsoleto (mercato o organizzazione cambiati) o palesemente irraggiungibile:
+evento raro e negativo, di solito si evita.
+
+\paragraph{Ready e Done (non coincidono).}
+\begin{itemize}
+  \item Una storia è \textbf{Ready} se: tutto il Team la capisce; è dettagliata abbastanza
+        da essere testata; il PO ne comprende il valore e può prioritizzarla; il Team può
+        stimarla e completarla in uno sprint; è indipendente.
+  \item \textbf{Done} è concordata da Team e PO all'inizio, ad esempio: codifica
+        completata, test di unità scritti ed eseguiti, test di integrazione e
+        prestazionali superati, documentazione minimale scritta. La storia non è finita
+        finché non soddisfa il PO.
+\end{itemize}
+
+\paragraph{Scrumboard (Taskboard / Kanban).} Lo sprint backlog sta su un tabellone
+modificabile da ogni membro.
+\begin{itemize}
+  \item il lavoro non è assegnato ma \emph{richiesto volontariamente} dai membri;
+  \item completata una storia, la si sposta nella colonna corrispondente;
+  \item la stima dello sforzo residuo si aggiorna ogni giorno;
+  \item il lavoro ``emerge'' sul tabellone: se un lavoro è poco chiaro si crea un item con
+        stima maggiore e lo si scompone dopo (scelta del DT, non del PO).
+\end{itemize}
+
+\paragraph{Daily Scrum (stand-up).} Max 15 minuti, in piedi, niente problem solving;
+chiunque può assistere, ma parlano solo i \emph{pig}. Tre domande: cosa ho fatto ieri,
+cosa farò oggi/domani, che problemi mi aspetto. Le risposte sono promesse ai compagni, non
+report per lo SM.
+
+\paragraph{Burndown chart.} Monitora l'andamento dello sprint confrontando il lavoro
+rimanente ideale con quello effettivo (ore residue per giorno), idealmente in modo
+automatico. Ogni giorno i membri ristimano il tempo rimasto sul proprio compito (es.\
+6~h spese su un task da 10~h e altre 6 stimate: 2~h oltre la stima). Esempio: sprint di 2
+settimane, 7 persone, 6~h/giorno $\Rightarrow$ 420 ore ideali. Il \emph{cumulative flow
+diagram} è uno strumento affine.
+
+\paragraph{Sprint review.} Riflessione sul \emph{prodotto}: cosa è stato o no completato,
+con una \emph{demo} (niente slide) delle nuove funzioni; 2--4 ore; si verifica lo stato
+del product backlog; invitare tutti.
+
+\paragraph{Sprint retrospective.} Riflessione sul \emph{processo}: cosa è andato bene,
+quali impedimenti; max 3 ore; partecipano SM, PO, Team e forse committenti e utenti.
+Obiettivi: esaminare persone, relazioni, processi e strumenti; rivedere i driver
+architetturali; individuare e ordinare cosa è andato bene e i miglioramenti possibili;
+creare un \emph{improvement plan}. Formato più semplice: \textbf{Start / Stop /
+Continue}.
+
+\paragraph{Rilasci e backlog refinement.} Ogni organizzazione sceglie la cadenza di
+rilascio: a fine sprint, a fine di un gruppo di sprint, o a ogni feature (continuous
+delivery/deployment); conviene comunque il \emph{release planning} a lungo termine. Nel
+\textbf{backlog refinement} PO e DT modificano, ri-stimano e riordinano il backlog
+secondo l'esperienza; non dovrebbe superare il 10\% del tempo del team. Il PO può
+cambiare il backlog in ogni momento, \emph{ma non lo sprint in corso}.
+
+\subsubsection{Quadro d'insieme}
+\begin{center}
+\begin{tabular}{|p{4.6cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Rituali} & \textbf{Artefatti} & \textbf{Pratiche}\\
+\hline
+Sprint planning & Product backlog & Planning Poker\\
+Stand-up meeting & Sprint goal & Testing\\
+Sprint review & Sprint backlog & Pair programming\\
+Sprint retrospective & Scrumboard & Continuous integration\\
+Backlog refinement & Potentially shippable increment & \\
+Release planning & Burndown chart, improvement plan & \\
+\hline
+\end{tabular}
+\end{center}
+
+Scrum non impone pratiche di sviluppo; molti team adottano quelle di XP:
+\textbf{TDD} (spesso implica simple design, testing, refactoring, continuous
+integration; vale la piramide dei test) e \textbf{pair programming} (spesso implica
+collective ownership, settimana di 40 ore, coding standard).
+
+\subsubsection{Scalabilità}
+Con team di $7\pm2$ persone si scala su sistemi grandi tramite \textbf{scrum di scrum}
+(alcuni progetti hanno coinvolto oltre 500 persone). Fattori: tipo di applicazione,
+dimensione e dispersione dei team, durata del progetto. Configurazioni:
+\begin{itemize}
+  \item \emph{team unico, molti PO}: un solo SM e un solo team;
+  \item \emph{molti team, prodotto unico}: un Chief Product Owner sopra i PO, ogni team
+        con il suo SM e PO.
+\end{itemize}
+Secondo Sutherland lo scrum di scrum \emph{non} è un ``meta-scrum'': è un meccanismo
+operativo di consegna, responsabile di consegnare il software funzionante di tutti i team
+secondo la DoD a fine sprint; il suo Master ne risponde.
+
+\subsubsection{Considerazioni finali}
+\paragraph{Problemi tipici:} ignoranza dei valori agili e di Scrum; software non testato a
+fine sprint (cattiva DoD); backlog non pronto all'inizio (cattiva Ready); mancata
+facilitazione; mancato supporto di manager e stakeholder; gestione caotica degli scrum di
+scrum.
+
+\paragraph{Patti tra stakeholder e team.} Il team promette: il PO difenderà gli interessi
+degli stakeholder; il loro tempo sarà usato bene; lavoro della massima qualità
+compatibilmente con i vincoli; nuove funzionalità validabili a ogni sprint. Gli
+stakeholder promettono: disponibilità ad aiutare; supporto allo SM nel rimuovere ostacoli;
+priorità e vincoli invariati durante lo sprint senza consenso del Team; partecipare a
+Scrum non danneggerà la carriera dei membri.
+
+\paragraph{XP o Scrum?}
+\begin{center}
+\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+\hline
+\textbf{XP} & \textbf{Scrum}\\
+\hline
+Orientato alla qualità (test driven) & Orientato al project management\\
+Iterazione 1--2 settimane & Sprint 2--4 settimane\\
+Requisiti sempre modificabili & Requisiti modificabili a fine sprint\\
+Il cliente ordina le storie & Il team ordina le storie\\
+Coaching informale & Scrum master certificato\\
+TDD, pair programming, planning game, refactoring & Retrospettiva, strumenti di PM, planning poker\\
+\hline
+\end{tabular}
+\end{center}
+XP e Scrum possono coesistere (e spesso lo fanno).
+
+\newpage
+\section{Modulo 2}
+\subsection{Controllo di versione e Git}
+\subsubsection{Il problema}
+
+Quando un progetto software diventa complesso, anche la sua gestione è complicata.
+Senza uno strumento di controllo delle revisioni:
+\begin{itemize}
+  \item \emph{programming in the small}: è difficile recuperare le versioni più vecchie
+        basandosi sulla data ed è difficile stabilire le differenze tra le versioni di
+        uno stesso file;
+  \item \emph{programming in the large/many}: non c'è modo di recuperare le versioni
+        precedenti né di vederne le differenze, la fusione delle versioni è manuale,
+        lenta e di dubbio successo, e sono possibili sovrascritture accidentali.
+\end{itemize}
+
+\subsubsection{Version Control System}
+
+Un \textbf{VCS} (detto anche \emph{versioning}, \emph{revision control system} o
+\emph{source code management}, SCM) è la gestione delle modifiche a documenti, programmi
+e altre informazioni memorizzate come file.
+
+In pratica un VCS fornisce:
+\begin{itemize}
+  \item un posto dove memorizzare le varie versioni del codice e dei documenti correlati
+        (backup multiplo e flessibile);
+  \item la possibilità di «tornare indietro» in caso di errore e di tracciare le
+        modifiche;
+  \item lo sviluppo parallelo facilitato, potendo lavorare su più versioni
+        contemporaneamente.
+\end{itemize}
+
+Evoluzione storica: SCCS e RCS (1982) $\rightarrow$ CVS (1986) $\rightarrow$
+Subversion (2000) $\rightarrow$ Git (2005).
+
+\subsubsection{Storia di Git}
+
+Git nasce dal kernel Linux. Fino al 2002 le modifiche al kernel venivano passate come
+file compressi; poi si iniziò a usare il DVCS proprietario \textbf{BitKeeper}. Nel 2005
+ne fu revocato l'uso gratuito, e ciò indusse Linus Torvalds a sviluppare uno strumento
+proprio: dopo 15 giorni di sviluppo Git era pronto. Git è veloce ed efficiente anche per
+grandi progetti e ha un ottimo sistema di ramificazioni per lo sviluppo non lineare;
+oggi si stima lo usi almeno l'85\% dei professionisti.
+
+\subsubsection{Glossario minimo}
+
+\begin{itemize}
+  \item \textbf{Repository} (deposito): un insieme di oggetti (file) e i riferimenti
+        necessari, in pratica una «foto» del progetto. Può essere online o offline.
+  \item \textbf{Clone}: l'atto di duplicare localmente un repository.
+  \item \textbf{Commit}: l'invio al repository delle modifiche effettuate.
+  \item \textbf{Checkout}: il ripristino di una particolare versione del progetto.
+\end{itemize}
+
+\subsubsection{Il ciclo di lavoro base}
+
+Il flusso tipico attraversa gli stati dei file:
+\[
+\text{Non tracciato} \xrightarrow{\;\texttt{git add}\;} \text{Staging area}
+\xrightarrow{\;\texttt{git commit}\;} \text{Tracciato / Non modificato}
+\]
+
+\paragraph{Configurazione iniziale}
+\begin{itemize}
+  \item \verb|git --version| --- verifica dell'installazione.
+  \item identificazione (one-shot), controllabile con \verb|git config --list|:
+\begin{verbatim}
+git config --global user.name "Alex York"
+git config --global user.email alex@example.com
+\end{verbatim}
+  \item \verb|git config --global init.defaultBranch main| --- semplifica l'interazione
+        con GitHub e GitLab.
+\end{itemize}
+
+\paragraph{Comandi base}
+\begin{itemize}
+  \item \verb|git init| --- inizializza il repository nella cartella corrente.
+  \item \verb|git add .| --- aggiunge i file alla staging area.
+  \item \verb|git commit -m "messaggio"| --- registra le modifiche
+        (\verb|-m| evita di finire nell'editor).
+  \item \verb|git commit -am "messaggio"| --- commit veloce: add + commit per i file già
+        tracciati.
+  \item \verb|git status| --- stato dell'albero di lavoro.
+  \item \verb|git log| --- storia delle modifiche: identificativo esadecimale, autore,
+        data, commento, posizione di HEAD e del branch. Utile \verb|git log --oneline|.
+  \item \verb|git reflog| --- storia sintetica degli spostamenti di HEAD.
+\end{itemize}
+
+\subsubsection{Tornare indietro}
+
+\begin{itemize}
+  \item \verb|git checkout <checksum>| --- ripristina \emph{tutti} i file a una versione
+        precedente e porta in stato di \textbf{detached HEAD}.
+        \verb|git checkout main| riporta HEAD all'ultimo commit.
+        \emph{Non committare in stato di detached HEAD}: si rischia di perdere il lavoro.
+        \verb|git switch -| torna al branch precedente.
+  \item \verb|git restore -s <checksum> <nomefile>| --- ripristina un \emph{solo} file
+        dal passato (nelle vecchie versioni: \verb|git checkout <checksum> -- nomefile|).
+  \item \verb|git revert <commit id>| --- ricostruisce un commit precedente creando un
+        \emph{nuovo} commit: più sicuro perché non distrugge la storia, ma appesantisce
+        il log.
+  \item \verb|git reset| --- è l'\emph{undo} di \verb|git add| (toglie dalla staging
+        area).
+  \item \verb|git reset --hard| --- cancella le modifiche non committate e ripristina
+        l'ultima versione salvata.
+\end{itemize}
+
+\subsubsection{Ignorare file: .gitignore}
+
+Git si basa sulle differenze di testo con le versioni precedenti, quindi non funziona
+bene con i file binari (\texttt{.pdf}, \texttt{.png}, \texttt{.docx}, \texttt{.exe},
+\texttt{.class}): ogni versione viene salvata integralmente, con perdita di spazio e di
+tempo.
+
+Il file \texttt{.gitignore} (col punto iniziale) elenca file e percorsi che NON sono mai
+inseriti nella staging area. Esempio:
+
+\begin{verbatim}
+# ignora i file eseguibili e png
+*.exe
+*.png
+
+# ignora tutti i file nelle cartelle indicate
+temp/
+img/
+\end{verbatim}
+
+Lo switch \verb|-f| (\verb|--force|) elimina il controllo di \texttt{.gitignore}:\\
+\verb|git add temp/antipatico.txt -f|.
+
+\subsubsection{Repository remoti}
+
+Schema di base: \verb|git clone| per duplicare un repository remoto, \verb|git push| per
+inviare i commit, \verb|git pull| per riceverli. Schema alternativo, partendo da un repo
+locale già esistente: \verb|git remote add origin <URL>|, poi push e pull.
+
+Sequenza tipica di collegamento a un remoto vuoto:
+\begin{verbatim}
+git config pull.rebase false
+git remote add origin [URL]
+git pull origin main --allow-unrelated-histories
+git push -u origin --all --force
+\end{verbatim}
+
+\paragraph{Sicurezza} I protocolli remoti di Git usano spesso crittografia a chiave
+pubblica. Le chiavi si generano con:
+\begin{verbatim}
+ssh-keygen -t rsa -b 4096 -C "commento"
+\end{verbatim}
+Il contenuto di \texttt{.ssh/id\_rsa.pub} va incollato nelle impostazioni SSH del
+servizio remoto. La verifica si fa con \verb|ssh -T git@gitlab.com|.
+
+\paragraph{Collaboratori} Se il repo è pubblico tutti possono clonarlo ma nessuno può
+modificarlo; se è privato nessuno lo può vedere. Per consentire la modifica occorre
+autorizzare esplicitamente gli utenti (\emph{project members}).
+
+\subsubsection{Social coding}
+
+L'arrivo del Web 2.0 e il bisogno di condividere codice hanno portato ai primi siti di
+condivisione (Sourceforge, 1999), poi evoluti in vere comunità di social networking
+grazie alle potenzialità di networking di Git.
+
+\begin{itemize}
+  \item \textbf{GitHub} (2008, comprato da Microsoft nel 2018): riferimento per community
+        e open source, il più vasto ecosistema di progetti e sviluppatori, comprensivo di
+        piattaforma DevOps.
+  \item \textbf{GitLab} (2014): open source, ottimizzato per il modello DevOps, focus su
+        DevSecOps dal repository alla CI/CD, sicurezza e deployment; disponibile anche
+        \emph{self-managed}, favorito dalle aziende con problemi di privacy.
+  \item \textbf{Bitbucket} (Atlassian): orientato ai team che usano l'ecosistema
+        Atlassian (Jira, Confluence, Bamboo); disponibile in cloud e come Data Center.
+\end{itemize}
+
+\subsubsection{Conflitti}
+
+Un conflitto nasce quando due sviluppatori modificano la stessa porzione di file. Il
+push viene rifiutato (\emph{rejected, fetch first}) e il successivo \verb|git pull|
+genera il conflitto, segnalato nel file con i marcatori:
+
+\begin{verbatim}
+<<<<<<< HEAD
+Un file di Bill Gates
+=======
+Un file di Alex York
+>>>>>>> d19a0f36141bb4a03281330a0cf02cce7533c869
+\end{verbatim}
+
+Metodi di risoluzione:
+\begin{enumerate}
+  \item \textbf{Manuale}: editare il file rimuovendo i marcatori, poi \verb|git add|,
+        \verb|git commit|, \verb|git push|.
+  \item \textbf{Forzante}: \verb|git reset --hard HEAD| e poi
+        \verb|git pull -X theirs| (accetta le modifiche remote) oppure
+        \verb|-X ours| (accetta le proprie).
+  \item \textbf{Distruttivo}: \verb|git reset --hard HEAD| seguito da
+        \verb|git push -f|. Elimina per sempre le modifiche non accettate.
+\end{enumerate}
+
+\subsubsection{Git come filesystem}
+
+Linus Torvalds aveva in mente un filesystem quando lavorava su Git:
+\begin{itemize}
+  \item \verb|git rm| --- equivale a \texttt{rm} di Unix;
+  \item \verb|git mv| --- equivale a \texttt{mv}, serve anche a rinominare mantenendo il
+        tracciamento;
+  \item \verb|git clean --force| --- elimina tutti i file NON tracciati dalla directory
+        di lavoro.
+\end{itemize}
+Le directory non esistono in Git: spariscono se sono vuote. Per tenerle la convenzione è
+inserire un file fittizio chiamato \texttt{.gitkeep}.
+
+\subsection{Branch, merge e fork}
+
+\subsubsection{I branch}
+
+Un \textbf{branch} è una diramazione del codice: i commit relativi alla diramazione
+restano isolati rispetto alla versione principale (\texttt{main} o \texttt{master}),
+dando totale libertà di lavorare, provare e «sporcare» il codice senza compromettere il
+lavoro degli altri. Quando si è pronti si ricongiunge la diramazione al tronco
+principale, e solo in quel momento ci si occupa degli eventuali conflitti. I branch sono
+veloci da creare e occupano pochissimo spazio.
+
+\begin{itemize}
+  \item \verb|git checkout -b branch1| --- crea il branch e vi si posiziona; da quel
+        momento i comandi hanno effetto solo su quel branch.
+  \item \verb|git branch| --- elenca i branch, marcando con \texttt{*} quello attivo.
+  \item \verb|git branch -d <nome>| --- cancella un branch locale.
+  \item \verb|git push origin --delete <nome>| --- cancella un branch remoto.
+  \item \verb|git branch -M <nome>| --- rinomina un branch locale.
+  \item \verb|git push -u origin branch1| --- fa tracciare il branch anche sul remoto.
+  \item \verb|git log --oneline --decorate --graph --all| --- log grafico di tutti i
+        branch.
+\end{itemize}
+
+\subsubsection{Merge e rebase}
+
+Al termine di una porzione significativa di lavoro si ricongiungono i rami: l'operazione
+è il \textbf{merge} (fusione). Come per il pull (che è di fatto un merge) si possono
+generare conflitti da risolvere.
+
+\begin{itemize}
+  \item \textbf{Merge} (\verb|git checkout main; git merge branch2|): riceve nel ramo
+        corrente i commit dell'altro ramo. Non è invasivo sulla struttura pre-esistente
+        dei rami, ma il risultato può essere di non facile interpretazione per il team,
+        perché servono numerosi merge per allineare il branch.
+  \item \textbf{Rebase} (\verb|git checkout feature; git rebase master|): accoda l'intero
+        ramo \texttt{feature} a \texttt{master}, di fatto «riscrivendo la storia» dei
+        commit. Il risultato è un flusso molto più lineare, ma si perde lo storico delle
+        modifiche precedenti all'operazione: \emph{mai eseguire un rebase su rami
+        pubblici}.
+\end{itemize}
+
+Altre operazioni:
+\begin{itemize}
+  \item \verb|git cherry-pick| --- «pesca» un commit da qualsiasi branch e lo applica al
+        branch attuale.
+  \item \verb|git rebase -i HEAD~5| --- sessione interattiva per comprimere gli ultimi
+        cinque commit.
+  \item \verb|git merge --squash feature/login| --- combina i commit del branch in un
+        unico commit (da effettuare successivamente).
+  \item \verb|git commit --amend| --- modifica l'ultimo commit, ideale per correzioni.
+\end{itemize}
+
+\subsubsection{Stash}
+
+Se un merge sovrascriverebbe modifiche locali non committate, Git lo interrompe. Le
+soluzioni sono: committare le modifiche, eliminarle con \verb|git reset --hard|, oppure
+«nasconderle sotto il tappeto» con \verb|git stash|. Dopo il merge si recuperano con
+\verb|git stash pop| (che può a sua volta generare conflitti) e si eliminano con
+\verb|git stash drop|.
+
+\subsubsection{Tag}
+
+I tag «marcano» un particolare commit: milestone, fine sprint, eventi particolari.
+\begin{itemize}
+  \item \textbf{Lightweight}: \verb|git tag pippo|, semplice puntatore a un commit,
+        analogo allo snapshot di un filesystem.
+  \item \textbf{Annotated}: \verb|git tag -a pluto -m "messaggio"|, ha un messaggio
+        associato, può essere firmato; \verb|git show pluto| mostra molte informazioni.
+\end{itemize}
+I tag \emph{non} vengono pushati automaticamente: servono
+\verb|git push origin <tagname>| oppure \verb|git push origin --tags|.
+
+\subsubsection{Fork e merge/pull request}
+
+Il \textbf{forking} è una caratteristica dei siti di social coding che permette di
+duplicare un repository esistente inserendolo tra i propri progetti (con libertà totale
+di accesso) pur mantenendo un legame con il repository originario, detto
+\textbf{upstream}.
+
+Su questa relazione si basa il sistema delle \textbf{pull request} (GitHub, Bitbucket) o
+\textbf{merge request} (GitLab): dopo aver forkato un repository e realizzato le
+modifiche, si invia una richiesta di inserimento invece di applicarla direttamente; il
+responsabile può accettarla o rifiutarla, eventualmente con un commento.
+
+\subsubsection{Flussi di lavoro}
+
+\paragraph{Centralized Workflow} Il server remoto è il riferimento («custode della
+verità»). Ogni sviluppatore clona il repository e sviluppa localmente; terminata una
+sezione significativa pulla, integra localmente e reinvia al repo remoto.\\
+\emph{Vantaggi}: facile da capire, ottimo per team piccoli.
+\emph{Svantaggi}: alla lunga gestire i conflitti diventa problematico, non sfrutta la
+natura distribuita di Git.
+
+\paragraph{Gitflow} Proposto da Vincent Driessen nel 2010. Prevede due branch di durata
+infinita:
+\begin{itemize}
+  \item \texttt{master}/\texttt{main} --- contiene il codice di produzione, pronto;
+  \item \texttt{develop} --- branch di sviluppo.
+\end{itemize}
+E branch temporanei con terminologia precisa:
+\begin{itemize}
+  \item \texttt{feature-*} --- nuove funzionalità, figlia di \texttt{develop};
+  \item \texttt{hotfix-*} --- riparazione di errori del master, da mergiare in
+        \texttt{master} o \texttt{develop};
+  \item \texttt{release-*} --- preparazione di un rilascio, figlia di \texttt{develop},
+        da riunire a \texttt{master} e \texttt{develop}.
+\end{itemize}
+\emph{Vantaggi}: ideale se occorrono rilasci regolari, presenza di tool, master con solo
+codice stabile.
+\emph{Svantaggi}: la storia passata diventa intricata e illeggibile, non funziona bene
+con versioni multiple, rischio di «merge hell».
+
+\paragraph{Feature branch workflow} Il repo remoto è il riferimento. Ogni sviluppatore
+forka il repository e lo clona localmente; se è fuori sincronia si ribasa alla situazione
+corrente. Crea un branch locale (replicato sul server remoto) e, quando ha finito,
+chiede conferma ai colleghi prima del push.\\
+\emph{Vantaggi}: promuove la collaborazione e la proprietà condivisa, master resta
+stabile.
+\emph{Svantaggi}: i branch più vecchi tendono ad avere problemi di merge.
+
+\paragraph{Forking workflow} Esiste un server \emph{upstream} di riferimento. Ogni
+sviluppatore lo forka, clona localmente il proprio repository e lavora indisturbato;
+quando si sente pronto invia una pull request al \emph{project master}.\\
+\emph{Vantaggi}: il repo upstream resta impeccabile grazie a un ferreo controllo degli
+accessi in scrittura.
+\emph{Svantaggi}: più complicato, implica una struttura gerarchica.
+
+\subsubsection{Tracciare la produttività}
+
+\begin{itemize}
+  \item \verb|git shortlog -sn --all| --- numero di commit per autore.
+  \item \textbf{git-quick-stats} --- offre molte opzioni oltre al semplice conteggio.
+  \item \textbf{Gitinspector} --- genera un grafico riassuntivo.
+  \item \textbf{Gource} --- genera un'animazione dei commit (attenzione alle dimensioni
+        del video).
+\end{itemize}
+
+Il numero di commit non è mai una metrica troppo significativa: «\emph{Git mente}». La
+fotografia può essere infedele se gli autori non committano in prima persona ma delegano
+a un'unica persona, se si inseriscono librerie corpose o codice trovato in rete, o se si
+lavora in \emph{pair}/\emph{mob programming}. Rimedi:
+\begin{enumerate}
+  \item \textbf{Manuale}: ogni autore committa solo il codice che ha davvero scritto,
+        eventualmente modificando temporaneamente il proprio username con
+        \verb|git config|.
+  \item \textbf{Co-author}: nel messaggio di commit, dopo almeno una riga vuota,
+        aggiungere la riga \verb|Co-authored-by: nome <email>|.
+        È rilevata da GitHub e GitLab, ma non da \texttt{git log} e Gitinspector.
+  \item \textbf{git-pair}: configurare gli utenti con \verb|git users| e committare con
+        \verb|gitp commit -m "..."|.
+\end{enumerate}
+\newpage
 \subsection{Introduzione UML}
 Introduzione al Unified Modeling Language (UML). A cosa servono? Formalizzare l'idea del OO.
 \subsubsection{Introduzione al OO}
@@ -2467,368 +3066,6 @@ strategie di implementazione dall'obiettivo. Guida:
 \textbf{Inibitori}: «il sistema funziona» e mancano tempo e soldi; dover lavorare con le
 astrazioni di design di qualcun altro.
 
-\newpage
-\section{Modulo 2}
-\subsection{Controllo di versione e Git}
-\subsubsection{Il problema}
-
-Quando un progetto software diventa complesso, anche la sua gestione è complicata.
-Senza uno strumento di controllo delle revisioni:
-\begin{itemize}
-  \item \emph{programming in the small}: è difficile recuperare le versioni più vecchie
-        basandosi sulla data ed è difficile stabilire le differenze tra le versioni di
-        uno stesso file;
-  \item \emph{programming in the large/many}: non c'è modo di recuperare le versioni
-        precedenti né di vederne le differenze, la fusione delle versioni è manuale,
-        lenta e di dubbio successo, e sono possibili sovrascritture accidentali.
-\end{itemize}
-
-\subsubsection{Version Control System}
-
-Un \textbf{VCS} (detto anche \emph{versioning}, \emph{revision control system} o
-\emph{source code management}, SCM) è la gestione delle modifiche a documenti, programmi
-e altre informazioni memorizzate come file.
-
-In pratica un VCS fornisce:
-\begin{itemize}
-  \item un posto dove memorizzare le varie versioni del codice e dei documenti correlati
-        (backup multiplo e flessibile);
-  \item la possibilità di «tornare indietro» in caso di errore e di tracciare le
-        modifiche;
-  \item lo sviluppo parallelo facilitato, potendo lavorare su più versioni
-        contemporaneamente.
-\end{itemize}
-
-Evoluzione storica: SCCS e RCS (1982) $\rightarrow$ CVS (1986) $\rightarrow$
-Subversion (2000) $\rightarrow$ Git (2005).
-
-\subsubsection{Storia di Git}
-
-Git nasce dal kernel Linux. Fino al 2002 le modifiche al kernel venivano passate come
-file compressi; poi si iniziò a usare il DVCS proprietario \textbf{BitKeeper}. Nel 2005
-ne fu revocato l'uso gratuito, e ciò indusse Linus Torvalds a sviluppare uno strumento
-proprio: dopo 15 giorni di sviluppo Git era pronto. Git è veloce ed efficiente anche per
-grandi progetti e ha un ottimo sistema di ramificazioni per lo sviluppo non lineare;
-oggi si stima lo usi almeno l'85\% dei professionisti.
-
-\subsubsection{Glossario minimo}
-
-\begin{itemize}
-  \item \textbf{Repository} (deposito): un insieme di oggetti (file) e i riferimenti
-        necessari, in pratica una «foto» del progetto. Può essere online o offline.
-  \item \textbf{Clone}: l'atto di duplicare localmente un repository.
-  \item \textbf{Commit}: l'invio al repository delle modifiche effettuate.
-  \item \textbf{Checkout}: il ripristino di una particolare versione del progetto.
-\end{itemize}
-
-\subsubsection{Il ciclo di lavoro base}
-
-Il flusso tipico attraversa gli stati dei file:
-\[
-\text{Non tracciato} \xrightarrow{\;\texttt{git add}\;} \text{Staging area}
-\xrightarrow{\;\texttt{git commit}\;} \text{Tracciato / Non modificato}
-\]
-
-\paragraph{Configurazione iniziale}
-\begin{itemize}
-  \item \verb|git --version| --- verifica dell'installazione.
-  \item identificazione (one-shot), controllabile con \verb|git config --list|:
-\begin{verbatim}
-git config --global user.name "Alex York"
-git config --global user.email alex@example.com
-\end{verbatim}
-  \item \verb|git config --global init.defaultBranch main| --- semplifica l'interazione
-        con GitHub e GitLab.
-\end{itemize}
-
-\paragraph{Comandi base}
-\begin{itemize}
-  \item \verb|git init| --- inizializza il repository nella cartella corrente.
-  \item \verb|git add .| --- aggiunge i file alla staging area.
-  \item \verb|git commit -m "messaggio"| --- registra le modifiche
-        (\verb|-m| evita di finire nell'editor).
-  \item \verb|git commit -am "messaggio"| --- commit veloce: add + commit per i file già
-        tracciati.
-  \item \verb|git status| --- stato dell'albero di lavoro.
-  \item \verb|git log| --- storia delle modifiche: identificativo esadecimale, autore,
-        data, commento, posizione di HEAD e del branch. Utile \verb|git log --oneline|.
-  \item \verb|git reflog| --- storia sintetica degli spostamenti di HEAD.
-\end{itemize}
-
-\subsubsection{Tornare indietro}
-
-\begin{itemize}
-  \item \verb|git checkout <checksum>| --- ripristina \emph{tutti} i file a una versione
-        precedente e porta in stato di \textbf{detached HEAD}.
-        \verb|git checkout main| riporta HEAD all'ultimo commit.
-        \emph{Non committare in stato di detached HEAD}: si rischia di perdere il lavoro.
-        \verb|git switch -| torna al branch precedente.
-  \item \verb|git restore -s <checksum> <nomefile>| --- ripristina un \emph{solo} file
-        dal passato (nelle vecchie versioni: \verb|git checkout <checksum> -- nomefile|).
-  \item \verb|git revert <commit id>| --- ricostruisce un commit precedente creando un
-        \emph{nuovo} commit: più sicuro perché non distrugge la storia, ma appesantisce
-        il log.
-  \item \verb|git reset| --- è l'\emph{undo} di \verb|git add| (toglie dalla staging
-        area).
-  \item \verb|git reset --hard| --- cancella le modifiche non committate e ripristina
-        l'ultima versione salvata.
-\end{itemize}
-
-\subsubsection{Ignorare file: .gitignore}
-
-Git si basa sulle differenze di testo con le versioni precedenti, quindi non funziona
-bene con i file binari (\texttt{.pdf}, \texttt{.png}, \texttt{.docx}, \texttt{.exe},
-\texttt{.class}): ogni versione viene salvata integralmente, con perdita di spazio e di
-tempo.
-
-Il file \texttt{.gitignore} (col punto iniziale) elenca file e percorsi che NON sono mai
-inseriti nella staging area. Esempio:
-
-\begin{verbatim}
-# ignora i file eseguibili e png
-*.exe
-*.png
-
-# ignora tutti i file nelle cartelle indicate
-temp/
-img/
-\end{verbatim}
-
-Lo switch \verb|-f| (\verb|--force|) elimina il controllo di \texttt{.gitignore}:\\
-\verb|git add temp/antipatico.txt -f|.
-
-\subsubsection{Repository remoti}
-
-Schema di base: \verb|git clone| per duplicare un repository remoto, \verb|git push| per
-inviare i commit, \verb|git pull| per riceverli. Schema alternativo, partendo da un repo
-locale già esistente: \verb|git remote add origin <URL>|, poi push e pull.
-
-Sequenza tipica di collegamento a un remoto vuoto:
-\begin{verbatim}
-git config pull.rebase false
-git remote add origin [URL]
-git pull origin main --allow-unrelated-histories
-git push -u origin --all --force
-\end{verbatim}
-
-\paragraph{Sicurezza} I protocolli remoti di Git usano spesso crittografia a chiave
-pubblica. Le chiavi si generano con:
-\begin{verbatim}
-ssh-keygen -t rsa -b 4096 -C "commento"
-\end{verbatim}
-Il contenuto di \texttt{.ssh/id\_rsa.pub} va incollato nelle impostazioni SSH del
-servizio remoto. La verifica si fa con \verb|ssh -T git@gitlab.com|.
-
-\paragraph{Collaboratori} Se il repo è pubblico tutti possono clonarlo ma nessuno può
-modificarlo; se è privato nessuno lo può vedere. Per consentire la modifica occorre
-autorizzare esplicitamente gli utenti (\emph{project members}).
-
-\subsubsection{Social coding}
-
-L'arrivo del Web 2.0 e il bisogno di condividere codice hanno portato ai primi siti di
-condivisione (Sourceforge, 1999), poi evoluti in vere comunità di social networking
-grazie alle potenzialità di networking di Git.
-
-\begin{itemize}
-  \item \textbf{GitHub} (2008, comprato da Microsoft nel 2018): riferimento per community
-        e open source, il più vasto ecosistema di progetti e sviluppatori, comprensivo di
-        piattaforma DevOps.
-  \item \textbf{GitLab} (2014): open source, ottimizzato per il modello DevOps, focus su
-        DevSecOps dal repository alla CI/CD, sicurezza e deployment; disponibile anche
-        \emph{self-managed}, favorito dalle aziende con problemi di privacy.
-  \item \textbf{Bitbucket} (Atlassian): orientato ai team che usano l'ecosistema
-        Atlassian (Jira, Confluence, Bamboo); disponibile in cloud e come Data Center.
-\end{itemize}
-
-\subsubsection{Conflitti}
-
-Un conflitto nasce quando due sviluppatori modificano la stessa porzione di file. Il
-push viene rifiutato (\emph{rejected, fetch first}) e il successivo \verb|git pull|
-genera il conflitto, segnalato nel file con i marcatori:
-
-\begin{verbatim}
-<<<<<<< HEAD
-Un file di Bill Gates
-=======
-Un file di Alex York
->>>>>>> d19a0f36141bb4a03281330a0cf02cce7533c869
-\end{verbatim}
-
-Metodi di risoluzione:
-\begin{enumerate}
-  \item \textbf{Manuale}: editare il file rimuovendo i marcatori, poi \verb|git add|,
-        \verb|git commit|, \verb|git push|.
-  \item \textbf{Forzante}: \verb|git reset --hard HEAD| e poi
-        \verb|git pull -X theirs| (accetta le modifiche remote) oppure
-        \verb|-X ours| (accetta le proprie).
-  \item \textbf{Distruttivo}: \verb|git reset --hard HEAD| seguito da
-        \verb|git push -f|. Elimina per sempre le modifiche non accettate.
-\end{enumerate}
-
-\subsubsection{Git come filesystem}
-
-Linus Torvalds aveva in mente un filesystem quando lavorava su Git:
-\begin{itemize}
-  \item \verb|git rm| --- equivale a \texttt{rm} di Unix;
-  \item \verb|git mv| --- equivale a \texttt{mv}, serve anche a rinominare mantenendo il
-        tracciamento;
-  \item \verb|git clean --force| --- elimina tutti i file NON tracciati dalla directory
-        di lavoro.
-\end{itemize}
-Le directory non esistono in Git: spariscono se sono vuote. Per tenerle la convenzione è
-inserire un file fittizio chiamato \texttt{.gitkeep}.
-
-\subsection{Branch, merge e fork}
-
-\subsubsection{I branch}
-
-Un \textbf{branch} è una diramazione del codice: i commit relativi alla diramazione
-restano isolati rispetto alla versione principale (\texttt{main} o \texttt{master}),
-dando totale libertà di lavorare, provare e «sporcare» il codice senza compromettere il
-lavoro degli altri. Quando si è pronti si ricongiunge la diramazione al tronco
-principale, e solo in quel momento ci si occupa degli eventuali conflitti. I branch sono
-veloci da creare e occupano pochissimo spazio.
-
-\begin{itemize}
-  \item \verb|git checkout -b branch1| --- crea il branch e vi si posiziona; da quel
-        momento i comandi hanno effetto solo su quel branch.
-  \item \verb|git branch| --- elenca i branch, marcando con \texttt{*} quello attivo.
-  \item \verb|git branch -d <nome>| --- cancella un branch locale.
-  \item \verb|git push origin --delete <nome>| --- cancella un branch remoto.
-  \item \verb|git branch -M <nome>| --- rinomina un branch locale.
-  \item \verb|git push -u origin branch1| --- fa tracciare il branch anche sul remoto.
-  \item \verb|git log --oneline --decorate --graph --all| --- log grafico di tutti i
-        branch.
-\end{itemize}
-
-\subsubsection{Merge e rebase}
-
-Al termine di una porzione significativa di lavoro si ricongiungono i rami: l'operazione
-è il \textbf{merge} (fusione). Come per il pull (che è di fatto un merge) si possono
-generare conflitti da risolvere.
-
-\begin{itemize}
-  \item \textbf{Merge} (\verb|git checkout main; git merge branch2|): riceve nel ramo
-        corrente i commit dell'altro ramo. Non è invasivo sulla struttura pre-esistente
-        dei rami, ma il risultato può essere di non facile interpretazione per il team,
-        perché servono numerosi merge per allineare il branch.
-  \item \textbf{Rebase} (\verb|git checkout feature; git rebase master|): accoda l'intero
-        ramo \texttt{feature} a \texttt{master}, di fatto «riscrivendo la storia» dei
-        commit. Il risultato è un flusso molto più lineare, ma si perde lo storico delle
-        modifiche precedenti all'operazione: \emph{mai eseguire un rebase su rami
-        pubblici}.
-\end{itemize}
-
-Altre operazioni:
-\begin{itemize}
-  \item \verb|git cherry-pick| --- «pesca» un commit da qualsiasi branch e lo applica al
-        branch attuale.
-  \item \verb|git rebase -i HEAD~5| --- sessione interattiva per comprimere gli ultimi
-        cinque commit.
-  \item \verb|git merge --squash feature/login| --- combina i commit del branch in un
-        unico commit (da effettuare successivamente).
-  \item \verb|git commit --amend| --- modifica l'ultimo commit, ideale per correzioni.
-\end{itemize}
-
-\subsubsection{Stash}
-
-Se un merge sovrascriverebbe modifiche locali non committate, Git lo interrompe. Le
-soluzioni sono: committare le modifiche, eliminarle con \verb|git reset --hard|, oppure
-«nasconderle sotto il tappeto» con \verb|git stash|. Dopo il merge si recuperano con
-\verb|git stash pop| (che può a sua volta generare conflitti) e si eliminano con
-\verb|git stash drop|.
-
-\subsubsection{Tag}
-
-I tag «marcano» un particolare commit: milestone, fine sprint, eventi particolari.
-\begin{itemize}
-  \item \textbf{Lightweight}: \verb|git tag pippo|, semplice puntatore a un commit,
-        analogo allo snapshot di un filesystem.
-  \item \textbf{Annotated}: \verb|git tag -a pluto -m "messaggio"|, ha un messaggio
-        associato, può essere firmato; \verb|git show pluto| mostra molte informazioni.
-\end{itemize}
-I tag \emph{non} vengono pushati automaticamente: servono
-\verb|git push origin <tagname>| oppure \verb|git push origin --tags|.
-
-\subsubsection{Fork e merge/pull request}
-
-Il \textbf{forking} è una caratteristica dei siti di social coding che permette di
-duplicare un repository esistente inserendolo tra i propri progetti (con libertà totale
-di accesso) pur mantenendo un legame con il repository originario, detto
-\textbf{upstream}.
-
-Su questa relazione si basa il sistema delle \textbf{pull request} (GitHub, Bitbucket) o
-\textbf{merge request} (GitLab): dopo aver forkato un repository e realizzato le
-modifiche, si invia una richiesta di inserimento invece di applicarla direttamente; il
-responsabile può accettarla o rifiutarla, eventualmente con un commento.
-
-\subsubsection{Flussi di lavoro}
-
-\paragraph{Centralized Workflow} Il server remoto è il riferimento («custode della
-verità»). Ogni sviluppatore clona il repository e sviluppa localmente; terminata una
-sezione significativa pulla, integra localmente e reinvia al repo remoto.\\
-\emph{Vantaggi}: facile da capire, ottimo per team piccoli.
-\emph{Svantaggi}: alla lunga gestire i conflitti diventa problematico, non sfrutta la
-natura distribuita di Git.
-
-\paragraph{Gitflow} Proposto da Vincent Driessen nel 2010. Prevede due branch di durata
-infinita:
-\begin{itemize}
-  \item \texttt{master}/\texttt{main} --- contiene il codice di produzione, pronto;
-  \item \texttt{develop} --- branch di sviluppo.
-\end{itemize}
-E branch temporanei con terminologia precisa:
-\begin{itemize}
-  \item \texttt{feature-*} --- nuove funzionalità, figlia di \texttt{develop};
-  \item \texttt{hotfix-*} --- riparazione di errori del master, da mergiare in
-        \texttt{master} o \texttt{develop};
-  \item \texttt{release-*} --- preparazione di un rilascio, figlia di \texttt{develop},
-        da riunire a \texttt{master} e \texttt{develop}.
-\end{itemize}
-\emph{Vantaggi}: ideale se occorrono rilasci regolari, presenza di tool, master con solo
-codice stabile.
-\emph{Svantaggi}: la storia passata diventa intricata e illeggibile, non funziona bene
-con versioni multiple, rischio di «merge hell».
-
-\paragraph{Feature branch workflow} Il repo remoto è il riferimento. Ogni sviluppatore
-forka il repository e lo clona localmente; se è fuori sincronia si ribasa alla situazione
-corrente. Crea un branch locale (replicato sul server remoto) e, quando ha finito,
-chiede conferma ai colleghi prima del push.\\
-\emph{Vantaggi}: promuove la collaborazione e la proprietà condivisa, master resta
-stabile.
-\emph{Svantaggi}: i branch più vecchi tendono ad avere problemi di merge.
-
-\paragraph{Forking workflow} Esiste un server \emph{upstream} di riferimento. Ogni
-sviluppatore lo forka, clona localmente il proprio repository e lavora indisturbato;
-quando si sente pronto invia una pull request al \emph{project master}.\\
-\emph{Vantaggi}: il repo upstream resta impeccabile grazie a un ferreo controllo degli
-accessi in scrittura.
-\emph{Svantaggi}: più complicato, implica una struttura gerarchica.
-
-\subsubsection{Tracciare la produttività}
-
-\begin{itemize}
-  \item \verb|git shortlog -sn --all| --- numero di commit per autore.
-  \item \textbf{git-quick-stats} --- offre molte opzioni oltre al semplice conteggio.
-  \item \textbf{Gitinspector} --- genera un grafico riassuntivo.
-  \item \textbf{Gource} --- genera un'animazione dei commit (attenzione alle dimensioni
-        del video).
-\end{itemize}
-
-Il numero di commit non è mai una metrica troppo significativa: «\emph{Git mente}». La
-fotografia può essere infedele se gli autori non committano in prima persona ma delegano
-a un'unica persona, se si inseriscono librerie corpose o codice trovato in rete, o se si
-lavora in \emph{pair}/\emph{mob programming}. Rimedi:
-\begin{enumerate}
-  \item \textbf{Manuale}: ogni autore committa solo il codice che ha davvero scritto,
-        eventualmente modificando temporaneamente il proprio username con
-        \verb|git config|.
-  \item \textbf{Co-author}: nel messaggio di commit, dopo almeno una riga vuota,
-        aggiungere la riga \verb|Co-authored-by: nome <email>|.
-        È rilevata da GitHub e GitLab, ma non da \texttt{git log} e Gitinspector.
-  \item \textbf{git-pair}: configurare gli utenti con \verb|git users| e committare con
-        \verb|gitp commit -m "..."|.
-\end{enumerate}
 
 \end{document}
 
