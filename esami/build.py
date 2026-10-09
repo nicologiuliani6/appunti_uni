@@ -90,6 +90,68 @@ def tag(b, topics):
     return tags + [x["id"] for x in topics if x.get("re_opzioni") and x["id"] not in tags and re.search(x["re_opzioni"], opts, re.I)]
 
 
+APPUNTI = {  # appunti dell'utente: indice da .toc, pagine verificate sul PDF
+    "ingegneria-del-software": ROOT.parent / "3/ing_sfw/ing_sfw",
+    "basi-di-dati": ROOT.parent / "3/basi_dati/basi_dati",
+    "introduzione-apprendimento-automatico": ROOT.parent / "3/apprendimento/apprendimento",
+}
+
+
+def appunti(base):
+    toc, pdf = base.with_suffix(".toc"), base.with_suffix(".pdf")
+    if not toc.exists() or not pdf.exists():
+        return []
+    import subprocess
+    pages = subprocess.run(["pdftotext", "-layout", str(pdf), "-"], capture_output=True, text=True).stdout.split("\f")
+    flat = lambda s: re.sub(r"[^a-z0-9]", "", s.lower())
+    out = []
+    for m in re.finditer(r"\\contentsline \{((?:sub)*section)\}\{(?:\\numberline \{([^}]*)\})?(.*?)\}\{(\d+)\}\{", toc.read_text(encoding="utf-8")):
+        lvl, num, title, page = m.group(1), m.group(2) or "", m.group(3), int(m.group(4))
+        title = re.sub(r"\\[a-zA-Z]+\s*|[{}$]", "", title).strip()   # via comandi LaTeX
+        key = flat(title)[:30]
+        # il numero del .toc è quello stampato: cerco la pagina fisica dove compare davvero il titolo
+        cands = sorted(range(len(pages)), key=lambda i: abs(i + 1 - page))[:12]
+        phys = next((i + 1 for i in cands if key and key in flat(pages[i])), page)
+        out.append({"n": num, "t": title, "p": phys, "l": lvl.count("sub")})
+    return out
+
+
+def gruppi(prove):
+    """Raggruppa le domande a crocette ripetute tra prove diverse (opzioni rimescolate, refusi, prefisso [Categoria]).
+    Stesso gruppo solo se testo quasi identico, stessi numeri, stesse opzioni e STESSA risposta giusta:
+    le varianti (es. 'aumento' vs 'riduzione', 'corretta' vs 'errata') restano domande distinte."""
+    import unicodedata
+    from difflib import SequenceMatcher
+
+    def norm(s):
+        s = re.sub(r"^\[[^\]]*\]\s*", "", s)
+        s = re.sub(r"(?<![\d.])0(?=[.,]\d)", "", s)          # 0.5 == .5
+        s = s.replace("¾", "3/4").replace("¼", "1/4").replace("½", "1/2")
+        s = unicodedata.normalize("NFKD", s.replace("’", "'")).encode("ascii", "ignore").decode().lower()
+        s = re.sub(r"\b([a-z])'", r"\1", s)
+        return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9]+", " ", s)).strip()
+    sim = lambda a, b: SequenceMatcher(None, a, b).ratio()
+
+    def same(x, y):
+        if len(x["o"]) != len(y["o"]) or sim(x["q"], y["q"]) < 0.9 or re.findall(r"\d+", x["q"]) != re.findall(r"\d+", y["q"]):
+            return False
+        pair = {i: max(range(len(y["o"])), key=lambda j: sim(x["o"][i], y["o"][j])) for i in range(len(x["o"]))}
+        if len(set(pair.values())) != len(pair) or min(sim(x["o"][i], y["o"][j]) for i, j in pair.items()) < 0.85:
+            return False
+        return sorted(pair[i] for i in x["c"]) == sorted(y["c"])
+
+    reps = []
+    for p in prove:
+        for b in p["blocks"]:
+            if b["type"] != "mcq":
+                continue
+            it = {"q": norm(b["q"]), "o": [norm(o) for o in b["options"]], "c": b["correct"], "b": b}
+            rep = next((r for r in reps if same(r, it)), None)
+            if rep is None:
+                reps.append(it); rep = it; rep["id"] = f"g{len(reps)}"
+            b["grp"] = rep["id"]
+
+
 data = []
 for slug, name in NAMES.items():
     prove = []
@@ -99,11 +161,15 @@ for slug, name in NAMES.items():
         for b in p["blocks"]:
             if b["type"] != "contesto":
                 b["topics"] = tag(b, TOPICS[slug])
+                # i progetti di Apprendimento sono di deep learning: fuori programma finché le reti non sono studiate
+                if p["key"].startswith("progetto") and slug == "introduzione-apprendimento-automatico" and "reti" not in b["topics"]:
+                    b["topics"].append("reti")
         prove.append(p)
     # scritti/simulazioni prima, poi progetti, poi banca; dentro ogni gruppo dal più recente
     group = lambda k: 2 if k.startswith("banca") else 1 if k.startswith("progetto") else 0
     prove.sort(key=lambda p: (-group(p["key"]), re.sub(r"^\D+", "", p["key"])), reverse=True)
-    data.append({"slug": slug, "name": name, "prove": prove,
+    gruppi(prove)
+    data.append({"slug": slug, "name": name, "prove": prove, "appunti": appunti(APPUNTI[slug]),
                  "topics": [{k: t[k] for k in ("id", "nome", "studiato")} for t in TOPICS[slug]]})
 
 (ROOT / "data.js").write_text("const DATA = " + json.dumps(data, ensure_ascii=False) + ";\n", encoding="utf-8")
@@ -111,4 +177,4 @@ for m in data:
     qs = [b for p in m["prove"] for b in p["blocks"] if b["type"] != "contesto"]
     ok = {t["id"] for t in m["topics"] if t["studiato"]}
     mirate = sum(1 for b in qs if b["topics"] and set(b["topics"]) <= ok)
-    print(f"{m['name']}: {len(m['prove'])} prove, {len(qs)} domande, {mirate} sugli argomenti studiati, {sum(1 for b in qs if not b['topics'])} senza argomento")
+    print(f"{m['name']}: appunti {len(m['appunti'])} sezioni · {len(m['prove'])} prove, {len(qs)} domande, {mirate} sugli argomenti studiati, {sum(1 for b in qs if not b['topics'])} senza argomento")

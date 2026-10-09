@@ -148,15 +148,23 @@ function segna(j) {
 }
 
 // prova virtuale sugli argomenti studiati: prima le mai viste, poi le sbagliate, poi le giuste; n = quante
+// domande ripetute tra prove diverse (stesso gruppo da build.py): esito = il più recente tra tutte le versioni
+function statoGruppo(m, grp) {
+  const all = store.get("mastery", {});
+  const recs = m.prove.flatMap(p => p.blocks.filter(b => b.grp == grp).map(b => all[qid(m, b)])).filter(Boolean);
+  if (!recs.length) return 0;
+  return recs.reduce((a, r) => r.data > a.data ? r : a).ok ? 2 : 1;
+}
+
 function mirato(m, n = Infinity, only = null) {
   const ok = studied(m), seen = new Set(), items = [];
   for (const p of m.prove) {
     let ctx = null;
     for (const b of p.blocks) {
       if (b.type == "contesto") { ctx = b; continue; }
-      const k = qid(m, b);
-      if ((only ? !only.includes(k) : !inProgram(b, ok)) || seen.has(k)) continue;
-      seen.add(k); items.push({ b, ctx, st: stato(m, b), i: items.length });
+      const k = qid(m, b), dk = !only && b.grp ? "grp:" + b.grp : k;   // sessione salvata: si ripristina esattamente com'era
+      if ((only ? !only.includes(k) : !inProgram(b, ok)) || seen.has(dk)) continue;
+      seen.add(dk); items.push({ b, ctx, st: b.grp ? statoGruppo(m, b.grp) : stato(m, b), i: items.length });
     }
   }
   const pick = [...items].sort((x, y) => x.st - y.st || x.i - y.i).slice(0, n).sort((x, y) => x.i - y.i);
@@ -230,8 +238,20 @@ function scarta() { const all = store.get("pausa", {}); delete all[DATA[cur].slu
 function riprendi() {
   const m = DATA[cur], s = store.get("pausa", {})[m.slug];
   if (s.v != 2) return alert("Questa sessione è nel formato vecchio e non si può riprendere in sicurezza. Esporta i dati dallo Storico (⬇️ Esporta) per recuperarla.");
-  const p = s.qids ? mirato(m, Infinity, s.qids) : m.prove.find(x => x.key == s.key);
+  let p = s.qids ? mirato(m, Infinity, s.qids) : m.prove.find(x => x.key == s.key);
   if (!p) return alert("Prova non trovata.");
+  if (s.qids) {
+    // via i doppioni (stessa domanda in prove diverse): restano quelle già risposte e una sola versione delle altre
+    const risp = b => s.risposte[qid(m, b)], seen = new Set(), blocks = [], ok = studied(m);
+    p.blocks.forEach(b => { if (b.type != "contesto" && b.grp && risp(b)) seen.add(b.grp); });
+    for (const b of p.blocks) {
+      if (b.type == "contesto") { blocks.push(b); continue; }
+      if (!risp(b) && !inProgram(b, ok)) continue;                 // non ancora risposta e ora fuori programma
+      if (b.grp && !risp(b)) { if (seen.has(b.grp)) continue; seen.add(b.grp); }
+      blocks.push(b);
+    }
+    p = { ...p, blocks: blocks.filter((b, i) => b.type != "contesto" || (blocks[i + 1] && blocks[i + 1].type != "contesto")) };
+  }
   run(p);
   exam.t0 = Date.now() - s.elapsed;
   const found = new Set();
@@ -342,8 +362,10 @@ async function spiega(j) {
     const d = await api("/api/explain", {
       materia: exam.m.name, contesto: exam.p.blocks.slice(0, j).filter(x => x.type == "contesto").map(x => x.md).join("\n\n"),
       domanda: b.q + "\n" + b.md + (b.options ? "\n" + b.options.map((o, k) => `${String.fromCharCode(97 + k)}) ${o}`).join("\n") : ""),
-      risposta, corretta, soluzione: b.sol });
-    box.innerHTML = `<div class="sol"><b>🧠 Spiegazione</b> <span class="small">(${esc(d.modello)})</span>${md(d.spiegazione)}</div>`;
+      risposta, corretta, soluzione: b.sol, appunti: exam.m.appunti || [] });
+    const rif = (d.appunti || []).map(a => `<a href="appunti/${exam.m.slug}.pdf#page=${a.p}" target="_blank">§${esc(a.n)} ${esc(a.t)} — pag. ${a.p}</a>`).join("<br>");
+    box.innerHTML = `<div class="sol"><b>🧠 Spiegazione</b> <span class="small">(${esc(d.modello)})</span>${md(d.spiegazione)}
+      ${rif ? `<p><b>📖 Ripassa sui tuoi appunti:</b><br>${rif}</p>` : ""}</div>`;
     typeset(box);
   } catch (e) {
     box.innerHTML = `<p class="small">⚠️ ${location.protocol == "file:" ? "Apri la pagina con <code>python3 server.py</code> (http://localhost:8000), non come file." : esc(e.message)}</p>`;
@@ -365,7 +387,7 @@ function total() {
   const max = qs.reduce((s, [b]) => s + b.pts, 0), got = qs.reduce((s, [, j]) => s + (exam.rub[j] || 0), 0);
   const done = qs.filter(([, j]) => exam.done[j]).length, voto = max ? got / max * 30 : 0;
   $("#tot").innerHTML = done ? `<span class="big score">${got}/${max} pt</span> → <span class="big score">${voto.toFixed(1)}/30</span>
-    <span class="small">(${exam.parziale ? `terminata a metà: voto su ${done} domande fatte` : `${done}/${qs.length} corrette${done < qs.length ? "; le non verificate valgono 0" : ""}`})</span>
+    <span class="small">(${exam.parziale ? `terminata a metà: voto su ${done} domande fatte` : `${done}/${qs.length} verificate${done < qs.length ? "; le non verificate valgono 0" : ""}`})</span>
     ${exam.consegnata ? `<span class="small">💾 salvato nello storico${qs.some(([b]) => b.type == "aperta") ? " (si aggiorna mentre correggi le aperte)" : ""}</span>` : ""}` : `<span class="small">${qs.length} domande · ${max} punti</span>`;
   if (exam.consegnata) { salva(voto, got, max); persist(); }
 }

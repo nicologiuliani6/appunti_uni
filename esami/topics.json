@@ -1,5 +1,5 @@
 {
-  "_nota": "Argomenti per materia. 'studiato' = default dedotto dagli appunti in 3/<materia>/*.tex (6/10/2026); nella pagina puoi cambiarli con le checkbox. Una domanda entra nell'allenamento mirato solo se TUTTI i suoi argomenti sono studiati. Regex cercate nel testo della domanda (e nelle opzioni se la domanda da sola non basta).",
+  "_nota": "Argomenti per materia. 'studiato' = default dedotto dagli appunti in 3/<materia>/*.tex (BD aggiornato il 9/10/2026: appunti completi); nella pagina puoi cambiarli con le checkbox. Una domanda entra nell'allenamento mirato solo se TUTTI i suoi argomenti sono studiati. Regex cercate nel testo della domanda (e nelle opzioni se la domanda da sola non basta).",
   "ingegneria-del-software": [
     {
       "id": "uml-base",
@@ -84,43 +84,49 @@
     {
       "id": "sql",
       "nome": "SQL",
-      "studiato": false,
+      "studiato": true,
       "re": "\\bSQL|SELECT|HAVING|GROUP BY|DELETE FROM|ALTER TABLE|interrogazioni nidificate"
     },
     {
       "id": "er",
       "nome": "Progettazione E-R",
-      "studiato": false,
+      "studiato": true,
       "re": "E/R|E-R|\\bER\\b|modello concettuale|progettazione|generalizzazione|cardinalità delle relazioni"
     },
     {
-      "id": "transazioni",
-      "nome": "Transazioni e concorrenza",
-      "studiato": false,
-      "re": "transazion|ACID|schedul|\\block|isolamento|anomali"
+      "id": "acid",
+      "nome": "Transazioni: proprietà ACID",
+      "studiato": true,
+      "re": "ACID|acide|una transazione rispetta|proprietà di (consistenza|isolamento|atomicità)"
+    },
+    {
+      "id": "concorrenza",
+      "nome": "Concorrenza: schedule, lock, isolamento",
+      "studiato": true,
+      "re": "schedul|\\block|2PL|livello di isolamento|conflitt|Transazioni[.:]"
     },
     {
       "id": "recovery",
       "nome": "Recovery (log, ARIES)",
-      "studiato": false,
+      "studiato": true,
       "re": "ARIES|REDO|UNDO|\\blog\\b|crash|Recovery"
     },
     {
       "id": "indici",
       "nome": "Indici, B+tree, hashing",
-      "studiato": false,
+      "studiato": true,
       "re": "indic[ei]|B\\+|hash|blocchi"
     },
     {
       "id": "normalizzazione",
       "nome": "Normalizzazione",
-      "studiato": false,
+      "studiato": true,
       "re": "normalizzazion|dipendenze funzionali"
     },
     {
       "id": "privilegi",
       "nome": "Sicurezza e privilegi",
-      "studiato": false,
+      "studiato": true,
       "re": "privilegi"
     }
   ],
@@ -129,7 +135,13 @@
       "id": "intro",
       "nome": "Introduzione, apprendimento supervisionato",
       "studiato": true,
-      "re": "apprendimento supervisionato|auto-supervisionato|self-supervised"
+      "re": "apprendimento supervisionato"
+    },
+    {
+      "id": "self-supervised",
+      "nome": "Apprendimento auto-supervisionato",
+      "studiato": false,
+      "re": "auto-supervisionato|self-supervised"
     },
     {
       "id": "alberi",
@@ -175,9 +187,15 @@
     },
     {
       "id": "multinomiale",
-      "nome": "Regressione multinomiale, softmax",
+      "nome": "Regressione multinomiale",
       "studiato": true,
-      "re": "multinomiale|softmax"
+      "re": "multinomiale"
+    },
+    {
+      "id": "softmax",
+      "nome": "Funzione softmax",
+      "studiato": false,
+      "re": "softmax"
     },
     {
       "id": "gradiente",
@@ -220,7 +238,7 @@
       "nome": "Reti neurali e deep learning",
       "studiato": false,
       "re": "neur|\\breti?\\b|layer|convolu|backprop|ReLU|vanishing|autoencoder|\\bGAN|U-Net|transformer|LSTM|MaxPool|Inception|AlexNet|ResNet|stride|kernel|campo ricettivo|optimizer|Keras|loss|deep|skip|transposed|diffusion|IoU|IntersectionoverUnion|Intersection over|epoche|Adversarial|dropout",
-      "re_opzioni": "backprop|skip connection|dropout|\\bGAN|Adversarial|encoder-decoder|Diffusion|ReLU|\\blayer|convolu"
+      "re_opzioni": "clipping|momento|backprop|skip connection|dropout|\\bGAN|Adversarial|encoder-decoder|Diffusion|ReLU|\\blayer|convolu"
     }
   ]
 }
