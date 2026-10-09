@@ -12,6 +12,18 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,positioning,arrows.meta}
+% Stili per diagrammi E-R
+\tikzset{
+  ent/.style={draw=blue!60!black,fill=cyan!12,minimum width=2cm,minimum height=7mm,font=\small\bfseries},
+  rel/.style={draw=blue!60!black,fill=cyan!12,diamond,aspect=2.4,inner sep=1pt,font=\small\bfseries},
+  erat/.style={circle,draw=blue!60!black,fill=white,inner sep=1.6pt},
+  erid/.style={circle,draw=blue!60!black,fill=blue!60!black,inner sep=1.6pt},
+  card/.style={font=\scriptsize,text=blue!60!black},
+  gen/.style={-{Triangle[open,length=3mm,width=3mm]},thick,draw=blue!60!black},
+  gentot/.style={-{Triangle[length=3mm,width=3mm]},thick,draw=blue!60!black},
+}
 
 % Simboli per i join esterni
 \newcommand{\ojoin}{\setbox0=\hbox{$\bowtie$}%
@@ -1615,6 +1627,2844 @@ interrogazioni ricorsive è delicata, soprattutto in presenza di negazione.
     \emph{incomparabili};
   \item Datalog \emph{ricorsivo con negazione} è più espressivo di calcolo e
     algebra.
+\end{itemize}
+
+\section{SQL di base}
+
+\subsection{SQL}
+
+In origine acronimo di \emph{Structured Query Language}, oggi è un nome
+proprio. È un linguaggio con molte funzionalità: implementa sia il \textbf{DDL}
+sia il \textbf{DML}. Esiste uno standard ISO, ma ogni DBMS ha la propria
+grammatica (dialetto).
+
+\subsection{Storia}
+
+\begin{itemize}
+  \item il predecessore è \textbf{SEQUEL} (1974);
+  \item prime implementazioni: SQL/DS e Oracle (1981);
+  \item standard ``de facto'' dal 1983;
+  \item molti aggiornamenti (1986, 1989, 1992, 1999, 2003, 2006, 2008, \dots),
+    ma i DBMS mantengono comunque la propria grammatica.
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{|l|l|p{8cm}|}
+\hline
+\textbf{Nome non ufficiale} & \textbf{Nome ufficiale} & \textbf{Caratteristiche}\\ \hline
+SQL-Base & SQL-86 & primo standard: quasi tutte le clausole per le
+  interrogazioni, supporto limitato a creazione e modifica di schemi e dati\\
+         & SQL-89 & integrità referenziale\\ \hline
+SQL-2 & SQL-92 & modello relazionale, nuove funzioni (\texttt{COALESCE},
+  \texttt{NULLIF}, \texttt{CASE}); tre livelli: entry, intermediate, full;
+  in gran parte retrocompatibile\\ \hline
+SQL-3 & SQL:1999 & modello object-relational, trigger, funzioni esterne\\
+      & SQL:2003 & estende il supporto a oggetti; query in Java e su dati
+  semistrutturati (SQL/XML); rimosse parole chiave in disuso\\
+      & SQL:2006 & supporto esteso a XML (XQuery)\\
+      & SQL:2008 & piccole modifiche di sintassi (es.\ trigger
+  \texttt{INSTEAD OF})\\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Definizione dei dati (DDL)}
+
+\paragraph{CREATE DATABASE} ogni database creato contiene tabelle, viste,
+trigger e altro. \texttt{CREATE DATABASE db\_name} (in SQLite
+\texttt{sqlite3\_open\_v2(db\_name)}, in Mimer \texttt{CREATE DATABANK}).
+
+\paragraph{CREATE SCHEMA} uno schema SQL ha un nome e descrive gli elementi che
+gli appartengono (tabelle, tipi, vincoli, viste, domini, \dots). Appartiene
+all'utente che ha eseguito il comando; con \texttt{AUTHORIZATION} si indica un
+utente proprietario diverso:
+\begin{verbatim}
+CREATE SCHEMA schema_name AUTHORIZATION 'user_name'
+\end{verbatim}
+
+\paragraph{CREATE TABLE} definisce una nuova relazione e ne crea l'istanza
+(vuota); specifica gli attributi (con i loro tipi) e i vincoli iniziali.
+\begin{verbatim}
+CREATE TABLE Employee(
+  Number  CHAR(6) PRIMARY KEY,
+  Name    CHAR(20) NOT NULL,
+  Surname CHAR(20) NOT NULL,
+  Dept    CHAR(15),
+  Wage    NUMERIC(9) DEFAULT 0,
+  FOREIGN KEY(Dept) REFERENCES Department(Dept),
+  UNIQUE (Surname, Name)
+)
+\end{verbatim}
+
+\subsection{Tipi di dato}
+
+I tipi degli attributi corrispondono ai \emph{domini} del modello relazionale.
+Si distinguono tipi \textbf{base} (predefiniti) e tipi \textbf{custom}
+(``domini'', semplici e riutilizzabili).
+
+\paragraph{Tipi base}
+\begin{itemize}
+  \item stringhe di caratteri, a lunghezza fissa (\texttt{CHAR(n)}) o variabile
+    (\texttt{VARCHAR(n)});
+  \item numerici: interi e vari tipi in virgola mobile;
+  \item \texttt{DATE}, \texttt{TIME}, \texttt{INTERVAL};
+  \item introdotti con SQL-3: \texttt{BOOLEAN}, \texttt{BLOB} e \texttt{CLOB}
+    (\emph{binary/character large object}, grandi collezioni di dati,
+    testuali o no).
+\end{itemize}
+
+\paragraph{CREATE DOMAIN} definisce un tipo custom, riusabile nelle relazioni,
+con vincoli e valore di default:
+\begin{verbatim}
+CREATE DOMAIN Grade
+  AS SMALLINT DEFAULT NULL
+  CHECK ( value >= 18 AND value <= 30 )
+\end{verbatim}
+
+\subsection{Vincoli intrarelazionali}
+
+\begin{itemize}
+  \item \texttt{NOT NULL};
+  \item \texttt{UNIQUE}: definisce una chiave (superchiave);
+  \item \texttt{PRIMARY KEY}: una sola per tabella, implica \texttt{NOT NULL}
+    (DB2 ha un comportamento non standard);
+  \item \texttt{CHECK}: vedi SQL avanzato.
+\end{itemize}
+
+\texttt{UNIQUE} e \texttt{PRIMARY KEY} si possono scrivere \emph{accanto
+all'attributo} (se la chiave è un solo attributo) o come \emph{elemento a sé}:
+\begin{verbatim}
+Number CHAR(6) PRIMARY KEY
+-- equivale a
+Number CHAR(6),
+PRIMARY KEY (Number)
+\end{verbatim}
+
+\paragraph{Attenzione} le due definizioni seguenti \textbf{non} sono
+equivalenti:
+\begin{verbatim}
+Name    CHAR(20) NOT NULL,
+Surname CHAR(20) NOT NULL,
+UNIQUE (Surname, Name)          -- la COPPIA è chiave
+
+Name    CHAR(20) NOT NULL UNIQUE,
+Surname CHAR(20) NOT NULL UNIQUE -- OGNI attributo è chiave (più restrittivo)
+\end{verbatim}
+
+\subsection{Vincoli interrelazionali}
+
+\texttt{REFERENCES} e \texttt{FOREIGN KEY} definiscono vincoli di
+\textbf{integrità referenziale}, su un singolo attributo o su più attributi. Si
+possono definire \emph{azioni} da eseguire quando il vincolo viene violato.
+
+\paragraph{Esempio} \texttt{Offences(Code, Day, Officer, State, Number)} con
+\texttt{Officer} che riferisce \texttt{Officer(Number, Surname, Name)} e la
+coppia \texttt{(State, Number)} che riferisce \texttt{Car(State, Number,
+Surname, Name)}:
+\begin{verbatim}
+CREATE TABLE Offences(
+  Code    CHAR(6) NOT NULL PRIMARY KEY,
+  Day     DATE NOT NULL,
+  Officer INTEGER NOT NULL REFERENCES Officer(Number),
+  State   CHAR(2),
+  Number  CHAR(6),
+  FOREIGN KEY(State, Number) REFERENCES Car(State, Number)
+)
+\end{verbatim}
+
+\paragraph{Azioni referenziali (referential triggered actions)} dopo ogni
+vincolo referenziale si può specificare l'azione da compiere quando
+un'operazione sulla tabella riferita violerebbe il vincolo:
+\begin{verbatim}
+ON < DELETE | UPDATE >
+   < CASCADE | SET NULL | SET DEFAULT | NO ACTION >
+\end{verbatim}
+\begin{description}[style=nextline]
+  \item[CASCADE] su \emph{delete}: si cancellano le tuple che riferiscono; su
+    \emph{update}: il valore della chiave esterna viene aggiornato al nuovo
+    valore.
+  \item[SET NULL] l'attributo che riferisce viene posto a \texttt{NULL}.
+  \item[SET DEFAULT] l'attributo che riferisce assume il valore di default.
+  \item[NO ACTION] la cancellazione/modifica non è permessa (default).
+\end{description}
+
+\subsection{Modifica degli schemi}
+
+Comandi: \texttt{ALTER DOMAIN}, \texttt{ALTER TABLE}, \texttt{DROP DOMAIN},
+\texttt{DROP TABLE}.
+
+\paragraph{ALTER DOMAIN} modifica un dominio già definito; si usa con
+\texttt{SET DEFAULT}, \texttt{DROP DEFAULT}, \texttt{ADD CONSTRAINT},
+\texttt{DROP CONSTRAINT}.
+\begin{verbatim}
+ALTER DOMAIN Grade SET DEFAULT 30   -- default applicato solo d'ora in poi,
+                                    -- ai valori mancanti inseriti
+ALTER DOMAIN Grade DROP DEFAULT
+ALTER DOMAIN Grade ADD CONSTRAINT isValid CHECK (value >= 18 AND value <= 30)
+ALTER DOMAIN Grade DROP CONSTRAINT isValid
+\end{verbatim}
+
+\paragraph{ALTER TABLE} modifica una tabella già definita; si usa con
+\texttt{ALTER COLUMN}, \texttt{ADD COLUMN}, \texttt{DROP COLUMN},
+\texttt{ADD CONSTRAINT}, \texttt{DROP CONSTRAINT}.
+\begin{verbatim}
+ALTER TABLE Employee ALTER COLUMN Number SET NOT NULL
+ALTER TABLE Employee ADD COLUMN Level CHARACTER(10)
+ALTER TABLE Employee DROP COLUMN Level RESTRICT -- solo se non contiene valori
+ALTER TABLE Employee DROP COLUMN Level CASCADE  -- la rimuove con i suoi valori
+ALTER TABLE Employee ADD CONSTRAINT validNum CHECK (char_length(Number) = 10)
+ALTER TABLE Employee DROP CONSTRAINT validNum
+\end{verbatim}
+
+\paragraph{DROP DOMAIN / DROP TABLE} \texttt{DROP DOMAIN Grade} rimuove un tipo
+definito dall'utente; \texttt{DROP TABLE Offences} rimuove l'intera tabella:
+schema e dati.
+
+\subsection{Indici}
+
+Migliorano i tempi di risposta delle interrogazioni (efficienza). Sono definiti
+a livello \emph{fisico}, non logico; un tempo erano anche l'unico modo per
+definire chiavi.
+\begin{verbatim}
+CREATE INDEX idx_Surname ON Officer (Surname)
+\end{verbatim}
+
+\paragraph{DDL in pratica} in molti sistemi e progetti, per definire lo schema
+si usano strumenti (spesso grafici) al posto delle istruzioni SQL.
+
+\subsection{Interrogazioni: SELECT}
+
+Operazioni sui dati: \textbf{interrogazione} (\texttt{SELECT}) e
+\textbf{modifica} (\texttt{INSERT}, \texttt{DELETE}, \texttt{UPDATE}).
+
+\begin{verbatim}
+SELECT <ListaAttributi>     -- target list
+FROM <ListaTabelle>         -- clausola FROM
+[ WHERE <Condizione> ]      -- clausola WHERE
+\end{verbatim}
+
+\paragraph{Come leggere una SELECT} l'ordine di valutazione non è quello di
+scrittura:
+\begin{verbatim}
+3  SELECT Number, Name
+1  FROM Officer
+2  WHERE Surname = 'Jones'
+\end{verbatim}
+(1) si prende la tabella \texttt{Officer}, (2) si tengono gli ufficiali con
+cognome \texttt{'Jones'}, (3) di ciascuno si mostrano \texttt{Number} e
+\texttt{Name}.
+
+\paragraph{Database di esempio} usato nel seguito:
+
+\begin{center}
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{\texttt{People}}\\ \hline
+Name & Age & Income\\ \hline
+Jim & 27 & 21\\ James & 25 & 15\\ Alice & 55 & 42\\ Jesse & 50 & 35\\
+Phil & 26 & 30\\ Louis & 50 & 40\\ Frank & 60 & 20\\ Olga & 30 & 41\\
+Steve & 85 & 35\\ Abby & 75 & 87\\ \hline
+\end{tabular}
+\qquad
+\begin{tabular}{cc}
+\multicolumn{2}{c}{\texttt{Motherhood}}\\ \hline
+Mother & Child\\ \hline
+Abby & Alice\\ Abby & Louis\\ Jesse & Olga\\ Jesse & Phil\\ Alice & Jim\\
+Alice & James\\ \hline
+\end{tabular}
+\qquad
+\begin{tabular}{cc}
+\multicolumn{2}{c}{\texttt{Fatherhood}}\\ \hline
+Father & Child\\ \hline
+Steve & Frank\\ Louis & Olga\\ Louis & Phil\\ Frank & Jim\\ Frank & James\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Selezione e proiezione}
+
+\paragraph{Selezione e proiezione} nome e reddito delle persone con meno di 30
+anni, $\pi_{\text{Name},\text{Income}}(\sigma_{\text{Age}<30}(\text{People}))$:
+\begin{verbatim}
+SELECT Name, Income
+FROM People
+WHERE Age < 30
+\end{verbatim}
+Risultato: (Jim, 21), (James, 15), (Phil, 30).
+
+\paragraph{Solo selezione} $\sigma_{\text{Age}<30}(\text{People})$: si usa
+\texttt{SELECT *} (tutti gli attributi).
+\begin{verbatim}
+SELECT * FROM People WHERE Age < 30
+\end{verbatim}
+
+\paragraph{Solo proiezione} $\pi_{\text{Name},\text{Income}}(\text{People})$:
+si omette il \texttt{WHERE}.
+\begin{verbatim}
+SELECT Name, Income FROM People
+\end{verbatim}
+
+\paragraph{Ridenominazione} con \texttt{AS} si rinominano attributi (nella
+target list) e tabelle (nel \texttt{FROM}, \emph{alias} o variabili di
+tupla):
+\begin{verbatim}
+SELECT p.Name AS GivenName, p.Income AS Revenue
+FROM People AS p
+WHERE p.Age < 30
+\end{verbatim}
+
+\paragraph{Abbreviazioni} data $R(A,B)$, \texttt{SELECT * FROM R} equivale a
+\begin{verbatim}
+SELECT X.A AS A, X.B AS B
+FROM R X
+WHERE true
+\end{verbatim}
+
+\paragraph{Condizioni composte} con \texttt{AND}, \texttt{OR}, \texttt{NOT}:
+\begin{verbatim}
+SELECT * FROM People
+WHERE Income > 25 AND (Age < 30 OR Age > 60)
+\end{verbatim}
+Risultato: Phil (26, 30) e Steve (85, 35).
+
+\paragraph{Predicato LIKE} confronto con pattern: \texttt{\_} indica un
+carattere qualsiasi, \texttt{\%} una sequenza (anche vuota) di caratteri.
+Persone con nome che inizia per `J' e ha `m' come terza lettera:
+\begin{verbatim}
+SELECT * FROM People WHERE Name LIKE 'J_m%'
+\end{verbatim}
+Risultato: Jim, James.
+
+\paragraph{Valori nulli} si usano \texttt{IS NULL} / \texttt{IS NOT NULL}.
+Impiegati con più di 40 anni o età sconosciuta,
+$\sigma_{(\text{Age}>40) \lor (\text{Age IS NULL})}(\text{Employee})$:
+\begin{verbatim}
+SELECT * FROM Employee WHERE Age > 40 OR Age IS NULL
+\end{verbatim}
+
+\paragraph{Duplicati e DISTINCT} a differenza dell'algebra, SQL \textbf{non}
+elimina i duplicati (le tabelle sono \emph{multiinsiemi}). Per eliminarli si
+usa \texttt{DISTINCT}:
+\begin{verbatim}
+SELECT Surname, Agency FROM Employee           -- (Neri,Naples), (Neri,Milan),
+                                               -- (Rossi,Rome), (Rossi,Rome)
+SELECT DISTINCT Surname, Agency FROM Employee  -- (Rossi,Rome) una volta sola
+\end{verbatim}
+
+\subsection{SQL e algebra relazionale}
+
+Con una sola relazione nel \texttt{FROM} si esprimono selezione, proiezione e
+ridenominazione; con più relazioni si ottengono \textbf{join} (e prodotti
+cartesiani). Date $R_1(A_1,A_2)$ e $R_2(A_3,A_4)$:
+\begin{verbatim}
+SELECT DISTINCT R1.A1, R2.A4
+FROM R1, R2
+WHERE R1.A2 = R2.A3
+\end{verbatim}
+corrisponde a $\pi_{A_1,A_4}(\sigma_{A_2=A_3}(R_1 \bowtie R_2))$: il
+\texttt{FROM} fa il prodotto cartesiano, il \texttt{WHERE} la selezione, la
+\texttt{SELECT} la proiezione.
+
+\paragraph{Alias} la ridenominazione serve nel prodotto cartesiano (per usare
+più copie della stessa tabella) e nella target list:
+\begin{verbatim}
+SELECT DISTINCT X.A1 AS B1, Y.A4 AS B2
+FROM R1 X, R2 Y, R1 Z
+WHERE X.A2 = Y.A3 AND Y.A4 = Z.A1
+\end{verbatim}
+\[
+\rho_{B_1,B_2 \leftarrow A_1,A_4}\bigl(\pi_{A_1,A_4}(\sigma_{A_2=A_3 \land
+A_4=C_1}(R_1 \bowtie R_2 \bowtie \rho_{C_1,C_2 \leftarrow A_1,A_2}(R_1)))\bigr)
+\]
+
+\paragraph{Valutazione} SQL è dichiarativo: la semantica è data ``per
+esempi''. I DBMS usano \emph{piani di esecuzione} efficienti (selezioni il
+prima possibile, join al posto dei prodotti cartesiani). Non serve quindi
+scrivere query efficienti: è più importante che siano \emph{comprensibili}
+(per evitare errori).
+
+\subsection{Join}
+
+\paragraph{Esempio 1} padri delle persone che guadagnano più di 20,
+$\pi_{\text{Father}}(\text{Fatherhood} \bowtie_{\text{Child}=\text{Name}}
+\sigma_{\text{Income}>20}(\text{People}))$:
+\begin{verbatim}
+SELECT DISTINCT Father
+FROM People, Fatherhood
+WHERE Child = Name AND Income > 20
+\end{verbatim}
+
+\paragraph{Esempio 2} nome e reddito delle persone che guadagnano più del
+padre, con il reddito del padre (serve \texttt{People} due volte):
+\begin{verbatim}
+SELECT c.Name AS Name, c.Income AS Income, f.Income AS fatherIncome
+FROM People f, Fatherhood, People c
+WHERE f.Name = Father AND Child = c.Name
+  AND c.Income > f.Income
+\end{verbatim}
+In algebra:
+$\pi_{\text{Name},\text{Income},\text{IF}}(\sigma_{\text{Income}>\text{IF}}(
+\rho_{\text{NF},\text{AF},\text{IF} \leftarrow \text{Name},\text{Age},\text{Income}}
+(\text{People}) \bowtie_{\text{NF}=\text{Father}} (\text{Fatherhood}
+\bowtie_{\text{Child}=\text{Name}} \text{People})))$.
+
+\paragraph{Espressioni nella target list}
+\begin{verbatim}
+SELECT Income/2 AS halvedIncome FROM People WHERE Name = 'Louis'  -- 20
+\end{verbatim}
+
+\paragraph{Join esplicito} madre e padre di ogni persona.
+\begin{verbatim}
+-- join implicito
+SELECT f.child, father, mother
+FROM motherhood m, fatherhood f
+WHERE m.child = f.child
+
+-- join esplicito
+SELECT mother, fatherhood.child, father
+FROM motherhood JOIN fatherhood ON fatherhood.child = motherhood.child
+\end{verbatim}
+Sintassi:
+\begin{verbatim}
+SELECT ...
+FROM LeftTable { ... JOIN RightTable ON joincondition }, ...
+[ WHERE otherPredicate ]
+\end{verbatim}
+L'esempio 2 con join espliciti:
+\begin{verbatim}
+SELECT c.name, c.income, f.income
+FROM (people f JOIN fatherhood ON f.name = father)
+     JOIN people c ON child = c.name
+WHERE c.income > f.income
+\end{verbatim}
+
+\paragraph{Join naturale}
+$\pi_{\text{Child},\text{Father},\text{Mother}}(\text{Fatherhood}
+\bowtie_{\text{Child}=\text{Name}} \rho_{\text{Name}\leftarrow\text{Child}}
+(\text{Motherhood}))$, cioè $\text{Fatherhood} \bowtie \text{Motherhood}$:
+\begin{verbatim}
+SELECT mother, child, father
+FROM Motherhood NATURAL JOIN Fatherhood
+\end{verbatim}
+
+\subsection{Join esterno}
+
+Con i join visti finora (\emph{inner join}) le tuple senza corrispondente
+nell'altra tabella vengono scartate. Per non perdere informazione si usa
+\texttt{LEFT}/\texttt{RIGHT}/\texttt{FULL} \texttt{OUTER JOIN}; per left e right
+la parola \texttt{OUTER} si può omettere (sono ``esterni'' per definizione).
+
+\paragraph{Left join} padre e, se nota, madre di ogni persona:
+\begin{verbatim}
+SELECT Fatherhood.child, father, mother
+FROM Fatherhood LEFT [OUTER] JOIN Motherhood
+     ON Fatherhood.child = Motherhood.child
+\end{verbatim}
+Risultato: (Frank, Steve, \texttt{NULL}), (Olga, Louis, Jesse), (Phil, Louis,
+Jesse), (Jim, Frank, Alice), (James, Frank, Alice).
+
+\paragraph{Full join} restituisce anche le tuple escluse da entrambi gli
+operandi:
+\begin{verbatim}
+SELECT Fatherhood.child, father, mother
+FROM Motherhood FULL OUTER JOIN Fatherhood
+     ON Motherhood.child = Fatherhood.child
+\end{verbatim}
+Oltre alle 5 righe del left join compaiono (\texttt{NULL}, \texttt{NULL},
+Abby) due volte (Alice e Louis non hanno padre in \texttt{Fatherhood}).
+
+\paragraph{Riepilogo}
+\begin{center}
+\begin{tabular}{ll}
+\texttt{A INNER JOIN B ON A.Key = B.Key} & $A \cap B$\\
+\texttt{A LEFT JOIN B ON A.Key = B.Key} & tutta $A$\\
+\texttt{A RIGHT JOIN B ON A.Key = B.Key} & tutta $B$\\
+\texttt{A FULL OUTER JOIN B ON A.Key = B.Key} & $A \cup B$\\
+\texttt{\dots\ LEFT JOIN \dots\ WHERE B.Key IS NULL} & $A \setminus B$\\
+\texttt{\dots\ RIGHT JOIN \dots\ WHERE A.Key IS NULL} & $B \setminus A$\\
+\texttt{\dots\ FULL JOIN \dots\ WHERE A.Key IS NULL OR B.Key IS NULL} &
+  $A \triangle B$ (differenza simmetrica)\\
+\end{tabular}
+\end{center}
+
+\subsection{Ordinamento}
+
+\begin{verbatim}
+SELECT name, income
+FROM People
+WHERE age < 30
+ORDER BY name ASC
+\end{verbatim}
+\texttt{ASC} ordine crescente, \texttt{DESC} decrescente. Senza
+\texttt{ORDER BY} l'ordine delle righe non è definito. (Le slide dicono che il
+default è decrescente, ma negli esempi \texttt{ORDER BY name} dà James, Jim,
+Phil: il default standard è \textbf{ASC}.)
+
+\subsection{Unione, intersezione, differenza}
+
+La \texttt{SELECT} da sola non esprime l'unione: serve un costrutto apposito.
+\begin{verbatim}
+SELECT ... UNION [ALL] SELECT ...
+\end{verbatim}
+Il risultato è senza duplicati, salvo con \texttt{ALL} (unione di
+\emph{multiinsiemi}).
+\begin{verbatim}
+SELECT child FROM Motherhood
+UNION            -- Alice, Louis, Olga, Frank, Phil
+SELECT child FROM Fatherhood
+
+SELECT child FROM Motherhood
+UNION ALL        -- Olga compare due volte
+SELECT child FROM Fatherhood
+\end{verbatim}
+
+\paragraph{Notazione posizionale} se gli schemi hanno nomi diversi non si
+rinomina: si assumono i nomi del \textbf{primo operando} e gli attributi si
+abbinano per posizione.
+\begin{verbatim}
+SELECT Father, Child FROM Fatherhood
+UNION
+SELECT Mother, Child FROM Motherhood   -- schema risultante: (Father, Child)
+\end{verbatim}
+Attenzione: \texttt{SELECT father, child \dots\ UNION SELECT child, mother
+\dots} ha schema \texttt{(father, child)} ma mette i figli nella colonna dei
+padri!
+
+\paragraph{Differenza e intersezione}
+\begin{verbatim}
+SELECT Name FROM Employee
+EXCEPT                      -- INTERSECT per l'intersezione
+SELECT Surname AS Name FROM Employee
+\end{verbatim}
+L'intersezione si può esprimere anche con un join:
+\begin{verbatim}
+SELECT E.Name FROM Employee E, Employee F WHERE E.Name = F.Surname
+\end{verbatim}
+La differenza si esprime anche con interrogazioni annidate.
+
+\subsection{Interrogazioni annidate}
+
+Nel \texttt{WHERE} i predicati possono confrontare uno (o più) attributi con il
+risultato di una \emph{sottointerrogazione}, o usare il quantificatore
+esistenziale.
+
+\paragraph{Esempio} nome e reddito del padre di Frank:
+\begin{verbatim}
+SELECT Name, Income            -- prodotto cartesiano + equi-join
+FROM People, Fatherhood
+WHERE Name = Father AND Child = 'Frank'
+
+SELECT Name, Income            -- annidata: vera se Name è uguale
+FROM People                    -- al risultato (una sola tupla)
+WHERE Name = (SELECT Father FROM Fatherhood WHERE Child = 'Frank')
+\end{verbatim}
+
+\paragraph{Discussione} le query annidate sono ``meno dichiarative'', ma a
+volte più leggibili (meno variabili). Si possono combinare con quelle non
+annidate. Le sottointerrogazioni non possono contenere operazioni insiemistiche
+(``l'unione si fa nella query esterna''): limite poco significativo.
+
+\paragraph{Semantica} l'interrogazione interna viene eseguita \textbf{una volta
+per ogni tupla} dell'interrogazione esterna.
+
+\paragraph{ANY, ALL, IN}
+\begin{description}[style=nextline]
+  \item[\texttt{Attributo op ANY (Expr)}] la tupla è selezionata se soddisfa il
+    confronto \texttt{op} ($=, <, >, \geq, \dots$) con \emph{almeno una} tupla
+    di \texttt{Expr}.
+  \item[\texttt{Attributo op ALL (Expr)}] \dots\ con \emph{tutte} le tuple di
+    \texttt{Expr}.
+  \item[\texttt{Attributo IN (Expr)}] il valore è contenuto nel risultato di
+    \texttt{Expr} (equivale a \texttt{= ANY}).
+\end{description}
+Si negano anteponendo \texttt{NOT}.
+
+\paragraph{Esempio} nome e reddito dei padri con almeno un figlio che guadagna
+più di 20:
+\begin{verbatim}
+SELECT DISTINCT F.Name, F.Income
+FROM People F, Fatherhood, People C
+WHERE F.Name = Father AND Child = C.Name AND C.Income > 20
+\end{verbatim}
+Senza \texttt{DISTINCT} (non facendo join, i padri non si ripetono per ogni
+figlio):
+\begin{verbatim}
+SELECT Name, Income
+FROM People
+WHERE Name IN (SELECT Father
+               FROM Fatherhood
+               WHERE Child = ANY (SELECT Name
+                                  FROM People
+                                  WHERE Income > 20))
+-- oppure
+WHERE Name IN (SELECT Father FROM Fatherhood, People
+               WHERE Child = Name AND Income > 20)
+\end{verbatim}
+Se però si vuole anche il reddito del figlio, la versione annidata
+\textbf{non} funziona: nella query esterna i dati del figlio non sono visibili.
+Serve la versione con join (\texttt{SELECT DISTINCT F.Name, F.Income, C.Income
+\dots}).
+
+\paragraph{Regole di visibilità}
+\begin{itemize}
+  \item non ci si può riferire a variabili definite in blocchi \emph{più
+    interni};
+  \item se il nome di una variabile è omesso, si assume quella dichiarata
+    ``più vicina'';
+  \item ci si può riferire a variabili dei blocchi esterni.
+\end{itemize}
+Esempio \textbf{errato}: \texttt{D1.City} non è visibile nella seconda
+sottointerrogazione, perché \texttt{D1} è definita in un blocco parallelo:
+\begin{verbatim}
+SELECT * FROM Employee
+WHERE Dept IN (SELECT Name FROM Department D1
+               WHERE Name = 'Production') OR
+      Dept IN (SELECT Name FROM Department D2
+               WHERE D2.City = D1.City)
+\end{verbatim}
+
+\subsection{Quantificatore esistenziale}
+
+\texttt{EXISTS (Expr)} è vero se \texttt{Expr} restituisce almeno una tupla.
+
+\paragraph{Persone con almeno un figlio} (\texttt{Name} è preso dalla relazione
+del blocco esterno):
+\begin{verbatim}
+SELECT * FROM People
+WHERE EXISTS (SELECT * FROM Fatherhood WHERE Father = Name) OR
+      EXISTS (SELECT * FROM Motherhood WHERE Mother = Name)
+\end{verbatim}
+
+\paragraph{Padri i cui figli guadagnano tutti più di 20} (\texttt{NOT EXISTS}
+esprime il ``per ogni''):
+\begin{verbatim}
+SELECT DISTINCT Father
+FROM Fatherhood Z
+WHERE NOT EXISTS (SELECT *
+                  FROM Fatherhood W, People
+                  WHERE W.Father = Z.Father
+                    AND W.Child = Name
+                    AND Income <= 20)
+\end{verbatim}
+
+\paragraph{Errore di scope} nella versione seguente \texttt{Child}, senza
+riferimento a tabella, si riferisce implicitamente al \texttt{FROM} più vicino,
+ma \texttt{People} non ha \texttt{Child}; va scritto \texttt{F.Child}:
+\begin{verbatim}
+SELECT DISTINCT F.Father
+FROM Fatherhood AS F
+WHERE NOT EXISTS (SELECT * FROM People
+                  WHERE F.Child = Name AND Income <= 20)
+\end{verbatim}
+
+\paragraph{Differenza con query annidate}
+\begin{verbatim}
+SELECT Name FROM Employee
+EXCEPT
+SELECT Surname AS Name FROM Employee
+-- equivale a
+SELECT Name FROM Employee I
+WHERE NOT EXISTS (SELECT * FROM Employee WHERE Surname = I.Name)
+\end{verbatim}
+
+\subsection{Funzioni aggregate}
+
+Nella target list si possono usare espressioni che calcolano un valore a
+partire da un \emph{insieme} di tuple: \texttt{COUNT}, \texttt{MIN},
+\texttt{MAX}, \texttt{AVG}, \texttt{SUM}.
+\begin{verbatim}
+Aggr([DISTINCT] *)
+Aggr([DISTINCT] Attributo)
+\end{verbatim}
+
+\paragraph{COUNT} numero di figli di Frank (la funzione si applica alle tuple
+del risultato \texttt{SELECT * FROM Fatherhood WHERE father = 'Frank'}):
+\begin{verbatim}
+SELECT count(*) AS NumFrankChildren
+FROM Fatherhood
+WHERE father = 'Frank'                       -- 2
+\end{verbatim}
+\begin{itemize}
+  \item \texttt{COUNT(*)} conta le righe;
+  \item \texttt{COUNT(attr)} conta i valori \textbf{non nulli} di
+    \texttt{attr};
+  \item \texttt{COUNT(DISTINCT attr)} conta i valori distinti non nulli.
+\end{itemize}
+Con redditi (30, \texttt{NULL}, 36, 36): \texttt{COUNT(*)} = 4,
+\texttt{COUNT(income)} = 3, \texttt{COUNT(DISTINCT income)} = 2.
+
+\paragraph{SUM, AVG, MAX, MIN} ignorano i \texttt{NULL}. Media dei redditi dei
+figli di Frank:
+\begin{verbatim}
+SELECT AVG(income)
+FROM People JOIN Fatherhood ON name = child
+WHERE father = 'Frank'
+\end{verbatim}
+Con redditi (21, \texttt{NULL}, 21, 35) \texttt{AVG(income)} = $77/3 \approx
+25{,}6$ (il \texttt{NULL} non conta nemmeno al denominatore).
+
+\paragraph{Aggregate e target list} query \textbf{errata}:
+\begin{verbatim}
+SELECT name, MAX(income) FROM People
+\end{verbatim}
+Di chi è il nome? La target list deve essere ``omogenea'': o tutte aggregate,
+o (con raggruppamento) attributi di raggruppamento. Corretta:
+\texttt{SELECT MIN(age), MAX(income) FROM People}. Per le persone con il
+reddito massimo si usa una query annidata:
+\begin{verbatim}
+SELECT * FROM People
+WHERE income = (SELECT MAX(income) FROM People)
+\end{verbatim}
+
+\subsection{Raggruppamento}
+
+Le funzioni aggregate si possono applicare a \emph{gruppi} di tuple con
+\texttt{GROUP BY ListaAttributi}. Numero di figli di ogni padre:
+\begin{verbatim}
+SELECT Father, COUNT(*) AS NumberOfChildren
+FROM Fatherhood
+GROUP BY Father             -- (Steve,1), (Louis,2), (Frank,2)
+\end{verbatim}
+
+\paragraph{Semantica} (1) si esegue la query senza aggregati né raggruppamento
+(\texttt{SELECT * FROM Fatherhood}); (2) si raggruppano le tuple con stessi
+valori degli attributi di \texttt{GROUP BY} e si applica l'aggregato a ogni
+gruppo.
+
+\paragraph{Raggruppamento e target list} nella target list possono comparire
+solo attributi del \texttt{GROUP BY} e funzioni aggregate. Errata:
+\begin{verbatim}
+SELECT father, AVG(f.income), c.income
+FROM People c JOIN Fatherhood ON child = c.name
+     JOIN People f ON father = f.name
+GROUP BY father     -- c.income non è unico nel gruppo (più figli)
+\end{verbatim}
+Corretta: \texttt{GROUP BY father, c.income}.
+
+\paragraph{Condizioni sui gruppi: HAVING} padri i cui figli hanno reddito medio
+maggiore di 25:
+\begin{verbatim}
+SELECT father, AVG(f.income)
+FROM People f JOIN Fatherhood ON child = name
+GROUP BY father
+HAVING AVG(f.income) > 25
+\end{verbatim}
+
+\paragraph{WHERE vs HAVING} \texttt{WHERE} filtra le \emph{tuple} prima del
+raggruppamento, \texttt{HAVING} filtra i \emph{gruppi} (condizioni su
+aggregati). Padri i cui figli sotto i 30 anni hanno reddito medio maggiore di
+20:
+\begin{verbatim}
+SELECT father, AVG(f.income)
+FROM People f JOIN Fatherhood ON child = name
+WHERE age < 30
+GROUP BY father
+HAVING AVG(f.income) > 20
+\end{verbatim}
+
+\paragraph{Raggruppamento e NULL} il \texttt{NULL} forma un gruppo a sé. Con
+$R(A,B) = \{(1,11),(2,11),(3,\texttt{NULL}),(4,\texttt{NULL})\}$:
+\begin{itemize}
+  \item \texttt{SELECT B, COUNT(*) FROM R GROUP BY B} $\to$ (11, 2),
+    (\texttt{NULL}, 2);
+  \item \texttt{SELECT A, COUNT(*) FROM R GROUP BY A} $\to$ 1 per ogni A;
+  \item \texttt{SELECT A, COUNT(B) FROM R GROUP BY A} $\to$ (1,1), (2,1),
+    (3,0), (4,0).
+\end{itemize}
+
+\paragraph{Sintassi completa della SELECT}
+\begin{verbatim}
+SELECT ListaAttributi + Espressioni
+FROM ListaTabelle + Join
+[ WHERE Condizione ]
+[ GROUP BY ListaAttributiRaggruppamento ]
+[ HAVING CondizioneAggregata ]
+[ ORDER BY AttributiOrdinamento ]
+\end{verbatim}
+
+\subsection{Modifica dei dati}
+
+\texttt{INSERT}, \texttt{DELETE}, \texttt{UPDATE} agiscono su una o più tuple
+di una tabella, in base a un predicato che può coinvolgere altre relazioni.
+
+\paragraph{INSERT}
+\begin{verbatim}
+INSERT INTO Tabella [(ListaAttributi)] VALUES (Valori)
+INSERT INTO Tabella [(ListaAttributi)] SELECT ...
+\end{verbatim}
+\begin{verbatim}
+INSERT INTO People VALUES ('John', 25, 52)
+INSERT INTO People(Name, Age, Income) VALUES ('Jack', 25, 52)
+INSERT INTO People(Name, Income) VALUES ('Robert', 55)
+INSERT INTO People(Name)
+  SELECT Father FROM Fatherhood
+  WHERE Father NOT IN (SELECT Name FROM People)
+\end{verbatim}
+\begin{itemize}
+  \item l'ordine di attributi e valori conta; le due liste devono avere lo
+    stesso numero di elementi;
+  \item se la lista attributi è omessa si intendono tutti, nell'ordine dello
+    schema;
+  \item gli attributi non elencati ricevono \texttt{NULL} o il valore di
+    default.
+\end{itemize}
+
+\paragraph{DELETE}
+\begin{verbatim}
+DELETE FROM Tabella [ WHERE Condizione ]
+\end{verbatim}
+\begin{verbatim}
+DELETE FROM People WHERE Age < 35
+DELETE FROM Fatherhood WHERE Child NOT IN (SELECT Name FROM People)
+DELETE FROM Fatherhood        -- svuota la tabella
+\end{verbatim}
+Cancella le tuple che soddisfano la condizione; può causare la cancellazione
+di tuple di altre tabelle (vincoli con \texttt{CASCADE}). Senza condizione si
+intende \texttt{WHERE TRUE}.
+
+\paragraph{UPDATE}
+\begin{verbatim}
+UPDATE NomeTabella
+SET Attributo = < Expr | SELECT ... | NULL | DEFAULT >
+[ WHERE Condizione ]
+\end{verbatim}
+Esempi su \texttt{People} = \{(Jim, 27, 30), (James, 25, 15), (Bob, 55, 36)\}:
+\begin{verbatim}
+UPDATE People SET Income = 45 WHERE Name = 'Bob'         -- Bob: 45
+UPDATE People SET Income = Income * 1.1 WHERE Age < 30   -- Jim 33, James 16,5
+UPDATE People SET Income = (SELECT Income FROM People WHERE Name = 'Jim')
+WHERE Name = 'Bob'                                       -- Bob: 30
+UPDATE People SET Income = NULL WHERE Age < 30           -- Jim, James: NULL
+UPDATE People SET Income = DEFAULT WHERE Age < 30        -- Jim, James: 0
+\end{verbatim}
+(l'ultimo assumendo \texttt{DEFAULT 0} per \texttt{Income} nella
+\texttt{CREATE TABLE}).
+
+\section{SQL avanzato}
+
+\subsection{Vincoli CHECK}
+
+\texttt{CHECK (Predicato)} specifica vincoli sulle tuple (ed eventualmente
+vincoli più complessi, non supportati da tutte le implementazioni).
+\begin{verbatim}
+CREATE TABLE Employee (
+  Number      CHARACTER(6),
+  Surname     CHARACTER(20),
+  Name        CHARACTER(20),
+  Sex         CHARACTER NOT NULL CHECK (Sex IN ('M','F')),
+  Salary      INTEGER CHECK (Salary >= 0),
+  Withholding INTEGER,
+  Net         INTEGER,
+  Supervisor  CHARACTER(6),
+  CHECK (Net = Salary - Withholding),
+  CHECK (Salary <= (SELECT Salary FROM Employee J
+                    WHERE Supervisor = J.Number))
+)
+\end{verbatim}
+Una \texttt{SELECT} dentro un \texttt{CHECK} (ultimo vincolo: nessuno guadagna
+più del proprio capo) non è supportata ovunque. Con i primi vincoli:
+\begin{itemize}
+  \item \texttt{INSERT INTO Employee VALUES (1,'Doe','John','',100,20,80)}
+    $\to$ rifiutata: \texttt{Sex} non è né `M' né `F';
+  \item \texttt{(2,'Smith','Jimmy','M',100,10,80)} $\to$ rifiutata: $80 \neq
+    100-10$;
+  \item \texttt{(3,'Rossini','Luca','M',70,20,50)} $\to$ accettata.
+\end{itemize}
+
+\subsection{Asserzioni}
+
+Vincoli definiti a livello di \textbf{schema} (non legati a una tabella):
+\begin{verbatim}
+CREATE ASSERTION NomeAsserzione CHECK (Predicato)
+
+CREATE ASSERTION AtLeastOneEmployee
+  CHECK (1 <= (SELECT count(*) FROM Employee))
+\end{verbatim}
+Anche qui la \texttt{SELECT} nel \texttt{CHECK} non è supportata da tutti.
+
+\subsection{Viste}
+
+\begin{verbatim}
+CREATE VIEW NomeVista [ (ListaAttributi) ] AS SelectSQL
+[ WITH [ LOCAL | CASCADED ] CHECK OPTION ]
+\end{verbatim}
+\begin{verbatim}
+CREATE VIEW AdminEmployees (Name, Surname, Salary) AS
+  SELECT Name, Surname, Salary
+  FROM Employee
+  WHERE Dept = 'Administration' AND Salary > 10
+\end{verbatim}
+
+\paragraph{Interrogare una vista} si fa come con qualsiasi relazione:
+\texttt{SELECT * FROM AdminEmployees} viene eseguita come la query che
+definisce la vista.
+
+\paragraph{Aggiornamento delle viste} di solito è permesso solo per viste
+definite su una \emph{singola} relazione. Si può chiedere al DBMS di fare dei
+controlli con \texttt{CHECK OPTION}: l'aggiornamento è permesso solo se la tupla
+risultante appartiene ancora alla vista.
+\begin{verbatim}
+CREATE VIEW PoorAdminEmployees AS
+  SELECT * FROM AdminEmployees
+  WHERE Salary < 50
+WITH CHECK OPTION
+
+UPDATE PoorAdminEmployees SET Salary = 60 WHERE Name = 'Ann'  -- NON permessa
+\end{verbatim}
+
+\paragraph{LOCAL e CASCADED} per viste definite su altre viste:
+\begin{description}[style=nextline]
+  \item[LOCAL] il controllo si fa solo sull'ultimo livello (la vista stessa);
+  \item[CASCADED] il controllo si fa su tutte le viste e relazioni sottostanti.
+\end{description}
+
+\subsection{Viste per query complesse}
+
+\paragraph{Aggregati annidati} numero medio di uffici per dipartimento.
+Errata, perché SQL non permette di annidare operatori aggregati:
+\begin{verbatim}
+SELECT avg(count(distinct Office)) FROM Employee GROUP BY Dept
+\end{verbatim}
+Corretta, con una vista intermedia:
+\begin{verbatim}
+CREATE VIEW DeptOffices(NameDept, OffNo) AS
+  SELECT Dept, count(distinct Office) FROM Employee GROUP BY Dept;
+
+SELECT avg(OffNo) FROM DeptOffices
+\end{verbatim}
+
+\paragraph{HAVING annidato} dipartimento con la massima somma degli stipendi.
+Soluzione errata per alcuni sistemi (non tutti ammettono sottoquery con
+aggregati nella \texttt{HAVING}):
+\begin{verbatim}
+SELECT Dept FROM Employee
+GROUP BY Dept
+HAVING sum(Salary) >= ALL (SELECT sum(Salary) FROM Employee GROUP BY Dept)
+\end{verbatim}
+Corretta:
+\begin{verbatim}
+CREATE VIEW BudgetSalary(Dep, TotalSalary) AS
+  SELECT Dept, sum(Salary) FROM Employee GROUP BY Dept;
+
+SELECT Dep FROM BudgetSalary
+WHERE TotalSalary = (SELECT max(TotalSalary) FROM BudgetSalary)
+\end{verbatim}
+
+\subsection{Interrogazioni ricorsive}
+
+Per ogni persona trovare tutti gli antenati, data \texttt{Fatherhood(Father,
+Child)}. Serve la ricorsione; in Datalog:
+\begin{align*}
+\text{Ancestors}(\text{Ancestor}: p, \text{Descendant}: f) &\leftarrow
+  \text{Fatherhood}(\text{Father}: p, \text{Child}: f)\\
+\text{Ancestors}(\text{Ancestor}: a, \text{Descendant}: d) &\leftarrow
+  \text{Fatherhood}(\text{Father}: a, \text{Child}: f),\
+  \text{Ancestors}(\text{Ancestor}: f, \text{Descendant}: d)
+\end{align*}
+
+In SQL:1999 si usa \texttt{WITH RECURSIVE}, che definisce una vista costruita
+ricorsivamente:
+\begin{verbatim}
+WITH RECURSIVE Ancestors(Ancestor, Descendant) AS (
+    SELECT Father, Child FROM Fatherhood          -- caso base
+  UNION ALL
+    SELECT Ancestor, Child                        -- passo ricorsivo
+    FROM Ancestors, Fatherhood
+    WHERE Descendant = Father
+)
+SELECT * FROM Ancestors
+\end{verbatim}
+
+\paragraph{Esempio} tutti i superiori di John Doe:
+\begin{verbatim}
+WITH RECURSIVE InCharge(No, Supervisor) AS (
+    SELECT No, Supervisor FROM Employee
+  UNION
+    SELECT Employee.No, InCharge.Supervisor
+    FROM Employee, InCharge
+    WHERE Employee.Supervisor = InCharge.No
+)
+SELECT Name, Surname, InCharge.Supervisor
+FROM Employee JOIN InCharge ON (Employee.No = InCharge.No)
+WHERE Name = 'John' AND Surname = 'Doe'
+\end{verbatim}
+
+\subsection{Funzioni scalari}
+
+Funzioni a livello di tupla che restituiscono un singolo valore per tupla.
+\begin{itemize}
+  \item \textbf{temporali}: \texttt{current\_date} (data odierna),
+    \texttt{extract(campo FROM espressione)} (estrae anno, mese, giorno,
+    ora, \dots);
+  \item \textbf{stringhe}: \texttt{char\_length} (lunghezza),
+    \texttt{lower} (minuscolo);
+  \item \textbf{conversione}: \texttt{CAST} converte un valore in un altro
+    dominio;
+  \item \textbf{condizionali}: \texttt{COALESCE}, \texttt{NULLIF},
+    \texttt{CASE}.
+\end{itemize}
+\begin{verbatim}
+SELECT EXTRACT(YEAR FROM OrderDate) AS OrderYear   -- anno degli ordini
+FROM Orders                                        -- emessi oggi
+WHERE DATE(OrderDate) = current_date()
+\end{verbatim}
+
+\paragraph{COALESCE} prende più espressioni e restituisce la prima non
+\texttt{NULL}. Utile per dare un valore di default ai nulli:
+\begin{verbatim}
+SELECT Number, coalesce(Mobile, PhoneHome) FROM Employee
+SELECT Name, Surname, coalesce(Dept, 'None') FROM Employee
+\end{verbatim}
+
+\paragraph{NULLIF} confronta il primo argomento con il secondo: restituisce
+\texttt{NULL} se coincidono, altrimenti il primo argomento.
+\begin{verbatim}
+SELECT Surname, nullif(Dept, 'Unknown') FROM Employee
+\end{verbatim}
+
+\paragraph{CASE} logica ``if-then-else'' il cui risultato dipende dal contenuto
+delle tabelle. Tassa dei veicoli immatricolati dopo il 1975 in base al tipo:
+\begin{verbatim}
+SELECT PlateNo,
+       (CASE Type
+          WHEN 'Car'  THEN 2.58 * KWatt
+          WHEN 'Moto' THEN (22.00 + 1.00 * KWatt)
+          ELSE null
+        END) AS Tax
+FROM Vehicle
+WHERE RegistrationYear > 1975
+\end{verbatim}
+
+\subsection{Sicurezza: privilegi}
+
+SQL permette di assegnare a ogni utente specifici \textbf{privilegi} (lettura,
+scrittura, \dots) su tutto il DB o su parti di esso (relazioni, attributi,
+viste, domini). Esiste almeno un amministratore di default (es.\
+\texttt{\_system}) con tutti i privilegi; chi crea una risorsa ottiene
+automaticamente tutti i privilegi su di essa.
+
+\paragraph{Un privilegio è descritto da} la risorsa, l'utente che lo concede,
+l'utente che lo riceve, l'operazione, e se può essere \emph{propagato} ad altri.
+
+\paragraph{Privilegi SQL}
+\begin{description}[style=nextline]
+  \item[insert] inserire nuove tuple;
+  \item[update] modificare tuple esistenti;
+  \item[delete] cancellare tuple;
+  \item[select] leggere una risorsa;
+  \item[references] definire vincoli di integrità referenziale verso la
+    risorsa;
+  \item[usage] usare una definizione (es.\ un dominio).
+\end{description}
+
+\paragraph{GRANT}
+\begin{verbatim}
+GRANT < Privilegi | ALL PRIVILEGES > ON Risorsa TO Utenti [ WITH GRANT OPTION ]
+
+GRANT SELECT ON Department TO Jack
+\end{verbatim}
+\texttt{WITH GRANT OPTION} permette all'utente di propagare il privilegio.
+
+\paragraph{REVOKE}
+\begin{verbatim}
+REVOKE Privilegi ON Risorsa FROM Utenti [ RESTRICT | CASCADE ]
+\end{verbatim}
+I privilegi devono essere revocati dallo stesso utente che li ha concessi.
+\begin{itemize}
+  \item \texttt{RESTRICT} (default): la revoca non coinvolge gli utenti che
+    hanno ricevuto il privilegio dall'utente corrente;
+  \item \texttt{CASCADE}: la revoca si estende anche a loro (attenzione:
+    ``reazione a catena'').
+\end{itemize}
+
+\paragraph{Discussione}
+\begin{itemize}
+  \item il sistema deve nascondere \emph{senza dare indizi} le parti del DB
+    non accessibili: se la tabella \texttt{Employees} non esiste o se esiste
+    ma l'utente non vi ha accesso, il messaggio deve essere lo stesso;
+  \item per mostrare a un utente solo alcune tuple si definisce una
+    \textbf{vista} con un predicato di selezione e si concede il privilegio
+    sulla vista.
+\end{itemize}
+
+\subsection{RBAC}
+
+SQL-3 introduce il \textbf{Role-Based Access Control}: un \emph{ruolo} è un
+contenitore di privilegi, concessi con \texttt{GRANT}. In ogni momento un
+utente ha i privilegi concessi a lui individualmente più quelli del ruolo
+attivo.
+\begin{verbatim}
+CREATE ROLE Employee;               -- crea il ruolo
+GRANT CREATE TABLE TO Employee;     -- privilegio al ruolo
+GRANT Employee TO user1;            -- ruolo a un utente
+REVOKE CREATE TABLE FROM Employee;  -- revoca dal ruolo
+SET ROLE Employee                   -- attiva il ruolo per l'utente corrente
+\end{verbatim}
+
+\subsection{Transazioni}
+
+Una \textbf{transazione} è un programma in esecuzione che costituisce
+un'unità logica di elaborazione (operazione atomica). Proprietà
+\textbf{ACID}:
+\begin{description}[style=nextline]
+  \item[Atomicità] la transazione è eseguita tutta o per niente. Bonifico da A
+    a B: o il denaro viene tolto da A \emph{e} accreditato a B, o non si fa
+    nulla.
+  \item[Consistenza] se eseguita interamente e senza interferenze, porta il DB
+    da uno stato consistente a un altro. Durante l'esecuzione i vincoli possono
+    essere violati, ma se alla fine ci sono ancora violazioni la transazione
+    va annullata (\emph{abort}).
+  \item[Isolamento] anche con molte transazioni concorrenti, l'esecuzione di
+    una non deve subire interferenze dalle altre (es.\ due bonifici
+    ``contemporanei'' sullo stesso conto).
+  \item[Durabilità] le modifiche di una transazione andata a buon fine
+    (\emph{committed}) devono persistere e non essere perse, anche in caso di
+    guasti hardware o software.
+\end{description}
+
+\paragraph{Transazioni in SQL} una transazione inizia con \texttt{START
+TRANSACTION} (opzionale nella maggior parte dei DBMS) e termina con:
+\begin{itemize}
+  \item \texttt{COMMIT [WORK]}: le operazioni vengono salvate nel DB;
+  \item \texttt{ROLLBACK [WORK]}: le operazioni vengono annullate e il DB torna
+    allo stato sicuro precedente.
+\end{itemize}
+Molti DBMS hanno l'\textbf{autocommit}: ogni istruzione è una transazione a sé.
+\begin{verbatim}
+START TRANSACTION;                    -- opzionale
+UPDATE BankAccount SET Balance = Balance - 10 WHERE AccountNumber = 42177;
+UPDATE BankAccount SET Balance = Balance + 10 WHERE AccountNumber = 12202;
+COMMIT WORK;
+\end{verbatim}
+
+\section{Modellazione concettuale dei dati}
+
+\subsection{Perché i modelli concettuali}
+
+Proviamo a costruire un DB relazionale direttamente dal modello logico:
+\begin{itemize}
+  \item da dove si comincia?
+  \item si rischia di perdersi subito nei dettagli;
+  \item bisogna definire da subito i legami fra le tabelle;
+  \item il modello relazionale è troppo ``rigido'' per modellare.
+\end{itemize}
+I modelli concettuali invece:
+\begin{itemize}
+  \item permettono di ragionare sulla realtà di interesse con un ``modello''
+    \emph{indipendente dall'implementazione};
+  \item permettono di definire le classi di oggetti di interesse e i loro
+    legami;
+  \item forniscono rappresentazioni grafiche efficaci (utili anche come
+    documentazione).
+\end{itemize}
+
+\subsection{Progettazione di basi di dati}
+
+La progettazione è una delle attività del processo di sviluppo di un sistema
+informativo, e va vista nel contesto più ampio del \textbf{ciclo di vita} dei
+sistemi informativi: l'insieme delle attività svolte in sequenza da analisti,
+progettisti e utenti nello sviluppo e nell'uso del sistema. È un processo
+iterativo (``cicli'').
+
+\paragraph{Fasi del ciclo di vita}
+\begin{description}[style=nextline]
+  \item[Studio di fattibilità] definizione di costi e priorità.
+  \item[Raccolta e analisi dei requisiti] studio delle proprietà del sistema.
+  \item[Progettazione] di dati e funzioni.
+  \item[Realizzazione (implementazione)]
+  \item[Validazione e collaudo] verifica del modello, debugging.
+  \item[Funzionamento] il sistema è in esercizio.
+\end{description}
+
+\paragraph{Dati e applicazioni} la progettazione di un SI riguarda due aspetti:
+progettazione dei \textbf{dati} e delle \textbf{applicazioni}. Ma i dati hanno
+un ruolo centrale: sono \emph{più stabili}.
+
+\paragraph{Metodologia di progettazione} i progetti di qualità seguono
+sistematicamente una metodologia, fatta di: suddivisione in fasi separate,
+criteri di scelta, modelli di rappresentazione, soluzioni generali e facilità
+d'uso.
+
+\subsection{Fasi della progettazione}
+
+\begin{center}
+\begin{tikzpicture}[node distance=6mm, every node/.style={font=\small},
+  box/.style={draw,fill=cyan!12,minimum width=3cm,minimum height=8mm,align=center}]
+  \node (req) {Requisiti della base di dati};
+  \node[box,below=of req] (c) {Progettazione\\concettuale};
+  \node[box,below=of c] (l) {Progettazione\\logica};
+  \node[box,below=of l] (p) {Progettazione\\fisica};
+  \node[below=of p] (ps) {};
+  \draw[->] (req) -- (c);
+  \draw[->] (c) -- node[right]{\emph{schema concettuale}} (l);
+  \draw[->] (l) -- node[right]{\emph{schema logico}} (p);
+  \draw[->] (p) -- node[right]{\emph{schema fisico}} (ps);
+  \node[left=1.5cm of c,font=\bfseries] {``Che cosa'': analisi};
+  \node[left=1.5cm of p,font=\bfseries] {``Come'': progettazione};
+\end{tikzpicture}
+\end{center}
+Il risultato di ogni fase è uno \emph{schema} usato nella fase successiva:
+schema concettuale, logico, fisico.
+
+\paragraph{Modello dei dati} insieme di costrutti usati per organizzare i dati
+di interesse e descriverne le operazioni. La componente fondamentale sono i
+\textbf{costruttori} (come i costruttori di tipo nei linguaggi di
+programmazione): es.\ il modello relazionale ha il costruttore
+\emph{relazione} per insiemi omogenei di tuple.
+
+\paragraph{Schemi e istanze} in ogni base di dati c'è uno \textbf{schema},
+invariante nel tempo, che ne descrive la struttura (aspetto
+\emph{intensionale}; nel relazionale: gli attributi delle relazioni) e
+un'\textbf{istanza}, i valori attuali, che possono cambiare anche molto
+rapidamente (aspetto \emph{estensionale}; nel relazionale: l'insieme di
+tuple).
+
+\paragraph{Due tipi di modelli}
+\begin{itemize}
+  \item \textbf{logici}: organizzano i dati nei DBMS; livello di astrazione
+    usato dai programmi (es.\ framework di persistenza); indipendenti dalla
+    struttura fisica. Es.: relazionale, a grafo, gerarchico, a oggetti;
+  \item \textbf{concettuali}: rappresentano i dati indipendentemente dal
+    sistema, cercando di descrivere i concetti del mondo reale; usati nelle
+    fasi preliminari della progettazione. Il più diffuso è il modello
+    \textbf{Entity-Relationship}.
+\end{itemize}
+
+\subsection{Il modello Entity-Relationship}
+
+È il modello concettuale più usato (ne esistono molte versioni simili).
+Costrutti: \textbf{entità}, \textbf{relazione} (relationship),
+\textbf{attributo}, \textbf{identificatore}, \textbf{generalizzazione},
+\dots
+
+\subsection{Entità}
+
+Classe di oggetti (cose, persone, luoghi) della realtà di interesse con
+proprietà comuni ed \emph{esistenza autonoma}. Es.: impiegato, città, conto
+corrente, ordine, fattura.
+\begin{itemize}
+  \item \emph{schema}: la classe omogenea di oggetti;
+  \item \emph{istanza} (occorrenza): un elemento della classe (l'oggetto, non
+    i dati che lo descrivono).
+\end{itemize}
+Nello schema ER le entità non rappresentano le singole istanze
+(``astrazione''). Si rappresentano con un rettangolo; ogni entità ha un nome
+univoco nello schema, espressivo, per convenzione al \emph{singolare}.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] at (0,0) {Employee};
+  \node[ent] at (3,0) {Dept.};
+  \node[ent] at (6,0) {City};
+  \node[ent] at (9,0) {Sell};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Relazioni (relationship)}
+
+Legame logico fra due o più entità del dominio (detto anche associazione,
+correlazione). Es.: \emph{Residenza} fra Persona e Città, \emph{Esame} fra
+Studente e Corso. Si rappresentano con un rombo; nome univoco, espressivo, se
+possibile un \emph{sostantivo} singolare invece di un verbo.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (s) at (0,0) {Student};
+  \node[rel] (e) at (3,0) {Exam};
+  \node[ent] (c) at (6,0) {Course};
+  \draw (s) -- (e) -- (c);
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Istanze} un'istanza di relazione binaria è una \emph{coppia} di
+istanze di entità, una per ciascuna entità coinvolta; un'istanza di relazione
+$n$-aria è una $n$-upla. \textbf{Non possono esserci istanze ripetute} (coppie
+o tuple uguali) in una relazione: è un insieme.
+
+\paragraph{Attenzione} con \texttt{Student}--\texttt{Exam}--\texttt{Course}
+uno studente non può sostenere due volte lo stesso esame per un corso (E1 ed E5
+sarebbero la stessa coppia (S1, C1)). Se il requisito è ``uno studente sostiene
+più volte l'esame dello stesso corso'', la soluzione è \textbf{promuovere la
+relazione a entità}: \texttt{Exam} diventa un'entità collegata a
+\texttt{Student} e a \texttt{Course} da due relazioni.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (s) at (0,0) {Student};
+  \node[rel] (r1) at (2.6,0) {\phantom{Ex}};
+  \node[ent] (e) at (5,0) {Exam};
+  \node[rel] (r2) at (7.4,0) {\phantom{Ex}};
+  \node[ent] (c) at (10,0) {Course};
+  \draw (s) -- (r1) -- (e) -- (r2) -- (c);
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Più relazioni fra le stesse entità} possibili: es.\
+\texttt{Workplace} e \texttt{Residence} fra \texttt{Employee} e
+\texttt{City}.
+
+\paragraph{Relazioni $n$-arie} es.\ \texttt{Provision} fra \texttt{Provider},
+\texttt{Supply} e \texttt{Dept.}: ogni istanza è una tripla (fornitore,
+prodotto, dipartimento).
+
+\paragraph{Relazioni ricorsive} coinvolgono due volte la stessa entità (es.\
+\texttt{Acquaintance} su \texttt{Person}). Se la relazione non è simmetrica
+servono i \textbf{ruoli}: \texttt{Succession} su \texttt{President} con ruoli
+\emph{Previous} e \emph{Next}. Possono essere anche ternarie: \texttt{Match}
+fra \texttt{TennisPlayer} (ruoli \emph{Better}, \emph{Worse}) e
+\texttt{Surface}.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (p) at (0,0) {President};
+  \node[rel] (s) at (0,1.5) {Succession};
+  \draw (p.west) -- ++(-0.6,0) |- (s.west) node[pos=0.25,left,card]{Previous};
+  \draw (p.east) -- ++(0.6,0) |- (s.east) node[pos=0.25,right,card]{Next};
+  \node[ent] (t) at (7,0) {TennisPlayer};
+  \node[rel] (m) at (7,1.5) {Match};
+  \node[ent] (su) at (7,3) {Surface};
+  \draw (t.west) -- ++(-0.6,0) |- (m.west) node[pos=0.25,left,card]{Better};
+  \draw (t.east) -- ++(0.6,0) |- (m.east) node[pos=0.25,right,card]{Worse};
+  \draw (m) -- (su);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Attributi}
+
+Proprietà di entità o relazioni: associa a ogni istanza un valore appartenente
+a un insieme detto \textbf{dominio}. Si disegnano come pallini collegati
+all'elemento.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (s) at (0,0) {Student};
+  \node[rel] (e) at (3,0) {Exam};
+  \node[ent] (c) at (6,0) {Course};
+  \draw (s) -- (e) -- (c);
+  \draw (s.north west)++(0.4,0) -- ++(-0.4,0.5) node[erat,label=above:{\small Surname}]{};
+  \draw (s.north east)++(-0.4,0) -- ++(0.4,0.5) node[erat,label=above:{\small Name}]{};
+  \draw (s.south) -- ++(0,-0.5) node[erat,label=below:{\small Number}]{};
+  \draw (e.north)++(-0.2,-0.1) -- ++(-0.5,0.6) node[erat,label=above:{\small Date}]{};
+  \draw (e.north)++(0.2,-0.1) -- ++(0.5,0.6) node[erat,label=above:{\small Degree}]{};
+  \draw (c.north) -- ++(0,0.5) node[erat,label=above:{\small Name}]{};
+  \draw (c.south) -- ++(0,-0.5) node[erat,label=below:{\small Code}]{};
+\end{tikzpicture}
+\end{center}
+Gli attributi di una relazione descrivono l'istanza della relazione: es.\
+(S1, C1) ha data 25/07/2004 e voto 26.
+
+\paragraph{Attributi composti} raggruppano attributi della stessa entità o
+relazione con significato o uso affine: es.\ \emph{Via}, \emph{Numero},
+\emph{CAP} formano \emph{Indirizzo} (si disegna un ovale).
+
+\subsection{Cardinalità delle relazioni}
+
+Coppia di valori associata a ogni entità che partecipa a una relazione:
+specifica il numero \textbf{minimo} e \textbf{massimo} di istanze della
+relazione a cui ogni istanza dell'entità può partecipare.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (e) at (0,0) {Employee};
+  \node[rel] (a) at (3.2,0) {Assignment};
+  \node[ent] (j) at (6.4,0) {Job};
+  \draw (e) -- node[pos=0,above right,card]{(1,5)} (a) -- node[pos=1,above left,card]{(0,50)} (j);
+\end{tikzpicture}
+\end{center}
+Un impiegato ha almeno un incarico e al più 5; un incarico può essere
+assegnato al più a 50 impiegati, ma anche a nessuno.
+
+Per semplicità si usano tre simboli:
+\begin{itemize}
+  \item 0 e 1 per la cardinalità minima: 0 = partecipazione
+    \emph{opzionale}, 1 = partecipazione \emph{obbligatoria};
+  \item 1 e N per la massima: N non pone alcun limite.
+\end{itemize}
+Es.\ \texttt{Student} (1,1) \texttt{Residence} (0,N) \texttt{City}: ogni
+studente risiede in esattamente una città, una città ha zero o più studenti.
+
+\paragraph{Tipi di relazioni} rispetto alle cardinalità \emph{massime}:
+\begin{itemize}
+  \item \textbf{molti a molti}: Student (0,N) Exam (0,N) Course; Mountain
+    (0,N) Climb (1,N) Climber; Pilot (1,N) Drives (1,N) Airplane;
+  \item \textbf{uno a molti}: People (0,1) Job (0,N) Firm; Cinema (1,1) Place
+    (0,N) City; Town (1,1) PartOf (1,N) District;
+  \item \textbf{uno a uno}: Person (0,1) Holds (0,1) Pacemaker;
+    PersonWithPacemaker (1,1) Holds (0,1) Pacemaker; PersonWithPacemaker (1,1)
+    Holds (1,1) ImplantedPacemaker.
+\end{itemize}
+Attenzione al \emph{verso} delle uno-a-molti; le relazioni con partecipazione
+obbligatoria da entrambi i lati sono molto rare.
+
+\subsection{Cardinalità degli attributi}
+
+Si possono associare cardinalità anche agli attributi, per indicare
+\emph{opzionalità} (informazione parziale) o attributi \emph{multivalore}. Se
+omessa vale (1,1).
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (e) at (0,0) {Employee};
+  \draw (e.east) -- ++(1,0.6) node[erat,label=right:{\small Phone}]{} node[card,pos=0.5,above left]{(0,N)};
+  \draw (e.east) -- ++(1,0) node[erat,label=right:{\small Name}]{};
+  \draw (e.east) -- ++(1,-0.6) node[erat,label=right:{\small Driving Licence \#}]{} node[card,pos=0.5,below left]{(0,1)};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Identificatori}
+
+Strumento per identificare univocamente le istanze di un'entità. Sono formati
+da:
+\begin{itemize}
+  \item attributi dell'entità: identificatore \textbf{interno};
+  \item (attributi +) entità esterne raggiungibili tramite relazioni:
+    identificatore \textbf{esterno}.
+\end{itemize}
+
+\paragraph{Identificatori interni} \emph{Plate} identifica \emph{Car} (non
+esistono due auto con la stessa targa). Se l'identificatore è composto da più
+attributi si disegna una linea che li unisce terminata da un pallino pieno:
+\emph{Name}, \emph{Surname}, \emph{Birth Date} identificano \emph{Person}
+(assumendo che non esistano omonimi nati lo stesso giorno).
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (c) at (0,0) {Car};
+  \draw (c.east) -- ++(0.9,0.4) node[erid,label=right:{\small Plate}]{};
+  \draw (c.east) -- ++(0.9,-0.4) node[erat,label=right:{\small Model}]{};
+  \node[ent] (p) at (6,0) {Person};
+  \draw (p.east) -- ++(1,0.6) node[erat,label=right:{\small Birth Date}]{};
+  \draw (p.east) -- ++(1,0) node[erat,label=right:{\small Surname}]{};
+  \draw (p.east) -- ++(1,-0.6) node[erat,label=right:{\small Name}]{};
+  \draw (p.south) -- ++(0,-0.5) node[erat,label=below:{\small Address}]{};
+  \draw[thick] (7.45,-0.75) -- (7.45,0.95) node[erid]{};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Identificatori esterni} \emph{Number} e l'entità
+\emph{University} formano l'identificatore di \emph{Student}: possono esistere
+studenti con la stessa matricola in università diverse.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (s) at (0,0) {Student};
+  \node[rel] (r) at (3.4,0) {Registration};
+  \node[ent] (u) at (6.8,0) {University};
+  \draw (s) -- node[pos=0.55,above,card]{(1,1)} (r) -- node[pos=1,above left,card]{(0,N)} (u);
+  \draw (s.north west)++(0.3,0) -- ++(-0.5,0.5) node[erat,label=above:{\small Surname}]{};
+  \draw (s.north east)++(-0.4,0) -- ++(0,0.6) node[erat,label=above:{\small Number}]{};
+  \draw (s.south) -- ++(0,-0.5) node[erat,label=below:{\small Year}]{};
+  \draw (u.north) -- ++(0,0.5) node[erid,label=above:{\small Name}]{};
+  \draw (u.south) -- ++(0,-0.5) node[erat,label=below:{\small Address}]{};
+  \draw[thick] (0.6,0.6) -- (1.4,0.6) -- (1.4,-0.6) node[erid]{};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Osservazioni}
+\begin{itemize}
+  \item ogni entità deve avere \emph{almeno un} identificatore, ma in generale
+    può averne più d'uno;
+  \item un identificatore esterno è possibile solo attraverso una relazione a
+    cui l'entità da identificare partecipa con cardinalità \textbf{(1,1)};
+  \item le relazioni non hanno identificatori: è meglio associare attributi
+    alle entità che alle relazioni.
+\end{itemize}
+
+\paragraph{Attenzione} piccole modifiche a cardinalità e identificatori
+possono cambiare il significato dell'intero schema. Nello schema
+impiegati--dipartimenti--sedi (sotto), se \emph{Dept.} è identificato da
+\emph{Name} + \emph{Office} con Composition (1,1) lato Dept.\ e (1,N) lato
+Office, ogni dipartimento ha una sola sede e possono esistere dipartimenti
+omonimi in sedi diverse. Se invece \emph{Office} è identificata da \emph{City}
++ \emph{Dept.} (Composition (1,N) lato Dept., (1,1) lato Office), ogni sede
+appartiene a un solo dipartimento e nella stessa città possono esserci molte
+sedi di dipartimenti diversi.
+
+\subsection{Generalizzazioni}
+
+Legano una o più entità $E_1, \dots, E_n$ a un'entità $E$ che le comprende
+come casi particolari: $E$ è una \textbf{generalizzazione} di $E_1, \dots,
+E_n$; le $E_i$ sono \textbf{specializzazioni} di $E$. Si rappresentano con una
+freccia verso il genitore.
+
+\paragraph{Proprietà} se $E$ (genitore) generalizza $E_1, \dots, E_n$ (figlie):
+\begin{itemize}
+  \item ogni proprietà di $E$ è significativa per le $E_i$;
+  \item ogni istanza di un'$E_i$ è anche istanza di $E$.
+\end{itemize}
+
+\paragraph{Ereditarietà} tutte le proprietà dell'entità genitore (attributi,
+relazioni, generalizzazioni) sono \emph{ereditate} dalle figlie e non vanno
+rappresentate esplicitamente.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (c) at (0,2.6) {City};
+  \node[rel] (b) at (0,1.3) {Birth};
+  \node[ent] (p) at (0,0) {People};
+  \node[ent] (e) at (-2,-2) {Employee};
+  \node[ent] (s) at (2,-2) {Student};
+  \draw (c) -- node[left,card]{(0,N)} (b) -- node[left,card]{(1,1)} (p);
+  \draw (p.east) -- ++(1,0.4) node[erid,label=right:{\small Tax code}]{};
+  \draw (p.east) -- ++(1,0) node[erat,label=right:{\small Name}]{};
+  \draw (p.east) -- ++(1,-0.4) node[erat,label=right:{\small Age}]{};
+  \draw (e.west) -- ++(-0.8,0.3) node[erat,label=left:{\small Income}]{};
+  \draw[gen] (e.north) |- (0,-1) -- (p.south);
+  \draw[thick,draw=blue!60!black] (s.north) |- (0,-1);
+\end{tikzpicture}
+\end{center}
+\emph{Employee} e \emph{Student} ereditano Tax code, Name, Age e la relazione
+Birth.
+
+\paragraph{Tipi di generalizzazione}
+\begin{itemize}
+  \item \textbf{totale} se ogni istanza del genitore è istanza di almeno una
+    figlia, \textbf{parziale} altrimenti;
+  \item \textbf{esclusiva} (disjoint) se ogni istanza del genitore è istanza di
+    al più una figlia, \textbf{sovrapposta} (overlapping) altrimenti.
+\end{itemize}
+Consideriamo (senza perdita di generalità) solo generalizzazioni esclusive,
+distinguendo totali (freccia piena) e parziali (freccia vuota).
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (v) at (0,0) {Vertebrates};
+  \node[ent] (m) at (-1.5,-1.8) {Mammals};
+  \node[ent] (r) at (1.5,-1.8) {Reptiles};
+  \draw[gen] (m.north) |- (0,-0.9) -- (v.south);
+  \draw[thick,draw=blue!60!black] (r.north) |- (0,-0.9);
+  \node[font=\small] at (0,-2.8) {esclusiva parziale};
+  \node[ent] (p) at (6,0) {Person};
+  \node[ent] (ma) at (4.5,-1.8) {Male};
+  \node[ent] (f) at (7.5,-1.8) {Female};
+  \draw[gentot] (ma.north) |- (6,-0.9) -- (p.south);
+  \draw[thick,draw=blue!60!black] (f.north) |- (6,-0.9);
+  \node[font=\small] at (6,-2.8) {esclusiva totale};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Altre proprietà}
+\begin{itemize}
+  \item si possono avere gerarchie a più livelli e più generalizzazioni allo
+    stesso livello;
+  \item un'entità può far parte di più gerarchie, come genitore e/o figlia;
+  \item una generalizzazione con una sola figlia si chiama \textbf{subset};
+  \item alcune configurazioni non hanno senso;
+  \item il genitore di una generalizzazione può non avere identificatore,
+    purché \dots\ (lo erediti/ottenga altrimenti).
+\end{itemize}
+
+\paragraph{Esercizio} le persone hanno codice fiscale, cognome ed età; per gli
+uomini interessa sapere se hanno svolto il servizio militare; gli impiegati
+hanno uno stipendio e possono essere dirigenti, funzionari o progettisti
+(alcuni progettisti sono responsabili di progetto); gli studenti (che non
+possono essere impiegati) hanno una matricola; alcune persone non sono né
+impiegati né studenti.
+
+Soluzione: \emph{People} (Tax code, Surname, Age) con due generalizzazioni:
+\emph{Man} (Military) / \emph{Woman} \textbf{totale}; \emph{Employee} (Income)
+/ \emph{Student} (Matr.) \textbf{parziale}. \emph{Employee} si specializza
+(totale) in \emph{SwArchitect}, \emph{Manager}, \emph{Clerk};
+\emph{SwArchitect} ha il subset \emph{In Charge}.
+
+\subsection{Documentazione degli schemi concettuali}
+
+Lo schema ER va corredato da:
+\begin{itemize}
+  \item un \textbf{dizionario dei dati} (entità e relazioni);
+  \item i \textbf{vincoli non esprimibili} nello schema.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95, every node/.append style={transform shape}]
+  \node[ent] (emp) at (0,0) {Employee};
+  \node[ent] (dep) at (8,0) {Dept.};
+  \node[ent] (prj) at (0,-4) {Project};
+  \node[ent] (off) at (8,-4) {Office};
+  \node[rel] (man) at (4,1.2) {Management};
+  \node[rel] (aff) at (4,-0.6) {Affiliation};
+  \node[rel] (att) at (0,-2) {Attendance};
+  \node[rel] (com) at (8,-2) {Composition};
+  \draw (emp.north) |- node[pos=0.75,above,card]{(0,1)} (man.west);
+  \draw (man.east) -| node[pos=0.25,above,card]{(1,1)} (dep.north);
+  \draw (emp.east) -- node[above,card]{(0,1)} (aff.west);
+  \draw (aff.east) -- node[above,card]{(0,N)} (dep.west);
+  \draw (emp) -- node[right,card]{(0,N)} (att) -- node[right,card]{(1,N)} (prj);
+  \draw (dep) -- node[right,card]{(1,1)} (com) -- node[right,card]{(1,N)} (off);
+  \draw (aff.south) -- ++(0,-0.4) node[erat,label=below:{\small Date}]{} node[card,right,pos=0.5]{(0,1)};
+  \draw (emp.north west)++(0.3,0) -- ++(-0.3,0.5) node[erat,label=above:{\small Surname}]{};
+  \draw (emp.south west)++(0.3,0) -- ++(-0.3,-0.5) node[erid,label=below:{\small Code}]{};
+  \draw (dep.north east)++(-0.3,0) -- ++(0.3,0.5) node[erat,label=above:{\small Phone}]{} node[card,pos=0.5,right]{(1,N)};
+  \draw (dep.east) -- ++(0.7,0) node[erat,label=right:{\small Name}]{};
+  \draw (prj.south west)++(0.3,0) -- ++(-0.3,-0.5) node[erat,label=below:{\small Budget}]{};
+  \draw (prj.south east)++(-0.3,0) -- ++(0.3,-0.5) node[erid,label=below:{\small Name}]{};
+  \draw (off.south east)++(-0.3,0) -- ++(0.3,-0.5) node[erid,label=below:{\small City}]{};
+  \draw (off.south west)++(0.3,0) -- ++(-0.6,-0.6) node[ellipse,draw=blue!60!black,fill=cyan!12,font=\small\bfseries,inner sep=1pt](ad){Address};
+  \draw (ad.west) -- ++(-0.5,0.2) node[erat,label=left:{\small Road}]{};
+  \draw (ad.west) -- ++(-0.5,-0.3) node[erat,label=left:{\small ZIP}]{};
+  \draw[thick] (8.4,-0.6) -- (8.4,0) -- (9.05,0) node[erid]{};
+\end{tikzpicture}
+\end{center}
+(\emph{Dept.} è identificato da \emph{Name} + \emph{Office}, tramite
+\emph{Composition}.)
+
+\paragraph{Dizionario dei dati: entità}
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Entità} & \textbf{Descrizione} & \textbf{Attributi} & \textbf{Identificatore}\\ \hline
+Employee & impiegato di un dipartimento & Code, Name, Surname & Code\\
+Project & progetti di un dipartimento & Name, Budget & Name\\
+Department & struttura dell'azienda & Name, Phone & Name, Office\\
+Office & sede di un dipartimento & City, Address & City\\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Dizionario dei dati: relazioni}
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Relazione} & \textbf{Descrizione} & \textbf{Componenti} & \textbf{Attributi}\\ \hline
+Management & direzione di un dipartimento & Employee, Dept. & \\
+Affiliation & afferenza a un dipartimento & Employee, Dept. & Date\\
+Attendance & partecipazione a un progetto & Employee, Project & \\
+Composition & composizione dei dipartimenti & Dept., Office & \\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Vincoli non esprimibili}
+\begin{enumerate}
+  \item il direttore di un dipartimento deve afferire a quel dipartimento;
+  \item un impiegato non deve avere uno stipendio maggiore del direttore del
+    suo dipartimento;
+  \item un dipartimento con sede a Roma deve essere diretto da un impiegato con
+    almeno 10 anni di anzianità;
+  \item un impiegato che non afferisce a nessun dipartimento non deve
+    partecipare ad alcun progetto.
+\end{enumerate}
+
+\subsection{Modellazione dei dati in UML}
+
+UML2 può sostituire ER per la modellazione dei dati, usando i \emph{class
+diagram}: cambia la rappresentazione grafica, l'approccio resta lo stesso.
+
+\begin{center}
+\begin{tabular}{ll}
+\textbf{ER} & \textbf{UML}\\ \hline
+entità & classe (rettangolo con nome e attributi)\\
+relazione binaria & associazione (linea con nome)\\
+attributi di relazione & \emph{association class} (classe collegata alla linea)\\
+relazione $n$-aria & rombo + association class, oppure meglio
+  \emph{reificazione}\\
+cardinalità $(\min,\max)$ & molteplicità \texttt{min..max} (scritta sul lato
+  \emph{opposto})\\
+identificatore interno & attributi marcati \texttt{\{id\}}\\
+identificatore esterno & stereotipo \texttt{<<Identifying>>} sull'associazione\\
+generalizzazione & freccia a triangolo vuoto con \texttt{\{total/partial,
+  disjoint\}}\\
+\end{tabular}
+\end{center}
+
+\paragraph{Associazioni con molteplicità}
+\begin{itemize}
+  \item \texttt{Order 1 --- Sell --- 0..1 Bill}: un ordine ha da 0 a 1
+    fattura; una fattura ha esattamente 1 ordine;
+  \item \texttt{Person * --- Residence --- City}: nessuna molteplicità vale
+    \texttt{1..1}, quindi una persona risiede in esattamente una città; una
+    città ha da 0 a N residenti;
+  \item \texttt{Tourist * --- Reservation --- 1..* Hotel}: un turista prenota
+    da 1 a N hotel; un hotel è prenotato da 0 a N turisti.
+\end{itemize}
+
+\paragraph{Reificazione} le associazioni $n$-arie sono poco comuni: conviene
+reificarle in una classe (es.\ \texttt{Provision} con attributo
+\texttt{Quantity}) collegata alle classi originali con associazioni binarie.
+
+\paragraph{Aggregazione e composizione}
+\begin{itemize}
+  \item \textbf{aggregazione} (rombo vuoto): un \emph{Technician} appartiene a
+    un \emph{Team}, ma può essere rappresentato indipendentemente dal team;
+  \item \textbf{composizione} (rombo pieno): un'\emph{Agency} appartiene a una
+    \emph{Firm} e non può esistere indipendentemente da essa.
+\end{itemize}
+
+\paragraph{Esempio} lo schema impiegati--dipartimenti in UML: \emph{Employee}
+(Code \{id\}, Surname, Income, Age), \emph{Dept.} (Name \{id\}, Phone
+\texttt{1..*}), \emph{Project} (Name \{id\}, Budget, Delivery Date
+\texttt{0..1}), \emph{Office} (City \{id\}, Address); \emph{Affiliation} e
+\emph{Attendance} come association class; \emph{Composition} come
+composizione con stereotipo \texttt{<<Identifying>>}; i vincoli non esprimibili
+come note.
+
+\section{Progettazione concettuale}
+
+\subsection{Requisiti e progettazione concettuale}
+
+La progettazione concettuale (il ``che cosa'') comprende attività
+interconnesse:
+\begin{itemize}
+  \item acquisizione (raccolta) dei requisiti;
+  \item analisi dei requisiti;
+  \item costruzione dello schema concettuale;
+  \item costruzione del glossario.
+\end{itemize}
+
+\subsection{Requisiti}
+
+\paragraph{Fonti possibili}
+\begin{itemize}
+  \item \textbf{utenti e committenti}, tramite interviste o documentazione
+    apposita (\emph{ad hoc});
+  \item \textbf{documentazione esistente}: normative (leggi, regolamenti di
+    settore), regolamenti interni, procedure aziendali, realizzazioni
+    preesistenti;
+  \item \textbf{modulistica}.
+\end{itemize}
+
+\paragraph{Acquisizione e analisi} l'acquisizione dei requisiti è
+un'attività difficile e non standardizzabile. Si parte raccogliendo i primi
+requisiti, che spesso vanno poi raffinati con ulteriori acquisizioni.
+
+\paragraph{Interviste}
+\begin{itemize}
+  \item utenti diversi forniscono informazioni diverse;
+  \item gli utenti di livello più alto nell'organizzazione hanno spesso una
+    visione più ampia ma meno dettagliata;
+  \item le interviste portano spesso a raffinamenti successivi (es.\ altre
+    interviste).
+\end{itemize}
+Suggerimenti: effettuare spesso verifiche di comprensione e coerenza; usare
+esempi (casi generali e casi limite); chiedere definizioni e classificazioni;
+chiedere quali aspetti sono essenziali e quali marginali.
+
+\paragraph{Documentazione descrittiva} regole pratiche:
+\begin{itemize}
+  \item scegliere il giusto livello di astrazione;
+  \item standardizzare la struttura delle frasi;
+  \item suddividere le frasi articolate;
+  \item separare le frasi sui \emph{dati} da quelle sulle \emph{funzioni}.
+\end{itemize}
+
+\paragraph{Termini e concetti} regole generali:
+\begin{itemize}
+  \item costruire un \textbf{glossario} dei termini;
+  \item individuare omonimi e sinonimi e unificarli in un unico termine;
+  \item rendere espliciti i riferimenti fra termini;
+  \item riorganizzare le frasi per concetti.
+\end{itemize}
+
+\subsection{Esempi di requisiti}
+
+\paragraph{Biblioteca} si vogliono automatizzare i dati sui riferimenti
+bibliografici. Per ogni riferimento si vuole un codice identificativo di 7
+caratteri (iniziali degli autori, anno di pubblicazione, carattere di
+disambiguazione). Un riferimento può essere una \emph{monografia} (interessano
+editore, data e luogo di pubblicazione) o un \emph{articolo su rivista} (nome
+della rivista, volume, numero, pagine, anno); per entrambi interessano i nomi
+degli autori.
+
+\paragraph{Società di formazione} (esempio guida)
+\begin{itemize}
+  \item si vuole una base di dati di una società che eroga corsi, di cui si
+    vogliono rappresentare i dati dei partecipanti e dei docenti;
+  \item per i partecipanti ($\sim$5000) si rappresentano codice, codice
+    fiscale, cognome, età, sesso, luogo di nascita, nome dei datori di lavoro
+    attuali, posti dove hanno lavorato in precedenza con periodo (data di
+    inizio e fine), indirizzo e telefono, corsi frequentati (corsi attuali e
+    passati, $\sim$200) con il giudizio finale;
+  \item si rappresentano i seminari frequentati e, per ogni giorno, dove e
+    quando si tengono le lezioni;
+  \item i corsi hanno un codice, un titolo e possono avere varie edizioni con
+    data di inizio e fine e numero di partecipanti;
+  \item se un partecipante è \emph{libero professionista} si rappresentano
+    l'area di interesse e, se lo possiede, il titolo professionale; se è
+    \emph{dipendente} si rappresentano livello e posizione ricoperta;
+  \item dei datori di lavoro (attuali e passati) si rappresentano nome,
+    indirizzo e telefono;
+  \item per i docenti ($\sim$300) si rappresentano cognome, età, luogo di
+    nascita, nome del corso che insegnano, corsi insegnati in passato e corsi
+    che possono insegnare, tutti i recapiti telefonici. I docenti possono
+    essere dipendenti interni o collaboratori esterni.
+\end{itemize}
+
+\paragraph{Glossario}
+\begin{center}
+\begin{tabular}{|l|p{4.5cm}|l|l|}
+\hline
+\textbf{Termine} & \textbf{Descrizione} & \textbf{Sinonimi} & \textbf{Collegamenti}\\ \hline
+Partecipante & persona che partecipa ai corsi & Studente & Corso, Società\\
+Docente & docente dei corsi; può essere esterno & Insegnante & Corso\\
+Corso & corso organizzato; può avere più edizioni & Seminario & Docente\\
+Società & ente presso cui i partecipanti lavorano o hanno lavorato & Posti &
+  Partecipante\\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Strutturazione dei requisiti} si riorganizzano le frasi in gruppi
+omogenei (frasi di carattere generale, sui partecipanti, su specifici tipi di
+partecipanti, sui datori di lavoro, sui corsi, sui docenti), sostituendo i
+sinonimi con i termini del glossario (studente $\to$ partecipante, insegnante
+$\to$ docente, seminario $\to$ corso, posti $\to$ società).
+
+\subsection{Dai requisiti ai costrutti ER}
+
+Quale costrutto usare per un termine dei requisiti?
+\begin{description}[style=nextline]
+  \item[Entità] se il termine ha proprietà significative e descrive oggetti
+    con esistenza autonoma.
+  \item[Attributo] se il termine è semplice e non ha proprietà.
+  \item[Relazione] se il termine correla due o più concetti.
+  \item[Generalizzazione] se un termine è un caso più generale di un altro.
+\end{description}
+
+\subsection{Pattern di progettazione}
+
+Soluzioni progettuali consolidate a problemi comuni (come i design pattern
+dell'ingegneria del software).
+
+\paragraph{Reificazione di attributo di entità} un attributo come
+\emph{Company} di \emph{Employee} va spesso trasformato in un'entità
+\emph{Company} collegata da una relazione \emph{Job} (Employee (1,1), Company
+(1,N)): la società è in genere un concetto a sé, specialmente se coinvolta in
+altre relazioni.
+
+\paragraph{Part-of} le relazioni uno a molti possono rappresentare relazioni
+\emph{parte di}:
+\begin{itemize}
+  \item \textbf{composizione}: un cinema è fatto di sale, ogni sala appartiene
+    a un cinema (\emph{Cinema} (1,N) MadeOf (1,1) \emph{Hall}, con \emph{Hall}
+    identificata esternamente da Number + Cinema);
+  \item \textbf{aggregazione}: una squadra è fatta di esperti (\emph{Team}
+    (1,N) MadeOf (0,1) \emph{Expert}): l'esperto esiste anche senza squadra.
+\end{itemize}
+
+\paragraph{Instance-of} a volte servono due entità distinte: una per il
+concetto \emph{astratto} e una per la sua realizzazione concreta. Es.\
+\emph{Flight} (Code, Source, Destination, Time) (1,N) InstOf (1,1)
+\emph{Scheduled} (Date), con \emph{Scheduled} identificata da Date +
+Flight; analogamente \emph{Tournament} -- \emph{Edition}.
+
+\paragraph{Reificazione di relazione binaria} se uno studente può sostenere
+più volte l'esame di un corso, la relazione \emph{Exam} (Date, Grade) fra
+\emph{Student} e \emph{Lecture} diventa un'entità \emph{Exam} collegata con
+S-E e E-L (lato Exam (1,1)); il suo identificatore può essere esterno
+(Student + Lecture + Date) oppure un codice interno.
+\begin{center}
+\begin{tikzpicture}
+  \node[ent] (s) at (0,0) {Student};
+  \node[rel] (se) at (2.6,0) {S-E};
+  \node[ent] (e) at (5,0) {Exam};
+  \node[rel] (el) at (7.4,0) {E-L};
+  \node[ent] (l) at (10,0) {Lecture};
+  \draw (s) -- node[pos=0,above right,card]{(0,N)} (se) -- node[pos=1,above left,card]{(1,1)} (e)
+        -- node[pos=0,above right,card]{(1,1)} (el) -- node[pos=1,above left,card]{(0,N)} (l);
+  \draw (s.north) -- ++(0,0.5) node[erid,label=above:{\small Number}]{};
+  \draw (l.north) -- ++(0,0.5) node[erid,label=above:{\small Code}]{};
+  \draw (e.north) -- ++(0,0.5) node[erat,label=above:{\small Date}]{};
+  \draw (e.south) -- ++(0,-0.5) node[erat,label=below:{\small Grade}]{};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Reificazione di relazione ricorsiva} una partita potrebbe essere una
+relazione binaria ricorsiva fra squadre, ma due squadre possono giocare più
+partite: si reifica \emph{Match} (Date, Score) collegata a \emph{Team} con
+\emph{Home} e \emph{Visiting} (lato Match (1,1)).
+
+\paragraph{Reificazione di attributo di relazione} un musicista suona in
+un'orchestra uno strumento, ma lo stesso strumento può essere suonato molte
+volte: l'attributo \emph{Instrument} di \emph{Plays} diventa un'entità, e
+\emph{Plays} viene reificata in un'entità collegata a \emph{Player},
+\emph{Orchestra} e \emph{Instrument}.
+
+\paragraph{Caso particolare} con le generalizzazioni si definisce un caso
+specifico di un'entità: \emph{Manager} specializza \emph{Employee} ed è
+l'unico a partecipare a \emph{manage} con \emph{Project} (non tutti gli
+impiegati dirigono un progetto).
+
+\paragraph{Storicizzazione} per mantenere la storia di un concetto si usa una
+generalizzazione in \emph{Historic} (con data di scadenza) e \emph{Current},
+oppure due relazioni \emph{CurrentEmployment} (0,1)/(1,N) e
+\emph{PastEmployment} (0,N)/(1,N, con Begin/End) fra \emph{Employee} e
+\emph{Company}; o ancora un'entità \emph{Employment} specializzata in
+\emph{Current} e \emph{Past}.
+
+\paragraph{Evoluzione di un concetto} le generalizzazioni servono anche a
+estendere un concetto quando il progetto è già in esercizio: un
+\emph{Accepted} project (Founding, Start Date) richiede più informazioni degli
+altri progetti (in attesa o rifiutati).
+
+\paragraph{Reificazione di relazione ternaria} \emph{Work} fra \emph{Empl.},
+\emph{Office} e \emph{Task}: gli impiegati lavorano su più compiti in più sedi.
+Si reifica \emph{Work} (Span) in un'entità identificata dalle tre relazioni E-W,
+O-W, T-W (tutte (1,1) lato Work). Se invece un compito è svolto da un solo
+impiegato e in una sola sede, la reificazione si semplifica: \emph{Empl.}
+(1,N) O-S (1,1) \emph{Task} (1,1) S-I (1,N) \emph{Office}.
+
+\subsection{Strategie di progettazione}
+
+Come tradurre i requisiti in schemi ER?
+
+\paragraph{Top-down} si parte da uno schema iniziale molto astratto e lo si
+raffina progressivamente (schema bozza $\to$ intermedio $\to$ finale) con
+\textbf{primitive di raffinamento}: un'entità diventa una relazione fra entità
+(\emph{Exam} $\to$ Student--Exam--Lecture), si aggiungono attributi
+(\emph{Employee} $\to$ Employee con Surname, Age, Wage), un'entità si
+specializza (\emph{People} $\to$ Man/Woman). Vantaggio: si parte da una visione
+d'insieme; ma serve una visione globale fin dall'inizio, difficile per sistemi
+complessi.
+
+\paragraph{Bottom-up} si suddividono i requisiti in parti sempre più piccole,
+si costruisce uno schema per ciascuna e poi si \textbf{integrano} gli schemi
+nello schema finale. Primitive: da un requisito si ricava un'entità; si
+introduce una relazione fra entità esistenti; si introduce una
+generalizzazione fra entità esistenti (\emph{People}, \emph{Man},
+\emph{Woman} $\to$ gerarchia). Rischio: l'integrazione può essere difficile.
+
+\paragraph{Inside-out} si parte da un concetto importante e ci si espande ``a
+macchia d'olio'' verso i concetti vicini: \emph{Employee} $\to$ + attributi
+$\to$ + \emph{Dept.} con Supervision e Belonging $\to$ + \emph{Project} con
+Enrollment $\to$ + \emph{Office} con MadeOf.
+
+\paragraph{Regola pratica: strategia mista}
+\begin{itemize}
+  \item si crea prima uno \textbf{schema scheletro} con le entità più
+    rilevanti (le più citate o quelle indicate esplicitamente come
+    importanti);
+  \item poi si decompone lo schema;
+  \item poi si raffina (bottom-up), si espande (top-down), si integra
+    (inside-out).
+\end{itemize}
+
+\subsection{Metodologia}
+
+\begin{enumerate}
+  \item \textbf{Analisi dei requisiti}: analizzare i requisiti ed eliminare le
+    ambiguità; costruire il glossario; raggruppare i requisiti in frasi
+    omogenee.
+  \item \textbf{Passo base}: definire uno schema scheletro con i concetti più
+    rilevanti.
+  \item \textbf{Passo iterativo} (ripetere finché non si è soddisfatti):
+    raffinare i concetti presenti sulla base dei requisiti; aggiungere
+    concetti per descrivere requisiti non ancora rappresentati.
+  \item \textbf{Analisi di qualità} (ripetuta durante tutto il processo):
+    verificare la qualità dello schema e modificarlo.
+\end{enumerate}
+
+\paragraph{Qualità di uno schema ER} \textbf{correttezza},
+\textbf{completezza}, \textbf{leggibilità}, \textbf{minimalità}.
+
+\paragraph{Con integrazione di schemi} per progetti grandi: analisi dei
+requisiti, passo base, \textbf{decomposizione} (dei requisiti complessi
+secondo lo schema scheletro, o per aree di interesse, anche con acquisizioni
+separate), passo base e iterativo \emph{per ogni sotto-schema/area},
+\textbf{integrazione} dei sotto-schemi in uno schema complessivo usando lo
+scheletro come riferimento, analisi di qualità.
+
+\subsection{Esempio completo: società di formazione}
+
+\paragraph{Schema scheletro} dalla frase generale (``corsi, partecipanti e
+docenti''): \emph{Participant} --Presence-- \emph{Lecture} --Teaching--
+\emph{Lecturer}.
+
+\paragraph{Raffinamento: partecipanti e datori di lavoro} \emph{Participant}
+(Tax, Code, \dots) è generalizzazione di \emph{Employee} (Level, Position) e
+\emph{Freelance} (Titolo prof., Area); \emph{Employer} (Name, \dots) è
+collegato a \emph{Participant} da \emph{PastEmpl} (0,N)--(0,N) e a
+\emph{Employee} da \emph{CurrEmpl} (1,1)--(0,N).
+
+\paragraph{Raffinamento: corsi} \emph{Lecture} (Code, Title) (0,N) Kind (1,1)
+\emph{Edition} (Start, End, \#Part.), con \emph{Edition} identificata da
+Start + Lecture; \emph{Edition} (1,N) MadeOf (1,1) \emph{Lesson} (Time, Room,
+Day), con \emph{Lesson} identificata da Time, Room, Day.
+
+\paragraph{Raffinamento: docenti} \emph{Lecturer} (Tax, Surname, Age, Place of
+Birth, Phone (1,N)) con generalizzazione in \emph{Independent} e \emph{Home}.
+
+\paragraph{Integrazione} nello schema scheletro: \emph{Presence} diventa
+\emph{PastPresence} (0,N)--(0,N) e \emph{CurrentPresence} (0,1)--(0,N) fra
+\emph{Participant} ed \emph{Edition}; \emph{Teaching} diventa \emph{Past}
+(0,1)--(0,N) e \emph{Current} (0,1)--(0,1) fra \emph{Edition} e
+\emph{Lecturer}, più \emph{Duty} (1,N)--(1,N) fra \emph{Lecture} e
+\emph{Lecturer} (corsi che il docente può insegnare). Lo schema finale
+contiene \emph{Participant} (con Freelance, Employee), \emph{Employer},
+\emph{Lecture}, \emph{Edition}, \emph{Lesson}, \emph{Lecturer} (con
+Independent, Home) e le relazioni viste.
+
+\section{Progettazione logica}
+
+\subsection{Obiettivo}
+
+``Tradurre'' lo schema concettuale in uno schema logico che rappresenti gli
+stessi dati in modo \textbf{corretto} ed \textbf{efficiente}.
+\begin{itemize}
+  \item \textbf{ingresso}: schema concettuale, informazioni sul carico
+    applicativo, modello logico;
+  \item \textbf{uscita}: schema logico (relazionale, a oggetti, a grafo,
+    \dots) e documentazione associata.
+\end{itemize}
+Non è una semplice traduzione: alcuni aspetti non sono rappresentabili
+direttamente, e bisogna considerare anche le \emph{prestazioni}.
+
+\paragraph{Due fasi}
+\begin{enumerate}
+  \item \textbf{ristrutturazione dello schema ER} (input: schema ER e carico
+    applicativo; output: schema ER ristrutturato);
+  \item \textbf{traduzione nel modello logico} (input: schema ristrutturato e
+    modello logico; output: schema logico).
+\end{enumerate}
+
+\subsection{Ristrutturazione: prestazioni}
+
+Si ristruttura per semplificare la traduzione e ottimizzare le prestazioni.
+Nota: uno schema ER ristrutturato \emph{non} è più uno schema concettuale in
+senso stretto.
+
+Le prestazioni non si possono valutare con precisione su uno schema
+concettuale; si usano \textbf{indicatori} approssimati:
+\begin{itemize}
+  \item \textbf{spazio}: numero di istanze previste;
+  \item \textbf{tempo}: numero di istanze (di entità e relazioni) visitate
+    durante un'operazione.
+\end{itemize}
+
+\paragraph{Tavola dei volumi} per lo schema impiegati--dipartimenti--progetti:
+\begin{center}
+\begin{tabular}{|l|c|r|}
+\hline
+\textbf{Concetto} & \textbf{Tipo} & \textbf{Volume}\\ \hline
+Office & E & 10\\ Dept. & E & 80\\ Employee & E & 2000\\ Project & E & 500\\
+MadeOf & R & 80\\ Belonging & R & 1900\\ Supervision & R & 80\\
+Enrollment & R & 6000\\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Tavola degli accessi} operazione: ``trova tutti i dati di un
+impiegato, del dipartimento a cui appartiene e dei progetti a cui
+partecipa''. Si costruisce seguendo lo \emph{schema di navigazione}:
+\begin{center}
+\begin{tabular}{|l|l|c|c|c|}
+\hline
+\textbf{Concetto} & \textbf{Costrutto} & \textbf{Accessi} & \textbf{Tipo} & \textbf{Ordine}\\ \hline
+Employee & Entità & 1 & L & 1\\
+Belonging & Relazione & 1 & L & 2\\
+Dept. & Entità & 1 & L & 3\\
+Enrollment & Relazione & 3 & L & 4\\
+Project & Entità & 3 & L & 5\\ \hline
+\end{tabular}
+\end{center}
+(3 = numero medio di progetti per impiegato: 6000/2000.)
+
+\paragraph{Attività di ristrutturazione}
+\begin{enumerate}
+  \item analisi delle ridondanze;
+  \item eliminazione delle generalizzazioni;
+  \item partizionamento/accorpamento di entità e relazioni;
+  \item scelta degli identificatori primari.
+\end{enumerate}
+
+\subsection{Analisi delle ridondanze}
+
+Una \textbf{ridondanza} in uno schema ER è un'informazione significativa ma
+derivabile da altre. In questa fase si decide se mantenerle, eliminarle o
+crearne di nuove.
+\begin{itemize}
+  \item \textbf{pro}: semplificano le interrogazioni;
+  \item \textbf{contro}: appesantiscono gli aggiornamenti e occupano più
+    spazio.
+\end{itemize}
+
+\paragraph{Forme di ridondanza}
+\begin{itemize}
+  \item attributi derivabili da altri attributi della stessa entità (o
+    relazione): es.\ in \emph{Invoice}, \emph{Gross value} = \emph{Net value}
+    + \emph{VAT};
+  \item attributi derivabili da attributi di altre entità (o relazioni): es.\
+    \emph{Total} di \emph{Purchase} derivabile da \emph{Quantity} di
+    \emph{Composition} e \emph{Price} di \emph{Product};
+  \item attributi derivabili da operazioni di conteggio;
+  \item relazioni derivabili dalla composizione di altre relazioni (in
+    generale: \textbf{cicli} di relazioni). Es.\ \emph{Teaching}
+    (Student--Lecturer) è derivabile da \emph{Attendance} (Student--Lecture) e
+    \emph{Tuition} (Lecture--Lecturer).
+\end{itemize}
+
+\paragraph{Esempio} \emph{Person} --Stay-- \emph{City}, con attributo
+ridondante \emph{Inhabitants} di \emph{City}. Volumi: City 200, Person
+1\,000\,000, Stay 1\,000\,000. Operazioni:
+\begin{itemize}
+  \item \textbf{op.\ 1}: memorizza una nuova persona con la sua città di
+    residenza (500 volte al giorno);
+  \item \textbf{op.\ 2}: stampa tutti i dati di una città, incluso il numero
+    di abitanti (2 volte al giorno).
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Con ridondanza} & \textbf{Senza ridondanza}\\[2pt]
+\begin{tabular}[t]{|l|c|c|c|}
+\hline
+\multicolumn{4}{|c|}{op.\ 1}\\ \hline
+Person & E & 1 & S\\ Stay & R & 1 & S\\ City & E & 1 & L\\ City & E & 1 & S\\ \hline
+\multicolumn{4}{|c|}{op.\ 2}\\ \hline
+City & E & 1 & L\\ \hline
+\end{tabular}
+&
+\begin{tabular}[t]{|l|c|c|c|}
+\hline
+\multicolumn{4}{|c|}{op.\ 1}\\ \hline
+Person & E & 1 & S\\ Stay & R & 1 & S\\ \hline
+\multicolumn{4}{|c|}{op.\ 2}\\ \hline
+City & E & 1 & L\\ Stay & R & 5000 & L\\ \hline
+\end{tabular}
+\end{tabular}
+\end{center}
+(5000 = $10^6/200$, residenti medi per città.) Contando le scritture
+\textbf{doppie}:
+\begin{itemize}
+  \item \textbf{con} ridondanza: op.\ 1 = 1500 scritture + 500 letture al
+    giorno; op.\ 2 trascurabile $\Rightarrow$ $3000 + 500 = $ \textbf{3500}
+    accessi al giorno;
+  \item \textbf{senza} ridondanza: op.\ 1 = 1000 scritture; op.\ 2 = circa
+    10\,000 letture $\Rightarrow$ $2000 + 10\,000 = $ \textbf{12\,000}
+    accessi al giorno.
+\end{itemize}
+Conviene mantenere la ridondanza (lo spazio in più è solo un intero per
+città).
+
+\subsection{Eliminazione delle generalizzazioni}
+
+Il modello relazionale non rappresenta direttamente le generalizzazioni,
+mentre entità e relazioni sì: si eliminano le gerarchie sostituendole con
+entità e relazioni. Data la generalizzazione $E_0$ (A01, A02; relazione R1 con
+E3) con figlie $E_1$ (A11) ed $E_2$ (A21; relazione R2 con E4), tre
+possibilità:
+\begin{enumerate}
+  \item \textbf{accorpamento delle figlie nel genitore}: resta $E_0$ con
+    attributi A01, A02, A11 (0,1), A21 (0,1) e un attributo \emph{Kind} che
+    indica il tipo; R2 si collega a $E_0$ con cardinalità minima 0;
+  \item \textbf{accorpamento del genitore nelle figlie}: restano $E_1$ (A01,
+    A11, A02) ed $E_2$ (A01, A21, A02); R1 si sdoppia in R11 (con $E_1$) e R12
+    (con $E_2$). Possibile solo se la generalizzazione è \emph{totale};
+  \item \textbf{sostituzione della generalizzazione con relazioni}: restano
+    tutte le entità, legate da relazioni RG1, RG2 ($E_0$ (0,1), $E_i$ (1,1));
+    le figlie sono identificate esternamente da $E_0$.
+\end{enumerate}
+
+\paragraph{Quale scegliere} si decide in base ai volumi e alle tavole degli
+accessi (contare solo gli accessi non basta). Regole generali:
+\begin{enumerate}
+  \item conviene quando le operazioni accedono a genitore e figlie
+    \emph{insieme};
+  \item conviene quando le operazioni accedono alle figlie \emph{distintamente}
+    fra loro;
+  \item conviene quando si accede alle figlie separatamente dal genitore.
+\end{enumerate}
+Sono possibili anche soluzioni \textbf{ibride}, specie con gerarchie a più
+livelli: es.\ $E_1$ accorpata in $E_0$ (A11 (0,1), Kind) ed $E_2$ legata con
+RG2.
+
+\subsection{Partizionamento e accorpamento}
+
+Si ristruttura per ridurre il numero di accessi:
+\begin{itemize}
+  \item attributi usati \emph{separatamente} vengono separati;
+  \item attributi usati \emph{insieme} vengono raggruppati, anche se
+    appartengono a entità/relazioni diverse.
+\end{itemize}
+
+\paragraph{Casi principali}
+\begin{itemize}
+  \item \textbf{partizionamento verticale di entità}: \emph{Employee} (Code,
+    Surname, Address, Day of birth, Level, Wage, Withholding tax) si divide in
+    \emph{Personal Data} (Code, Surname, Address, Day of birth) e
+    \emph{Corporation Data} (Level, Wage, Withholding tax) legate da una
+    relazione (1,1)--(1,1), con \emph{Corporation Data} identificata
+    esternamente;
+  \item \textbf{eliminazione di attributi multivalore}: \emph{Office} (Name,
+    Address, City, Phone (1,N)) $\to$ nuova entità \emph{Phone} (Number)
+    legata a \emph{Office} da \emph{Appliance} (Office (1,N), Phone (1,1));
+  \item \textbf{accorpamento di entità}: \emph{Person} (0,1) Lives (1,1)
+    \emph{Apartment} $\to$ un'unica entità \emph{Person} con attributi No.\
+    (0,1) e Addr (0,1);
+  \item \textbf{partizionamento orizzontale di relazioni}: \emph{PartOf} fra
+    \emph{Player} e \emph{Team} (con Bought, Cession (0,1)) si divide in
+    \emph{Current} (con Bought) e \emph{Past} (con Bought, Cession).
+\end{itemize}
+
+\subsection{Scelta degli identificatori primari}
+
+Operazione indispensabile per la traduzione nel modello relazionale. Criteri:
+\begin{itemize}
+  \item assenza di opzionalità (nessun \texttt{NULL});
+  \item semplicità;
+  \item utilizzo nelle operazioni più frequenti o importanti.
+\end{itemize}
+Se nessun identificatore soddisfa i requisiti si introducono nuovi attributi
+con \textbf{codici} generati appositamente.
+
+\subsection{Traduzione nel modello relazionale}
+
+Idea di base:
+\begin{itemize}
+  \item le \textbf{entità} diventano relazioni (tabelle) sui loro attributi;
+  \item le \textbf{relazioni} (relationship) diventano relazioni sui loro
+    attributi più gli identificatori delle entità coinvolte.
+\end{itemize}
+
+\paragraph{Relazioni molti a molti} \emph{Employee} (Number, Surname, Wage)
+(0,N) \emph{Enrollment} (StartDate) (1,N) \emph{Project} (Code, Name, Budget):
+\begin{center}
+\texttt{Employee(\underline{Number}, Surname, Wage)}\\
+\texttt{Project(\underline{Code}, Name, Budget)}\\
+\texttt{Enrollment(\underline{Number}, \underline{Code}, StartDate)}
+\end{center}
+con vincoli di integrità referenziale fra \texttt{Number} di
+\texttt{Enrollment} e la chiave di \texttt{Employee}, e fra \texttt{Code} di
+\texttt{Enrollment} e la chiave di \texttt{Project}. Conviene usare nomi più
+espressivi per le chiavi esterne:
+\texttt{Enrollment(\underline{Employee}, \underline{Project}, StartDate)}.
+
+Nota: questa traduzione non tiene conto della cardinalità \emph{minima} delle
+molti a molti (si potrebbe solo con \texttt{CHECK} complessi e poco
+supportati).
+
+\paragraph{Relazioni ricorsive} \emph{Product} (Code, Name, Cost) con
+\emph{MadeOf} (Number) e ruoli MadeUp/Element:
+\begin{center}
+\texttt{Product(\underline{Code}, Name, Cost)}\\
+\texttt{MadeOf(\underline{MadeUp}, \underline{Element}, Number)}
+\end{center}
+
+\paragraph{Relazioni $n$-arie} \emph{Supply} (Number) fra \emph{Supplier}
+(VAT, Name), \emph{Product} (Code, Type), \emph{Department} (Name, Phone):
+\begin{center}
+\texttt{Supplier(\underline{VAT}, Name)} \quad
+\texttt{Product(\underline{Code}, Type)} \quad
+\texttt{Department(\underline{Name}, Phone)}\\
+\texttt{Supply(\underline{Supplier}, \underline{Product},
+  \underline{Department}, Number)}
+\end{center}
+
+\paragraph{Relazioni uno a molti} \emph{Player} (Surname, DayOfBirth, Role)
+(1,1) \emph{Agreement} (Hire) (0,N) \emph{Team} (Name, City, TeamColors).
+Traduzione ``standard'' (corretta):
+\begin{center}
+\texttt{Player(\underline{Surname, DayOfBirth}, Role)}\\
+\texttt{Agreement(\underline{SurnameP, BDayP}, Team, Hire)}\\
+\texttt{Team(\underline{Name}, City, TeamColors)}
+\end{center}
+(la chiave di \texttt{Agreement} è solo il giocatore: ognuno ha un solo
+contratto). Soluzione \textbf{meno ridondante}, accorpando la relazione nel
+lato (1,1):
+\begin{center}
+\texttt{Player(\underline{Surname, DayOfBirth}, Team, Role, Hire)}\\
+\texttt{Team(\underline{Name}, City, TeamColors)}
+\end{center}
+con vincolo referenziale fra \texttt{Team} in \texttt{Player} e la chiave di
+\texttt{Team}. Se la cardinalità minima fosse 0, \texttt{Team} in
+\texttt{Player} dovrebbe ammettere \texttt{NULL}: questa traduzione
+rappresenta anche il caso (0,1), con 0 $\to$ \texttt{NULL} ammessi, 1 $\to$
+\texttt{NULL} non ammessi.
+
+\paragraph{Entità con identificatore esterno} \emph{Student} (Number, Surname,
+Course Year) (1,1) \emph{Enrollment} (1,N) \emph{University} (Name, City,
+Address), con Student identificato da Number + University:
+\begin{center}
+\texttt{Student(\underline{Number, University}, Surname, CourseYear)}\\
+\texttt{University(\underline{Name}, City, Addr)}
+\end{center}
+La relazione è rappresentata dall'identificatore: ogni studente è iscritto a
+una sola università.
+
+\paragraph{Relazioni uno a uno} \emph{Head} (Code, Surname, Wage) (1,1)
+\emph{Supervision} (StartDate) (1,1) \emph{Department} (Name, Office, Phone).
+Opzioni: accorpare la relazione a una delle due entità (da una parte o
+dall'altra), oppure accorpare tutto. Soluzione preferita:
+\begin{center}
+\texttt{Head(\underline{Code}, Surname, Wage)}\\
+\texttt{Department(\underline{Name}, Office, Phone, Head, StartDate)}
+\end{center}
+un vincolo referenziale, nessun \texttt{NULL}. Altra soluzione:
+\texttt{Supervision(\underline{Head}, \underline{Department}, StartDate)} con
+due vincoli referenziali.
+
+\subsection{Esempio completo}
+
+Lo schema impiegati--dipartimenti--sedi (Employee, Dept., Project, Office con
+Supervision, Belonging, Enrollment, MadeOf; Dept.\ identificato da Name +
+Office) si traduce in:
+\begin{center}
+\texttt{Employee(\underline{Code}, Surname, Department, Office, Date*)}\\
+\texttt{Dept.(\underline{Name, City}, Phone, Head)}\\
+\texttt{Office(\underline{City}, Road, Zip)}\\
+\texttt{Project(\underline{Name}, Budget)}\\
+\texttt{Enrollment(\underline{Employee}, \underline{Project})}
+\end{center}
+(\texttt{*} = ammette \texttt{NULL}; \emph{Belonging} è accorpata in
+\texttt{Employee}, \emph{Supervision} in \texttt{Dept.}, l'attributo
+multivalore Phone si assume ristrutturato.)
+
+\paragraph{Attenzione} differenze apparentemente piccole di cardinalità e
+identificatori portano a significati molto diversi. Se \emph{Office} è
+identificata da City + Dept.\ (MadeOf: Dept.\ (1,N), Office (1,1)), si ottiene
+invece:
+\begin{center}
+\texttt{Dept.(\underline{Name}, City, Phone, Head)}\\
+\texttt{Office(\underline{City}, \underline{Dept.}, Road, Zip)}
+\end{center}
+
+\paragraph{Strumenti} esistono strumenti CASE commerciali che supportano tutte
+le fasi della progettazione (es.\ ERwin), fino alla generazione automatica
+delle istruzioni \texttt{CREATE TABLE}.
+
+\section{Normalizzazione}
+
+\subsection{Forme normali}
+
+Una \textbf{forma normale} è una proprietà di una base di dati relazionale che
+ne garantisce la qualità, cioè l'assenza di certi difetti. Quando una relazione
+non è normalizzata:
+\begin{itemize}
+  \item presenta \emph{ridondanze};
+  \item si presta a comportamenti poco desiderabili durante gli aggiornamenti.
+\end{itemize}
+Le forme normali sono di solito definite sul modello relazionale, ma hanno
+senso anche in altri contesti (es.\ il modello ER).
+
+La \textbf{normalizzazione} è la procedura che trasforma schemi non
+normalizzati in schemi che soddisfano una forma normale. Va usata come
+\textbf{tecnica di verifica} dei risultati della progettazione: \emph{non} è
+una metodologia di progettazione.
+
+\subsection{Una relazione con anomalie}
+
+\begin{center}
+\begin{tabular}{|l|c|l|c|l|}
+\hline
+\underline{Employee} & Wage & \underline{Project} & Budget & Role\\ \hline
+Jones & 20 & Mars & 2 & Technician\\
+Smith & 35 & Jupiter & 15 & Designer\\
+Smith & 35 & Venus & 15 & Designer\\
+Williams & 55 & Venus & 15 & Chief\\
+Williams & 55 & Jupiter & 15 & Consultant\\
+Williams & 55 & Mars & 2 & Consultant\\
+Brown & 48 & Mars & 2 & Chief\\
+Brown & 48 & Venus & 15 & Designer\\
+White & 48 & Venus & 15 & Designer\\
+White & 48 & Jupiter & 15 & Director\\ \hline
+\end{tabular}
+\end{center}
+
+\paragraph{Anomalie}
+\begin{description}[style=nextline]
+  \item[Ridondanza] lo stipendio di ogni impiegato è ripetuto in tutte le sue
+    tuple (idem il budget di ogni progetto).
+  \item[Anomalia di aggiornamento] se lo stipendio di un impiegato cambia,
+    bisogna modificarne tutte le occorrenze.
+  \item[Anomalia di cancellazione] se un impiegato smette di partecipare a
+    tutti i progetti, viene eliminato completamente dalla base di dati.
+  \item[Anomalia di inserimento] non si può inserire un impiegato senza un
+    progetto associato.
+\end{description}
+Perché è una situazione indesiderabile? Perché si rappresentano \emph{nella
+stessa relazione} informazioni eterogenee: gli impiegati con i loro stipendi,
+i progetti con i loro budget, i ruoli degli impiegati nei progetti.
+
+\subsection{Dipendenze funzionali}
+
+Per studiare in modo sistematico questi aspetti si usa la \textbf{dipendenza
+funzionale}: un particolare vincolo di integrità del modello relazionale che
+descrive legami funzionali fra gli attributi di una relazione.
+
+\paragraph{Definizione} data una relazione $r$ su schema $R(X)$ e due
+sottoinsiemi non vuoti $Y$ e $Z$ di $X$, esiste in $r$ una dipendenza
+funzionale (FD) fra $Y$ e $Z$, e si scrive $Y \to Z$, se per ogni coppia di
+tuple $t_1, t_2$ di $r$ con gli stessi valori su $Y$, risulta che $t_1$ e
+$t_2$ hanno gli stessi valori anche su $Z$.
+
+\paragraph{Esempio} nella relazione precedente valgono:
+\[
+\text{Employee} \to \text{Wage} \qquad
+\text{Project} \to \text{Budget} \qquad
+\text{Employee Project} \to \text{Role}
+\]
+
+\paragraph{FD banali} $\text{Employee Project} \to \text{Project}$ è
+``banale'' (sempre vera). $Y \to A$ è \textbf{non banale} se $A$ non compare
+in $Y$ (se $A$ è un insieme: nessun attributo di $A$ appartiene a $Y$).
+
+\paragraph{FD e anomalie} le anomalie dipendono da alcune FD:
+\begin{itemize}
+  \item gli impiegati hanno un unico stipendio: $\text{Employee} \to
+    \text{Wage}$;
+  \item i progetti hanno un unico budget: $\text{Project} \to \text{Budget}$.
+\end{itemize}
+Non tutte le FD causano anomalie: ``in ogni progetto un impiegato ha un solo
+ruolo'', $\text{Employee Project} \to \text{Role}$, è soddisfatta
+``banalmente'' perché Employee Project è una \textbf{chiave}.
+\begin{itemize}
+  \item la terza FD ha a sinistra una chiave e \emph{non} causa anomalie;
+  \item le prime due non hanno a sinistra una chiave e \emph{causano}
+    anomalie;
+  \item la relazione contiene informazioni legate alla chiave e altre legate
+    ad attributi che non formano una chiave.
+\end{itemize}
+Le anomalie sono quindi causate dall'aver messo insieme concetti
+\textbf{eterogenei}: proprietà degli impiegati (stipendio), dei progetti
+(budget) e della chiave Employee Project (ruolo).
+
+\subsection{Forma normale di Boyce e Codd (BCNF)}
+
+Le forme normali sono proprietà soddisfatte solo in assenza di anomalie,
+definite tramite vincoli sulle dipendenze funzionali. La più importante è la
+forma normale di Boyce e Codd.
+
+\paragraph{Definizione} una relazione $r$ è in \textbf{BCNF} se per ogni
+dipendenza funzionale (non banale) $X \to Y$ definita su $r$, $X$ contiene una
+chiave $K$ di $r$, cioè $X$ è \textbf{superchiave} per $r$.
+
+\paragraph{Normalizzazione} se una relazione non è in BCNF, nella maggior parte
+dei casi si può sostituire con due o più relazioni normalizzate (in BCNF).
+Criterio: \emph{se una relazione rappresenta più concetti indipendenti, va
+decomposta in relazioni più piccole, una per ogni concetto}.
+
+\paragraph{Esempio di decomposizione} la relazione delle anomalie diventa:
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+\underline{Employee} & Wage\\ \hline
+Jones & 20\\ Smith & 35\\ Williams & 55\\ Brown & 48\\ White & 48\\ \hline
+\end{tabular}
+\quad
+\begin{tabular}{|l|c|}
+\hline
+\underline{Project} & Budget\\ \hline
+Mars & 2\\ Jupiter & 15\\ Venus & 15\\ \hline
+\end{tabular}
+\quad
+\begin{tabular}{|l|l|l|}
+\hline
+\underline{Employee} & \underline{Project} & Role\\ \hline
+Jones & Mars & Technician\\ Smith & Jupiter & Designer\\
+Smith & Venus & Designer\\ Williams & Venus & Chief\\
+Williams & Jupiter & Consultant\\ Williams & Mars & Consultant\\
+Brown & Mars & Chief\\ Brown & Venus & Designer\\
+White & Venus & Designer\\ White & Jupiter & Director\\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Decomposizione senza perdita}
+
+\paragraph{Una decomposizione con perdita} data \texttt{(Employee, Project,
+Office)} con $\text{Employee} \to \text{Office}$ e $\text{Project} \to
+\text{Office}$:
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Employee & Project & Office\\ \hline
+Jones & Mars & Rome\\ Smith & Jupiter & Milan\\ Smith & Venus & Milan\\
+White & Saturn & Milan\\ White & Venus & Milan\\ \hline
+\end{tabular}
+\end{center}
+la si decompone sulla base delle due FD in \texttt{(Employee, Office)} =
+\{(Jones, Rome), (Smith, Milan), (White, Milan)\} e \texttt{(Project, Office)}
+= \{(Mars, Rome), (Jupiter, Milan), (Venus, Milan), (Saturn, Milan)\}.
+Ricostruendo con il join naturale su \texttt{Office} si ottengono 7 tuple,
+fra cui le \textbf{spurie} (Smith, Saturn, Milan) e (White, Jupiter, Milan):
+il risultato è \emph{diverso} dalla relazione originale.
+
+\paragraph{Definizione} una relazione $r$ si decompone \textbf{senza perdita}
+su $X$ e $Y$ se il join delle proiezioni di $r$ su $X$ e $Y$ è uguale a $r$:
+\[ \pi_X(r) \bowtie \pi_Y(r) = r \]
+La proprietà è garantita se gli \textbf{attributi comuni} contengono una
+\textbf{chiave} di almeno una delle relazioni decomposte (nell'esempio,
+\texttt{Office} non è chiave né di una né dell'altra).
+
+\subsection{Conservazione delle dipendenze}
+
+\paragraph{Esempio: inserimento} una decomposizione senza perdita si ottiene
+su \texttt{Employee} (chiave di \texttt{(Employee, Office)}):
+\texttt{(Employee, Office)} e \texttt{(Employee, Project)}. Supponiamo di
+inserire la tupla (White, Mars, Milan): nelle relazioni decomposte non viola
+nulla, ma ricostruendo si ha Mars sia a Rome sia a Milan, violando
+$\text{Project} \to \text{Office}$. Questa FD coinvolge attributi che non
+stanno più insieme in nessuna relazione, quindi non è più verificabile
+localmente.
+
+\paragraph{Definizione} una decomposizione \textbf{conserva le dipendenze} se
+ciascuna delle dipendenze funzionali dello schema originale coinvolge
+attributi che compaiono tutti insieme in uno degli schemi decomposti.
+
+\paragraph{Proprietà richieste} la normalizzazione per decomposizione deve
+garantire che gli schemi ottenuti, presi insieme, abbiano:
+\begin{itemize}
+  \item la \textbf{decomposizione senza perdita}, che assicura la
+    ricostruzione delle informazioni originarie;
+  \item la \textbf{conservazione delle dipendenze}, che assicura il
+    mantenimento dei vincoli di integrità originari.
+\end{itemize}
+
+\subsection{Terza forma normale (3NF)}
+
+\paragraph{Una relazione non normalizzabile in BCNF}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Chief & \underline{Project} & \underline{Office}\\ \hline
+Smith & Mars & Rome\\ Johnson & Jupiter & Milan\\ Johnson & Mars & Milan\\
+White & Saturn & Milan\\ White & Venus & Milan\\ \hline
+\end{tabular}
+\qquad
+$\begin{array}{l}
+\text{Project Office} \to \text{Chief}\\
+\text{Chief} \to \text{Office}
+\end{array}$
+\end{center}
+$\text{Chief} \to \text{Office}$ viola la BCNF (Chief non è superchiave), ma
+$\text{Project Office} \to \text{Chief}$ coinvolge \emph{tutti} gli
+attributi: nessuna decomposizione può conservarla. In alcuni casi la BCNF
+``non è raggiungibile''.
+
+\paragraph{Definizione} una relazione $r$ è in \textbf{terza forma normale}
+se, per ogni FD non banale $X \to Y$ definita su $r$, è verificata almeno una
+delle condizioni:
+\begin{itemize}
+  \item $X$ contiene una chiave $K$ di $r$ ($X$ è superchiave);
+  \item ogni attributo in $Y$ è contenuto in almeno una chiave di $r$.
+\end{itemize}
+Nell'esempio, Office fa parte della chiave (Project, Office): la relazione è
+in 3NF.
+
+\paragraph{BCNF e 3NF}
+\begin{itemize}
+  \item la BCNF è più restrittiva della 3NF (la 3NF ammette relazioni con
+    alcune anomalie);
+  \item la 3NF è \emph{sempre} raggiungibile (c'è un teorema), con
+    decomposizione senza perdita e che conserva le dipendenze;
+  \item se una relazione ha una sola chiave, è in BCNF se e solo se è in 3NF.
+\end{itemize}
+
+\paragraph{Decomposizione in 3NF}
+\begin{itemize}
+  \item si crea una relazione per ogni gruppo di attributi coinvolti in una
+    dipendenza funzionale;
+  \item si verifica che alla fine una relazione contenga una chiave della
+    relazione originaria;
+  \item il risultato dipende dalle dipendenze individuate.
+\end{itemize}
+Strategia: se la relazione non è normalizzata si decompone in 3NF, poi si
+verifica se lo schema ottenuto è anche in BCNF.
+
+\paragraph{Una possibile riorganizzazione} se nell'esempio si scopre un
+ulteriore concetto, il \emph{dipartimento} (ogni dirigente dirige un
+dipartimento in una sede):
+\[
+\text{Dept. Office} \to \text{Chief} \qquad
+\text{Chief} \to \text{Office Dept.} \qquad
+\text{Project Office} \to \text{Dept.}
+\]
+si ottiene una decomposizione in BCNF:
+\begin{center}
+\begin{tabular}{|l|l|c|}
+\hline
+\underline{Chief} & Office & Dept.\\ \hline
+Smith & Rome & 1\\ Johnson & Milan & 1\\ White & Milan & 2\\ \hline
+\end{tabular}
+\qquad
+\begin{tabular}{|l|l|c|}
+\hline
+\underline{Project} & \underline{Office} & Dept.\\ \hline
+Mars & Rome & 1\\ Jupiter & Milan & 1\\ Mars & Milan & 1\\
+Saturn & Milan & 2\\ Venus & Milan & 2\\ \hline
+\end{tabular}
+\end{center}
+
+\subsection{Teoria delle dipendenze}
+
+I concetti visti si possono automatizzare: \emph{data una relazione e un
+insieme di dipendenze funzionali su di essa, generare una decomposizione che
+contenga solo relazioni in forma normale e soddisfi le proprietà di
+decomposizione senza perdita e conservazione delle dipendenze}.
+
+\paragraph{Implicazione} dalle FD valide se ne possono derivare altre: un
+insieme di FD $F$ \textbf{implica} $f$ se ogni relazione che soddisfa tutte le
+dipendenze in $F$ soddisfa anche $f$. Es.: $\text{Employee} \to \text{Type}$ e
+$\text{Type} \to \text{Wage}$ implicano $\text{Employee} \to \text{Wage}$.
+
+\subsection{Progettazione e normalizzazione}
+
+La teoria della normalizzazione si può usare nella progettazione logica per
+verificare lo schema delle relazioni finali, ma anche nella progettazione
+concettuale per verificare la qualità dello schema concettuale.
+
+\paragraph{Normalizzazione su entità} \emph{Product} (Code, Product Name,
+Price, Retailer Name, Address, VAT N) con la dipendenza
+\[ \text{VAT N} \to \text{RetailerName Address} \]
+viola la forma normale. Si decompone l'entità: \emph{Product} (Code, Name,
+Price) (1,1) \emph{Supply} (0,N) \emph{Supplier} (VAT N, Name, Address).
+
+\paragraph{Normalizzazione su relazioni} la relazione ternaria \emph{Thesis}
+fra \emph{Professor} (0,N), \emph{Student} (0,1), \emph{Degree} (0,N) e
+\emph{Dept.} (0,N), con le dipendenze
+\[
+\text{Student} \to \text{Degree} \qquad
+\text{Student} \to \text{Professor} \qquad
+\text{Professor} \to \text{Dept.}
+\]
+non è in 3NF per $\text{Professor} \to \text{Dept.}$ (Professor non è
+superchiave, Dept.\ non appartiene a una chiave; la chiave è Student). Si
+decompone: \emph{Work} fra \emph{Professor} (1,1) e \emph{Dept.} (0,N), e
+\emph{Thesis} fra Professor, Student, Degree.
+
+Ora \emph{Thesis} è in BCNF rispetto a $\text{Student} \to \text{Degree}$ e
+$\text{Student} \to \text{Professor}$; le due proprietà però sono
+\emph{indipendenti} e si può decomporre ulteriormente: \emph{Thesis} binaria
+fra \emph{Professor} (0,N) e \emph{Student} (0,1), ed \emph{Enroll} fra
+\emph{Student} (1,1) e \emph{Degree} (0,N).
+
+\section{Basi di dati attive}
+
+\subsection{Da passive ad attive}
+
+Le politiche di reazione dei vincoli di integrità sono il primo esempio di
+comportamento \textbf{reattivo} nelle basi di dati:
+\begin{verbatim}
+ON < DELETE | UPDATE >
+   < CASCADE | SET NULL | SET DEFAULT | NO ACTION >
+\end{verbatim}
+L'idea è introdurre \textbf{costrutti di linguaggio} appositi, detti
+\textbf{regole} (attive), per gestire una parte del comportamento procedurale
+delle applicazioni. Stando a livello di base di dati, questo comportamento è
+``condiviso'' fra le applicazioni (indipendenza dei dati).
+
+\paragraph{Base di dati attiva} ha una componente che gestisce regole attive
+del tipo \textbf{Evento-Condizione-Azione} (ECA):
+\begin{itemize}
+  \item gli \emph{eventi} sono modifiche della base di dati;
+  \item si verifica una \emph{condizione} (vero/falso);
+  \item si eseguono una o più \emph{azioni}.
+\end{itemize}
+Queste basi di dati hanno un comportamento \emph{reattivo} (contrapposto a
+\emph{passivo}): non eseguono solo le transazioni degli utenti, ma anche le
+regole. I DBMS commerciali (SQL-3) usano i \textbf{trigger}, definiti come le
+altre componenti dello schema.
+
+\subsection{Evoluzione}
+
+\begin{description}[style=nextline]
+  \item[Anni '70: niente DBMS] le applicazioni $A_1, \dots, A_n$ condividono
+    dati comuni direttamente sui file del sistema operativo.
+  \item[Anni '80: primi DBMS] applicazioni (in Pascal, C) sopra un DBMS che
+    gestisce le tabelle (sopra i file).
+  \item[Anni '90: comportamento procedurale condiviso] nascono le
+    \textbf{stored procedure}, per condividere comportamenti procedurali
+    comuni fra applicazioni diverse. Non sono standardizzate e soffrono di
+    \emph{impedance mismatch} con il linguaggio usato per esprimerle; di
+    conseguenza si introducono regole specifiche, i \textbf{trigger}, gestite
+    direttamente dal DBMS (\textbf{DBMS attivi}).
+  \item[Anni 2000] architettura client/server via Internet: front-end
+    (JavaScript), back-end su web application server (Java), base di dati
+    attiva con tabelle e trigger.
+  \item[Anni 2010: app mobili] front-end in Java, Objective-C, HTML5; stessa
+    struttura lato server.
+\end{description}
+
+\subsection{Trigger}
+
+Si definiscono con istruzioni DDL (\texttt{CREATE TRIGGER}) e seguono il
+paradigma ECA:
+\begin{itemize}
+  \item \textbf{evento}: modifica dei dati, specificata con
+    \texttt{insert}, \texttt{delete}, \texttt{update};
+  \item \textbf{condizione}: predicato SQL (opzionale);
+  \item \textbf{azione}: sequenza di istruzioni SQL (o estensioni, es.\
+    PL/SQL in Oracle).
+\end{itemize}
+Intuitivamente: quando accade l'evento (\emph{attivazione}), se la condizione
+è soddisfatta (\emph{valutazione}), allora si esegue l'azione
+(\emph{esecuzione}). Ogni trigger fa riferimento a una tabella
+(\emph{target}): risponde a eventi relativi a quella tabella.
+
+\paragraph{Granularità}
+\begin{itemize}
+  \item \textbf{di tupla} (\emph{row-level}): un'attivazione per ogni tupla
+    coinvolta nell'operazione;
+  \item \textbf{di operazione} (\emph{statement-level}): una sola
+    attivazione per ogni istruzione SQL, con riferimento a tutte le tuple
+    coinvolte (``set-oriented'').
+\end{itemize}
+
+\paragraph{Modalità}
+\begin{itemize}
+  \item \textbf{immediata}: subito dopo (o subito prima) dell'evento;
+  \item \textbf{differita}: al momento del \texttt{commit}.
+\end{itemize}
+
+\subsection{Modello computazionale}
+
+Sia $T^U = U_1; \dots; U_n$ la transazione dell'utente e $P$ un insieme di
+regole della forma $E, C \to A$ (Evento, Condizione, Azione). Indicando con
+$U_i^P$ la sequenza di azioni indotte da $U_i$ su $P$:
+\begin{itemize}
+  \item la semantica \textbf{immediata} genera
+    $T^I = U_1; U_1^P; \dots; U_n; U_n^P$;
+  \item la semantica \textbf{differita} genera
+    $T^D = U_1; \dots; U_n; U_1^P; \dots; U_n^P$.
+\end{itemize}
+Problemi: \textbf{confluenza}, \textbf{terminazione}, \textbf{equivalenza}.
+
+\subsection{Trigger in Oracle}
+
+\paragraph{Sintassi}
+\begin{verbatim}
+create trigger TriggerName
+  Mode Event {, Event}
+  on TargetTable
+  [ [referencing Reference]
+    for each row
+    [when SQLPredicate] ]
+  PL/SQLBlock
+\end{verbatim}
+\begin{itemize}
+  \item \emph{Mode}: \texttt{before} o \texttt{after};
+  \item \emph{Event}: \texttt{insert}, \texttt{update}, \texttt{delete};
+  \item \texttt{for each row} specifica la granularità (di tupla);
+  \item \emph{Reference}: permette di definire nomi di variabili (solo per
+    granularità di tupla): \texttt{old as} \emph{OldVariable} $|$
+    \texttt{new as} \emph{NewVariable}.
+\end{itemize}
+
+\paragraph{Semantica}
+\begin{itemize}
+  \item modalità \textbf{immediata} (sia \texttt{after} sia \texttt{before});
+  \item piano di esecuzione: trigger \texttt{before statement}; per ogni tupla
+    coinvolta: trigger \texttt{before row}, operazione, trigger \texttt{after
+    row}; infine trigger \texttt{after statement};
+  \item in caso di errore si annulla tutto;
+  \item priorità fra trigger;
+  \item al massimo 32 trigger attivati in cascata.
+\end{itemize}
+
+\paragraph{Esempio} riordino automatico in magazzino:
+\begin{verbatim}
+create trigger Reorder
+  after update of QtyAvbl on Warehouse
+  when (new.QtyAvbl < new.QtyLimit)
+  for each row
+  declare X number;
+  begin
+    select count(*) into X
+    from PendingOrders
+    where Part = new.Part;
+    if X = 0
+    then
+      insert into PendingOrders
+      values (new.Part, new.QtyReord, sysdate);
+    end if;
+  end;
+\end{verbatim}
+Quando la quantità disponibile scende sotto la soglia, se non c'è già un
+ordine pendente per quel pezzo se ne inserisce uno.
+
+\paragraph{Esempio 2} con \texttt{Warehouse}:
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Part & QtyAvbl & QtyLimit & QtyReord\\ \hline
+1 & 200 & 150 & 100\\ 2 & 780 & 500 & 200\\ 3 & 450 & 400 & 120\\ \hline
+\end{tabular}
+\end{center}
+\begin{verbatim}
+T1: update Warehouse set QtyAvbl = QtyAvbl - 70 where Part = 1
+T2: update Warehouse set QtyAvbl = QtyAvbl - 60 where Part <= 3
+\end{verbatim}
+\begin{itemize}
+  \item T1: pezzo 1 passa a 130 $< 150$ $\Rightarrow$ si inserisce l'ordine
+    (1, 100, oggi);
+  \item T2: pezzo 1 passa a 70 (sotto soglia, ma c'è già un ordine pendente:
+    nessun inserimento); pezzo 2 a 720 (sopra soglia); pezzo 3 a 390 $< 400$
+    $\Rightarrow$ si inserisce (3, 120, oggi).
+\end{itemize}
+
+\subsection{Trigger in DB2}
+
+\paragraph{Sintassi}
+\begin{verbatim}
+create trigger TriggerName
+  Mode Event on TargetTable
+  [referencing Reference]
+  for each Level
+  [when (SQLPredicate)]
+  SQLProceduralStatement
+\end{verbatim}
+\begin{itemize}
+  \item \emph{Mode}: \texttt{before} o \texttt{after};
+  \item \emph{Event}: \texttt{insert}, \texttt{update}, \texttt{delete};
+  \item \texttt{for each} \emph{Level} specifica la granularità
+    (\texttt{row} o \texttt{statement});
+  \item \emph{Reference}: nomi di variabili (in base alla granularità):
+    \texttt{old as} \emph{OldTupleVar} $|$ \texttt{new as}
+    \emph{NewTupleVar} $|$ \texttt{old\_table as} \emph{OldTableVar} $|$
+    \texttt{new\_table as} \emph{NewTableVar}.
+\end{itemize}
+
+\paragraph{Semantica}
+\begin{itemize}
+  \item modalità \textbf{immediata} (sia \texttt{after} sia \texttt{before});
+  \item i trigger \texttt{before} non possono modificare la base di dati, se
+    non per variazioni sulle modifiche causate dall'evento (quindi in generale
+    non possono attivare altri trigger);
+  \item in caso di errore si annulla tutto;
+  \item nessuna priorità fra trigger (l'ordine è definito dal sistema);
+    interazione con le azioni compensative dei vincoli di integrità
+    referenziale;
+  \item al massimo 16 trigger attivati in cascata.
+\end{itemize}
+
+\paragraph{Esempio}
+\begin{verbatim}
+foreign key (Supplier)
+  references Distributor
+  on delete set null
+
+create trigger SoleSupplier
+  before update of Supplier on Part
+  referencing new as N
+  for each row
+  when (N.Supplier is not null)
+  signal sqlstate '70005' ('Cannot change supplier')
+
+create trigger AuditPart
+  after update on Part
+  referencing old_table as OT
+  for each statement
+  insert into Audit
+  values(user, current-date, (select count(*) from OT))
+\end{verbatim}
+\texttt{SoleSupplier} impedisce di cambiare fornitore a un pezzo (ammesso solo
+porlo a \texttt{NULL}, come fa la \texttt{on delete set null}).
+\texttt{AuditPart} registra, per ogni istruzione di modifica, utente, data e
+numero di tuple modificate.
+
+\subsection{Estensioni}
+
+Di solito non disponibili:
+\begin{itemize}
+  \item eventi temporali (anche periodici) o ``definiti dall'utente'';
+  \item combinazioni booleane di eventi;
+  \item clausola \texttt{instead of}: non si esegue l'operazione che ha
+    attivato l'evento, ma un'altra azione al suo posto;
+  \item esecuzione ``distaccata'' (\emph{detached}): si attiva una
+    transazione autonoma;
+  \item definizione di priorità;
+  \item gruppi di regole attivabili e disattivabili;
+  \item regole associate anche alle interrogazioni (non solo agli
+    aggiornamenti).
+\end{itemize}
+
+\subsection{Proprietà delle regole}
+
+\begin{itemize}
+  \item \textbf{terminazione} (essenziale);
+  \item \textbf{confluenza};
+  \item \textbf{determinismo delle osservazioni}.
+\end{itemize}
+
+\subsection{Applicazioni}
+
+\begin{itemize}
+  \item \textbf{funzionalità interne}: gestione dei vincoli di integrità,
+    replicazione, gestione delle viste (materializzate: propagazione delle
+    modifiche; virtuali: modifica delle interrogazioni);
+  \item \textbf{funzionalità applicative}: descrizione del comportamento
+    della base di dati (regole aziendali).
 \end{itemize}
 
 \end{document}

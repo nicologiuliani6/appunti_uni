@@ -106,7 +106,7 @@ function home() {
         <button class="btn" ${nq ? "" : "disabled"} onclick="run(mirato(DATA[cur]))">Tutte (${nq})</button></div></div>`;
   const ps = store.get("pausa", {})[m.slug];
   const resume = ps ? `<div class="card" style="border-color:var(--acc)"><div class="t" style="flex:1"><b>▶️ Sessione in pausa: ${esc(ps.titolo)}</b>
-      <div class="small">${Object.keys(ps.done).length} domande già fatte${ps.qids ? ` su ${ps.qids.length}` : ""} · ${Math.round(ps.elapsed / 60000)} min · ${new Date(ps.data).toLocaleString("it-IT", { dateStyle: "short", timeStyle: "short" })}</div></div>
+      <div class="small">${ps.v == 2 ? Object.values(ps.risposte).filter(r => r.done).length : "⚠️ formato vecchio, da recuperare:"} domande già fatte${ps.qids ? ` su ${ps.qids.length}` : ""} · ${Math.round(ps.elapsed / 60000)} min · ${new Date(ps.data).toLocaleString("it-IT", { dateStyle: "short", timeStyle: "short" })}</div></div>
       <div class="row"><button class="btn pri" onclick="riprendi()">Riprendi</button><button class="btn" onclick="if(confirm('Scartare la sessione in pausa?'))scarta()">Scarta</button></div></div>` : "";
   $("#app").innerHTML = resume + top + `<div class="list">` + (m.prove.length ? m.prove.map((p, i) => {
     const h3 = kind(p) != last ? `<h3 class="small" style="margin:18px 4px 4px">${last = kind(p)}</h3>` : "";
@@ -133,7 +133,12 @@ const inProgram = (b, ok) => b.topics.length > 0 && b.topics.every(t => ok.has(t
 
 // prova virtuale: tutte le domande (senza duplicati) sugli argomenti studiati, col loro contesto
 // padronanza per domanda (stesso testo in prove diverse = stessa domanda): {ok, data}
-const qid = (m, b) => { let h = 5381; for (const c of b.q + (b.options || []).join("|")) h = (h * 33 ^ c.charCodeAt(0)) >>> 0; return m.slug + ":" + h.toString(36); };
+// impronta stabile della domanda: testo normalizzato (via icone/spazi), così piccole pulizie del testo non la cambiano
+const qid = (m, b) => {
+  const t = [b.q, ...(b.options || [])].map(x => x.replace(/[\uE000-\uF8FF]/g, "").replace(/\s+/g, " ").trim()).join("|");
+  let h = 5381; for (const c of t) h = (h * 33 ^ c.charCodeAt(0)) >>> 0;
+  return m.slug + ":" + h.toString(36);
+};
 const stato = (m, b) => { const r = store.get("mastery", {})[qid(m, b)]; return r ? (r.ok ? 2 : 1) : 0; };  // 0 mai vista, 1 sbagliata, 2 giusta
 function segna(j) {
   if (!exam) return;
@@ -207,35 +212,48 @@ function persist() {
   if (!exam) return;
   const all = store.get("pausa", {});
   if (exam.consegnata) delete all[exam.m.slug];
-  else all[exam.m.slug] = {
-    key: exam.p.key, titolo: exam.p.titolo, ans: exam.ans, done: exam.done, elapsed: Date.now() - exam.t0, data: new Date().toISOString(),
-    qids: exam.p.key == "mirato" ? exam.p.blocks.filter(b => b.type != "contesto").map(b => qid(exam.m, b)) : null,
-    griglia: Object.fromEntries(Object.keys(exam.done).map(j => [j, [...document.querySelectorAll(`[id^="g${j}_"]`)].map(c => c.checked)])),
-  };
+  else {
+    // v2: risposte indicizzate per impronta della domanda, non per posizione (le posizioni possono cambiare)
+    const risposte = {};
+    exam.p.blocks.forEach((b, j) => {
+      if (b.type == "contesto" || (exam.ans[j] == null && !exam.done[j])) return;
+      risposte[qid(exam.m, b)] = { ans: exam.ans[j] ?? null, done: !!exam.done[j],
+        griglia: [...document.querySelectorAll(`[id^="g${j}_"]`)].map(c => c.checked) };
+    });
+    all[exam.m.slug] = { v: 2, key: exam.p.key, titolo: exam.p.titolo, elapsed: Date.now() - exam.t0, data: new Date().toISOString(),
+      qids: exam.p.key == "mirato" ? exam.p.blocks.filter(b => b.type != "contesto").map(b => qid(exam.m, b)) : null, risposte };
+  }
   store.set("pausa", all);
 }
 function pausa() { persist(); home(); }
 function scarta() { const all = store.get("pausa", {}); delete all[DATA[cur].slug]; store.set("pausa", all); home(); }
 function riprendi() {
   const m = DATA[cur], s = store.get("pausa", {})[m.slug];
+  if (s.v != 2) return alert("Questa sessione è nel formato vecchio e non si può riprendere in sicurezza. Esporta i dati dallo Storico (⬇️ Esporta) per recuperarla.");
   const p = s.qids ? mirato(m, Infinity, s.qids) : m.prove.find(x => x.key == s.key);
-  if (!p) return scarta();
+  if (!p) return alert("Prova non trovata.");
   run(p);
   exam.t0 = Date.now() - s.elapsed;
-  for (const [j, a] of Object.entries(s.ans)) {
-    const b = p.blocks[j];
-    if (!b) continue;
-    if (b.type == "mcq") a.forEach(v => { const el = document.querySelector(`input[name=q${j}][value="${v}"]`); if (el) el.checked = true; });
-    else { const el = $((b.type == "num" ? "#n" : "#t") + j); if (el) el.value = a; }
-    exam.ans[j] = a;
-  }
-  for (const j of Object.keys(s.done)) {
-    if (!p.blocks[j]) continue;
-    check(+j);
-    (s.griglia[j] || []).forEach((v, k) => { const c = $(`#g${j}_${k}`); if (c) c.checked = v; });
-    if (p.blocks[j].type == "aperta") grade(+j);
-  }
-  const first = p.blocks.findIndex((b, j) => b.type != "contesto" && !s.done[j]);
+  const found = new Set();
+  p.blocks.forEach((b, j) => {
+    if (b.type == "contesto") return;
+    const r = s.risposte[qid(m, b)];
+    if (!r) return;
+    found.add(qid(m, b));
+    if (r.ans != null) {
+      if (b.type == "mcq") r.ans.forEach(v => { const el = document.querySelector(`input[name=q${j}][value="${v}"]`); if (el) el.checked = true; });
+      else { const el = $((b.type == "num" ? "#n" : "#t") + j); if (el) el.value = r.ans; }
+      exam.ans[j] = r.ans;
+    }
+    if (r.done) {
+      check(j);
+      (r.griglia || []).forEach((v, k) => { const c = $(`#g${j}_${k}`); if (c) c.checked = v; });
+      if (b.type == "aperta") grade(j);
+    }
+  });
+  const persi = Object.keys(s.risposte).filter(k => !found.has(k)).length;
+  if (persi) alert(`${persi} risposte salvate riguardano domande che non esistono più (testo modificato o argomento escluso).`);
+  const first = p.blocks.findIndex((b, j) => b.type != "contesto" && !exam.done[j]);
   if (first >= 0) $("#q" + first).scrollIntoView({ block: "center" });
 }
 
@@ -392,7 +410,7 @@ function storico() {
   $("#app").innerHTML = `<div class="card"><b>📜 Storico delle prove fatte</b>
       <div class="small">Salvato solo in questo browser: chi apre il sito da un altro browser/PC ha il proprio storico.</div>
       <div class="row">${DATA.map(m => `<span class="small">${esc(m.name)}: <b>${rows.filter(r => r.materia == m.name).length}</b> prove, media <b>${media(m.name)}</b>/30</span>`).join(" · ")}</div>
-      <div class="row"><button class="btn" onclick="esporta()">⬇️ Esporta file</button>
+      <div class="row"><button class="btn" onclick="esporta()">⬇️ Esporta tutti i dati</button>
       <label class="btn">⬆️ Importa file<input type="file" accept=".json" hidden onchange="importa(this.files[0])"></label>
       <button class="btn" onclick="if(confirm('Cancellare tutto lo storico di questo browser?')){store.set('hist',{});storico()}">🗑 Cancella</button></div></div>
     <div class="card">${rows.length ? `<table style="display:table;width:100%"><tr><th>Data</th><th>Materia</th><th>Prova</th><th>Punti</th><th>Voto</th><th>Tempo</th></tr>
@@ -401,16 +419,22 @@ function storico() {
       : `<p class="small">Nessuna prova consegnata finora.</p>`}</div>`;
 }
 
+const KEYS = ["hist", "pausa", "mastery", "studied"];
 function esporta() {
+  const dump = { versione: 2, ...Object.fromEntries(KEYS.map(k => [k, store.get(k, {})])) };
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(store.get("hist", {}), null, 1)], { type: "application/json" }));
-  a.download = `storico-esami-${new Date().toISOString().slice(0, 10)}.json`; a.click();
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(dump, null, 1)], { type: "application/json" }));
+  a.download = `dati-esami-${new Date().toISOString().slice(0, 10)}.json`; a.click();
 }
 async function importa(f) {
   try {
-    const add = JSON.parse(await f.text()), hist = store.get("hist", {});
-    for (const [k, list] of Object.entries(add)) for (const r of list) if (!(hist[k] ??= []).some(x => x.data == r.data)) hist[k].push(r);
-    store.set("hist", hist); storico();
+    const add = JSON.parse(await f.text());
+    const full = add.versione ? add : { hist: add };   // vecchi export: solo storico
+    const hist = store.get("hist", {});
+    for (const [k, list] of Object.entries(full.hist || {})) for (const r of list) if (!(hist[k] ??= []).some(x => x.data == r.data)) hist[k].push(r);
+    store.set("hist", hist);
+    for (const k of ["pausa", "mastery", "studied"]) if (full[k]) store.set(k, { ...store.get(k, {}), ...full[k] });
+    storico();
   } catch { alert("File non valido"); }
 }
 

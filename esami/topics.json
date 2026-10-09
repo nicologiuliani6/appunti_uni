@@ -220,7 +220,7 @@
       "nome": "Reti neurali e deep learning",
       "studiato": false,
       "re": "neur|\\breti?\\b|layer|convolu|backprop|ReLU|vanishing|autoencoder|\\bGAN|U-Net|transformer|LSTM|MaxPool|Inception|AlexNet|ResNet|stride|kernel|campo ricettivo|optimizer|Keras|loss|deep|skip|transposed|diffusion|IoU|IntersectionoverUnion|Intersection over|epoche|Adversarial|dropout",
-      "re_opzioni": "skip connection|dropout|\\bGAN|Adversarial|encoder-decoder|Diffusion|ReLU|\\blayer|convolu"
+      "re_opzioni": "backprop|skip connection|dropout|\\bGAN|Adversarial|encoder-decoder|Diffusion|ReLU|\\blayer|convolu"
     }
   ]
 }
