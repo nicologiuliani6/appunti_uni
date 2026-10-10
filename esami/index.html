@@ -115,13 +115,28 @@ function home() {
   function card(p, i) {
     const h = hist[m.slug + "/" + p.key] || [], n = p.blocks.filter(b => b.type != "contesto").length;
     const best = h.length ? Math.max(...h.map(r => r.voto)) : null;
+    const ns = p.blocks.filter(b => b.type != "contesto" && inProgram(b, ok)).length;
+    const hs = hist[m.slug + "/" + p.key + "~studiati"] || [], bests = hs.length ? Math.max(...hs.map(r => r.voto)) : null;
+    const solo = ns && ns < n ? `<button class="btn" onclick="event.stopPropagation(); start(${i}, true)" title="Stessa prova, solo le domande sugli argomenti che hai studiato">🎯 Solo studiati (${ns})${bests != null ? ` · ${bests.toFixed(1)}` : ""}</button>` : "";
     return `<div class="card" onclick="start(${i})"><div class="t"><b>${esc(p.titolo)}</b>
       <span class="small">${n} domande · ${p.durata ? p.durata + " min" : "senza limite"} · ${h.length} tentativi</span></div>
-      ${best != null ? `<span class="score">${best.toFixed(1)}/30</span>` : `<span class="small">mai fatta</span>`}</div>`;
+      ${solo}${best != null ? `<span class="score">${best.toFixed(1)}/30</span>` : `<span class="small">mai fatta</span>`}</div>`;
   }
 }
 
-function start(i) { run(DATA[cur].prove[i]); }
+function start(i, solo = false) { const m = DATA[cur]; run(solo ? soloStudiati(m, m.prove[i]) : m.prove[i]); }
+
+// prova completa ridotta alle sole domande sugli argomenti studiati (contesti tenuti solo se servono)
+function soloStudiati(m, p) {
+  const ok = studied(m), blocks = [];
+  p.blocks.forEach((b, i) => {
+    if (b.type != "contesto") { if (inProgram(b, ok)) blocks.push(b); return; }
+    const segue = p.blocks.slice(i + 1).find(x => x.type == "contesto" || inProgram(x, ok));
+    if (segue && segue.type != "contesto") blocks.push(b);
+  });
+  return { ...p, solo: true, titolo: p.titolo + " · solo argomenti studiati", blocks,
+           durata: p.durata ? Math.max(1, Math.round(p.durata * blocks.filter(b => b.type != "contesto").length / p.blocks.filter(b => b.type != "contesto").length)) : 0 };
+}
 
 // argomenti studiati: default da topics.json (dedotti dagli appunti), modificabili e salvati nel browser
 function studied(m) { const s = store.get("studied", {})[m.slug]; return new Set(s ?? m.topics.filter(t => t.studiato).map(t => t.id)); }
@@ -228,7 +243,7 @@ function persist() {
       risposte[qid(exam.m, b)] = { ans: exam.ans[j] ?? null, done: !!exam.done[j],
         griglia: [...document.querySelectorAll(`[id^="g${j}_"]`)].map(c => c.checked) };
     });
-    all[exam.m.slug] = { v: 2, key: exam.p.key, titolo: exam.p.titolo, elapsed: Date.now() - exam.t0, data: new Date().toISOString(),
+    all[exam.m.slug] = { v: 2, key: exam.p.key, solo: !!exam.p.solo, titolo: exam.p.titolo, elapsed: Date.now() - exam.t0, data: new Date().toISOString(),
       qids: exam.p.key == "mirato" ? exam.p.blocks.filter(b => b.type != "contesto").map(b => qid(exam.m, b)) : null, risposte };
   }
   store.set("pausa", all);
@@ -239,6 +254,7 @@ function riprendi() {
   const m = DATA[cur], s = store.get("pausa", {})[m.slug];
   if (s.v != 2) return alert("Questa sessione è nel formato vecchio e non si può riprendere in sicurezza. Esporta i dati dallo Storico (⬇️ Esporta) per recuperarla.");
   let p = s.qids ? mirato(m, Infinity, s.qids) : m.prove.find(x => x.key == s.key);
+  if (p && s.solo) p = soloStudiati(m, p);
   if (!p) return alert("Prova non trovata.");
   if (s.qids) {
     // via i doppioni (stessa domanda in prove diverse): restano quelle già risposte e una sola versione delle altre
@@ -411,7 +427,7 @@ function consegna() {
 
 // storico nel browser (localStorage): ogni persona/browser ha il suo, niente di condiviso
 function salva(voto, punti, max) {
-  const hist = store.get("hist", {}), k = exam.m.slug + "/" + exam.p.key, list = (hist[k] ??= []);
+  const hist = store.get("hist", {}), k = exam.m.slug + "/" + exam.p.key + (exam.p.solo ? "~studiati" : ""), list = (hist[k] ??= []);
   const rec = { voto, punti, max, data: exam.fine ??= new Date().toISOString(), titolo: exam.p.titolo,
                 minuti: Math.round((Date.parse(exam.fine) - exam.t0) / 60000) };
   const i = list.findIndex(r => r.data == rec.data);
