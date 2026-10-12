@@ -66,8 +66,15 @@
 
 % Evidenziatura usata nelle slide
 \usepackage[normalem]{ulem}
-\renewcommand{\underline}[1]{\uline{#1}}   % sottolineato che va a capo (non esce dal margine)
+\let\mathunderline\underline
+\renewcommand{\underline}[1]{\ifmmode\mathunderline{#1}\else\uline{#1}\fi}   % testo: va a capo; in formula: underline standard (uline in math si blocca)
 \newcommand{\hl}[1]{\textcolor{orange}{#1}}
+\definecolor{fluo}{HTML}{FFFF00}
+\DeclareRobustCommand{\giallo}[1]{\ifmmode   % in formula: riquadro unico, non spezzato
+    \mathchoice{\colorbox{fluo}{$\displaystyle#1$}}{\colorbox{fluo}{$\textstyle#1$}}%
+               {\colorbox{fluo}{$\scriptstyle#1$}}{\colorbox{fluo}{$\scriptscriptstyle#1$}}%
+  \else\bgroup\markoverwith{\textcolor{fluo}{\rule[-.5ex]{2pt}{2.5ex}}}\ULon{#1}\fi}   % evidenziatore giallo fluo, va a capo
+\pdfstringdefDisableCommands{\def\giallo#1{#1}}   % nei segnalibri PDF solo testo
 
 % --- Albero di decisione di esempio (Play Tennis) ----------------------------
 \newcommand{\alberoTennis}{%
@@ -178,10 +185,10 @@ Attraverso modelli di ML possiamo anche stabilire correlazioni, clusters, $\dots
   \end{minipage}%
 }
 
-\subsubsection{Classi di problemi di apprendimento}
+\subsubsection{\giallo{Classi di problemi di apprendimento}}
 \begin{itemize}
     \item \itemimg{%
-        Approfondimento supervisionato: inputs + outputs (etichette)
+        \giallo{Approfondimento supervisionato: inputs e outputs (etichette)}
         \begin{itemize}[topsep=0.2em, partopsep=0pt]
             \item classificazione
             \item regressione
@@ -250,14 +257,15 @@ L'AI, machine learning, deep learning:
 \subsubsection*{Componenti addestrati mediante apprendimento}
 \imgfig[0.55]{2026-09-24_12-01-52.png}
 
-\subsection{Alberi di decisione}
+\subsection{\giallo{Alberi di decisione}}
+\textit{Con gli albri di decisione possiamo esprimere qualsiasi funzione di classificazione.}\\
 Definiamo \textbf{traning set} un insieme di \texttt{esempi di allenamento}
 \begin{align*}
     \langle x^{(i)}, y^{(i)}\rangle
 \end{align*}
 con
 \begin{itemize}
-    \item $x^{(i)} \in X$ insieme degli inputs
+    \item \giallo{$x^{(i)} \in X$ insieme degli inputs (vettore di feature)} (\textit{le feature possono essere sia discrete/continue })
     \item $y^{(i)} \in Y$ insieme delgi outputs, \textbf{groudn truth}
     \item $i$ indice dell'istanza di training
 \end{itemize}
@@ -271,6 +279,7 @@ Le tecniche di Machine Learning richiedono la scelta preliminare di uno \texttt{
 \underline{spazio delle ipotesi $H$.}
 
 \subsubsection{Alberi di decisione: un esempio}
+\textit{Ricorda: altezza albero $\leq$ numero features. Quindi il costo della predizione e' $O(altezza)$, ovvero molto basso.}\\
 È un buon giorno per giocare a tennis?
 \begin{align*}
     H : \text{Outlook} \times \text{Humidity} \times \text{Wind} \times \text{Temp} \to \text{Play Tennis?}
@@ -340,17 +349,19 @@ Main loop:
 \end{enumerate}
 Ma quale è il ``miglior'' attributo?
 \figura{\alberiAB}
-Definiamo \textbf{entropia} di una variabile aleatoria $X$
+\subsubsection{\giallo{Definizione entropia}}
+\giallo{Definiamo \textbf{entropia} di una variabile aleatoria $X$}
 \begin{align*}
-    H(X)=- \sum_{i=1}^{n} P(X=i)\log_2 P(X=i)
+\giallo{H(X)=- \sum_{i=1}^{n} P(X=i)\log_2 P(X=i)}\
 \end{align*}
 dove $n$ è il numero dei possibili valori di $n$.
 
 \figura{%
   \begin{minipage}[c]{0.48\linewidth}
-    L'entropia misura il \hl{grado di impurità} (disordine) della informazione.
-    È massima ($\log n$) quando $X$ è uniformemente distribuita tra tutti i
-    suoi $n$ valori, e minima ($0$) quando è concentrata su un singolo valore.
+  \giallo{L'entropia misura il \hl{grado di impurità}} (disordine) \giallo{della informazione}.
+    È massima (\giallo{$\log n$}) quando $X$ è uniformemente distribuita tra tutti i
+    suoi $n$ valori, e minima (\giallo{$0$}) quando è concentrata su un singolo valore.\\
+    \textit{Ricorda: una bassa entropia non misura se e' equamente distribuita ma focalizza le classi piu' frequenti.}
   \end{minipage}%
   \hfill
   \begin{minipage}[c]{0.46\linewidth}
@@ -472,16 +483,17 @@ Il problema? Non conosciamo $\mathcal{D}$! Quindi semplicement eprendiamo i dati
     \item   test set: utilizzato per misurare accuracy e overfitting $h$
 \end{itemize}
 Tipicamente si riserva una ulteriore porzione, il \textbf{test set}, per la valutazione finale.
-\subsubsection{Evitare overfitting sugli alberi di decisione}
+\subsubsection{\giallo{Evitare overfitting sugli alberi di decisione}}
 \begin{itemize}
-    \item \texttt{early stopping}: terminare la costruzione dell'albero non appena il miglioramento del modello non è più statisticamente significativo. Ad esempio, quando il guadagno informativo è inferiore ad una certa soglia, o il numero dei dati relativo al nodo è troppo piccolo.
+    \item \giallo{\texttt{early stopping}: terminare la costruzione dell'albero non appena il miglioramento del modello non è più statisticamente significativo.} Ad esempio, quando il guadagno informativo è inferiore ad una certa soglia, o il numero dei dati relativo al nodo è troppo piccolo.
     \item \texttt{post-pruning}: si sviluppa l'intero albero e quindi si procede a potarlo all'indietro.
     \begin{itemize}
-        \item \underline{post-pruning finalizzato alla riduzione dell'errore}: costruire un albero di decisione completo per il training set, quindi ripetere la seguente operazione finché ogni ulteriore pruning non migliora l'accuratezza della predizione:
+        \item \giallo{\underline{post-pruning finalizzato alla riduzione dell'errore}: costruire un albero di decisione completo per il training set, quindi ripetere la seguente operazione finché ogni ulteriore pruning non migliora l'accuratezza della predizione:}
         \begin{enumerate}
             \item per ogni sottoalbero, valutare (sul validation set) l'impatto della sua rimozione sulla accuratezza della classificazione
             \item effettuare (in modo greedy) il pruning del sottoalbero che ottimizza l'accuracy
         \end{enumerate}
+    \item nuovi dati di training
     \end{itemize}
     \item acquisizione di nuovi dati di training 
 \end{itemize}
@@ -611,7 +623,7 @@ $A$ è una variabile aleatoria discreta a $k$ valori se può assumere esattament
     P(A=\nu_1 \lor A=\nu_2 \lor \dots \lor A=\nu_k) &= 1
 \end{align*}
 
-\subsubsection{Probabilità condizionata}
+\subsubsection{\giallo{Probabilità condizionata}}
 La probabilità condizionata dell'evento $A$ dato l'evento $B$ è definita come
 \begin{align*}
     P(A|B) = \frac{P(A\land B)}{P(B)}
@@ -694,12 +706,12 @@ dove il denominatore si ottiene marginalizzando (sommando su $Y$) $P(X=x_j) = \s
     \end{tabular}
   \end{minipage}%
 }
-Date $n$ features booleane, dobbiamo stimare $2^n-1$ parametri.
-
+\giallo{Date $n$ features booleane, dobbiamo stimare $2^n-1$ parametri.}
 \subsubsection{Uso della distribuzione congiunta}
-Disponendo della distribuzione congiunta possiamo stimare la probabilità di \textbf{qualunque evento} esprimibile come combinazione logica delle features.
+\textit{Ricorda: ricaviamo sia marginale/condizionata. Il costo e' direttamente proporzionale al numero di features.}\\
+\giallo{Disponendo della distribuzione congiunta possiamo stimare la probabilità di \textbf{qualunque evento} esprimibile come combinazione logica delle features.}
 \begin{align*}
-    P(E) = \sum_{\text{row} \in E} P(\text{row})
+    \underbrace{P(E) = \sum_{\text{row} \in E} P(\text{row})}_\text{prob. marginale}
 \end{align*}
 \textbf{Esempio}: calcoliamo $P(M, \text{poor})$ dalla tabella precedente
 \begin{align*}
@@ -710,7 +722,7 @@ Disponendo della distribuzione congiunta possiamo stimare la probabilità di \te
 \subsubsection{Inferenza con la distribuzione congiunta}
 È altrettanto semplice calcolare la probabilità condizionata di un evento $E_1$ dato un altro evento $E_2$
 \begin{align*}
-    P(E_1|E_2) = \frac{P(E_1 \land E_2)}{P(E_2)} = \frac{\sum_{\text{row}\in E_1\land E_2} P(\text{row})}{\sum_{\text{row}\in E_2} P(\text{row})}
+    P(E_1|E_2) = \frac{P(E_1 \land E_2)}{P(E_2)} = \underbrace{\frac{\sum_{\text{row}\in E_1\land E_2} P(\text{row})}{\sum_{\text{row}\in E_2} P(\text{row})}}_\text{prob. condizionata}
 \end{align*}
 Riprendiamo l'esempio precedente e calcoliamo $P(\text{M}|\text{poor})$
 \begin{align*}
@@ -754,7 +766,8 @@ Quanti parametri per $P(X_1,\dots,X_n|Y)$ (nel caso booleano)?
     \item per Naïve Bayes
 \end{itemize}
 
-\subsubsection{Naïve Bayes: riassunto}
+\subsubsection{\giallo{Naïve Bayes: riassunto}}
+\textit{Ricorda: assume che le features siano indipendenti.}\\
 \textbf{Bayes rule}
 \begin{align*}
     P(Y=y_i|X_1,\dots,X_n) = \frac{P(Y=y_i)\cdot P(X_1,\dots,X_n|Y=y_i)}{P(X_1,\dots,X_n)}
@@ -873,7 +886,8 @@ La regola di Bayes ci permette di invertire il problema in \textbf{data la categ
     \item In alcuni casi in MLE possiamo avere $P(X_i \mid Y)=0$
     \item L'approccio naive assume che due eveni sono indipendenti tra loro, \underline{e se fossero dipendenti?}
 \end{itemize}
-\subsection{Maximum Likelihood Estimation (MLE)}
+\subsection[\giallo{Maximum Likelihood Estimation (MLE)}]{\giallo{Maximum $\underbrace{\text{Likelihood}}_{\text{funzione } P(\text{dato} \mid \theta)}$ Estimation (MLE)}}
+\textit{Ricorda: stima di massima verosimiglianza ($\hat{\theta} = \arg\max_\theta P(\text{dato}\mid \theta))$. La frequenza delle classi conta, ovvero una classe più frequente pesa di più in output.}
 \begin{gather*}
     \pi_k = P(Y=y_k) = \frac{\#\mathcal{D}\{Y=y_k\}}{|\mathcal{D}|}\\[1ex]
     \theta_{ijk} = P(X_i=x_{ij} \mid Y=y_k) = \frac{\#\mathcal{D}\{X_i=x_{ij} \land Y=y_k\}}{\#\mathcal{D}\{Y=y_k\}}
@@ -893,9 +907,13 @@ Supponiamo ora di avere due possibilità:
 La distribuzione di \textbf{Bernoulli} abbiamo 2 possibili output 0 o 1, con probabilità $\theta$ e $1-\theta$.\\
 Sia $X^n$ il numero di 0 in una sequenza di $n$ lanci: $X^n$ segue una \hl{distribuzione binomiale}
 \begin{align*}
-    P(X^n=\alpha_0 \mid \theta) = \binom{n}{\alpha_0}\cdot \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}
+    P(X^n=\alpha_0 \mid \theta) = & \binom{n}{\alpha_0}\cdot \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}\\
+    & = \frac{n!}{\alpha_0!(n - \alpha_0)!}\cdot \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}
 \end{align*}
-dove $\alpha_1 = n-\alpha_0$ è il numero di 1 nella sequenza (ovvero $\alpha_0+\alpha_1=n$).\\
+dove $\alpha_1 = n-\alpha_0$ è il numero di 1 nella sequenza (ovvero $\alpha_0+\alpha_1=n$).
+\begin{align*}
+    &= \frac{n!}{\alpha_0!(n-\alpha_0)!}\theta^{\alpha_0}(1-\theta)^{n-\alpha_0}
+\end{align*}
 \vspace{1px}\\
 \paragraph{Continiamo l'esempio di prima} $n=10$, $\alpha_0=6$ e $\alpha_1=4$.\\
 Se $\theta=.5$ e $1-\theta=.5$
@@ -910,16 +928,16 @@ Quindi $\theta=.5$ è leggermente più verosimile di $\theta=.7$.
 \begin{center}
     \textcolor{red}{Qual è il valore più verosimile per $\theta$?}
 \end{center}
-\paragraph{Calcoliamo MLE}
+\paragraph{Calcoliamo MLE} (\textit{ricerca max. likelihood})
 \begin{align*}
     \hat{\theta} &= \arg\max_{\theta}\; P(X^n=\alpha_0 \mid \theta) =\\
-                 &= \arg\max_{\theta}\; \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}
+                 &=  \giallo{\arg\max_{\theta}\; \theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}}
 \end{align*}
-In modo equivalente possiamo cercare il $\theta$ che massimizza il logaritmo dell'espressione precedente
+\giallo{In modo equivalente possiamo cercare il $\theta$ che massimizza il \underline{logaritmo dell'espressione precedente} (log-likelihood)}
 \begin{align*}
     \ln\left(\theta^{\alpha_0}\cdot (1-\theta)^{\alpha_1}\right) = \alpha_0\ln(\theta) + \alpha_1\ln(1-\theta)
 \end{align*}
-Derivando rispetto a $\theta$ otteniamo
+Derivando (cerchiamo max) rispetto a $\theta$ otteniamo
 \begin{align*}
     \frac{\alpha_0}{\theta} - \frac{\alpha_1}{1-\theta} = \frac{\alpha_0 - \alpha_0\theta - \alpha_1\theta}{\theta\cdot(1-\theta)}
 \end{align*}
@@ -928,9 +946,9 @@ che si annulla per
     \theta = \frac{\alpha_0}{\alpha_0+\alpha_1} = \frac{\alpha_0}{n}
 \end{align*}
 \paragraph{Caso mulivariabile} \textbf{Distribuzione discreta} (es. lancio di un dado): $k$ possibili esiti $\{1,2,\dots,k\}$ con probabilità $\theta_i$ dove $\sum_i \theta_i = 1$.\\
-Sequenza di $n$ lanci: \hl{distribuzione multinomiale}
+Sequenza di $n$ lanci: \hl{\giallo{distribuzione multinomiale}}
 \begin{align*}
-    P(X^n=\alpha_i \mid \theta) = c_{\alpha_i}\prod_i \theta_i^{\alpha_i}
+\giallo{P(X^n=\alpha_i \mid \theta) = c_{\alpha_i}\prod_i \theta_i^{\alpha_i}}
 \end{align*}
 dove $\alpha_i$ è il numero di $i$ nella sequenza e $c_{\overline{\alpha_i}}$ è una costante combinatoria che non dipende da $\theta$.
 \begin{align*}
@@ -1051,6 +1069,7 @@ Con $\|\vec{a}\|$ indichiamo la \textbf{norma euclidea} (la lunghezza) del vetto
 \end{align*}
 \textit{Dimostrazione:} dal teorema del coseno si ricava $\vec{a}\cdot\vec{b}=\frac{\|\vec{a}\|^2+\|\vec{b}\|^2-\|\vec{a}-\vec{b}\|^2}{2}$; sviluppando i quadrati i termini $a_i^2$ e $b_i^2$ si cancellano e resta $\sum_i a_ib_i$, quindi le due definizioni coincidono.
 \subsection{La natura lineare di Naïve Bayes (caso booleano)}
+\textit{Ricorda: assumiamo che le features sono indipendenti.}\\
 $X_i$, $Y$ \textcolor{red}{booleane}\\
 \vspace{1px}\\
 Classificazione di $\vec{x}=\langle x_1,\dots,x_n\rangle$ (vediamo se rientra più in $Y=0$ oppure $Y=1$):
@@ -1067,7 +1086,7 @@ Usiamo il fatto che per una funzione booleana $f(x)$ vale
 \end{align*}
 Quindi, se $\theta_{ik}=P(X_i=1\mid y=k)$ (di conseguenza $P(X_i=0\mid y=k)=1-\theta_{ik}$), otteniamo
 \begin{align*}
-    \log\frac{P(Y=1)}{P(Y=0)} + \sum_i x_i\cdot\log\frac{\theta_{i1}}{\theta_{i0}} + \sum_i (1-x_i)\cdot\log\frac{1-\theta_{i1}}{1-\theta_{i0}} \geq 0
+    \underbrace{\log\frac{P(Y=1)}{P(Y=0)} + \sum_i x_i\cdot\log\frac{\theta_{i1}}{\theta_{i0}} + \sum_i (1-x_i)\cdot\log\frac{1-\theta_{i1}}{1-\theta_{i0}} \geq 0}_\text{i pesi $\vec{w}$ sono gia inclusi nei logaritmi}
 \end{align*}
 che è un'espressione \hl{lineare} nell'insieme delle features $x_i$!
 \subsubsection{Classificazione lineare}
@@ -1076,10 +1095,10 @@ Algoritmi di classificazione basati su una \hl{combinazione lineare} dei valori 
 Ogni feature è valutata \hl{indipendentemente dalle altre} e contribuisce al risultato in modo lineare, con un opportuno peso (che è un parametro del modello, da stimare).\\
 \vspace{1px}\\
 Ad esempio, se le features sono i pixel di un'immagine, possiamo usare metodi lineari solo a meno di una \hl{normalizzazione} (in posizione e dimensione) dell'oggetto da riconoscere.
-\subsection{Gaussian Naïve Bayes}
-Un limite del Naïve Bayes è che le features $X_i$ non devono essere continue, perché se lo fossero le probabilità $P(X_i \mid Y)$ sono nulle. Quindi parliamo di \textbf{densità} di distribuzioni.\\
+\subsection{\giallo{Gaussian Naïve Bayes}}
+\giallo{Un limite del Naïve Bayes è che le features $X_i$ non devono essere continue, perché se lo fossero le probabilità $P(X_i \mid Y)$ sono nulle. Quindi parliamo di \textbf{densità} di distribuzioni.\\}
 \vspace{1px} \\
-Un approccio è quello di supporre che $P(X_i \mid Y )$ abbia una distribuzione Gaussiana (detta anche Normale).\\
+\underline{Un approccio è quello di supporre che $P(X_i \mid Y )$ abbia una distribuzione Gaussiana} (detta anche Normale).\\
 \vspace{1px} \\
 \textbf{Densità di probabilità} (con integrale $=1$):
 \[
@@ -1113,7 +1132,7 @@ p(x \mid \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(x-\mu)^2}{2\sig
 \end{tikzpicture}
 \end{minipage}
 
-\subsection{Accuratezza, Precisione e Richiamo}
+\subsection{\giallo{Accuratezza, Precisione e Richiamo}}
 \begin{center}
 \begin{tikzpicture}[x=0.011cm,y=-0.011cm,font=\small,every node/.style={align=left,inner sep=1pt}]
 \draw[blue!60!black,line width=1.5pt,domain=170:730,samples=120,smooth] plot (\x,{545-410*exp(-0.5*((\x-425)/60)^2)});
@@ -1138,8 +1157,8 @@ p(x \mid \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(x-\mu)^2}{2\sig
 \renewcommand{\arraystretch}{2.4}
 \begin{tabular}{@{}r@{\hspace{0.5em}}l@{\hspace{2em}}l@{}}
 $\text{Accuratezza} =$ & $\dfrac{TP+TN}{All}$ & Quante istanze sono classificate correttamente? \\
-$\text{Precisione} =$ & $\dfrac{TP}{TP+FP}$ & Quanto è precisa la classificazione (sui positivi)? \\
-$\text{Richiamo} =$ & $\dfrac{TP}{TP+FN}$ & Che percentuale dei positivi è recuperata? \\
+$\giallo{\text{Precisione}} =$ & $\dfrac{TP}{TP+FP}$ & Quanto è precisa la classificazione (sui positivi)? \\
+$\giallo{\text{Richiamo}} =$ & $\dfrac{TP}{TP+FN}$ & Che percentuale dei positivi è recuperata? \\
 $F1 =$ & $2\,\dfrac{\text{Precisione}\cdot\text{Richiamo}}{\text{Precisione}+\text{Richiamo}}$ & Media armonica tra precisione e richiamo. \\
 \end{tabular}
 \end{center}
@@ -1176,11 +1195,12 @@ $\sigma_{ik}^2$ = \textbf{varianza} di $X_i$ per le istanze con etichetta $Y = y
 \]
 
 \subsection{Classificatori discriminativi}
-\subsubsection{Regressione Logistica}
+\subsubsection{\giallo{Regressione Logistica}}
+\textit{Ricorda: non assumiammo neessuna forma di dipendenza/indpendeza.}\\
 \textbf{Idea}:
 \begin{itemize}
 \item Naïve Bayes ci permette di calcolare $P(Y \mid X)$ dopo aver appreso $P(Y)$ e $P(X \mid Y)$.
-\item Perché non cercare di apprendere \hl{direttamente} $P(Y \mid X)$?
+\item Perché non cercare di \giallo{apprendere \hl{direttamente} $P(Y \mid X)$}?
 \end{itemize}
 \textbf{Che forma adottare per $P(Y \mid X)$?} Che forma abbiamo nel caso di Naïve Bayes? Se:
 \begin{itemize}
@@ -1201,19 +1221,21 @@ Una proprietà interessante è
 \ln\frac{P(Y = 0 \mid X = \langle x_1, \dots, x_n \rangle)}{P(Y = 1 \mid X = \langle x_1, \dots, x_n \rangle)} = w_0 + \sum_i w_i x_i
 \]
 \hl{Per classificare $X = \langle x_1, \dots, x_n \rangle$ è sufficiente vedere se $w_0 + \sum_i w_i x_i > 0$.}
-\subsubsection{La funzione logistica}
+\subsubsection{\giallo{La funzione logistica}}
 La Regressione Logistica \textit{assume} che
 \[
 P(Y = 1 \mid X = \langle x_1, \dots, x_n \rangle) = \frac{1}{1 + \exp\left(-w_0 - \sum_i w_i x_i\right)}
 \]
-e cerca direttamente di stimare i parametri $w_i$.\\
+\giallo{e cerca direttamente di stimare i parametri $w_i$.}\\
 \vspace{1px}\\
 \begin{minipage}[c]{0.45\textwidth}
-La funzione
-\[
-\sigma(x) = \frac{1}{1 + e^{-x}}
-\]
-è detta \hl{funzione logistica}.
+    \fbox{\parbox{0.9\linewidth}{
+        La funzione
+        \[
+            \sigma(x) = \frac{1}{1 + e^{-x}}
+        \]
+        è detta \hl{\giallo{funzione logistica}}.
+    }}
 \end{minipage}
 \hfill
 \begin{minipage}[c]{0.5\textwidth}
@@ -1230,7 +1252,7 @@ La funzione
 \end{tikzpicture}
 \end{minipage}
 
-\subsubsection{Training per regressione logistica (caso binario)}
+\subsubsection{\giallo{Training per regressione logistica (caso binario)}}
 Sappiamo che
 \[
 P(y = 1 \mid x, w) = \sigma\left(w_0 + \sum_i w_i x_i\right)
@@ -1239,17 +1261,20 @@ Dati i campioni (indipendenti) $\langle x^\ell, y^\ell \rangle$, la loro probabi
 \[
 \prod_\ell P(y^\ell \mid x^\ell, w) = \prod_\ell P(y^\ell = 1 \mid x^\ell, w)^{y^\ell} \cdot P(y^\ell = 0 \mid x^\ell, w)^{(1 - y^\ell)}
 \]
-Vogliamo trovare i valori dei parametri $w$ che \hl{massimizzano} questa probabilità (MLE).\\
+\giallo{Vogliamo trovare i valori dei parametri $\vec{w}$ che \hl{massimizzano} questa probabilità (MLE, ovvero likelihood).}\\
 \vspace{1px}\\
 Analogamente, possiamo passare ai logaritmi e massimizzare
 \begin{align*}
-\sum_\ell \log P(y^\ell \mid x^\ell, w) = \sum_\ell \Big( y^\ell \cdot \log P(Y = 1 \mid x^\ell, w) + (1 - y^\ell) \cdot \log P(Y = 0 \mid x^\ell, w) \Big)
+    \mathcal{L}(\vec{w}) = \sum_\ell \log P(y^\ell \mid x^\ell, w) = \sum_\ell \Big( y^\ell \cdot \log P(Y = 1 \mid x^\ell, w) + (1 - y^\ell) \cdot \log P(Y = 0 \mid x^\ell, w) \Big)
 \end{align*}
 
-\subsubsection{Gradiente}
-Sfortunatamente non esiste una soluzione analitica per il precedente problema di ottimizzazione.\\
+\subsubsection{\giallo{Gradiente}}
+\underline{Sfortunatamente non esiste una soluzione analitica per il precedente problema di ottimizzazione, ovvero:}
+\begin{align*}
+    \boxed{\mathbf{w}^*=\arg\max_{\mathbf{w}}\mathcal{L}(\mathbf{w})}
+\end{align*}
 \vspace{1px}\\
-Quindi, utilizziamo dei metodi \hl{iterativi} di ottimizzazione, come la \hl{tecnica del gradiente}:\\
+Quindi, \giallo{utilizziamo dei metodi \hl{iterativi} di ottimizzazione, come la \hl{tecnica del gradiente}}:\\
 \vspace{1px}\\
 \begin{minipage}[c]{0.5\textwidth}
 \centering
@@ -1270,13 +1295,13 @@ Quindi, utilizziamo dei metodi \hl{iterativi} di ottimizzazione, come la \hl{tec
 \]
 training:
 \begin{align*}
-\Delta w_i &= \mu \cdot \frac{\partial E}{\partial w_i}\\
+\Delta w_i &= \underline{\underbrace{\mu }_\text{learning rate} \cdot \frac{\partial E}{\partial w_i}}_\text{passo del gradiente}\\
 w_i &= w_i + \Delta w_i
 \end{align*}
 \end{minipage}\\
 \vspace{1px}\\
 \textbf{Perché il segno è $+$?} Qui $E$ è la \hl{log-likelihood}, da \textbf{massimizzare}. Il gradiente punta nella direzione in cui la funzione \textbf{cresce}, quindi per salire ci si muove \textbf{nella} direzione del gradiente: \hl{ascesa del gradiente} $\Rightarrow \Delta w_i = +\mu \cdot \frac{\partial E}{\partial w_i}$.
-
+a
 \subsection{La tecnica del gradiente}
 \subsubsection{Approccio iterativo}
 L'obiettivo consiste nel minimizzare una qualche funzione di errore $\Theta(w)$ misurata sul training set, aggiustando opportunamente i parametri del modello.\\
@@ -1350,7 +1375,7 @@ Su quanti punti misurare l'errore.\\
 \vspace{1px}\\
 \textbf{Mini-batch}: calcolo dell'errore e del suo gradiente su un sottoinsieme dei dati: un buon compromesso.
 
-\subsubsection{Gradiente per regressione logistica}
+\subsubsection{\giallo{Gradiente per regressione logistica}}
 \begin{itemize}
 \item probabilità che una istanza $\ell$ abbia etichetta $Y = 1$:
 \end{itemize}
@@ -1370,8 +1395,8 @@ l(w) = \sum_\ell \log P(Y = y^\ell \mid x^\ell, w) = \sum_\ell y^\ell \log(\alph
 \frac{\partial l(w)}{\partial w_i} = \sum_\ell x_i^\ell \cdot (y^\ell - \alpha^\ell)
 \]
 
-\subsubsection{Il processo di apprendimento}
-Iterare la seguente \hl{operazione di update} finché non si raggiunge l'approssimazione desiderata (ad esempio fino a quando l'accuratezza sul set di validazione è soddisfacente o non sembra aumentare).
+\subsubsection{\giallo{Il processo di apprendimento}}
+\giallo{Iterare la seguente \hl{operazione di update}} finché non si raggiunge l'approssimazione desiderata (ad esempio fino a quando l'accuratezza sul set di validazione è soddisfacente o non sembra aumentare).
 \begin{align*}
 & w_i \leftarrow w_i + \Delta w_i \\
 & w_i \leftarrow w_i + \mu \frac{\partial l(w)}{\partial w_i} \\
@@ -1425,21 +1450,21 @@ Quando $z$ è lontano da $0$ la sigmoid è \textbf{satura} (output vicino a $0$ 
 \end{itemize}
 
 \subsection{Modelli generativi e discriminativi}
-\subsubsection{Generative vs discriminative models}
-\textbf{Discriminativi}: i modelli discriminativi sono utilizzati prevalentemente per problemi di classificazione, dove l'obiettivo consiste nell'apprendere la frontiera (\hl{decision boundary}) che separa le differenti classi.\\
+\subsubsection{\giallo{Generative vs discriminative models}}
+\giallo{\textbf{Discriminativi}: i modelli discriminativi sono utilizzati prevalentemente per problemi di classificazione}, dove l'obiettivo consiste nell'apprendere la frontiera (\hl{decision boundary}) che separa le differenti classi.\\
 \vspace{1px}\\
-\textbf{Generativi}: i modelli generativi cercano di apprendere la \hl{distribuzione dei dati}. Oltre che ai fini della classificazione, possono essere usati per data generation, data augmentation (con cautela), anomaly detection, trasferimento di contenuto/stile e molte altre applicazioni.
+\giallo{\textbf{Generativi}: i modelli generativi cercano di apprendere la \hl{distribuzione dei dati}. Oltre che ai fini della classificazione, possono essere usati per data generation, data augmentation} (con cautela), \giallo{anomaly detection, trasferimento di contenuto/stile e molte altre applicazioni}.
 
 \subsubsection{Modelli generativi e discriminativi (esempio)}
 Problema: stimare $f: X \to Y$ o $P(Y \mid X)$.\\
 \vspace{1px}\\
-\textbf{Classificatore generativo} (e.g., Naïve Bayes):
+\underline{\textbf{Classificatore generativo} (e.g., Naïve Bayes)}:
 \begin{itemize}
 \item si assume una certa distribuzione per $P(X \mid Y)$, $P(X)$;
 \item si stimano i parametri per $P(X \mid Y)$ e $P(X)$ sui dati di training;
 \item si utilizza la regola di Bayes per inferire $P(Y \mid X)$.
 \end{itemize}
-\textbf{Classificatore discriminativo} (e.g., Regressione Logistica):
+\underline{\textbf{Classificatore discriminativo} (e.g., Regressione Logistica)}:
 \begin{itemize}
 \item si assume una certa distribuzione per $P(Y \mid X)$;
 \item si stimano i parametri per $P(Y \mid X)$ sui dati di training.
