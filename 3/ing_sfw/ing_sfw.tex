@@ -1006,6 +1006,165 @@ TDD, pair programming, planning game, refactoring & Retrospettiva, strumenti di 
 \end{center}
 XP e Scrum possono coesistere (e spesso lo fanno).
 
+
+\subsection{User stories}
+
+\subsubsection{Progettazione agile vs.\ tradizionale}
+Nell'approccio tradizionale i requisiti stanno in un \textbf{SRS}: documento tecnico,
+legato ad aspetti legali, il più ampio e approfondito possibile, frutto di lunga
+preparazione e in pratica raramente modificato in corso d'opera. I progetti agili
+affrontano i requisiti in modo opposto (senza escludere gli approcci classici): si
+incentrano su due artefatti, le \textbf{user story} e il \textbf{product backlog}.
+
+\subsubsection{Il modello di user story}
+\begin{itemize}
+  \item \emph{As a} $\langle$tipo di utente$\rangle$, \emph{I want} $\langle$fare
+        qualcosa$\rangle$, \emph{so that} $\langle$ottengo un valore$\rangle$.
+  \item Esempio: \emph{come utente della biblioteca (ruolo) voglio consultare il
+        catalogo (funzione) per prendere a prestito un volume (valore)}.
+\end{itemize}
+Esiste un modello alternativo (più compatto) e i due \textbf{non sono equivalenti}: il
+primo va favorito come modello \emph{iniziale}, più vicino al cliente e meno definito
+(la storia la deve capire lui); il secondo è preferibile per storie brevi, meglio ancora
+per sotto-storie, e può servire a definire i task tecnici che compongono la US. Nel
+processo agile si aggiungono i \emph{criteri di accettazione} del valore di business.
+
+Le storie hanno granularità variabile. La catena è: bisogni $\to$ user story $\to$
+task/backlog $\to$ feature/tool $\to$ prodotto software.
+
+\paragraph{Condizioni e test.} Una storia si arricchisce di dettagli o test aggiuntivi,
+ad esempio per ``consultare il catalogo'': volume già in prestito, iscritto con troppi
+volumi, volume ordinato ma non arrivato, volume da acquistare; per l'iscrizione al
+portale: CV vuoto o molto lungo, stipendio mancante o a sei cifre.
+
+\paragraph{US e task.} Le US non sono e non devono essere tecniche (es.\ ``implementare
+l'autenticazione con SSL''), ma possono essere esplicitate in \textbf{task} tecnici (es.\
+autenticazione OAuth, upload del CV, web crawler, report, segnalazione all'utente). I
+nomi non sono standard: in certi ambienti \emph{issue} o \emph{ticket} indicano storie
+e/o task.
+
+\paragraph{Partizioni orizzontali e verticali.} Scrivere buone storie non è facile: è
+più semplice (e gli sviluppatori lo preferiscono, per efficienza) partizionare il backlog
+\emph{orizzontalmente}, stratificando l'architettura. Le partizioni \textbf{verticali}
+tagliano invece una fetta di tutti gli strati e permettono di consegnare rapidamente
+singole funzionalità, con feedback continuo dal cliente.
+
+\subsubsection{Definition of Done}
+Serie di criteri \emph{oggettivi} per stabilire se una storia è completata. È stabilita
+dal team di sviluppo, di solito uguale per tutto il progetto (può evolvere). Esempio: la
+storia è committata; esiste un unit test con coverage $\geq 75\%$; è commentata con
+Javadoc/Pydoc/JSdoc; segue le guidelines di coding del documento X.
+
+\subsubsection{Le US come frammenti di una conversazione}
+Ogni ruolo vi cerca una risposta: utente (come descrivo i miei desideri?), stakeholder
+(come faccio avere successo al prodotto?), PM (come traccio e pianifico?), BA (quali
+sono i dettagli?), UX (quali sono i bisogni?), developer (quali task oggi?), QA (come
+valido il task completato?).
+
+\subsubsection{Storie buone: INVEST}
+Come per i libri, ci sono storie buone e cattive. Per obiettivi sensati
+(\textbf{S.M.A.R.T.}: specifici, misurabili, accettati, realistici, temporizzati) si
+deve investire (\textbf{I.N.V.E.S.T.}) nelle user story:
+\begin{itemize}
+  \item \textbf{Independent}: ogni storia può essere lavorata con pieno controllo, senza
+        dipendere da altre.
+  \item \textbf{Negotiable}: non sono scolpite nella pietra né perfette; il dettaglio può
+        essere eccessivo e va verificato col cliente (alcune limitazioni però sono fisse).
+  \item \textbf{Valuable}: devono mostrare il vantaggio per il cliente e gli altri
+        partecipanti; servono a evitare le ``storie tecniche''.
+  \item \textbf{Estimable}: dettaglio sufficiente per stimare il tempo; ogni team avrà
+        una stima diversa (ma consistente). Scale: lineari, Fibonacci, T-shirt, ore;
+        spesso Planning Poker.
+  \item \textbf{Sized right}: completabili in un'iterazione. Più si è vicini al lavoro,
+        più devono essere specifiche; si parte da storie grandi da spezzare (modello a
+        piramide: \emph{tema} $\to$ \emph{epica} $\to$ \emph{storia}).
+  \item \textbf{Testable}: i \emph{criteri di accettazione} fanno diventare realtà le
+        storie e assicurano che il risultato sia quello previsto; i test andrebbero
+        automatizzati e non si dovrebbe iniziare a codificare prima di averli chiari.
+\end{itemize}
+
+\subsubsection{La stima: story points e Planning Poker}
+Tutte le US vanno stimate in \textbf{story points}: unità astratta e \emph{relativa},
+utile per confrontare le storie tra loro. La stima coinvolge tutti e incoraggia una
+discussione costruttiva.
+
+Il \textbf{Planning Poker} (attribuito a Grenning, 2002) unisce esperienza, analogia e
+punti di vista diversi in modo rapido; partecipa tutto il team di sviluppo. Ogni
+partecipante ha un set di carte con scala pseudo-Fibonacci (esistono app e siti per il
+remoto). Procedura:
+\begin{enumerate}
+  \item il moderatore espone la storia;
+  \item ognuno sceglie una carta senza mostrarla;
+  \item si scoprono tutte insieme;
+  \item gli \emph{outlier} spiegano la loro scelta;
+  \item si ripete fino al consenso.
+\end{enumerate}
+Trucco: come prima storia se ne sceglie una di difficoltà ``media'', altrimenti la scala
+potrebbe non bastare.
+
+\subsubsection{Backlog}
+L'insieme delle storie stimate e pronte costituisce il \textbf{backlog}, l'analogo agile
+dell'SRS. Le storie sono prioritizzate per dimensione, rischi, necessità; una selezione
+costituisce l'obiettivo di un'iterazione (sprint). Il backlog si aggiorna di continuo.
+
+\paragraph{Vantaggi e svantaggi delle US.}
+\begin{center}
+\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+\hline
+\textbf{Pro} & \textbf{Contro}\\
+\hline
+Cicli di feedback continui & Non adatte ad aspetti puramente tecnici (spike, bug)\\
+Coinvolgimento del cliente, visione comune, conversazione & Problemi legali\\
+Prioritizzazione & Si perde la visione globale (design povero)\\
+Massimizzazione dell'usabilità & Difficili da scrivere\\
+Facilita la stima dei tempi & \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Strumenti per progetti agili}
+\begin{itemize}
+  \item \textbf{Post-it, whiteboard, penna}: il metodo consigliato, favorisce
+        l'interazione; problemi con team distribuiti e difficile da integrare nel
+        software di gestione.
+  \item \textbf{Trello}: bacheca elettronica general purpose, freemium (la parte gratuita
+        basta), con estensioni per user story e sviluppo.
+  \item \textbf{WeKan}: clone open source di Trello, con meno funzioni, tipicamente
+        installato su server locale.
+  \item \textbf{Pivotal Tracker}: specifico per user story e progetti agili; freemium,
+        gratuito fino a 3 utenti.
+  \item \textbf{Taiga}: gestione progetti per il mondo agile, open source (web o locale).
+  \item \textbf{Big guns}: Atlassian Jira, Microsoft Teams, VersionOne: soluzioni complete,
+        con curva di apprendimento ripida, proprietarie e costose.
+\end{itemize}
+
+\subsubsection{Cucumber e Gherkin}
+\textbf{Cucumber} è uno strumento per il \emph{Behavior Driven Development} (BDD),
+tecnica basata su TDD, OOP e domain-driven design: usa conversazione ed esempi concreti
+per costruire una comprensione condivisa del comportamento del programma. Si appoggia a
+\textbf{Gherkin}, linguaggio descrittivo vicino al linguaggio naturale, per scrivere
+script di test di alto livello che verificano il comportamento del sistema (usa regular
+expression e sistemi di build come Ant, Maven, Gradle, Make).
+
+Struttura di un file \texttt{.feature}:
+\begin{verbatim}
+Feature: Is it Friday yet?
+  In order to ...   As a ...   I want ...
+
+  Scenario: Sunday isn't Friday
+    Given today is Sunday
+    When I ask whether it's Friday yet
+    Then I should be told "Nope"
+\end{verbatim}
+\emph{Given} = precondizioni, \emph{When} = azioni dell'attore, \emph{Then} = risultato
+verificabile; \emph{And} aggiunge passi. Esiste anche la versione italiana
+(\texttt{\#language: it}: Funzionalità, Scenario, Dato, Quando, Allora, E). Per ogni passo
+si scrive in Java uno \emph{step definition} con \verb|@Given|, \verb|@When|, \verb|@Then|;
+finché non è implementato il passo risulta \emph{undefined/pending}.
+
+\paragraph{Use case vs.\ user story.} Le user story sono più leggere e conversazionali;
+gli use case più formali e dettagliati (vedi il confronto nelle slide).
+
 \newpage
 \section{Modulo 2}
 \subsection{Controllo di versione e Git}
@@ -1217,7 +1376,6 @@ Linus Torvalds aveva in mente un filesystem quando lavorava su Git:
 Le directory non esistono in Git: spariscono se sono vuote. Per tenerle la convenzione è
 inserire un file fittizio chiamato \texttt{.gitkeep}.
 
-\subsection{Branch, merge e fork}
 
 \subsubsection{I branch}
 
