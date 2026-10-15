@@ -3225,5 +3225,302 @@ strategie di implementazione dall'obiettivo. Guida:
 astrazioni di design di qualcun altro.
 
 
+
+\newpage
+\subsection{Architetture software}
+
+\subsubsection{Introduzione}
+Il \emph{system design} decide \emph{come} costruire il sistema, cioè la sua struttura
+(\textbf{architettura}). Nei processi procedurali avviene dopo l'analisi e prima della
+codifica; in quelli agili procede in parallelo ad analisi e codifica. Scrivere codice
+senza progettare (\emph{hacking}) è da evitare: rende difficili miglioramenti e modifiche.
+Il principio è \emph{divide et impera}: partizionare il sistema in sotto-sistemi.
+
+Il \textbf{progetto architetturale} è l'attività di identificare e definire i
+sotto-sistemi, a vari livelli: \emph{hardware}, \emph{software di sistema} (OS, DBMS,
+server internet) e \emph{software applicativo} (moduli, funzioni, interfacce).
+
+\subsubsection{Architettura hardware}
+\begin{itemize}
+  \item \textbf{macchina singola};
+  \item \textbf{mainframe}: un calcolatore unico a cui si accede da terminali;
+  \item \textbf{rete di calcolatori}: server e client;
+  \item \textbf{embedded}: processori collegati direttamente a sensori e attuatori;
+  \item \textbf{parallela}: molti processori per calcoli massivi. Può essere a
+        processori semplici e strettamente accoppiati (migliaia o milioni), oppure a
+        calcolatori veri collegati in rete (serve software apposito). Il \emph{grid
+        computing} usa reti di computer via internet per grandi calcoli (progettazione
+        di farmaci, fisica nucleare, segnali spaziali, genoma umano).
+\end{itemize}
+
+\subsubsection{Stili architetturali}
+Secondo Shaw e Garlan (1996) uno \textbf{stile architetturale} definisce una famiglia di
+sistemi tramite un pattern di organizzazione strutturale: un vocabolario di tipi di
+\emph{componenti} e \emph{connettori} e i vincoli su come combinarli. In UML si
+rappresentano in vari modi (es.\ deployment diagram). I sette stili comuni:
+\begin{itemize}
+  \item \textbf{Pipes and filters}: ogni componente (\emph{filter}) legge flussi in
+        ingresso e applica trasformazioni locali incrementali (l'output inizia prima che
+        l'input sia finito); i connettori sono \emph{pipe}. I filtri sono indipendenti:
+        non condividono stato e non conoscono i vicini.
+  \item \textbf{Data abstraction e organizzazione OO}: la rappresentazione dei dati è un
+        ADT/oggetto, un componente ``manager'' che preserva l'integrità di una risorsa e
+        nasconde la rappresentazione. Svantaggio: gli oggetti devono conoscere gli ID
+        degli altri.
+  \item \textbf{Layering}: livelli sovrapposti.
+  \item \textbf{Implicit invocation (event-based)}: le interfacce espongono procedure ed
+        eventi; chi annuncia un evento non sa chi reagirà (\emph{broadcast}). Forte
+        supporto al riuso.
+  \item \textbf{Repositories}: \emph{database} (il trigger sono le transazioni) o
+        \emph{blackboard} (il trigger è lo stato corrente; tre parti: knowledge
+        sources, struttura dati blackboard, controllo).
+  \item \textbf{Interpreters}: una macchina virtuale in software, con motore di
+        interpretazione, memoria, stato del controllo e stato del programma simulato
+        (es.\ \emph{table driven}).
+  \item \textbf{Process control}.
+\end{itemize}
+
+\subsubsection{Architettura del software di sistema}
+Componenti: \textbf{sistema operativo} (proprietario o open source), \textbf{gestione
+di rete} (TCP/IP, standard di alto livello come CORBA, J2EE, .NET), \textbf{DBMS}
+(relazionale, a oggetti, XML, a file), \textbf{internet server}, \textbf{ambiente di
+sviluppo} (linguaggio, editor, debugger), \textbf{component model} (riuso) e \textbf{web
+services}.
+
+\paragraph{Repository centrale.} Molti utenti condividono un data store al centro
+dell'architettura (implementato con un DBMS), attorno al quale i client leggono e
+modificano i dati. In base a dove avviene il calcolo: \emph{thin client} (quasi tutto sul
+server), \emph{balanced} (carico condiviso), \emph{fat client} (quasi tutto sul client).
+\begin{itemize}
+  \item \textbf{Pro}: dati in un unico posto; accesso efficiente per molti utenti;
+        divisione dei compiti tra applicazione e repository; le applicazioni non si
+        conoscono tra loro.
+  \item \textbf{Contro}: le applicazioni subiscono uno specifico modello dati; cambiarlo
+        è difficile e costoso; alto overhead di comunicazione; forte dipendenza dal
+        repository.
+\end{itemize}
+
+\paragraph{Client-server.} Rete di processori e dispositivi: i \emph{server} offrono
+servizi, i \emph{client} li usano; entrambi possono girare sulla stessa macchina e un
+server può fare da client. Il \textbf{middleware} abilita la comunicazione, tramite
+\emph{remote procedure call} o \emph{object request broker} (ORB: i servizi sono visti
+come oggetti). Può realizzare lo stile repository centrale.
+\begin{itemize}
+  \item \textbf{Pro}: sistema distribuito e modulare; il guasto di un server ha effetto
+        limitato; cambiare la struttura interna di un server è facile.
+  \item \textbf{Contro}: architettura e tecnologie di integrazione complesse; costi alti
+        di sviluppo, test e gestione; degrado delle prestazioni.
+\end{itemize}
+
+\paragraph{Basata su inter/intra-net.} Le applicazioni sono insieme server e client, su
+standard aperti TCP/IP; ospitano e accedono a web service; scambiano dati in formati a
+caratteri (XML). La posizione fisica non è un vincolo.
+\begin{itemize}
+  \item \textbf{Pro}: quelli del client-server, più standard aperti e affidabili,
+        molto software libero, formati facili da gestire, scalabilità da LAN a internet.
+  \item \textbf{Contro}: velocità di scambio talvolta insufficiente per grandi moli di
+        dati; la \emph{sicurezza} è un problema (firewall indispensabili); sviluppo non
+        banale ancora complesso.
+\end{itemize}
+
+\paragraph{Architettura a $n$ livelli.} Altra prospettiva sul C/S distribuito: nella
+\emph{three-tier} il flusso informativo è lineare e ogni livello può essere aggiornato o
+sostituito indipendentemente; se quello centrale è a sua volta a più livelli si ha
+$n$-tier. Pro e contro sono quelli del C/S.
+
+\paragraph{Architettura a livelli (layered).} Detta anche \emph{abstract machine}:
+servizi e operazioni accedono solo allo stesso livello o a quello interno adiacente; i
+livelli interni non conoscono quelli esterni. Non sostituisce i modelli precedenti ma è un
+altro modo di gestirli. \emph{Services}: cosa fa il livello; \emph{interfaces}: come vi si
+accede; \emph{protocols}: come è implementato. Livelli interni vicini all'istruzione
+macchina e al kernel; intermedi con servizi di utilità e funzioni applicative; esterno con
+i servizi chiamati dalle applicazioni.
+\begin{itemize}
+  \item \textbf{Pro}: livelli indipendenti e modulari, più facili da progettare, testare
+        e installare; sviluppo incrementale.
+  \item \textbf{Contro}: i dati attraversano ogni livello (overhead); difficile seguire
+        il modello alla lettera.
+\end{itemize}
+
+\paragraph{Architetture di rete a livelli.} Una architettura di rete definisce i livelli
+e i protocolli tra processi pari. Due modelli: \textbf{OSI} (ISO, utile per discutere di
+progetto di reti; più astratto, regolare e dettagliato) e \textbf{TCP/IP} (più diffuso
+perché è la base di internet). IP serve dove ogni nodo è inaffidabile; TCP aggiunge
+controllo end-to-end ed è più affidabile.
+
+\begin{center}
+\begin{tabular}{|l|p{11.5cm}|}
+\hline
+\textbf{Livello OSI} & \textbf{Funzione}\\
+\hline
+Application & interfaccia verso il programma applicativo (es.\ trasferimento file)\\
+Presentation & formattazione e gestione dati (compressione, conversione, cifratura)\\
+Session & negozia la sessione con il nodo di destinazione\\
+Transport & spezza i messaggi in pacchetti e aggiunge l'header\\
+Network & instradamento dei pacchetti, indirizzi\\
+Data link & header/trailer, controllo errori a destinazione\\
+Physical & trasmissione di segnali elettrici, ottici o radio\\
+\hline
+\end{tabular}
+\end{center}
+TCP/IP ha quattro livelli: \emph{Application} (FTP, TELNET, SMTP, HTTP, \ldots),
+\emph{Transport} (servizio affidabile TCP), \emph{Internet} (rete non affidabile e
+senza connessione che consegna pacchetti IP), \emph{Host-to-network} (collegamento alla
+rete fisica).
+
+\subsubsection{Architettura applicativa}
+Struttura un'applicazione o un sotto-sistema, ossia il software scritto dagli
+sviluppatori. Si distinguono modelli architetturali e \textbf{modelli di controllo} (come
+i moduli sono controllati perché funzionino correttamente).
+
+\paragraph{Controllo centralizzato.} I moduli sono passivi: l'esecuzione parte solo se
+comandata dal modulo di controllo, a cui restituiscono i risultati.
+\begin{itemize}
+  \item \textbf{Call and return}: parte il main, che chiama funzioni di livello più basso
+        (ciascuna può chiamarne altre) e ne riceve i risultati; finisce quando il main
+        ritorna. Una funzione non foglia è il modulo di controllo delle sue sotto-funzioni.
+        Attenzione alla ricorsione; per funzioni su altri computer si usano le RPC.
+        Esempio: \emph{periodic invoice processing} = apri i database, processa le fatture
+        (leggi, elabora, stampa documenti, aggiorna dati), chiudi i database.
+  \item \textbf{Manager model}: un modulo manager avvia, ferma e coordina gli altri, con
+        un ciclo di controllo senza fine che controlla periodicamente sensori e moduli di
+        input. I moduli possono essere funzioni, oggetti o sotto-sistemi. Usato nel
+        controllo industriale e nei sistemi real-time.
+\end{itemize}
+
+\paragraph{Controllo guidato dagli eventi.} I moduli si registrano per gli eventi, che
+avvengono fuori dal loro controllo; serve un \emph{event handler} (di solito l'OS).
+\begin{itemize}
+  \item \textbf{Broadcast}: ogni evento è inviato ai moduli in grado di gestirlo e quelli
+        interessati agiscono. Modulare (aggiungere componenti ed eventi è facile) ma
+        complesso da coordinare. Esempio: GUI moderne.
+  \item \textbf{Interrupt-driven}: per real-time con tempi di risposta critici. Gli
+        interrupt hanno una priorità e un handler (di solito una funzione): se arriva il
+        più prioritario si sospende il processo corrente, si chiama la funzione e poi si
+        riprende; quelli a priorità minore vanno in coda. Difficile da realizzare: le
+        funzioni possono essere fermate in modo asincrono e quelle ad alta priorità
+        possono bloccare il sistema.
+\end{itemize}
+
+\paragraph{Multi-threading.} Più processi in parallelo, su multiprocessore vero o
+sequenziali con priorità; un thread parte chiamando una funzione o inviando un messaggio
+a un oggetto. Non è una forma di controllo (può essere centralizzato o a eventi). I
+\textbf{semafori} sono un singolo punto di controllo che protegge una risorsa accessibile
+da un processo alla volta.
+
+\paragraph{Modello data flow (pipes and filters).} L'informazione scorre nelle pipe e le
+trasformazioni sono nei filtri: input $\to$ trasformazione $\to$ output. Architettura
+generica a grafo di filtri; in quella \emph{batch} è una singola linea sequenziale.
+\begin{itemize}
+  \item \textbf{Pro}: filtri indipendenti e riusabili; intuitivo; un filtro può produrre
+        output mentre elabora l'input; trasformazioni in sequenza o in thread paralleli;
+        aggiungere o togliere filtri è facile.
+  \item \textbf{Contro}: non tutte le applicazioni si modellano così; la gestione degli
+        errori è un problema; formati di scambio incompatibili minano la modularità.
+\end{itemize}
+
+\paragraph{Modello a oggetti.} La decomposizione è centrata sui dati: l'unità sono gli
+oggetti (dati, operazioni, interfaccia), che comunicano con messaggi. Usa
+\emph{incapsulamento} ed \emph{ereditarietà}.
+\begin{itemize}
+  \item \textbf{Pro}: intuitivo; stesso modello OO in tutte le fasi; oggetti più stabili
+        delle funzioni; modulari e indipendenti; passaggio di messaggi in sequenza o in
+        parallelo; riuso di oggetti e framework; modifiche interne con impatto minimo;
+        test facile.
+  \item \textbf{Contro}: i messaggi possono dare molto overhead; difficile per chi viene
+        dai linguaggi procedurali; \emph{ravioli code} (analogo dello spaghetti code).
+\end{itemize}
+
+\subsubsection{Astrazione e decomposizione modulare}
+\textbf{Astrazione}: si considerano solo gli aspetti rilevanti di un'entità, nascondendo
+gli altri; sistemi e moduli si vedono a vari livelli. \textbf{Scala}: il sistema si
+scompone in sotto-sistemi, e questi in sotto-sotto-sistemi.
+\begin{itemize}
+  \item \emph{astrazione procedurale}: scomposizione in funzioni, ciascuna caratterizzata
+        dalla firma; si usano senza conoscerne l'implementazione;
+  \item \emph{astrazione dei dati}: l'\textbf{ADT} è un tipo definito dalle operazioni
+        applicabili (solo le firme); è ciò che usano le classi nei linguaggi OO.
+\end{itemize}
+La \textbf{decomposizione modulare} scompone in sotto-sistemi e poi moduli (divide et
+impera); per usare un modulo basta l'interfaccia. \emph{Bottom-up}: si parte da moduli
+riusabili per costruire sistemi più complessi. \emph{Top-down}: si scompone il sistema
+finché i moduli di basso livello sono direttamente implementabili.
+
+\subsubsection{Considerare alternative}
+Il progettista valuta molte alternative, scegliendo o fondendole. Criteri: aderenza ai
+requisiti del cliente, semplicità e qualità, risorse e costo. Si procede per
+\emph{raffinamento iterativo}: aggiungendo classi via via più specializzate alle gerarchie
+e raffinando le operazioni in istruzioni più dettagliate.
+
+\newpage
+\subsection{Code review con Essence}
+
+Esercizio: \emph{essenzializzare} la pratica \textbf{Code Review}, cioè descriverla come
+pratica Essence riusabile e indipendente dagli strumenti (purpose, primary Alpha, work
+product, activities, competencies, progress criteria, pattern, uso dell'LLM). Qui sono
+sintetizzati i commenti alle soluzioni dei tre gruppi di studenti e il confronto con la
+soluzione del docente.
+
+\subsubsection{Commento alle soluzioni degli studenti}
+Nel complesso c'è una buona comprensione intuitiva, ma con confusioni tra \emph{Alpha},
+\emph{Work Product} e \emph{strumenti}.
+\begin{itemize}
+  \item \textbf{Gruppo 1}: purpose buono (qualità, manutenibilità, sicurezza). Debole
+        l'Alpha ``Approvazione del codice'', che è un \emph{risultato} della review:
+        come primary Alpha è più appropriato \emph{Software System}. Il report di review
+        è un work product plausibile, le attività coerenti, i progress criteria generici.
+        Esempio efficace (MiracleSort: problemi di performance in codice formalmente
+        corretto), ma manca l'uso dell'LLM.
+  \item \textbf{Gruppo 2}: il più vicino allo spirito dell'esercizio. La sequenza ``in
+        attesa di revisione $\to$ da correggere $\to$ corretto'' descrive meglio gli
+        stati di un Alpha \emph{specifico della pratica} (es.\ Code Change) che di un
+        Alpha del kernel. Work product ``documentazione'' troppo generico. Buono il
+        pattern delle modifiche piccole e l'LLM come supporto, con decisione finale al
+        revisore umano.
+  \item \textbf{Gruppo 3}: meno aderente. Purpose ``produrre codice funzionante per un
+        negozio'' troppo specifico (descrive lo sviluppo in generale); ``avere un IDE
+        funzionante'' è uno strumento, non un Alpha, e viola il requisito
+        \emph{tool-independent}. Valide le competenze su linguaggio e dominio; l'LLM per
+        il debugging richiede verifica umana.
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Aspetto} & \textbf{Gruppo 1} & \textbf{Gruppo 2} & \textbf{Gruppo 3}\\
+\hline
+Purpose & Buono & Buono & Troppo specifico\\
+Primary Alpha & Poco appropriato & Interessante come Alpha specifico & Non corretto\\
+Work Product & Buono & Troppo generico & Buono\\
+Activities & Appropriate & Appropriate & Parzialmente fuori focus\\
+Competencies & Troppo generiche & Troppo generiche & Più complete\\
+Progress criteria & Presenti ma vaghi & Discreti & Mancanti\\
+Pattern & Mancante & Buono & Mancante\\
+LLM & Mancante & Buono e responsabile & Valido ma poco sviluppato\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Confronto con la soluzione del docente}
+\begin{center}
+\begin{tabular}{|l|p{6cm}|p{6.5cm}|}
+\hline
+\textbf{Aspetto} & \textbf{Studenti} & \textbf{Soluzione del docente}\\
+\hline
+Purpose & Qualità, sicurezza, manutenibilità & Valutare le modifiche prima dell'integrazione e condividere conoscenza\\
+Primary Alpha & Spesso ambiguo o errato & \emph{Software System}, con Team e Way of Working a supporto\\
+Work Product & Report / documentazione & \emph{Review Record} strutturato\\
+Activities & Lettura, analisi, correzione & Prepare Review, Examine Change, Resolve Findings, Confirm Integration\\
+Competencies & Soprattutto programmazione & Development, testing, system understanding, communication costruttiva\\
+LLM & Assente o generico & Supporto alla review con verifica umana\\
+\hline
+\end{tabular}
+\end{center}
+Le \emph{competencies} sono l'aspetto più sottovalutato. Sull'LLM la proposta migliore
+degli studenti coincide con quella del docente: può suggerire domande o possibili
+problemi, ma ogni risultato va verificato da un revisore competente. In sintesi, gli
+studenti hanno colto il nucleo pratico, mentre la soluzione del docente lo struttura in
+modo più rigoroso e coerente con Essence.
+
 \end{document}
 
