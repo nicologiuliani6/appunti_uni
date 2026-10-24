@@ -1343,7 +1343,7 @@ Il caso ideale si ha quando la superficie è convessa, cosa che garantisce l'esi
 \hfill
 \begin{minipage}[c]{0.44\textwidth}
 \centering
-\begin{tikzpicture}[scale=0.9]
+\begin{tikzpicture}[scale=1.15]
 \foreach \a/\b/\c in {2.4/0.9/10, 1.9/0.7/25, 1.4/0.5/45, 0.9/0.33/65, 0.45/0.17/85}
   \filldraw[rotate=30, fill=cyan!\c!white, draw=black] (0,0) ellipse (\a cm and \b cm);
 \draw[->] (0,-1.6)--(0,1.9) node[above] {\scriptsize $w_1$};
@@ -1500,6 +1500,268 @@ Example run in 22.404 s
 Per ogni classe, i pesi corrispondenti hanno la stessa dimensionalità dell'immagine di input: abbiamo un peso per ogni feature.\\
 \vspace{1px}\\
 Possiamo visualizzare i pesi!
-\imgfig[0.7]{mnist_pesi.png}
+\imgfig[0.7]{mnist_pesi_rgb.png}
 Per ogni classe, le zone \textcolor{red}{rosse} sono quelle dove mi aspetto di avere della scrittura, quelle \textcolor{blue}{blu} dove non mi aspetto di averne.
+\section{Introduzione alle reti neurali}
+\begin{itemize}
+\item \textbf{Cos'è il deep learning?}\\
+Un \hl{ramo} del machine learning.
+\item \textbf{Quali problemi può risolvere?}\\
+Gli stessi del ML.
+\item \textbf{Ci sono casi in cui il DL eccelle particolarmente?}\\
+Tutti i problemi con miriadi di features (immagini, audio, testo, $\dots$).
+\end{itemize}
+\textbf{Quale è la tecnica base del DL?} Le \textit{reti neurali!} Il nome \texttt{deep} deriva dal fatto che abbiamo una rete di neuroni artificiali molto profonda. Inoltre possiamo dire che "\textit{sfrutta}" la profondità delle features, ovvero sfrutta caratteristiche profonde dei dati, caratteristiche estratte da altre caratteristiche.\\
+\begin{center}
+\begin{tikzpicture}[
+  neurone/.style={circle, draw, thick, fill=white, minimum size=0.75cm, inner sep=0pt},
+  arco/.style={-{Stealth[length=2mm]}, gray!80, thick}]
+  % sfondi dei livelli
+  \fill[red!20]   (-0.5,-1.5) rectangle (0.5,1.5);
+  \fill[blue!20]  ( 2.5,-2.2) rectangle (3.5,2.2);
+  \fill[blue!20]  ( 5.5,-2.2) rectangle (6.5,2.2);
+  \fill[green!20] ( 8.5,-0.7) rectangle (9.5,0.7);
+  % neuroni
+  \foreach \i/\y in {1/1,2/0,3/-1}          \node[neurone] (i\i) at (0,\y) {};
+  \foreach \i/\y in {1/1.5,2/0.5,3/-0.5,4/-1.5} {
+    \node[neurone] (a\i) at (3,\y) {};
+    \node[neurone] (b\i) at (6,\y) {};
+  }
+  \node[neurone] (o) at (9,0) {};
+  % collegamenti
+  \foreach \i in {1,2,3} \foreach \j in {1,2,3,4} \draw[arco] (i\i) -- (a\j);
+  \foreach \i in {1,2,3,4} \foreach \j in {1,2,3,4} \draw[arco] (a\i) -- (b\j);
+  \foreach \i in {1,2,3,4} \draw[arco] (b\i) -- (o);
+  % etichette
+  \node[red!80!black]   at (0,-1.95) {livello di input};
+  \node[blue!80!black, align=center]  at (3,-2.85) {livello\\nascosto~1};
+  \node[blue!80!black, align=center]  at (6,-2.85) {livello\\nascosto 2};
+  \node[green!50!black] at (9,-1.15) {livello di output};
+  \node (lab) at (3,3.3) {Neurone artificiale};
+  \draw[-{Stealth[length=2mm]}] (lab) -- (a1.north);
+\end{tikzpicture}
+\end{center}
+Ogni neurone riceve più input e produce un singolo output (che può essere passato come input a molti altri neuroni).
+\vspace{1px}\\
+
+\subsection{Il neurone artificiale}
+\begin{center}
+\begin{tikzpicture}[
+  nodo/.style={circle, draw, thick, fill=white, minimum size=1.1cm, inner sep=0pt},
+  freccia/.style={-{Stealth[length=2.5mm]}, thick}]
+  \node[nodo] (x1) at (0,2.2)  {$x_1$};
+  \node[nodo] (x2) at (0,0.6)  {$x_2$};
+  \node[nodo] (xn) at (0,-1.6) {$x_n$};
+  \node[nodo] (s)  at (4,0)    {$\Sigma$};
+  \node[nodo] (f)  at (6.4,0)  {};
+  \node[nodo] (b)  at (4,-2.4) {$+1$};
+  % funzione di attivazione a gradino
+  \draw[thick] ($(f)+(-0.3,-0.2)$) -- ($(f)+(0,-0.2)$) -- ($(f)+(0,0.2)$) -- ($(f)+(0.3,0.2)$);
+  % collegamenti
+  \draw[freccia] (x1) -- node[above right, pos=0.55] {$w_1$} (s);
+  \draw[freccia] (x2) -- node[above, pos=0.5] {$w_2$} (s);
+  \draw[freccia] (xn) -- node[below right, pos=0.5] {$w_n$} (s);
+  \draw[freccia] (b)  -- node[right] {$b$} (s);
+  \draw[freccia] (s) -- (f);
+  \draw[freccia] (f) -- ++(2.2,0) node[right, blue!80!black] {output};
+  % etichette
+  \node[blue!80!black] at (0,3.4) {input};
+  \node[green!50!black, align=center] at (6.4,1.3) {funzione di\\attivazione};
+  \node[green!50!black] at (5.2,-2.4) {bias};
+\end{tikzpicture}
+\end{center}
+\textbf{Ogni neurone} (!) implementa un regressore logistico
+\[ \sigma(wx + b) \]
+
+\subsection{Funzioni di attivazione}
+La funzione di attivazione è la responsabile dello \hl{scatto} (\textit{threshold triggering}) del neurone.
+\begin{center}
+\begin{minipage}[t]{0.48\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle, width=\linewidth, height=3.4cm, xmin=-4, xmax=4, ymin=-0.2, ymax=1.3, ytick={0,1}, xtick=\empty, ticklabel style={font=\scriptsize}]
+\addplot[red, thick, domain=-4:0, samples=2] {0};
+\addplot[red, thick, domain=0:4, samples=2] {1};
+\end{axis}
+\end{tikzpicture}\\
+{\small soglia: se $x>0$ allora $1$ altrimenti $0$}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle, width=\linewidth, height=3.4cm, xmin=-6, xmax=6, ymin=-0.1, ymax=1.2, ytick={0,0.5,1}, xtick=\empty, ticklabel style={font=\scriptsize}]
+\addplot[red, thick, domain=-6:6, samples=60] {1/(1+exp(-x))};
+\end{axis}
+\end{tikzpicture}\\
+{\small funzione logistica: $\dfrac{1}{1+e^{-x}}$}
+\end{minipage}
+
+\vspace{1em}
+\begin{minipage}[t]{0.48\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle, width=\linewidth, height=3.4cm, xmin=-4, xmax=4, ymin=-1.2, ymax=1.2, ytick={-1,0,1}, xtick=\empty, ticklabel style={font=\scriptsize}]
+\addplot[red, thick, domain=-4:4, samples=60] {tanh(x)};
+\end{axis}
+\end{tikzpicture}\\
+{\small tangente iperbolica: $\dfrac{e^x-e^{-x}}{e^x+e^{-x}}$}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}\centering
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle, width=\linewidth, height=3.4cm, xmin=-3, xmax=3, ymin=-0.3, ymax=3, ytick={0,1}, xtick=\empty, ticklabel style={font=\scriptsize}]
+\addplot[red, thick, domain=-3:3, samples=2] {max(0,x)};
+\end{axis}
+\end{tikzpicture}\\
+{\small \textit{rectified linear} (ReLU): se $x>0$ allora $x$ altrimenti $0$}
+\end{minipage}
+\end{center}
+
+\subsection{Il neurone corticale}
+Il neurone biologico funziona in modo analogo:
+\begin{itemize}
+\item l'\hl{albero dendritico} della cellula raccoglie gli input provenienti dagli altri neuroni, che vengono sommati tra loro;
+\item quando viene superata una \hl{soglia di innesco}, l'\textit{Axon Hillock} (cono di emergenza dell'assone) genera un impulso che viene trasmesso lungo l'assone agli altri neuroni.
+\end{itemize}
+La struttura della cellula comprende: dendriti, corpo cellulare, nucleo, \textit{axon hillock}, guaina mielinica e terminali dell'assone.
+\imgfig[0.55]{neurone_corticale.png}
+
+\subsubsection{Alcune cifre sul cervello umano}
+\begin{itemize}
+\item numero di neuroni: $\sim 2 \cdot 10^{10}$;
+\item tempo di commutazione di un neurone: $\sim 0.001$ s (\textcolor{red}{lento!});
+\item sinapsi (connessioni) per neurone: $\sim 10^{4-5}$;
+\item tempo per riconoscere un'immagine: $\sim 0.1$ s.
+\end{itemize}
+Quindi il cervello è \hl{poco profondo} ($< 100$ livelli) ma ha un \hl{altissimo parallelismo}.
+\imgfig[0.2]{cervello.png}
+
+\subsubsection{Confronto con il neurone corticale}
+Le reti neurali artificiali (ANN) ricalcano il neurone biologico:
+\begin{itemize}
+\item gli input $x_1, \dots, x_n$ con i pesi $w_1, \dots, w_n$ corrispondono ai \textit{dendriti};
+\item il $\Sigma$ somma gli input pesati (corpo cellulare);
+\item la \textit{funzione di attivazione} fa da soglia, come l'\textit{assone};
+\item l'output viene propagato ai rami terminali dell'assone, cioè agli altri neuroni.
+\end{itemize}
+\imgfig[0.7]{confronto_neurone.png}
+
+\subsubsection{Motivazioni del calcolo neurale}
+\begin{itemize}
+\item capire, tramite simulazione, \hl{come funziona il cervello};
+\item investigare un \hl{diverso paradigma di computazione}, molto lontano dai linguaggi di programmazione tradizionali;
+\item risolvere \hl{problemi pratici} difficili da affrontare con tecniche algoritmiche, utile anche se il cervello funziona in modo diverso.
+\end{itemize}
+
+\subsection{Topologie di rete}
+\subsubsection{Reti feed-forward e ricorrenti}
+Se la rete è \hl{aciclica} si chiama \textit{feed-forward}.\\
+Se ha dei \hl{cicli} si chiama \textit{ricorrente} (non verranno trattate).
+
+\subsubsection{Livelli (layers)}
+In una rete feed-forward i neuroni sono di solito organizzati in \hl{livelli} (\textit{layers}): input, hidden e output.\\
+Se c'è più di un livello nascosto la rete è \hl{profonda} (\textit{deep}), altrimenti si dice \hl{poco profonda} (\textit{shallow}).
+
+\subsubsection{Livelli principali: dense layer}
+\textbf{Dense layer}: ogni neurone del livello $k-1$ è connesso a \textbf{ogni} neurone del livello $k$.\\
+\vspace{1px}\\
+Un singolo neurone:
+\[ I^n \cdot W^n + B^1 = O^1 \]
+L'operazione può essere \hl{vettorizzata} per produrre $m$ output in parallelo:
+\[ I^n \cdot W^{n \times m} + B^m = O^m \]
+\begin{itemize}
+\item i dense layer lavorano di solito su input \hl{piatti} (non strutturati);
+\item l'ordine degli elementi in input è \hl{irrilevante}.
+\end{itemize}
+
+\subsubsection{Livelli principali: convolutional layer}
+\textbf{Convolutional layer}: ogni neurone del livello $k-1$ è connesso, tramite un \textbf{kernel} parametrico, a un sottoinsieme fisso di neuroni del livello $k$. Il kernel viene fatto scorrere (\textit{convoluto}) su tutto il livello precedente.
+\imgfig[0.75]{convoluzione.png}
+\begin{enumerate}
+\item si sposta il kernel $K$ su una porzione $M$ dell'input di uguale dimensione;
+\item si calcola il prodotto scalare $M \cdot K$ e, eventualmente, si aggiunge un bias;
+\item si sposta il kernel e si ripete.
+\end{enumerate}
+La dimensione dell'output dipende solo da quante volte viene applicato il kernel.\\
+\vspace{1px}\\
+L'input è \hl{strutturato} e la struttura si riflette nell'output.
+
+\subsection{Approfondimento sul DL}
+\subsubsection{Capire il DL}
+\begin{itemize}
+\item capire i \textbf{diversi livelli} e il loro scopo;
+\item capire come i livelli possono essere organizzati in \textbf{architetture rilevanti};
+\item capire le diverse \textbf{applicazioni} possibili del DL e le loro soluzioni specifiche;
+\item capire i principali \textbf{problemi} e \textbf{costi}.
+\end{itemize}
+
+\subsubsection{Framework per il DL}
+\begin{itemize}
+\item \textcolor{magenta}{TensorFlow/Keras}, Google Brain;
+\item \textcolor{magenta}{PyTorch}, Facebook;
+\item \textcolor{magenta}{MXNET}, Apache.
+\end{itemize}
+Useremo principalmente \textcolor{magenta}{Keras}.
+
+\subsubsection{Cenni storici}
+\subsubsection{Il lascito (legacy)}
+\begin{center}
+\begin{tabular}{r|l}
+1958 & perceptron \\
+1975 & backpropagation \\
+1980 & convolutional layers \\
+1992 & max-pooling \\
+1997 & LSTM \\
+$\dots$ & $\dots$
+\end{tabular}
+\end{center}
+Progresso \hl{estremamente lento}.
+
+\subsubsection{La rivoluzione del Deep Learning}
+\begin{center}
+\begin{tabular}{r|l@{\hspace{2.5em}}r|l}
+2011 & \textbf{Google Brain foundation} & 2017 & \textbf{PyTorch release} \\
+2012 & ReLU and Dropout & 2017 & Mask-RCNN \\
+2012 & ImageNet Competition & 2017 & PPO \\
+2013 & DQN & 2018 & Transformers \\
+2014 & Inception v1 & 2018 & BERT \\
+2015 & \textbf{TensorFlow release} & 2018 & GPT \\
+2015 & Keras release & 2018 & Soft Actor Critic \\
+2015 & Batch normalization & 2020 & OpenAI Jukebox \\
+2015 & YOLO v1 & 2020 & Vision Transformer \\
+2015 & \textbf{OpenAI foundation} & 2021 & \textbf{MXNet release} \\
+2016 & Residual connections & 2022 & DALL-E
+\end{tabular}
+\end{center}
+Solo alcune \hl{pietre miliari}\dots
+
+\subsubsection{La situazione a inizio secolo}
+\newcommand{\vennbase}{%
+  \draw[rotate around={-28:(-3,0.3)}] (-3,0.3) ellipse (2.9 and 1.4);
+  \node at (-3.9,1.0) {\large AI};
+  \node[font=\scriptsize, align=left] at (-3.0,0.1) {Knowledge Representation\\Expert Systems\\Constraint Programming};
+  \draw[rotate around={12:(-0.3,1.4)}] (-0.3,1.4) ellipse (0.9 and 1.6);
+  \node at (-0.3,2.3) {\large NLP};
+  \draw[rotate around={18:(1.2,0.7)}] (1.2,0.7) ellipse (3 and 1.6);
+  \node at (3.0,1.5) {\large ML};
+  \node[font=\scriptsize, align=left] at (1.45,0.6) {Support Vector Machines\\Bayesian Models\\Clustering};
+  \draw (-0.6,-0.6) circle (0.6) node {\large NN};
+  \draw (3.7,-0.1) circle (0.55) node {\large OCR};
+  \draw (1.8,-0.9) ellipse (2.1 and 1.0);
+  \node at (2.2,-1) {\large Vision};
+  \draw (0.4,-2.1) ellipse (2.0 and 0.85);
+  \node at (0.4,-2.1) {\large Robotics};
+}
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+  \vennbase
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{L'era del deep learning}
+\begin{center}
+\begin{tikzpicture}[scale=1.15]
+  \vennbase
+  \draw[green!70!black, very thick, rotate around={-4:(0.5,-0.2)}] (0.5,-0.2) ellipse (3.1 and 2.2);
+  \node[green!50!black, align=center, font=\large] at (4.9,2.5) {Deep\\Learning};
+  \draw[green!70!black, very thick] (4.2,2.0) -- (2.87,1.21);
+\end{tikzpicture}
+\end{center}
+
 \end{document}
