@@ -48,6 +48,7 @@
 
 % #1 = nome file immagine, #2 = titolo, #3 = contenuto tradotto
 \newcommand{\ecard}[3]{%
+\ifcsname tikzexternaldisable\endcsname\tikzexternaldisable\fi  % tcolorbox usa TikZ: in conflitto con l'externalize di latexmk-fast
 \begin{tcolorbox}[enhanced, breakable, colback=\cardcolor!4, colframe=\cardcolor,
     coltitle=white, colbacktitle=\cardcolor, title=#2,
     fonttitle=\bfseries\small, arc=2mm, boxrule=0.7pt,
@@ -58,6 +59,7 @@
   \end{minipage}\hfill
   \begin{minipage}[t]{0.83\linewidth}\vspace{0pt}\small #3\end{minipage}%
 \end{tcolorbox}%
+\ifcsname tikzexternalenable\endcsname\tikzexternalenable\fi
 }
 \newcommand{\chk}[1]{\begin{itemize}[nosep,leftmargin=*,topsep=2pt,label=$\square$]#1\end{itemize}}
 \newcommand{\sts}[1]{\begin{enumerate}[nosep,leftmargin=*,topsep=2pt]#1\end{enumerate}}
@@ -3521,6 +3523,478 @@ degli studenti coincide con quella del docente: può suggerire domande o possibi
 problemi, ma ogni risultato va verificato da un revisore competente. In sintesi, gli
 studenti hanno colto il nucleo pratico, mentre la soluzione del docente lo struttura in
 modo più rigoroso e coerente con Essence.
+
+\newpage
+\subsection{Constructor Fabric: processo ingegneristico attorno ai tool di AI coding}
+
+\subsubsection{Cos'è Constructor Fabric}
+
+\textbf{Constructor Fabric} è una piattaforma open source \emph{AI-native} che collega
+l'intero ciclo di vita del software (plan, build, run) in un unico flusso tracciabile e
+governato, dai requisiti alla produzione. Lo strumento che si installa si chiama
+\textbf{Constructor Studio} e il suo comando è \texttt{cfs}.
+
+Fornisce template di documenti, \emph{skill} con nome, checklist di review, controlli
+deterministici e identificatori stabili che legano i requisiti al codice.
+\textbf{Non contiene un modello linguistico} e non chiama nessuna API di modelli: gira
+dentro Claude Code, Cursor, Codex, GitHub Copilot o Windsurf, e sono questi tool a
+portare il modello.
+
+\paragraph{I quattro pezzi}
+\begin{itemize}
+  \item \texttt{cfs}: tool a riga di comando, da terminale, per setup, controlli e lavoro
+        su più repository;
+  \item \textbf{skill} \texttt{cf-*}: nomi che si scrivono nella \emph{chat} del tool di
+        AI coding per avviare un workflow;
+  \item \textbf{Kit}: bundle installabili di skill, template, checklist e regole; il kit
+        \textbf{SDLC} è quello di default;
+  \item \textbf{CPT ID} (\emph{Canonical Provenance Trace}): stringhe che permettono di
+        seguire un requisito nel design, nel codice e nei test.
+\end{itemize}
+
+\paragraph{Modello mentale} Il tool di AI coding serve per ragionare, scrivere,
+trasformare e giudicare l'implementazione. Constructor Fabric serve per scegliere il
+workflow, caricare il contesto giusto, applicare regole e template, eseguire controlli
+deterministici, mantenere collegati requisiti, design e codice e spezzare i task grandi
+in fasi.
+
+\paragraph{Quando è solo overhead} Un singolo typo in un file; esplorazione libera senza
+output strutturato; prototipo usa-e-getta il più veloce possibile; assenza di documento
+sorgente, scope e criteri di accettazione; budget di token ristretto con task piccolo.
+
+\subsubsection{Installazione}
+
+Requisiti: Python 3.11+, Git, un tool di AI coding supportato; \texttt{pipx} solo per
+installare lo strumento, \texttt{gh} solo per i workflow sulle pull request.
+\begin{verbatim}
+pipx install git+https://github.com/constructorfabric/studio.git
+cfs --version
+cd path/to/your/repository     # root del repo, non una sottocartella
+cfs init                       # interattivo; rieseguirlo ripara i file generati
+cfs generate-agents            # scrive i file di integrazione per il tool host
+\end{verbatim}
+\texttt{cfs init} chiede: root del progetto, directory di setup (default
+\texttt{.cf-studio/}), se i file generati restano in \texttt{.gitignore} (sì), se
+installare il kit SDLC (sì). Per una prova vanno bene tutti i default.
+\texttt{generate-agents} va rieseguito dopo aver installato un kit, cambiato le regole o
+se l'host non vede più le skill.
+
+\paragraph{Cosa finisce nel repository}
+\begin{verbatim}
+.cf-studio/
+    .core/  .gen/     # runtime generato, gitignored
+    config/           # vostro: AGENTS.md, SKILL.md, rules/
+    core.toml  version.toml  whatsnew.toml
+.claude/ .cursor/ .codex/ .windsurf/ .github/    # file per gli host
+\end{verbatim}
+La parte che il team rivede ed evolve è \texttt{config/}.
+
+\paragraph{Kit}
+\begin{verbatim}
+cfs kit install constructorfabric/studio-kit-sdlc    # poi generate-agents
+cfs kit install --path <path> --install-mode copy|register
+cfs kit check-updates     # mostra le novità, non cambia nulla
+cfs kit update            # cfs update --with-kits yes: aggiorna anche i kit
+\end{verbatim}
+\emph{copy} copia i file del kit nella directory di setup; \emph{register} lo lascia dov'è
+e registra solo un collegamento. Dopo ogni cambio di kit, \texttt{cfs generate-agents}.
+
+\paragraph{Problemi tipici}
+\begin{itemize}
+  \item \texttt{cfs: command not found} dopo l'install: aprire un nuovo terminale;
+  \item setup lanciato fuori dalla root del repo: rieseguire \texttt{cfs init} dalla root;
+  \item file generati ignorati dal tool: ricaricare/riaprire il repository nel tool;
+  \item \texttt{cf} dà una risposta normale da chatbot: repository sbagliato oppure
+        \texttt{generate-agents} mai eseguito;
+  \item funzionano solo i nomi \texttt{cf-*} e non gli slash command: è normale, gli slash
+        command sono alias specifici dell'host;
+  \item controlli cross-repository rumorosi: partire con \texttt{cfs validate --local-only}.
+\end{itemize}
+
+\subsubsection{Usarlo: terminale vs chat}
+
+Regola che fa risparmiare un'ora: \textbf{terminale} per \texttt{cfs} e i suoi
+sottocomandi (setup, validazione, update, workspace); \textbf{chat} per \texttt{cf} e le
+skill \texttt{cf-*} (esplorazione, pianificazione, scrittura, review). Le skill scritte
+nel terminale non fanno nulla, e \texttt{cfs validate} scritto in chat non è
+un'esecuzione reale.
+
+Per attivarlo si apre il repo nel tool e si scrive \texttt{cf} (deve comparire un menu di
+routing), poi \texttt{cf-help} per il tour. Forma portabile:
+\texttt{cf-<skill>: <richiesta>}: il nome seleziona il workflow, il testo dopo i due punti
+è il lavoro da fare.
+
+\paragraph{Skill principali}
+\begin{center}
+\begin{tabular}{|l|p{10.5cm}|}
+\hline
+\texttt{cf-help} & cosa c'è e da dove partire\\
+\texttt{cf-explore:} & trova file, artefatti, regole, contesto\\
+\texttt{cf-brainstorm:} & apre le opzioni prima di fissare lo scope\\
+\texttt{cf-auto-config} & deduce le regole di progetto di un repo esistente\\
+\texttt{cf-plan:} / \texttt{cf-planning:} & spezza il lavoro in fasi rivedibili / piano riusabile con definition of done\\
+\texttt{cf-coding:} & scrive, rivede, corregge, testa codice\\
+\texttt{cf-write-docs:} & scrive o rivede un documento per umani\\
+\texttt{cf-explain:} & spiega un documento, una PR, una decisione\\
+\texttt{cf-map:} & mostra la mappa delle dipendenze\\
+\texttt{cf-testing:} & scrive o esegue test\\
+\texttt{cf-git-commit:} & stage e commit con messaggio conforme\\
+\texttt{cf-workspace:} & lavoro su più repository\\
+\texttt{cf-kit:}, \texttt{cf-write-skills:} & crea/valida kit; scrive prompt, workflow, skill\\
+\texttt{cf-debug-prompts:} & osserva un workflow passo per passo\\
+\texttt{cf-brave-new-world} & sceglie da solo default sicuri e reversibili nella sessione\\
+\hline
+\end{tabular}
+\end{center}
+Dal kit SDLC: \texttt{cf-sdlc-doc-prd}, \texttt{-doc-adr}, \texttt{-doc-design},
+\texttt{-decompose}, \texttt{-doc-feature}, \texttt{-implement}; per dopo
+\texttt{-change-impact-analysis}, \texttt{-reverse-engineer}, \texttt{-pr-review},
+\texttt{-pr-status}.
+
+\paragraph{Alias e sotto-route} \texttt{cf-coding} è un alias che carica
+\texttt{cf-coding-gen} (idem \texttt{cf-write-docs}, \texttt{cf-write-skills}). Si
+chiamano direttamente le sotto-route quando si sa cosa si vuole: \texttt{-gen},
+\texttt{-review}, \texttt{-fix} (per coding, documenting, prompting),
+\texttt{cf-coding-ci}, \texttt{cf-coding-tests}, \texttt{cf-code-planning}.
+\texttt{cf-analyze} e \texttt{cf-generate} sono router che scelgono la skill adatta.
+
+\paragraph{Richieste buone e cattive}
+Una richiesta che funziona ha \emph{target con nome, scope limitato, criteri di successo
+visibili}:
+\begin{verbatim}
+cf-plan: break this auth migration into safe implementation phases
+cf-explore: trace where auth configuration is defined and loaded
+cf-coding: review this module for correctness, regression risk, missing tests
+\end{verbatim}
+Una richiesta che fa perdere il pomeriggio non ha né scope, né target, né fonte di
+verità, né criteri: \texttt{cf-coding: build the whole system}, \texttt{make this project
+enterprise grade}, \texttt{improve everything}, \texttt{rewrite the app based on best
+practices}. Il workflow non ha nulla su cui fare routing e va a indovinare.
+
+\paragraph{Gate} Prima di partire chiede: modalità di interazione (\emph{assistant},
+\emph{normal}, \emph{debug}; \emph{assistant} racconta dove si trova ed è utile le prime
+volte), se fare prima \texttt{cf-explore}, se fare brainstorm prima di fissare lo scope,
+se pianificare quando il lavoro è multi-step, se delegare a un sub-agent. Ogni gate lo
+approva l'utente: niente di grosso parte in silenzio.
+
+\subsubsection{La pipeline}
+
+Scenario: un team deve aggiungere un nuovo \emph{billing workflow} a un prodotto
+esistente (product manager, architetto, due sviluppatori, QA). Nessuno riscrive il
+processo: usano il proprio, e Constructor Fabric tiene insieme gli artefatti.
+
+\begin{center}
+\begin{tikzpicture}[node distance=5mm, every node/.style={draw, rounded corners, font=\small, inner sep=3pt, fill=blue!6}, >=Stealth]
+\node (a) {PRD};
+\node (b) [right=of a] {ADR};
+\node (c) [right=of b] {DESIGN};
+\node (d) [right=of c] {DECOMP.};
+\node (e) [right=of d] {FEATURE};
+\node (f) [right=of e] {codice};
+\node (g) [right=of f] {test};
+\draw[->] (a)--(b); \draw[->] (b)--(c); \draw[->] (c)--(d);
+\draw[->] (d)--(e); \draw[->] (e)--(f); \draw[->] (f)--(g);
+\end{tikzpicture}
+\end{center}
+Collegati dai CPT ID, plasmati dal kit, verificati da \texttt{cfs}. QA, performance,
+security e DevOps usano gli stessi file, non copie.
+
+\begin{enumerate}
+  \item \textbf{Gather} (\texttt{cf-explore:}): il PM parte da qui, non dal PRD. Esce una
+        piccola mappa di quali note esistono, quali sono obsolete, quali vincoli sono già
+        scritti. È lo stadio più economico e il più saltato.
+  \item \textbf{Opzioni} (\texttt{cf-brainstorm:}): tre o quattro forme candidate con i
+        loro trade-off, senza impegnarsi. Si usa finché lo scope è aperto; a PRD fatto
+        è tardi.
+  \item \textbf{PRD} (\texttt{cf-sdlc-doc-prd:}): da template: scopo, attori, scope,
+        requisiti funzionali e non funzionali, use case, criteri di accettazione,
+        rischi. \textbf{Ogni requisito ha un CPT ID e una priorità}: è ciò che rende
+        possibile il resto della catena. Poi review contro metodologia e checklist (si
+        vedono i finding prima di qualunque riscrittura e si approva lo scope delle
+        correzioni) e infine \texttt{cfs validate}.
+  \item \textbf{ADR} (\texttt{cf-sdlc-doc-adr:}): una decisione, un record: contesto,
+        driver, opzioni considerate, esito, conseguenze. L'architetto lo scrive
+        \emph{prima} del design, così questo ha su cosa poggiare; tra sei mesi è il file
+        che risponde a ``perché l'abbiamo fatto così''.
+  \item \textbf{DESIGN} (\texttt{cf-sdlc-doc-design:}): gli input sono nominati (PRD e
+        ADR approvati): la skill \emph{trasforma} documenti approvati, non inventa da
+        una riga. Esce architettura, componenti, layer, sequenze, data model, tech
+        stack; ogni driver porta il CPT ID del requisito a cui risponde.
+  \item \textbf{Decompose} (\texttt{cf-sdlc-decompose:}): lista ordinata di feature con
+        dipendenze, ciascuna con una fetta del design. Si controlla la copertura: ogni
+        componente, sequenza ed elemento dati appartiene a \emph{esattamente una}
+        feature. Così un lavoro grosso diventa più pezzi rivedibili.
+  \item \textbf{FEATURE spec} (\texttt{cf-sdlc-doc-feature:}): una feature, una
+        specifica: flussi, stati, algoritmi, definition of done. Ognuno ha un CPT ID
+        \emph{un livello più fine} del requisito. È l'ultimo documento prima del
+        codice e quello contro cui si controlla l'implementazione.
+  \item \textbf{Implement} (\texttt{cf-sdlc-implement:}): codice e unit test contro la
+        specifica approvata, \textbf{con i marker CPT}. Senza marker la catena si ferma
+        all'ultimo documento e il codice torna a essere un'opinione.
+  \item \textbf{Review del codice} (\texttt{cf-coding:} review): in una \emph{chat
+        nuova}, perché il contesto di scrittura passa le sue assunzioni alla review;
+        meglio ancora un sub-agent, che non vede il ragionamento di chi ha scritto.
+        Prima i finding, le correzioni dopo l'approvazione dello scope.
+  \item \textbf{Vista d'insieme} (\texttt{cfs map}, \texttt{cf-map:}): i \emph{dangling
+        reference} sono il modo per trovare il requisito che nessuno ha implementato.
+\end{enumerate}
+
+\paragraph{Come appare un requisito, nel PRD} Titolo, priorità, ID e testo normativo con
+MUST:
+\begin{verbatim}
+#### FR-003 Retry a failed invoice charge
+- [x] `p1` - **ID**: `cpt-billing-fr-invoice-retry`
+When a charge fails with a retriable provider error, the system MUST retry
+it at the configured interval up to the configured maximum, and MUST stop
+retrying on a non-retriable error.
+**Actors**: `cpt-billing-actor-finance-operator`, `...-payment-provider`
+\end{verbatim}
+Nel DESIGN lo stesso ID riappare a sinistra e la risposta ingegneristica a destra
+(\emph{Solution}: uno scheduler dei retry possiede la state machine; gli errori del
+provider sono classificati una volta sola al confine dell'adapter in retriable/terminal).
+Nella DECOMPOSITION una feature ha \texttt{Purpose}, \texttt{Depends On},
+\texttt{Requirements Covered} (i CPT ID) e \texttt{Out of scope}.
+
+\paragraph{Marker nel codice} Commenti normali, in qualunque linguaggio e editor, senza
+plugin:
+\begin{verbatim}
+# @cpt-algo:cpt-billing-algo-retry-should-retry:p1
+def should_retry(*, attempt, config) -> bool:
+    # @cpt-begin:cpt-billing-algo-retry-should-retry:p1:inst-terminal
+    if attempt.error_class is ErrorClass.TERMINAL:
+        return False
+    # @cpt-end:cpt-billing-algo-retry-should-retry:p1:inst-terminal
+    ...
+\end{verbatim}
+
+\paragraph{Cosa è il risultato} Non ``l'AI ha scritto il progetto'', ma un
+\emph{sistema di consegna ispezionabile}: alla domanda ``quale codice implementa questo
+requisito approvato?'' risponde il repository, invece dello sviluppatore che se lo ricorda.
+
+\subsubsection{Validazione}
+
+\begin{itemize}
+  \item \texttt{cfs validate} (\texttt{--local-only} per saltare la risoluzione
+        cross-repository, utile mentre si itera): controlla struttura, sezioni
+        obbligatorie, riferimenti, forma dei CPT ID, regole di consistenza.
+        \textbf{Deterministico}: stessi file e regole, stesso risultato. Da lanciare in
+        locale prima della PR e da tenere in CI.
+  \item \texttt{cfs validate-toc}: l'indice di una guida corrisponde ai suoi titoli;
+        \texttt{cfs check-language}: il documento è scritto in una lingua ammessa.
+  \item \texttt{cfs map}, \texttt{cfs where-defined --id <ID>} (quale file definisce
+        l'ID), \texttt{cfs list-ids --source docs}: da usare \emph{prima} di un
+        refactoring, non dopo.
+\end{itemize}
+
+\paragraph{Il ciclo} (1) plan o generate; (2) validate; (3) review; (4) leggere i finding
+e approvare lo scope della correzione; (5) fix; (6) validate di nuovo; (7) ripetere finché
+non resta nulla di noto. Vale uguale per documenti e codice.
+
+\paragraph{Cosa il ciclo non dà} Migliora la qualità ma \textbf{non prova la
+correttezza}: un \texttt{cfs validate} verde dice che la \emph{forma} è giusta, non che il
+software funziona; una checklist superata dice che la review è stata \emph{coerente}, non
+che fosse corretta. Resta necessaria la review umana finale.
+
+\subsubsection{Abitudini, trappole, multi-repo}
+
+\paragraph{Abitudini} Nominare il target (artefatto, area di codice, esito); dare
+documenti sorgente e vincoli, non intenzioni; pianificare prima che la conversazione sia
+sovraccarica; validare presto e di continuo; dire esplicitamente cosa \emph{non} deve
+cambiare; usare il workflow più piccolo che ti tiene comunque in controllo; chat nuova per
+ogni task grosso di scrittura o review; rendere la review ripetibile e poi decidere tu.
+
+\paragraph{Trappole} Usarlo come chat generica (salta tutto ciò che lo rende utile);
+partire con una skill di scrittura su un task enorme e ambiguo; validare solo alla fine
+(gli errori a monte si sono amplificati); credere che un check verde o un lungo giro di
+fix provi la correttezza; usarlo per brainstorming aperto; un workflow strutturato per una
+modifica che un edit diretto avrebbe coperto; chiedere un esito senza nominare il documento
+da cui discende; portarsi dietro contesto vecchio in un task non correlato.
+
+\paragraph{Più repository} Non clonare il setup completo in ogni servizio: un repository
+di orchestrazione e gli altri collegati come workspace.
+\begin{verbatim}
+cfs workspace-init
+cfs workspace-add --name docs     --path ../docs-repo     --role artifacts
+cfs workspace-add --name services --path ../services-repo --role codebase
+cfs workspace-info
+\end{verbatim}
+Un solo posto per setup, regole e kit condivisi e tracciabilità che attraversa i repo.
+
+\paragraph{Primi trenta minuti} Install, \texttt{cfs init}, \texttt{cfs generate-agents};
+\texttt{cf}, poi \texttt{cf-help}; \emph{un} piccolo input reale (un requisito, una nota di
+design, una modifica mirata) con \texttt{cf-explain:}, una review con \texttt{cf-coding:}
+o \texttt{cf-plan:}. Non una review dell'intero repository né una implementazione ampia.
+Successo = attivazione confermata, un risultato utile, un prossimo passo più chiaro.
+
+\subsubsection{Usare Constructor Fabric con LLM gratuiti (CF02)}
+
+Constructor Fabric non ha chiave API, endpoint o modello: è uno strato di orchestrazione
+che si attiva dentro un tool già in esecuzione. \emph{Il tool host porta il modello,
+Constructor Fabric porta il processo.} Gli host documentati sono cinque.
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+ & \textbf{Claude} & \textbf{Cursor} & \textbf{Copilot} & \textbf{Codex} & \textbf{Windsurf}\\
+\hline
+Integrazione skill & sì & sì & sì & sì & sì\\
+Sub-agent dell'host & sì & sì & sì & sì & no\\
+Review read-only & forte & forte & parziale & più debole & nessuna\\
+Worktree isolation & sì & no & no & no & no\\
+Scelta del modello & sì & sì & no & parziale & N/A\\
+Host multi-modello & no & sì & sì & no & sì\\
+\hline
+\end{tabular}
+\end{center}
+Un sub-agent mancante è un limite dell'host, non di Constructor Fabric. La domanda giusta
+non è ``come ottengo un LLM gratis'' ma ``come ottengo accesso gratuito a uno di quei
+cinque tool e quale modello c'è dietro'': un abbonamento chat gratuito \emph{non} è accesso
+API gratuito, e un programma studenti gratuito non sempre è un modello gratuito.
+
+Quattro modi per non pagare: (1) un provider frontier con tier API gratuito stabile;
+(2) un modello open-weight sul proprio computer; (3) un servizio cloud gratuito che ospita
+modelli open-weight; (4) un programma studenti che regala un tool host.
+
+\paragraph{API frontier}
+\begin{center}
+\begin{tabular}{|l|c|p{9cm}|}
+\hline
+\textbf{Provider} & \textbf{API gratis?} & \textbf{Cosa si ottiene}\\
+\hline
+Google (Gemini) & sì & modelli Flash a \$0, circa 10--15 richieste/min e 1000--1500/giorno; i prompt \emph{possono addestrare} i modelli (si paga in dati)\\
+Mistral & sì & tier \emph{Experiment}, tutti i modelli incl.\ Codestral, con rate limit; provider europeo, meno integrato negli host\\
+Anthropic & no & solo chat gratuita (con limiti); API a pagamento, i crediti di prova scadono\\
+OpenAI & no & solo chat gratuita; API pay-as-you-go, Codex segue i piani a pagamento\\
+\hline
+\end{tabular}
+\end{center}
+Il tier Gemini va bene per esplorazione, generazione di singoli documenti e review, non per
+un agente che fa decine di tool call al minuto per un'ora. Con dati sotto NDA, tesi sotto
+embargo o codice aziendale non va usato.
+
+\paragraph{Open-weight in locale} Un modello \emph{open-weight} ha parametri scaricabili:
+niente chiave, quota o contatore di richieste; il costo si sposta dalla bolletta alla
+memoria e alla batteria.
+\begin{itemize}
+  \item \textbf{Qwen3-Coder}: la linea open-weight oggi più forte per coding agentico in
+        locale (addestrata per tool use e editing multi-step); più taglie.
+  \item \textbf{Gemma} (Google, pensata per il dispositivo, debole sulle catene agentiche
+        lunghe) e i \textbf{DeepSeek distillati}: seconde scelte ragionevoli.
+  \item \textbf{Ollama}: il runner più semplice. Espone un endpoint compatibile OpenAI su
+        \texttt{/v1}, quindi qualunque cosa accetti un base URL custom funziona. \textbf{LM
+        Studio} è l'equivalente con interfaccia grafica.
+\end{itemize}
+\begin{verbatim}
+ollama serve                  # server locale su :11434
+ollama pull qwen3-coder:30b   # scarica i pesi, una volta
+ollama run qwen3-coder:30b
+\end{verbatim}
+\textbf{Quanto computer serve}: un modello da 7--8 miliardi di parametri quantizzato usa
+circa 6--8 GB (va su qualunque portatile moderno; ok per spiegare codice, piccole modifiche,
+review di un file; no per decisioni architetturali, decomposizione, implementazione
+multi-file lunga). Uno da 27--32 miliardi richiede circa 20--24 GB ed è la taglia da cui i
+modelli locali diventano usabili per lavoro agentico. Un Mac Apple Silicon con 32 GB ci
+riesce perché ha \textbf{memoria unificata} (la GPU indirizza tutta la RAM, quindi 20+ GB
+per il modello), mentre un portatile Windows tipico ha 16 GB di RAM più 6--8 GB di VRAM
+dedicata e il modello, se non ci sta, finisce sulla CPU e va a rilento.
+
+Si rinuncia a: capacità grezza (un 30B non è un frontier), velocità sui contesti lunghi
+(dove vivono i workflow di Constructor Fabric), batteria e circa 20 GB di disco. Si
+guadagna: nessuna quota, nessuna chiave, nessuna rete, e \emph{il codice non lascia la
+macchina} (può decidere per una tesi su dati privati).
+
+\paragraph{Cloud gratuito (open-weight ospitato)}
+\begin{center}
+\begin{tabular}{|l|p{6.5cm}|p{4cm}|}
+\hline
+\textbf{Servizio} & \textbf{Limite gratuito} & \textbf{Carta?}\\
+\hline
+Cerebras & circa 1M token/giorno, reset giornaliero & no\\
+Groq & modelli open-weight, tetti al minuto e al giorno, generazione molto veloce & no\\
+OpenRouter & 20 req/min e 50 req/giorno sui modelli \texttt{:free}; 1000/giorno dopo un acquisto una tantum di almeno \$10 & no, finché non si vuole il tetto alto\\
+\hline
+\end{tabular}
+\end{center}
+Servono tutti open-weight, quindi la qualità del modello è la stessa questione di prima.
+
+\paragraph{Programmi studenti, per chi studia in Italia}
+\begin{center}
+\begin{tabular}{|l|c|p{8cm}|}
+\hline
+\textbf{Programma} & \textbf{Aiuta?} & \textbf{Perché}\\
+\hline
+GitHub Student Developer Pack & sì & piano studenti di Copilot (crediti AI mensili), host supportato, vale anche in Italia, verifica con la mail universitaria, niente carta\\
+Google AI Plus (studenti) & no & è un abbonamento consumer, \emph{esclude} l'accesso API\\
+Gemini API free tier & sì & non è un programma studenti, è semplicemente gratis\\
+Codex for Students / Student Collective (OpenAI) & no & l'Italia è esclusa\\
+Azure for Students & no & il credito esclude Azure OpenAI Service\\
+AWS Educate & no & il credito esclude Bedrock\\
+\hline
+\end{tabular}
+\end{center}
+
+\paragraph{Tre percorsi}
+\begin{itemize}
+  \item \textbf{A: Copilot con lo Student Pack}, il consigliato per la maggior parte:
+        niente da installare, nessuna chiave. Copilot è host multi-modello (uno più forte
+        per la review, uno più veloce per il lavoro di massa).
+\begin{verbatim}
+cfs init
+cfs generate-agents --agent copilot
+\end{verbatim}
+  \item \textbf{B: Claude Code su un modello proprio}. Claude Code è l'host più forte
+        (sub-agent, worktree isolation, model hint negli agenti generati) ma Anthropic non
+        lo dà gratis. Da Ollama 0.14.0 c'è un endpoint che parla l'API Anthropic Messages:
+\begin{verbatim}
+ollama pull gpt-oss:20b
+export ANTHROPIC_AUTH_TOKEN=ollama      # segnaposto, Ollama non lo controlla
+export ANTHROPIC_BASE_URL=http://localhost:11434
+claude --model gpt-oss:20b
+cfs init && cfs generate-agents --agent claude
+\end{verbatim}
+        Verifica con \texttt{ollama list} e \texttt{echo \$ANTHROPIC\_BASE\_URL}; se
+        \texttt{claude} chiede ancora il login le variabili non sono arrivate alla shell
+        che lo ha lanciato. Richieste piccole: un modello locale ha meno pazienza.
+  \item \textbf{C: chiave Gemini o Mistral}, dove l'host permette di scegliere il
+        provider e per script ai margini del lavoro; non tutti e cinque gli host accettano
+        una chiave arbitraria, e un agente brucia richieste molto più in fretta di un
+        umano in chat.
+\end{itemize}
+
+\paragraph{Quale scegliere} Qualunque portatile, funzionante in dieci minuti: A. Mac da
+32 GB o più, nessun limite: B. Codice privato che non si può mandare in giro: B (non è
+un caso dubbio). Qualità frontier con poco budget: tier Gemini, nei suoi limiti. Provare
+molti modelli: OpenRouter, valutando i \$10 una tantum.
+
+\paragraph{Esempio reale: overwork\_alert} Il repository di Constructor Fabric include un
+piccolo esempio costruito esattamente con questa pipeline: un tool macOS in background che
+traccia il tempo di lavoro \emph{attivo} (se l'idle supera una soglia l'orologio si ferma)
+e avvisa quando si supera un limite. Locale, un solo utente, niente rete, niente menubar.
+Contiene \texttt{PRD.md}, \texttt{DESIGN.md}, \texttt{DECOMPOSITION.md}, un ADR (CLI
+daemon + LaunchAgent, scartando menubar app e job launchd periodico), quattro FEATURE
+spec e nove moduli Python: ``quattro documenti, quattro spec, nove moduli''.
+
+Il requisito \texttt{FR-002} (limite e soglia configurabili) ha default 3 ore, 5 minuti di
+idle, 30 minuti tra i promemoria, e nel codice compaiono come
+\texttt{limit\_seconds=10800}, \texttt{idle\_threshold\_seconds=300},
+\texttt{repeat\_interval\_seconds=1800}. I criteri di accettazione contengono tutti un
+numero (primo alert entro 5 s dal superamento, pausa entro 10 s all'idle, stato via CLI in
+meno di 5 s, setup in 10 minuti). Il DESIGN ha tre layer: CLI/Control (argparse, IPC
+locale), Tracking Core (loop del daemon), OS Integration (\texttt{ioreg}, \texttt{osascript},
+\texttt{launchd}). La FEATURE spec scrive l'algoritmo come passi numerati
+(\texttt{IF ... RETURN do\_not\_notify}) ciascuno con un ID \texttt{inst-...}, e il codice
+ha un \texttt{@cpt-begin/@cpt-end} per ogni passo.
+
+\textbf{Seguire un identificatore}: \texttt{cpt-ex-ovwa-fr-notify-on-limit} compare nel PRD
+(FR-003), nel DESIGN come driver con soluzione, nella DECOMPOSITION assegnato alla feature
+\texttt{notifications}, nella FEATURE spec raffinato in algoritmo e stato, e in
+\texttt{notification\_policy.py} come commenti attorno alle righe esatte. Cinque file, una
+stringa, nessuna riunione. È un esempio volutamente piccolo: mostra l'aspetto degli
+artefatti, non dimostra che l'approccio scali a un sistema grande.
+
+\paragraph{Avvertenza} I numeri (tier gratuiti, rate limit, idoneità studenti) sono stati
+verificati ad agosto 2026 e cambiano ogni pochi mesi: la struttura del ragionamento dura
+più dei numeri, quindi prima di fidarsi di un limite va aperta la fonte.
 
 \end{document}
 
