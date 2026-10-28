@@ -139,10 +139,14 @@ function soloStudiati(m, p) {
 }
 
 // argomenti studiati: default da topics.json (dedotti dagli appunti), modificabili e salvati nel browser
-function studied(m) { const s = store.get("studied", {})[m.slug]; return new Set(s ?? m.topics.filter(t => t.studiato).map(t => t.id)); }
+// nel browser si salvano solo le differenze dal default, così i nuovi argomenti studiati di topics.json arrivano da soli
+// (un vecchio salvataggio a lista viene ignorato)
+function overrides(m) { const o = store.get("studied", {})[m.slug]; return o && !Array.isArray(o) ? o : {}; }
+function studied(m) { const o = overrides(m); return new Set(m.topics.filter(t => o[t.id] ?? t.studiato).map(t => t.id)); }
 function setStudied(id, on) {
-  const m = DATA[cur], all = store.get("studied", {}), s = studied(m);
-  on ? s.add(id) : s.delete(id); all[m.slug] = [...s]; store.set("studied", all); home();
+  const m = DATA[cur], all = store.get("studied", {}), o = overrides(m);
+  if (on == m.topics.find(t => t.id == id).studiato) delete o[id]; else o[id] = on;
+  all[m.slug] = o; store.set("studied", all); home();
 }
 const inProgram = (b, ok) => b.topics.length > 0 && b.topics.every(t => ok.has(t));
 

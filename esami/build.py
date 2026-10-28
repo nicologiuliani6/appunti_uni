@@ -165,8 +165,8 @@ for slug, name in NAMES.items():
                 if p["key"].startswith("progetto") and slug == "introduzione-apprendimento-automatico" and "reti" not in b["topics"]:
                     b["topics"].append("reti")
         prove.append(p)
-    # scritti/simulazioni prima, poi progetti, poi banca; dentro ogni gruppo dal più recente
-    group = lambda k: 2 if k.startswith("banca") else 1 if k.startswith("progetto") else 0
+    # scritti/simulazioni prima, poi progetti, poi banca ed esempi; dentro ogni gruppo dal più recente
+    group = lambda k: 2 if k.startswith(("banca", "esempi")) else 1 if k.startswith("progetto") else 0
     prove.sort(key=lambda p: (-group(p["key"]), re.sub(r"^\D+", "", p["key"])), reverse=True)
     gruppi(prove)
     data.append({"slug": slug, "name": name, "prove": prove, "appunti": appunti(APPUNTI[slug]),

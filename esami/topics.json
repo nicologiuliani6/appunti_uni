@@ -1,5 +1,5 @@
 {
-  "_nota": "Argomenti per materia. 'studiato' = default dedotto dagli appunti in 3/<materia>/*.tex (BD aggiornato il 9/10/2026: appunti completi); nella pagina puoi cambiarli con le checkbox. Una domanda entra nell'allenamento mirato solo se TUTTI i suoi argomenti sono studiati. Regex cercate nel testo della domanda (e nelle opzioni se la domanda da sola non basta).",
+  "_nota": "Argomenti per materia. 'studiato' = default dedotto dagli appunti in 3/<materia>/*.tex (BD 9/10/2026: completi; IngSW e AA aggiornati il 28/10/2026); nella pagina puoi cambiarli con le checkbox. Una domanda entra nell'allenamento mirato solo se TUTTI i suoi argomenti sono studiati. Regex cercate nel testo della domanda (e nelle opzioni se la domanda da sola non basta).",
   "ingegneria-del-software": [
     {
       "id": "uml-base",
@@ -40,20 +40,56 @@
     {
       "id": "user-story",
       "nome": "User story / epiche",
-      "studiato": false,
+      "studiato": true,
       "re": "user stor|storie atomiche|epica"
     },
     {
       "id": "linguaggi",
       "nome": "Linguaggi OO (overloading, binding, C++/Java/Python)",
       "studiato": false,
-      "re": "overload|overrid|late binding|ereditariet. virtuale|decorator|metaclass|C\\+\\+|\\bJava\\b|\\bPython\\b"
+      "re": "overload|overrid|late binding|ereditariet. virtuale|funzione virtuale|template|polimorfismo parametrico|metaclass|C\\+\\+|\\bJava\\b"
     },
     {
       "id": "processo",
-      "nome": "Processo, requisiti, agile, PM",
+      "nome": "Processo, requisiti, agile, Scrum, PM",
+      "studiato": true,
+      "re": "project manager|requisit|agile|Scrum|sprint|backlog|MoSCoW|Minimal Viable|story point|modell\\w* a cascata|stakeholder|prototipazione|Product Owner|sforzo necessario|triangolo di ferro|Essence|\\balpha\\b"
+    },
+    {
+      "id": "uml-dinamici",
+      "nome": "Diagrammi di stato, sequenza, collaborazione, package",
+      "studiato": true,
+      "re": "diagramm\\w* (di|degli|dei) (stat|sequenz|collaborazion|package|component)|statechart"
+    },
+    {
+      "id": "git",
+      "nome": "Controllo di versione e Git",
+      "studiato": true,
+      "re": "\\bgit\\b|version control|controllo di versione|\\bcommit\\b|\\bbranch|\\bmerge\\b|rebase|pull request"
+    },
+    {
+      "id": "architetture",
+      "nome": "Architetture software",
+      "studiato": true,
+      "re": "architettur|client.server|pipe and filter|a livelli"
+    },
+    {
+      "id": "testing",
+      "nome": "Testing, TDD, principi di design (coesione, SOLID)",
       "studiato": false,
-      "re": "project manager|requisiti|agile"
+      "re": "\\btest|Mocking|whitebox|blackbox|coesione|accoppiamento|Single Responsibility|Dependency Inversion|\\binterfaccia\\b|componente riusabile|qualità del software"
+    },
+    {
+      "id": "python",
+      "nome": "Python (linguaggio, collezioni, interprete, GIL)",
+      "studiato": false,
+      "re": "Python|range\\(|pop\\(|append|\\btupl|\\blist[ae]\\b|\\bstring[ah]e?\\b|\\bset\\b|slice|generatore|iteratore|lambda|LEGB|\\bglobal\\b|staticmethod|__\\w+__|\\bGIL\\b|bytecode|value stack|call stack|\\bframe\\b|\\bdis\\b|//"
+    },
+    {
+      "id": "llm",
+      "nome": "API LLM e framework ad agenti (OpenAI, LangChain, CrewAI)",
+      "studiato": false,
+      "re": "OpenAI|LangChain|CrewAI|\\bLLM\\b"
     }
   ],
   "basi-di-dati": [
@@ -234,11 +270,17 @@
       "re": "K-means|clustering|PCA|Principal Component|cross-validation|normalizzazione dei dati"
     },
     {
+      "id": "reti-base",
+      "nome": "Reti neurali: neurone, attivazioni, topologie, dense/conv layer",
+      "studiato": true,
+      "re": "neuron[ei] artificial|neurone corticale|funzion[ei] di attivazione|ReLU|tangente iperbolica|\\btanh\\b|feed.forward|dense layer|layer dens|livell[oi] dens|livell[oi] nascost|hidden layer|\\bshallow\\b|rete (neurale )?profonda|\\bneur|\\breti?\\b|layer|convolu|kernel|deep"
+    },
+    {
       "id": "reti",
-      "nome": "Reti neurali e deep learning",
+      "nome": "Reti neurali: training, CNN avanzate, architetture",
       "studiato": false,
-      "re": "neur|\\breti?\\b|layer|convolu|backprop|ReLU|vanishing|autoencoder|\\bGAN|U-Net|transformer|LSTM|MaxPool|Inception|AlexNet|ResNet|stride|kernel|campo ricettivo|optimizer|Keras|loss|deep|skip|transposed|diffusion|IoU|IntersectionoverUnion|Intersection over|epoche|Adversarial|dropout",
-      "re_opzioni": "clipping|momento|backprop|skip connection|dropout|\\bGAN|Adversarial|encoder-decoder|Diffusion|ReLU|\\blayer|convolu"
+      "re": "backprop|vanishing|autoencoder|\\bGAN|U-Net|transformer|LSTM|MaxPool|pooling|Inception|AlexNet|ResNet|stride|padding|campo ricettivo|optimizer|Keras|\\bloss\\b|skip|transposed|diffusion|IoU|IntersectionoverUnion|Intersection over|epoche|Adversarial|dropout|batch norm",
+      "re_opzioni": "clipping|momento|backprop|skip connection|dropout|\\bGAN|Adversarial|encoder-decoder|Diffusion|pooling|stride|padding|U-Net|ResNet|Inception|VGG|encoder|downsampling"
     }
   ]
 }
