@@ -1,286 +1,328 @@
 {
-  "_nota": "Argomenti per materia. 'studiato' = default dedotto dagli appunti in 3/<materia>/*.tex (BD 9/10/2026: completi; IngSW e AA aggiornati il 28/10/2026); nella pagina puoi cambiarli con le checkbox. Una domanda entra nell'allenamento mirato solo se TUTTI i suoi argomenti sono studiati. Regex cercate nel testo della domanda (e nelle opzioni se la domanda da sola non basta).",
-  "ingegneria-del-software": [
-    {
-      "id": "uml-base",
-      "nome": "UML e concetti OO (oggetti, classi)",
-      "studiato": true,
-      "re": "\\bUML\\b|un oggetto è|istanza di una classe"
-    },
-    {
-      "id": "uml-classi",
-      "nome": "Diagramma delle classi / estrazione metodi",
-      "studiato": true,
-      "re": "diagramma (a|delle|di) class|estragg\\w* i metodi|delle classi coerente"
-    },
-    {
-      "id": "use-case",
-      "nome": "Use case",
-      "studiato": true,
-      "re": "use case|casi d.uso|caso d.uso"
-    },
-    {
-      "id": "attivita",
-      "nome": "Diagramma di attività",
-      "studiato": true,
-      "re": "diagramma di attivit"
-    },
-    {
-      "id": "pattern",
-      "nome": "Design pattern specifici (singleton, prototype…)",
-      "studiato": false,
-      "re": "design pattern|singleton|clone|prototype"
-    },
-    {
-      "id": "crc",
-      "nome": "Schede CRC",
-      "studiato": false,
-      "re": "\\bCRC\\b"
-    },
-    {
-      "id": "user-story",
-      "nome": "User story / epiche",
-      "studiato": true,
-      "re": "user stor|storie atomiche|epica"
-    },
-    {
-      "id": "linguaggi",
-      "nome": "Linguaggi OO (overloading, binding, C++/Java/Python)",
-      "studiato": false,
-      "re": "overload|overrid|late binding|ereditariet. virtuale|funzione virtuale|template|polimorfismo parametrico|metaclass|C\\+\\+|\\bJava\\b"
-    },
-    {
-      "id": "processo",
-      "nome": "Processo, requisiti, agile, Scrum, PM",
-      "studiato": true,
-      "re": "project manager|requisit|agile|Scrum|sprint|backlog|MoSCoW|Minimal Viable|story point|modell\\w* a cascata|stakeholder|prototipazione|Product Owner|sforzo necessario|triangolo di ferro|Essence|\\balpha\\b"
-    },
-    {
-      "id": "uml-dinamici",
-      "nome": "Diagrammi di stato, sequenza, collaborazione, package",
-      "studiato": true,
-      "re": "diagramm\\w* (di|degli|dei) (stat|sequenz|collaborazion|package|component)|statechart"
-    },
-    {
-      "id": "git",
-      "nome": "Controllo di versione e Git",
-      "studiato": true,
-      "re": "\\bgit\\b|version control|controllo di versione|\\bcommit\\b|\\bbranch|\\bmerge\\b|rebase|pull request"
-    },
-    {
-      "id": "architetture",
-      "nome": "Architetture software",
-      "studiato": true,
-      "re": "architettur|client.server|pipe and filter|a livelli"
-    },
-    {
-      "id": "testing",
-      "nome": "Testing, TDD, principi di design (coesione, SOLID)",
-      "studiato": false,
-      "re": "\\btest|Mocking|whitebox|blackbox|coesione|accoppiamento|Single Responsibility|Dependency Inversion|\\binterfaccia\\b|componente riusabile|qualità del software"
-    },
-    {
-      "id": "python",
-      "nome": "Python (linguaggio, collezioni, interprete, GIL)",
-      "studiato": false,
-      "re": "Python|range\\(|pop\\(|append|\\btupl|\\blist[ae]\\b|\\bstring[ah]e?\\b|\\bset\\b|slice|generatore|iteratore|lambda|LEGB|\\bglobal\\b|staticmethod|__\\w+__|\\bGIL\\b|bytecode|value stack|call stack|\\bframe\\b|\\bdis\\b|//"
-    },
-    {
-      "id": "llm",
-      "nome": "API LLM e framework ad agenti (OpenAI, LangChain, CrewAI)",
-      "studiato": false,
-      "re": "OpenAI|LangChain|CrewAI|\\bLLM\\b"
-    }
-  ],
-  "basi-di-dati": [
-    {
-      "id": "relazionale",
-      "nome": "Modello relazionale, vincoli, chiavi, null",
-      "studiato": true,
-      "re": "vincol|chiav|superchiav|valor\\w* null|informazione incompleta|integrit|modello relazionale"
-    },
-    {
-      "id": "algebra",
-      "nome": "Algebra relazionale",
-      "studiato": true,
-      "re": "algebra relazionale|algebric|join|proiezione|intersezione|equi-join|\\\\pi_|\\\\sigma_|\\\\bowtie"
-    },
-    {
-      "id": "calcolo",
-      "nome": "Calcolo relazionale",
-      "studiato": true,
-      "re": "calcolo (\\(relazionale\\) )?(relazionale|su domini|su tuple)"
-    },
-    {
-      "id": "viste",
-      "nome": "Viste",
-      "studiato": true,
-      "re": "\\bvist[ae]\\b"
-    },
-    {
-      "id": "sql",
-      "nome": "SQL",
-      "studiato": true,
-      "re": "\\bSQL|SELECT|HAVING|GROUP BY|DELETE FROM|ALTER TABLE|interrogazioni nidificate"
-    },
-    {
-      "id": "er",
-      "nome": "Progettazione E-R",
-      "studiato": true,
-      "re": "E/R|E-R|\\bER\\b|modello concettuale|progettazione|generalizzazione|cardinalità delle relazioni"
-    },
-    {
-      "id": "acid",
-      "nome": "Transazioni: proprietà ACID",
-      "studiato": true,
-      "re": "ACID|acide|una transazione rispetta|proprietà di (consistenza|isolamento|atomicità)"
-    },
-    {
-      "id": "concorrenza",
-      "nome": "Concorrenza: schedule, lock, isolamento",
-      "studiato": true,
-      "re": "schedul|\\block|2PL|livello di isolamento|conflitt|Transazioni[.:]"
-    },
-    {
-      "id": "recovery",
-      "nome": "Recovery (log, ARIES)",
-      "studiato": true,
-      "re": "ARIES|REDO|UNDO|\\blog\\b|crash|Recovery"
-    },
-    {
-      "id": "indici",
-      "nome": "Indici, B+tree, hashing",
-      "studiato": true,
-      "re": "indic[ei]|B\\+|hash|blocchi"
-    },
-    {
-      "id": "normalizzazione",
-      "nome": "Normalizzazione",
-      "studiato": true,
-      "re": "normalizzazion|dipendenze funzionali"
-    },
-    {
-      "id": "privilegi",
-      "nome": "Sicurezza e privilegi",
-      "studiato": true,
-      "re": "privilegi"
-    }
-  ],
-  "introduzione-apprendimento-automatico": [
-    {
-      "id": "intro",
-      "nome": "Introduzione, apprendimento supervisionato",
-      "studiato": true,
-      "re": "apprendimento supervisionato"
-    },
-    {
-      "id": "self-supervised",
-      "nome": "Apprendimento auto-supervisionato",
-      "studiato": false,
-      "re": "auto-supervisionato|self-supervised"
-    },
-    {
-      "id": "alberi",
-      "nome": "Alberi di decisione, random forest",
-      "studiato": true,
-      "re": "alber[oi] di decision|random forest|foreste"
-    },
-    {
-      "id": "entropia",
-      "nome": "Entropia, information gain",
-      "studiato": true,
-      "re": "entropi|information gain|mutua informazione"
-    },
-    {
-      "id": "probabilita",
-      "nome": "Probabilità, distribuzione congiunta",
-      "studiato": true,
-      "re": "probal?bilità condizionat|P\\(A\\|B\\)|dad[oi]\\b|monete|distribuzione congiunta|dsitribuzione congiunta|variabile aleatoria"
-    },
-    {
-      "id": "naive-bayes",
-      "nome": "Naive Bayes",
-      "studiato": true,
-      "re": "naive bayes|naïve bayes"
-    },
-    {
-      "id": "generativi",
-      "nome": "Modelli generativi vs discriminativi",
-      "studiato": true,
-      "re": "generativ|discriminativ"
-    },
-    {
-      "id": "metriche",
-      "nome": "Accuratezza, precisione, recall",
-      "studiato": true,
-      "re": "recall|precisione|precision|falsi positivi|falsi negativi"
-    },
-    {
-      "id": "logistica",
-      "nome": "Regressione logistica e funzione logistica",
-      "studiato": true,
-      "re": "regressione logistica|funzione logistica"
-    },
-    {
-      "id": "multinomiale",
-      "nome": "Regressione multinomiale",
-      "studiato": true,
-      "re": "multinomiale"
-    },
-    {
-      "id": "softmax",
-      "nome": "Funzione softmax",
-      "studiato": false,
-      "re": "softmax"
-    },
-    {
-      "id": "gradiente",
-      "nome": "Discesa del gradiente, learning rate, minibatch",
-      "studiato": true,
-      "re": "discesa del gradiente|learning rate|minibatch|minimi locali"
-    },
-    {
-      "id": "lineare",
-      "nome": "Classificazione lineare",
-      "studiato": true,
-      "re": "classificazione lineare"
-    },
-    {
-      "id": "overfitting",
-      "nome": "Overfitting",
-      "studiato": true,
-      "re": "overfitting"
-    },
-    {
-      "id": "crossentropy",
-      "nome": "Crossentropy, KL",
-      "studiato": false,
-      "re": "crossentropy|cross-entropy|Kullback"
-    },
-    {
-      "id": "regr-lineare",
-      "nome": "Regressione lineare",
-      "studiato": false,
-      "re": "regressione lineare"
-    },
-    {
-      "id": "non-supervisionato",
-      "nome": "Clustering, PCA, cross-validation, normalizzazione",
-      "studiato": false,
-      "re": "K-means|clustering|PCA|Principal Component|cross-validation|normalizzazione dei dati"
-    },
-    {
-      "id": "reti-base",
-      "nome": "Reti neurali: neurone, attivazioni, topologie, dense/conv layer",
-      "studiato": true,
-      "re": "neuron[ei] artificial|neurone corticale|funzion[ei] di attivazione|ReLU|tangente iperbolica|\\btanh\\b|feed.forward|dense layer|layer dens|livell[oi] dens|livell[oi] nascost|hidden layer|\\bshallow\\b|rete (neurale )?profonda|\\bneur|\\breti?\\b|layer|convolu|kernel|deep"
-    },
-    {
-      "id": "reti",
-      "nome": "Reti neurali: training, CNN avanzate, architetture",
-      "studiato": false,
-      "re": "backprop|vanishing|autoencoder|\\bGAN|U-Net|transformer|LSTM|MaxPool|pooling|Inception|AlexNet|ResNet|stride|padding|campo ricettivo|optimizer|Keras|\\bloss\\b|skip|transposed|diffusion|IoU|IntersectionoverUnion|Intersection over|epoche|Adversarial|dropout|batch norm",
-      "re_opzioni": "clipping|momento|backprop|skip connection|dropout|\\bGAN|Adversarial|encoder-decoder|Diffusion|pooling|stride|padding|U-Net|ResNet|Inception|VGG|encoder|downsampling"
-    }
-  ]
+ "_nota": "Argomenti per materia. 'studiato' = default dedotto dagli appunti in 3/<materia>/*.tex (BD 9/10/2026: completi; IngSW e AA aggiornati il 28/10/2026); nella pagina puoi cambiarli con le checkbox. Una domanda entra nell'allenamento mirato solo se TUTTI i suoi argomenti sono studiati. Regex cercate nel testo della domanda (e nelle opzioni se la domanda da sola non basta).",
+ "ingegneria-del-software": [
+  {
+   "id": "uml-base",
+   "nome": "UML e concetti OO (oggetti, classi)",
+   "studiato": true,
+   "re": "\\bUML\\b|un oggetto è|istanza di una classe"
+  },
+  {
+   "id": "uml-classi",
+   "nome": "Diagramma delle classi / estrazione metodi",
+   "studiato": true,
+   "re": "diagramma (a|delle|di) class|estragg\\w* i metodi|delle classi coerente"
+  },
+  {
+   "id": "use-case",
+   "nome": "Use case",
+   "studiato": true,
+   "re": "use case|casi d.uso|caso d.uso"
+  },
+  {
+   "id": "attivita",
+   "nome": "Diagramma di attività",
+   "studiato": true,
+   "re": "diagramma di attivit"
+  },
+  {
+   "id": "pattern",
+   "nome": "Design pattern (singleton, prototype…)",
+   "studiato": true,
+   "re": "design pattern|singleton|clone|prototype"
+  },
+  {
+   "id": "crc",
+   "nome": "Schede CRC",
+   "studiato": false,
+   "re": "\\bCRC\\b"
+  },
+  {
+   "id": "user-story",
+   "nome": "User story / epiche",
+   "studiato": true,
+   "re": "user stor|storie atomiche|epica"
+  },
+  {
+   "id": "linguaggi",
+   "nome": "Linguaggi OO (overloading, binding, C++/Java/Python)",
+   "studiato": false,
+   "re": "overload|overrid|late binding|ereditariet. virtuale|funzione virtuale|template|polimorfismo parametrico|metaclass|C\\+\\+|\\bJava\\b"
+  },
+  {
+   "id": "processo",
+   "nome": "Processo, requisiti, agile, Scrum, PM",
+   "studiato": true,
+   "re": "project manager|requisit|agile|Scrum|sprint|backlog|MoSCoW|Minimal Viable|story point|modell\\w* a cascata|stakeholder|prototipazione|Product Owner|sforzo necessario|triangolo di ferro|Essence|\\balpha\\b"
+  },
+  {
+   "id": "uml-dinamici",
+   "nome": "Diagrammi di stato, sequenza, collaborazione, package",
+   "studiato": true,
+   "re": "diagramm\\w* (di|degli|dei) (stat|sequenz|collaborazion|package|component)|statechart"
+  },
+  {
+   "id": "git",
+   "nome": "Controllo di versione e Git",
+   "studiato": true,
+   "re": "\\bgit\\b|version control|controllo di versione|\\bcommit\\b|\\bbranch|\\bmerge\\b|rebase|pull request"
+  },
+  {
+   "id": "architetture",
+   "nome": "Architetture software",
+   "studiato": true,
+   "re": "architettur|client.server|pipe and filter|a livelli"
+  },
+  {
+   "id": "testing",
+   "nome": "Testing, TDD, qualità e metriche",
+   "studiato": true,
+   "re": "\\btest|Mocking|whitebox|blackbox|qualità del software|copertura|ciclomatic|SonarQube|debito tecnico|\\bGQM\\b|difetto|guasto"
+  },
+  {
+   "id": "python",
+   "nome": "Python (linguaggio, collezioni, interprete, GIL)",
+   "studiato": false,
+   "re": "Python|range\\(|pop\\(|append|\\btupl|\\blist[ae]\\b|\\bstring[ah]e?\\b|\\bset\\b|slice|generatore|iteratore|lambda|LEGB|\\bglobal\\b|staticmethod|__\\w+__|\\bGIL\\b|bytecode|value stack|call stack|\\bframe\\b|\\bdis\\b|//"
+  },
+  {
+   "id": "llm",
+   "nome": "API LLM e framework ad agenti (OpenAI, LangChain, CrewAI)",
+   "studiato": false,
+   "re": "OpenAI|LangChain|CrewAI|\\bLLM\\b"
+  },
+  {
+   "id": "componenti",
+   "nome": "Componenti, nodi, deployment",
+   "studiato": true,
+   "re": "componenti? (UML|software)|\\bnod[oi]\\b|deployment|\\.dll|lecca"
+  },
+  {
+   "id": "realtime",
+   "nome": "UML per sistemi real-time",
+   "studiato": true,
+   "re": "real.?time|tempo reale|vincoli temporali|timing"
+  },
+  {
+   "id": "ocl",
+   "nome": "Object Constraint Language (OCL)",
+   "studiato": true,
+   "re": "\\bOCL\\b|Object Constraint|invarian|pre.?condizion|post.?condizion"
+  },
+  {
+   "id": "refactoring",
+   "nome": "Refactoring",
+   "studiato": true,
+   "re": "refactor|code smell|ristruttur"
+  },
+  {
+   "id": "solid",
+   "nome": "Principi di design (coesione, SOLID, interfacce)",
+   "studiato": false,
+   "re": "coesione|accoppiamento|Single Responsibility|Dependency Inversion|\\binterfaccia\\b|componente riusabile"
+  },
+  {
+   "id": "ciclo-vita",
+   "nome": "Ciclo di vita, costi, manutenzione, produttività, Brooks",
+   "studiato": true,
+   "re": "ciclo di vita|manutenzione|produttivit|Brooks|silver bullet|Standish|costo del software|\\bLoC\\b|waterfall|modell\\w* a cascata|SWEBOK"
+  },
+  {
+   "id": "xp",
+   "nome": "Extreme Programming (pratiche, YAGNI, CI, MVP)",
+   "studiato": true,
+   "re": "\\bXP\\b|Extreme Programming|YAGNI|integrazione continua|continuous integration|pair programming|programmazione in coppia|Minimal Viable|\\bMVP\\b|refactoring"
+  }
+ ],
+ "basi-di-dati": [
+  {
+   "id": "relazionale",
+   "nome": "Modello relazionale, vincoli, chiavi, null",
+   "studiato": true,
+   "re": "vincol|chiav|superchiav|valor\\w* null|informazione incompleta|integrit|modello relazionale"
+  },
+  {
+   "id": "algebra",
+   "nome": "Algebra relazionale",
+   "studiato": true,
+   "re": "algebra relazionale|algebric|join|proiezione|intersezione|equi-join|\\\\pi_|\\\\sigma_|\\\\bowtie"
+  },
+  {
+   "id": "calcolo",
+   "nome": "Calcolo relazionale",
+   "studiato": true,
+   "re": "calcolo (\\(relazionale\\) )?(relazionale|su domini|su tuple)"
+  },
+  {
+   "id": "viste",
+   "nome": "Viste",
+   "studiato": true,
+   "re": "\\bvist[ae]\\b"
+  },
+  {
+   "id": "sql",
+   "nome": "SQL",
+   "studiato": true,
+   "re": "\\bSQL|SELECT|HAVING|GROUP BY|DELETE FROM|ALTER TABLE|interrogazioni nidificate"
+  },
+  {
+   "id": "er",
+   "nome": "Progettazione E-R",
+   "studiato": true,
+   "re": "E/R|E-R|\\bER\\b|modello concettuale|progettazione|generalizzazione|cardinalità delle relazioni"
+  },
+  {
+   "id": "acid",
+   "nome": "Transazioni: proprietà ACID",
+   "studiato": true,
+   "re": "ACID|acide|una transazione rispetta|proprietà di (consistenza|isolamento|atomicità)"
+  },
+  {
+   "id": "concorrenza",
+   "nome": "Concorrenza: schedule, lock, isolamento",
+   "studiato": true,
+   "re": "schedul|\\block|2PL|livello di isolamento|conflitt|Transazioni[.:]"
+  },
+  {
+   "id": "recovery",
+   "nome": "Recovery (log, ARIES)",
+   "studiato": true,
+   "re": "ARIES|REDO|UNDO|\\blog\\b|crash|Recovery"
+  },
+  {
+   "id": "indici",
+   "nome": "Indici, B+tree, hashing",
+   "studiato": true,
+   "re": "indic[ei]|B\\+|hash|blocchi"
+  },
+  {
+   "id": "normalizzazione",
+   "nome": "Normalizzazione",
+   "studiato": true,
+   "re": "normalizzazion|dipendenze funzionali"
+  },
+  {
+   "id": "privilegi",
+   "nome": "Sicurezza e privilegi",
+   "studiato": true,
+   "re": "privilegi"
+  }
+ ],
+ "introduzione-apprendimento-automatico": [
+  {
+   "id": "intro",
+   "nome": "Introduzione, apprendimento supervisionato",
+   "studiato": true,
+   "re": "apprendimento supervisionato"
+  },
+  {
+   "id": "self-supervised",
+   "nome": "Apprendimento auto-supervisionato",
+   "studiato": false,
+   "re": "auto-supervisionato|self-supervised"
+  },
+  {
+   "id": "alberi",
+   "nome": "Alberi di decisione, random forest",
+   "studiato": true,
+   "re": "alber[oi] di decision|random forest|foreste"
+  },
+  {
+   "id": "entropia",
+   "nome": "Entropia, information gain",
+   "studiato": true,
+   "re": "entropi|information gain|mutua informazione"
+  },
+  {
+   "id": "probabilita",
+   "nome": "Probabilità, distribuzione congiunta",
+   "studiato": true,
+   "re": "probal?bilità condizionat|P\\(A\\|B\\)|dad[oi]\\b|monete|distribuzione congiunta|dsitribuzione congiunta|variabile aleatoria"
+  },
+  {
+   "id": "naive-bayes",
+   "nome": "Naive Bayes",
+   "studiato": true,
+   "re": "naive bayes|naïve bayes"
+  },
+  {
+   "id": "generativi",
+   "nome": "Modelli generativi vs discriminativi",
+   "studiato": true,
+   "re": "generativ|discriminativ"
+  },
+  {
+   "id": "metriche",
+   "nome": "Accuratezza, precisione, recall",
+   "studiato": true,
+   "re": "recall|precisione|precision|falsi positivi|falsi negativi"
+  },
+  {
+   "id": "logistica",
+   "nome": "Regressione logistica e funzione logistica",
+   "studiato": true,
+   "re": "regressione logistica|funzione logistica"
+  },
+  {
+   "id": "multinomiale",
+   "nome": "Regressione multinomiale",
+   "studiato": true,
+   "re": "multinomiale"
+  },
+  {
+   "id": "softmax",
+   "nome": "Funzione softmax",
+   "studiato": false,
+   "re": "softmax"
+  },
+  {
+   "id": "gradiente",
+   "nome": "Discesa del gradiente, learning rate, minibatch",
+   "studiato": true,
+   "re": "discesa del gradiente|learning rate|minibatch|minimi locali"
+  },
+  {
+   "id": "lineare",
+   "nome": "Classificazione lineare",
+   "studiato": true,
+   "re": "classificazione lineare"
+  },
+  {
+   "id": "overfitting",
+   "nome": "Overfitting",
+   "studiato": true,
+   "re": "overfitting"
+  },
+  {
+   "id": "crossentropy",
+   "nome": "Crossentropy, KL",
+   "studiato": false,
+   "re": "crossentropy|cross-entropy|Kullback"
+  },
+  {
+   "id": "regr-lineare",
+   "nome": "Regressione lineare",
+   "studiato": false,
+   "re": "regressione lineare"
+  },
+  {
+   "id": "non-supervisionato",
+   "nome": "Clustering, PCA, cross-validation, normalizzazione",
+   "studiato": false,
+   "re": "K-means|clustering|PCA|Principal Component|cross-validation|normalizzazione dei dati"
+  },
+  {
+   "id": "reti-base",
+   "nome": "Reti neurali: neurone, attivazioni, topologie, dense/conv layer",
+   "studiato": true,
+   "re": "neuron[ei] artificial|neurone corticale|funzion[ei] di attivazione|ReLU|tangente iperbolica|\\btanh\\b|feed.forward|dense layer|layer dens|livell[oi] dens|livell[oi] nascost|hidden layer|\\bshallow\\b|rete (neurale )?profonda|\\bneur|\\breti?\\b|layer|convolu|kernel|deep"
+  },
+  {
+   "id": "reti",
+   "nome": "Reti neurali: training, CNN avanzate, architetture",
+   "studiato": false,
+   "re": "backprop|vanishing|autoencoder|\\bGAN|U-Net|transformer|LSTM|MaxPool|pooling|Inception|AlexNet|ResNet|stride|padding|campo ricettivo|optimizer|Keras|\\bloss\\b|skip|transposed|diffusion|IoU|IntersectionoverUnion|Intersection over|epoche|Adversarial|dropout|batch norm",
+   "re_opzioni": "clipping|momento|backprop|skip connection|dropout|\\bGAN|Adversarial|encoder-decoder|Diffusion|pooling|stride|padding|U-Net|ResNet|Inception|VGG|encoder|downsampling"
+  }
+ ]
 }

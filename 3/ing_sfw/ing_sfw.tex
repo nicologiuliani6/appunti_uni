@@ -254,6 +254,137 @@ codice: è una costruzione sociale che influenza e viene influenzata dalle perso
 lo sviluppano e lo usano. Chi lo sviluppa ha una responsabilità etica, perché il
 software non è neutrale.
 
+\subsection{L'ingegneria del software e il ciclo di vita}
+
+\subsubsection{Che cos'è l'ingegneria del software}
+L'\textbf{ingegneria del software} è una disciplina \emph{metodologica}: studia i metodi di
+produzione, le teorie alla base dei metodi e gli strumenti di sviluppo e di misura della
+qualità dei sistemi software. È anche una disciplina \emph{empirica}, basata
+sull'esperienza e sulla storia dei progetti passati. Attenzione: manca ancora una
+\emph{teoria} dell'ingegneria del software (Essence è un tentativo in questa direzione).
+Nei paesi anglosassoni \emph{software engineer} è una professione riconosciuta.
+
+\subsubsection{Produttività}
+La \textbf{produttività} è il rapporto output/input: 1000 caramelle prodotte con 100 euro
+significano 10 caramelle per euro. Nello sviluppo software è il rapporto tra software
+prodotto (in \textbf{LoC}, \emph{lines of code}) e sforzo (\emph{effort}, in giorni/persona):
+per esempio 50 LoC al giorno/persona.
+
+La produttività dell'industria software è \textbf{bassa}. Dallo \emph{Standish Report} 2003,
+su 13.522 progetti: il 66\% fallisce (nessun risultato utile), l'82\% supera i tempi
+previsti, il 48\% produce sistemi senza le funzioni richieste dai clienti, con 55 miliardi
+di dollari di spreco nei soli USA. I \emph{CHAOS report} (2015) confrontano agile e
+waterfall: l'agile ha più successi.
+
+I rischi principali di chi sviluppa software sono: mancanza di feedback del
+cliente/utente, \textbf{turnover} dello staff (la permanenza media nelle grandi aziende
+tech è di circa 2 anni), realizzare funzioni non richieste, ritardi, sforamento del
+budget, sistema inusabile, sistema incapace di cooperare con quelli esistenti.
+
+\subsubsection{Principi guida dello sviluppo}
+Sei principi: \textbf{sviluppare iterativamente}, gestire i requisiti, usare architetture
+di componenti, modellare graficamente, verificare la qualità, controllare le modifiche.
+\begin{itemize}
+  \item \emph{Iterativo}: ogni iterazione produce una versione funzionante e verificabile;
+        il feedback di fine iterazione guida le priorità della successiva; i rischi
+        emergono presto, quando correggerli costa ancora poco.
+  \item \emph{Controllo delle modifiche}: un sistema di versionamento (Git) traccia chi ha
+        cambiato cosa, quando e perché; il \emph{branching} permette di lavorare in
+        parallelo senza toccare la versione stabile; commit message, pull request e code
+        review danno tracciabilità e riducono le regressioni.
+\end{itemize}
+
+\subsubsection{Il ciclo di vita}
+Fasi del \textbf{ciclo di vita}: requisiti (analisi e specifica), progettazione
+(architettura e componenti), codifica e debugging, testing e verifica, deployment,
+manutenzione. Le \emph{attività di sviluppo} (specifica, progetto della struttura
+modulare e delle interfacce, implementazione e integrazione, verifica e validazione,
+evoluzione e manutenzione) vanno modellate esplicitamente per poterle gestire, per
+esempio con un diagramma di \textbf{Gantt}. Un \textbf{processo software} è l'insieme dei
+\emph{ruoli} (stakeholder, progettista, sviluppatore, tester, manutentore), delle
+\emph{attività} (programmare, testare, fare una demo, documentare) e dei \emph{documenti}
+(codice sorgente, eseguibile, specifica, risultati dei test) necessari per creare un
+sistema software.
+
+\subsubsection{I costi del software}
+\begin{itemize}
+  \item I costi software spesso \emph{dominano} quelli dell'hardware sottostante.
+  \item \textbf{Mantenere costa più che sviluppare}: nei sistemi longevi la manutenzione
+        vale un multiplo dello sviluppo (es.\ 3 volte).
+  \item Distribuzione storica (Boehm, citato da Schach): definizione del problema e
+        requisiti 7\%, pianificazione e design 8\%, codifica dei moduli 5\%, test e
+        integrazione 13\%, \textbf{manutenzione 67\%}. In uno scenario ipotetico con GenAI
+        (stime illustrative): requisiti 10\%, design 5\%, codifica 0\%, test 10\%,
+        manutenzione 75\%.
+  \item \textbf{Costo del cambiamento}: il grafico classico dice che una modifica costa
+        tanto più quanto più tardi avviene (da cui il waterfall: decisioni importanti
+        subito), ma l'agile mette in dubbio che sia davvero così. Nel mito ``i requisiti
+        cambiano, il software è flessibile'': il costo cresce passando da requisiti a
+        design a implementazione.
+  \item Con la dimensione del software crescono il costo per riga e la durata, e cala la
+        produttività (sistema $<$ utility $<$ applicazione, in LoC per programmatore al
+        giorno).
+  \item \emph{Fare la cosa giusta} (Standish 2002): il 7\% delle funzioni è usato
+        continuamente, il 13\% spesso, il 16\% saltuariamente, il 19\% raramente, il
+        \textbf{45\% mai}.
+\end{itemize}
+
+\subsubsection{La manutenzione}
+Tutti i prodotti hanno bisogno di manutenzione perché il mondo cambia: la manutenzione è
+``normale''. Tre tipi:
+\begin{itemize}
+  \item \textbf{perfettiva} (o preventiva), 65\%: migliorare il prodotto (es.\ le
+        prestazioni di una ricerca già corretta);
+  \item \textbf{adattiva}, 18\%: rispondere a modifiche dell'ambiente (es.\ nuova versione
+        del sistema operativo);
+  \item \textbf{correttiva}, 17\%: correggere errori trovati dopo la consegna (es.\ un
+        calcolo errato).
+\end{itemize}
+
+\subsubsection{Attributi dei prodotti e standard}
+\begin{itemize}
+  \item Attributi \textbf{esterni} (visibili all'utente): costo e tipo di licenza,
+        prestazioni, garanzia.
+  \item Attributi \textbf{interni} (visibili ai progettisti): dimensione (\emph{size}),
+        sforzo di produzione, durata, mantenibilità, modularità.
+\end{itemize}
+L'importanza relativa degli attributi dipende dal prodotto e dall'ambiente (nei sistemi
+real-time con requisiti di sicurezza contano soprattutto affidabilità ed efficienza); se
+un attributo va ``spinto'', i costi di sviluppo crescono esponenzialmente.
+
+Standard IEEE principali: 610 (glossario), 828 (gestione delle configurazioni), 829
+(documentazione dei test), 830 (specifica dei requisiti), 1008 (unit testing), 1219
+(manutenzione), 1471 (descrizione delle architetture), 1517 (riuso). Lo \textbf{SWEBOK}
+(\emph{Software Engineering Body of Knowledge}, IEEE, versione 4.0) organizza la
+conoscenza in aree.
+
+\subsubsection{Stakeholder}
+Gli stakeholder sono progettisti professionisti, management, personale tecnico, decisori,
+utenti, finanziatori: a ciascuno corrispondono almeno un punto di vista (\emph{view}) e
+varie decisioni.
+
+\subsubsection{Miti e leggende}
+\begin{itemize}
+  \item \textbf{No silver bullet} (Fred Brooks, premio Turing 1999, progettista dell'IBM
+        360): non esiste un ``proiettile d'argento'', una soluzione finale che renda facile
+        costruire software. Libri: \emph{The Mythical Man-Month}, articolo \emph{No Silver
+        Bullet} (1987).
+  \item \textbf{Legge di Brooks}: aggiungere personale a un progetto in ritardo lo fa
+        ritardare ancora di più.
+  \item Per cominciare basta un'idea generica degli obiettivi: \emph{falso}, la cattiva
+        specifica dei requisiti è la maggior causa di fallimenti.
+  \item I requisiti possono cambiare tanto il software è flessibile: \emph{falso}, il
+        costo della modifica cresce col tempo.
+\end{itemize}
+
+\paragraph{Gli LLM sono il nuovo silver bullet?} Generano codice, test, documentazione e
+refactoring, ma non risolvono i problemi di fondo (requisiti, architettura, qualità).
+Rischi: codice plausibile ma errato (allucinazioni), debito tecnico nascosto, dipendenza
+dal fornitore, proprietà intellettuale del codice generato. Nel ciclo di vita: requisiti
+(user story), design (suggerimenti, sempre con supervisione umana), codifica (pair
+programming con l'AI), testing (casi da validare), manutenzione (comprensione di codice
+legacy). La verifica umana resta obbligatoria.
+
 \subsection{Essence: gli Alpha del Kernel}
 
 \textbf{Essence} (standard OMG) definisce un \emph{kernel} di concetti comuni a
@@ -773,6 +904,156 @@ delimitano (\emph{scope and constrain}) il \emph{Work}; il \emph{Team} produce i
 \caption{Il grafo degli Alpha del kernel di Essence.}
 \end{figure}
 
+\subsection{Processi agili ed Extreme Programming}
+
+\subsubsection{Collaborazione, progetti e prodotti}
+Sviluppare software è un'attività \emph{sociale}: comprendere i bisogni richiede
+conversazione e negoziazione, e un prodotto corretto deve anche risolvere un problema utile.
+\begin{center}
+\begin{tabular}{|p{2.6cm}|p{6.2cm}|p{6.2cm}|}
+\hline
+ & \textbf{Progetto} & \textbf{Prodotto}\\
+\hline
+Orizzonte & iniziativa temporanea con un obiettivo & evoluzione nel tempo, ciclo di vita\\
+Pianificazione & vincoli di ambito, tempi, risorse & obiettivi di prodotto, lavoro ordinato per valore\\
+Successo & raggiungere gli obiettivi del progetto & valore per utenti e organizzazione nel tempo\\
+\hline
+\end{tabular}
+\end{center}
+Un progetto può essere agile e le due visioni possono coesistere. All'inizio si conosce
+solo una parte del problema: pianificare significa formulare una \emph{previsione} e
+aggiornarla con nuove informazioni (agilità = pianificazione frequente e verificabile).
+Il \emph{backlog} non contiene solo user story, ma anche difetti e attività tecniche.
+
+\subsubsection{Valori e principi agili}
+Il Manifesto agile dà più valore a individui e interazioni, software funzionante,
+collaborazione col cliente, risposta al cambiamento, \emph{pur riconoscendo} il valore di
+processi, documentazione, contratti e piani. I \textbf{dodici principi} si raggruppano in
+quattro temi: valore e adattamento (consegne frequenti, software funzionante, cambiamenti
+benvenuti); collaborazione e autonomia (lavoro quotidiano col business, persone motivate,
+team auto-organizzati); qualità e sostenibilità (ritmo sostenibile, eccellenza tecnica);
+semplicità e miglioramento (massimizzare il lavoro \emph{non} fatto, riflettere e adattare).
+
+\paragraph{Feedback su tempi diversi.} Test automatici (secondi/minuti: il comportamento
+atteso è preservato?); coppia e integrazione (durante il lavoro e ogni giorno: il codice è
+comprensibile e si integra?); cliente e utenti (durante l'iterazione e ai rilasci:
+l'incremento risolve il problema?); riflessione del team (a intervalli regolari: il nostro
+modo di lavorare è efficace?).
+
+\paragraph{Minimum Viable Product.} Un MVP (concetto del \emph{Lean Startup}) mette alla
+prova un'\emph{ipotesi} sul prodotto e sugli utenti; il risultato serve a decidere se
+proseguire, cambiare direzione o fermarsi. ``Minimo'' riguarda lo \emph{sforzo} per ottenere un
+riscontro utile, ``viable'' richiede un'esperienza sufficiente a rendere significativo il
+riscontro. Il numero di funzionalità non definisce un MVP (esempio: la demo di Dropbox
+prima del prodotto completo).
+
+\paragraph{Approcci collegati all'agilità.}
+metodi e framework di sviluppo (XP, Scrum, Crystal, FDD, ASD, DSDM); gestione del flusso
+(Kanban, Lean software development); framework per più team (SAFe, LeSS); sviluppo e
+operazioni (DevOps).
+
+\subsubsection{Extreme Programming (XP)}
+\paragraph{I cinque valori}: comunicazione (rendere visibili conoscenze, problemi,
+decisioni), semplicità (costruire ciò che serve oggi), feedback (da codice, test e
+persone), coraggio (affrontare problemi, modificare il codice, dichiarare difficoltà),
+rispetto.
+
+Il team XP riunisce le competenze per realizzare e verificare il prodotto; il
+rappresentante del cliente è disponibile con tempi di risposta brevi (\emph{cliente
+on-site}, co-locazione: in un team remoto accesso e feedback vanno progettati
+esplicitamente). Il cliente porta priorità e valore, gli sviluppatori stime e conoscenza
+tecnica.
+
+\paragraph{Le dodici pratiche classiche}:
+\begin{itemize}
+  \item \emph{pianificazione e cliente}: Planning Game, piccoli rilasci, cliente on-site;
+  \item \emph{design e codice}: metafora del sistema, progettazione semplice, refactoring;
+  \item \emph{verifica e collaborazione}: testing, pair programming, proprietà collettiva;
+  \item \emph{continuità del lavoro}: integrazione continua, settimana di 40 ore, standard
+        di codifica.
+\end{itemize}
+Le pratiche si sostengono a vicenda: il refactoring richiede test automatici e passi
+piccoli; la proprietà collettiva richiede convenzioni, revisione e integrazione; i piccoli
+rilasci richiedono storie piccole e cliente disponibile; la pianificazione adattiva
+richiede stime del team e feedback frequente.
+
+\paragraph{Planning Game e cambiamenti.} Il cliente chiarisce il valore, sceglie le
+priorità e valuta alternative di ambito; gli sviluppatori chiariscono fattibilità, stime e
+rischi e segnalano dipendenze. Il piano è rivisto a ogni iterazione. Se il cliente chiede
+un cambiamento in corsa: chiarire bisogno e urgenza, valutare costo e rischio con il team,
+concordare cosa anticipare o rinviare, aggiornare il piano e rendere visibile la
+decisione. \emph{Accogliere} il cambiamento significa valutarlo, non subirlo.
+
+\paragraph{Metafora e linguaggio comune.} La metafora di XP dà al team un'immagine
+condivisa del sistema; nella 2\textsuperscript{a} edizione non è più una pratica ma resta
+l'obiettivo di un \emph{linguaggio comune}: un glossario usato nelle conversazioni, nei
+criteri di accettazione, nei test e nel codice (es.\ \texttt{Abbonamento},
+\texttt{TARIFFA\_MENSILE}).
+
+\paragraph{Progettazione semplice e YAGNI.} Il design sostiene i requisiti noti e i vincoli
+rilevanti; si evitano generalizzazioni speculative (\textbf{YAGNI}, ``You Aren't Gonna Need
+It'': non ti servirà). Se nessun requisito richiede una gerarchia di classi \texttt{Tariffa},
+si rinvia e si ristruttura quando arriva un caso concreto: i test esistenti rendono sicuro il
+refactoring. XP \emph{non} vieta l'astrazione, la rinvia finché serve.
+
+\paragraph{User story e test di accettazione.} Scheda (bisogno breve), conversazione
+(contesto, vincoli), \textbf{conferma} (verifica del comportamento): ``Card, Conversation,
+Confirmation'' di Jeffries. Il formato ``Come\dots, voglio\dots, per\dots'' è utile ma non
+obbligatorio. I criteri di accettazione sono verificabili; i test di accettazione si
+scrivono in forma \emph{Dato--Quando--Allora}, il team li traduce in verifiche ripetibili.
+
+\paragraph{Refactoring: ``due cappelli''.} Migliorare la struttura interna \emph{preservando
+il comportamento osservabile}, a piccoli passi eseguendo i test dopo ciascuno (es.\ spostare
+nella superclasse un metodo duplicato nelle sottoclassi). Non è refactoring correggere un
+difetto né aggiungere una funzionalità: si cambia la struttura \emph{o} il comportamento,
+mai entrambi nello stesso passo.
+
+\paragraph{Integrazione continua.} Modifica piccola $\to$ integrazione nella linea
+principale $\to$ costruzione e test automatici $\to$ esito visibile, errori corretti subito.
+\begin{center}
+\begin{tabular}{|p{3.6cm}|p{11cm}|}
+\hline
+\textbf{Integrazione continua} & ogni modifica è integrata spesso, almeno ogni giorno, e verificata automaticamente\\
+\textbf{Consegna continua} & il software è sempre in uno stato rilasciabile; il rilascio resta una \emph{decisione}\\
+\textbf{Rilascio continuo} & ogni modifica che supera i controlli raggiunge automaticamente gli utenti\\
+\hline
+\end{tabular}
+\end{center}
+Far girare i test su rami separati integrati ogni due settimane \emph{non} è integrazione
+continua: manca l'integrazione frequente nella linea condivisa.
+
+\paragraph{Proprietà collettiva e ritmo sostenibile.} Il team condivide conoscenza e
+responsabilità su tutto il codice, ma non significa modifiche arbitrarie: servono
+convenzioni, test automatici su ogni modifica, revisione e permessi espliciti nel
+repository. Nella 1\textsuperscript{a} edizione (1999) c'è la ``settimana di 40 ore'', nella
+2\textsuperscript{a} (2004) ``lavoro energico e margine nel piano'': le ore di presenza non
+misurano né produttività né apprendimento.
+
+\paragraph{Pair programming: l'evidenza.} Meta-analisi di 18 studi (Hannay et al., 2009):
+la \emph{qualità} migliora (effetto piccolo), la \emph{durata} del compito si riduce (effetto
+medio), lo \emph{sforzo totale} in ore-persona aumenta (effetto medio). Compiti semplici: più
+rapidi ma con qualità inferiore; compiti complessi: qualità maggiore con sforzo molto più alto.
+Si usa la coppia dove il beneficio giustifica il costo.
+
+\paragraph{Commenti e convenzioni.} Convenzioni condivise (per Python PEP~8), nomi chiari.
+Un commento utile spiega il \emph{perché}, non il \emph{che cosa} (\texttt{mesi = mesi + 1
+\# aggiunge 1} è inutile).
+
+\subsubsection{IA generativa e pratiche XP}
+Storie: proposte di formulazione e scomposizione, da verificare con cliente e team. Test:
+casi normali e limite, da verificare su oracolo e copertura pertinente. Codice:
+implementazioni e alternative, da verificare su correttezza, sicurezza, comprensibilità.
+Refactoring: nomi, estrazioni, semplificazioni, con comportamento preservato. Coppia:
+spiegare codice e discutere alternative, ma decisioni e responsabilità restano al team.
+Il risparmio dipende anche dal costo di revisione.
+
+\textbf{Errore condiviso tra codice e test generati}: se il modello propone
+\texttt{prezzo(mesi) = 30 * mesi * 0.9} insieme al test \texttt{prezzo(2) == 54}, il test
+passa ma conferma la stessa assunzione errata. Il risultato atteso di un test deve venire da
+una fonte \emph{indipendente} dal codice: il criterio di accettazione concordato
+(\texttt{prezzo(2)} deve essere 60). Codice e test coerenti tra loro possono essere entrambi
+sbagliati; alta copertura o chiedere allo stesso modello di rivedersi non bastano.
+
 \subsection{Introduzione a Scrum}
 
 \subsubsection{Contesto: sviluppo agile}
@@ -1009,6 +1290,73 @@ TDD, pair programming, planning game, refactoring & Retrospettiva, strumenti di 
 XP e Scrum possono coesistere (e spesso lo fanno).
 
 
+\subsubsection{Scrum nell'era degli LLM}
+\paragraph{Cosa dicono le guide.} La Scrum Guide 2020 non menziona l'IA. Lo \textbf{Scrum
+Guide Expansion Pack} (2025, v2026.1; Coleman, Jocham, Sutherland) introduce i
+\emph{Product Developers}, la \emph{Definition of Outcome Done} e una sezione sull'IA:
+\emph{Product Owner} e \emph{Scrum Master} devono essere \textbf{umani}; i Product Developers
+possono essere umani o automatizzati, ma \emph{almeno uno} deve essere umano. Principi:
+responsabilità umana chiara per tutti i risultati (\emph{human in the loop}); l'IA è partner
+decisionale supervisionato, non scavalca empirismo ed etica; sperimentare con prove piccole e
+reversibili.
+
+\paragraph{Uso reale} (Perkusich et al., 2026, $n=49$): gli LLM sono usati per raffinare lo
+Sprint Goal (77\%), definire requisiti non funzionali (76\%), riassumere eventi (68\%),
+sintetizzare il feedback della Review (64\%). Problemi riportati: output ``quasi corretto ma
+non del tutto'' (81\%), rischi di riservatezza dei dati (63\%), allucinazioni e validazione
+(59\%).
+
+\begin{center}
+\begin{tabular}{|p{2.6cm}|p{6.2cm}|p{6.2cm}|}
+\hline
+ & \textbf{Può aiutare a\dots} & \textbf{Non può sostituire\dots}\\
+\hline
+\textbf{LLM come PO} & bozze di user story da note e interviste, criteri di accettazione e casi limite, sintesi del feedback, ambiguità e duplicati nel backlog, sparring partner & responsabilità del valore e del ROI, negoziazione tra stakeholder, visione e Product Goal, mandato dell'organizzazione, decisione finale sull'ordine del backlog\\
+\hline
+\textbf{LLM come SM} & sintesi del Daily, impedimenti ricorrenti, agende della Retrospective, analisi di metriche (lead time, WIP, burndown), coaching di primo livello sulle regole & empatia e dinamiche di gruppo, gestione dei conflitti e sicurezza psicologica, cambiamento organizzativo, ostacoli fisici e politici, ruolo di leader che serve\\
+\hline
+\end{tabular}
+\end{center}
+Evidenze: agenti ``PO'' migliorano la qualità percepita delle storie ma aggiungono
+contenuti fuori scope (serve la revisione del PO); nelle priorità gli LLM sono corretti solo
+nel 55--71\% dei casi, con alta variabilità tra sessioni. Esercizio tipico: l'LLM scrive le
+storie, il PO decide (accetta quelle INVEST, scompone le epic, trasforma le ambiguità in
+domande agli stakeholder, nessuna storia accettata senza conversazione col team).
+
+\paragraph{Il team come controllore dell'IA.} L'IA produce bozze (storie, codice, test); il
+team \emph{specifica} (Sprint Goal, vincoli e criteri nei prompt), \emph{verifica} (code
+review, test indipendenti, analisi statica e di sicurezza), \emph{valida} con PO e stakeholder
+(è la storia giusta?) e \emph{decide}: accetta solo ciò che soddisfa la DoD. I Developer
+passano da autori di ogni riga a progettisti, revisori e garanti della qualità.
+
+\paragraph{Definition of Done per il codice generato}: revisione umana (ogni modifica letta e
+capita da almeno un Developer); test indipendenti (non generati dallo stesso prompt del
+codice); sicurezza (analisi statica e dei segreti, nessuna dipendenza inventata,
+\emph{package hallucination}); licenze (provenienza e compatibilità); riservatezza (nessun
+dato personale nei prompt); tracciabilità (nella pull request si dichiara l'uso dell'IA e il
+prompt rilevante).
+
+\paragraph{Caso reale} (Weber, Zimmermann, Franceschetti, 2026): in 3 giorni 41 user story e
+415 test, poi 62 story, 804 test, circa 9000 righe, tutte scritte dall'assistente. Il
+processo ha gate umani: user story (l'IA redige, l'umano approva i criteri) $\to$ specifica
+nel prompt $\to$ build test-first (rosso$\to$verde) $\to$ validazione sull'app in esecuzione
+su dati reali. \emph{Catena di tracciabilità}: persona $\to$ vincolo non negoziabile $\to$
+criterio di accettazione $\to$ specifica nel prompt $\to$ asserzione di test $\to$
+comportamento verificato. Cinque lezioni: processo con gate tracciabile; specificare il
+conoscibile e scoprire il resto con un prototipo; validare nell'ambiente reale (4 funzioni
+passavano la suite ma fallivano nell'uso perché i \emph{mock} non esercitavano browser, API
+del modello e SDK: una suite verde verifica i collegamenti, non il sistema); mettere i gate
+all'assistente (gate imposto dallo strumento: 81\% contro 13\% per convenzione); registrare
+decisioni e ipotesi (ADR). ``Il codice costa poco, la valutazione no.''
+
+\paragraph{Chi decide, chi assiste.} Product Goal e ordine del backlog: il PO (l'LLM analizza
+il feedback; rischio: priorità incoerenti). Sprint Goal: lo Scrum Team (l'LLM riformula;
+rischio: obiettivo generico). Stime e piano: i Developers (l'LLM scompone in task; rischio:
+falsa precisione). Storie, codice e test: il team come controllore (``quasi corretto $\neq$
+Done''). Accettazione dell'Increment: lo Scrum Team via DoD (rischio: fiducia eccessiva).
+Miglioramento del processo: il team facilitato dallo SM (rischio: perdita del confronto
+umano). L'IA amplia le capacità del team ma non sostituisce la responsabilità umana.
+
 \subsection{User stories}
 
 \subsubsection{Progettazione agile vs.\ tradizionale}
@@ -1166,6 +1514,452 @@ finché non è implementato il passo risulta \emph{undefined/pending}.
 
 \paragraph{Use case vs.\ user story.} Le user story sono più leggere e conversazionali;
 gli use case più formali e dettagliati (vedi il confronto nelle slide).
+
+\newpage
+\subsection{Testing automatico, TDD e pair programming}
+
+\subsubsection{Coding conventions}
+I \textbf{coding standard} sono approvati dal team, non imposti (supportano anche la
+pratica CoCoOw). Conviene appoggiarsi a standard esistenti, integrati negli IDE: Javadoc o
+analogo, standard di Google e Oracle (Java), PEP (Python), Google e CKAN (JavaScript).
+Ogni team \emph{può} darsi anche regole personali: notazione polacca per le variabili
+(\texttt{int64Hello}, \texttt{szInput}), nessun metodo con più di 16 righe, mai metodi
+statici (usare Singleton). Attenzione a non esagerare con regole troppo personali.
+
+\subsubsection{Il testing automatico}
+Il debugging è lungo, noioso e dà risultati incerti: per migliorare la qualità del codice,
+specie nel \emph{programming in the large}, si fa fare il lavoro sporco al computer con
+i \textbf{test automatici}. I test sono l'\emph{unico} modo del programmatore per
+verificare che il codice funzioni: lanciare il programma 1--2 volte non basta, serve un
+approccio metodico.
+
+Il 70\% dei test dovrebbe essere \textbf{test di unità} (piramide dei test), i test
+manuali vanno ridotti all'osso e automatizzare il più possibile fa risparmiare tempo.
+Per \textbf{unit testing} si intende il collaudo di singole unità software, cioè il
+minimo componente autonomo: una funzione, una classe, un metodo. Un unit test è
+automatizzato e ripetibile, facile da scrivere e da eseguire (Run $\rightarrow$ Run Test),
+rapido, e il suo codice fa parte del progetto a pieno titolo.
+
+\paragraph{Test loop}
+\begin{verbatim}
+do {
+  scegliere l'obiettivo: cosa testare?
+  scrivere un codice efficace per il controllo
+  eseguire il codice
+  se non passa, debuggare
+} while (non si trovano più bug);
+\end{verbatim}
+La condizione di uscita non è facile da verificare: in genere si lavora finché si ha tempo
+e si è «ragionevolmente sicuri». Un indicatore oggettivo è la \textbf{code coverage}.
+
+\paragraph{Le tre A} Ogni test ha tre fasi:
+\begin{itemize}[nosep]
+  \item \textbf{Arrange}: cosa occorre? quali dati di input servono?
+  \item \textbf{Act}: si richiama la funzione o il metodo e si ottiene un risultato.
+  \item \textbf{Assert}: si verifica che il risultato coincida con l'atteso.
+\end{itemize}
+Esempio (conto bancario, Java + JUnit):
+\begin{verbatim}
+BankAccount account = new BankAccount().WithBalance(10);   // Arrange
+account.addMoney(10);                                      // Act
+assertEquals(20, account.getBalance());                    // Assert
+\end{verbatim}
+
+\paragraph{Con quale test partire?} \emph{Happy path} (il caso più semplice e favorevole,
+quello che porta più valore), \emph{sad path} (input errato), \emph{boundary conditions}
+(casi limite, es.\ saldo 0, \texttt{addMoney(0)}, \texttt{addMoney(null)}).
+
+\paragraph{Framework per linguaggio}
+\begin{center}
+\begin{tabular}{|l|p{11.5cm}|}
+\hline
+Java & \textbf{JUnit} (ora la quinta release, \emph{Jupiter}): lo standard, ha dato il nome
+alla famiglia \textbf{xUnit} (CppUnit, PhpUnit, \dots) e ha influenzato tutti gli altri.
+Preconfigurato in Eclipse, NetBeans, IDEA; su VS Code serve lavoro manuale\\
+\hline
+Python & \texttt{unittest}, di fatto lo standard (esistono alternative)\\
+\hline
+JavaScript & nessun vincitore: Jest, Puppeteer, Mocha, Jasmine, QUnit; richiedono
+configurazione e l'integrazione con l'IDE non è sempre liscia\\
+\hline
+C/C++ & più complicato (linguaggio compilato): CppUnit, Googletest, Boost.Test,
+Catch2\\
+\hline
+C\# & MSTest (Microsoft), NUnit (porting di JUnit, veloce), xUnit.net (open source, forse
+il più completo)\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{TDD: cos'è e perché}
+Nel modello a cascata il testing viene dopo la codifica; il TDD \emph{rovescia la
+prospettiva}: il test viene prima. 
+
+\paragraph{Vantaggi} design evolutivo del codice; focus su un unico aspetto utile;
+sicurezza sul codice di produzione; documentazione sempre aggiornata; espressione della
+creatività; ritmo allo sviluppo.
+
+\paragraph{Problemi} più codice da scrivere e mantenere; difficile da applicare
+all'integration testing e al codice legacy; richiede un cambio di mentalità; il
+refactoring spesso finisce in secondo piano.
+
+\subsubsection{TDD: come si fa}
+Il ciclo \textbf{Red--Green--Refactor}:
+\begin{itemize}[nosep]
+  \item \textbf{Red}: scrivo un test che fallisce;
+  \item \textbf{Green}: scrivo il codice che fa passare il test;
+  \item \textbf{Refactor}: pulisco codice e test.
+\end{itemize}
+\textbf{Le 3 regole del TDD}:
+\begin{enumerate}[nosep]
+  \item non scrivere codice di produzione prima di aver scritto un test rosso;
+  \item non scrivere più di un test che fallisce (un errore di compilazione conta come
+        fallimento);
+  \item non scrivere più codice di produzione di quello necessario a far passare il test
+        correntemente rosso.
+\end{enumerate}
+
+\paragraph{Refactoring} Ristrutturazione disciplinata del codice che ne altera la
+struttura interna \emph{senza cambiare il comportamento esterno}, abbassandone la
+complessità. Si basa su piccole trasformazioni che preservano il comportamento: ognuna è
+limitata, quindi controllabile e difficilmente con un impatto negativo elevato, mentre una
+sequenza può portare a una ristrutturazione significativa. Grazie ai test si riduce la
+possibilità di introdurre errori. Benefici: il design non degrada, si elimina il codice
+duplicato, il codice è più comprensibile, si trovano bug (se un test fallisce sono già a
+metà dell'opera), lo sviluppo diventa più veloce.
+
+\paragraph{Code smell} Si parte a fare refactoring dai \emph{code smell}: caratteristiche
+del codice generalmente riconosciute come probabili indicazioni di un difetto di
+programmazione. Non sono bug (il software funziona), ma «debolezze» che ne riducono la
+qualità.
+
+\paragraph{Simple design} Tutti i test sono verdi; non c'è duplicazione (di codice, logica,
+algoritmi interscambiabili); l'intento del programmatore è espresso chiaramente; il numero
+di classi e metodi è minimo.
+
+\paragraph{Come dovrebbe essere un test}
+\begin{itemize}[nosep]
+  \item \textbf{veloce} (si lanciano centinaia di volte), \textbf{ripetibile},
+        \textbf{indipendente} dagli altri test;
+  \item \textbf{isolato} dal codice di produzione (progetti separati, anche se molti tool
+        mettono test e src vicini);
+  \item \textbf{rifattorizzato} (si testano le primitive di test);
+  \item \textbf{non distruttivo}: preserva le condizioni iniziali (niente \texttt{DROP TABLE});
+  \item \textbf{self-verified}: se fallisce si capisce al volo perché (meglio un messaggio
+        nelle asserzioni);
+  \item \textbf{timely}: eseguito in tempo ragionevole.
+\end{itemize}
+
+\paragraph{Chi testa il test?} Il QA, il PO, lo SM, il compagno di pair, un tester del test,
+un test automatico del test? Nel TDD è il \textbf{Red} a verificare il test: se un test
+non è mai stato rosso, non si sa se sa davvero fallire.
+
+\subsubsection{Pair programming}
+\paragraph{Ritmo e flusso} Per dare ritmo alla giornata dello sviluppatore e misurare il
+tempo speso si usa la \textbf{tecnica del pomodoro}.
+
+\paragraph{Ruoli} I programmatori lavorano sempre in coppia, alternandosi tra i ruoli:
+\begin{center}
+\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+\hline
+\textbf{Driver} & \textbf{Navigator}\\
+\hline
+Ha mouse e tastiera; scrive test e codice; ha una visione di breve periodo &
+Ha una todo-list; appunta i test mancanti e i possibili refactoring; ha una visione di
+lungo periodo\\
+\hline
+\end{tabular}
+\end{center}
+
+\paragraph{Stili e varianti}
+\begin{enumerate}[nosep]
+  \item \emph{Classica}: il Driver scrive, il Navigator commenta e controlla ad alto livello.
+  \item \emph{Hard}: il Navigator detta le idee, il Driver esegue («for an idea to go from
+        your head into the computer it must go through someone else's hands»).
+  \item \emph{Tour}: il Driver fa tutte le scelte raccontando ciò che fa, il Navigator
+        segue il ragionamento e controlla.
+  \item \emph{Mob}: un intero gruppo fa da Navigator, un solo Driver.
+\end{enumerate}
+
+\paragraph{Dati} Progetto 1 (solisti) contro progetto 2 (coppie): produttività 5 contro 7,2
+KLOC/mese-persona; difetti nei test di unità 5,34 contro 0,4 per KLOC; difetti nei test di
+integrazione 2,3 contro 0,2 per KLOC.
+
+\paragraph{Accounting} Su Git i contributi di coppia si segnano nel messaggio di commit
+con la riga (preceduta da una riga vuota) \texttt{Co-authored-by: Nome <email>}, tag
+introdotto da GitHub.
+
+\paragraph{Buone norme} Non interrompere; suggerire («cosa ne pensi?»); appuntarsi i
+problemi emersi (checklist); igiene personale. Le coppie non sono necessariamente fisse:
+spesso si impone una turnazione stretta per amalgamare gli stili ed eliminare la «silo
+culture»; cambiare ogni 2--3 pomodori, seguire user story diverse e affrontare ciò che si
+conosce meno.
+
+\paragraph{AI-pair programming} Ciclo: \emph{codifica} (come driver, attenzione ai
+suggerimenti), \emph{direzione} (come navigator, scrivere commenti o istruzioni chiare
+tipo «creare un endpoint REST per il login»), \emph{controllo e test} (rileggere, raffinare,
+non accettare mai le proposte alla cieca).
+\begin{center}
+\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+\hline
+\textbf{Vantaggi} & \textbf{Svantaggi}\\
+\hline
+Programmazione più veloce (suggerisce, completa funzioni, scrive le parti ripetitive);
+maggiore concentrazione e continuità; supporto all'apprendimento (nuovi modi di risolvere
+problemi, buone pratiche, framework); prototipazione rapida delle idee &
+Rischio di dipendenza eccessiva (si indeboliscono problem solving e debug); bug nascosti
+(codice che sembra corretto ma ha bug, inefficienze o vulnerabilità); limiti nella logica
+complessa o molto specifica di dominio (suggerimenti generici); riservatezza (il codice
+può essere elaborato su server esterni)\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{TDD Calisthenics: la String Calculator}
+Kata di Osherove, in coppia, con Java e JUnit 5. Obiettivo: una calcolatrice che somma i numeri di una
+stringa separati da virgola; se non ci sono numeri il risultato è 0.
+
+\paragraph{Struttura di un test JUnit}
+\begin{verbatim}
+@Test
+public void nomeDelTest() {
+    // setup delle variabili            (Arrange)
+    // invocazione del metodo           (Act)
+    // una o più istruzioni di controllo (Assert)
+}
+\end{verbatim}
+Varianti di assert: \texttt{assertTrue}, \texttt{assertFalse}, \texttt{assertEquals} (il
+più flessibile, overloadato su primitivi, \texttt{String} e \texttt{Object}, con messaggio
+opzionale).
+
+\paragraph{Sequenza} (scambiando i ruoli driver/navigator a ogni passo)
+\begin{enumerate}[nosep]
+  \item \textbf{Primo test (red)}: scrivere prima la firma del metodo
+        (\texttt{int calcola(String s)}) e un test elementare, happy path: stringa vuota
+        $\to$ 0. \textbf{Green}: farlo passare. Il test di maggior valore col minimo sforzo
+        è il calcolo di un singolo valore (meglio una classe di valori, evitare il
+        microtest).
+  \item \textbf{Secondo test (red)}: estendere le funzionalità mantenendo le precedenti, es.\
+        due o più valori separati da un carattere, o semplicemente \texttt{"1"} $\to$ 1.
+        \textbf{Green}.
+  \item \textbf{Refactoring}: generalizzare ($n$ numeri), togliere rigidità (valori
+        hardcoded), commentare (Javadoc). I test \emph{devono restare verdi}.
+  \item \textbf{Terzo test (red)}: robustezza, gestire errori di programmatore e utente
+        (\texttt{null}, stringa vuota, \dots).
+\end{enumerate}
+\begin{verbatim}
+@Test public void parseTwoNumbers() {
+    StringCalculator calculator = new StringCalculator();
+    int result = calculator.calcola("1,2");
+    assertEquals(result, 3); }
+\end{verbatim}
+
+\subsubsection{Testing in JavaScript con Jest (Lab 3)}
+In JavaScript non esiste un framework unico; si usa \textbf{Jest} per i test di unità
+(\texttt{npm test} rilancia i test a ogni modifica).
+
+\paragraph{Funzionalità base} Tre funzioni bastano:
+\begin{itemize}[nosep]
+  \item \texttt{describe}: delimita una \emph{test suite} (serie di test collegati);
+  \item \texttt{test} (sinonimo \texttt{it}, per cui in inglese il nome inizia con
+        «should»): un singolo test;
+  \item \texttt{expect}: verifica il risultato con matcher come \texttt{.toBe} (uguaglianza
+        stretta), \texttt{.toEqual} (uguaglianza di valore) e molti altri.
+\end{itemize}
+\begin{verbatim}
+const conto = require('./contobancario');      // modulo da testare
+test('estratto conto', () => {
+  let risultato = conto.estrattoConto();       // Act
+  expect(risultato).toBe(": 0€");              // Assert
+});
+\end{verbatim}
+
+\paragraph{Altro Jest} \emph{Fixture}: \texttt{beforeEach}, \texttt{afterEach},
+\texttt{beforeAll}, \texttt{afterAll}. Altri matcher: \texttt{toBeGreaterThanOrEqual},
+\texttt{toBeNull}, \texttt{toBeUndefined}, \texttt{.not}, \texttt{toMatch(/lk/)},
+\texttt{toContain('rosso')}, \texttt{toThrow(RangeError)}.
+
+\paragraph{Selenium} Tool open source per automatizzare i browser, usato per i test E2E;
+\textbf{Selenium WebDriver} simula l'utente reale nel browser (Firefox, Chrome, Safari,
+Edge, \dots), in locale o su macchine remote. Jest è poco diffuso per gli E2E: per quelli ci sono più
+aiuti per Mocha o Jasmine.
+
+\subsection{La qualità del software}
+
+\subsubsection{Errore, difetto, guasto}
+Tre concetti legati da catena di causa (IEEE 610.12):
+\begin{itemize}
+  \item \textbf{errore} (\emph{error}): azione umana sbagliata, es.\ un'interpretazione errata
+        della specifica;
+  \item \textbf{difetto} (\emph{fault}, ``bug''): imperfezione nel codice o in un documento,
+        causa di un guasto;
+  \item \textbf{guasto} (\emph{failure}): comportamento osservabile non previsto.
+\end{itemize}
+Esempio: \emph{Mars Climate Orbiter} (1999): il team usa libbre-forza$\cdot$s invece di
+newton$\cdot$s (errore), il modulo calcola gli impulsi nell'unità sbagliata (difetto), la
+sonda va persa (guasto). Altri casi: Therac-25 (1985--87, race condition, sovradosaggi letali),
+Ariane~5 (1996, overflow nella conversione 64$\to$16 bit di codice riusato), Knight Capital
+(2012, codice obsoleto riattivato, 440 milioni di dollari persi in 45 minuti), CrowdStrike (2024).
+
+\paragraph{Perché il software è difettoso.} Circa un errore ogni 10 righe, anche per
+programmatori esperti; il compilatore ne cattura circa il 50\%, circa il 15\% sfugge fino al
+cliente (Humphrey). La qualità non si ``aggiunge'' alla fine: si costruisce con \emph{filtri
+successivi} (revisioni, compilatore, analisi statica, test, ispezioni). Non tutti i difetti
+pesano uguale: pochi difetti frequenti causano la maggior parte dei guasti, con una lunga coda
+di difetti rari.
+
+\subsubsection{Che cos'è la qualità}
+Dipende da chi guarda: l'utente (adatto ai bisogni, facile da usare), il tester (senza
+difetti), lo sviluppatore (facile da capire e modificare), il committente (costa poco), le
+operations (veloce, sempre disponibile). Per ISO/IEC 25010 è il grado in cui il prodotto
+soddisfa i bisogni, espliciti e impliciti, dei suoi stakeholder.
+
+\paragraph{Qualità del processo, interna, esterna, in uso.} Ognuna influenza la successiva:
+\emph{processo} (come sviluppiamo, es.\ \% di codice revisionato) $\to$ \emph{interna}
+(visibile a chi costruisce, si misura senza eseguire: ispezioni, analisi statica, es.\
+complessità, duplicazione) $\to$ \emph{esterna} (si misura eseguendo il sistema: test, es.\
+tempo di risposta, guasti) $\to$ \emph{in uso} (si misura con utenti reali, ISO/IEC 25019).
+
+\paragraph{ISO/IEC 25010:2023.} Otto caratteristiche del prodotto: idoneità funzionale
+(completezza, correttezza), efficienza prestazionale, compatibilità (coesistenza,
+interoperabilità), capacità di interazione (ex usabilità), affidabilità (disponibilità,
+tolleranza ai guasti), \emph{security} (riservatezza, integrità), manutenibilità (modularità,
+modificabilità), flessibilità (ex portabilità); nel 2023 si aggiunge la \emph{safety}.
+
+\subsubsection{Misurare}
+``Non puoi controllare ciò che non puoi misurare'' (DeMarco). Ma per la \textbf{legge di
+Goodhart}: quando una misura diventa un obiettivo smette di essere una buona misura
+(copertura gonfiata da test senza asserzioni, velocity gonfiata, righe di codice come
+``produttività''). Cosa si misura: \emph{risorse} (mesi-persona, costo preventivo vs
+consuntivo), \emph{processo} (\% difetti trovati per fase, cycle time, velocity, stabilità
+dei requisiti), \emph{prodotto} (LOC, function point, complessità ciclomatica, copertura,
+difetti per KLOC).
+
+\paragraph{Complessità ciclomatica (McCabe, 1976).} Sul grafo di flusso del codice,
+$V(G) = E - N + 2$ con $E$ archi e $N$ nodi. Esempio: \texttt{read P,Q; if (P+Q>10) print
+"Large"; if (P>50) print "P Large"} ha $N=6$, $E=7$, quindi $V(G)=7-6+2=3$. Altre metriche
+di prodotto: LOC, function point, metriche OO di Chidamber e Kemerer (accoppiamento tra
+classi, profondità di ereditarietà).
+
+\paragraph{Goal--Question--Metric (Basili).} Tre livelli: \textbf{goal} (concettuale, es.
+``valutare l'affidabilità del prodotto''), \textbf{question} (operativo, es.\ ``qual è la
+distribuzione dei guasti?'', ``il codice rispetta lo standard?''), \textbf{metric}
+(quantitativo, es.\ n.\ guasti per modulo, violazioni per modulo). Esempio sul progetto di
+gruppo: goal ``alla relazione contribuiscono tutti''; Q1 quante ore ha lavorato ciascuno
+(M1 ore registrate), Q2 quanta parte ha scritto ciascuno (M2 \% di sezioni o commit per autore).
+
+\subsubsection{Verifica e testing}
+\textbf{Verifica}: ``stiamo costruendo il prodotto nel modo giusto?'' (conformità alla
+specifica). \textbf{Validazione}: ``stiamo costruendo il prodotto giusto?'' (accettazione del
+cliente). Verifica statica: ispezioni; dinamica: test. Nel \emph{modello a V} (Boehm) ogni
+livello di specifica definisce i test del livello corrispondente: requisiti $\leftrightarrow$
+test di accettazione, architettura $\leftrightarrow$ test di sistema, progetto dei moduli
+$\leftrightarrow$ test di integrazione, codice $\leftrightarrow$ test di unità.
+
+\emph{Il testing illumina, non dimostra}: può mostrare la presenza di errori, mai
+l'assenza (Dijkstra, 1970); chi cerca di mostrare l'assenza ne trova pochi (Myers).
+
+\paragraph{Piramide dei test.} Base: molti test di \emph{unità} (veloci, economici, isolati;
+JUnit, pytest); in mezzo \emph{integrazione e sistema} (interfacce tra componenti);
+in cima pochi \emph{end-to-end e accettazione} (lenti, fragili, vicini all'utente; Selenium,
+Playwright). Salendo crescono costo, tempo, fragilità. Anti-pattern: il \textbf{cono gelato}
+(molti test manuali ed E2E, pochi di unità).
+
+\paragraph{Black-box.} Test \emph{funzionale} dalla specifica: classi di equivalenza, valori
+limite, tabelle di decisione, test basati sui casi d'uso. Il test esaustivo è impossibile
+($5^{10}\approx 9{,}8$ milioni di casi). Esempio: ``al massimo 5 prestiti attivi'': valori
+limite $-1,0,5,6$ (più un rappresentante, es.\ 3): $-1$ errore di input, $0$ e $3$ concesso,
+$5$ rifiutato (già al massimo), $6$ errore di stato inconsistente.
+
+\paragraph{White-box.} Test \emph{strutturale} dal codice. Criteri di copertura:
+\begin{center}
+\begin{tabular}{|l|p{7cm}|c|}
+\hline
+\textbf{Criterio} & \textbf{Richiede che\dots} & \textbf{Test minimi (es.\ McCabe)}\\
+\hline
+comandi & ogni comando sia eseguito almeno una volta & 1\\
+decisioni & ogni decisione sia sia vera sia falsa & 2\\
+cammini & ogni cammino sia percorso & 4\\
+\hline
+\end{tabular}
+\end{center}
+Nell'esempio con $P=60,Q=0$ entrambe le \texttt{print} sono eseguite: basta 1 test per i
+comandi; per le decisioni ne servono 2 (serve anche un caso con condizioni false). Per il
+\textbf{teorema di Weyuker} è indecidibile, per un programma qualsiasi, se esista un input
+che esegue un dato comando, decisione o cammino. \emph{Copertura $\neq$ qualità dei test}:
+un test senza asserzioni copre il codice senza verificarlo; il \textbf{mutation testing}
+introduce piccole modifiche al codice e controlla che i test le ``uccidano''.
+
+\paragraph{TDD.} Rosso (test che fallisce) $\to$ verde (codice minimo che passa) $\to$
+refactoring (test restano verdi): ciclo di pochi minuti. ``Senza test non sappiamo davvero se
+il nostro codice peggiora o migliora'' (Feathers). Il circolo vizioso del \emph{non
+scriviamo i test}: non abbiamo tempo $\to$ non siamo abbastanza veloci $\to$ modificare il
+codice è difficile e rischioso $\to$ non scriviamo i test.
+
+\subsubsection{Analisi statica, quality gate, debito tecnico}
+\paragraph{Pipeline.} Commit/pull request $\to$ build $\to$ test (unità, integrazione)
+$\to$ analisi statica (bug, vulnerabilità, smell) $\to$ \textbf{quality gate} (soglie
+superate? altrimenti si torna allo sviluppatore) $\to$ rilascio. Esempio di soglie sul
+codice nuovo: 0 nuove vulnerabilità critiche, copertura $\ge 80\%$, righe duplicate
+$<3\%$; le soglie le decide il team, magari con GQM.
+
+\paragraph{Debito tecnico} (Cunningham, 1992). Come un debito finanziario: il
+\emph{capitale} è la correzione rinviata, gli \emph{interessi} sono il costo maggiore di ogni
+modifica futura; si misura in tempo stimato di correzione e si ripaga col refactoring protetto
+dai test. Quadrante di Fowler (sconsiderato/prudente $\times$ consapevole/involontario):
+sconsiderato-consapevole ``non abbiamo tempo per il progetto'', prudente-consapevole
+``rilasciamo ora e ne gestiamo le conseguenze'', sconsiderato-involontario ``che cos'è la
+stratificazione?'', prudente-involontario ``ora sappiamo come avremmo dovuto farlo''.
+
+\paragraph{SonarQube.} Analisi statica nell'IDE (SonarQube for IDE, ex SonarLint), nella
+pipeline CI (Server o Cloud) e nella pull request (l'esito del gate può bloccare il merge).
+Tre qualità collegate a ISO 25010: \emph{affidabilità} (es.\ null dereference, risorsa non
+chiusa), \emph{sicurezza} (es.\ SQL injection; i \emph{security hotspot} vanno rivisti a
+mano), \emph{manutenibilità} (codice duplicato, funzioni troppo complesse $\to$ debito
+tecnico). Gravità: blocker, high, medium, low, info. Rating A--E per la manutenibilità dal
+rapporto di debito $= \text{debito tecnico} / (30\text{ min} \times \text{righe di codice})$:
+A $\le 5\%$, B $<10\%$, C $<20\%$, D $<50\%$, E $\ge 50\%$. Per affidabilità e sicurezza il
+rating dipende dal problema più grave.
+
+\paragraph{Quality gate e \emph{Clean as You Code}.} Il gate giudica il codice \emph{nuovo o
+modificato}: chi tocca il codice lo lascia pulito, il debito pregresso si ripaga
+gradualmente. Il gate predefinito ``Sonar way'' ha quattro condizioni sul codice nuovo: 0
+nuovi problemi (rating A), 100\% di security hotspot rivisti da una persona, copertura
+$\ge 80\%$, righe duplicate $\le 3\%$. Offre feedback automatico a ogni pull request e un
+criterio di rilascio esplicito; \emph{non} garantisce correttezza funzionale né assenza di
+errori (falsi positivi e negativi), e la copertura 80\% si raggiunge anche con test senza
+asserzioni (Goodhart). Esiste un gate ``Sonar way for AI Code''.
+
+\subsubsection{La qualità del codice generato da LLM}
+Circa il 90\% dei professionisti usa l'IA, il 59\% percepisce codice di qualità migliore, solo
+il 3\% dichiara fiducia alta nell'output (DORA e Stack Overflow, 2025): percezione $\neq$
+misura. Quattro lenti:
+\begin{itemize}
+  \item \textbf{Correttezza}: con test deboli si sovrastima (HumanEval$+$ con 80 volte più
+        test fa calare fino al 19--29\% le soluzioni ``corrette''; Liu et al., 2023).
+  \item \textbf{Sicurezza}: circa 40\% di programmi Copilot con almeno una vulnerabilità CWE
+        (Pearce 2022); 45\% dei compiti con vulnerabilità OWASP, Java $>70\%$, XSS 86\%
+        (Veracode 2025); pacchetti inesistenti suggeriti nel 5--22\% dei casi, almeno 5,2\% nei
+        commerciali e 21,7\% negli open source (Spracklen 2025). Rischio: \textbf{slopsquatting}
+        (un attaccante registra il nome inventato dal modello). Il codice generato va
+        trattato come \emph{codice non fidato}.
+  \item \textbf{Manutenibilità}: più copia-incolla, meno refactoring (GitClear 2025: nel
+        2024 blocchi duplicati $\times 8$, righe ``spostate'' $-40\%$, per la prima volta le
+        righe copiate superano quelle spostate).
+  \item \textbf{Produttività}: esperimenti controllati mostrano più velocità (+55,8\% Peng
+        2023, +26\% PR Cui 2025, circa 21\% Google 2025) ma misurano velocità, non qualità; nello
+        studio METR 2025 sviluppatori esperti si aspettavano $+24\%$, percepivano $+20\%$ ma
+        erano più lenti del $19\%$. DORA 2025: throughput e instabilità delle consegne
+        crescono, ``l'IA amplifica'' punti di forza e disfunzioni.
+\end{itemize}
+\paragraph{Garantire la qualità}: revisione umana (letto e capito), test indipendenti con
+valori limite e mutation testing, analisi statica e di sicurezza con verifica delle
+dipendenze, quality gate e Definition of Done. Domande: chi ha letto il codice? i test sono
+scritti senza guardare il codice? le dipendenze esistono? chi ne risponde? Piano GQM per un
+assistente IA: goal ``valutare l'effetto dell'assistente sulla qualità, per il team'';
+metriche da pipeline (difetti post-rilascio per KLOC, nuove vulnerabilità per PR,
+\% duplicazione, complessità media, debito stimato, lead time, tasso di rilasci falliti);
+da evitare ``righe generate dall'IA'' come metrica di successo (Goodhart).
 
 \newpage
 \section{Modulo 2}
