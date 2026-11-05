@@ -1,0 +1,2634 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}
+\title{Ingegneria del Software: domande d'esame}
+\author{Nicolò Giuliani}
+\date{}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Ciclo di vita, costi, manutenzione, produttività, Brooks}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 1 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale dei seguenti modelli di sviluppo è caratterizzato da fasi sequenziali e ben definite?
+
+\begin{enumerate}[label=\alph*)]
+\item Modello Incrementale.
+\item Modello a spirale.
+\item Modello a cascata.
+\item Modello Agile.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 2 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è lo scopo principale della separazione tra interfaccia e implementazione?
+
+\begin{enumerate}[label=\alph*)]
+\item Rendere più difficile la manutenzione del codice.
+\item Migliorare le performance in compilazione.
+\item Ridurre l'accoppiamento tra le componenti.
+\item Garantire la compatibilità con il sistema operativo.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\section{Processo, requisiti, agile, Scrum, PM}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 3 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Nel metodo MoSCoW utilizzato per la gestione dei requisiti, cosa rappresenta la categoria "Should Have"?
+
+\begin{enumerate}[label=\alph*)]
+\item Requisiti importanti ma non critici, che possono essere posticipati se necessario.
+\item Funzionalità non essenziali ma che migliorano l'esperienza utente.
+\item Funzionalità opzionali che possono essere implementate se c'è tempo.
+\item Requisiti essenziali che devono essere soddisfatti per il successo del progetto.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 4 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Il "triangolo di ferro" del project management rappresenta i tre vincoli fondamentali di un progetto. Quali sono?
+
+\begin{enumerate}[label=\alph*)]
+\item Qualità, Comunicazione, Budget.
+\item Tempo, Costo, Scopo.
+\item Team, Product Owner, Scrum Master.
+\item Customer, Solution, Endeavour.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 5 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Cos'è lo "scope" di un progetto agile?
+
+\begin{enumerate}[label=\alph*)]
+\item Gli stakeholder del progetto.
+\item Il product backlog.
+\item Il numero finale degli sprint.
+\item L'architettura del prodotto.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 6 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale ruolo è assente in Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item Product owner.
+\item Scrum master.
+\item Project manager.
+\item Team member.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 7 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Cos'è il Minimal Viable Product?
+
+\begin{enumerate}[label=\alph*)]
+\item Il prodotto con il più alto ritorno sugli investimenti rispetto al rischio.
+\item Il prodotto al termine del primo sprint
+\item Il prodotto al termine dell'ultimo sprint
+\item Il prodotto al termine dello sprint più recente
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 8 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Che cos'è la velocità di un team Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item Il numero medio di story point "fatti" in uno sprint.
+\item Il numero medio di user story "fatti" in uno sprint.
+\item Il numero di story point "fatti" nell'ultimo sprint.
+\item Il numero di story point "fatti" nello sprint in corso.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 9 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Come si calcola lo sforzo necessario allo sviluppo di un prodotto software?
+
+\begin{enumerate}[label=\alph*)]
+\item Il costo in euro di un prodotto software.
+\item La durata in giorni dello sviluppo.
+\item La durata dello sviluppo moltiplicata per le persone coinvolte nello sviluppo.
+\item La somma dei tempi dedicati allo sviluppo da parte di ciascun sviluppatore.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 10 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale delle seguenti affermazioni descrive meglio il compito principale del project manager di un prodotto software?
+
+\begin{enumerate}[label=\alph*)]
+\item Assicurarsi che ogni sviluppatore scriva il codice meno costoso possibile nel minor tempo possibile.
+\item Gestire i requisiti parlando con gli stakeholder e analizzandoli col team di sviluppo.
+\item Gestire il testing in modo automatico cercando di risparmiare tempo e diminuire effort.
+\item Assicurarsi che il prodotto sia completato nei tempi previsti, rimanendo entro il budget e soddisfacendo i requisiti richiesti.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 11 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale delle seguenti caratteristiche identifica meglio un processo di sviluppo agile?
+
+\begin{enumerate}[label=\alph*)]
+\item La suddivisione del lavoro in iterazioni brevi e incrementali con feedback frequenti dagli stakeholder.
+\item L'uso delle user story per definire completamente i requisiti di prodotto prima di iniziare lo sviluppo.
+\item La pianificazione accurata di tutte le attività necessarie al prodotto prima dell'avvio dello sviluppo.
+\item L'individuazione di un singolo responsabile che prenda tutte le decisioni tecniche e di progetto.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 12 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Qual è lo scopo principale della fase di analisi dei requisiti?
+
+\begin{enumerate}[label=\alph*)]
+\item Definire l'architettura del sistema.
+\item Comprendere cosa il sistema deve fare.
+\item Scrivere i test di unità.
+\item Stimare il tempo di esecuzione del software.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 13 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Perché è utile creare una documentazione dei requisiti?
+
+\begin{enumerate}[label=\alph*)]
+\item Per decidere il linguaggio di programmazione.
+\item Per generare automaticamente il codice sorgente.
+\item Per evitare l'uso di librerie esterne.
+\item Per avere una base condivisa tra sviluppatori e stakeholder.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 14 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+In Scrum, cosa rappresenta il Product Backlog?
+
+\begin{enumerate}[label=\alph*)]
+\item L'elenco dei bug da correggere.
+\item L'elenco ordinato delle funzionalità e modifiche richieste al prodotto.
+\item Il diario delle attività svolte dallo Scrum Master.
+\item Il piano di progetto iniziale.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 15 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Chi è responsabile della massimizzazione del valore del prodotto in Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item Il team di sviluppo.
+\item Il project manager.
+\item Il Product Owner.
+\item Il cliente.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 16 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale delle seguenti attività avviene tipicamente alla fine di uno Sprint in Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item Stima dei costi del progetto.
+\item Ridefinizione della visione del prodotto.
+\item Sprint Review e Sprint Retrospective.
+\item Disegno dell'architettura del sistema.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 17 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+In cosa consiste la Daily Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item Una revisione dettagliata del codice.
+\item Un incontro con gli stakeholder.
+\item Una breve riunione quotidiana per pianificare il lavoro delle prossime 24 ore.
+\item Una presentazione dei risultati ottenuti al cliente.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 18 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale delle seguenti non è una delle responsabilità dello Scrum Master?
+
+\begin{enumerate}[label=\alph*)]
+\item Decidere quali funzionalità implementare.
+\item Facilitare le cerimonie Scrum.
+\item Aiutare a rimuovere gli impedimenti al lavoro del team.
+\item Promuovere la comprensione di Scrum nel team.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 19 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Qual è la durata raccomandata per uno Sprint in Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item 1 giorno.
+\item 1 mese e mezzo.
+\item Massimo 1 mese.
+\item Almeno 3 mesi.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 20 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Qual è uno dei principali vantaggi dell'uso di Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item Riduzione automatica del debito tecnico.
+\item Feedback frequente e continuo da parte degli stakeholder.
+\item Rimozione del bisogno di documentazione.
+\item Codice generato automaticamente ad ogni sprint.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 21 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Qual è l'obiettivo della Retrospective in Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item Pianificare le funzionalità dello sprint successivo.
+\item Identificare miglioramenti nel processo di lavoro del team.
+\item Presentare il lavoro finito agli stakeholder.
+\item Raccogliere i bug segnalati dagli utenti.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 22 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+In Scrum, chi partecipa alla Sprint Planning?
+
+\begin{enumerate}[label=\alph*)]
+\item Solo lo Scrum Master e il Product Owner.
+\item Solo il team di sviluppo.
+\item Solo il cliente.
+\item Scrum Master, Product Owner e team di sviluppo.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 23 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale delle seguenti è una caratteristica di un buon requisito software?
+
+\begin{enumerate}[label=\alph*)]
+\item Essere vago e aperto a interpretazioni.
+\item Essere chiaro, misurabile e verificabile.
+\item Essere scritto in linguaggio tecnico.
+\item Essere modificabile solo dal team di sviluppo.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 24 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Cosa si intende per 'prototipazione' nel contesto dello sviluppo software?
+
+\begin{enumerate}[label=\alph*)]
+\item Scrivere codice direttamente in produzione.
+\item Definire il piano economico del progetto.
+\item Costruire versioni semplificate del software per raccogliere feedback.
+\item Creare la documentazione finale del sistema.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 25 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Cosa rappresenta una 'user story' in Scrum?
+
+\begin{enumerate}[label=\alph*)]
+\item Un diagramma dei flussi di dati.
+\item Una descrizione sintetica di una funzionalità dal punto di vista dell'utente.
+\item Un requisito funzionale formale.
+\item Un caso di test per l'integrazione.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 26 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Qual è un vantaggio dell'uso della modellazione UML nel processo di sviluppo?
+
+\begin{enumerate}[label=\alph*)]
+\item Elimina la necessità del testing.
+\item Facilita la comunicazione tra membri del team e stakeholder.
+\item Riduce i tempi di compilazione.
+\item Permette di testare automaticamente il codice.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 27 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Un use case è
+
+\begin{enumerate}[label=\alph*)]
+\item un qualunque requisito.
+\item un caso di uso dell'interfaccia utente accettato dall'utente.
+\item un caso di uso atomico che dà valore all'utente.
+\item un requisito semplice del sistema validato dall'utente.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 28 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è la principale differenza tra requisiti funzionali e requisiti non funzionali nel contesto dello sviluppo software?
+
+\begin{enumerate}[label=\alph*)]
+\item I requisiti funzionali descrivono come il software deve essere implementato, mentre i requisiti non funzionali descrivono cosa il software deve fare.
+\item I requisiti funzionali sono sempre obbligatori, mentre i requisiti non funzionali sono opzionali.
+\item I requisiti funzionali definiscono i comportamenti e le operazioni del sistema, mentre i requisiti non funzionali specificano vincoli o caratteristiche di qualità del sistema.
+\item I requisiti funzionali riguardano solo l'interfaccia utente, mentre i requisiti non funzionali riguardano solo il backend del sistema.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 29 \hfill {\small mcq, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+Un use case
+
+\begin{enumerate}[label=\alph*)]
+\item È un qualunque requisito
+\item È un caso di uso dell'interfaccia utente accettato dall'utente
+\item È un caso di uso atomico che dà valore all'utente
+\item È un requisito semplice del sistema validato dall'utente
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 30 \hfill {\small mcq, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+Quale delle seguenti affermazioni descrive meglio il compito principale del project manager di un prodotto software?
+
+\begin{enumerate}[label=\alph*)]
+\item Assicurarsi che ogni sviluppatore scriva il codice meno costoso possibile nel minor tempo possibile.
+\item Gestire i requisiti parlando con gli stakeholder e analizzandoli col team di sviluppo.
+\item Gestire il testing in modo automatico cercando di risparmiare tempo e diminuire effort.
+\item Assicurarsi che il prodotto sia completato nei tempi previsti, rimanendo entro il budget e soddisfacendo i requisiti richiesti.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 31 \hfill {\small mcq, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+Qual è la principale differenza tra requisiti funzionali e requisiti non funzionali nel contesto dello sviluppo software?
+
+\begin{enumerate}[label=\alph*)]
+\item I requisiti funzionali descrivono come il software deve essere implementato, mentre i requisiti non funzionali descrivono cosa il software deve fare.
+\item I requisiti funzionali sono sempre obbligatori, mentre i requisiti non funzionali sono opzionali.
+\item I requisiti funzionali definiscono i comportamenti e le operazioni del sistema, mentre i requisiti non funzionali specificano vincoli o caratteristiche di qualità del sistema.
+\item I requisiti funzionali riguardano solo l'interfaccia utente, mentre i requisiti non funzionali riguardano solo il backend del sistema.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 32 \hfill {\small mcq, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+Quale delle seguenti caratteristiche identifica meglio un processo di sviluppo agile?
+
+\begin{enumerate}[label=\alph*)]
+\item La suddivisione del lavoro in iterazioni brevi e incrementali con feedback frequenti dagli stakeholder.
+\item L'uso delle user story per definire completamente i requisiti di prodotto prima di iniziare lo sviluppo.
+\item La pianificazione accurata di tutte le attività necessarie al prodotto prima dell'avvio dello sviluppo.
+\item L'individuazione di un singolo responsabile che prenda tutte le decisioni tecniche e di progetto.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\section{User story / epiche}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 33 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente poesia di Gianni Rodari, "Distrazione interplanetaria":
+
+Chissà se a quest'ora su Marte, / su Mercurio o Nettuno, / qualcuno / in un banco di scuola / sta cercando la parola / che gli manca / per cominciare il tema / sulla pagina bianca.
+E certo nel cielo di Orione, / dei Gemelli, del Leone, / un altro dimentica / nel calamaio / i segni d'interpunzione… / come faccio io.
+Quasi lo sento / lo scricchiolio / di un pennino / in fondo al firmamento: / in un minuscolo puntino / della Via Lattea / un minuscolo scolaretto / sul suo libro di storia / disegna un pupazzetto.
+Lo sa che non sta bene / e anch'io lo so: / ma rideremo insieme / quando lo incontrerò.
+\end{tcolorbox}
+Si determinino almeno due storie atomiche estratte dalla descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 34 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri il seguente brano "Il Paese con l'esse davanti" (il documento lo attribuisce a Calvino, ma è di Gianni Rodari, da "Favole al telefono"):
+
+Giovannino Perdigiorno era un grande viaggiatore. Viaggia e viaggia, capitò nel paese con l'esse davanti.
+"Ma che razza di paese è?" domandò a un cittadino che prendeva il fresco sotto un albero. Il cittadino, per tutta risposta, cavò di tasca un temperino e lo mostrò bene aperto sul palmo della mano. "Vede questo?" "È un temperino" "Tutto sbagliato. Invece è uno stemperino, cioè un temperino con l'esse davanti. Serve a far ricrescere le matite, quando sono consumate, ed è molto utile nelle scuole". "Magnifico", disse Giovannino. "E poi?" "Poi abbiamo lo staccapanni". "Vorrà dire l'attaccapanni". "L'attaccapanni serve a ben poco, se non avete il cappotto da attaccarci. Col nostro staccapanni è tutto diverso. Lì non bisogna attaccarci niente, c'è già tutto attaccato. Se avete bisogno di un cappotto andate lì e lo staccate. Chi ha bisogno di una giacca, non deve mica andare a comprarla: passa dallo staccapanni e la stacca. C'è lo staccapanni d'estate e quello d'inverno, quello per uomo e quello per signora. Così si risparmiano tanti soldi".
+\end{tcolorbox}
+Si determinino almeno due storie atomiche estratte dalla descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 35 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri il seguente brano di Italo Calvino, da "Gli amori difficili":
+
+L'isolotto aveva rive alte, di roccia. Sopra cresceva la macchia fitta e bassa della vegetazione che resiste vicino al mare. Nel cielo volavano i gabbiani. Era una piccola isola vicino alla costa, deserta, incolta: in mezz'ora si poteva farne il giro in barca, o anche in canotto di gomma, come quello di quei due che venivano avanti, l'uomo pagaiando tranquillo, la donna coricata a prendere il sole. Avvicinandosi l'uomo tese l'orecchio. - Cos'hai sentito? - chiese lei. - Silenzio, - lui disse. - Le isole hanno un silenzio che si sente. Di fatto, ogni silenzio consiste della rete di rumori minuti che l'avvolge: il silenzio dell'isola si staccava da quello del calmo mare circostante perché era percorso da fruscii vegetali, da versi d'uccelli o da un improvviso frullo d'ali.
+\end{tcolorbox}
+Si determinino almeno due storie atomiche estratte dalla descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 36 \hfill {\small aperta, 4 pt \textcolor{gray}{(Scritto 15/01/2015)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Svolgere gli esercizi mediante diagrammi UML ben commentati. Libri chiusi.
+\end{tcolorbox}
+Data l'Epica "Uso di telepass da parte di un imprenditore", scomporla in 4 user stories stimate.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 37 \hfill {\small aperta, 5 pt \textcolor{gray}{(Scritto 16/01/2020)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si vuole progettare il gioco \textbf{"CapsuleMonster"}, descritto nel seguito.
+
+Ogni partita è composta da almeno due giocatori, e si gioca su una mappa quadrata. Ogni giocatore è caratterizzato dal nome – che deve essere registrato nel sistema – ed è l'allenatore di una squadra di CapsuleMonster (massimo 6 mostri).
+
+La partita inizia quando ci sono almeno 3 giocatori attivi, e dura un massimo di 60 minuti. Il possessore del CapsuleMonster con più energia al termine del gioco è dichiarato vincitore. Ogni giocatore inizia senza mostri, e inizia a girare per la mappa in cerca di CapsuleMonster. Il giocatore, a ogni dato istante, può muoversi, cercare, tentare di catturare il mostro, dare ordini al CapsuleMonster.
+
+Un CapsuleMonster è inizialmente nascosto e non appartiene a nessun giocatore. Se è visto da un giocatore si mette in fuga. Se quando è in fuga viene "afferrato" dal giocatore allora, se ha un livello di energia inferiore a 5 viene catturato e diventa proprietà del giocatore. Altrimenti si nasconde di nuovo ma con un livello di energia diminuito di 1. Nello stato catturato il giocatore può: (i) dirgli di entrare in squadra; (ii) ordinargli di combattere con un CapsuleMonster avversario; (iii) liberarlo.
+
+Ogni CapsuleMonster è caratterizzato da un livello energia, valori di attacco, difesa e un potere speciale unico. Alcuni CapsuleMonster sono Leggendari ed hanno un fattore moltiplicativo della propria energia (un reale compreso tra 1 e 2). Se è libero, si muove ad intervalli casuali. Se è prigioniero, esegue gli ordini del giocatore, e tenta di scappare ad intervalli casuali.
+\end{tcolorbox}
+Scrivere 4 user stories, complete di stima relativa e almeno una condizione di verifica per ognuna relativa al problema in esame. Utilizzare almeno due attori diversi.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 38 \hfill {\small aperta, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente storiella di Gianni Rodari:
+
+"Una volta le galline trovarono la volpe in mezzo al sentiero. Aveva gli occhi chiusi, la coda non si muoveva. - È morta, è morta - gridarono le galline. - Facciamole il funerale. Difatti suonarono le campane a morto, si vestirono di nero e il gallo andò a scavare la fossa in fondo al prato. Fu un bellissimo funerale e i pulcini portavano i fiori. Quando arrivarono vicino alla buca la volpe saltò fuori dalla cassa e mangiò tutte le galline.
+La notizia volò di pollaio in pollaio. Ne parlò perfino la radio, ma la volpe non se ne preoccupò. Lasciò passare un po' di tempo, cambiò paese, si sdraiò in mezzo al sentiero e chiuse gli occhi. Vennero le galline di quel paese e subito gridarono anche loro: - È morta, è morta! Facciamole il funerale.
+Suonarono le campane, si vestirono di nero e il gallo andò a scavare la fossa in mezzo al granoturco. Fu un bellissimo funerale e i pulcini cantavano che si sentivano in Francia. Quando furono vicini alla buca, la volpe saltò fuori dalla cassa e mangiò tutto il corteo.
+La notizia volò di pollaio in pollaio e fece versare molte lacrime. Ne parlò anche la televisione, ma la volpe non si prese paura per nulla. Essa sapeva che le galline hanno poca memoria e campò tutta la vita facendo la morta. E chi farà come quelle galline vuol dire che non ha capito la storia.."
+\end{tcolorbox}
+Si determinino almeno due storie atomiche estratte dalla descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 39 \hfill {\small aperta, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Per le domande seguenti si consideri la storia (Rodari):
+
+Una volta, a Bologna, fecero un palazzo di gelato proprio sulla Piazza Maggiore, e i bambini venivano di lontano a dargli una leccatina. Il tetto era di panna montata, il fumo dei comignoli di zucchero filato, i comignoli di frutta candita. Tutto il resto era di gelato: le porte di gelato, i muri di gelato, i mobili di gelato. Un bambino piccolissimo si era attaccato a un tavolo e gli leccò le zampe una per una, fin che il tavolo gli crollò addosso con tutti i piatti, e i piatti erano di gelato al cioccolato, il più buono. Una guardia del Comune, a un certo punto, si accorse che una finestra si scioglieva. I vetri erano di gelato alla fragola, e si squagliavano in rivoletti rosa. - Presto, - gridò la guardia, - più presto ancora! E giù tutti a leccare più presto, per non lasciar andare perduta una sola goccia di quel capolavoro. - Una poltrona! - implorava una vecchiettina, che non riusciva a farsi largo tra la folla, - una poltrona per una povera vecchia. Chi me la porta? Coi braccioli, se è possibile. Un generoso pompiere corse a prenderle una poltrona di gelato alla crema e pistacchio, e la povera vecchietta, tutta beata, cominciò a leccarla proprio dai braccioli. Fu un gran giorno, quello, e per ordine dei dottori nessuno ebbe il mal di pancia. Ancora adesso, quando i bambini chiedono un altro gelato, i genitori sospirano: - Eh già, per te ce ne vorrebbe un palazzo intero, come quello di Bologna.
+\end{tcolorbox}
+Si determinino almeno due storie atomiche estratte dalla storia.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\section{Testing, TDD, qualità e metriche}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 40 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Come si chiama il testing in cui si usa il sorgente del programma?
+
+\begin{enumerate}[label=\alph*)]
+\item Blackbox.
+\item Whitebox.
+\item Debugging.
+\item Validazione.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 41 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale tra questi è un vantaggio dei test automatici?
+
+\begin{enumerate}[label=\alph*)]
+\item Aumentano il coupling tra i moduli.
+\item Rallentano il ciclo di sviluppo.
+\item Eliminano la necessità del debugging.
+\item Permettono di individuare rapidamente regressioni nel codice.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 42 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Qual è l'obiettivo della tecnica del "Mocking" nei test?
+
+\begin{enumerate}[label=\alph*)]
+\item Creare ambienti virtuali.
+\item Misurare la copertura del codice.
+\item Simulare comportamenti di componenti esterni.
+\item Gestire errori in tempo reale.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 43 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+A cosa serve un diagramma delle classi UML?
+
+\begin{enumerate}[label=\alph*)]
+\item A visualizzare l'output di un programma.
+\item A rappresentare le relazioni tra classi e oggetti.
+\item A disegnare wireframe per interfacce grafiche.
+\item A testare il comportamento delle classi.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 44 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Qual è lo scopo principale della progettazione guidata dai test (TDD)?
+
+\begin{enumerate}[label=\alph*)]
+\item Produrre test in ritardo rispetto allo sviluppo.
+\item Guidare la scrittura del codice attraverso i test.
+\item Scrivere meno codice possibile.
+\item Testare l'usabilità dell'interfaccia utente.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 45 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Qual è l'obiettivo del testing nel processo di sviluppo software?
+
+\begin{enumerate}[label=\alph*)]
+\item Ridurre la dimensione del codice.
+\item Eliminare le dipendenze tra moduli.
+\item Produrre documentazione automatica.
+\item Verificare che il software si comporti come atteso.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 46 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Quale delle seguenti attività rientra nella gestione della qualità del software?
+
+\begin{enumerate}[label=\alph*)]
+\item Assegnare i task al team di sviluppo.
+\item Stimare i costi delle licenze software.
+\item Definire metriche per valutare il codice.
+\item Scrivere la documentazione utente.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 47 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è la differenza principale tra LangChain e CrewAI?
+
+\begin{enumerate}[label=\alph*)]
+\item LangChain si concentra su pipeline e strumenti, CrewAI sulla coordinazione multi-agente
+\item LangChain è solo per traduzioni, CrewAI per generazione di testo
+\item LangChain è un modello di linguaggio, CrewAI è un framework
+\item LangChain funziona senza API, CrewAI solo con API OpenAI
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 48 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Per quale motivo può essere utile lo streaming delle risposte di un LLM?
+
+\begin{enumerate}[label=\alph*)]
+\item Per ridurre il costo dei token
+\item Per migliorare la sicurezza dei prompt
+\item Per ridurre la latenza e visualizzare il testo man mano che viene generato
+\item Per salvare automaticamente le risposte nel database
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 49 \hfill {\small mcq, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+In UML uno use case
+
+\begin{enumerate}[label=\alph*)]
+\item Struttura l'interfaccia grafica del sistema
+\item Definisce una funzionalità atomica necessaria per l'utente finale
+\item Organizza i casi di test del sistema
+\item Struttura i pacchetti di classi da fornire al cliente
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\section{UML e concetti OO (oggetti, classi)}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 50 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Una funzione virtuale in UML
+
+\begin{enumerate}[label=\alph*)]
+\item può limitare il numero di repliche di campi in una classe base.
+\item permette l'overriding.
+\item permette l'overloading.
+\item è una forma di eredità che sembra esistere ma poi si dissolve.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 51 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Un oggetto è
+
+\begin{enumerate}[label=\alph*)]
+\item un modello di una classe.
+\item un'istanza di una classe.
+\item una classe.
+\item una metaclasse.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 52 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+UML è l'acronimo per
+
+\begin{enumerate}[label=\alph*)]
+\item Universal Modeling Language.
+\item Unified Modeling Language.
+\item Universal Modeling Level.
+\item Unified Modeling Level.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 53 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente poesia di Gianni Rodari, "Distrazione interplanetaria":
+
+Chissà se a quest'ora su Marte, / su Mercurio o Nettuno, / qualcuno / in un banco di scuola / sta cercando la parola / che gli manca / per cominciare il tema / sulla pagina bianca.
+E certo nel cielo di Orione, / dei Gemelli, del Leone, / un altro dimentica / nel calamaio / i segni d'interpunzione… / come faccio io.
+Quasi lo sento / lo scricchiolio / di un pennino / in fondo al firmamento: / in un minuscolo puntino / della Via Lattea / un minuscolo scolaretto / sul suo libro di storia / disegna un pupazzetto.
+Lo sa che non sta bene / e anch'io lo so: / ma rideremo insieme / quando lo incontrerò.
+\end{tcolorbox}
+Si presenti un diagramma di attività in UML desumibile da una parte qualunque della descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 54 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri il seguente brano "Il Paese con l'esse davanti" (il documento lo attribuisce a Calvino, ma è di Gianni Rodari, da "Favole al telefono"):
+
+Giovannino Perdigiorno era un grande viaggiatore. Viaggia e viaggia, capitò nel paese con l'esse davanti.
+"Ma che razza di paese è?" domandò a un cittadino che prendeva il fresco sotto un albero. Il cittadino, per tutta risposta, cavò di tasca un temperino e lo mostrò bene aperto sul palmo della mano. "Vede questo?" "È un temperino" "Tutto sbagliato. Invece è uno stemperino, cioè un temperino con l'esse davanti. Serve a far ricrescere le matite, quando sono consumate, ed è molto utile nelle scuole". "Magnifico", disse Giovannino. "E poi?" "Poi abbiamo lo staccapanni". "Vorrà dire l'attaccapanni". "L'attaccapanni serve a ben poco, se non avete il cappotto da attaccarci. Col nostro staccapanni è tutto diverso. Lì non bisogna attaccarci niente, c'è già tutto attaccato. Se avete bisogno di un cappotto andate lì e lo staccate. Chi ha bisogno di una giacca, non deve mica andare a comprarla: passa dallo staccapanni e la stacca. C'è lo staccapanni d'estate e quello d'inverno, quello per uomo e quello per signora. Così si risparmiano tanti soldi".
+\end{tcolorbox}
+Si presenti un diagramma di attività in UML desumibile da una parte qualunque della descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 55 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri il seguente brano di Italo Calvino, da "Gli amori difficili":
+
+L'isolotto aveva rive alte, di roccia. Sopra cresceva la macchia fitta e bassa della vegetazione che resiste vicino al mare. Nel cielo volavano i gabbiani. Era una piccola isola vicino alla costa, deserta, incolta: in mezz'ora si poteva farne il giro in barca, o anche in canotto di gomma, come quello di quei due che venivano avanti, l'uomo pagaiando tranquillo, la donna coricata a prendere il sole. Avvicinandosi l'uomo tese l'orecchio. - Cos'hai sentito? - chiese lei. - Silenzio, - lui disse. - Le isole hanno un silenzio che si sente. Di fatto, ogni silenzio consiste della rete di rumori minuti che l'avvolge: il silenzio dell'isola si staccava da quello del calmo mare circostante perché era percorso da fruscii vegetali, da versi d'uccelli o da un improvviso frullo d'ali.
+\end{tcolorbox}
+Si presenti un diagramma di attività in UML desumibile da una parte qualunque della descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 56 \hfill {\small mcq, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+UML è l'acronimo per
+
+\begin{enumerate}[label=\alph*)]
+\item Universal Modeling Language
+\item Unified Modeling Language
+\item Universal Modeling Level
+\item Unified Modeling Level
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 57 \hfill {\small mcq, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+Un oggetto è
+
+\begin{enumerate}[label=\alph*)]
+\item Un modello di una classe
+\item Un'istanza di una classe
+\item Una classe
+\item Una metaclasse
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\section{Use case}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 58 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+La relazione include per un use case
+
+\begin{enumerate}[label=\alph*)]
+\item definisce un'estensione atomica del mio use case.
+\item definisce un use case che è una specializzazione atomica dello use case di partenza.
+\item definisce una funzionalità coesa dello use case e quindi separata.
+\item definisce una relazione di ereditarietà tra use case.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 59 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+La relazione extend per un use case
+
+\begin{enumerate}[label=\alph*)]
+\item definisce un'estensione atomica del mio use case.
+\item definisce un use case che è una specializzazione atomica dello use case di partenza.
+\item crea con lo use case di partenza un nuovo use case.
+\item definisce una relazione di ereditarietà tra use case.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 60 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è lo scopo principale di un caso d'uso in un processo di sviluppo software?
+
+\begin{enumerate}[label=\alph*)]
+\item Descrivere come il sistema è implementato internamente.
+\item Fornire una rappresentazione grafica della struttura dei dati.
+\item Rappresentare le interazioni tra gli attori e il sistema per soddisfare un obiettivo specifico.
+\item Valutare la performance del sistema in ambiente di produzione.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 61 \hfill {\small aperta, 4 pt \textcolor{gray}{(Scritto 15/01/2015)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Svolgere gli esercizi mediante diagrammi UML ben commentati. Libri chiusi.
+\end{tcolorbox}
+Definire gli attori e i casi d'uso per il servizio Telepass. Il sistema prevede l'utilizzo di un terminale collocato sul parabrezza di veicoli, e consente di pagare il pedaggio senza fermarsi alle barriere; in certi luoghi il Telepass può essere usato per pagare un parcheggio. Il terminale Telepass è assegnato ad un cliente tramite un contratto che definisce la forma di pagamento, che consiste in un addebito periodico su conto corrente, BancoPosta o carta di credito. Il terminale è identificato da codice univoco, e può essere utilizzato da un massimo di tre veicoli le cui targhe devono essere comunicate ad Autostrade per l'Italia. Il transito dei veicoli viene tracciato all'ingresso e all'uscita, e produce un addebito corrispondente sul conto del cliente, o una sanzione in caso di transito irregolare.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 62 \hfill {\small aperta, 4 pt \textcolor{gray}{(Scritto 16/01/2020)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si vuole progettare il gioco \textbf{"CapsuleMonster"}, descritto nel seguito.
+
+Ogni partita è composta da almeno due giocatori, e si gioca su una mappa quadrata. Ogni giocatore è caratterizzato dal nome – che deve essere registrato nel sistema – ed è l'allenatore di una squadra di CapsuleMonster (massimo 6 mostri).
+
+La partita inizia quando ci sono almeno 3 giocatori attivi, e dura un massimo di 60 minuti. Il possessore del CapsuleMonster con più energia al termine del gioco è dichiarato vincitore. Ogni giocatore inizia senza mostri, e inizia a girare per la mappa in cerca di CapsuleMonster. Il giocatore, a ogni dato istante, può muoversi, cercare, tentare di catturare il mostro, dare ordini al CapsuleMonster.
+
+Un CapsuleMonster è inizialmente nascosto e non appartiene a nessun giocatore. Se è visto da un giocatore si mette in fuga. Se quando è in fuga viene "afferrato" dal giocatore allora, se ha un livello di energia inferiore a 5 viene catturato e diventa proprietà del giocatore. Altrimenti si nasconde di nuovo ma con un livello di energia diminuito di 1. Nello stato catturato il giocatore può: (i) dirgli di entrare in squadra; (ii) ordinargli di combattere con un CapsuleMonster avversario; (iii) liberarlo.
+
+Ogni CapsuleMonster è caratterizzato da un livello energia, valori di attacco, difesa e un potere speciale unico. Alcuni CapsuleMonster sono Leggendari ed hanno un fattore moltiplicativo della propria energia (un reale compreso tra 1 e 2). Se è libero, si muove ad intervalli casuali. Se è prigioniero, esegue gli ordini del giocatore, e tenta di scappare ad intervalli casuali.
+\end{tcolorbox}
+Scrivere il diagramma dei casi d'uso del sistema appena descritto.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 63 \hfill {\small mcq, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+La relazione extend per un use case
+
+\begin{enumerate}[label=\alph*)]
+\item Definisce un'estensione atomica del mio use case
+\item Definisce un use case che è una specializzazione atomica dello use case di partenza
+\item Crea con lo use case di partenza un nuovo use case
+\item Definisce una relazione di ereditarietà tra use case.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 64 \hfill {\small aperta, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente descrizione (Rodari, "Giacomo di cristallo"):
+
+"Una volta, in una città lontana, venne al mondo un bambino trasparente. Attraverso le sue membra si poteva vedere come attraverso l'aria e l'acqua. Era di carne e d'ossa e pareva di vetro, e se cadeva non andava in pezzi, ma al più si faceva sulla fronte un bernoccolo trasparente. Si vedeva il suo cuore battere, si vedevano i suoi pensieri guizzare come pesci colorati nella loro vasca. Una volta, per sbaglio, il bambino disse una bugia, e subito la gente poté vedere come una palla di fuoco dietro la sua fronte: ridisse la verità e la palla di fuoco si dissolse. Per tutto il resto della sua vita non disse più bugie."
+\end{tcolorbox}
+Si determinino almeno due use case estratti dalla descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\section{Diagramma di attività}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 65 \hfill {\small aperta, 5 pt \textcolor{gray}{(Scritto 15/01/2015)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Svolgere gli esercizi mediante diagrammi UML ben commentati. Libri chiusi.
+\end{tcolorbox}
+Disegnare un diagramma di attività che descriva il transito di un veicolo da un cancello di ingresso abilitato al Telepass. Quando un veicolo si avvicina ad un cancello, il sistema emette un segnale di richiesta di identificazione. Il terminale risponde al segnale ritrasmettendo un codice identificativo univoco. Allora il sistema alza la sbarra e una telecamera rileva la targa del veicolo che attraversa il cancello. Nel caso il codice ricevuto sia corretto e corrisponda ad una delle targhe abilitate, il sistema registra il transito regolare (cui segue fatturazione "normale"), altrimenti viene registrato un transito irregolare cui segue fatturazione con sanzione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 66 \hfill {\small aperta, 5 pt \textcolor{gray}{(Scritto 16/01/2020)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si vuole progettare il gioco \textbf{"CapsuleMonster"}, descritto nel seguito.
+
+Ogni partita è composta da almeno due giocatori, e si gioca su una mappa quadrata. Ogni giocatore è caratterizzato dal nome – che deve essere registrato nel sistema – ed è l'allenatore di una squadra di CapsuleMonster (massimo 6 mostri).
+
+La partita inizia quando ci sono almeno 3 giocatori attivi, e dura un massimo di 60 minuti. Il possessore del CapsuleMonster con più energia al termine del gioco è dichiarato vincitore. Ogni giocatore inizia senza mostri, e inizia a girare per la mappa in cerca di CapsuleMonster. Il giocatore, a ogni dato istante, può muoversi, cercare, tentare di catturare il mostro, dare ordini al CapsuleMonster.
+
+Un CapsuleMonster è inizialmente nascosto e non appartiene a nessun giocatore. Se è visto da un giocatore si mette in fuga. Se quando è in fuga viene "afferrato" dal giocatore allora, se ha un livello di energia inferiore a 5 viene catturato e diventa proprietà del giocatore. Altrimenti si nasconde di nuovo ma con un livello di energia diminuito di 1. Nello stato catturato il giocatore può: (i) dirgli di entrare in squadra; (ii) ordinargli di combattere con un CapsuleMonster avversario; (iii) liberarlo.
+
+Ogni CapsuleMonster è caratterizzato da un livello energia, valori di attacco, difesa e un potere speciale unico. Alcuni CapsuleMonster sono Leggendari ed hanno un fattore moltiplicativo della propria energia (un reale compreso tra 1 e 2). Se è libero, si muove ad intervalli casuali. Se è prigioniero, esegue gli ordini del giocatore, e tenta di scappare ad intervalli casuali.
+\end{tcolorbox}
+Scrivere un diagramma di attività che gestisce l'intera partita. Essa è formata da sottoattività: partita e analisi. La partita inizializza i mostri e i giocatori, quindi gestisce i mostri (tramite AI) e l'input dei giocatori. L'analisi gestisce e visualizza le statistiche di gioco. Al termine del tempo visualizza le statistiche e il vincitore.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 67 \hfill {\small aperta, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente descrizione (Rodari, "Giacomo di cristallo"):
+
+"Una volta, in una città lontana, venne al mondo un bambino trasparente. Attraverso le sue membra si poteva vedere come attraverso l'aria e l'acqua. Era di carne e d'ossa e pareva di vetro, e se cadeva non andava in pezzi, ma al più si faceva sulla fronte un bernoccolo trasparente. Si vedeva il suo cuore battere, si vedevano i suoi pensieri guizzare come pesci colorati nella loro vasca. Una volta, per sbaglio, il bambino disse una bugia, e subito la gente poté vedere come una palla di fuoco dietro la sua fronte: ridisse la verità e la palla di fuoco si dissolse. Per tutto il resto della sua vita non disse più bugie."
+\end{tcolorbox}
+Si presenti un diagramma di attività desumibile da una parte qualunque della descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 68 \hfill {\small aperta, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente storiella di Gianni Rodari:
+
+"Una volta le galline trovarono la volpe in mezzo al sentiero. Aveva gli occhi chiusi, la coda non si muoveva. - È morta, è morta - gridarono le galline. - Facciamole il funerale. Difatti suonarono le campane a morto, si vestirono di nero e il gallo andò a scavare la fossa in fondo al prato. Fu un bellissimo funerale e i pulcini portavano i fiori. Quando arrivarono vicino alla buca la volpe saltò fuori dalla cassa e mangiò tutte le galline.
+La notizia volò di pollaio in pollaio. Ne parlò perfino la radio, ma la volpe non se ne preoccupò. Lasciò passare un po' di tempo, cambiò paese, si sdraiò in mezzo al sentiero e chiuse gli occhi. Vennero le galline di quel paese e subito gridarono anche loro: - È morta, è morta! Facciamole il funerale.
+Suonarono le campane, si vestirono di nero e il gallo andò a scavare la fossa in mezzo al granoturco. Fu un bellissimo funerale e i pulcini cantavano che si sentivano in Francia. Quando furono vicini alla buca, la volpe saltò fuori dalla cassa e mangiò tutto il corteo.
+La notizia volò di pollaio in pollaio e fece versare molte lacrime. Ne parlò anche la televisione, ma la volpe non si prese paura per nulla. Essa sapeva che le galline hanno poca memoria e campò tutta la vita facendo la morta. E chi farà come quelle galline vuol dire che non ha capito la storia.."
+\end{tcolorbox}
+Si presenti un diagramma di attività desumibile da una parte qualunque della descrizione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 69 \hfill {\small aperta, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Per le domande seguenti si consideri la storia (Rodari):
+
+Una volta, a Bologna, fecero un palazzo di gelato proprio sulla Piazza Maggiore, e i bambini venivano di lontano a dargli una leccatina. Il tetto era di panna montata, il fumo dei comignoli di zucchero filato, i comignoli di frutta candita. Tutto il resto era di gelato: le porte di gelato, i muri di gelato, i mobili di gelato. Un bambino piccolissimo si era attaccato a un tavolo e gli leccò le zampe una per una, fin che il tavolo gli crollò addosso con tutti i piatti, e i piatti erano di gelato al cioccolato, il più buono. Una guardia del Comune, a un certo punto, si accorse che una finestra si scioglieva. I vetri erano di gelato alla fragola, e si squagliavano in rivoletti rosa. - Presto, - gridò la guardia, - più presto ancora! E giù tutti a leccare più presto, per non lasciar andare perduta una sola goccia di quel capolavoro. - Una poltrona! - implorava una vecchiettina, che non riusciva a farsi largo tra la folla, - una poltrona per una povera vecchia. Chi me la porta? Coi braccioli, se è possibile. Un generoso pompiere corse a prenderle una poltrona di gelato alla crema e pistacchio, e la povera vecchietta, tutta beata, cominciò a leccarla proprio dai braccioli. Fu un gran giorno, quello, e per ordine dei dottori nessuno ebbe il mal di pancia. Ancora adesso, quando i bambini chiedono un altro gelato, i genitori sospirano: - Eh già, per te ce ne vorrebbe un palazzo intero, come quello di Bologna.
+\end{tcolorbox}
+Si presenti un diagramma di attività desumibile da una parte qualunque della storia.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\section{Diagramma delle classi / estrazione metodi}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 70 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente poesia di Gianni Rodari, "Distrazione interplanetaria":
+
+Chissà se a quest'ora su Marte, / su Mercurio o Nettuno, / qualcuno / in un banco di scuola / sta cercando la parola / che gli manca / per cominciare il tema / sulla pagina bianca.
+E certo nel cielo di Orione, / dei Gemelli, del Leone, / un altro dimentica / nel calamaio / i segni d'interpunzione… / come faccio io.
+Quasi lo sento / lo scricchiolio / di un pennino / in fondo al firmamento: / in un minuscolo puntino / della Via Lattea / un minuscolo scolaretto / sul suo libro di storia / disegna un pupazzetto.
+Lo sa che non sta bene / e anch'io lo so: / ma rideremo insieme / quando lo incontrerò.
+\end{tcolorbox}
+Si generi il diagramma a classi della storia nel suo complesso, estraendo gli oggetti e i metodi.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 71 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri il seguente brano "Il Paese con l'esse davanti" (il documento lo attribuisce a Calvino, ma è di Gianni Rodari, da "Favole al telefono"):
+
+Giovannino Perdigiorno era un grande viaggiatore. Viaggia e viaggia, capitò nel paese con l'esse davanti.
+"Ma che razza di paese è?" domandò a un cittadino che prendeva il fresco sotto un albero. Il cittadino, per tutta risposta, cavò di tasca un temperino e lo mostrò bene aperto sul palmo della mano. "Vede questo?" "È un temperino" "Tutto sbagliato. Invece è uno stemperino, cioè un temperino con l'esse davanti. Serve a far ricrescere le matite, quando sono consumate, ed è molto utile nelle scuole". "Magnifico", disse Giovannino. "E poi?" "Poi abbiamo lo staccapanni". "Vorrà dire l'attaccapanni". "L'attaccapanni serve a ben poco, se non avete il cappotto da attaccarci. Col nostro staccapanni è tutto diverso. Lì non bisogna attaccarci niente, c'è già tutto attaccato. Se avete bisogno di un cappotto andate lì e lo staccate. Chi ha bisogno di una giacca, non deve mica andare a comprarla: passa dallo staccapanni e la stacca. C'è lo staccapanni d'estate e quello d'inverno, quello per uomo e quello per signora. Così si risparmiano tanti soldi".
+\end{tcolorbox}
+Si generi il diagramma a classi della storia nel suo complesso, estraendo gli oggetti e i metodi.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 72 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri il seguente brano di Italo Calvino, da "Gli amori difficili":
+
+L'isolotto aveva rive alte, di roccia. Sopra cresceva la macchia fitta e bassa della vegetazione che resiste vicino al mare. Nel cielo volavano i gabbiani. Era una piccola isola vicino alla costa, deserta, incolta: in mezz'ora si poteva farne il giro in barca, o anche in canotto di gomma, come quello di quei due che venivano avanti, l'uomo pagaiando tranquillo, la donna coricata a prendere il sole. Avvicinandosi l'uomo tese l'orecchio. - Cos'hai sentito? - chiese lei. - Silenzio, - lui disse. - Le isole hanno un silenzio che si sente. Di fatto, ogni silenzio consiste della rete di rumori minuti che l'avvolge: il silenzio dell'isola si staccava da quello del calmo mare circostante perché era percorso da fruscii vegetali, da versi d'uccelli o da un improvviso frullo d'ali.
+\end{tcolorbox}
+Si generi il diagramma a classi della storia nel suo complesso, estraendo gli oggetti e i metodi.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 73 \hfill {\small aperta, 4 pt \textcolor{gray}{(Scritto 15/01/2015)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Svolgere gli esercizi mediante diagrammi UML ben commentati. Libri chiusi.
+\end{tcolorbox}
+Disegnare e commentare un diagramma delle classi coerente con le schede CRC.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 74 \hfill {\small aperta, 5 pt \textcolor{gray}{(Scritto 16/01/2020)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si vuole progettare il gioco \textbf{"CapsuleMonster"}, descritto nel seguito.
+
+Ogni partita è composta da almeno due giocatori, e si gioca su una mappa quadrata. Ogni giocatore è caratterizzato dal nome – che deve essere registrato nel sistema – ed è l'allenatore di una squadra di CapsuleMonster (massimo 6 mostri).
+
+La partita inizia quando ci sono almeno 3 giocatori attivi, e dura un massimo di 60 minuti. Il possessore del CapsuleMonster con più energia al termine del gioco è dichiarato vincitore. Ogni giocatore inizia senza mostri, e inizia a girare per la mappa in cerca di CapsuleMonster. Il giocatore, a ogni dato istante, può muoversi, cercare, tentare di catturare il mostro, dare ordini al CapsuleMonster.
+
+Un CapsuleMonster è inizialmente nascosto e non appartiene a nessun giocatore. Se è visto da un giocatore si mette in fuga. Se quando è in fuga viene "afferrato" dal giocatore allora, se ha un livello di energia inferiore a 5 viene catturato e diventa proprietà del giocatore. Altrimenti si nasconde di nuovo ma con un livello di energia diminuito di 1. Nello stato catturato il giocatore può: (i) dirgli di entrare in squadra; (ii) ordinargli di combattere con un CapsuleMonster avversario; (iii) liberarlo.
+
+Ogni CapsuleMonster è caratterizzato da un livello energia, valori di attacco, difesa e un potere speciale unico. Alcuni CapsuleMonster sono Leggendari ed hanno un fattore moltiplicativo della propria energia (un reale compreso tra 1 e 2). Se è libero, si muove ad intervalli casuali. Se è prigioniero, esegue gli ordini del giocatore, e tenta di scappare ad intervalli casuali.
+\end{tcolorbox}
+Disegnare e commentare un diagramma delle classi coerente con le schede CRC.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 75 \hfill {\small aperta, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente descrizione (Rodari, "Giacomo di cristallo"):
+
+"Una volta, in una città lontana, venne al mondo un bambino trasparente. Attraverso le sue membra si poteva vedere come attraverso l'aria e l'acqua. Era di carne e d'ossa e pareva di vetro, e se cadeva non andava in pezzi, ma al più si faceva sulla fronte un bernoccolo trasparente. Si vedeva il suo cuore battere, si vedevano i suoi pensieri guizzare come pesci colorati nella loro vasca. Una volta, per sbaglio, il bambino disse una bugia, e subito la gente poté vedere come una palla di fuoco dietro la sua fronte: ridisse la verità e la palla di fuoco si dissolse. Per tutto il resto della sua vita non disse più bugie."
+\end{tcolorbox}
+Si generi il diagramma a classi della storia estraendo oggetti, metodi, ecc.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 76 \hfill {\small aperta, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente storiella di Gianni Rodari:
+
+"Una volta le galline trovarono la volpe in mezzo al sentiero. Aveva gli occhi chiusi, la coda non si muoveva. - È morta, è morta - gridarono le galline. - Facciamole il funerale. Difatti suonarono le campane a morto, si vestirono di nero e il gallo andò a scavare la fossa in fondo al prato. Fu un bellissimo funerale e i pulcini portavano i fiori. Quando arrivarono vicino alla buca la volpe saltò fuori dalla cassa e mangiò tutte le galline.
+La notizia volò di pollaio in pollaio. Ne parlò perfino la radio, ma la volpe non se ne preoccupò. Lasciò passare un po' di tempo, cambiò paese, si sdraiò in mezzo al sentiero e chiuse gli occhi. Vennero le galline di quel paese e subito gridarono anche loro: - È morta, è morta! Facciamole il funerale.
+Suonarono le campane, si vestirono di nero e il gallo andò a scavare la fossa in mezzo al granoturco. Fu un bellissimo funerale e i pulcini cantavano che si sentivano in Francia. Quando furono vicini alla buca, la volpe saltò fuori dalla cassa e mangiò tutto il corteo.
+La notizia volò di pollaio in pollaio e fece versare molte lacrime. Ne parlò anche la televisione, ma la volpe non si prese paura per nulla. Essa sapeva che le galline hanno poca memoria e campò tutta la vita facendo la morta. E chi farà come quelle galline vuol dire che non ha capito la storia.."
+\end{tcolorbox}
+Si generi il diagramma a classi della storia nel suo complesso estraendo oggetti.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 77 \hfill {\small aperta, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente storiella di Gianni Rodari:
+
+"Una volta le galline trovarono la volpe in mezzo al sentiero. Aveva gli occhi chiusi, la coda non si muoveva. - È morta, è morta - gridarono le galline. - Facciamole il funerale. Difatti suonarono le campane a morto, si vestirono di nero e il gallo andò a scavare la fossa in fondo al prato. Fu un bellissimo funerale e i pulcini portavano i fiori. Quando arrivarono vicino alla buca la volpe saltò fuori dalla cassa e mangiò tutte le galline.
+La notizia volò di pollaio in pollaio. Ne parlò perfino la radio, ma la volpe non se ne preoccupò. Lasciò passare un po' di tempo, cambiò paese, si sdraiò in mezzo al sentiero e chiuse gli occhi. Vennero le galline di quel paese e subito gridarono anche loro: - È morta, è morta! Facciamole il funerale.
+Suonarono le campane, si vestirono di nero e il gallo andò a scavare la fossa in mezzo al granoturco. Fu un bellissimo funerale e i pulcini cantavano che si sentivano in Francia. Quando furono vicini alla buca, la volpe saltò fuori dalla cassa e mangiò tutto il corteo.
+La notizia volò di pollaio in pollaio e fece versare molte lacrime. Ne parlò anche la televisione, ma la volpe non si prese paura per nulla. Essa sapeva che le galline hanno poca memoria e campò tutta la vita facendo la morta. E chi farà come quelle galline vuol dire che non ha capito la storia.."
+\end{tcolorbox}
+Si estraggano i metodi.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 78 \hfill {\small aperta, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Per le domande seguenti si consideri la storia (Rodari):
+
+Una volta, a Bologna, fecero un palazzo di gelato proprio sulla Piazza Maggiore, e i bambini venivano di lontano a dargli una leccatina. Il tetto era di panna montata, il fumo dei comignoli di zucchero filato, i comignoli di frutta candita. Tutto il resto era di gelato: le porte di gelato, i muri di gelato, i mobili di gelato. Un bambino piccolissimo si era attaccato a un tavolo e gli leccò le zampe una per una, fin che il tavolo gli crollò addosso con tutti i piatti, e i piatti erano di gelato al cioccolato, il più buono. Una guardia del Comune, a un certo punto, si accorse che una finestra si scioglieva. I vetri erano di gelato alla fragola, e si squagliavano in rivoletti rosa. - Presto, - gridò la guardia, - più presto ancora! E giù tutti a leccare più presto, per non lasciar andare perduta una sola goccia di quel capolavoro. - Una poltrona! - implorava una vecchiettina, che non riusciva a farsi largo tra la folla, - una poltrona per una povera vecchia. Chi me la porta? Coi braccioli, se è possibile. Un generoso pompiere corse a prenderle una poltrona di gelato alla crema e pistacchio, e la povera vecchietta, tutta beata, cominciò a leccarla proprio dai braccioli. Fu un gran giorno, quello, e per ordine dei dottori nessuno ebbe il mal di pancia. Ancora adesso, quando i bambini chiedono un altro gelato, i genitori sospirano: - Eh già, per te ce ne vorrebbe un palazzo intero, come quello di Bologna.
+\end{tcolorbox}
+Si generi il diagramma a classi della storia nel suo complesso estraendo oggetti.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 79 \hfill {\small aperta, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Per le domande seguenti si consideri la storia (Rodari):
+
+Una volta, a Bologna, fecero un palazzo di gelato proprio sulla Piazza Maggiore, e i bambini venivano di lontano a dargli una leccatina. Il tetto era di panna montata, il fumo dei comignoli di zucchero filato, i comignoli di frutta candita. Tutto il resto era di gelato: le porte di gelato, i muri di gelato, i mobili di gelato. Un bambino piccolissimo si era attaccato a un tavolo e gli leccò le zampe una per una, fin che il tavolo gli crollò addosso con tutti i piatti, e i piatti erano di gelato al cioccolato, il più buono. Una guardia del Comune, a un certo punto, si accorse che una finestra si scioglieva. I vetri erano di gelato alla fragola, e si squagliavano in rivoletti rosa. - Presto, - gridò la guardia, - più presto ancora! E giù tutti a leccare più presto, per non lasciar andare perduta una sola goccia di quel capolavoro. - Una poltrona! - implorava una vecchiettina, che non riusciva a farsi largo tra la folla, - una poltrona per una povera vecchia. Chi me la porta? Coi braccioli, se è possibile. Un generoso pompiere corse a prenderle una poltrona di gelato alla crema e pistacchio, e la povera vecchietta, tutta beata, cominciò a leccarla proprio dai braccioli. Fu un gran giorno, quello, e per ordine dei dottori nessuno ebbe il mal di pancia. Ancora adesso, quando i bambini chiedono un altro gelato, i genitori sospirano: - Eh già, per te ce ne vorrebbe un palazzo intero, come quello di Bologna.
+\end{tcolorbox}
+Si estraggano i metodi.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\section{Design pattern (singleton, prototype…)}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 80 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Il decorator in Python
+
+\begin{enumerate}[label=\alph*)]
+\item implementa nel linguaggio il design pattern del decorator.
+\item permette la decorazione del codice con commenti necessari alla auto-documentazione.
+\item è una funzione di ordine superiore.
+\item definisce l'interfaccia con il C++.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 81 \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è il vantaggio dell'uso di una metaclasse Singleton generalizzata?
+
+\begin{enumerate}[label=\alph*)]
+\item Permette di creare oggetti da qualsiasi classe base.
+\item Garantisce che esista solo un'istanza di qualsiasi classe che la usa.
+\item Migliora la velocità di esecuzione.
+\item Impedisce la modifica degli attributi.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 82 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+Si descriva il design pattern factory method e si evidenzi la sua struttura in un linguaggio di programmazione a scelta.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 83 \hfill {\small aperta, 3 pt \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+Si descriva il design pattern del prototype e si evidenzi la sua struttura specifica in Java.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 84 \hfill {\small aperta, 6 pt \textcolor{gray}{(Scritto 15/01/2015)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Svolgere gli esercizi mediante diagrammi UML ben commentati. Libri chiusi.
+\end{tcolorbox}
+Arricchire il diagramma dell'esercizio 3 con uno o più design pattern (3 punti per design pattern, massimo 2).
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 85 \hfill {\small aperta, 3 pt \textcolor{gray}{(Scritto 16/01/2020)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si vuole progettare il gioco \textbf{"CapsuleMonster"}, descritto nel seguito.
+
+Ogni partita è composta da almeno due giocatori, e si gioca su una mappa quadrata. Ogni giocatore è caratterizzato dal nome – che deve essere registrato nel sistema – ed è l'allenatore di una squadra di CapsuleMonster (massimo 6 mostri).
+
+La partita inizia quando ci sono almeno 3 giocatori attivi, e dura un massimo di 60 minuti. Il possessore del CapsuleMonster con più energia al termine del gioco è dichiarato vincitore. Ogni giocatore inizia senza mostri, e inizia a girare per la mappa in cerca di CapsuleMonster. Il giocatore, a ogni dato istante, può muoversi, cercare, tentare di catturare il mostro, dare ordini al CapsuleMonster.
+
+Un CapsuleMonster è inizialmente nascosto e non appartiene a nessun giocatore. Se è visto da un giocatore si mette in fuga. Se quando è in fuga viene "afferrato" dal giocatore allora, se ha un livello di energia inferiore a 5 viene catturato e diventa proprietà del giocatore. Altrimenti si nasconde di nuovo ma con un livello di energia diminuito di 1. Nello stato catturato il giocatore può: (i) dirgli di entrare in squadra; (ii) ordinargli di combattere con un CapsuleMonster avversario; (iii) liberarlo.
+
+Ogni CapsuleMonster è caratterizzato da un livello energia, valori di attacco, difesa e un potere speciale unico. Alcuni CapsuleMonster sono Leggendari ed hanno un fattore moltiplicativo della propria energia (un reale compreso tra 1 e 2). Se è libero, si muove ad intervalli casuali. Se è prigioniero, esegue gli ordini del giocatore, e tenta di scappare ad intervalli casuali.
+\end{tcolorbox}
+(Opzionale) Mostrare e commentare nel diagramma un design pattern GoF.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 86 \hfill {\small aperta, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente descrizione (Rodari, "Giacomo di cristallo"):
+
+"Una volta, in una città lontana, venne al mondo un bambino trasparente. Attraverso le sue membra si poteva vedere come attraverso l'aria e l'acqua. Era di carne e d'ossa e pareva di vetro, e se cadeva non andava in pezzi, ma al più si faceva sulla fronte un bernoccolo trasparente. Si vedeva il suo cuore battere, si vedevano i suoi pensieri guizzare come pesci colorati nella loro vasca. Una volta, per sbaglio, il bambino disse una bugia, e subito la gente poté vedere come una palla di fuoco dietro la sua fronte: ridisse la verità e la palla di fuoco si dissolse. Per tutto il resto della sua vita non disse più bugie."
+\end{tcolorbox}
+Si descriva il design pattern del singleton e si definisca il codice associato in un linguaggio di programmazione che permetta di implementare le caratteristiche di questo pattern.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 87 \hfill {\small aperta, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente storiella di Gianni Rodari:
+
+"Una volta le galline trovarono la volpe in mezzo al sentiero. Aveva gli occhi chiusi, la coda non si muoveva. - È morta, è morta - gridarono le galline. - Facciamole il funerale. Difatti suonarono le campane a morto, si vestirono di nero e il gallo andò a scavare la fossa in fondo al prato. Fu un bellissimo funerale e i pulcini portavano i fiori. Quando arrivarono vicino alla buca la volpe saltò fuori dalla cassa e mangiò tutte le galline.
+La notizia volò di pollaio in pollaio. Ne parlò perfino la radio, ma la volpe non se ne preoccupò. Lasciò passare un po' di tempo, cambiò paese, si sdraiò in mezzo al sentiero e chiuse gli occhi. Vennero le galline di quel paese e subito gridarono anche loro: - È morta, è morta! Facciamole il funerale.
+Suonarono le campane, si vestirono di nero e il gallo andò a scavare la fossa in mezzo al granoturco. Fu un bellissimo funerale e i pulcini cantavano che si sentivano in Francia. Quando furono vicini alla buca, la volpe saltò fuori dalla cassa e mangiò tutto il corteo.
+La notizia volò di pollaio in pollaio e fece versare molte lacrime. Ne parlò anche la televisione, ma la volpe non si prese paura per nulla. Essa sapeva che le galline hanno poca memoria e campò tutta la vita facendo la morta. E chi farà come quelle galline vuol dire che non ha capito la storia.."
+\end{tcolorbox}
+Si descriva il design pattern del singleton e si evidenzi la sua struttura specifica in Python.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 88 \hfill {\small aperta, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente storiella di Gianni Rodari:
+
+"Una volta le galline trovarono la volpe in mezzo al sentiero. Aveva gli occhi chiusi, la coda non si muoveva. - È morta, è morta - gridarono le galline. - Facciamole il funerale. Difatti suonarono le campane a morto, si vestirono di nero e il gallo andò a scavare la fossa in fondo al prato. Fu un bellissimo funerale e i pulcini portavano i fiori. Quando arrivarono vicino alla buca la volpe saltò fuori dalla cassa e mangiò tutte le galline.
+La notizia volò di pollaio in pollaio. Ne parlò perfino la radio, ma la volpe non se ne preoccupò. Lasciò passare un po' di tempo, cambiò paese, si sdraiò in mezzo al sentiero e chiuse gli occhi. Vennero le galline di quel paese e subito gridarono anche loro: - È morta, è morta! Facciamole il funerale.
+Suonarono le campane, si vestirono di nero e il gallo andò a scavare la fossa in mezzo al granoturco. Fu un bellissimo funerale e i pulcini cantavano che si sentivano in Francia. Quando furono vicini alla buca, la volpe saltò fuori dalla cassa e mangiò tutto il corteo.
+La notizia volò di pollaio in pollaio e fece versare molte lacrime. Ne parlò anche la televisione, ma la volpe non si prese paura per nulla. Essa sapeva che le galline hanno poca memoria e campò tutta la vita facendo la morta. E chi farà come quelle galline vuol dire che non ha capito la storia.."
+\end{tcolorbox}
+Si descriva il design pattern clone (Prototype) e si dettagli la sua struttura in un linguaggio di programmazione a scelta.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\section{Schede CRC [X] non ancora visto}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 89 X \hfill {\small aperta, 4 pt \textcolor{gray}{(Scritto 15/01/2015)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Svolgere gli esercizi mediante diagrammi UML ben commentati. Libri chiusi.
+\end{tcolorbox}
+Disegnare le schede CRC per l'esercizio precedente.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 90 X \hfill {\small aperta, 4 pt \textcolor{gray}{(Scritto 16/01/2020)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si vuole progettare il gioco \textbf{"CapsuleMonster"}, descritto nel seguito.
+
+Ogni partita è composta da almeno due giocatori, e si gioca su una mappa quadrata. Ogni giocatore è caratterizzato dal nome – che deve essere registrato nel sistema – ed è l'allenatore di una squadra di CapsuleMonster (massimo 6 mostri).
+
+La partita inizia quando ci sono almeno 3 giocatori attivi, e dura un massimo di 60 minuti. Il possessore del CapsuleMonster con più energia al termine del gioco è dichiarato vincitore. Ogni giocatore inizia senza mostri, e inizia a girare per la mappa in cerca di CapsuleMonster. Il giocatore, a ogni dato istante, può muoversi, cercare, tentare di catturare il mostro, dare ordini al CapsuleMonster.
+
+Un CapsuleMonster è inizialmente nascosto e non appartiene a nessun giocatore. Se è visto da un giocatore si mette in fuga. Se quando è in fuga viene "afferrato" dal giocatore allora, se ha un livello di energia inferiore a 5 viene catturato e diventa proprietà del giocatore. Altrimenti si nasconde di nuovo ma con un livello di energia diminuito di 1. Nello stato catturato il giocatore può: (i) dirgli di entrare in squadra; (ii) ordinargli di combattere con un CapsuleMonster avversario; (iii) liberarlo.
+
+Ogni CapsuleMonster è caratterizzato da un livello energia, valori di attacco, difesa e un potere speciale unico. Alcuni CapsuleMonster sono Leggendari ed hanno un fattore moltiplicativo della propria energia (un reale compreso tra 1 e 2). Se è libero, si muove ad intervalli casuali. Se è prigioniero, esegue gli ordini del giocatore, e tenta di scappare ad intervalli casuali.
+\end{tcolorbox}
+Disegnare le schede CRC per l'esercizio precedente.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\section{Principi di design (coesione, SOLID, interfacce) [X] non ancora visto}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 91 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+In un design orientato agli oggetti, cos'è un "componente riusabile"?
+
+\begin{enumerate}[label=\alph*)]
+\item Una parte del codice progettata per essere facilmente integrabile in contesti diversi.
+\item Un template HTML collegato a un controller.
+\item Una classe che eredita da se stessa.
+\item Un modulo Python contenente solo costanti.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 92 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: processo)}}}
+Cosa caratterizza un buon design modulare?
+
+\begin{enumerate}[label=\alph*)]
+\item Moduli altamente accoppiati tra loro.
+\item Codice duplicato nei vari moduli.
+\item Assenza di interfacce.
+\item Alta coesione e basso accoppiamento.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 93 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa rappresenta il concetto di "interfaccia" in ambito di programmazione orientata agli oggetti?
+
+\begin{enumerate}[label=\alph*)]
+\item Una libreria esterna che estende le funzionalità.
+\item Un contratto che specifica un insieme di metodi che una classe deve implementare.
+\item Una classe concreta astratta.
+\item Una classe che eredita da più superclassi.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 94 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quando si usa il principio di Dependency Inversion?
+
+\begin{enumerate}[label=\alph*)]
+\item Per implementare ricorsione.
+\item Per ereditare proprietà da una superclasse.
+\item Quando si devono ottimizzare cicli annidati.
+\item Quando si vogliono dipendenze da astrazioni e non da classi concrete.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 95 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Perché è utile utilizzare il principio di Single Responsibility?
+
+\begin{enumerate}[label=\alph*)]
+\item Ogni classe ha una sola ragione di cambiamento.
+\item Aumenta la velocità di compilazione.
+\item Riduce la quantità di codice scritto.
+\item Evita l'uso delle classi astratte.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\section{Linguaggi OO (overloading, binding, C++/Java/Python) [X] non ancora visto}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 96 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+I template in C++
+
+\begin{enumerate}[label=\alph*)]
+\item sono una modalità corretta e completa di definire generici.
+\item simulano la presenza di generici tramite la definizione di puntatori a void.
+\item definiscono classi astratte che permettono di definire comportamenti analoghi ai generici.
+\item producono una moltiplicazione di codice oggetto se istanziati su tipi multipli.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 97 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale affermazione descrive meglio la specializzazione dei template in C++?
+
+\begin{enumerate}[label=\alph*)]
+\item I template sono modelli di codice precompilati da usare in fase di inclusione di header.
+\item I template in C++ funzionano esattamente come i generici in Java, con type erasure a runtime.
+\item I template emulano il polimorfismo parametrico generando classi o funzioni specifiche durante la compilazione, sulla base di modelli esistenti.
+\item I template usano la specializzazione per creare gerarchie di classi simili all'ereditarietà in fase di esecuzione.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 98 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Con quale strumento in C si può approssimare il polimorfismo parametrico?
+
+\begin{enumerate}[label=\alph*)]
+\item Con le macro.
+\item Con l'inclusione.
+\item Con i puntatori a funzione.
+\item Non è mai possibile.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 99 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+L'ereditarietà virtuale
+
+\begin{enumerate}[label=\alph*)]
+\item è la tipica forma di ereditarietà che implementa il late binding.
+\item è una forma di ereditarietà che non permette di istanziare oggetti della classe.
+\item è una forma di ereditarietà che serve ad evitare la moltiplicazione di istanze della classe.
+\item non esiste.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 100 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Il late binding permette
+
+\begin{enumerate}[label=\alph*)]
+\item la definizione di modelli generici.
+\item la definizioni di più funzioni con nomi identici ma parametri diversi risolta durante la compilazione.
+\item la definizioni di più funzioni con nomi identici ma parametri diversi risolta durante l'esecuzione.
+\item l'associazione del corpo di una funzione al suo nome durante l'esecuzione.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 101 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+L'overloading in Python
+
+\begin{enumerate}[label=\alph*)]
+\item dà un errore di compilazione.
+\item è strutturato come in C++.
+\item richiede una fase di preprocessamento.
+\item è gestito tramite un decorator.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 102 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+A cosa serve un PromptTemplate in LangChain?
+
+\begin{enumerate}[label=\alph*)]
+\item Gestire la memoria conversazionale
+\item Definire una catena di agenti
+\item Creare prompt strutturati e parametrizzati
+\item Collegare database esterni
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 103 X \hfill {\small mcq, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+L'ereditarietà virtuale
+
+\begin{enumerate}[label=\alph*)]
+\item È la tipica forma di ereditarietà che implementa il late binding
+\item È una forma di ereditarietà che non permette di istanziare oggetti della classe
+\item È una forma di ereditarietà che serve ad evitare la moltiplicazione di istanze della classe
+\item Non esiste
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 104 X \hfill {\small aperta, 3 pt \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente descrizione (Rodari, "Giacomo di cristallo"):
+
+"Una volta, in una città lontana, venne al mondo un bambino trasparente. Attraverso le sue membra si poteva vedere come attraverso l'aria e l'acqua. Era di carne e d'ossa e pareva di vetro, e se cadeva non andava in pezzi, ma al più si faceva sulla fronte un bernoccolo trasparente. Si vedeva il suo cuore battere, si vedevano i suoi pensieri guizzare come pesci colorati nella loro vasca. Una volta, per sbaglio, il bambino disse una bugia, e subito la gente poté vedere come una palla di fuoco dietro la sua fronte: ridisse la verità e la palla di fuoco si dissolse. Per tutto il resto della sua vita non disse più bugie."
+\end{tcolorbox}
+Si dettagli la differenza tra overloading e overriding.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 105 X \hfill {\small mcq, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+Il late binding permette
+
+\begin{enumerate}[label=\alph*)]
+\item la definizione di modelli generici
+\item la definizione di più funzioni con nomi identici ma parametri diversi risolta durante la compilazione
+\item la definizione di più funzioni con nomi identici ma parametri diversi risolta durante l'esecuzione
+\item l'associazione del corpo di una funzione al suo nome durante l'esecuzione
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 106 X \hfill {\small mcq, 3 pt \textcolor{gray}{(Scritto 10/01/2025)}}}
+L'overloading in Python
+
+\begin{enumerate}[label=\alph*)]
+\item dà un errore di compilazione
+\item è strutturato come in C++
+\item richiede una fase di preprocessamento
+\item è gestito tramite un decorator
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 107 X \hfill {\small mcq, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+L'ereditarietà virtuale in C++
+
+\begin{enumerate}[label=\alph*)]
+\item È alla base del meccanismo di late binding per la chiamata a funzione.
+\item Non esiste.
+\item Permette di evitare replica di strutture dati in presenza di ereditarietà multipla con classi base condivise.
+\item Gestisce la reflection con opportune primitive.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 108 X \hfill {\small aperta, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente storiella di Gianni Rodari:
+
+"Una volta le galline trovarono la volpe in mezzo al sentiero. Aveva gli occhi chiusi, la coda non si muoveva. - È morta, è morta - gridarono le galline. - Facciamole il funerale. Difatti suonarono le campane a morto, si vestirono di nero e il gallo andò a scavare la fossa in fondo al prato. Fu un bellissimo funerale e i pulcini portavano i fiori. Quando arrivarono vicino alla buca la volpe saltò fuori dalla cassa e mangiò tutte le galline.
+La notizia volò di pollaio in pollaio. Ne parlò perfino la radio, ma la volpe non se ne preoccupò. Lasciò passare un po' di tempo, cambiò paese, si sdraiò in mezzo al sentiero e chiuse gli occhi. Vennero le galline di quel paese e subito gridarono anche loro: - È morta, è morta! Facciamole il funerale.
+Suonarono le campane, si vestirono di nero e il gallo andò a scavare la fossa in mezzo al granoturco. Fu un bellissimo funerale e i pulcini cantavano che si sentivano in Francia. Quando furono vicini alla buca, la volpe saltò fuori dalla cassa e mangiò tutto il corteo.
+La notizia volò di pollaio in pollaio e fece versare molte lacrime. Ne parlò anche la televisione, ma la volpe non si prese paura per nulla. Essa sapeva che le galline hanno poca memoria e campò tutta la vita facendo la morta. E chi farà come quelle galline vuol dire che non ha capito la storia.."
+\end{tcolorbox}
+Il seguente frammento di codice in C++ e in Java ha un comportamento sostanzialmente differente, discutere quale (si ignorino le piccole differenze sintattiche):
+\begin{verbatim}
+class A {
+    int x;
+    class B {
+        int y;
+    }
+}
+\end{verbatim}
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 109 X \hfill {\small mcq, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+Le metaclassi in Java
+
+\begin{enumerate}[label=\alph*)]
+\item Non esistono
+\item Sono alla base del polimorfismo parametrico
+\item Servono nella dependency injection
+\item Permettono l'overloading
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\section{Python (linguaggio, collezioni, interprete, GIL) [X] non ancora visto}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 110 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è uno dei principi base di Python secondo il Zen of Python?
+
+\begin{enumerate}[label=\alph*)]
+\item La velocità è tutto.
+\item Complicato è meglio di complesso.
+\item Esplicito è meglio che implicito.
+\item Più codice, meglio è.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 111 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale tra questi NON è un paradigma supportato da Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Scripting.
+\item Logico.
+\item Imperativo.
+\item Funzionale.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 112 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede se dimentichi l'indentazione dopo un'istruzione if in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Viene ignorata l'istruzione.
+\item Si esegue comunque.
+\item Si genera un SyntaxWarning.
+\item Si genera un IndentationError.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 113 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Come viene gestito il typing in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Statico e forte.
+\item Dinamico e debole.
+\item Statico e debole.
+\item Dinamico e forte.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 114 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è il risultato dell'operazione 9//4 in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item 2
+\item 2.25
+\item 3
+\item Errore.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 115 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale tra queste affermazioni è corretta riguardo le stringhe in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Le stringhe sono mutevoli.
+\item Si può modificare un singolo carattere.
+\item Le stringhe sono immutabili.
+\item Le stringhe supportano operatori di assegnamento.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 116 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede se si tenta di accedere all'indice 20 di una stringa lunga 20 caratteri?
+
+\begin{enumerate}[label=\alph*)]
+\item Restituisce il carattere finale.
+\item Solleva un IndexError.
+\item Restituisce None.
+\item Solleva un ValueError.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 117 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale tra questi tipi di collezioni è immutabile in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Tuple.
+\item Set.
+\item Dictionary.
+\item List.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 118 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale funzione viene usata per generare una sequenza di numeri interi in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item list()
+\item seq()
+\item range()
+\item series()
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 119 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è la differenza tra pop() e remove() in una lista?
+
+\begin{enumerate}[label=\alph*)]
+\item pop() rimuove per valore, remove() per indice.
+\item pop() rimuove per indice, remove() per valore.
+\item Entrambe rimuovono per indice.
+\item Nessuna differenza.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 120 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa ritorna range(2, 10, 3) una volta convertito in lista?
+
+\begin{enumerate}[label=\alph*)]
+\item [2, 4, 6, 8, 10]
+\item [2, 5, 8]
+\item [2, 3, 4, 5, 6, 7, 8, 9]
+\item [2, 5, 7, 9]
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 121 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa rappresenta l'eccezione StopIteration in un iteratore?
+
+\begin{enumerate}[label=\alph*)]
+\item L'iteratore ha raggiunto la fine della sequenza.
+\item L'iteratore ha trovato un errore nei dati.
+\item L'iterazione non è mai iniziata.
+\item L'oggetto non è iterabile.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 122 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Come si chiama una funzione senza nome in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item anon()
+\item ghost
+\item lambda
+\item inline
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 123 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa fa il decoratore @staticmethod?
+
+\begin{enumerate}[label=\alph*)]
+\item Rende un metodo accessibile solo dalla classe.
+\item Consente di chiamare il metodo senza passare self o cls.
+\item Rende il metodo protetto.
+\item Aggiunge il metodo al costruttore.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 124 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è l'ordine delle regole di scoping in Python (LEGB)?
+
+\begin{enumerate}[label=\alph*)]
+\item Local, External, Global, Builtin
+\item Local, Enclosing, Global, Builtin
+\item Last, Enclosing, Global, Builtin
+\item Last, External, Global, Builtin
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 125 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+A cosa serve la parola chiave global in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item A creare una variabile visibile solo localmente.
+\item A limitare l'uso di variabili globali in funzioni.
+\item A riferirsi a una variabile definita fuori dal blocco corrente.
+\item A esportare variabili in altri moduli.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 126 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede ai parametri con valori predefiniti mutabili in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Vengono copiati ogni volta.
+\item Mantengono il loro stato tra chiamate successive.
+\item Generano un errore se modificati.
+\item Vengono convertiti in valori immutabili.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 127 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa rappresenta type(x) quando x è una funzione?
+
+\begin{enumerate}[label=\alph*)]
+\item method
+\item builtin\_function\_or\_method
+\item function
+\item lambda
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 128 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Dopo aver consumato un generatore in Python, cosa succede?
+
+\begin{enumerate}[label=\alph*)]
+\item Può essere riutilizzato infinite volte.
+\item Viene automaticamente rigenerato.
+\item Viene convertito in lista.
+\item È esaurito e non può più essere usato.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 129 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale metodo magico permette di sovraccaricare l'operatore '+' ?
+
+\begin{enumerate}[label=\alph*)]
+\item \texttt{\_\_sum\_\_}
+\item \texttt{\_\_plus\_\_}
+\item \texttt{\_\_add\_\_}
+\item \texttt{\_\_concat\_\_}
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 130 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è il risultato dell'operazione 7 // 3 in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item 2.3333
+\item 3
+\item 1
+\item 2
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 131 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede se si prova ad assegnare un nuovo carattere a un indice di una stringa in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item La stringa viene modificata correttamente.
+\item Viene sollevato un TypeError.
+\item La stringa viene copiata e modificata.
+\item Non succede nulla.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 132 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale operatore in Python serve a concatenare due stringhe?
+
+\begin{enumerate}[label=\alph*)]
+\item *
+\item +
+\item \&
+\item //
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 133 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Come si scrive una stringa multilinea in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Usando il carattere \textbackslash{}n.
+\item Usando triple virgolette '''...''' o """...""".
+\item Usando la funzione multistring().
+\item Con la concatenazione di più stringhe singole.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 134 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa produce la slice [::-1] applicata a una stringa?
+
+\begin{enumerate}[label=\alph*)]
+\item Ritorna la stessa stringa.
+\item Ritorna una copia della stringa.
+\item Ritorna la stringa invertita.
+\item Ritorna la stringa con solo caratteri pari.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 135 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale errore viene sollevato quando si accede a un indice fuori dal range di una stringa?
+
+\begin{enumerate}[label=\alph*)]
+\item TypeError
+\item ValueError
+\item IndexError
+\item KeyError
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 136 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Che differenza c'è tra gli operatori + e * usati con le stringhe?
+
+\begin{enumerate}[label=\alph*)]
+\item + ripete la stringa, * concatena.
+\item + concatena le stringhe, * ripete la stringa un certo numero di volte.
+\item Entrambi concatenano.
+\item Entrambi ripetono la stringa.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 137 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede con questo codice?
+\begin{verbatim}
+c = 'Hello' ' ' 'World'
+print(c)
+\end{verbatim}
+
+\begin{enumerate}[label=\alph*)]
+\item Errore di sintassi.
+\item Stampa "HelloWorld" senza spazio.
+\item Stampa "Hello World" con spazio.
+\item Nessuna stampa.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 138 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Come funziona la slice [start:end:step]?
+
+\begin{enumerate}[label=\alph*)]
+\item Restituisce una sottostringa da start a end escluso, saltando step caratteri.
+\item Restituisce la stringa invertita.
+\item Restituisce una copia della stringa.
+\item Restituisce una lista di caratteri.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 139 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è la differenza principale tra una stringa e una lista in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Le stringhe sono mutabili, le liste sono immutabili.
+\item Le stringhe sono immutabili, le liste sono mutabili.
+\item Nessuna differenza.
+\item Le liste contengono solo numeri, le stringhe solo caratteri.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 140 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale tra le seguenti affermazioni è vera riguardo le liste in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Le liste sono immutabili e ordinate.
+\item Le liste sono mutabili e ordinate.
+\item Le liste non supportano duplicati.
+\item Le liste sono immutabili e non ordinate.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 141 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede assegnando una lista ad un'altra variabile in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Viene creata una copia profonda della lista.
+\item Viene creata una copia superficiale della lista.
+\item Entrambe le variabili puntano alla stessa lista.
+\item Viene generato un errore.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 142 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale metodo permette di aggiungere un elemento alla fine di una lista?
+
+\begin{enumerate}[label=\alph*)]
+\item add()
+\item insert()
+\item append()
+\item extend()
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 143 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede se si modifica un elemento interno (ad esempio una lista) contenuto in una tupla?
+
+\begin{enumerate}[label=\alph*)]
+\item La tupla diventa mutabile.
+\item La modifica genera un errore.
+\item L'elemento interno si modifica ma la tupla resta immutabile.
+\item La tupla si copia automaticamente prima della modifica.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 144 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale tra le seguenti affermazioni sui set è corretta?
+
+\begin{enumerate}[label=\alph*)]
+\item I set sono ordinati e possono contenere duplicati.
+\item I set sono non ordinati e non possono contenere duplicati.
+\item I set possono contenere liste come elementi.
+\item I set supportano l'operatore + per concatenazione.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 145 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede se si prova ad aggiungere una lista come elemento di un set?
+
+\begin{enumerate}[label=\alph*)]
+\item La lista viene aggiunta correttamente.
+\item Il set diventa mutabile.
+\item Si genera un errore di tipo "unhashable type".
+\item La lista viene convertita in tupla e aggiunta.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 146 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Come si crea una copia profonda (deep copy) di una lista annidata in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Usando il metodo copy() della lista.
+\item Usando l'operatore di assegnazione =.
+\item Usando il modulo copy con copy.deepcopy().
+\item Non è possibile creare copie profonde di liste annidate.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 147 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è il risultato di questa operazione su una lista \texttt{aList = [1, 2, 3, 4]}: \texttt{aList.pop(2)} ?
+
+\begin{enumerate}[label=\alph*)]
+\item Rimuove e ritorna l'elemento con valore 2.
+\item Rimuove e ritorna l'elemento all'indice 2.
+\item Rimuove l'elemento 2 senza ritornarlo.
+\item Genera un errore.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 148 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale tra le seguenti affermazioni descrive correttamente la differenza tra tuple e liste?
+
+\begin{enumerate}[label=\alph*)]
+\item Tuple sono mutabili, liste sono immutabili.
+\item Tuple sono immutabili, liste sono mutabili.
+\item Entrambe sono mutabili ma con sintassi diversa.
+\item Entrambe sono immutabili ma con sintassi diversa.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 149 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa succede se si concatena una tupla con un intero in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item L'intero viene aggiunto come elemento.
+\item Viene generato un errore di tipo.
+\item L'intero viene convertito in tupla automaticamente.
+\item La tupla diventa mutabile.
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 150 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quali sono le tre fasi principali dell'esecuzione di un programma Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Parsing, Ottimizzazione, Linking
+\item Interpreter Initialization, Compilazione in bytecode, Bytecode Interpretation
+\item Preprocessing, Compilazione in Assembly, Esecuzione
+\item Traduzione in C, Compilazione, Runtime
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 151 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è il compito principale della fase di Interpreter Initialization?
+
+\begin{enumerate}[label=\alph*)]
+\item Generare i file .pyc
+\item Caricare moduli built-in, gestire memoria e creare il GIL
+\item Disassemblare il bytecode
+\item Avviare la compilazione JIT
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 152 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa rappresenta un frame durante l'esecuzione del bytecode?
+
+\begin{enumerate}[label=\alph*)]
+\item Una struttura che contiene solo variabili globali
+\item Un'unità di esecuzione con codice, scope e stack
+\item Una copia del sorgente .py
+\item Un dizionario temporaneo con i built-in
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 153 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Come funziona la call stack in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Ogni funzione aggiunge un frame; al ritorno il frame viene rimosso
+\item Tutte le funzioni condividono un unico frame
+\item La call stack non esiste, si usano solo dizionari di contesto
+\item Le funzioni ricorsive sovrascrivono i frame precedenti
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 154 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è la funzione del modulo dis in Python?
+
+\begin{enumerate}[label=\alph*)]
+\item Disassemblare il bytecode in opcodes leggibili
+\item Ottimizzare la compilazione
+\item Mostrare i moduli built-in
+\item Gestire i riferimenti degli oggetti
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 155 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale meccanismo di gestione memoria usa CPython?
+
+\begin{enumerate}[label=\alph*)]
+\item Garbage collection generazionale puro
+\item Reference counting con garbage collector per cicli
+\item Manuale come in C
+\item Unicamente mark-and-sweep
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 156 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Perché esiste il Global Interpreter Lock (GIL)?
+
+\begin{enumerate}[label=\alph*)]
+\item Per velocizzare il calcolo parallelo
+\item Per semplificare la gestione memoria, evitando race condition
+\item Per supportare librerie C esterne
+\item Per ridurre la latenza del bytecode
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 157 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Come fanno librerie come NumPy a ottenere parallelismo nonostante il GIL?
+
+\begin{enumerate}[label=\alph*)]
+\item Usano Python puro senza bytecode
+\item Rilasciano temporaneamente il GIL in codice C esterno
+\item Compilano direttamente in Assembly
+\item Ignorano completamente la call stack
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 158 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è la caratteristica principale della Python Virtual Machine?
+
+\begin{enumerate}[label=\alph*)]
+\item È un interprete stack-based che esegue bytecode
+\item È un compilatore che genera file eseguibili nativi
+\item È una macchina a registri per CPU multi-core
+\item Funziona solo come ottimizzatore di memoria
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 159 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è lo scopo del value stack nella VM?
+
+\begin{enumerate}[label=\alph*)]
+\item Conservare moduli built-in
+\item Salvare costanti globali
+\item Tenere operandi e risultati temporanei durante l'esecuzione
+\item Gestire i thread del GIL
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 160 X \hfill {\small aperta, 3 pt \textcolor{gray}{(Preappello 24/11/2025)}}}
+\begin{tcolorbox}[colback=gray!8,colframe=gray!50,title=Contesto]
+Si consideri la seguente storiella di Gianni Rodari:
+
+"Una volta le galline trovarono la volpe in mezzo al sentiero. Aveva gli occhi chiusi, la coda non si muoveva. - È morta, è morta - gridarono le galline. - Facciamole il funerale. Difatti suonarono le campane a morto, si vestirono di nero e il gallo andò a scavare la fossa in fondo al prato. Fu un bellissimo funerale e i pulcini portavano i fiori. Quando arrivarono vicino alla buca la volpe saltò fuori dalla cassa e mangiò tutte le galline.
+La notizia volò di pollaio in pollaio. Ne parlò perfino la radio, ma la volpe non se ne preoccupò. Lasciò passare un po' di tempo, cambiò paese, si sdraiò in mezzo al sentiero e chiuse gli occhi. Vennero le galline di quel paese e subito gridarono anche loro: - È morta, è morta! Facciamole il funerale.
+Suonarono le campane, si vestirono di nero e il gallo andò a scavare la fossa in mezzo al granoturco. Fu un bellissimo funerale e i pulcini cantavano che si sentivano in Francia. Quando furono vicini alla buca, la volpe saltò fuori dalla cassa e mangiò tutto il corteo.
+La notizia volò di pollaio in pollaio e fece versare molte lacrime. Ne parlò anche la televisione, ma la volpe non si prese paura per nulla. Essa sapeva che le galline hanno poca memoria e campò tutta la vita facendo la morta. E chi farà come quelle galline vuol dire che non ha capito la storia.."
+\end{tcolorbox}
+Si scriva un decorator in Python corretto che stampa un messaggio prima della chiamata di una funzione e alla sua terminazione.
+
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{4cm}\hrule
+
+
+\section{API LLM e framework ad agenti (OpenAI, LangChain, CrewAI) [X] non ancora visto}
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 161 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Nel contesto delle API di OpenAI, quale ruolo serve a definire le regole e il comportamento del modello?
+
+\begin{enumerate}[label=\alph*)]
+\item user
+\item assistant
+\item system
+\item developer
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 162 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Quale informazione è contenuta nel campo usage della risposta API di OpenAI?
+
+\begin{enumerate}[label=\alph*)]
+\item Lo stile della risposta
+\item Il numero di token utilizzati
+\item Il livello di temperatura
+\item Il modello usato
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 163 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è la funzione principale della Memory in LangChain?
+
+\begin{enumerate}[label=\alph*)]
+\item Salvare lo stato del modello
+\item Ricordare il contesto delle conversazioni precedenti
+\item Generare automaticamente prompt
+\item Aumentare la velocità di calcolo
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 164 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+In CrewAI, quale elemento rappresenta una singola unità di lavoro assegnata a un agente?
+
+\begin{enumerate}[label=\alph*)]
+\item Crew
+\item Role
+\item Task
+\item Goal
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 165 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa rappresenta il campo finish\_reason in una risposta API di OpenAI?
+
+\begin{enumerate}[label=\alph*)]
+\item Il modello è andato in errore
+\item Il motivo per cui il modello ha terminato la generazione
+\item La quantità di token generati
+\item La temperatura usata nella generazione
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 166 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+In LangChain, cosa fa una LLMChain?
+
+\begin{enumerate}[label=\alph*)]
+\item Collega un prompt a un modello e gestisce input e output
+\item Genera automaticamente nuove API
+\item Ottimizza l'uso dei token
+\item Traduce i messaggi in diverse lingue
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 167 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è il vantaggio principale di usare Agents in LangChain?
+
+\begin{enumerate}[label=\alph*)]
+\item Consentono di ridurre i costi computazionali
+\item Eliminano la necessità di definire prompt
+\item Consentono al modello di scegliere dinamicamente quali strumenti utilizzare
+\item Rendono l'LLM più veloce
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 168 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Qual è lo scopo dei Tools in LangChain?
+
+\begin{enumerate}[label=\alph*)]
+\item Esporre funzioni esterne che il modello può invocare
+\item Memorizzare conversazioni precedenti
+\item Fornire dataset per il training
+\item Modificare la temperatura del modello
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 169 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+In CrewAI, cosa definisce il parametro goal di un agente?
+
+\begin{enumerate}[label=\alph*)]
+\item Le API a cui l'agente può accedere
+\item L'obiettivo esplicito che guida le decisioni dell'agente
+\item Il tipo di memoria utilizzata
+\item La sequenza dei task da eseguire
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 170 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+In CrewAI, come possono essere eseguiti i task?
+
+\begin{enumerate}[label=\alph*)]
+\item In modo sequenziale o in parallelo
+\item Solo in ordine gerarchico
+\item Solo uno alla volta
+\item Sempre in background
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\needspace{8\baselineskip}
+\subsection*{Domanda 171 X \hfill {\small mcq, 1 pt \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+Cosa rappresenta un Crew in CrewAI?
+
+\begin{enumerate}[label=\alph*)]
+\item Un singolo agente specializzato
+\item Una memoria condivisa tra più task
+\item Un insieme di agenti e task coordinati
+\item Un tool esterno integrato nel sistema
+\end{enumerate}
+\vspace{0.2cm}
+\noindent\textbf{Risposta:}\par
+\vspace{1.5cm}\hrule
+
+
+\end{document}
