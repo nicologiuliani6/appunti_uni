@@ -77,8 +77,7 @@
 \tableofcontents   % <-- genera automaticamente la pagina dell'indice
 \newpage
 
-\section{Modulo 1}
-
+\section{Modulo 1 - Lezioni}
 \subsection{Introduzione al corso}
 
 Il corso presenta metodi e strumenti di \textbf{analisi}, \textbf{modellazione},
@@ -385,6 +384,638 @@ dal fornitore, proprietà intellettuale del codice generato. Nel ciclo di vita: 
 programming con l'AI), testing (casi da validare), manutenzione (comprensione di codice
 legacy). La verifica umana resta obbligatoria.
 
+\subsection{Processi agili ed Extreme Programming}
+
+\subsubsection{Collaborazione, progetti e prodotti}
+Sviluppare software è un'attività \emph{sociale}: comprendere i bisogni richiede
+conversazione e negoziazione, e un prodotto corretto deve anche risolvere un problema utile.
+\begin{center}
+\begin{tabular}{|p{2.6cm}|p{6.2cm}|p{6.2cm}|}
+\hline
+ & \textbf{Progetto} & \textbf{Prodotto}\\
+\hline
+Orizzonte & iniziativa temporanea con un obiettivo & evoluzione nel tempo, ciclo di vita\\
+Pianificazione & vincoli di ambito, tempi, risorse & obiettivi di prodotto, lavoro ordinato per valore\\
+Successo & raggiungere gli obiettivi del progetto & valore per utenti e organizzazione nel tempo\\
+\hline
+\end{tabular}
+\end{center}
+Un progetto può essere agile e le due visioni possono coesistere. All'inizio si conosce
+solo una parte del problema: pianificare significa formulare una \emph{previsione} e
+aggiornarla con nuove informazioni (agilità = pianificazione frequente e verificabile).
+Il \emph{backlog} non contiene solo user story, ma anche difetti e attività tecniche.
+
+\subsubsection{Valori e principi agili}
+Il Manifesto agile dà più valore a individui e interazioni, software funzionante,
+collaborazione col cliente, risposta al cambiamento, \emph{pur riconoscendo} il valore di
+processi, documentazione, contratti e piani. I \textbf{dodici principi} si raggruppano in
+quattro temi: valore e adattamento (consegne frequenti, software funzionante, cambiamenti
+benvenuti); collaborazione e autonomia (lavoro quotidiano col business, persone motivate,
+team auto-organizzati); qualità e sostenibilità (ritmo sostenibile, eccellenza tecnica);
+semplicità e miglioramento (massimizzare il lavoro \emph{non} fatto, riflettere e adattare).
+
+\paragraph{Feedback su tempi diversi.} Test automatici (secondi/minuti: il comportamento
+atteso è preservato?); coppia e integrazione (durante il lavoro e ogni giorno: il codice è
+comprensibile e si integra?); cliente e utenti (durante l'iterazione e ai rilasci:
+l'incremento risolve il problema?); riflessione del team (a intervalli regolari: il nostro
+modo di lavorare è efficace?).
+
+\paragraph{Minimum Viable Product.} Un MVP (concetto del \emph{Lean Startup}) mette alla
+prova un'\emph{ipotesi} sul prodotto e sugli utenti; il risultato serve a decidere se
+proseguire, cambiare direzione o fermarsi. ``Minimo'' riguarda lo \emph{sforzo} per ottenere un
+riscontro utile, ``viable'' richiede un'esperienza sufficiente a rendere significativo il
+riscontro. Il numero di funzionalità non definisce un MVP (esempio: la demo di Dropbox
+prima del prodotto completo).
+
+\paragraph{Approcci collegati all'agilità.}
+metodi e framework di sviluppo (XP, Scrum, Crystal, FDD, ASD, DSDM); gestione del flusso
+(Kanban, Lean software development); framework per più team (SAFe, LeSS); sviluppo e
+operazioni (DevOps).
+
+\subsubsection{Extreme Programming (XP)}
+\paragraph{I cinque valori}: comunicazione (rendere visibili conoscenze, problemi,
+decisioni), semplicità (costruire ciò che serve oggi), feedback (da codice, test e
+persone), coraggio (affrontare problemi, modificare il codice, dichiarare difficoltà),
+rispetto.
+
+Il team XP riunisce le competenze per realizzare e verificare il prodotto; il
+rappresentante del cliente è disponibile con tempi di risposta brevi (\emph{cliente
+on-site}, co-locazione: in un team remoto accesso e feedback vanno progettati
+esplicitamente). Il cliente porta priorità e valore, gli sviluppatori stime e conoscenza
+tecnica.
+
+\paragraph{Le dodici pratiche classiche}:
+\begin{itemize}
+  \item \emph{pianificazione e cliente}: Planning Game, piccoli rilasci, cliente on-site;
+  \item \emph{design e codice}: metafora del sistema, progettazione semplice, refactoring;
+  \item \emph{verifica e collaborazione}: testing, pair programming, proprietà collettiva;
+  \item \emph{continuità del lavoro}: integrazione continua, settimana di 40 ore, standard
+        di codifica.
+\end{itemize}
+Le pratiche si sostengono a vicenda: il refactoring richiede test automatici e passi
+piccoli; la proprietà collettiva richiede convenzioni, revisione e integrazione; i piccoli
+rilasci richiedono storie piccole e cliente disponibile; la pianificazione adattiva
+richiede stime del team e feedback frequente.
+
+\paragraph{Planning Game e cambiamenti.} Il cliente chiarisce il valore, sceglie le
+priorità e valuta alternative di ambito; gli sviluppatori chiariscono fattibilità, stime e
+rischi e segnalano dipendenze. Il piano è rivisto a ogni iterazione. Se il cliente chiede
+un cambiamento in corsa: chiarire bisogno e urgenza, valutare costo e rischio con il team,
+concordare cosa anticipare o rinviare, aggiornare il piano e rendere visibile la
+decisione. \emph{Accogliere} il cambiamento significa valutarlo, non subirlo.
+
+\paragraph{Metafora e linguaggio comune.} La metafora di XP dà al team un'immagine
+condivisa del sistema; nella 2\textsuperscript{a} edizione non è più una pratica ma resta
+l'obiettivo di un \emph{linguaggio comune}: un glossario usato nelle conversazioni, nei
+criteri di accettazione, nei test e nel codice (es.\ \texttt{Abbonamento},
+\texttt{TARIFFA\_MENSILE}).
+
+\paragraph{Progettazione semplice e YAGNI.} Il design sostiene i requisiti noti e i vincoli
+rilevanti; si evitano generalizzazioni speculative (\textbf{YAGNI}, ``You Aren't Gonna Need
+It'': non ti servirà). Se nessun requisito richiede una gerarchia di classi \texttt{Tariffa},
+si rinvia e si ristruttura quando arriva un caso concreto: i test esistenti rendono sicuro il
+refactoring. XP \emph{non} vieta l'astrazione, la rinvia finché serve.
+
+\paragraph{User story e test di accettazione.} Scheda (bisogno breve), conversazione
+(contesto, vincoli), \textbf{conferma} (verifica del comportamento): ``Card, Conversation,
+Confirmation'' di Jeffries. Il formato ``Come\dots, voglio\dots, per\dots'' è utile ma non
+obbligatorio. I criteri di accettazione sono verificabili; i test di accettazione si
+scrivono in forma \emph{Dato--Quando--Allora}, il team li traduce in verifiche ripetibili.
+
+\paragraph{Refactoring: ``due cappelli''.} Migliorare la struttura interna \emph{preservando
+il comportamento osservabile}, a piccoli passi eseguendo i test dopo ciascuno (es.\ spostare
+nella superclasse un metodo duplicato nelle sottoclassi). Non è refactoring correggere un
+difetto né aggiungere una funzionalità: si cambia la struttura \emph{o} il comportamento,
+mai entrambi nello stesso passo.
+
+\paragraph{Integrazione continua.} Modifica piccola $\to$ integrazione nella linea
+principale $\to$ costruzione e test automatici $\to$ esito visibile, errori corretti subito.
+\begin{center}
+\begin{tabular}{|p{3.6cm}|p{11cm}|}
+\hline
+\textbf{Integrazione continua} & ogni modifica è integrata spesso, almeno ogni giorno, e verificata automaticamente\\
+\textbf{Consegna continua} & il software è sempre in uno stato rilasciabile; il rilascio resta una \emph{decisione}\\
+\textbf{Rilascio continuo} & ogni modifica che supera i controlli raggiunge automaticamente gli utenti\\
+\hline
+\end{tabular}
+\end{center}
+Far girare i test su rami separati integrati ogni due settimane \emph{non} è integrazione
+continua: manca l'integrazione frequente nella linea condivisa.
+
+\paragraph{Proprietà collettiva e ritmo sostenibile.} Il team condivide conoscenza e
+responsabilità su tutto il codice, ma non significa modifiche arbitrarie: servono
+convenzioni, test automatici su ogni modifica, revisione e permessi espliciti nel
+repository. Nella 1\textsuperscript{a} edizione (1999) c'è la ``settimana di 40 ore'', nella
+2\textsuperscript{a} (2004) ``lavoro energico e margine nel piano'': le ore di presenza non
+misurano né produttività né apprendimento.
+
+\paragraph{Pair programming: l'evidenza.} Meta-analisi di 18 studi (Hannay et al., 2009):
+la \emph{qualità} migliora (effetto piccolo), la \emph{durata} del compito si riduce (effetto
+medio), lo \emph{sforzo totale} in ore-persona aumenta (effetto medio). Compiti semplici: più
+rapidi ma con qualità inferiore; compiti complessi: qualità maggiore con sforzo molto più alto.
+Si usa la coppia dove il beneficio giustifica il costo.
+
+\paragraph{Commenti e convenzioni.} Convenzioni condivise (per Python PEP~8), nomi chiari.
+Un commento utile spiega il \emph{perché}, non il \emph{che cosa} (\texttt{mesi = mesi + 1
+\# aggiunge 1} è inutile).
+
+\subsubsection{IA generativa e pratiche XP}
+Storie: proposte di formulazione e scomposizione, da verificare con cliente e team. Test:
+casi normali e limite, da verificare su oracolo e copertura pertinente. Codice:
+implementazioni e alternative, da verificare su correttezza, sicurezza, comprensibilità.
+Refactoring: nomi, estrazioni, semplificazioni, con comportamento preservato. Coppia:
+spiegare codice e discutere alternative, ma decisioni e responsabilità restano al team.
+Il risparmio dipende anche dal costo di revisione.
+
+\textbf{Errore condiviso tra codice e test generati}: se il modello propone
+\texttt{prezzo(mesi) = 30 * mesi * 0.9} insieme al test \texttt{prezzo(2) == 54}, il test
+passa ma conferma la stessa assunzione errata. Il risultato atteso di un test deve venire da
+una fonte \emph{indipendente} dal codice: il criterio di accettazione concordato
+(\texttt{prezzo(2)} deve essere 60). Codice e test coerenti tra loro possono essere entrambi
+sbagliati; alta copertura o chiedere allo stesso modello di rivedersi non bastano.
+
+\subsection{Introduzione a Scrum}
+
+\subsubsection{Contesto: sviluppo agile}
+Certi sviluppi non si pianificano in anticipo: il problema è complesso e richiede il
+contributo di molte persone, la soluzione all'inizio non è chiara, i requisiti
+cambieranno durante lo sviluppo, il lavoro può essere articolato in \emph{incrementi} e
+serve una collaborazione stretta con feedback rapido e continuo degli utenti finali.
+
+Il \textbf{Manifesto agile} dichiara di preferire:
+\begin{itemize}
+  \item individui e interazioni $\succ$ processi e strumenti;
+  \item software che funziona $\succ$ documentazione completa;
+  \item collaborazione del cliente $\succ$ negoziazione contrattuale;
+  \item rispondere al cambiamento $\succ$ seguire un piano.
+\end{itemize}
+
+\paragraph{Dalla staffetta al pacchetto di mischia.} Takeuchi e Nonaka (1986) contrappongono
+l'approccio a \emph{staffetta} (requisiti $\to$ design $\to$ codice $\to$ test, una fase
+alla volta) a quello \emph{rugby}, in cui il team avanza come un'unità passandosi la
+palla. Il team Scrum fa un po' di tutto (requisiti, design, codice, test) in ogni sprint.
+
+\subsubsection{Che cos'è Scrum}
+Scrum è un \textbf{framework di project management} per lo sviluppo \emph{iterativo e
+incrementale} di prodotti, nato per i progetti software. Non è un processo né una
+tecnica: è un contenitore in cui usare processi e tecniche diverse (spesso insieme a XP).
+Rende evidente l'efficacia delle proprie pratiche di product management e sviluppo, così
+da migliorarle: non porta all'eccellenza, ma \emph{mostra il livello di inefficienza}
+(Ken Schwaber).
+
+In sintesi:
+\begin{itemize}
+  \item il cliente può ispezionare versioni funzionanti del software ogni 1--4 settimane;
+  \item il cliente definisce le funzioni e le priorità; il team decide ogni giorno come
+        realizzare al meglio quelle a priorità più alta;
+  \item a ogni sprint nasce una nuova versione, esaminata per decidere se fare un altro
+        sprint o produrre un rilascio;
+  \item team \textbf{auto-organizzante}, metodo agile parzialmente pianificato;
+  \item i requisiti stanno nel \textbf{Backlog}; sviluppo guidato da storie e test;
+  \item il prodotto cresce in \emph{sprint} di durata fissa;
+  \item meeting: review e retrospettive.
+\end{itemize}
+
+\subsubsection{Persone e ruoli}
+Un team ha $5\pm2$ persone (in altre slide $7\pm2$), tutte egualmente responsabili della
+riuscita del progetto. I ruoli sono tre. Si distingue tra ruoli \emph{pig} (coinvolti
+e responsabili del risultato: team, ScrumMaster, Product Owner) e ruoli \emph{chicken}
+(stakeholder esterni, coinvolti ma non responsabili) dalla storiella della gallina e del
+maiale.
+
+\begin{center}
+\begin{tabular}{|p{4.6cm}|p{4.6cm}|p{5.6cm}|}
+\hline
+\textbf{Product Owner (PO)} & \textbf{Scrum Master (SM)} & \textbf{Development Team (DT)}\\
+\hline
+Rappresenta il cliente & Difensore del team & Cross-funzionale\\
+Definisce le feature & Elimina gli ostacoli & Colocalizzato\\
+Stabilisce le priorità & Evita le interruzioni & Auto-organizzato\\
+Fissa le date di rilascio & Facilitatore del team & A tempo pieno\\
+Fornisce feedback & Controllore del processo & Definisce i task, stima lo sforzo\\
+Gestisce gli stakeholder & Gestisce il management & Evolve il processo\\
+Accetta o rifiuta i risultati & & Assicura la qualità\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Pilastri e valori}
+\paragraph{I tre pilastri} guidano tutte le attività:
+\begin{itemize}
+  \item \textbf{Trasparenza}: gli aspetti significativi del processo devono essere
+        visibili ai responsabili del risultato e compresi allo stesso modo (linguaggio
+        comune; la definizione di ``Fatto'' condivisa da chi esegue e da chi accetta).
+  \item \textbf{Ispezione}: gli artefatti vanno ispezionati spesso per rilevare
+        deviazioni dall'obiettivo dello sprint, ma non così spesso da intralciare il
+        lavoro, e da chi ne ha la competenza.
+  \item \textbf{Adattamento}: se l'ispezione rileva aspetti fuori dai limiti accettabili,
+        processo o materiale vanno adattati il più rapidamente possibile.
+\end{itemize}
+
+\paragraph{I cinque valori.}
+\begin{itemize}
+  \item \textbf{Focus}: SM rimuove impedimenti; PO massimizza il valore gestendo il
+        Product Backlog; il Team sviluppa in funzione della Definition of Done.
+  \item \textbf{Coraggio}: proteggere e guidare il Team (SM), fidarsi e dialogare con gli
+        stakeholder (PO), superare i propri limiti in ottica \emph{inspect-and-adapt}
+        (Team).
+  \item \textbf{Apertura}: aperti ai cambiamenti interni ed esterni e a nuove soluzioni,
+        soprattutto tecniche.
+  \item \textbf{Impegno} (commitment): il DT lo dichiara a ogni Sprint Planning; l'SM
+        diffonde la cultura Scrum; il PO si impegna con gli stakeholder a un incremento
+        costante.
+  \item \textbf{Rispetto}, nell'ottica della \emph{Prima Direttiva delle Retrospettive}
+        (Kerth): qualunque cosa si scopra, si crede che ognuno abbia fatto del suo meglio
+        date le conoscenze, le capacità, le risorse e la situazione del momento.
+\end{itemize}
+
+\subsubsection{Il processo: Product Backlog e Sprint}
+Il \textbf{Product Backlog} è la lista prioritizzata delle user story (anche come
+\emph{user story map}, backlog bidimensionale). Il processo si compone di \textbf{Sprint}
+di durata costante (2--4 settimane, per migliorare il ritmo); ogni sprint include
+design, codifica e test, estrae dal product backlog storie \emph{Ready} e aggiunge al
+prodotto codice \emph{Done}. Il risultato è un \textbf{incremento di prodotto
+potenzialmente rilasciabile} (MVP): verificato, testato, rifattorizzato, allineato alla
+DoD.
+
+\paragraph{Sprint planning.} Pianificazione di gruppo (PO, SM, Team) di almeno un'ora per
+ogni settimana di sprint.
+\begin{itemize}
+  \item il Team sceglie, insieme al PO, le user story del product backlog che
+        diventano lo \textbf{sprint backlog} e fissa lo \textbf{sprint goal} (breve
+        descrizione del lavoro dello sprint);
+  \item PO e Team concordano la \emph{Definition of Done} per gli elementi dello sprint;
+  \item il Team stima quanto riuscirà a fare, secondo la propria \emph{velocità};
+  \item si studia l'architettura di alto livello, si definiscono i task e se ne stima lo
+        sforzo in ore (tecnica: \textbf{Planning Poker}).
+\end{itemize}
+\textbf{Durante lo sprint non si cambia}: è compito dello SM pianificare le durate in
+modo che il team non cambi. Il PO può solo \emph{cancellare} lo sprint se l'obiettivo
+diventa obsoleto (mercato o organizzazione cambiati) o palesemente irraggiungibile:
+evento raro e negativo, di solito si evita.
+
+\paragraph{Ready e Done (non coincidono).}
+\begin{itemize}
+  \item Una storia è \textbf{Ready} se: tutto il Team la capisce; è dettagliata abbastanza
+        da essere testata; il PO ne comprende il valore e può prioritizzarla; il Team può
+        stimarla e completarla in uno sprint; è indipendente.
+  \item \textbf{Done} è concordata da Team e PO all'inizio, ad esempio: codifica
+        completata, test di unità scritti ed eseguiti, test di integrazione e
+        prestazionali superati, documentazione minimale scritta. La storia non è finita
+        finché non soddisfa il PO.
+\end{itemize}
+
+\paragraph{Scrumboard (Taskboard / Kanban).} Lo sprint backlog sta su un tabellone
+modificabile da ogni membro.
+\begin{itemize}
+  \item il lavoro non è assegnato ma \emph{richiesto volontariamente} dai membri;
+  \item completata una storia, la si sposta nella colonna corrispondente;
+  \item la stima dello sforzo residuo si aggiorna ogni giorno;
+  \item il lavoro ``emerge'' sul tabellone: se un lavoro è poco chiaro si crea un item con
+        stima maggiore e lo si scompone dopo (scelta del DT, non del PO).
+\end{itemize}
+
+\paragraph{Daily Scrum (stand-up).} Max 15 minuti, in piedi, niente problem solving;
+chiunque può assistere, ma parlano solo i \emph{pig}. Tre domande: cosa ho fatto ieri,
+cosa farò oggi/domani, che problemi mi aspetto. Le risposte sono promesse ai compagni, non
+report per lo SM.
+
+\paragraph{Burndown chart.} Monitora l'andamento dello sprint confrontando il lavoro
+rimanente ideale con quello effettivo (ore residue per giorno), idealmente in modo
+automatico. Ogni giorno i membri ristimano il tempo rimasto sul proprio compito (es.\
+6~h spese su un task da 10~h e altre 6 stimate: 2~h oltre la stima). Esempio: sprint di 2
+settimane, 7 persone, 6~h/giorno $\Rightarrow$ 420 ore ideali. Il \emph{cumulative flow
+diagram} è uno strumento affine.
+
+\paragraph{Sprint review.} Riflessione sul \emph{prodotto}: cosa è stato o no completato,
+con una \emph{demo} (niente slide) delle nuove funzioni; 2--4 ore; si verifica lo stato
+del product backlog; invitare tutti.
+
+\paragraph{Sprint retrospective.} Riflessione sul \emph{processo}: cosa è andato bene,
+quali impedimenti; max 3 ore; partecipano SM, PO, Team e forse committenti e utenti.
+Obiettivi: esaminare persone, relazioni, processi e strumenti; rivedere i driver
+architetturali; individuare e ordinare cosa è andato bene e i miglioramenti possibili;
+creare un \emph{improvement plan}. Formato più semplice: \textbf{Start / Stop /
+Continue}.
+
+\paragraph{Rilasci e backlog refinement.} Ogni organizzazione sceglie la cadenza di
+rilascio: a fine sprint, a fine di un gruppo di sprint, o a ogni feature (continuous
+delivery/deployment); conviene comunque il \emph{release planning} a lungo termine. Nel
+\textbf{backlog refinement} PO e DT modificano, ri-stimano e riordinano il backlog
+secondo l'esperienza; non dovrebbe superare il 10\% del tempo del team. Il PO può
+cambiare il backlog in ogni momento, \emph{ma non lo sprint in corso}.
+
+\subsubsection{Quadro d'insieme}
+\begin{center}
+\begin{tabular}{|p{4.6cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Rituali} & \textbf{Artefatti} & \textbf{Pratiche}\\
+\hline
+Sprint planning & Product backlog & Planning Poker\\
+Stand-up meeting & Sprint goal & Testing\\
+Sprint review & Sprint backlog & Pair programming\\
+Sprint retrospective & Scrumboard & Continuous integration\\
+Backlog refinement & Potentially shippable increment & \\
+Release planning & Burndown chart, improvement plan & \\
+\hline
+\end{tabular}
+\end{center}
+
+Scrum non impone pratiche di sviluppo; molti team adottano quelle di XP:
+\textbf{TDD} (spesso implica simple design, testing, refactoring, continuous
+integration; vale la piramide dei test) e \textbf{pair programming} (spesso implica
+collective ownership, settimana di 40 ore, coding standard).
+
+\subsubsection{Scalabilità}
+Con team di $7\pm2$ persone si scala su sistemi grandi tramite \textbf{scrum di scrum}
+(alcuni progetti hanno coinvolto oltre 500 persone). Fattori: tipo di applicazione,
+dimensione e dispersione dei team, durata del progetto. Configurazioni:
+\begin{itemize}
+  \item \emph{team unico, molti PO}: un solo SM e un solo team;
+  \item \emph{molti team, prodotto unico}: un Chief Product Owner sopra i PO, ogni team
+        con il suo SM e PO.
+\end{itemize}
+Secondo Sutherland lo scrum di scrum \emph{non} è un ``meta-scrum'': è un meccanismo
+operativo di consegna, responsabile di consegnare il software funzionante di tutti i team
+secondo la DoD a fine sprint; il suo Master ne risponde.
+
+\subsubsection{Considerazioni finali}
+\paragraph{Problemi tipici:} ignoranza dei valori agili e di Scrum; software non testato a
+fine sprint (cattiva DoD); backlog non pronto all'inizio (cattiva Ready); mancata
+facilitazione; mancato supporto di manager e stakeholder; gestione caotica degli scrum di
+scrum.
+
+\paragraph{Patti tra stakeholder e team.} Il team promette: il PO difenderà gli interessi
+degli stakeholder; il loro tempo sarà usato bene; lavoro della massima qualità
+compatibilmente con i vincoli; nuove funzionalità validabili a ogni sprint. Gli
+stakeholder promettono: disponibilità ad aiutare; supporto allo SM nel rimuovere ostacoli;
+priorità e vincoli invariati durante lo sprint senza consenso del Team; partecipare a
+Scrum non danneggerà la carriera dei membri.
+
+\paragraph{XP o Scrum?}
+\begin{center}
+\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
+\hline
+\textbf{XP} & \textbf{Scrum}\\
+\hline
+Orientato alla qualità (test driven) & Orientato al project management\\
+Iterazione 1--2 settimane & Sprint 2--4 settimane\\
+Requisiti sempre modificabili & Requisiti modificabili a fine sprint\\
+Il cliente ordina le storie & Il team ordina le storie\\
+Coaching informale & Scrum master certificato\\
+TDD, pair programming, planning game, refactoring & Retrospettiva, strumenti di PM, planning poker\\
+\hline
+\end{tabular}
+\end{center}
+XP e Scrum possono coesistere (e spesso lo fanno).
+
+
+\subsubsection{Scrum nell'era degli LLM}
+\paragraph{Cosa dicono le guide.} La Scrum Guide 2020 non menziona l'IA. Lo \textbf{Scrum
+Guide Expansion Pack} (2025, v2026.1; Coleman, Jocham, Sutherland) introduce i
+\emph{Product Developers}, la \emph{Definition of Outcome Done} e una sezione sull'IA:
+\emph{Product Owner} e \emph{Scrum Master} devono essere \textbf{umani}; i Product Developers
+possono essere umani o automatizzati, ma \emph{almeno uno} deve essere umano. Principi:
+responsabilità umana chiara per tutti i risultati (\emph{human in the loop}); l'IA è partner
+decisionale supervisionato, non scavalca empirismo ed etica; sperimentare con prove piccole e
+reversibili.
+
+\paragraph{Uso reale} (Perkusich et al., 2026, $n=49$): gli LLM sono usati per raffinare lo
+Sprint Goal (77\%), definire requisiti non funzionali (76\%), riassumere eventi (68\%),
+sintetizzare il feedback della Review (64\%). Problemi riportati: output ``quasi corretto ma
+non del tutto'' (81\%), rischi di riservatezza dei dati (63\%), allucinazioni e validazione
+(59\%).
+
+\begin{center}
+\begin{tabular}{|p{2.6cm}|p{6.2cm}|p{6.2cm}|}
+\hline
+ & \textbf{Può aiutare a\dots} & \textbf{Non può sostituire\dots}\\
+\hline
+\textbf{LLM come PO} & bozze di user story da note e interviste, criteri di accettazione e casi limite, sintesi del feedback, ambiguità e duplicati nel backlog, sparring partner & responsabilità del valore e del ROI, negoziazione tra stakeholder, visione e Product Goal, mandato dell'organizzazione, decisione finale sull'ordine del backlog\\
+\hline
+\textbf{LLM come SM} & sintesi del Daily, impedimenti ricorrenti, agende della Retrospective, analisi di metriche (lead time, WIP, burndown), coaching di primo livello sulle regole & empatia e dinamiche di gruppo, gestione dei conflitti e sicurezza psicologica, cambiamento organizzativo, ostacoli fisici e politici, ruolo di leader che serve\\
+\hline
+\end{tabular}
+\end{center}
+Evidenze: agenti ``PO'' migliorano la qualità percepita delle storie ma aggiungono
+contenuti fuori scope (serve la revisione del PO); nelle priorità gli LLM sono corretti solo
+nel 55--71\% dei casi, con alta variabilità tra sessioni. Esercizio tipico: l'LLM scrive le
+storie, il PO decide (accetta quelle INVEST, scompone le epic, trasforma le ambiguità in
+domande agli stakeholder, nessuna storia accettata senza conversazione col team).
+
+\paragraph{Il team come controllore dell'IA.} L'IA produce bozze (storie, codice, test); il
+team \emph{specifica} (Sprint Goal, vincoli e criteri nei prompt), \emph{verifica} (code
+review, test indipendenti, analisi statica e di sicurezza), \emph{valida} con PO e stakeholder
+(è la storia giusta?) e \emph{decide}: accetta solo ciò che soddisfa la DoD. I Developer
+passano da autori di ogni riga a progettisti, revisori e garanti della qualità.
+
+\paragraph{Definition of Done per il codice generato}: revisione umana (ogni modifica letta e
+capita da almeno un Developer); test indipendenti (non generati dallo stesso prompt del
+codice); sicurezza (analisi statica e dei segreti, nessuna dipendenza inventata,
+\emph{package hallucination}); licenze (provenienza e compatibilità); riservatezza (nessun
+dato personale nei prompt); tracciabilità (nella pull request si dichiara l'uso dell'IA e il
+prompt rilevante).
+
+\paragraph{Caso reale} (Weber, Zimmermann, Franceschetti, 2026): in 3 giorni 41 user story e
+415 test, poi 62 story, 804 test, circa 9000 righe, tutte scritte dall'assistente. Il
+processo ha gate umani: user story (l'IA redige, l'umano approva i criteri) $\to$ specifica
+nel prompt $\to$ build test-first (rosso$\to$verde) $\to$ validazione sull'app in esecuzione
+su dati reali. \emph{Catena di tracciabilità}: persona $\to$ vincolo non negoziabile $\to$
+criterio di accettazione $\to$ specifica nel prompt $\to$ asserzione di test $\to$
+comportamento verificato. Cinque lezioni: processo con gate tracciabile; specificare il
+conoscibile e scoprire il resto con un prototipo; validare nell'ambiente reale (4 funzioni
+passavano la suite ma fallivano nell'uso perché i \emph{mock} non esercitavano browser, API
+del modello e SDK: una suite verde verifica i collegamenti, non il sistema); mettere i gate
+all'assistente (gate imposto dallo strumento: 81\% contro 13\% per convenzione); registrare
+decisioni e ipotesi (ADR). ``Il codice costa poco, la valutazione no.''
+
+\paragraph{Chi decide, chi assiste.} Product Goal e ordine del backlog: il PO (l'LLM analizza
+il feedback; rischio: priorità incoerenti). Sprint Goal: lo Scrum Team (l'LLM riformula;
+rischio: obiettivo generico). Stime e piano: i Developers (l'LLM scompone in task; rischio:
+falsa precisione). Storie, codice e test: il team come controllore (``quasi corretto $\neq$
+Done''). Accettazione dell'Increment: lo Scrum Team via DoD (rischio: fiducia eccessiva).
+Miglioramento del processo: il team facilitato dallo SM (rischio: perdita del confronto
+umano). L'IA amplia le capacità del team ma non sostituisce la responsabilità umana.
+
+\subsection{La qualità del software}
+
+\subsubsection{Errore, difetto, guasto}
+Tre concetti legati da catena di causa (IEEE 610.12):
+\begin{itemize}
+  \item \textbf{errore} (\emph{error}): azione umana sbagliata, es.\ un'interpretazione errata
+        della specifica;
+  \item \textbf{difetto} (\emph{fault}, ``bug''): imperfezione nel codice o in un documento,
+        causa di un guasto;
+  \item \textbf{guasto} (\emph{failure}): comportamento osservabile non previsto.
+\end{itemize}
+Esempio: \emph{Mars Climate Orbiter} (1999): il team usa libbre-forza$\cdot$s invece di
+newton$\cdot$s (errore), il modulo calcola gli impulsi nell'unità sbagliata (difetto), la
+sonda va persa (guasto). Altri casi: Therac-25 (1985--87, race condition, sovradosaggi letali),
+Ariane~5 (1996, overflow nella conversione 64$\to$16 bit di codice riusato), Knight Capital
+(2012, codice obsoleto riattivato, 440 milioni di dollari persi in 45 minuti), CrowdStrike (2024).
+
+\paragraph{Perché il software è difettoso.} Circa un errore ogni 10 righe, anche per
+programmatori esperti; il compilatore ne cattura circa il 50\%, circa il 15\% sfugge fino al
+cliente (Humphrey). La qualità non si ``aggiunge'' alla fine: si costruisce con \emph{filtri
+successivi} (revisioni, compilatore, analisi statica, test, ispezioni). Non tutti i difetti
+pesano uguale: pochi difetti frequenti causano la maggior parte dei guasti, con una lunga coda
+di difetti rari.
+
+\subsubsection{Che cos'è la qualità}
+Dipende da chi guarda: l'utente (adatto ai bisogni, facile da usare), il tester (senza
+difetti), lo sviluppatore (facile da capire e modificare), il committente (costa poco), le
+operations (veloce, sempre disponibile). Per ISO/IEC 25010 è il grado in cui il prodotto
+soddisfa i bisogni, espliciti e impliciti, dei suoi stakeholder.
+
+\paragraph{Qualità del processo, interna, esterna, in uso.} Ognuna influenza la successiva:
+\emph{processo} (come sviluppiamo, es.\ \% di codice revisionato) $\to$ \emph{interna}
+(visibile a chi costruisce, si misura senza eseguire: ispezioni, analisi statica, es.\
+complessità, duplicazione) $\to$ \emph{esterna} (si misura eseguendo il sistema: test, es.\
+tempo di risposta, guasti) $\to$ \emph{in uso} (si misura con utenti reali, ISO/IEC 25019).
+
+\paragraph{ISO/IEC 25010:2023.} Otto caratteristiche del prodotto: idoneità funzionale
+(completezza, correttezza), efficienza prestazionale, compatibilità (coesistenza,
+interoperabilità), capacità di interazione (ex usabilità), affidabilità (disponibilità,
+tolleranza ai guasti), \emph{security} (riservatezza, integrità), manutenibilità (modularità,
+modificabilità), flessibilità (ex portabilità); nel 2023 si aggiunge la \emph{safety}.
+
+\subsubsection{Misurare}
+``Non puoi controllare ciò che non puoi misurare'' (DeMarco). Ma per la \textbf{legge di
+Goodhart}: quando una misura diventa un obiettivo smette di essere una buona misura
+(copertura gonfiata da test senza asserzioni, velocity gonfiata, righe di codice come
+``produttività''). Cosa si misura: \emph{risorse} (mesi-persona, costo preventivo vs
+consuntivo), \emph{processo} (\% difetti trovati per fase, cycle time, velocity, stabilità
+dei requisiti), \emph{prodotto} (LOC, function point, complessità ciclomatica, copertura,
+difetti per KLOC).
+
+\paragraph{Complessità ciclomatica (McCabe, 1976).} Sul grafo di flusso del codice,
+$V(G) = E - N + 2$ con $E$ archi e $N$ nodi. Esempio: \texttt{read P,Q; if (P+Q>10) print
+"Large"; if (P>50) print "P Large"} ha $N=6$, $E=7$, quindi $V(G)=7-6+2=3$. Altre metriche
+di prodotto: LOC, function point, metriche OO di Chidamber e Kemerer (accoppiamento tra
+classi, profondità di ereditarietà).
+
+\paragraph{Goal--Question--Metric (Basili).} Tre livelli: \textbf{goal} (concettuale, es.
+``valutare l'affidabilità del prodotto''), \textbf{question} (operativo, es.\ ``qual è la
+distribuzione dei guasti?'', ``il codice rispetta lo standard?''), \textbf{metric}
+(quantitativo, es.\ n.\ guasti per modulo, violazioni per modulo). Esempio sul progetto di
+gruppo: goal ``alla relazione contribuiscono tutti''; Q1 quante ore ha lavorato ciascuno
+(M1 ore registrate), Q2 quanta parte ha scritto ciascuno (M2 \% di sezioni o commit per autore).
+
+\subsubsection{Verifica e testing}
+\textbf{Verifica}: ``stiamo costruendo il prodotto nel modo giusto?'' (conformità alla
+specifica). \textbf{Validazione}: ``stiamo costruendo il prodotto giusto?'' (accettazione del
+cliente). Verifica statica: ispezioni; dinamica: test. Nel \emph{modello a V} (Boehm) ogni
+livello di specifica definisce i test del livello corrispondente: requisiti $\leftrightarrow$
+test di accettazione, architettura $\leftrightarrow$ test di sistema, progetto dei moduli
+$\leftrightarrow$ test di integrazione, codice $\leftrightarrow$ test di unità.
+
+\emph{Il testing illumina, non dimostra}: può mostrare la presenza di errori, mai
+l'assenza (Dijkstra, 1970); chi cerca di mostrare l'assenza ne trova pochi (Myers).
+
+\paragraph{Piramide dei test.} Base: molti test di \emph{unità} (veloci, economici, isolati;
+JUnit, pytest); in mezzo \emph{integrazione e sistema} (interfacce tra componenti);
+in cima pochi \emph{end-to-end e accettazione} (lenti, fragili, vicini all'utente; Selenium,
+Playwright). Salendo crescono costo, tempo, fragilità. Anti-pattern: il \textbf{cono gelato}
+(molti test manuali ed E2E, pochi di unità).
+
+\paragraph{Black-box.} Test \emph{funzionale} dalla specifica: classi di equivalenza, valori
+limite, tabelle di decisione, test basati sui casi d'uso. Il test esaustivo è impossibile
+($5^{10}\approx 9{,}8$ milioni di casi). Esempio: ``al massimo 5 prestiti attivi'': valori
+limite $-1,0,5,6$ (più un rappresentante, es.\ 3): $-1$ errore di input, $0$ e $3$ concesso,
+$5$ rifiutato (già al massimo), $6$ errore di stato inconsistente.
+
+\paragraph{White-box.} Test \emph{strutturale} dal codice. Criteri di copertura:
+\begin{center}
+\begin{tabular}{|l|p{7cm}|c|}
+\hline
+\textbf{Criterio} & \textbf{Richiede che\dots} & \textbf{Test minimi (es.\ McCabe)}\\
+\hline
+comandi & ogni comando sia eseguito almeno una volta & 1\\
+decisioni & ogni decisione sia sia vera sia falsa & 2\\
+cammini & ogni cammino sia percorso & 4\\
+\hline
+\end{tabular}
+\end{center}
+Nell'esempio con $P=60,Q=0$ entrambe le \texttt{print} sono eseguite: basta 1 test per i
+comandi; per le decisioni ne servono 2 (serve anche un caso con condizioni false). Per il
+\textbf{teorema di Weyuker} è indecidibile, per un programma qualsiasi, se esista un input
+che esegue un dato comando, decisione o cammino. \emph{Copertura $\neq$ qualità dei test}:
+un test senza asserzioni copre il codice senza verificarlo; il \textbf{mutation testing}
+introduce piccole modifiche al codice e controlla che i test le ``uccidano''.
+
+\paragraph{TDD.} Rosso (test che fallisce) $\to$ verde (codice minimo che passa) $\to$
+refactoring (test restano verdi): ciclo di pochi minuti. ``Senza test non sappiamo davvero se
+il nostro codice peggiora o migliora'' (Feathers). Il circolo vizioso del \emph{non
+scriviamo i test}: non abbiamo tempo $\to$ non siamo abbastanza veloci $\to$ modificare il
+codice è difficile e rischioso $\to$ non scriviamo i test.
+
+\subsubsection{Analisi statica, quality gate, debito tecnico}
+\paragraph{Pipeline.} Commit/pull request $\to$ build $\to$ test (unità, integrazione)
+$\to$ analisi statica (bug, vulnerabilità, smell) $\to$ \textbf{quality gate} (soglie
+superate? altrimenti si torna allo sviluppatore) $\to$ rilascio. Esempio di soglie sul
+codice nuovo: 0 nuove vulnerabilità critiche, copertura $\ge 80\%$, righe duplicate
+$<3\%$; le soglie le decide il team, magari con GQM.
+
+\paragraph{Debito tecnico} (Cunningham, 1992). Come un debito finanziario: il
+\emph{capitale} è la correzione rinviata, gli \emph{interessi} sono il costo maggiore di ogni
+modifica futura; si misura in tempo stimato di correzione e si ripaga col refactoring protetto
+dai test. Quadrante di Fowler (sconsiderato/prudente $\times$ consapevole/involontario):
+sconsiderato-consapevole ``non abbiamo tempo per il progetto'', prudente-consapevole
+``rilasciamo ora e ne gestiamo le conseguenze'', sconsiderato-involontario ``che cos'è la
+stratificazione?'', prudente-involontario ``ora sappiamo come avremmo dovuto farlo''.
+
+\paragraph{SonarQube.} Analisi statica nell'IDE (SonarQube for IDE, ex SonarLint), nella
+pipeline CI (Server o Cloud) e nella pull request (l'esito del gate può bloccare il merge).
+Tre qualità collegate a ISO 25010: \emph{affidabilità} (es.\ null dereference, risorsa non
+chiusa), \emph{sicurezza} (es.\ SQL injection; i \emph{security hotspot} vanno rivisti a
+mano), \emph{manutenibilità} (codice duplicato, funzioni troppo complesse $\to$ debito
+tecnico). Gravità: blocker, high, medium, low, info. Rating A--E per la manutenibilità dal
+rapporto di debito $= \text{debito tecnico} / (30\text{ min} \times \text{righe di codice})$:
+A $\le 5\%$, B $<10\%$, C $<20\%$, D $<50\%$, E $\ge 50\%$. Per affidabilità e sicurezza il
+rating dipende dal problema più grave.
+
+\paragraph{Quality gate e \emph{Clean as You Code}.} Il gate giudica il codice \emph{nuovo o
+modificato}: chi tocca il codice lo lascia pulito, il debito pregresso si ripaga
+gradualmente. Il gate predefinito ``Sonar way'' ha quattro condizioni sul codice nuovo: 0
+nuovi problemi (rating A), 100\% di security hotspot rivisti da una persona, copertura
+$\ge 80\%$, righe duplicate $\le 3\%$. Offre feedback automatico a ogni pull request e un
+criterio di rilascio esplicito; \emph{non} garantisce correttezza funzionale né assenza di
+errori (falsi positivi e negativi), e la copertura 80\% si raggiunge anche con test senza
+asserzioni (Goodhart). Esiste un gate ``Sonar way for AI Code''.
+
+\subsubsection{La qualità del codice generato da LLM}
+Circa il 90\% dei professionisti usa l'IA, il 59\% percepisce codice di qualità migliore, solo
+il 3\% dichiara fiducia alta nell'output (DORA e Stack Overflow, 2025): percezione $\neq$
+misura. Quattro lenti:
+\begin{itemize}
+  \item \textbf{Correttezza}: con test deboli si sovrastima (HumanEval$+$ con 80 volte più
+        test fa calare fino al 19--29\% le soluzioni ``corrette''; Liu et al., 2023).
+  \item \textbf{Sicurezza}: circa 40\% di programmi Copilot con almeno una vulnerabilità CWE
+        (Pearce 2022); 45\% dei compiti con vulnerabilità OWASP, Java $>70\%$, XSS 86\%
+        (Veracode 2025); pacchetti inesistenti suggeriti nel 5--22\% dei casi, almeno 5,2\% nei
+        commerciali e 21,7\% negli open source (Spracklen 2025). Rischio: \textbf{slopsquatting}
+        (un attaccante registra il nome inventato dal modello). Il codice generato va
+        trattato come \emph{codice non fidato}.
+  \item \textbf{Manutenibilità}: più copia-incolla, meno refactoring (GitClear 2025: nel
+        2024 blocchi duplicati $\times 8$, righe ``spostate'' $-40\%$, per la prima volta le
+        righe copiate superano quelle spostate).
+  \item \textbf{Produttività}: esperimenti controllati mostrano più velocità (+55,8\% Peng
+        2023, +26\% PR Cui 2025, circa 21\% Google 2025) ma misurano velocità, non qualità; nello
+        studio METR 2025 sviluppatori esperti si aspettavano $+24\%$, percepivano $+20\%$ ma
+        erano più lenti del $19\%$. DORA 2025: throughput e instabilità delle consegne
+        crescono, ``l'IA amplifica'' punti di forza e disfunzioni.
+\end{itemize}
+\paragraph{Garantire la qualità}: revisione umana (letto e capito), test indipendenti con
+valori limite e mutation testing, analisi statica e di sicurezza con verifica delle
+dipendenze, quality gate e Definition of Done. Domande: chi ha letto il codice? i test sono
+scritti senza guardare il codice? le dipendenze esistono? chi ne risponde? Piano GQM per un
+assistente IA: goal ``valutare l'effetto dell'assistente sulla qualità, per il team'';
+metriche da pipeline (difetti post-rilascio per KLOC, nuove vulnerabilità per PR,
+\% duplicazione, complessità media, debito stimato, lead time, tasso di rilasci falliti);
+da evitare ``righe generate dall'IA'' come metrica di successo (Goodhart).
+
+\newpage
+\section{Essence}
 \subsection{Essence: gli Alpha del Kernel}
 
 \textbf{Essence} (standard OMG) definisce un \emph{kernel} di concetti comuni a
@@ -904,459 +1535,77 @@ delimitano (\emph{scope and constrain}) il \emph{Work}; il \emph{Team} produce i
 \caption{Il grafo degli Alpha del kernel di Essence.}
 \end{figure}
 
-\subsection{Processi agili ed Extreme Programming}
+\subsection{Code review con Essence}
 
-\subsubsection{Collaborazione, progetti e prodotti}
-Sviluppare software è un'attività \emph{sociale}: comprendere i bisogni richiede
-conversazione e negoziazione, e un prodotto corretto deve anche risolvere un problema utile.
-\begin{center}
-\begin{tabular}{|p{2.6cm}|p{6.2cm}|p{6.2cm}|}
-\hline
- & \textbf{Progetto} & \textbf{Prodotto}\\
-\hline
-Orizzonte & iniziativa temporanea con un obiettivo & evoluzione nel tempo, ciclo di vita\\
-Pianificazione & vincoli di ambito, tempi, risorse & obiettivi di prodotto, lavoro ordinato per valore\\
-Successo & raggiungere gli obiettivi del progetto & valore per utenti e organizzazione nel tempo\\
-\hline
-\end{tabular}
-\end{center}
-Un progetto può essere agile e le due visioni possono coesistere. All'inizio si conosce
-solo una parte del problema: pianificare significa formulare una \emph{previsione} e
-aggiornarla con nuove informazioni (agilità = pianificazione frequente e verificabile).
-Il \emph{backlog} non contiene solo user story, ma anche difetti e attività tecniche.
+Esercizio: \emph{essenzializzare} la pratica \textbf{Code Review}, cioè descriverla come
+pratica Essence riusabile e indipendente dagli strumenti (purpose, primary Alpha, work
+product, activities, competencies, progress criteria, pattern, uso dell'LLM). Qui sono
+sintetizzati i commenti alle soluzioni dei tre gruppi di studenti e il confronto con la
+soluzione del docente.
 
-\subsubsection{Valori e principi agili}
-Il Manifesto agile dà più valore a individui e interazioni, software funzionante,
-collaborazione col cliente, risposta al cambiamento, \emph{pur riconoscendo} il valore di
-processi, documentazione, contratti e piani. I \textbf{dodici principi} si raggruppano in
-quattro temi: valore e adattamento (consegne frequenti, software funzionante, cambiamenti
-benvenuti); collaborazione e autonomia (lavoro quotidiano col business, persone motivate,
-team auto-organizzati); qualità e sostenibilità (ritmo sostenibile, eccellenza tecnica);
-semplicità e miglioramento (massimizzare il lavoro \emph{non} fatto, riflettere e adattare).
-
-\paragraph{Feedback su tempi diversi.} Test automatici (secondi/minuti: il comportamento
-atteso è preservato?); coppia e integrazione (durante il lavoro e ogni giorno: il codice è
-comprensibile e si integra?); cliente e utenti (durante l'iterazione e ai rilasci:
-l'incremento risolve il problema?); riflessione del team (a intervalli regolari: il nostro
-modo di lavorare è efficace?).
-
-\paragraph{Minimum Viable Product.} Un MVP (concetto del \emph{Lean Startup}) mette alla
-prova un'\emph{ipotesi} sul prodotto e sugli utenti; il risultato serve a decidere se
-proseguire, cambiare direzione o fermarsi. ``Minimo'' riguarda lo \emph{sforzo} per ottenere un
-riscontro utile, ``viable'' richiede un'esperienza sufficiente a rendere significativo il
-riscontro. Il numero di funzionalità non definisce un MVP (esempio: la demo di Dropbox
-prima del prodotto completo).
-
-\paragraph{Approcci collegati all'agilità.}
-metodi e framework di sviluppo (XP, Scrum, Crystal, FDD, ASD, DSDM); gestione del flusso
-(Kanban, Lean software development); framework per più team (SAFe, LeSS); sviluppo e
-operazioni (DevOps).
-
-\subsubsection{Extreme Programming (XP)}
-\paragraph{I cinque valori}: comunicazione (rendere visibili conoscenze, problemi,
-decisioni), semplicità (costruire ciò che serve oggi), feedback (da codice, test e
-persone), coraggio (affrontare problemi, modificare il codice, dichiarare difficoltà),
-rispetto.
-
-Il team XP riunisce le competenze per realizzare e verificare il prodotto; il
-rappresentante del cliente è disponibile con tempi di risposta brevi (\emph{cliente
-on-site}, co-locazione: in un team remoto accesso e feedback vanno progettati
-esplicitamente). Il cliente porta priorità e valore, gli sviluppatori stime e conoscenza
-tecnica.
-
-\paragraph{Le dodici pratiche classiche}:
+\subsubsection{Commento alle soluzioni degli studenti}
+Nel complesso c'è una buona comprensione intuitiva, ma con confusioni tra \emph{Alpha},
+\emph{Work Product} e \emph{strumenti}.
 \begin{itemize}
-  \item \emph{pianificazione e cliente}: Planning Game, piccoli rilasci, cliente on-site;
-  \item \emph{design e codice}: metafora del sistema, progettazione semplice, refactoring;
-  \item \emph{verifica e collaborazione}: testing, pair programming, proprietà collettiva;
-  \item \emph{continuità del lavoro}: integrazione continua, settimana di 40 ore, standard
-        di codifica.
-\end{itemize}
-Le pratiche si sostengono a vicenda: il refactoring richiede test automatici e passi
-piccoli; la proprietà collettiva richiede convenzioni, revisione e integrazione; i piccoli
-rilasci richiedono storie piccole e cliente disponibile; la pianificazione adattiva
-richiede stime del team e feedback frequente.
-
-\paragraph{Planning Game e cambiamenti.} Il cliente chiarisce il valore, sceglie le
-priorità e valuta alternative di ambito; gli sviluppatori chiariscono fattibilità, stime e
-rischi e segnalano dipendenze. Il piano è rivisto a ogni iterazione. Se il cliente chiede
-un cambiamento in corsa: chiarire bisogno e urgenza, valutare costo e rischio con il team,
-concordare cosa anticipare o rinviare, aggiornare il piano e rendere visibile la
-decisione. \emph{Accogliere} il cambiamento significa valutarlo, non subirlo.
-
-\paragraph{Metafora e linguaggio comune.} La metafora di XP dà al team un'immagine
-condivisa del sistema; nella 2\textsuperscript{a} edizione non è più una pratica ma resta
-l'obiettivo di un \emph{linguaggio comune}: un glossario usato nelle conversazioni, nei
-criteri di accettazione, nei test e nel codice (es.\ \texttt{Abbonamento},
-\texttt{TARIFFA\_MENSILE}).
-
-\paragraph{Progettazione semplice e YAGNI.} Il design sostiene i requisiti noti e i vincoli
-rilevanti; si evitano generalizzazioni speculative (\textbf{YAGNI}, ``You Aren't Gonna Need
-It'': non ti servirà). Se nessun requisito richiede una gerarchia di classi \texttt{Tariffa},
-si rinvia e si ristruttura quando arriva un caso concreto: i test esistenti rendono sicuro il
-refactoring. XP \emph{non} vieta l'astrazione, la rinvia finché serve.
-
-\paragraph{User story e test di accettazione.} Scheda (bisogno breve), conversazione
-(contesto, vincoli), \textbf{conferma} (verifica del comportamento): ``Card, Conversation,
-Confirmation'' di Jeffries. Il formato ``Come\dots, voglio\dots, per\dots'' è utile ma non
-obbligatorio. I criteri di accettazione sono verificabili; i test di accettazione si
-scrivono in forma \emph{Dato--Quando--Allora}, il team li traduce in verifiche ripetibili.
-
-\paragraph{Refactoring: ``due cappelli''.} Migliorare la struttura interna \emph{preservando
-il comportamento osservabile}, a piccoli passi eseguendo i test dopo ciascuno (es.\ spostare
-nella superclasse un metodo duplicato nelle sottoclassi). Non è refactoring correggere un
-difetto né aggiungere una funzionalità: si cambia la struttura \emph{o} il comportamento,
-mai entrambi nello stesso passo.
-
-\paragraph{Integrazione continua.} Modifica piccola $\to$ integrazione nella linea
-principale $\to$ costruzione e test automatici $\to$ esito visibile, errori corretti subito.
-\begin{center}
-\begin{tabular}{|p{3.6cm}|p{11cm}|}
-\hline
-\textbf{Integrazione continua} & ogni modifica è integrata spesso, almeno ogni giorno, e verificata automaticamente\\
-\textbf{Consegna continua} & il software è sempre in uno stato rilasciabile; il rilascio resta una \emph{decisione}\\
-\textbf{Rilascio continuo} & ogni modifica che supera i controlli raggiunge automaticamente gli utenti\\
-\hline
-\end{tabular}
-\end{center}
-Far girare i test su rami separati integrati ogni due settimane \emph{non} è integrazione
-continua: manca l'integrazione frequente nella linea condivisa.
-
-\paragraph{Proprietà collettiva e ritmo sostenibile.} Il team condivide conoscenza e
-responsabilità su tutto il codice, ma non significa modifiche arbitrarie: servono
-convenzioni, test automatici su ogni modifica, revisione e permessi espliciti nel
-repository. Nella 1\textsuperscript{a} edizione (1999) c'è la ``settimana di 40 ore'', nella
-2\textsuperscript{a} (2004) ``lavoro energico e margine nel piano'': le ore di presenza non
-misurano né produttività né apprendimento.
-
-\paragraph{Pair programming: l'evidenza.} Meta-analisi di 18 studi (Hannay et al., 2009):
-la \emph{qualità} migliora (effetto piccolo), la \emph{durata} del compito si riduce (effetto
-medio), lo \emph{sforzo totale} in ore-persona aumenta (effetto medio). Compiti semplici: più
-rapidi ma con qualità inferiore; compiti complessi: qualità maggiore con sforzo molto più alto.
-Si usa la coppia dove il beneficio giustifica il costo.
-
-\paragraph{Commenti e convenzioni.} Convenzioni condivise (per Python PEP~8), nomi chiari.
-Un commento utile spiega il \emph{perché}, non il \emph{che cosa} (\texttt{mesi = mesi + 1
-\# aggiunge 1} è inutile).
-
-\subsubsection{IA generativa e pratiche XP}
-Storie: proposte di formulazione e scomposizione, da verificare con cliente e team. Test:
-casi normali e limite, da verificare su oracolo e copertura pertinente. Codice:
-implementazioni e alternative, da verificare su correttezza, sicurezza, comprensibilità.
-Refactoring: nomi, estrazioni, semplificazioni, con comportamento preservato. Coppia:
-spiegare codice e discutere alternative, ma decisioni e responsabilità restano al team.
-Il risparmio dipende anche dal costo di revisione.
-
-\textbf{Errore condiviso tra codice e test generati}: se il modello propone
-\texttt{prezzo(mesi) = 30 * mesi * 0.9} insieme al test \texttt{prezzo(2) == 54}, il test
-passa ma conferma la stessa assunzione errata. Il risultato atteso di un test deve venire da
-una fonte \emph{indipendente} dal codice: il criterio di accettazione concordato
-(\texttt{prezzo(2)} deve essere 60). Codice e test coerenti tra loro possono essere entrambi
-sbagliati; alta copertura o chiedere allo stesso modello di rivedersi non bastano.
-
-\subsection{Introduzione a Scrum}
-
-\subsubsection{Contesto: sviluppo agile}
-Certi sviluppi non si pianificano in anticipo: il problema è complesso e richiede il
-contributo di molte persone, la soluzione all'inizio non è chiara, i requisiti
-cambieranno durante lo sviluppo, il lavoro può essere articolato in \emph{incrementi} e
-serve una collaborazione stretta con feedback rapido e continuo degli utenti finali.
-
-Il \textbf{Manifesto agile} dichiara di preferire:
-\begin{itemize}
-  \item individui e interazioni $\succ$ processi e strumenti;
-  \item software che funziona $\succ$ documentazione completa;
-  \item collaborazione del cliente $\succ$ negoziazione contrattuale;
-  \item rispondere al cambiamento $\succ$ seguire un piano.
+  \item \textbf{Gruppo 1}: purpose buono (qualità, manutenibilità, sicurezza). Debole
+        l'Alpha ``Approvazione del codice'', che è un \emph{risultato} della review:
+        come primary Alpha è più appropriato \emph{Software System}. Il report di review
+        è un work product plausibile, le attività coerenti, i progress criteria generici.
+        Esempio efficace (MiracleSort: problemi di performance in codice formalmente
+        corretto), ma manca l'uso dell'LLM.
+  \item \textbf{Gruppo 2}: il più vicino allo spirito dell'esercizio. La sequenza ``in
+        attesa di revisione $\to$ da correggere $\to$ corretto'' descrive meglio gli
+        stati di un Alpha \emph{specifico della pratica} (es.\ Code Change) che di un
+        Alpha del kernel. Work product ``documentazione'' troppo generico. Buono il
+        pattern delle modifiche piccole e l'LLM come supporto, con decisione finale al
+        revisore umano.
+  \item \textbf{Gruppo 3}: meno aderente. Purpose ``produrre codice funzionante per un
+        negozio'' troppo specifico (descrive lo sviluppo in generale); ``avere un IDE
+        funzionante'' è uno strumento, non un Alpha, e viola il requisito
+        \emph{tool-independent}. Valide le competenze su linguaggio e dominio; l'LLM per
+        il debugging richiede verifica umana.
 \end{itemize}
 
-\paragraph{Dalla staffetta al pacchetto di mischia.} Takeuchi e Nonaka (1986) contrappongono
-l'approccio a \emph{staffetta} (requisiti $\to$ design $\to$ codice $\to$ test, una fase
-alla volta) a quello \emph{rugby}, in cui il team avanza come un'unità passandosi la
-palla. Il team Scrum fa un po' di tutto (requisiti, design, codice, test) in ogni sprint.
-
-\subsubsection{Che cos'è Scrum}
-Scrum è un \textbf{framework di project management} per lo sviluppo \emph{iterativo e
-incrementale} di prodotti, nato per i progetti software. Non è un processo né una
-tecnica: è un contenitore in cui usare processi e tecniche diverse (spesso insieme a XP).
-Rende evidente l'efficacia delle proprie pratiche di product management e sviluppo, così
-da migliorarle: non porta all'eccellenza, ma \emph{mostra il livello di inefficienza}
-(Ken Schwaber).
-
-In sintesi:
-\begin{itemize}
-  \item il cliente può ispezionare versioni funzionanti del software ogni 1--4 settimane;
-  \item il cliente definisce le funzioni e le priorità; il team decide ogni giorno come
-        realizzare al meglio quelle a priorità più alta;
-  \item a ogni sprint nasce una nuova versione, esaminata per decidere se fare un altro
-        sprint o produrre un rilascio;
-  \item team \textbf{auto-organizzante}, metodo agile parzialmente pianificato;
-  \item i requisiti stanno nel \textbf{Backlog}; sviluppo guidato da storie e test;
-  \item il prodotto cresce in \emph{sprint} di durata fissa;
-  \item meeting: review e retrospettive.
-\end{itemize}
-
-\subsubsection{Persone e ruoli}
-Un team ha $5\pm2$ persone (in altre slide $7\pm2$), tutte egualmente responsabili della
-riuscita del progetto. I ruoli sono tre. Si distingue tra ruoli \emph{pig} (coinvolti
-e responsabili del risultato: team, ScrumMaster, Product Owner) e ruoli \emph{chicken}
-(stakeholder esterni, coinvolti ma non responsabili) dalla storiella della gallina e del
-maiale.
-
 \begin{center}
-\begin{tabular}{|p{4.6cm}|p{4.6cm}|p{5.6cm}|}
+\begin{tabular}{|l|l|l|l|}
 \hline
-\textbf{Product Owner (PO)} & \textbf{Scrum Master (SM)} & \textbf{Development Team (DT)}\\
+\textbf{Aspetto} & \textbf{Gruppo 1} & \textbf{Gruppo 2} & \textbf{Gruppo 3}\\
 \hline
-Rappresenta il cliente & Difensore del team & Cross-funzionale\\
-Definisce le feature & Elimina gli ostacoli & Colocalizzato\\
-Stabilisce le priorità & Evita le interruzioni & Auto-organizzato\\
-Fissa le date di rilascio & Facilitatore del team & A tempo pieno\\
-Fornisce feedback & Controllore del processo & Definisce i task, stima lo sforzo\\
-Gestisce gli stakeholder & Gestisce il management & Evolve il processo\\
-Accetta o rifiuta i risultati & & Assicura la qualità\\
+Purpose & Buono & Buono & Troppo specifico\\
+Primary Alpha & Poco appropriato & Interessante come Alpha specifico & Non corretto\\
+Work Product & Buono & Troppo generico & Buono\\
+Activities & Appropriate & Appropriate & Parzialmente fuori focus\\
+Competencies & Troppo generiche & Troppo generiche & Più complete\\
+Progress criteria & Presenti ma vaghi & Discreti & Mancanti\\
+Pattern & Mancante & Buono & Mancante\\
+LLM & Mancante & Buono e responsabile & Valido ma poco sviluppato\\
 \hline
 \end{tabular}
 \end{center}
 
-\subsubsection{Pilastri e valori}
-\paragraph{I tre pilastri} guidano tutte le attività:
-\begin{itemize}
-  \item \textbf{Trasparenza}: gli aspetti significativi del processo devono essere
-        visibili ai responsabili del risultato e compresi allo stesso modo (linguaggio
-        comune; la definizione di ``Fatto'' condivisa da chi esegue e da chi accetta).
-  \item \textbf{Ispezione}: gli artefatti vanno ispezionati spesso per rilevare
-        deviazioni dall'obiettivo dello sprint, ma non così spesso da intralciare il
-        lavoro, e da chi ne ha la competenza.
-  \item \textbf{Adattamento}: se l'ispezione rileva aspetti fuori dai limiti accettabili,
-        processo o materiale vanno adattati il più rapidamente possibile.
-\end{itemize}
-
-\paragraph{I cinque valori.}
-\begin{itemize}
-  \item \textbf{Focus}: SM rimuove impedimenti; PO massimizza il valore gestendo il
-        Product Backlog; il Team sviluppa in funzione della Definition of Done.
-  \item \textbf{Coraggio}: proteggere e guidare il Team (SM), fidarsi e dialogare con gli
-        stakeholder (PO), superare i propri limiti in ottica \emph{inspect-and-adapt}
-        (Team).
-  \item \textbf{Apertura}: aperti ai cambiamenti interni ed esterni e a nuove soluzioni,
-        soprattutto tecniche.
-  \item \textbf{Impegno} (commitment): il DT lo dichiara a ogni Sprint Planning; l'SM
-        diffonde la cultura Scrum; il PO si impegna con gli stakeholder a un incremento
-        costante.
-  \item \textbf{Rispetto}, nell'ottica della \emph{Prima Direttiva delle Retrospettive}
-        (Kerth): qualunque cosa si scopra, si crede che ognuno abbia fatto del suo meglio
-        date le conoscenze, le capacità, le risorse e la situazione del momento.
-\end{itemize}
-
-\subsubsection{Il processo: Product Backlog e Sprint}
-Il \textbf{Product Backlog} è la lista prioritizzata delle user story (anche come
-\emph{user story map}, backlog bidimensionale). Il processo si compone di \textbf{Sprint}
-di durata costante (2--4 settimane, per migliorare il ritmo); ogni sprint include
-design, codifica e test, estrae dal product backlog storie \emph{Ready} e aggiunge al
-prodotto codice \emph{Done}. Il risultato è un \textbf{incremento di prodotto
-potenzialmente rilasciabile} (MVP): verificato, testato, rifattorizzato, allineato alla
-DoD.
-
-\paragraph{Sprint planning.} Pianificazione di gruppo (PO, SM, Team) di almeno un'ora per
-ogni settimana di sprint.
-\begin{itemize}
-  \item il Team sceglie, insieme al PO, le user story del product backlog che
-        diventano lo \textbf{sprint backlog} e fissa lo \textbf{sprint goal} (breve
-        descrizione del lavoro dello sprint);
-  \item PO e Team concordano la \emph{Definition of Done} per gli elementi dello sprint;
-  \item il Team stima quanto riuscirà a fare, secondo la propria \emph{velocità};
-  \item si studia l'architettura di alto livello, si definiscono i task e se ne stima lo
-        sforzo in ore (tecnica: \textbf{Planning Poker}).
-\end{itemize}
-\textbf{Durante lo sprint non si cambia}: è compito dello SM pianificare le durate in
-modo che il team non cambi. Il PO può solo \emph{cancellare} lo sprint se l'obiettivo
-diventa obsoleto (mercato o organizzazione cambiati) o palesemente irraggiungibile:
-evento raro e negativo, di solito si evita.
-
-\paragraph{Ready e Done (non coincidono).}
-\begin{itemize}
-  \item Una storia è \textbf{Ready} se: tutto il Team la capisce; è dettagliata abbastanza
-        da essere testata; il PO ne comprende il valore e può prioritizzarla; il Team può
-        stimarla e completarla in uno sprint; è indipendente.
-  \item \textbf{Done} è concordata da Team e PO all'inizio, ad esempio: codifica
-        completata, test di unità scritti ed eseguiti, test di integrazione e
-        prestazionali superati, documentazione minimale scritta. La storia non è finita
-        finché non soddisfa il PO.
-\end{itemize}
-
-\paragraph{Scrumboard (Taskboard / Kanban).} Lo sprint backlog sta su un tabellone
-modificabile da ogni membro.
-\begin{itemize}
-  \item il lavoro non è assegnato ma \emph{richiesto volontariamente} dai membri;
-  \item completata una storia, la si sposta nella colonna corrispondente;
-  \item la stima dello sforzo residuo si aggiorna ogni giorno;
-  \item il lavoro ``emerge'' sul tabellone: se un lavoro è poco chiaro si crea un item con
-        stima maggiore e lo si scompone dopo (scelta del DT, non del PO).
-\end{itemize}
-
-\paragraph{Daily Scrum (stand-up).} Max 15 minuti, in piedi, niente problem solving;
-chiunque può assistere, ma parlano solo i \emph{pig}. Tre domande: cosa ho fatto ieri,
-cosa farò oggi/domani, che problemi mi aspetto. Le risposte sono promesse ai compagni, non
-report per lo SM.
-
-\paragraph{Burndown chart.} Monitora l'andamento dello sprint confrontando il lavoro
-rimanente ideale con quello effettivo (ore residue per giorno), idealmente in modo
-automatico. Ogni giorno i membri ristimano il tempo rimasto sul proprio compito (es.\
-6~h spese su un task da 10~h e altre 6 stimate: 2~h oltre la stima). Esempio: sprint di 2
-settimane, 7 persone, 6~h/giorno $\Rightarrow$ 420 ore ideali. Il \emph{cumulative flow
-diagram} è uno strumento affine.
-
-\paragraph{Sprint review.} Riflessione sul \emph{prodotto}: cosa è stato o no completato,
-con una \emph{demo} (niente slide) delle nuove funzioni; 2--4 ore; si verifica lo stato
-del product backlog; invitare tutti.
-
-\paragraph{Sprint retrospective.} Riflessione sul \emph{processo}: cosa è andato bene,
-quali impedimenti; max 3 ore; partecipano SM, PO, Team e forse committenti e utenti.
-Obiettivi: esaminare persone, relazioni, processi e strumenti; rivedere i driver
-architetturali; individuare e ordinare cosa è andato bene e i miglioramenti possibili;
-creare un \emph{improvement plan}. Formato più semplice: \textbf{Start / Stop /
-Continue}.
-
-\paragraph{Rilasci e backlog refinement.} Ogni organizzazione sceglie la cadenza di
-rilascio: a fine sprint, a fine di un gruppo di sprint, o a ogni feature (continuous
-delivery/deployment); conviene comunque il \emph{release planning} a lungo termine. Nel
-\textbf{backlog refinement} PO e DT modificano, ri-stimano e riordinano il backlog
-secondo l'esperienza; non dovrebbe superare il 10\% del tempo del team. Il PO può
-cambiare il backlog in ogni momento, \emph{ma non lo sprint in corso}.
-
-\subsubsection{Quadro d'insieme}
+\subsubsection{Confronto con la soluzione del docente}
 \begin{center}
-\begin{tabular}{|p{4.6cm}|p{5cm}|p{5cm}|}
+\begin{tabular}{|l|p{6cm}|p{6.5cm}|}
 \hline
-\textbf{Rituali} & \textbf{Artefatti} & \textbf{Pratiche}\\
+\textbf{Aspetto} & \textbf{Studenti} & \textbf{Soluzione del docente}\\
 \hline
-Sprint planning & Product backlog & Planning Poker\\
-Stand-up meeting & Sprint goal & Testing\\
-Sprint review & Sprint backlog & Pair programming\\
-Sprint retrospective & Scrumboard & Continuous integration\\
-Backlog refinement & Potentially shippable increment & \\
-Release planning & Burndown chart, improvement plan & \\
+Purpose & Qualità, sicurezza, manutenibilità & Valutare le modifiche prima dell'integrazione e condividere conoscenza\\
+Primary Alpha & Spesso ambiguo o errato & \emph{Software System}, con Team e Way of Working a supporto\\
+Work Product & Report / documentazione & \emph{Review Record} strutturato\\
+Activities & Lettura, analisi, correzione & Prepare Review, Examine Change, Resolve Findings, Confirm Integration\\
+Competencies & Soprattutto programmazione & Development, testing, system understanding, communication costruttiva\\
+LLM & Assente o generico & Supporto alla review con verifica umana\\
 \hline
 \end{tabular}
 \end{center}
+Le \emph{competencies} sono l'aspetto più sottovalutato. Sull'LLM la proposta migliore
+degli studenti coincide con quella del docente: può suggerire domande o possibili
+problemi, ma ogni risultato va verificato da un revisore competente. In sintesi, gli
+studenti hanno colto il nucleo pratico, mentre la soluzione del docente lo struttura in
+modo più rigoroso e coerente con Essence.
 
-Scrum non impone pratiche di sviluppo; molti team adottano quelle di XP:
-\textbf{TDD} (spesso implica simple design, testing, refactoring, continuous
-integration; vale la piramide dei test) e \textbf{pair programming} (spesso implica
-collective ownership, settimana di 40 ore, coding standard).
-
-\subsubsection{Scalabilità}
-Con team di $7\pm2$ persone si scala su sistemi grandi tramite \textbf{scrum di scrum}
-(alcuni progetti hanno coinvolto oltre 500 persone). Fattori: tipo di applicazione,
-dimensione e dispersione dei team, durata del progetto. Configurazioni:
-\begin{itemize}
-  \item \emph{team unico, molti PO}: un solo SM e un solo team;
-  \item \emph{molti team, prodotto unico}: un Chief Product Owner sopra i PO, ogni team
-        con il suo SM e PO.
-\end{itemize}
-Secondo Sutherland lo scrum di scrum \emph{non} è un ``meta-scrum'': è un meccanismo
-operativo di consegna, responsabile di consegnare il software funzionante di tutti i team
-secondo la DoD a fine sprint; il suo Master ne risponde.
-
-\subsubsection{Considerazioni finali}
-\paragraph{Problemi tipici:} ignoranza dei valori agili e di Scrum; software non testato a
-fine sprint (cattiva DoD); backlog non pronto all'inizio (cattiva Ready); mancata
-facilitazione; mancato supporto di manager e stakeholder; gestione caotica degli scrum di
-scrum.
-
-\paragraph{Patti tra stakeholder e team.} Il team promette: il PO difenderà gli interessi
-degli stakeholder; il loro tempo sarà usato bene; lavoro della massima qualità
-compatibilmente con i vincoli; nuove funzionalità validabili a ogni sprint. Gli
-stakeholder promettono: disponibilità ad aiutare; supporto allo SM nel rimuovere ostacoli;
-priorità e vincoli invariati durante lo sprint senza consenso del Team; partecipare a
-Scrum non danneggerà la carriera dei membri.
-
-\paragraph{XP o Scrum?}
-\begin{center}
-\begin{tabular}{|p{7.2cm}|p{7.2cm}|}
-\hline
-\textbf{XP} & \textbf{Scrum}\\
-\hline
-Orientato alla qualità (test driven) & Orientato al project management\\
-Iterazione 1--2 settimane & Sprint 2--4 settimane\\
-Requisiti sempre modificabili & Requisiti modificabili a fine sprint\\
-Il cliente ordina le storie & Il team ordina le storie\\
-Coaching informale & Scrum master certificato\\
-TDD, pair programming, planning game, refactoring & Retrospettiva, strumenti di PM, planning poker\\
-\hline
-\end{tabular}
-\end{center}
-XP e Scrum possono coesistere (e spesso lo fanno).
-
-
-\subsubsection{Scrum nell'era degli LLM}
-\paragraph{Cosa dicono le guide.} La Scrum Guide 2020 non menziona l'IA. Lo \textbf{Scrum
-Guide Expansion Pack} (2025, v2026.1; Coleman, Jocham, Sutherland) introduce i
-\emph{Product Developers}, la \emph{Definition of Outcome Done} e una sezione sull'IA:
-\emph{Product Owner} e \emph{Scrum Master} devono essere \textbf{umani}; i Product Developers
-possono essere umani o automatizzati, ma \emph{almeno uno} deve essere umano. Principi:
-responsabilità umana chiara per tutti i risultati (\emph{human in the loop}); l'IA è partner
-decisionale supervisionato, non scavalca empirismo ed etica; sperimentare con prove piccole e
-reversibili.
-
-\paragraph{Uso reale} (Perkusich et al., 2026, $n=49$): gli LLM sono usati per raffinare lo
-Sprint Goal (77\%), definire requisiti non funzionali (76\%), riassumere eventi (68\%),
-sintetizzare il feedback della Review (64\%). Problemi riportati: output ``quasi corretto ma
-non del tutto'' (81\%), rischi di riservatezza dei dati (63\%), allucinazioni e validazione
-(59\%).
-
-\begin{center}
-\begin{tabular}{|p{2.6cm}|p{6.2cm}|p{6.2cm}|}
-\hline
- & \textbf{Può aiutare a\dots} & \textbf{Non può sostituire\dots}\\
-\hline
-\textbf{LLM come PO} & bozze di user story da note e interviste, criteri di accettazione e casi limite, sintesi del feedback, ambiguità e duplicati nel backlog, sparring partner & responsabilità del valore e del ROI, negoziazione tra stakeholder, visione e Product Goal, mandato dell'organizzazione, decisione finale sull'ordine del backlog\\
-\hline
-\textbf{LLM come SM} & sintesi del Daily, impedimenti ricorrenti, agende della Retrospective, analisi di metriche (lead time, WIP, burndown), coaching di primo livello sulle regole & empatia e dinamiche di gruppo, gestione dei conflitti e sicurezza psicologica, cambiamento organizzativo, ostacoli fisici e politici, ruolo di leader che serve\\
-\hline
-\end{tabular}
-\end{center}
-Evidenze: agenti ``PO'' migliorano la qualità percepita delle storie ma aggiungono
-contenuti fuori scope (serve la revisione del PO); nelle priorità gli LLM sono corretti solo
-nel 55--71\% dei casi, con alta variabilità tra sessioni. Esercizio tipico: l'LLM scrive le
-storie, il PO decide (accetta quelle INVEST, scompone le epic, trasforma le ambiguità in
-domande agli stakeholder, nessuna storia accettata senza conversazione col team).
-
-\paragraph{Il team come controllore dell'IA.} L'IA produce bozze (storie, codice, test); il
-team \emph{specifica} (Sprint Goal, vincoli e criteri nei prompt), \emph{verifica} (code
-review, test indipendenti, analisi statica e di sicurezza), \emph{valida} con PO e stakeholder
-(è la storia giusta?) e \emph{decide}: accetta solo ciò che soddisfa la DoD. I Developer
-passano da autori di ogni riga a progettisti, revisori e garanti della qualità.
-
-\paragraph{Definition of Done per il codice generato}: revisione umana (ogni modifica letta e
-capita da almeno un Developer); test indipendenti (non generati dallo stesso prompt del
-codice); sicurezza (analisi statica e dei segreti, nessuna dipendenza inventata,
-\emph{package hallucination}); licenze (provenienza e compatibilità); riservatezza (nessun
-dato personale nei prompt); tracciabilità (nella pull request si dichiara l'uso dell'IA e il
-prompt rilevante).
-
-\paragraph{Caso reale} (Weber, Zimmermann, Franceschetti, 2026): in 3 giorni 41 user story e
-415 test, poi 62 story, 804 test, circa 9000 righe, tutte scritte dall'assistente. Il
-processo ha gate umani: user story (l'IA redige, l'umano approva i criteri) $\to$ specifica
-nel prompt $\to$ build test-first (rosso$\to$verde) $\to$ validazione sull'app in esecuzione
-su dati reali. \emph{Catena di tracciabilità}: persona $\to$ vincolo non negoziabile $\to$
-criterio di accettazione $\to$ specifica nel prompt $\to$ asserzione di test $\to$
-comportamento verificato. Cinque lezioni: processo con gate tracciabile; specificare il
-conoscibile e scoprire il resto con un prototipo; validare nell'ambiente reale (4 funzioni
-passavano la suite ma fallivano nell'uso perché i \emph{mock} non esercitavano browser, API
-del modello e SDK: una suite verde verifica i collegamenti, non il sistema); mettere i gate
-all'assistente (gate imposto dallo strumento: 81\% contro 13\% per convenzione); registrare
-decisioni e ipotesi (ADR). ``Il codice costa poco, la valutazione no.''
-
-\paragraph{Chi decide, chi assiste.} Product Goal e ordine del backlog: il PO (l'LLM analizza
-il feedback; rischio: priorità incoerenti). Sprint Goal: lo Scrum Team (l'LLM riformula;
-rischio: obiettivo generico). Stime e piano: i Developers (l'LLM scompone in task; rischio:
-falsa precisione). Storie, codice e test: il team come controllore (``quasi corretto $\neq$
-Done''). Accettazione dell'Increment: lo Scrum Team via DoD (rischio: fiducia eccessiva).
-Miglioramento del processo: il team facilitato dallo SM (rischio: perdita del confronto
-umano). L'IA amplia le capacità del team ma non sostituisce la responsabilità umana.
-
+\newpage
+\section{Processi-esercitazioni}
 \subsection{User stories}
 
 \subsubsection{Progettazione agile vs.\ tradizionale}
@@ -1784,185 +2033,1351 @@ test('estratto conto', () => {
 Edge, \dots), in locale o su macchine remote. Jest è poco diffuso per gli E2E: per quelli ci sono più
 aiuti per Mocha o Jasmine.
 
-\subsection{La qualità del software}
+\subsection{Retrospettiva (Sprint retrospective)}
 
-\subsubsection{Errore, difetto, guasto}
-Tre concetti legati da catena di causa (IEEE 610.12):
-\begin{itemize}
-  \item \textbf{errore} (\emph{error}): azione umana sbagliata, es.\ un'interpretazione errata
-        della specifica;
-  \item \textbf{difetto} (\emph{fault}, ``bug''): imperfezione nel codice o in un documento,
-        causa di un guasto;
-  \item \textbf{guasto} (\emph{failure}): comportamento osservabile non previsto.
+
+\textbf{Fonte}: \emph{Retrospective Workshop} (esercitazioni, prof.\ Missiroli, AA 2026-27).
+Il metodo Essence per la retrospettiva è un piccolo contributo del prof.\ Missiroli.
+
+\subsubsection{Cos'è la retrospettiva}
+La \textbf{Sprint Retrospective} è la riunione in cui il team analizza lo Sprint appena
+concluso per \emph{migliorare il processo e l'esecuzione}, tenendo conto del feedback di
+ciascun membro. Anche il feedback di utenti e stakeholder può entrare nella discussione.
+È la riflessione sul \emph{processo}; la sprint review (demo del prodotto) è la riflessione
+sul \emph{prodotto}. Vanno tenute distinte.
+
+\paragraph{Quando e quanto}
+\begin{itemize}[nosep]
+  \item Si svolge al termine di ogni Sprint, di solito dopo la sprint review.
+  \item Sprint di due settimane: circa un'ora e mezza. Mini-sprint (meno di una settimana):
+        anche meno di mezz'ora.
+  \item Va fissato un limite di tempo prima di iniziare.
 \end{itemize}
-Esempio: \emph{Mars Climate Orbiter} (1999): il team usa libbre-forza$\cdot$s invece di
-newton$\cdot$s (errore), il modulo calcola gli impulsi nell'unità sbagliata (difetto), la
-sonda va persa (guasto). Altri casi: Therac-25 (1985--87, race condition, sovradosaggi letali),
-Ariane~5 (1996, overflow nella conversione 64$\to$16 bit di codice riusato), Knight Capital
-(2012, codice obsoleto riattivato, 440 milioni di dollari persi in 45 minuti), CrowdStrike (2024).
 
-\paragraph{Perché il software è difettoso.} Circa un errore ogni 10 righe, anche per
-programmatori esperti; il compilatore ne cattura circa il 50\%, circa il 15\% sfugge fino al
-cliente (Humphrey). La qualità non si ``aggiunge'' alla fine: si costruisce con \emph{filtri
-successivi} (revisioni, compilatore, analisi statica, test, ispezioni). Non tutti i difetti
-pesano uguale: pochi difetti frequenti causano la maggior parte dei guasti, con una lunga coda
-di difetti rari.
+\paragraph{Chi partecipa}
+Tutto il team. Si possono invitare stakeholder ed esperti. Il Product Owner può essere
+presente o assente: alcune versioni lo escludono per parlare più liberamente, altre lo
+prevedono per avere il quadro completo dei problemi.
 
-\subsubsection{Che cos'è la qualità}
-Dipende da chi guarda: l'utente (adatto ai bisogni, facile da usare), il tester (senza
-difetti), lo sviluppatore (facile da capire e modificare), il committente (costa poco), le
-operations (veloce, sempre disponibile). Per ISO/IEC 25010 è il grado in cui il prodotto
-soddisfa i bisogni, espliciti e impliciti, dei suoi stakeholder.
+\paragraph{Temi da discutere}
+I temi vanno decisi in anticipo, tipicamente dallo Scrum Master. Esempi:
+\begin{itemize}[nosep]
+  \item produttività (siamo lenti?);
+  \item processo (scadenze in ritardo?);
+  \item risultati (il codice è scadente?);
+  \item team (litighiamo troppo?);
+  \item strumenti di lavoro (lo strumento X è adatto?);
+  \item ambiente di lavoro (c'è troppa confusione?).
+\end{itemize}
 
-\paragraph{Qualità del processo, interna, esterna, in uso.} Ognuna influenza la successiva:
-\emph{processo} (come sviluppiamo, es.\ \% di codice revisionato) $\to$ \emph{interna}
-(visibile a chi costruisce, si misura senza eseguire: ispezioni, analisi statica, es.\
-complessità, duplicazione) $\to$ \emph{esterna} (si misura eseguendo il sistema: test, es.\
-tempo di risposta, guasti) $\to$ \emph{in uso} (si misura con utenti reali, ISO/IEC 25019).
+\subsubsection{Obiettivo: produrre azioni}
+Parlare dei problemi fa sempre bene, ma lo scopo vero è \textbf{migliorare}: aumentare la
+produttività e la soddisfazione per gli obiettivi raggiunti. La riunione deve quindi
+produrre soluzioni, sotto forma di \textbf{Action Point} da attuare nello Sprint successivo.
 
-\paragraph{ISO/IEC 25010:2023.} Otto caratteristiche del prodotto: idoneità funzionale
-(completezza, correttezza), efficienza prestazionale, compatibilità (coesistenza,
-interoperabilità), capacità di interazione (ex usabilità), affidabilità (disponibilità,
-tolleranza ai guasti), \emph{security} (riservatezza, integrità), manutenibilità (modularità,
-modificabilità), flessibilità (ex portabilità); nel 2023 si aggiunge la \emph{safety}.
+\paragraph{Il metodo base in tre fasi}
+\begin{enumerate}[nosep]
+  \item \textbf{Analisi} dell'andamento dell'ultimo Sprint;
+  \item \textbf{Identificazione e valutazione} degli elementi positivi e negativi;
+  \item \textbf{Soluzioni} proposte dal team: almeno una per ogni elemento negativo.
+\end{enumerate}
+Il team sceglie uno o più temi (team, prodotto, processo\ldots) e si chiede:
+\begin{enumerate}[nosep]
+  \item Cosa ha funzionato?
+  \item Cosa non ha funzionato e può essere migliorato?
+  \item Che cosa possiamo fare nella prossima iterazione per migliorare?
+\end{enumerate}
+Il risultato va \textbf{documentato} (testo o grafico), per esempio con una board a tre
+colonne.
 
-\subsubsection{Misurare}
-``Non puoi controllare ciò che non puoi misurare'' (DeMarco). Ma per la \textbf{legge di
-Goodhart}: quando una misura diventa un obiettivo smette di essere una buona misura
-(copertura gonfiata da test senza asserzioni, velocity gonfiata, righe di codice come
-``produttività''). Cosa si misura: \emph{risorse} (mesi-persona, costo preventivo vs
-consuntivo), \emph{processo} (\% difetti trovati per fase, cycle time, velocity, stabilità
-dei requisiti), \emph{prodotto} (LOC, function point, complessità ciclomatica, copertura,
-difetti per KLOC).
-
-\paragraph{Complessità ciclomatica (McCabe, 1976).} Sul grafo di flusso del codice,
-$V(G) = E - N + 2$ con $E$ archi e $N$ nodi. Esempio: \texttt{read P,Q; if (P+Q>10) print
-"Large"; if (P>50) print "P Large"} ha $N=6$, $E=7$, quindi $V(G)=7-6+2=3$. Altre metriche
-di prodotto: LOC, function point, metriche OO di Chidamber e Kemerer (accoppiamento tra
-classi, profondità di ereditarietà).
-
-\paragraph{Goal--Question--Metric (Basili).} Tre livelli: \textbf{goal} (concettuale, es.
-``valutare l'affidabilità del prodotto''), \textbf{question} (operativo, es.\ ``qual è la
-distribuzione dei guasti?'', ``il codice rispetta lo standard?''), \textbf{metric}
-(quantitativo, es.\ n.\ guasti per modulo, violazioni per modulo). Esempio sul progetto di
-gruppo: goal ``alla relazione contribuiscono tutti''; Q1 quante ore ha lavorato ciascuno
-(M1 ore registrate), Q2 quanta parte ha scritto ciascuno (M2 \% di sezioni o commit per autore).
-
-\subsubsection{Verifica e testing}
-\textbf{Verifica}: ``stiamo costruendo il prodotto nel modo giusto?'' (conformità alla
-specifica). \textbf{Validazione}: ``stiamo costruendo il prodotto giusto?'' (accettazione del
-cliente). Verifica statica: ispezioni; dinamica: test. Nel \emph{modello a V} (Boehm) ogni
-livello di specifica definisce i test del livello corrispondente: requisiti $\leftrightarrow$
-test di accettazione, architettura $\leftrightarrow$ test di sistema, progetto dei moduli
-$\leftrightarrow$ test di integrazione, codice $\leftrightarrow$ test di unità.
-
-\emph{Il testing illumina, non dimostra}: può mostrare la presenza di errori, mai
-l'assenza (Dijkstra, 1970); chi cerca di mostrare l'assenza ne trova pochi (Myers).
-
-\paragraph{Piramide dei test.} Base: molti test di \emph{unità} (veloci, economici, isolati;
-JUnit, pytest); in mezzo \emph{integrazione e sistema} (interfacce tra componenti);
-in cima pochi \emph{end-to-end e accettazione} (lenti, fragili, vicini all'utente; Selenium,
-Playwright). Salendo crescono costo, tempo, fragilità. Anti-pattern: il \textbf{cono gelato}
-(molti test manuali ed E2E, pochi di unità).
-
-\paragraph{Black-box.} Test \emph{funzionale} dalla specifica: classi di equivalenza, valori
-limite, tabelle di decisione, test basati sui casi d'uso. Il test esaustivo è impossibile
-($5^{10}\approx 9{,}8$ milioni di casi). Esempio: ``al massimo 5 prestiti attivi'': valori
-limite $-1,0,5,6$ (più un rappresentante, es.\ 3): $-1$ errore di input, $0$ e $3$ concesso,
-$5$ rifiutato (già al massimo), $6$ errore di stato inconsistente.
-
-\paragraph{White-box.} Test \emph{strutturale} dal codice. Criteri di copertura:
+\paragraph{Azioni precise}
+Il punto più importante sono le azioni. Non servono buoni propositi del tipo «lavoreremo
+meglio»: un'azione deve essere precisa e, idealmente, avere un responsabile o un controllore.
 \begin{center}
-\begin{tabular}{|l|p{7cm}|c|}
+\begin{tabular}{|p{5.2cm}|p{10cm}|}
 \hline
-\textbf{Criterio} & \textbf{Richiede che\dots} & \textbf{Test minimi (es.\ McCabe)}\\
+\textbf{Vago (da evitare)} & \textbf{Preciso (da scrivere)} \\
 \hline
-comandi & ogni comando sia eseguito almeno una volta & 1\\
-decisioni & ogni decisione sia sia vera sia falsa & 2\\
-cammini & ogni cammino sia percorso & 4\\
+«dobbiamo usare meglio Git» & «ogni membro fa almeno un commit all'ora; Franco monitora» \\
+\hline
+«miglioriamo l'UML» & «entro giovedì si ristruttura l'UML separando le classi in elementi
+indipendenti e aggiungendo le funzionalità presenti nel codice [Giorgio]» \\
 \hline
 \end{tabular}
 \end{center}
-Nell'esempio con $P=60,Q=0$ entrambe le \texttt{print} sono eseguite: basta 1 test per i
-comandi; per le decisioni ne servono 2 (serve anche un caso con condizioni false). Per il
-\textbf{teorema di Weyuker} è indecidibile, per un programma qualsiasi, se esista un input
-che esegue un dato comando, decisione o cammino. \emph{Copertura $\neq$ qualità dei test}:
-un test senza asserzioni copre il codice senza verificarlo; il \textbf{mutation testing}
-introduce piccole modifiche al codice e controlla che i test le ``uccidano''.
 
-\paragraph{TDD.} Rosso (test che fallisce) $\to$ verde (codice minimo che passa) $\to$
-refactoring (test restano verdi): ciclo di pochi minuti. ``Senza test non sappiamo davvero se
-il nostro codice peggiora o migliora'' (Feathers). Il circolo vizioso del \emph{non
-scriviamo i test}: non abbiamo tempo $\to$ non siamo abbastanza veloci $\to$ modificare il
-codice è difficile e rischioso $\to$ non scriviamo i test.
+\subsubsection{Retrospettiva con Essence}
+Essence è un linguaggio grafico per descrivere metodi e pratiche dell'ingegneria del
+software; le sue \emph{carte} guidano il team a riflettere sul proprio lavoro e a
+preparare cambiamenti. Usarlo rende la retrospettiva più strutturata: propone argomenti
+(alcuni possono essere saltati) e indica dei \emph{punti} per capire lo stato di ciascun
+elemento.
 
-\subsubsection{Analisi statica, quality gate, debito tecnico}
-\paragraph{Pipeline.} Commit/pull request $\to$ build $\to$ test (unità, integrazione)
-$\to$ analisi statica (bug, vulnerabilità, smell) $\to$ \textbf{quality gate} (soglie
-superate? altrimenti si torna allo sviluppatore) $\to$ rilascio. Esempio di soglie sul
-codice nuovo: 0 nuove vulnerabilità critiche, copertura $\ge 80\%$, righe duplicate
-$<3\%$; le soglie le decide il team, magari con GQM.
-
-\paragraph{Debito tecnico} (Cunningham, 1992). Come un debito finanziario: il
-\emph{capitale} è la correzione rinviata, gli \emph{interessi} sono il costo maggiore di ogni
-modifica futura; si misura in tempo stimato di correzione e si ripaga col refactoring protetto
-dai test. Quadrante di Fowler (sconsiderato/prudente $\times$ consapevole/involontario):
-sconsiderato-consapevole ``non abbiamo tempo per il progetto'', prudente-consapevole
-``rilasciamo ora e ne gestiamo le conseguenze'', sconsiderato-involontario ``che cos'è la
-stratificazione?'', prudente-involontario ``ora sappiamo come avremmo dovuto farlo''.
-
-\paragraph{SonarQube.} Analisi statica nell'IDE (SonarQube for IDE, ex SonarLint), nella
-pipeline CI (Server o Cloud) e nella pull request (l'esito del gate può bloccare il merge).
-Tre qualità collegate a ISO 25010: \emph{affidabilità} (es.\ null dereference, risorsa non
-chiusa), \emph{sicurezza} (es.\ SQL injection; i \emph{security hotspot} vanno rivisti a
-mano), \emph{manutenibilità} (codice duplicato, funzioni troppo complesse $\to$ debito
-tecnico). Gravità: blocker, high, medium, low, info. Rating A--E per la manutenibilità dal
-rapporto di debito $= \text{debito tecnico} / (30\text{ min} \times \text{righe di codice})$:
-A $\le 5\%$, B $<10\%$, C $<20\%$, D $<50\%$, E $\ge 50\%$. Per affidabilità e sicurezza il
-rating dipende dal problema più grave.
-
-\paragraph{Quality gate e \emph{Clean as You Code}.} Il gate giudica il codice \emph{nuovo o
-modificato}: chi tocca il codice lo lascia pulito, il debito pregresso si ripaga
-gradualmente. Il gate predefinito ``Sonar way'' ha quattro condizioni sul codice nuovo: 0
-nuovi problemi (rating A), 100\% di security hotspot rivisti da una persona, copertura
-$\ge 80\%$, righe duplicate $\le 3\%$. Offre feedback automatico a ogni pull request e un
-criterio di rilascio esplicito; \emph{non} garantisce correttezza funzionale né assenza di
-errori (falsi positivi e negativi), e la copertura 80\% si raggiunge anche con test senza
-asserzioni (Goodhart). Esiste un gate ``Sonar way for AI Code''.
-
-\subsubsection{La qualità del codice generato da LLM}
-Circa il 90\% dei professionisti usa l'IA, il 59\% percepisce codice di qualità migliore, solo
-il 3\% dichiara fiducia alta nell'output (DORA e Stack Overflow, 2025): percezione $\neq$
-misura. Quattro lenti:
-\begin{itemize}
-  \item \textbf{Correttezza}: con test deboli si sovrastima (HumanEval$+$ con 80 volte più
-        test fa calare fino al 19--29\% le soluzioni ``corrette''; Liu et al., 2023).
-  \item \textbf{Sicurezza}: circa 40\% di programmi Copilot con almeno una vulnerabilità CWE
-        (Pearce 2022); 45\% dei compiti con vulnerabilità OWASP, Java $>70\%$, XSS 86\%
-        (Veracode 2025); pacchetti inesistenti suggeriti nel 5--22\% dei casi, almeno 5,2\% nei
-        commerciali e 21,7\% negli open source (Spracklen 2025). Rischio: \textbf{slopsquatting}
-        (un attaccante registra il nome inventato dal modello). Il codice generato va
-        trattato come \emph{codice non fidato}.
-  \item \textbf{Manutenibilità}: più copia-incolla, meno refactoring (GitClear 2025: nel
-        2024 blocchi duplicati $\times 8$, righe ``spostate'' $-40\%$, per la prima volta le
-        righe copiate superano quelle spostate).
-  \item \textbf{Produttività}: esperimenti controllati mostrano più velocità (+55,8\% Peng
-        2023, +26\% PR Cui 2025, circa 21\% Google 2025) ma misurano velocità, non qualità; nello
-        studio METR 2025 sviluppatori esperti si aspettavano $+24\%$, percepivano $+20\%$ ma
-        erano più lenti del $19\%$. DORA 2025: throughput e instabilità delle consegne
-        crescono, ``l'IA amplifica'' punti di forza e disfunzioni.
+\paragraph{La tabella}
+Si costruisce una tabella con:
+\begin{itemize}[nosep]
+  \item in ascissa tre stati dell'elemento: \textbf{Bene}, \textbf{OK}, \textbf{Non bene};
+  \item in ordinata due o più righe, cioè l'importanza dell'elemento da considerare;
+  \item a destra una colonna per gli \textbf{Action Point}.
 \end{itemize}
-\paragraph{Garantire la qualità}: revisione umana (letto e capito), test indipendenti con
-valori limite e mutation testing, analisi statica e di sicurezza con verifica delle
-dipendenze, quality gate e Definition of Done. Domande: chi ha letto il codice? i test sono
-scritti senza guardare il codice? le dipendenze esistono? chi ne risponde? Piano GQM per un
-assistente IA: goal ``valutare l'effetto dell'assistente sulla qualità, per il team'';
-metriche da pipeline (difetti post-rilascio per KLOC, nuove vulnerabilità per PR,
-\% duplicazione, complessità media, debito stimato, lead time, tasso di rilasci falliti);
-da evitare ``righe generate dall'IA'' come metrica di successo (Goodhart).
 
-\newpage
-\section{Modulo 2}
+\paragraph{Procedura}
+\begin{enumerate}[nosep]
+  \item \textbf{Prima parte}: il team (tipicamente lo SM) prende una carta dal mazzo e la
+        piazza nella posizione che ritiene corretta.
+  \item \textbf{Seconda parte}: partendo dalle carte più importanti che non sono «Buone»,
+        si indicano le cause (senza accusare nessuno) e si propone una soluzione.
+  \item \textbf{Finale}: si documenta la riunione.
+\end{enumerate}
+
+\paragraph{Quali carte}
+Essence ha moltissime carte, e all'inizio possono disperdere. Per una retrospettiva
+standard basta un sottoinsieme delle carte «Scrum Essentials» o «Agile Essentials».
+Le \emph{entity card} descrivono un concetto e i suoi stati (di solito lo stato
+desiderabile è l'ultimo in basso). Le \emph{checklist card} aiutano a capire in quale stato
+si trova un'entità e si possono usare anche per un planning poker. Gli \emph{Alpha} stessi
+sono un buon punto di discussione.
+
+\subsubsection{Suggerimenti e rischi}
+\paragraph{Suggerimenti}
+\begin{itemize}[nosep]
+  \item pre-selezionare un numero limitato di carte o elementi, possibilmente con checklist;
+  \item considerare solo gli elementi importanti;
+  \item limitare il tempo per ogni carta;
+  \item arrivare a 3 o 4 Action Point condivisi da tutti;
+  \item evitare lo scambio di accuse: pensare a come risolvere, non a chi ha causato;
+  \item \textbf{documentare tutto}.
+\end{itemize}
+
+\paragraph{Problemi tipici}
+\begin{itemize}[nosep]
+  \item \textbf{apatia};
+  \item \textbf{emozioni}: il rischio è che diventi un incrocio di accuse;
+  \item \textbf{assenza di conversazione}: ci si limita a esporre, senza discutere.
+\end{itemize}
+
+\subsubsection{Sintesi per l'esame}
+\begin{itemize}[nosep]
+  \item La retrospettiva riguarda il \emph{processo}; la review riguarda il \emph{prodotto}.
+  \item Si fa a fine Sprint, con tempo limitato e con tutto il team.
+  \item Il risultato sono \emph{azioni precise} con responsabile, da attuare nello Sprint successivo.
+  \item Metodo base: \emph{cosa ha funzionato / cosa no / cosa facciamo}; formato rapido:
+        \textbf{Start / Stop / Continue}.
+  \item Essence: carte, tabella Bene / OK / Non bene, Action Point a destra.
+\end{itemize}
+
+
+\section{Constructor Fabric}
+\subsection{Constructor Fabric: processo ingegneristico attorno ai tool di AI coding}
+
+\subsubsection{Cos'è Constructor Fabric}
+
+\textbf{Constructor Fabric} è una piattaforma open source \emph{AI-native} che collega
+l'intero ciclo di vita del software (plan, build, run) in un unico flusso tracciabile e
+governato, dai requisiti alla produzione. Lo strumento che si installa si chiama
+\textbf{Constructor Studio} e il suo comando è \texttt{cfs}.
+
+Fornisce template di documenti, \emph{skill} con nome, checklist di review, controlli
+deterministici e identificatori stabili che legano i requisiti al codice.
+\textbf{Non contiene un modello linguistico} e non chiama nessuna API di modelli: gira
+dentro Claude Code, Cursor, Codex, GitHub Copilot o Windsurf, e sono questi tool a
+portare il modello.
+
+\paragraph{I quattro pezzi}
+\begin{itemize}
+  \item \texttt{cfs}: tool a riga di comando, da terminale, per setup, controlli e lavoro
+        su più repository;
+  \item \textbf{skill} \texttt{cf-*}: nomi che si scrivono nella \emph{chat} del tool di
+        AI coding per avviare un workflow;
+  \item \textbf{Kit}: bundle installabili di skill, template, checklist e regole; il kit
+        \textbf{SDLC} è quello di default;
+  \item \textbf{CPT ID} (\emph{Canonical Provenance Trace}): stringhe che permettono di
+        seguire un requisito nel design, nel codice e nei test.
+\end{itemize}
+
+\paragraph{Modello mentale} Il tool di AI coding serve per ragionare, scrivere,
+trasformare e giudicare l'implementazione. Constructor Fabric serve per scegliere il
+workflow, caricare il contesto giusto, applicare regole e template, eseguire controlli
+deterministici, mantenere collegati requisiti, design e codice e spezzare i task grandi
+in fasi.
+
+\paragraph{Quando è solo overhead} Un singolo typo in un file; esplorazione libera senza
+output strutturato; prototipo usa-e-getta il più veloce possibile; assenza di documento
+sorgente, scope e criteri di accettazione; budget di token ristretto con task piccolo.
+
+\subsubsection{Installazione}
+
+Requisiti: Python 3.11+, Git, un tool di AI coding supportato; \texttt{pipx} solo per
+installare lo strumento, \texttt{gh} solo per i workflow sulle pull request.
+\begin{verbatim}
+pipx install git+https://github.com/constructorfabric/studio.git
+cfs --version
+cd path/to/your/repository     # root del repo, non una sottocartella
+cfs init                       # interattivo; rieseguirlo ripara i file generati
+cfs generate-agents            # scrive i file di integrazione per il tool host
+\end{verbatim}
+\texttt{cfs init} chiede: root del progetto, directory di setup (default
+\texttt{.cf-studio/}), se i file generati restano in \texttt{.gitignore} (sì), se
+installare il kit SDLC (sì). Per una prova vanno bene tutti i default.
+\texttt{generate-agents} va rieseguito dopo aver installato un kit, cambiato le regole o
+se l'host non vede più le skill.
+
+\paragraph{Cosa finisce nel repository}
+\begin{verbatim}
+.cf-studio/
+    .core/  .gen/     # runtime generato, gitignored
+    config/           # vostro: AGENTS.md, SKILL.md, rules/
+    core.toml  version.toml  whatsnew.toml
+.claude/ .cursor/ .codex/ .windsurf/ .github/    # file per gli host
+\end{verbatim}
+La parte che il team rivede ed evolve è \texttt{config/}.
+
+\paragraph{Kit}
+\begin{verbatim}
+cfs kit install constructorfabric/studio-kit-sdlc    # poi generate-agents
+cfs kit install --path <path> --install-mode copy|register
+cfs kit check-updates     # mostra le novità, non cambia nulla
+cfs kit update            # cfs update --with-kits yes: aggiorna anche i kit
+\end{verbatim}
+\emph{copy} copia i file del kit nella directory di setup; \emph{register} lo lascia dov'è
+e registra solo un collegamento. Dopo ogni cambio di kit, \texttt{cfs generate-agents}.
+
+\paragraph{Problemi tipici}
+\begin{itemize}
+  \item \texttt{cfs: command not found} dopo l'install: aprire un nuovo terminale;
+  \item setup lanciato fuori dalla root del repo: rieseguire \texttt{cfs init} dalla root;
+  \item file generati ignorati dal tool: ricaricare/riaprire il repository nel tool;
+  \item \texttt{cf} dà una risposta normale da chatbot: repository sbagliato oppure
+        \texttt{generate-agents} mai eseguito;
+  \item funzionano solo i nomi \texttt{cf-*} e non gli slash command: è normale, gli slash
+        command sono alias specifici dell'host;
+  \item controlli cross-repository rumorosi: partire con \texttt{cfs validate --local-only}.
+\end{itemize}
+
+\subsubsection{Usarlo: terminale vs chat}
+
+Regola che fa risparmiare un'ora: \textbf{terminale} per \texttt{cfs} e i suoi
+sottocomandi (setup, validazione, update, workspace); \textbf{chat} per \texttt{cf} e le
+skill \texttt{cf-*} (esplorazione, pianificazione, scrittura, review). Le skill scritte
+nel terminale non fanno nulla, e \texttt{cfs validate} scritto in chat non è
+un'esecuzione reale.
+
+Per attivarlo si apre il repo nel tool e si scrive \texttt{cf} (deve comparire un menu di
+routing), poi \texttt{cf-help} per il tour. Forma portabile:
+\texttt{cf-<skill>: <richiesta>}: il nome seleziona il workflow, il testo dopo i due punti
+è il lavoro da fare.
+
+\paragraph{Skill principali}
+\begin{center}
+\begin{tabular}{|l|p{10.5cm}|}
+\hline
+\texttt{cf-help} & cosa c'è e da dove partire\\
+\texttt{cf-explore:} & trova file, artefatti, regole, contesto\\
+\texttt{cf-brainstorm:} & apre le opzioni prima di fissare lo scope\\
+\texttt{cf-auto-config} & deduce le regole di progetto di un repo esistente\\
+\texttt{cf-plan:} / \texttt{cf-planning:} & spezza il lavoro in fasi rivedibili / piano riusabile con definition of done\\
+\texttt{cf-coding:} & scrive, rivede, corregge, testa codice\\
+\texttt{cf-write-docs:} & scrive o rivede un documento per umani\\
+\texttt{cf-explain:} & spiega un documento, una PR, una decisione\\
+\texttt{cf-map:} & mostra la mappa delle dipendenze\\
+\texttt{cf-testing:} & scrive o esegue test\\
+\texttt{cf-git-commit:} & stage e commit con messaggio conforme\\
+\texttt{cf-workspace:} & lavoro su più repository\\
+\texttt{cf-kit:}, \texttt{cf-write-skills:} & crea/valida kit; scrive prompt, workflow, skill\\
+\texttt{cf-debug-prompts:} & osserva un workflow passo per passo\\
+\texttt{cf-brave-new-world} & sceglie da solo default sicuri e reversibili nella sessione\\
+\hline
+\end{tabular}
+\end{center}
+Dal kit SDLC: \texttt{cf-sdlc-doc-prd}, \texttt{-doc-adr}, \texttt{-doc-design},
+\texttt{-decompose}, \texttt{-doc-feature}, \texttt{-implement}; per dopo
+\texttt{-change-impact-analysis}, \texttt{-reverse-engineer}, \texttt{-pr-review},
+\texttt{-pr-status}.
+
+\paragraph{Alias e sotto-route} \texttt{cf-coding} è un alias che carica
+\texttt{cf-coding-gen} (idem \texttt{cf-write-docs}, \texttt{cf-write-skills}). Si
+chiamano direttamente le sotto-route quando si sa cosa si vuole: \texttt{-gen},
+\texttt{-review}, \texttt{-fix} (per coding, documenting, prompting),
+\texttt{cf-coding-ci}, \texttt{cf-coding-tests}, \texttt{cf-code-planning}.
+\texttt{cf-analyze} e \texttt{cf-generate} sono router che scelgono la skill adatta.
+
+\paragraph{Richieste buone e cattive}
+Una richiesta che funziona ha \emph{target con nome, scope limitato, criteri di successo
+visibili}:
+\begin{verbatim}
+cf-plan: break this auth migration into safe implementation phases
+cf-explore: trace where auth configuration is defined and loaded
+cf-coding: review this module for correctness, regression risk, missing tests
+\end{verbatim}
+Una richiesta che fa perdere il pomeriggio non ha né scope, né target, né fonte di
+verità, né criteri: \texttt{cf-coding: build the whole system}, \texttt{make this project
+enterprise grade}, \texttt{improve everything}, \texttt{rewrite the app based on best
+practices}. Il workflow non ha nulla su cui fare routing e va a indovinare.
+
+\paragraph{Gate} Prima di partire chiede: modalità di interazione (\emph{assistant},
+\emph{normal}, \emph{debug}; \emph{assistant} racconta dove si trova ed è utile le prime
+volte), se fare prima \texttt{cf-explore}, se fare brainstorm prima di fissare lo scope,
+se pianificare quando il lavoro è multi-step, se delegare a un sub-agent. Ogni gate lo
+approva l'utente: niente di grosso parte in silenzio.
+
+\subsubsection{La pipeline}
+
+Scenario: un team deve aggiungere un nuovo \emph{billing workflow} a un prodotto
+esistente (product manager, architetto, due sviluppatori, QA). Nessuno riscrive il
+processo: usano il proprio, e Constructor Fabric tiene insieme gli artefatti.
+
+\begin{center}
+\begin{tikzpicture}[node distance=5mm, every node/.style={draw, rounded corners, font=\small, inner sep=3pt, fill=blue!6}, >=Stealth]
+\node (a) {PRD};
+\node (b) [right=of a] {ADR};
+\node (c) [right=of b] {DESIGN};
+\node (d) [right=of c] {DECOMP.};
+\node (e) [right=of d] {FEATURE};
+\node (f) [right=of e] {codice};
+\node (g) [right=of f] {test};
+\draw[->] (a)--(b); \draw[->] (b)--(c); \draw[->] (c)--(d);
+\draw[->] (d)--(e); \draw[->] (e)--(f); \draw[->] (f)--(g);
+\end{tikzpicture}
+\end{center}
+Collegati dai CPT ID, plasmati dal kit, verificati da \texttt{cfs}. QA, performance,
+security e DevOps usano gli stessi file, non copie.
+
+\begin{enumerate}
+  \item \textbf{Gather} (\texttt{cf-explore:}): il PM parte da qui, non dal PRD. Esce una
+        piccola mappa di quali note esistono, quali sono obsolete, quali vincoli sono già
+        scritti. È lo stadio più economico e il più saltato.
+  \item \textbf{Opzioni} (\texttt{cf-brainstorm:}): tre o quattro forme candidate con i
+        loro trade-off, senza impegnarsi. Si usa finché lo scope è aperto; a PRD fatto
+        è tardi.
+  \item \textbf{PRD} (\texttt{cf-sdlc-doc-prd:}): da template: scopo, attori, scope,
+        requisiti funzionali e non funzionali, use case, criteri di accettazione,
+        rischi. \textbf{Ogni requisito ha un CPT ID e una priorità}: è ciò che rende
+        possibile il resto della catena. Poi review contro metodologia e checklist (si
+        vedono i finding prima di qualunque riscrittura e si approva lo scope delle
+        correzioni) e infine \texttt{cfs validate}.
+  \item \textbf{ADR} (\texttt{cf-sdlc-doc-adr:}): una decisione, un record: contesto,
+        driver, opzioni considerate, esito, conseguenze. L'architetto lo scrive
+        \emph{prima} del design, così questo ha su cosa poggiare; tra sei mesi è il file
+        che risponde a ``perché l'abbiamo fatto così''.
+  \item \textbf{DESIGN} (\texttt{cf-sdlc-doc-design:}): gli input sono nominati (PRD e
+        ADR approvati): la skill \emph{trasforma} documenti approvati, non inventa da
+        una riga. Esce architettura, componenti, layer, sequenze, data model, tech
+        stack; ogni driver porta il CPT ID del requisito a cui risponde.
+  \item \textbf{Decompose} (\texttt{cf-sdlc-decompose:}): lista ordinata di feature con
+        dipendenze, ciascuna con una fetta del design. Si controlla la copertura: ogni
+        componente, sequenza ed elemento dati appartiene a \emph{esattamente una}
+        feature. Così un lavoro grosso diventa più pezzi rivedibili.
+  \item \textbf{FEATURE spec} (\texttt{cf-sdlc-doc-feature:}): una feature, una
+        specifica: flussi, stati, algoritmi, definition of done. Ognuno ha un CPT ID
+        \emph{un livello più fine} del requisito. È l'ultimo documento prima del
+        codice e quello contro cui si controlla l'implementazione.
+  \item \textbf{Implement} (\texttt{cf-sdlc-implement:}): codice e unit test contro la
+        specifica approvata, \textbf{con i marker CPT}. Senza marker la catena si ferma
+        all'ultimo documento e il codice torna a essere un'opinione.
+  \item \textbf{Review del codice} (\texttt{cf-coding:} review): in una \emph{chat
+        nuova}, perché il contesto di scrittura passa le sue assunzioni alla review;
+        meglio ancora un sub-agent, che non vede il ragionamento di chi ha scritto.
+        Prima i finding, le correzioni dopo l'approvazione dello scope.
+  \item \textbf{Vista d'insieme} (\texttt{cfs map}, \texttt{cf-map:}): i \emph{dangling
+        reference} sono il modo per trovare il requisito che nessuno ha implementato.
+\end{enumerate}
+
+\paragraph{Come appare un requisito, nel PRD} Titolo, priorità, ID e testo normativo con
+MUST:
+\begin{verbatim}
+#### FR-003 Retry a failed invoice charge
+- [x] `p1` - **ID**: `cpt-billing-fr-invoice-retry`
+When a charge fails with a retriable provider error, the system MUST retry
+it at the configured interval up to the configured maximum, and MUST stop
+retrying on a non-retriable error.
+**Actors**: `cpt-billing-actor-finance-operator`, `...-payment-provider`
+\end{verbatim}
+Nel DESIGN lo stesso ID riappare a sinistra e la risposta ingegneristica a destra
+(\emph{Solution}: uno scheduler dei retry possiede la state machine; gli errori del
+provider sono classificati una volta sola al confine dell'adapter in retriable/terminal).
+Nella DECOMPOSITION una feature ha \texttt{Purpose}, \texttt{Depends On},
+\texttt{Requirements Covered} (i CPT ID) e \texttt{Out of scope}.
+
+\paragraph{Marker nel codice} Commenti normali, in qualunque linguaggio e editor, senza
+plugin:
+\begin{verbatim}
+# @cpt-algo:cpt-billing-algo-retry-should-retry:p1
+def should_retry(*, attempt, config) -> bool:
+    # @cpt-begin:cpt-billing-algo-retry-should-retry:p1:inst-terminal
+    if attempt.error_class is ErrorClass.TERMINAL:
+        return False
+    # @cpt-end:cpt-billing-algo-retry-should-retry:p1:inst-terminal
+    ...
+\end{verbatim}
+
+\paragraph{Cosa è il risultato} Non ``l'AI ha scritto il progetto'', ma un
+\emph{sistema di consegna ispezionabile}: alla domanda ``quale codice implementa questo
+requisito approvato?'' risponde il repository, invece dello sviluppatore che se lo ricorda.
+
+\subsubsection{Validazione}
+
+\begin{itemize}
+  \item \texttt{cfs validate} (\texttt{--local-only} per saltare la risoluzione
+        cross-repository, utile mentre si itera): controlla struttura, sezioni
+        obbligatorie, riferimenti, forma dei CPT ID, regole di consistenza.
+        \textbf{Deterministico}: stessi file e regole, stesso risultato. Da lanciare in
+        locale prima della PR e da tenere in CI.
+  \item \texttt{cfs validate-toc}: l'indice di una guida corrisponde ai suoi titoli;
+        \texttt{cfs check-language}: il documento è scritto in una lingua ammessa.
+  \item \texttt{cfs map}, \texttt{cfs where-defined --id <ID>} (quale file definisce
+        l'ID), \texttt{cfs list-ids --source docs}: da usare \emph{prima} di un
+        refactoring, non dopo.
+\end{itemize}
+
+\paragraph{Il ciclo} (1) plan o generate; (2) validate; (3) review; (4) leggere i finding
+e approvare lo scope della correzione; (5) fix; (6) validate di nuovo; (7) ripetere finché
+non resta nulla di noto. Vale uguale per documenti e codice.
+
+\paragraph{Cosa il ciclo non dà} Migliora la qualità ma \textbf{non prova la
+correttezza}: un \texttt{cfs validate} verde dice che la \emph{forma} è giusta, non che il
+software funziona; una checklist superata dice che la review è stata \emph{coerente}, non
+che fosse corretta. Resta necessaria la review umana finale.
+
+\subsubsection{Abitudini, trappole, multi-repo}
+
+\paragraph{Abitudini} Nominare il target (artefatto, area di codice, esito); dare
+documenti sorgente e vincoli, non intenzioni; pianificare prima che la conversazione sia
+sovraccarica; validare presto e di continuo; dire esplicitamente cosa \emph{non} deve
+cambiare; usare il workflow più piccolo che ti tiene comunque in controllo; chat nuova per
+ogni task grosso di scrittura o review; rendere la review ripetibile e poi decidere tu.
+
+\paragraph{Trappole} Usarlo come chat generica (salta tutto ciò che lo rende utile);
+partire con una skill di scrittura su un task enorme e ambiguo; validare solo alla fine
+(gli errori a monte si sono amplificati); credere che un check verde o un lungo giro di
+fix provi la correttezza; usarlo per brainstorming aperto; un workflow strutturato per una
+modifica che un edit diretto avrebbe coperto; chiedere un esito senza nominare il documento
+da cui discende; portarsi dietro contesto vecchio in un task non correlato.
+
+\paragraph{Più repository} Non clonare il setup completo in ogni servizio: un repository
+di orchestrazione e gli altri collegati come workspace.
+\begin{verbatim}
+cfs workspace-init
+cfs workspace-add --name docs     --path ../docs-repo     --role artifacts
+cfs workspace-add --name services --path ../services-repo --role codebase
+cfs workspace-info
+\end{verbatim}
+Un solo posto per setup, regole e kit condivisi e tracciabilità che attraversa i repo.
+
+\paragraph{Primi trenta minuti} Install, \texttt{cfs init}, \texttt{cfs generate-agents};
+\texttt{cf}, poi \texttt{cf-help}; \emph{un} piccolo input reale (un requisito, una nota di
+design, una modifica mirata) con \texttt{cf-explain:}, una review con \texttt{cf-coding:}
+o \texttt{cf-plan:}. Non una review dell'intero repository né una implementazione ampia.
+Successo = attivazione confermata, un risultato utile, un prossimo passo più chiaro.
+
+\subsubsection{Usare Constructor Fabric con LLM gratuiti (CF02)}
+
+Constructor Fabric non ha chiave API, endpoint o modello: è uno strato di orchestrazione
+che si attiva dentro un tool già in esecuzione. \emph{Il tool host porta il modello,
+Constructor Fabric porta il processo.} Gli host documentati sono cinque.
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+ & \textbf{Claude} & \textbf{Cursor} & \textbf{Copilot} & \textbf{Codex} & \textbf{Windsurf}\\
+\hline
+Integrazione skill & sì & sì & sì & sì & sì\\
+Sub-agent dell'host & sì & sì & sì & sì & no\\
+Review read-only & forte & forte & parziale & più debole & nessuna\\
+Worktree isolation & sì & no & no & no & no\\
+Scelta del modello & sì & sì & no & parziale & N/A\\
+Host multi-modello & no & sì & sì & no & sì\\
+\hline
+\end{tabular}
+\end{center}
+Un sub-agent mancante è un limite dell'host, non di Constructor Fabric. La domanda giusta
+non è ``come ottengo un LLM gratis'' ma ``come ottengo accesso gratuito a uno di quei
+cinque tool e quale modello c'è dietro'': un abbonamento chat gratuito \emph{non} è accesso
+API gratuito, e un programma studenti gratuito non sempre è un modello gratuito.
+
+Quattro modi per non pagare: (1) un provider frontier con tier API gratuito stabile;
+(2) un modello open-weight sul proprio computer; (3) un servizio cloud gratuito che ospita
+modelli open-weight; (4) un programma studenti che regala un tool host.
+
+\paragraph{API frontier}
+\begin{center}
+\begin{tabular}{|l|c|p{9cm}|}
+\hline
+\textbf{Provider} & \textbf{API gratis?} & \textbf{Cosa si ottiene}\\
+\hline
+Google (Gemini) & sì & modelli Flash a \$0, circa 10--15 richieste/min e 1000--1500/giorno; i prompt \emph{possono addestrare} i modelli (si paga in dati)\\
+Mistral & sì & tier \emph{Experiment}, tutti i modelli incl.\ Codestral, con rate limit; provider europeo, meno integrato negli host\\
+Anthropic & no & solo chat gratuita (con limiti); API a pagamento, i crediti di prova scadono\\
+OpenAI & no & solo chat gratuita; API pay-as-you-go, Codex segue i piani a pagamento\\
+\hline
+\end{tabular}
+\end{center}
+Il tier Gemini va bene per esplorazione, generazione di singoli documenti e review, non per
+un agente che fa decine di tool call al minuto per un'ora. Con dati sotto NDA, tesi sotto
+embargo o codice aziendale non va usato.
+
+\paragraph{Open-weight in locale} Un modello \emph{open-weight} ha parametri scaricabili:
+niente chiave, quota o contatore di richieste; il costo si sposta dalla bolletta alla
+memoria e alla batteria.
+\begin{itemize}
+  \item \textbf{Qwen3-Coder}: la linea open-weight oggi più forte per coding agentico in
+        locale (addestrata per tool use e editing multi-step); più taglie.
+  \item \textbf{Gemma} (Google, pensata per il dispositivo, debole sulle catene agentiche
+        lunghe) e i \textbf{DeepSeek distillati}: seconde scelte ragionevoli.
+  \item \textbf{Ollama}: il runner più semplice. Espone un endpoint compatibile OpenAI su
+        \texttt{/v1}, quindi qualunque cosa accetti un base URL custom funziona. \textbf{LM
+        Studio} è l'equivalente con interfaccia grafica.
+\end{itemize}
+\begin{verbatim}
+ollama serve                  # server locale su :11434
+ollama pull qwen3-coder:30b   # scarica i pesi, una volta
+ollama run qwen3-coder:30b
+\end{verbatim}
+\textbf{Quanto computer serve}: un modello da 7--8 miliardi di parametri quantizzato usa
+circa 6--8 GB (va su qualunque portatile moderno; ok per spiegare codice, piccole modifiche,
+review di un file; no per decisioni architetturali, decomposizione, implementazione
+multi-file lunga). Uno da 27--32 miliardi richiede circa 20--24 GB ed è la taglia da cui i
+modelli locali diventano usabili per lavoro agentico. Un Mac Apple Silicon con 32 GB ci
+riesce perché ha \textbf{memoria unificata} (la GPU indirizza tutta la RAM, quindi 20+ GB
+per il modello), mentre un portatile Windows tipico ha 16 GB di RAM più 6--8 GB di VRAM
+dedicata e il modello, se non ci sta, finisce sulla CPU e va a rilento.
+
+Si rinuncia a: capacità grezza (un 30B non è un frontier), velocità sui contesti lunghi
+(dove vivono i workflow di Constructor Fabric), batteria e circa 20 GB di disco. Si
+guadagna: nessuna quota, nessuna chiave, nessuna rete, e \emph{il codice non lascia la
+macchina} (può decidere per una tesi su dati privati).
+
+\paragraph{Cloud gratuito (open-weight ospitato)}
+\begin{center}
+\begin{tabular}{|l|p{6.5cm}|p{4cm}|}
+\hline
+\textbf{Servizio} & \textbf{Limite gratuito} & \textbf{Carta?}\\
+\hline
+Cerebras & circa 1M token/giorno, reset giornaliero & no\\
+Groq & modelli open-weight, tetti al minuto e al giorno, generazione molto veloce & no\\
+OpenRouter & 20 req/min e 50 req/giorno sui modelli \texttt{:free}; 1000/giorno dopo un acquisto una tantum di almeno \$10 & no, finché non si vuole il tetto alto\\
+\hline
+\end{tabular}
+\end{center}
+Servono tutti open-weight, quindi la qualità del modello è la stessa questione di prima.
+
+\paragraph{Programmi studenti, per chi studia in Italia}
+\begin{center}
+\begin{tabular}{|l|c|p{8cm}|}
+\hline
+\textbf{Programma} & \textbf{Aiuta?} & \textbf{Perché}\\
+\hline
+GitHub Student Developer Pack & sì & piano studenti di Copilot (crediti AI mensili), host supportato, vale anche in Italia, verifica con la mail universitaria, niente carta\\
+Google AI Plus (studenti) & no & è un abbonamento consumer, \emph{esclude} l'accesso API\\
+Gemini API free tier & sì & non è un programma studenti, è semplicemente gratis\\
+Codex for Students / Student Collective (OpenAI) & no & l'Italia è esclusa\\
+Azure for Students & no & il credito esclude Azure OpenAI Service\\
+AWS Educate & no & il credito esclude Bedrock\\
+\hline
+\end{tabular}
+\end{center}
+
+\paragraph{Tre percorsi}
+\begin{itemize}
+  \item \textbf{A: Copilot con lo Student Pack}, il consigliato per la maggior parte:
+        niente da installare, nessuna chiave. Copilot è host multi-modello (uno più forte
+        per la review, uno più veloce per il lavoro di massa).
+\begin{verbatim}
+cfs init
+cfs generate-agents --agent copilot
+\end{verbatim}
+  \item \textbf{B: Claude Code su un modello proprio}. Claude Code è l'host più forte
+        (sub-agent, worktree isolation, model hint negli agenti generati) ma Anthropic non
+        lo dà gratis. Da Ollama 0.14.0 c'è un endpoint che parla l'API Anthropic Messages:
+\begin{verbatim}
+ollama pull gpt-oss:20b
+export ANTHROPIC_AUTH_TOKEN=ollama      # segnaposto, Ollama non lo controlla
+export ANTHROPIC_BASE_URL=http://localhost:11434
+claude --model gpt-oss:20b
+cfs init && cfs generate-agents --agent claude
+\end{verbatim}
+        Verifica con \texttt{ollama list} e \texttt{echo \$ANTHROPIC\_BASE\_URL}; se
+        \texttt{claude} chiede ancora il login le variabili non sono arrivate alla shell
+        che lo ha lanciato. Richieste piccole: un modello locale ha meno pazienza.
+  \item \textbf{C: chiave Gemini o Mistral}, dove l'host permette di scegliere il
+        provider e per script ai margini del lavoro; non tutti e cinque gli host accettano
+        una chiave arbitraria, e un agente brucia richieste molto più in fretta di un
+        umano in chat.
+\end{itemize}
+
+\paragraph{Quale scegliere} Qualunque portatile, funzionante in dieci minuti: A. Mac da
+32 GB o più, nessun limite: B. Codice privato che non si può mandare in giro: B (non è
+un caso dubbio). Qualità frontier con poco budget: tier Gemini, nei suoi limiti. Provare
+molti modelli: OpenRouter, valutando i \$10 una tantum.
+
+\paragraph{Esempio reale: overwork\_alert} Il repository di Constructor Fabric include un
+piccolo esempio costruito esattamente con questa pipeline: un tool macOS in background che
+traccia il tempo di lavoro \emph{attivo} (se l'idle supera una soglia l'orologio si ferma)
+e avvisa quando si supera un limite. Locale, un solo utente, niente rete, niente menubar.
+Contiene \texttt{PRD.md}, \texttt{DESIGN.md}, \texttt{DECOMPOSITION.md}, un ADR (CLI
+daemon + LaunchAgent, scartando menubar app e job launchd periodico), quattro FEATURE
+spec e nove moduli Python: ``quattro documenti, quattro spec, nove moduli''.
+
+Il requisito \texttt{FR-002} (limite e soglia configurabili) ha default 3 ore, 5 minuti di
+idle, 30 minuti tra i promemoria, e nel codice compaiono come
+\texttt{limit\_seconds=10800}, \texttt{idle\_threshold\_seconds=300},
+\texttt{repeat\_interval\_seconds=1800}. I criteri di accettazione contengono tutti un
+numero (primo alert entro 5 s dal superamento, pausa entro 10 s all'idle, stato via CLI in
+meno di 5 s, setup in 10 minuti). Il DESIGN ha tre layer: CLI/Control (argparse, IPC
+locale), Tracking Core (loop del daemon), OS Integration (\texttt{ioreg}, \texttt{osascript},
+\texttt{launchd}). La FEATURE spec scrive l'algoritmo come passi numerati
+(\texttt{IF ... RETURN do\_not\_notify}) ciascuno con un ID \texttt{inst-...}, e il codice
+ha un \texttt{@cpt-begin/@cpt-end} per ogni passo.
+
+\textbf{Seguire un identificatore}: \texttt{cpt-ex-ovwa-fr-notify-on-limit} compare nel PRD
+(FR-003), nel DESIGN come driver con soluzione, nella DECOMPOSITION assegnato alla feature
+\texttt{notifications}, nella FEATURE spec raffinato in algoritmo e stato, e in
+\texttt{notification\_policy.py} come commenti attorno alle righe esatte. Cinque file, una
+stringa, nessuna riunione. È un esempio volutamente piccolo: mostra l'aspetto degli
+artefatti, non dimostra che l'approccio scali a un sistema grande.
+
+\paragraph{Avvertenza} I numeri (tier gratuiti, rate limit, idoneità studenti) sono stati
+verificati ad agosto 2026 e cambiano ogni pochi mesi: la struttura del ragionamento dura
+più dei numeri, quindi prima di fidarsi di un limite va aperta la fonte.
+
+\section{Python}
+\subsection{Python per l'ingegneria del software (L05)}
+
+\subsubsection{Perché Python}
+Lezione del corso di Succi che riprende i concetti di architettura e design visti in
+precedenza e li rilegge \emph{guardando il codice}. Il fuoco è sull'ingegneria del software:
+capire perché e come si è arrivati a una certa soluzione, non i trucchi. Python è diventato
+uno standard, quindi lo si usa anche se il docente preferirebbe altri linguaggi (C++, C,
+Java, Haskell, Smalltalk). Nel contesto del corso: L04 ripassa Java e il pattern strategy,
+L05 è Python, L06 tratta i sistemi AI in Python.
+
+\paragraph{Origini e principi} Ideato da Guido van Rossum al CWI negli anni Ottanta, con prima
+implementazione all'inizio degli anni Novanta (l'ultima stabile citata nelle slide è la 3.11.5,
+del 5 ottobre 2022). Caratteristiche: \textbf{multiparadigma} (scripting, imperativo,
+a oggetti, funzionale); \textbf{tipizzazione dinamica}; \textbf{garbage collection};
+filosofia «batteries included» (libreria standard ricca); esecuzione tramite macchina
+virtuale, quindi «in un certo senso» interpretato.
+
+\paragraph{Zen of Python} (Tim Peters, visibile con \texttt{import this}). Principi da
+ricordare:
+\begin{itemize}[nosep]
+  \item «Explicit is better than implicit», «Simple is better than complex», «Flat is
+        better than nested», «Readability counts»;
+  \item «Errors should never pass silently. Unless explicitly silenced.»;
+  \item «In the face of ambiguity, refuse the temptation to guess»;
+  \item «If the implementation is hard to explain, it's a bad idea»;
+  \item «Namespaces are one honking great idea».
+\end{itemize}
+
+\subsubsection{Scripting: interprete e sintassi di base}
+Si parte dall'interprete interattivo (REPL) con variabili, \texttt{if}, blocchi delimitati
+dall'indentazione, \texttt{while}, \texttt{for}, collezioni e iterazioni.
+\begin{itemize}[nosep]
+  \item \textbf{Indentazione obbligatoria}: un \texttt{if} senza blocco indentato dà
+        \texttt{IndentationError: expected an indented block}.
+  \item \textbf{Tipizzazione dinamica ma forte}: \texttt{x = "a"} seguito da \texttt{x = 1}
+        va bene, mentre \texttt{1 + "a string"} dà \texttt{TypeError}.
+  \item \textbf{Matematica}: \texttt{/} dà un float (\texttt{7/3} = 2.333\dots), \texttt{//}
+        la divisione intera (2), \texttt{\%} il resto (1), \texttt{**} la potenza (343).
+        Nel REPL \texttt{\_} è l'ultimo risultato.
+\end{itemize}
+
+\subsubsection{Stringhe}
+Apici singoli e doppi sono equivalenti; le triple servono per stringhe su più righe.
+\texttt{+} concatena, \texttt{*} ripete (\texttt{2*'ab'} = \texttt{'abab'}). Le stringhe
+sono \emph{immutabili}: \texttt{e[0] = 'T'} dà \texttt{TypeError}, si costruisce una nuova
+stringa.
+
+\paragraph{Indicizzazione e slicing} \texttt{s[start:stop:step]}: \texttt{start} incluso,
+\texttt{stop} escluso, indici negativi contati da destra. Con \texttt{e = 'My Example of Python'}:
+\texttt{e[3:5]} è \texttt{'Ex'}, \texttt{e[-4:-1]} è \texttt{'tho'}, \texttt{e[11:]} è
+\texttt{'of Python'}, \texttt{e[::-1]} inverte la stringa. \texttt{len(s)} dà la lunghezza.
+
+\subsubsection{Interpolazione di stringhe}
+Tre modi per inserire valori in una stringa:
+\begin{itemize}[nosep]
+  \item \texttt{\%} (\texttt{"Hello, \%s!" \% name}): storico, sintassi fragile (una tupla
+        va incapsulata in un'altra tupla), da evitare nel codice nuovo;
+  \item \texttt{str.format()}: placeholder \texttt{\{\}}, posizionali o con nome, e il
+        mini-linguaggio di formato (\texttt{\{:.2f\}}, \texttt{\{:>5\}}, \texttt{\{:<10\}});
+  \item \textbf{f-string} (Python 3.6, PEP 498): \texttt{f"Hello, \{name\}!"}, accetta
+        espressioni complete. Sono quelle preferite oggi.
+\end{itemize}
+\begin{verbatim}
+name = "Jane"
+balance = 5425.9292
+print(f"Hello, {name}! Balance: ${balance:.2f}")   # Hello, Jane! Balance: $5425.93
+print(f"Uppercased: {name.upper()}")                # Uppercased: JANE
+print(f"{[2**n for n in range(3, 9)]}")            # [8, 16, 32, 64, 128, 256]
+\end{verbatim}
+
+\subsubsection{Collezioni}
+Python non ha array. Le collezioni base sono quattro:
+\begin{center}
+\begin{tabular}{|l|l|c|c|c|}
+\hline
+Tipo & Sintassi & Ordinata & Mutabile & Duplicati \\
+\hline
+\texttt{list} & \texttt{[1, 2, 3]} & sì & sì & sì \\
+\texttt{tuple} & \texttt{(1, 2, 3)} & sì & no & sì \\
+\texttt{set} & \texttt{\{1, 2, 3\}} & no & sì & no \\
+\texttt{dict} & \texttt{\{"k": 1\}} & sì (ordine di inserimento) & sì & chiavi no \\
+\hline
+\end{tabular}
+\end{center}
+
+\paragraph{Liste} Indicizzazione e slicing come per le stringhe, ma mutabili:
+\texttt{odd[2] = 20}, \texttt{append}, assegnazione di uno slice anche di lunghezza
+diversa (\texttt{odd[3:5] = [100, 200, 300]}), \texttt{odd[:] = []} svuota. Liste annidate
+ed eterogenee sono ammesse; \texttt{in} verifica l'appartenenza. Per rimuovere:
+\texttt{pop(i)} restituisce e toglie l'elemento in posizione \texttt{i}, \texttt{remove(v)}
+toglie la prima occorrenza di \texttt{v}, \texttt{del lista[i]} cancella, \texttt{clear()}
+svuota.
+
+\paragraph{Copie} La trappola dei riferimenti: \texttt{y = x} non copia nulla, è un
+alias. Due livelli di copia:
+\begin{itemize}[nosep]
+  \item \textbf{superficiale} (\texttt{x.copy()}): copia solo il primo livello; le liste
+        annidate restano condivise. Con \texttt{j = [z, k]} e \texttt{i = j.copy()}, un
+        cambiamento di \texttt{k} si vede anche in \texttt{i};
+  \item \textbf{profonda} (\texttt{copy.deepcopy(j)}): copia ricorsivamente tutto; le
+        modifiche successive all'originale non toccano la copia.
+\end{itemize}
+
+\paragraph{Tuple} Immutabili: \texttt{t[1] = ...} dà \texttt{TypeError}, non c'è
+\texttt{append}. Ma l'immutabilità riguarda la tupla, non gli elementi: in \texttt{b = ([3, 4, 5], 6)}
+la lista interna si modifica (\texttt{a[0] = 1} cambia anche \texttt{b}). Concatenare
+(\texttt{t = t + (1, 2)}) crea una nuova tupla; \texttt{(3)} non è una tupla, serve
+\texttt{(3,)}; \texttt{tuple(lista)} converte.
+
+\paragraph{Set} Collezioni senza duplicati i cui elementi devono essere \emph{hashable}:
+liste, set e dizionari non ci possono entrare (\texttt{TypeError: unhashable type}), tuple
+sì. Attenzione: \texttt{\{1, True, "green"\}} ha due elementi, perché \texttt{True == 1}.
+Operatori: \texttt{|} unione, \texttt{\&} intersezione, \texttt{in} appartenenza. Il
+\texttt{+} non esiste fra set.
+
+\paragraph{Dizionari} Coppie chiave:valore, chiavi uniche, indicizzate per chiave.
+\texttt{keys()}, \texttt{values()}, \texttt{update(\{...\})}, \texttt{pop('chiave')},
+\texttt{popitem()} (rimuove l'ultima coppia inserita), \texttt{del d['chiave']}.
+
+\paragraph{range} \texttt{range(n)}, \texttt{range(start, stop, step)}: genera una sequenza
+di interi (\texttt{list(range(2, 20, 3))} = \texttt{[2, 5, 8, 11, 14, 17]}). È un oggetto
+range, non una lista; accetta solo interi (\texttt{range(4.3)} dà \texttt{TypeError}).
+
+\subsubsection{Controllo di flusso e iteratori}
+\texttt{if}/\texttt{elif}/\texttt{else} sono basati sull'indentazione. \texttt{while} e
+\texttt{for} possono avere una clausola \texttt{else}, eseguita solo se il ciclo termina
+senza \texttt{break}. Tre istruzioni per il flusso nei cicli:
+\begin{itemize}[nosep]
+  \item \texttt{break}: esce dal ciclo (il suo \texttt{else} non viene eseguito);
+  \item \texttt{continue}: salta alla prossima iterazione;
+  \item \texttt{pass}: non fa nulla, serve come segnaposto (non esiste in C e Java).
+\end{itemize}
+
+\paragraph{Iterabili e iteratori} Un \emph{iterabile} ha \texttt{\_\_iter\_\_()} che
+restituisce un iteratore. Un \emph{iteratore} ha \texttt{\_\_next\_\_()}, che restituisce un
+elemento alla volta aggiornando il proprio stato e solleva \texttt{StopIteration} quando
+finisce. Il \texttt{for} chiama implicitamente \texttt{next()} e intercetta la
+\texttt{StopIteration}.
+\begin{verbatim}
+s = "iter"
+it = iter(s)     # equivale a s.__iter__()
+next(it)         # 'i'
+next(it)         # 't'
+\end{verbatim}
+
+\subsubsection{Argomenti da riga di comando}
+Come in Java, \texttt{sys.argv} contiene gli argomenti, con \texttt{sys.argv[0]} il nome
+dello script. Per il parsing si usa \texttt{getopt.getopt(sys.argv[1:], "nh:o:")}: la
+\texttt{n} è un'opzione senza argomento, \texttt{h:} e \texttt{o:} richiedono un argomento.
+La funzione restituisce la coppia (opzioni, argomenti residui).
+
+\subsubsection{Funzioni}
+\paragraph{Parametri e ritorno} Parametri con valori di default e chiamata posizionale o
+con nome: \texttt{def f(a, b=3, c=0.5)} si può chiamare come \texttt{f(1)}, \texttt{f(1, 6)},
+\texttt{f(1, c=-1)}. Se si restituiscono più valori, viene restituita una tupla.
+
+\paragraph{Passaggio dei parametri} Per valore, dove il valore è un riferimento (come in
+Java): gli oggetti mutabili si modificano dall'interno, quelli immutabili no. Le funzioni
+sono oggetti di prima classe: si passano come parametro e si restituiscono.
+\begin{verbatim}
+def apply(f, a):
+    return f(a)
+apply(lambda x: x + 1, 3)    # 4
+apply(lambda x: x ** 2, 4)   # 16
+\end{verbatim}
+
+\paragraph{Entry point} Ogni modulo ha la variabile \texttt{\_\_name\_\_}: vale
+\texttt{"\_\_main\_\_"} se il modulo è quello lanciato direttamente, altrimenti il nome del
+file senza \texttt{.py}. Convenzione: una funzione \texttt{main()} richiamata così:
+\begin{verbatim}
+if __name__ == "__main__":
+    main()
+\end{verbatim}
+
+\paragraph{Funzioni annidate} Possibili come in Pascal: la funzione interna vede le
+variabili di quella esterna.
+
+\paragraph{Scope LEGB} Ordine di ricerca di un nome: \textbf{L}ocal, \textbf{E}nclosing,
+\textbf{G}lobal, \textbf{B}uiltin. Senza dichiarazioni, assegnare una variabile già usata in
+uno scope esterno la rende locale e la nasconde: se la si legge prima dell'assegnazione
+si ottiene \texttt{UnboundLocalError}. \texttt{global x} dichiara la variabile globale da
+modificare; \texttt{nonlocal y} collega la variabile allo scope esterno (non globale).
+Dichiarare \texttt{global z} dopo averla già assegnata nello stesso scope dà
+\texttt{SyntaxError}.
+
+\paragraph{Default mutabili} I valori di default sono valutati una sola volta, alla
+definizione della funzione, non a ogni chiamata. Con un default mutabile lo stato
+persiste tra le chiamate:
+\begin{verbatim}
+def f(a=[50]):
+    a[0] += 1
+    return a
+f()    # [51]
+f()    # [52]: stesso oggetto di prima
+\end{verbatim}
+Regola pratica: per default mutabili si usa \texttt{None} e si crea l'oggetto nel corpo.
+
+\paragraph{Overloading} Non esiste come in Java o C++: se si definisce più volte la stessa
+funzione, vale solo l'ultima. Alternative: parametri di default (anche \texttt{None}),
+il decoratore \texttt{@dispatch} della libreria \texttt{multipledispatch}, oppure le
+classi (vedi oltre).
+
+\subsubsection{Moduli, pacchetti e import}
+Ogni file \texttt{.py} è un modulo, il cui nome è il nome del file; il modulo è anch'esso
+un oggetto. Il runtime cerca i moduli nelle directory di \texttt{sys.path}, che include
+la variabile d'ambiente \texttt{PYTHONPATH}.
+\begin{itemize}[nosep]
+  \item \texttt{import amodulo}: si usa come \texttt{amodulo.goofy()};
+  \item \texttt{from amodulo import goofy}: si usa come \texttt{goofy()};
+  \item \texttt{from amodulo import *}: importa tutto, ma è da evitare (i nomi che iniziano
+        con \texttt{\_} restano esclusi);
+  \item \texttt{import amodulo as unmodulo}, \texttt{from amodulo import goofy as pippo}:
+        rinomina.
+\end{itemize}
+
+\paragraph{Pacchetti} Un pacchetto è una directory con un file \texttt{\_\_init\_\_.py}
+(anche vuoto), eseguito all'import come «costruttore» del pacchetto. I sotto-pacchetti si
+separano con il punto. Gli import relativi usano \texttt{.} (directory corrente) e
+\texttt{..} (padre), per esempio \texttt{from .animal import Animal}.
+
+\paragraph{Namespace} L'insieme dei nomi visibili: \texttt{dir()} per il namespace corrente,
+\texttt{dir(modulo)} per quello di un modulo.
+
+\paragraph{Esecuzione con \texttt{-m}} Un programma può essere lanciato come file
+(\texttt{python dog.py}), come stringa (\texttt{python -c "print(1+1)"}) o come modulo
+(\texttt{python -m zoo.dog}). Con \texttt{-m} si dà un nome di modulo con i punti, non un
+percorso. Passi eseguiti: la directory corrente viene messa in testa a \texttt{sys.path};
+il modulo viene cercato con il normale meccanismo di import; vengono importati i pacchetti
+padre (quindi si eseguono i loro \texttt{\_\_init\_\_.py}); il modulo viene eseguito con
+\texttt{\_\_name\_\_ == "\_\_main\_\_"}, mantenendo il vero nome in \texttt{\_\_spec\_\_.name}.
+
+Esempio con un pacchetto \texttt{zoo/} contenente \texttt{\_\_init\_\_.py}, \texttt{animal.py}
+(\texttt{class Animal}), \texttt{dog.py} (\texttt{from .animal import Animal}, \texttt{class Dog(Animal)})
+e \texttt{\_\_main\_\_.py}:
+\begin{verbatim}
+$ python zoo/dog.py
+ImportError: attempted relative import with no known parent package   # fallisce
+$ python -m zoo.dog                                                   # funziona
+$ python -m zoo                                                       # esegue zoo/__main__.py
+\end{verbatim}
+Quando si lancia il file, la directory del file finisce in \texttt{sys.path[0]}: dentro il
+pacchetto \texttt{import animal} funziona e \texttt{import zoo.animal} no, cioè il contrario
+di quanto il resto del codice presuppone. Con \texttt{-m} il pacchetto è visto dall'esterno,
+come da ogni altro modulo; va però lanciato dalla radice del progetto (o con il pacchetto nel
+\texttt{PYTHONPATH}), altrimenti \texttt{No module named 'zoo'}.
+
+\paragraph{Differenza tra \texttt{\_\_init\_\_.py} e \texttt{\_\_main\_\_.py}}
+\texttt{\_\_init\_\_.py} viene eseguito a ogni import (è il costruttore del pacchetto);
+\texttt{\_\_main\_\_.py} è il punto di ingresso, eseguito solo con \texttt{python -m pacchetto}.
+È così che molti tool offrono una CLI restando pacchetti importabili.
+
+\paragraph{Moduli di libreria lanciati con \texttt{-m}} \texttt{python -m venv .venv} (crea un
+ambiente virtuale), \texttt{python -m pip install ...}, \texttt{python -m pytest},
+\texttt{python -m unittest discover}, \texttt{python -m pdb file.py} (debugger),
+\texttt{python -m timeit "..."} (micro-benchmark), \texttt{python -m json.tool},
+\texttt{python -m http.server 8000}, \texttt{python -m compileall} (produce i \texttt{.pyc}).
+Si usa \texttt{python -m pip} invece di \texttt{pip}: \texttt{pip} è il primo eseguibile nel
+PATH, che può appartenere a un altro interprete; \texttt{python -m pip} installa nel
+pacchetto dell'interprete che poi importerà.
+
+\subsubsection{Programmazione funzionale}
+Lambda, immutabilità e variabili globali non modificabili nelle funzioni sono già stati
+visti. Python offre comunque strumenti funzionali.
+
+\paragraph{map, filter, reduce} \texttt{map(f, seq)} applica \texttt{f} a ogni elemento e
+restituisce un iteratore; \texttt{filter(p, seq)} tiene gli elementi per cui il predicato è
+vero; \texttt{reduce(f, seq)} (da \texttt{functools}) riduce la sequenza a un valore. Sono
+il pattern map-reduce dei big data: \texttt{map} e \texttt{filter} sono parallelizzabili.
+\begin{verbatim}
+from functools import reduce
+list(map(lambda x: x + 1, [1, 2, 3]))                      # [2, 3, 4]
+list(filter(lambda x: x > 10, [8, 9, 10, 3, 11, 2, 100]))  # [11, 100]
+reduce(lambda x, y: x + y, [1, 2, 3, 4, 5])                # 15
+\end{verbatim}
+
+\paragraph{Valutazione} I parametri sono valutati in modo eager. Esiste un'approssimazione
+della valutazione pigra con i \emph{generatori}: una funzione con \texttt{yield} invece di
+\texttt{return} produce un elemento alla volta, su richiesta. Un generatore si consuma una
+volta sola: dopo l'espansione in tupla è vuoto.
+\begin{verbatim}
+def generateIntegers(N):
+    for i in range(N):
+        yield i
+x = generateIntegers(10)   # ancora nessun calcolo
+next(x)                    # 0
+next(x)                    # 1
+\end{verbatim}
+
+\paragraph{Comprehension} Liste, insiemi e dizionari si generano in forma compatta.
+\begin{verbatim}
+[x*x for x in range(5, 12) if x % 2 == 0]           # [36, 64, 100]
+[x*x if x % 2 == 0 else -x*x for x in range(5, 12)] # [-25, 36, -49, 64, -81, 100, -121]
+[(i, j) for i in range(3) for j in range(3)]         # prodotto cartesiano
+[(i, j) for (i, j) in zip(range(3), range(3))]       # zip: coppie
+{i: j[::-1] for (i, j) in zip(range(1, 4), ["one", "two", "three"])}
+\end{verbatim}
+Il dizionario richiede la coppia con \texttt{:}. \texttt{zip} restituisce un iteratore di
+tuple.
+
+\subsubsection{Programmazione a oggetti: classi}
+Python è orientato agli oggetti «fino a un certo punto». Una classe si definisce con
+\texttt{class}; il riferimento all'oggetto è \texttt{self}, esplicito come primo parametro
+dei metodi di istanza (che però non si passa nella chiamata). L'inizializzatore è
+\texttt{\_\_init\_\_}, dove di norma si definiscono gli attributi di istanza.
+\begin{verbatim}
+class Animal:
+    numberOfAnimals = 0                 # attributo di classe
+    def __init__(self, name):
+        Animal.numberOfAnimals += 1
+        self.name = name                # attributo di istanza
+    def setName(self, name):
+        self.name = name
+    @classmethod
+    def getNumberOfAnimals(cls):        # riceve la classe
+        return cls.numberOfAnimals
+    @staticmethod
+    def increment(i):                   # nessun riferimento alla classe
+        return i + 1
+\end{verbatim}
+\texttt{@staticmethod} esiste soprattutto per ragioni di nomi (raggruppa una funzione sotto
+la classe).
+
+\paragraph{Visibilità} Attributi e metodi che iniziano con un solo \texttt{\_} sono
+\emph{protetti} per convenzione; quelli con \texttt{\_\_} sono \emph{privati} tramite
+\textbf{name mangling}: \texttt{\_\_privateChangeName} diventa \texttt{\_Animal\_\_privateChangeName}.
+Restano comunque accessibili dall'esterno con il nome modificato, quindi la privatezza è
+soprattutto un segnale.
+
+\paragraph{Ereditarietà} Singola e multipla. \texttt{class Dog(Animal)} con
+\texttt{super().\_\_init\_\_(name)} per chiamare la base. Attenzione: creare una sottoclasse
+\emph{non} chiama l'\texttt{\_\_init\_\_} della base; se la sottoclasse non ha
+\texttt{\_\_init\_\_}, Python risale la gerarchia e usa il più vicino (il metodo è virtuale).
+Con \texttt{Penguin} che non chiama \texttt{super()} e \texttt{Parrot} che lo chiama,
+\texttt{Dove} senza \texttt{\_\_init\_\_}, la creazione di un pinguino stampa solo
+«Creating a penguin», mentre \texttt{Parrot()} stampa prima «Creating an animal» e poi
+«Creating a parrot».
+
+\paragraph{Polimorfismo e late binding} Il metodo eseguito dipende dal tipo effettivo
+dell'oggetto, non da quello dichiarato: \texttt{identifyYourself} di \texttt{Dog} sovrascrive
+quello di \texttt{Animal}.
+
+\paragraph{Metodi magici} Sono i metodi «con doppio underscore» che implementano operatori e
+protocolli:
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Metodo & Uso \\
+\hline
+\texttt{\_\_add\_\_(self, o)} & \texttt{a + b} \\
+\texttt{\_\_getitem\_\_(self, i)} & lettura \texttt{x[i]} \\
+\texttt{\_\_setitem\_\_(self, i, v)} & scrittura \texttt{x[i] = v} \\
+\texttt{\_\_contains\_\_(self, x)} & \texttt{x in obj} \\
+\texttt{\_\_iter\_\_(self)} & \texttt{for} e \texttt{iter(obj)} \\
+\texttt{\_\_repr\_\_(self)} & rappresentazione testuale (stampa, debug) \\
+\texttt{\_\_enter\_\_}, \texttt{\_\_exit\_\_} & blocchi \texttt{with} \\
+\texttt{\_\_call\_\_(self, ...)} & oggetti chiamabili: \texttt{obj(...)} \\
+\texttt{\_\_new\_\_}, \texttt{\_\_init\_\_} & creazione (allocazione e inizializzazione) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Modello degli oggetti: \texttt{type}, \texttt{base} e \texttt{class}}
+In Python un oggetto ha \emph{identità}, \emph{stato} (i suoi attributi) e un \emph{tipo}.
+Anche le classi sono oggetti, quindi hanno a loro volta un tipo e una base. Le due relazioni
+da non confondere:
+\begin{itemize}[nosep]
+  \item \texttt{X.\_\_base\_\_} (con \texttt{\_\_bases\_\_} e \texttt{\_\_mro\_\_}): «da chi
+        eredita \texttt{X}?» (ereditarietà, freccia blu);
+  \item \texttt{x.\_\_class\_\_} (uguale a \texttt{type(x)}): «chi ha creato \texttt{x}?»
+        (istanziazione, freccia rossa tratteggiata).
+\end{itemize}
+Solo le classi hanno \texttt{\_\_base\_\_}; ogni oggetto ha \texttt{\_\_class\_\_}. Con
+\texttt{class Animal} e \texttt{class Dog(Animal)}:
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+Oggetto & \texttt{\_\_class\_\_} & \texttt{\_\_base\_\_} \\
+\hline
+\texttt{dog} & \texttt{Dog} & (non esiste) \\
+\texttt{Dog} & \texttt{type} & \texttt{Animal} \\
+\texttt{Animal} & \texttt{type} & \texttt{object} \\
+\texttt{object} & \texttt{type} & \texttt{None} \\
+\texttt{type} & \texttt{type} & \texttt{object} \\
+\hline
+\end{tabular}
+\end{center}
+\texttt{object} e \texttt{type} chiudono il cerchio: \texttt{type} è sottoclasse di
+\texttt{object}, ed \texttt{object} è istanza di \texttt{type}. Questo è un problema
+«uovo e gallina» risolto in C dall'interprete, con ogni oggetto che punta al proprio tipo.
+
+\paragraph{\texttt{class} è zucchero per \texttt{type}} La definizione
+\texttt{class Dog(Animal): ...} equivale a \texttt{Dog = type("Dog", (Animal,), \{...\})}.
+Si possono quindi creare classi a runtime:
+\begin{verbatim}
+Cat = type("Cat", (Animal,), {"nickname": "Prr", "weight": 10})
+c = Cat("Garfield")
+c.nickname        # 'Prr'
+\end{verbatim}
+
+\paragraph{Metaclassi} Una metaclasse è una classe le cui istanze sono classi. Si cambia il
+creatore delle classi senza toccare l'ereditarietà:
+\begin{verbatim}
+class Meta(type):
+    pass
+class Bird(Animal, metaclass=Meta):
+    pass
+# Bird.__class__ è Meta, Bird.__base__ resta Animal
+\end{verbatim}
+Esempio concreto: Pydantic. Per \texttt{class User(BaseModel)} si ha
+\texttt{User.\_\_base\_\_ = BaseModel} (ereditarietà ordinaria) e
+\texttt{User.\_\_class\_\_ = ModelMetaclass}, che legge le annotazioni dei campi e costruisce
+i validatori al momento della creazione della classe.
+
+\paragraph{Creazione di un'istanza} \texttt{Dog()} invoca \texttt{type.\_\_call\_\_}, che
+orchestra il processo (è un template method): alloca con \texttt{\_\_new\_\_}, poi inizializza
+con \texttt{\_\_init\_\_}.
+\begin{verbatim}
+class type:
+    def __call__(cls, *args, **kw):
+        instance = cls.__new__(cls, *args, **kw)
+        if isinstance(instance, cls):
+            instance.__init__(*args, **kw)
+        return instance
+\end{verbatim}
+
+\paragraph{Singleton in Python} Due modi. Con \texttt{\_\_new\_\_}, si restituisce sempre la
+stessa istanza, ma \texttt{\_\_init\_\_} viene richiamato comunque: serve un flag per
+inizializzare una sola volta. Con una metaclasse, si ridefinisce \texttt{\_\_call\_\_} e il
+problema non si pone:
+\begin{verbatim}
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(type(cls), cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Database():
+    def __init__(self, url):
+        self.url = url
+
+class DatabaseSingleton(Database, metaclass=Singleton):
+    pass
+\end{verbatim}
+
+\subsubsection{Type hint e generici}
+Python è dinamico: variabili, parametri e valori di ritorno possono cambiare tipo a runtime.
+Gli \emph{type hint} aggiungono tipi opzionali per intercettare errori prima. L'interprete
+\emph{li ignora}: \texttt{say\_hi(123)} viene eseguito senza errori. Per verificarli si usa un
+type checker statico, il più diffuso è \textbf{mypy}, che segnala ad esempio
+\texttt{Argument 1 to "say\_hi" has incompatible type "int"; expected "str"}.
+\begin{verbatim}
+def say_hi(name: str) -> str:
+    return f'Hi {name}'
+
+name: str = 'Hello'         # di solito superfluo: il checker inferisce il tipo
+from typing import Union, List, Dict, Set
+def add(x: Union[int, float], y: Union[int, float]) -> Union[int, float]:
+    return x + y           # da Python 3.10: int | float
+nums: List[int] = [1, 2, 3]
+ages: Dict[str, int] = {"Alice": 25}
+tags: Set[str] = {"python", "typing"}
+def log(message: str) -> None:
+    print(message)
+\end{verbatim}
+Gli alias dei tipi (\texttt{List}, \texttt{Dict}, \texttt{Set}, \texttt{Sequence},
+\texttt{Mapping}, \dots) servono per le collezioni. Da Python 3.9 si possono usare anche
+direttamente \texttt{list[int]} o \texttt{dict[str, int]}.
+
+\paragraph{Generici} Permettono funzioni e classi riusabili su più tipi, con
+\texttt{TypeVar} come segnaposto di tipo. La funzione restituisce lo stesso tipo che riceve:
+\begin{verbatim}
+from typing import TypeVar, Generic
+T = TypeVar('T')
+def reverse(items: list[T]) -> list[T]:
+    return items[::-1]
+
+class Box(Generic[T]):
+    def __init__(self, item: T):
+        self.item = item
+    def get_item(self) -> T:
+        return self.item
+\end{verbatim}
+\texttt{TypeVar('T', int, float)} limita ai tipi elencati (vincolo). \texttt{TypeVar('T',
+bound=Animal)} accetta \texttt{Animal} e le sottoclassi, come un limite superiore.
+
+\subsubsection{Introspezione e riflessione}
+\textbf{Introspezione}: scoprire informazioni su un oggetto a runtime. \textbf{Riflessione}:
+in più, modificarlo a runtime.
+\begin{itemize}[nosep]
+  \item \texttt{type(x)} restituisce il tipo esatto; \texttt{isinstance(x, A)} considera anche
+        le sottoclassi. Per distinguere: \texttt{if type(obj) is B}.
+  \item \texttt{hasattr(obj, 'a')}, \texttt{id(obj)}, \texttt{dir(obj)}, \texttt{vars(obj)},
+        \texttt{callable(obj)}.
+  \item Modifica: si possono aggiungere attributi a classi e oggetti a runtime
+        (\texttt{A.x = 1}, \texttt{a.y = 2}), metodi con \texttt{setattr(A, '\_\_init\_\_', init)}
+        e persino sostituire il codice di una funzione con \texttt{test.\_\_code\_\_ = ...}.
+  \item Creazione dinamica di classi con \texttt{type(nome, basi, dict)}.
+\end{itemize}
+
+\subsubsection{Decoratori}
+Un decoratore è una funzione di ordine superiore che prende una funzione, la avvolge in un
+\texttt{wrapper} e restituisce il wrapper. La sintassi \texttt{@d} sopra \texttt{def f} è
+equivalente a \texttt{f = d(f)}.
+\begin{verbatim}
+def decorator(func):
+    def wrapper(*args, **kwargs):
+        print("Before calling the function.")
+        result = func(*args, **kwargs)
+        print("After calling the function.")
+        return result
+    return wrapper
+
+@decorator
+def greet():
+    print("Hello, World!")
+\end{verbatim}
+Usi tipici: logging, autenticazione, memoizzazione, misura dei tempi. Esistono decoratori di
+funzione, di metodo e di classe (per esempio una classe decorata che riceve un attributo
+\texttt{class\_name}).
+
+\paragraph{Ordine nelle catene} I decoratori si applicano dal più vicino alla funzione verso
+l'alto. Con \texttt{decor1} che eleva al quadrato e \texttt{decor} che raddoppia, e
+\texttt{num2()} che restituisce 10:
+\begin{itemize}[nosep]
+  \item \texttt{@decor} sopra \texttt{@decor1}: prima quadrato, poi doppio: \texttt{200};
+  \item \texttt{@decor1} sopra \texttt{@decor}: prima doppio, poi quadrato: \texttt{400}.
+\end{itemize}
+
+\paragraph{Decoratori built-in} \texttt{@staticmethod}, \texttt{@classmethod} e
+\texttt{@property} sono zucchero sintattico: internamente chiamano le classi
+\texttt{staticmethod}, \texttt{classmethod} e \texttt{property}, implementate con il protocollo
+dei descrittori. \texttt{@staticmethod} non riceve né \texttt{self} né \texttt{cls};
+\texttt{@classmethod} riceve la classe; un metodo senza decoratore richiede un'istanza
+(\texttt{Dog.speak()} dà errore sul parametro \texttt{self}).
+
+\subsubsection{Proprietà (@property)}
+\texttt{@property} trasforma un metodo in un attributo gestito: si legge come \texttt{p.name}
+senza parentesi, ma il codice dietro può validare o calcolare. Si aggiunge un setter con
+\texttt{@name.setter} e un deleter con \texttt{@name.deleter}; senza setter la proprietà è in
+sola lettura.
+\begin{verbatim}
+class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+    @property
+    def radius(self):
+        return self._radius
+    @radius.setter
+    def radius(self, value):
+        if value < 0:
+            raise ValueError("Radius cannot be negative")
+        self._radius = value
+    @property
+    def area(self):                     # calcolata, sola lettura
+        return 3.14159 * self._radius ** 2
+\end{verbatim}
+Vantaggi: incapsulamento senza cambiare l'API pubblica (si può passare da attributo a metodo
+con logica senza rompere il codice chiamante), validazione, valori calcolati, compatibilità.
+
+\subsubsection{Argomenti variabili: *args e **kwargs}
+\texttt{*args} raccoglie gli argomenti posizionali extra in una tupla; \texttt{**kwargs}
+raccoglie quelli con nome in un dizionario. L'ordine è \texttt{def f(a, b, *args, **kwargs)}.
+Sono essenziali nei decoratori, perché il wrapper non conosce la firma della funzione
+avvolta, e un decoratore deve essere «trasparente», cioè non modificare gli argomenti:
+\begin{verbatim}
+def logger(func):
+    def wrapper(*args, **kwargs):
+        print("Calling:", func.__name__)
+        return func(*args, **kwargs)
+    return wrapper
+
+@logger
+def add(x, y):
+    return x + y
+add(5, 7)     # stampa "Calling: add", poi restituisce 12
+\end{verbatim}
+Esempio tipico: un \texttt{timing} che misura \texttt{time.time()} prima e dopo la chiamata.
+
+\subsubsection{Classi astratte (ABC)}
+Il modulo \texttt{abc} definisce un'interfaccia comune alle sottoclassi tramite
+\texttt{@abstractmethod}. Una classe con metodi astratti non si può istanziare (\texttt{TypeError});
+una sottoclasse diventa concreta solo se implementa tutti i metodi astratti. I metodi
+concreti della base sono ereditati normalmente. Le proprietà astratte combinano
+\texttt{@property} e \texttt{@abstractmethod}. Le ABC sono costruite su \texttt{ABCMeta}, una
+metaclasse che controlla i metodi astratti al momento dell'istanziazione.
+\begin{verbatim}
+from abc import ABC, abstractmethod
+class Animal(ABC):
+    @abstractmethod
+    def sound(self):
+        pass
+    def move(self):
+        return "Moving"        # concreto, ereditato
+class Dog(Animal):
+    pass                       # ancora astratta
+class Cat(Animal):
+    def sound(self):
+        return "Meow"          # concreta
+# Animal() e Dog() danno TypeError; Cat().sound() funziona
+\end{verbatim}
+
+\subsubsection{Dataclass}
+Dalla versione 3.7, \texttt{@dataclass} genera per una classe che serve solo a contenere dati
+\texttt{\_\_init\_\_}, \texttt{\_\_repr\_\_} e \texttt{\_\_eq\_\_} (confronto di valore, non di
+identità). I campi sono annotazioni di tipo; quelli con default vanno dopo quelli senza.
+\texttt{frozen=True} le rende immutabili (come le tuple).
+\begin{verbatim}
+from dataclasses import dataclass
+@dataclass
+class Point:
+    x: int
+    y: int
+    label: str = "p"
+p = Point(10, 20)          # Point(x=10, y=20, label='p')
+Point(1, 2) == Point(1, 2) # True
+@dataclass(frozen=True)
+class Color:
+    r: int
+    g: int
+    b: int
+\end{verbatim}
+
+\subsubsection{Inversion of Control e Dependency Injection}
+\textbf{Inversion of Control} (IoC): la creazione e la gestione degli oggetti sono delegate a
+un'entità esterna. \textbf{Dependency Injection} (DI) è la tecnica con cui si forniscono
+all'oggetto le sue dipendenze dall'esterno. Obiettivi: \emph{basso accoppiamento}
+(componenti indipendenti) e \emph{alta coesione} (ogni componente fa un compito solo), quindi
+testabilità e riuso. In Java la DI passa spesso per framework complessi; in Python è più
+semplice, ma utile comunque nelle applicazioni grandi.
+\begin{verbatim}
+# senza DI: il servizio crea la propria dipendenza
+class Service:
+    def __init__(self):
+        self.client = ApiClient()
+
+# con DI: la dipendenza arriva dall'esterno (mock nei test)
+class Service:
+    def __init__(self, client: ApiClient):
+        self.client = client
+\end{verbatim}
+Con molte dipendenze l'assemblaggio manuale diventa verboso e sparso per il codice. Una
+libreria come \texttt{dependency-injector} lo centralizza in un \emph{container}:
+\begin{verbatim}
+from dependency_injector import containers, providers
+class Container(containers.DeclarativeContainer):
+    config = providers.Configuration()
+    client = providers.Singleton(ApiClient, api_key=config.api_key, timeout=config.timeout)
+    service = providers.Factory(Service, client=client)
+
+container = Container()
+container.config.api_key.from_env("API_KEY", required=True)
+container.config.timeout.from_env("TIMEOUT", as_=int, default=5)
+container.wire(modules=[__name__])
+
+@inject
+def main(service: Service = Provide[Container.service]):
+    ...
+
+with container.client.override(MockApiClient()):
+    main()                     # nei test: il mock al posto del client reale
+\end{verbatim}
+I \texttt{providers} sono \texttt{Singleton} (un'istanza condivisa) o \texttt{Factory} (una nuova
+istanza a ogni richiesta). \texttt{override} sostituisce una dipendenza nei test senza toccare il
+codice applicativo, più pulito del monkey-patching.
+
+\subsubsection{Pydantic}
+Pydantic è la libreria più usata per la validazione dei dati in Python (la usano FastAPI,
+LangChain e altri). Un modello è una classe che eredita da \texttt{BaseModel}; i campi sono
+annotazioni di tipo, validate e convertite alla costruzione. Combina tipizzazione statica e
+garanzie a runtime, con core in Rust.
+\begin{verbatim}
+from pydantic import BaseModel, ValidationError
+class User(BaseModel):
+    name: str
+    age: int = 0
+
+u = User(name="Ada", age="36")   # "36" viene convertito in 36
+User(name="Ada", age="old")      # ValidationError: age, input should be a valid integer
+\end{verbatim}
+Esempio più ricco, con un modello \texttt{Employee} che usa \texttt{EmailStr}, \texttt{date}, un
+\texttt{Enum} per il dipartimento e un \texttt{UUID} di default:
+\begin{verbatim}
+emp = Employee.model_validate(my_dict)      # da dizionario
+emp = Employee.model_validate_json(my_json) # da stringa JSON
+emp.model_dump()                            # -> dizionario
+emp.model_dump_json()                       # -> stringa JSON
+Employee.model_json_schema()                # JSON Schema del modello
+\end{verbatim}
+Il \texttt{ValidationError} segnala tutti gli errori insieme, ciascuno con percorso, messaggio
+e tipo atteso.
+
+\paragraph{Campi e validatori} \texttt{Field} aggiunge vincoli e metadati:
+\texttt{default\_factory=uuid4}, \texttt{frozen=True}, \texttt{min\_length=1},
+\texttt{pattern=r"..."}, \texttt{alias="birth\_date"}, \texttt{gt=0}. Un
+\texttt{@field\_validator} valida un singolo campo (ad esempio «almeno 18 anni»); un
+\texttt{@model\_validator(mode="after")} valida la combinazione di più campi (ad esempio «un
+dipendente IT non può scegliere i benefit»).
+\begin{verbatim}
+from pydantic import BaseModel, Field, field_validator, model_validator
+class Employee(BaseModel):
+    name: str = Field(min_length=1)
+    salary: float = Field(gt=0)
+    department: str
+    elected_benefits: bool
+
+    @field_validator("name")
+    @classmethod
+    def no_spaces(cls, v: str) -> str:
+        if v.strip() != v:
+            raise ValueError("name must not have surrounding spaces")
+        return v
+
+    @model_validator(mode="after")
+    def check_it_benefits(self):
+        if self.department == "IT" and self.elected_benefits:
+            raise ValueError("IT employees don't qualify for benefits")
+        return self
+\end{verbatim}
+
+\paragraph{Validazione di funzioni e configurazione} \texttt{@validate\_call} valida a
+runtime gli argomenti di una funzione secondo le annotazioni (per esempio un
+\texttt{EmailStr} o un \texttt{PositiveFloat}). \texttt{BaseSettings} (pacchetto
+\texttt{pydantic-settings}) legge e valida le variabili d'ambiente e i file \texttt{.env}, utile
+per le configurazioni dell'applicazione (URL, utente, password, chiave API).
+
+\paragraph{Collegamento con la teoria} Pydantic usa tutto il modello degli oggetti visto sopra:
+la classe \texttt{User} ha come \texttt{\_\_class\_\_} la metaclasse \texttt{ModelMetaclass}, e
+\texttt{create\_model} è per i modelli quello che \texttt{type(...)} è per gli oggetti. Il
+codice può quindi essere polimorfo sul modello: una funzione che clona l'oggetto con
+\texttt{obj.\_\_class\_\_(**dati)} funziona per \texttt{User}, \texttt{Admin} e qualunque
+sottoclasse futura.
+
+\paragraph{Avvertenza} Il materiale contiene esempi di codice che usano versioni recenti di
+Python e librerie in evoluzione (in particolare Pydantic v2): prima di fidarsi di una firma o
+di un comportamento conviene verificare la documentazione ufficiale.
+
+\section{Git e UML}
 \subsection{Controllo di versione e Git}
 \subsubsection{Il problema}
 
@@ -4249,546 +5664,5 @@ requisiti del cliente, semplicità e qualità, risorse e costo. Si procede per
 e raffinando le operazioni in istruzioni più dettagliate.
 
 \newpage
-\subsection{Code review con Essence}
-
-Esercizio: \emph{essenzializzare} la pratica \textbf{Code Review}, cioè descriverla come
-pratica Essence riusabile e indipendente dagli strumenti (purpose, primary Alpha, work
-product, activities, competencies, progress criteria, pattern, uso dell'LLM). Qui sono
-sintetizzati i commenti alle soluzioni dei tre gruppi di studenti e il confronto con la
-soluzione del docente.
-
-\subsubsection{Commento alle soluzioni degli studenti}
-Nel complesso c'è una buona comprensione intuitiva, ma con confusioni tra \emph{Alpha},
-\emph{Work Product} e \emph{strumenti}.
-\begin{itemize}
-  \item \textbf{Gruppo 1}: purpose buono (qualità, manutenibilità, sicurezza). Debole
-        l'Alpha ``Approvazione del codice'', che è un \emph{risultato} della review:
-        come primary Alpha è più appropriato \emph{Software System}. Il report di review
-        è un work product plausibile, le attività coerenti, i progress criteria generici.
-        Esempio efficace (MiracleSort: problemi di performance in codice formalmente
-        corretto), ma manca l'uso dell'LLM.
-  \item \textbf{Gruppo 2}: il più vicino allo spirito dell'esercizio. La sequenza ``in
-        attesa di revisione $\to$ da correggere $\to$ corretto'' descrive meglio gli
-        stati di un Alpha \emph{specifico della pratica} (es.\ Code Change) che di un
-        Alpha del kernel. Work product ``documentazione'' troppo generico. Buono il
-        pattern delle modifiche piccole e l'LLM come supporto, con decisione finale al
-        revisore umano.
-  \item \textbf{Gruppo 3}: meno aderente. Purpose ``produrre codice funzionante per un
-        negozio'' troppo specifico (descrive lo sviluppo in generale); ``avere un IDE
-        funzionante'' è uno strumento, non un Alpha, e viola il requisito
-        \emph{tool-independent}. Valide le competenze su linguaggio e dominio; l'LLM per
-        il debugging richiede verifica umana.
-\end{itemize}
-
-\begin{center}
-\begin{tabular}{|l|l|l|l|}
-\hline
-\textbf{Aspetto} & \textbf{Gruppo 1} & \textbf{Gruppo 2} & \textbf{Gruppo 3}\\
-\hline
-Purpose & Buono & Buono & Troppo specifico\\
-Primary Alpha & Poco appropriato & Interessante come Alpha specifico & Non corretto\\
-Work Product & Buono & Troppo generico & Buono\\
-Activities & Appropriate & Appropriate & Parzialmente fuori focus\\
-Competencies & Troppo generiche & Troppo generiche & Più complete\\
-Progress criteria & Presenti ma vaghi & Discreti & Mancanti\\
-Pattern & Mancante & Buono & Mancante\\
-LLM & Mancante & Buono e responsabile & Valido ma poco sviluppato\\
-\hline
-\end{tabular}
-\end{center}
-
-\subsubsection{Confronto con la soluzione del docente}
-\begin{center}
-\begin{tabular}{|l|p{6cm}|p{6.5cm}|}
-\hline
-\textbf{Aspetto} & \textbf{Studenti} & \textbf{Soluzione del docente}\\
-\hline
-Purpose & Qualità, sicurezza, manutenibilità & Valutare le modifiche prima dell'integrazione e condividere conoscenza\\
-Primary Alpha & Spesso ambiguo o errato & \emph{Software System}, con Team e Way of Working a supporto\\
-Work Product & Report / documentazione & \emph{Review Record} strutturato\\
-Activities & Lettura, analisi, correzione & Prepare Review, Examine Change, Resolve Findings, Confirm Integration\\
-Competencies & Soprattutto programmazione & Development, testing, system understanding, communication costruttiva\\
-LLM & Assente o generico & Supporto alla review con verifica umana\\
-\hline
-\end{tabular}
-\end{center}
-Le \emph{competencies} sono l'aspetto più sottovalutato. Sull'LLM la proposta migliore
-degli studenti coincide con quella del docente: può suggerire domande o possibili
-problemi, ma ogni risultato va verificato da un revisore competente. In sintesi, gli
-studenti hanno colto il nucleo pratico, mentre la soluzione del docente lo struttura in
-modo più rigoroso e coerente con Essence.
-
-\newpage
-\subsection{Constructor Fabric: processo ingegneristico attorno ai tool di AI coding}
-
-\subsubsection{Cos'è Constructor Fabric}
-
-\textbf{Constructor Fabric} è una piattaforma open source \emph{AI-native} che collega
-l'intero ciclo di vita del software (plan, build, run) in un unico flusso tracciabile e
-governato, dai requisiti alla produzione. Lo strumento che si installa si chiama
-\textbf{Constructor Studio} e il suo comando è \texttt{cfs}.
-
-Fornisce template di documenti, \emph{skill} con nome, checklist di review, controlli
-deterministici e identificatori stabili che legano i requisiti al codice.
-\textbf{Non contiene un modello linguistico} e non chiama nessuna API di modelli: gira
-dentro Claude Code, Cursor, Codex, GitHub Copilot o Windsurf, e sono questi tool a
-portare il modello.
-
-\paragraph{I quattro pezzi}
-\begin{itemize}
-  \item \texttt{cfs}: tool a riga di comando, da terminale, per setup, controlli e lavoro
-        su più repository;
-  \item \textbf{skill} \texttt{cf-*}: nomi che si scrivono nella \emph{chat} del tool di
-        AI coding per avviare un workflow;
-  \item \textbf{Kit}: bundle installabili di skill, template, checklist e regole; il kit
-        \textbf{SDLC} è quello di default;
-  \item \textbf{CPT ID} (\emph{Canonical Provenance Trace}): stringhe che permettono di
-        seguire un requisito nel design, nel codice e nei test.
-\end{itemize}
-
-\paragraph{Modello mentale} Il tool di AI coding serve per ragionare, scrivere,
-trasformare e giudicare l'implementazione. Constructor Fabric serve per scegliere il
-workflow, caricare il contesto giusto, applicare regole e template, eseguire controlli
-deterministici, mantenere collegati requisiti, design e codice e spezzare i task grandi
-in fasi.
-
-\paragraph{Quando è solo overhead} Un singolo typo in un file; esplorazione libera senza
-output strutturato; prototipo usa-e-getta il più veloce possibile; assenza di documento
-sorgente, scope e criteri di accettazione; budget di token ristretto con task piccolo.
-
-\subsubsection{Installazione}
-
-Requisiti: Python 3.11+, Git, un tool di AI coding supportato; \texttt{pipx} solo per
-installare lo strumento, \texttt{gh} solo per i workflow sulle pull request.
-\begin{verbatim}
-pipx install git+https://github.com/constructorfabric/studio.git
-cfs --version
-cd path/to/your/repository     # root del repo, non una sottocartella
-cfs init                       # interattivo; rieseguirlo ripara i file generati
-cfs generate-agents            # scrive i file di integrazione per il tool host
-\end{verbatim}
-\texttt{cfs init} chiede: root del progetto, directory di setup (default
-\texttt{.cf-studio/}), se i file generati restano in \texttt{.gitignore} (sì), se
-installare il kit SDLC (sì). Per una prova vanno bene tutti i default.
-\texttt{generate-agents} va rieseguito dopo aver installato un kit, cambiato le regole o
-se l'host non vede più le skill.
-
-\paragraph{Cosa finisce nel repository}
-\begin{verbatim}
-.cf-studio/
-    .core/  .gen/     # runtime generato, gitignored
-    config/           # vostro: AGENTS.md, SKILL.md, rules/
-    core.toml  version.toml  whatsnew.toml
-.claude/ .cursor/ .codex/ .windsurf/ .github/    # file per gli host
-\end{verbatim}
-La parte che il team rivede ed evolve è \texttt{config/}.
-
-\paragraph{Kit}
-\begin{verbatim}
-cfs kit install constructorfabric/studio-kit-sdlc    # poi generate-agents
-cfs kit install --path <path> --install-mode copy|register
-cfs kit check-updates     # mostra le novità, non cambia nulla
-cfs kit update            # cfs update --with-kits yes: aggiorna anche i kit
-\end{verbatim}
-\emph{copy} copia i file del kit nella directory di setup; \emph{register} lo lascia dov'è
-e registra solo un collegamento. Dopo ogni cambio di kit, \texttt{cfs generate-agents}.
-
-\paragraph{Problemi tipici}
-\begin{itemize}
-  \item \texttt{cfs: command not found} dopo l'install: aprire un nuovo terminale;
-  \item setup lanciato fuori dalla root del repo: rieseguire \texttt{cfs init} dalla root;
-  \item file generati ignorati dal tool: ricaricare/riaprire il repository nel tool;
-  \item \texttt{cf} dà una risposta normale da chatbot: repository sbagliato oppure
-        \texttt{generate-agents} mai eseguito;
-  \item funzionano solo i nomi \texttt{cf-*} e non gli slash command: è normale, gli slash
-        command sono alias specifici dell'host;
-  \item controlli cross-repository rumorosi: partire con \texttt{cfs validate --local-only}.
-\end{itemize}
-
-\subsubsection{Usarlo: terminale vs chat}
-
-Regola che fa risparmiare un'ora: \textbf{terminale} per \texttt{cfs} e i suoi
-sottocomandi (setup, validazione, update, workspace); \textbf{chat} per \texttt{cf} e le
-skill \texttt{cf-*} (esplorazione, pianificazione, scrittura, review). Le skill scritte
-nel terminale non fanno nulla, e \texttt{cfs validate} scritto in chat non è
-un'esecuzione reale.
-
-Per attivarlo si apre il repo nel tool e si scrive \texttt{cf} (deve comparire un menu di
-routing), poi \texttt{cf-help} per il tour. Forma portabile:
-\texttt{cf-<skill>: <richiesta>}: il nome seleziona il workflow, il testo dopo i due punti
-è il lavoro da fare.
-
-\paragraph{Skill principali}
-\begin{center}
-\begin{tabular}{|l|p{10.5cm}|}
-\hline
-\texttt{cf-help} & cosa c'è e da dove partire\\
-\texttt{cf-explore:} & trova file, artefatti, regole, contesto\\
-\texttt{cf-brainstorm:} & apre le opzioni prima di fissare lo scope\\
-\texttt{cf-auto-config} & deduce le regole di progetto di un repo esistente\\
-\texttt{cf-plan:} / \texttt{cf-planning:} & spezza il lavoro in fasi rivedibili / piano riusabile con definition of done\\
-\texttt{cf-coding:} & scrive, rivede, corregge, testa codice\\
-\texttt{cf-write-docs:} & scrive o rivede un documento per umani\\
-\texttt{cf-explain:} & spiega un documento, una PR, una decisione\\
-\texttt{cf-map:} & mostra la mappa delle dipendenze\\
-\texttt{cf-testing:} & scrive o esegue test\\
-\texttt{cf-git-commit:} & stage e commit con messaggio conforme\\
-\texttt{cf-workspace:} & lavoro su più repository\\
-\texttt{cf-kit:}, \texttt{cf-write-skills:} & crea/valida kit; scrive prompt, workflow, skill\\
-\texttt{cf-debug-prompts:} & osserva un workflow passo per passo\\
-\texttt{cf-brave-new-world} & sceglie da solo default sicuri e reversibili nella sessione\\
-\hline
-\end{tabular}
-\end{center}
-Dal kit SDLC: \texttt{cf-sdlc-doc-prd}, \texttt{-doc-adr}, \texttt{-doc-design},
-\texttt{-decompose}, \texttt{-doc-feature}, \texttt{-implement}; per dopo
-\texttt{-change-impact-analysis}, \texttt{-reverse-engineer}, \texttt{-pr-review},
-\texttt{-pr-status}.
-
-\paragraph{Alias e sotto-route} \texttt{cf-coding} è un alias che carica
-\texttt{cf-coding-gen} (idem \texttt{cf-write-docs}, \texttt{cf-write-skills}). Si
-chiamano direttamente le sotto-route quando si sa cosa si vuole: \texttt{-gen},
-\texttt{-review}, \texttt{-fix} (per coding, documenting, prompting),
-\texttt{cf-coding-ci}, \texttt{cf-coding-tests}, \texttt{cf-code-planning}.
-\texttt{cf-analyze} e \texttt{cf-generate} sono router che scelgono la skill adatta.
-
-\paragraph{Richieste buone e cattive}
-Una richiesta che funziona ha \emph{target con nome, scope limitato, criteri di successo
-visibili}:
-\begin{verbatim}
-cf-plan: break this auth migration into safe implementation phases
-cf-explore: trace where auth configuration is defined and loaded
-cf-coding: review this module for correctness, regression risk, missing tests
-\end{verbatim}
-Una richiesta che fa perdere il pomeriggio non ha né scope, né target, né fonte di
-verità, né criteri: \texttt{cf-coding: build the whole system}, \texttt{make this project
-enterprise grade}, \texttt{improve everything}, \texttt{rewrite the app based on best
-practices}. Il workflow non ha nulla su cui fare routing e va a indovinare.
-
-\paragraph{Gate} Prima di partire chiede: modalità di interazione (\emph{assistant},
-\emph{normal}, \emph{debug}; \emph{assistant} racconta dove si trova ed è utile le prime
-volte), se fare prima \texttt{cf-explore}, se fare brainstorm prima di fissare lo scope,
-se pianificare quando il lavoro è multi-step, se delegare a un sub-agent. Ogni gate lo
-approva l'utente: niente di grosso parte in silenzio.
-
-\subsubsection{La pipeline}
-
-Scenario: un team deve aggiungere un nuovo \emph{billing workflow} a un prodotto
-esistente (product manager, architetto, due sviluppatori, QA). Nessuno riscrive il
-processo: usano il proprio, e Constructor Fabric tiene insieme gli artefatti.
-
-\begin{center}
-\begin{tikzpicture}[node distance=5mm, every node/.style={draw, rounded corners, font=\small, inner sep=3pt, fill=blue!6}, >=Stealth]
-\node (a) {PRD};
-\node (b) [right=of a] {ADR};
-\node (c) [right=of b] {DESIGN};
-\node (d) [right=of c] {DECOMP.};
-\node (e) [right=of d] {FEATURE};
-\node (f) [right=of e] {codice};
-\node (g) [right=of f] {test};
-\draw[->] (a)--(b); \draw[->] (b)--(c); \draw[->] (c)--(d);
-\draw[->] (d)--(e); \draw[->] (e)--(f); \draw[->] (f)--(g);
-\end{tikzpicture}
-\end{center}
-Collegati dai CPT ID, plasmati dal kit, verificati da \texttt{cfs}. QA, performance,
-security e DevOps usano gli stessi file, non copie.
-
-\begin{enumerate}
-  \item \textbf{Gather} (\texttt{cf-explore:}): il PM parte da qui, non dal PRD. Esce una
-        piccola mappa di quali note esistono, quali sono obsolete, quali vincoli sono già
-        scritti. È lo stadio più economico e il più saltato.
-  \item \textbf{Opzioni} (\texttt{cf-brainstorm:}): tre o quattro forme candidate con i
-        loro trade-off, senza impegnarsi. Si usa finché lo scope è aperto; a PRD fatto
-        è tardi.
-  \item \textbf{PRD} (\texttt{cf-sdlc-doc-prd:}): da template: scopo, attori, scope,
-        requisiti funzionali e non funzionali, use case, criteri di accettazione,
-        rischi. \textbf{Ogni requisito ha un CPT ID e una priorità}: è ciò che rende
-        possibile il resto della catena. Poi review contro metodologia e checklist (si
-        vedono i finding prima di qualunque riscrittura e si approva lo scope delle
-        correzioni) e infine \texttt{cfs validate}.
-  \item \textbf{ADR} (\texttt{cf-sdlc-doc-adr:}): una decisione, un record: contesto,
-        driver, opzioni considerate, esito, conseguenze. L'architetto lo scrive
-        \emph{prima} del design, così questo ha su cosa poggiare; tra sei mesi è il file
-        che risponde a ``perché l'abbiamo fatto così''.
-  \item \textbf{DESIGN} (\texttt{cf-sdlc-doc-design:}): gli input sono nominati (PRD e
-        ADR approvati): la skill \emph{trasforma} documenti approvati, non inventa da
-        una riga. Esce architettura, componenti, layer, sequenze, data model, tech
-        stack; ogni driver porta il CPT ID del requisito a cui risponde.
-  \item \textbf{Decompose} (\texttt{cf-sdlc-decompose:}): lista ordinata di feature con
-        dipendenze, ciascuna con una fetta del design. Si controlla la copertura: ogni
-        componente, sequenza ed elemento dati appartiene a \emph{esattamente una}
-        feature. Così un lavoro grosso diventa più pezzi rivedibili.
-  \item \textbf{FEATURE spec} (\texttt{cf-sdlc-doc-feature:}): una feature, una
-        specifica: flussi, stati, algoritmi, definition of done. Ognuno ha un CPT ID
-        \emph{un livello più fine} del requisito. È l'ultimo documento prima del
-        codice e quello contro cui si controlla l'implementazione.
-  \item \textbf{Implement} (\texttt{cf-sdlc-implement:}): codice e unit test contro la
-        specifica approvata, \textbf{con i marker CPT}. Senza marker la catena si ferma
-        all'ultimo documento e il codice torna a essere un'opinione.
-  \item \textbf{Review del codice} (\texttt{cf-coding:} review): in una \emph{chat
-        nuova}, perché il contesto di scrittura passa le sue assunzioni alla review;
-        meglio ancora un sub-agent, che non vede il ragionamento di chi ha scritto.
-        Prima i finding, le correzioni dopo l'approvazione dello scope.
-  \item \textbf{Vista d'insieme} (\texttt{cfs map}, \texttt{cf-map:}): i \emph{dangling
-        reference} sono il modo per trovare il requisito che nessuno ha implementato.
-\end{enumerate}
-
-\paragraph{Come appare un requisito, nel PRD} Titolo, priorità, ID e testo normativo con
-MUST:
-\begin{verbatim}
-#### FR-003 Retry a failed invoice charge
-- [x] `p1` - **ID**: `cpt-billing-fr-invoice-retry`
-When a charge fails with a retriable provider error, the system MUST retry
-it at the configured interval up to the configured maximum, and MUST stop
-retrying on a non-retriable error.
-**Actors**: `cpt-billing-actor-finance-operator`, `...-payment-provider`
-\end{verbatim}
-Nel DESIGN lo stesso ID riappare a sinistra e la risposta ingegneristica a destra
-(\emph{Solution}: uno scheduler dei retry possiede la state machine; gli errori del
-provider sono classificati una volta sola al confine dell'adapter in retriable/terminal).
-Nella DECOMPOSITION una feature ha \texttt{Purpose}, \texttt{Depends On},
-\texttt{Requirements Covered} (i CPT ID) e \texttt{Out of scope}.
-
-\paragraph{Marker nel codice} Commenti normali, in qualunque linguaggio e editor, senza
-plugin:
-\begin{verbatim}
-# @cpt-algo:cpt-billing-algo-retry-should-retry:p1
-def should_retry(*, attempt, config) -> bool:
-    # @cpt-begin:cpt-billing-algo-retry-should-retry:p1:inst-terminal
-    if attempt.error_class is ErrorClass.TERMINAL:
-        return False
-    # @cpt-end:cpt-billing-algo-retry-should-retry:p1:inst-terminal
-    ...
-\end{verbatim}
-
-\paragraph{Cosa è il risultato} Non ``l'AI ha scritto il progetto'', ma un
-\emph{sistema di consegna ispezionabile}: alla domanda ``quale codice implementa questo
-requisito approvato?'' risponde il repository, invece dello sviluppatore che se lo ricorda.
-
-\subsubsection{Validazione}
-
-\begin{itemize}
-  \item \texttt{cfs validate} (\texttt{--local-only} per saltare la risoluzione
-        cross-repository, utile mentre si itera): controlla struttura, sezioni
-        obbligatorie, riferimenti, forma dei CPT ID, regole di consistenza.
-        \textbf{Deterministico}: stessi file e regole, stesso risultato. Da lanciare in
-        locale prima della PR e da tenere in CI.
-  \item \texttt{cfs validate-toc}: l'indice di una guida corrisponde ai suoi titoli;
-        \texttt{cfs check-language}: il documento è scritto in una lingua ammessa.
-  \item \texttt{cfs map}, \texttt{cfs where-defined --id <ID>} (quale file definisce
-        l'ID), \texttt{cfs list-ids --source docs}: da usare \emph{prima} di un
-        refactoring, non dopo.
-\end{itemize}
-
-\paragraph{Il ciclo} (1) plan o generate; (2) validate; (3) review; (4) leggere i finding
-e approvare lo scope della correzione; (5) fix; (6) validate di nuovo; (7) ripetere finché
-non resta nulla di noto. Vale uguale per documenti e codice.
-
-\paragraph{Cosa il ciclo non dà} Migliora la qualità ma \textbf{non prova la
-correttezza}: un \texttt{cfs validate} verde dice che la \emph{forma} è giusta, non che il
-software funziona; una checklist superata dice che la review è stata \emph{coerente}, non
-che fosse corretta. Resta necessaria la review umana finale.
-
-\subsubsection{Abitudini, trappole, multi-repo}
-
-\paragraph{Abitudini} Nominare il target (artefatto, area di codice, esito); dare
-documenti sorgente e vincoli, non intenzioni; pianificare prima che la conversazione sia
-sovraccarica; validare presto e di continuo; dire esplicitamente cosa \emph{non} deve
-cambiare; usare il workflow più piccolo che ti tiene comunque in controllo; chat nuova per
-ogni task grosso di scrittura o review; rendere la review ripetibile e poi decidere tu.
-
-\paragraph{Trappole} Usarlo come chat generica (salta tutto ciò che lo rende utile);
-partire con una skill di scrittura su un task enorme e ambiguo; validare solo alla fine
-(gli errori a monte si sono amplificati); credere che un check verde o un lungo giro di
-fix provi la correttezza; usarlo per brainstorming aperto; un workflow strutturato per una
-modifica che un edit diretto avrebbe coperto; chiedere un esito senza nominare il documento
-da cui discende; portarsi dietro contesto vecchio in un task non correlato.
-
-\paragraph{Più repository} Non clonare il setup completo in ogni servizio: un repository
-di orchestrazione e gli altri collegati come workspace.
-\begin{verbatim}
-cfs workspace-init
-cfs workspace-add --name docs     --path ../docs-repo     --role artifacts
-cfs workspace-add --name services --path ../services-repo --role codebase
-cfs workspace-info
-\end{verbatim}
-Un solo posto per setup, regole e kit condivisi e tracciabilità che attraversa i repo.
-
-\paragraph{Primi trenta minuti} Install, \texttt{cfs init}, \texttt{cfs generate-agents};
-\texttt{cf}, poi \texttt{cf-help}; \emph{un} piccolo input reale (un requisito, una nota di
-design, una modifica mirata) con \texttt{cf-explain:}, una review con \texttt{cf-coding:}
-o \texttt{cf-plan:}. Non una review dell'intero repository né una implementazione ampia.
-Successo = attivazione confermata, un risultato utile, un prossimo passo più chiaro.
-
-\subsubsection{Usare Constructor Fabric con LLM gratuiti (CF02)}
-
-Constructor Fabric non ha chiave API, endpoint o modello: è uno strato di orchestrazione
-che si attiva dentro un tool già in esecuzione. \emph{Il tool host porta il modello,
-Constructor Fabric porta il processo.} Gli host documentati sono cinque.
-
-\begin{center}
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
- & \textbf{Claude} & \textbf{Cursor} & \textbf{Copilot} & \textbf{Codex} & \textbf{Windsurf}\\
-\hline
-Integrazione skill & sì & sì & sì & sì & sì\\
-Sub-agent dell'host & sì & sì & sì & sì & no\\
-Review read-only & forte & forte & parziale & più debole & nessuna\\
-Worktree isolation & sì & no & no & no & no\\
-Scelta del modello & sì & sì & no & parziale & N/A\\
-Host multi-modello & no & sì & sì & no & sì\\
-\hline
-\end{tabular}
-\end{center}
-Un sub-agent mancante è un limite dell'host, non di Constructor Fabric. La domanda giusta
-non è ``come ottengo un LLM gratis'' ma ``come ottengo accesso gratuito a uno di quei
-cinque tool e quale modello c'è dietro'': un abbonamento chat gratuito \emph{non} è accesso
-API gratuito, e un programma studenti gratuito non sempre è un modello gratuito.
-
-Quattro modi per non pagare: (1) un provider frontier con tier API gratuito stabile;
-(2) un modello open-weight sul proprio computer; (3) un servizio cloud gratuito che ospita
-modelli open-weight; (4) un programma studenti che regala un tool host.
-
-\paragraph{API frontier}
-\begin{center}
-\begin{tabular}{|l|c|p{9cm}|}
-\hline
-\textbf{Provider} & \textbf{API gratis?} & \textbf{Cosa si ottiene}\\
-\hline
-Google (Gemini) & sì & modelli Flash a \$0, circa 10--15 richieste/min e 1000--1500/giorno; i prompt \emph{possono addestrare} i modelli (si paga in dati)\\
-Mistral & sì & tier \emph{Experiment}, tutti i modelli incl.\ Codestral, con rate limit; provider europeo, meno integrato negli host\\
-Anthropic & no & solo chat gratuita (con limiti); API a pagamento, i crediti di prova scadono\\
-OpenAI & no & solo chat gratuita; API pay-as-you-go, Codex segue i piani a pagamento\\
-\hline
-\end{tabular}
-\end{center}
-Il tier Gemini va bene per esplorazione, generazione di singoli documenti e review, non per
-un agente che fa decine di tool call al minuto per un'ora. Con dati sotto NDA, tesi sotto
-embargo o codice aziendale non va usato.
-
-\paragraph{Open-weight in locale} Un modello \emph{open-weight} ha parametri scaricabili:
-niente chiave, quota o contatore di richieste; il costo si sposta dalla bolletta alla
-memoria e alla batteria.
-\begin{itemize}
-  \item \textbf{Qwen3-Coder}: la linea open-weight oggi più forte per coding agentico in
-        locale (addestrata per tool use e editing multi-step); più taglie.
-  \item \textbf{Gemma} (Google, pensata per il dispositivo, debole sulle catene agentiche
-        lunghe) e i \textbf{DeepSeek distillati}: seconde scelte ragionevoli.
-  \item \textbf{Ollama}: il runner più semplice. Espone un endpoint compatibile OpenAI su
-        \texttt{/v1}, quindi qualunque cosa accetti un base URL custom funziona. \textbf{LM
-        Studio} è l'equivalente con interfaccia grafica.
-\end{itemize}
-\begin{verbatim}
-ollama serve                  # server locale su :11434
-ollama pull qwen3-coder:30b   # scarica i pesi, una volta
-ollama run qwen3-coder:30b
-\end{verbatim}
-\textbf{Quanto computer serve}: un modello da 7--8 miliardi di parametri quantizzato usa
-circa 6--8 GB (va su qualunque portatile moderno; ok per spiegare codice, piccole modifiche,
-review di un file; no per decisioni architetturali, decomposizione, implementazione
-multi-file lunga). Uno da 27--32 miliardi richiede circa 20--24 GB ed è la taglia da cui i
-modelli locali diventano usabili per lavoro agentico. Un Mac Apple Silicon con 32 GB ci
-riesce perché ha \textbf{memoria unificata} (la GPU indirizza tutta la RAM, quindi 20+ GB
-per il modello), mentre un portatile Windows tipico ha 16 GB di RAM più 6--8 GB di VRAM
-dedicata e il modello, se non ci sta, finisce sulla CPU e va a rilento.
-
-Si rinuncia a: capacità grezza (un 30B non è un frontier), velocità sui contesti lunghi
-(dove vivono i workflow di Constructor Fabric), batteria e circa 20 GB di disco. Si
-guadagna: nessuna quota, nessuna chiave, nessuna rete, e \emph{il codice non lascia la
-macchina} (può decidere per una tesi su dati privati).
-
-\paragraph{Cloud gratuito (open-weight ospitato)}
-\begin{center}
-\begin{tabular}{|l|p{6.5cm}|p{4cm}|}
-\hline
-\textbf{Servizio} & \textbf{Limite gratuito} & \textbf{Carta?}\\
-\hline
-Cerebras & circa 1M token/giorno, reset giornaliero & no\\
-Groq & modelli open-weight, tetti al minuto e al giorno, generazione molto veloce & no\\
-OpenRouter & 20 req/min e 50 req/giorno sui modelli \texttt{:free}; 1000/giorno dopo un acquisto una tantum di almeno \$10 & no, finché non si vuole il tetto alto\\
-\hline
-\end{tabular}
-\end{center}
-Servono tutti open-weight, quindi la qualità del modello è la stessa questione di prima.
-
-\paragraph{Programmi studenti, per chi studia in Italia}
-\begin{center}
-\begin{tabular}{|l|c|p{8cm}|}
-\hline
-\textbf{Programma} & \textbf{Aiuta?} & \textbf{Perché}\\
-\hline
-GitHub Student Developer Pack & sì & piano studenti di Copilot (crediti AI mensili), host supportato, vale anche in Italia, verifica con la mail universitaria, niente carta\\
-Google AI Plus (studenti) & no & è un abbonamento consumer, \emph{esclude} l'accesso API\\
-Gemini API free tier & sì & non è un programma studenti, è semplicemente gratis\\
-Codex for Students / Student Collective (OpenAI) & no & l'Italia è esclusa\\
-Azure for Students & no & il credito esclude Azure OpenAI Service\\
-AWS Educate & no & il credito esclude Bedrock\\
-\hline
-\end{tabular}
-\end{center}
-
-\paragraph{Tre percorsi}
-\begin{itemize}
-  \item \textbf{A: Copilot con lo Student Pack}, il consigliato per la maggior parte:
-        niente da installare, nessuna chiave. Copilot è host multi-modello (uno più forte
-        per la review, uno più veloce per il lavoro di massa).
-\begin{verbatim}
-cfs init
-cfs generate-agents --agent copilot
-\end{verbatim}
-  \item \textbf{B: Claude Code su un modello proprio}. Claude Code è l'host più forte
-        (sub-agent, worktree isolation, model hint negli agenti generati) ma Anthropic non
-        lo dà gratis. Da Ollama 0.14.0 c'è un endpoint che parla l'API Anthropic Messages:
-\begin{verbatim}
-ollama pull gpt-oss:20b
-export ANTHROPIC_AUTH_TOKEN=ollama      # segnaposto, Ollama non lo controlla
-export ANTHROPIC_BASE_URL=http://localhost:11434
-claude --model gpt-oss:20b
-cfs init && cfs generate-agents --agent claude
-\end{verbatim}
-        Verifica con \texttt{ollama list} e \texttt{echo \$ANTHROPIC\_BASE\_URL}; se
-        \texttt{claude} chiede ancora il login le variabili non sono arrivate alla shell
-        che lo ha lanciato. Richieste piccole: un modello locale ha meno pazienza.
-  \item \textbf{C: chiave Gemini o Mistral}, dove l'host permette di scegliere il
-        provider e per script ai margini del lavoro; non tutti e cinque gli host accettano
-        una chiave arbitraria, e un agente brucia richieste molto più in fretta di un
-        umano in chat.
-\end{itemize}
-
-\paragraph{Quale scegliere} Qualunque portatile, funzionante in dieci minuti: A. Mac da
-32 GB o più, nessun limite: B. Codice privato che non si può mandare in giro: B (non è
-un caso dubbio). Qualità frontier con poco budget: tier Gemini, nei suoi limiti. Provare
-molti modelli: OpenRouter, valutando i \$10 una tantum.
-
-\paragraph{Esempio reale: overwork\_alert} Il repository di Constructor Fabric include un
-piccolo esempio costruito esattamente con questa pipeline: un tool macOS in background che
-traccia il tempo di lavoro \emph{attivo} (se l'idle supera una soglia l'orologio si ferma)
-e avvisa quando si supera un limite. Locale, un solo utente, niente rete, niente menubar.
-Contiene \texttt{PRD.md}, \texttt{DESIGN.md}, \texttt{DECOMPOSITION.md}, un ADR (CLI
-daemon + LaunchAgent, scartando menubar app e job launchd periodico), quattro FEATURE
-spec e nove moduli Python: ``quattro documenti, quattro spec, nove moduli''.
-
-Il requisito \texttt{FR-002} (limite e soglia configurabili) ha default 3 ore, 5 minuti di
-idle, 30 minuti tra i promemoria, e nel codice compaiono come
-\texttt{limit\_seconds=10800}, \texttt{idle\_threshold\_seconds=300},
-\texttt{repeat\_interval\_seconds=1800}. I criteri di accettazione contengono tutti un
-numero (primo alert entro 5 s dal superamento, pausa entro 10 s all'idle, stato via CLI in
-meno di 5 s, setup in 10 minuti). Il DESIGN ha tre layer: CLI/Control (argparse, IPC
-locale), Tracking Core (loop del daemon), OS Integration (\texttt{ioreg}, \texttt{osascript},
-\texttt{launchd}). La FEATURE spec scrive l'algoritmo come passi numerati
-(\texttt{IF ... RETURN do\_not\_notify}) ciascuno con un ID \texttt{inst-...}, e il codice
-ha un \texttt{@cpt-begin/@cpt-end} per ogni passo.
-
-\textbf{Seguire un identificatore}: \texttt{cpt-ex-ovwa-fr-notify-on-limit} compare nel PRD
-(FR-003), nel DESIGN come driver con soluzione, nella DECOMPOSITION assegnato alla feature
-\texttt{notifications}, nella FEATURE spec raffinato in algoritmo e stato, e in
-\texttt{notification\_policy.py} come commenti attorno alle righe esatte. Cinque file, una
-stringa, nessuna riunione. È un esempio volutamente piccolo: mostra l'aspetto degli
-artefatti, non dimostra che l'approccio scali a un sistema grande.
-
-\paragraph{Avvertenza} I numeri (tier gratuiti, rate limit, idoneità studenti) sono stati
-verificati ad agosto 2026 e cambiano ogni pochi mesi: la struttura del ragionamento dura
-più dei numeri, quindi prima di fidarsi di un limite va aperta la fonte.
-
 \end{document}
 

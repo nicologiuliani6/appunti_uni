@@ -1764,4 +1764,461 @@ Solo alcune \hl{pietre miliari}\dots
 \end{tikzpicture}
 \end{center}
 
+\section{Espressività e addestramento}
+\subsection{Espressività}
+\begin{itemize}
+\item Possiamo calcolare \textbf{qualsiasi funzione} con una rete neurale?
+\item Servono davvero le reti \hl{profonde}?
+\item Possiamo calcolare qualsiasi funzione con un \hl{singolo neurone}?
+\end{itemize}
+
+\subsubsection{Caso a un solo livello: il perceptron}
+Soglia binaria:
+\[ \text{output} = \begin{cases} 1 & \text{se } \sum_i w_i x_i + b \ge 0 \\ 0 & \text{altrimenti} \end{cases}
+\qquad\Longleftrightarrow\qquad
+\text{output} = \begin{cases} 1 & \text{se } \sum_i w_i x_i \ge -b \\ 0 & \text{altrimenti} \end{cases} \]
+Il \hl{bias} stabilisce la \textit{posizione} della soglia.
+
+\subsubsection{Iperpiani}
+L'insieme dei punti
+\[ \sum_i w_i x_i + b = 0 \]
+definisce un \hl{iperpiano} nello spazio delle variabili $x_i$.\\
+\vspace{1px}\\
+Esempio: $-\frac{1}{2}x_1 + x_2 + 1 = 0$ è una \textbf{retta} nello spazio bidimensionale.
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle, width=6cm, height=4.2cm, xmin=-1, xmax=3.5, ymin=-1.6, ymax=1, xlabel={$x_1$}, ylabel={$x_2$}, xtick={2}, ytick={-1}, ticklabel style={font=\scriptsize}, every axis label/.append style={font=\small}]
+\addplot[red, thick, domain=-1:3.5, samples=2] {x/2-1};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+L'iperpiano divide lo spazio in due parti: a una (sopra la retta) il perceptron assegna valore $1$, all'altra valore $0$.\\
+\vspace{1px}\\
+"Sopra" e "sotto" si possono scambiare semplicemente invertendo i parametri:
+\[ \sum_i w_i x_i + b \le 0 \iff \sum_i -w_i x_i - b \ge 0 \]
+
+\subsubsection{Calcolare connettivi logici: NAND}
+Possiamo implementare la funzione \textbf{NAND} con un perceptron?
+\begin{center}
+\begin{tabular}{cc|c}
+$x_1$ & $x_2$ & output \\ \hline
+0 & 0 & 1 \\
+0 & 1 & 1 \\
+1 & 0 & 1 \\
+1 & 1 & 0
+\end{tabular}
+\end{center}
+Cioè: possiamo trovare due pesi $w_1, w_2$ e un bias $b$ tali che
+\[ \text{nand}(x_1,x_2) = \begin{cases} 1 & \text{se } \sum_i w_i x_i + b \ge 0 \\ 0 & \text{altrimenti} \end{cases} \]
+\subsubsection*{Rappresentazione grafica}
+È come chiedersi: possiamo tracciare una \hl{retta} che separi i punti verdi da quelli rossi?\\
+\vspace{1px}\\
+\textbf{Sì!} Ad esempio la retta $1.5 - x_1 - x_2 = 0$ (oppure $3 - 2x_1 - 2x_2 = 0$).
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+\draw[->] (-0.3,0) -- (1.9,0) node[right] {$x_2$};
+\draw[->] (0,-0.3) -- (0,1.9) node[above] {$x_1$};
+\draw[blue!70!black, thick] (-0.2,1.7) -- (1.7,-0.2);
+\foreach \x/\y in {0/0,0/1,1/0} \fill[green!60!black] (\x,\y) circle (2pt);
+\fill[red] (1,1) circle (2pt);
+\node[below left, font=\scriptsize] at (0,0) {0,0};
+\node[left, font=\scriptsize] at (0,1) {0,1};
+\node[below, font=\scriptsize] at (1,0) {1,0};
+\node[above right, font=\scriptsize] at (1,1) {1,1};
+\node[font=\small] at (0.5,-0.5) {NAND};
+\end{tikzpicture}
+\end{center}
+\subsubsection*{Il perceptron NAND}
+\[ \text{output} = \begin{cases} 1 & \text{se } -2x_1 - 2x_2 + 3 \ge 0 \\ 0 & \text{altrimenti} \end{cases} \]
+Possiamo calcolare \hl{qualsiasi circuito logico} con un perceptron?
+
+\subsubsection{Il caso XOR}
+Possiamo tracciare una retta che separi i punti rossi da quelli verdi?
+\begin{center}
+\begin{tikzpicture}[scale=1.5]
+\draw[->] (-0.3,0) -- (1.9,0) node[right] {$x_2$};
+\draw[->] (0,-0.3) -- (0,1.9) node[above] {$x_1$};
+\foreach \x/\y in {0/1,1/0} \fill[green!60!black] (\x,\y) circle (2pt);
+\foreach \x/\y in {0/0,1/1} \fill[red] (\x,\y) circle (2pt);
+\node[below left, font=\scriptsize] at (0,0) {0,0};
+\node[left, font=\scriptsize] at (0,1) {0,1};
+\node[below, font=\scriptsize] at (1,0) {1,0};
+\node[above right, font=\scriptsize] at (1,1) {1,1};
+\node[font=\small] at (0.5,-0.5) {XOR};
+\end{tikzpicture}
+\end{center}
+\textbf{Impossibile!}
+\begin{center}
+\fbox{\textbf{I perceptron a singolo livello non sono completi!}}
+\end{center}
+
+\subsubsection{Perceptron multi-livello}
+\begin{itemize}
+\item sappiamo che possiamo calcolare la \textbf{NAND} con un perceptron;
+\item sappiamo che la NAND è \hl{logicamente completa} (possiamo calcolare qualsiasi connettivo usando solo NAND);
+\end{itemize}
+Quindi: \textit{perché i perceptron non sono completi?}\\
+Perché dobbiamo \hl{comporli}, cioè considerare i \textbf{perceptron multi-livello}.
+
+\subsubsection{Esempio: perceptron multi-livello per lo XOR}
+Possiamo calcolare lo XOR \hl{impilando} (\textit{stacking}) dei perceptron?
+\imgfig[0.8]{xor_mlp.png}
+\begin{center}
+\begin{tikzpicture}[
+  nodo/.style={circle, draw, thick, fill=white, minimum size=0.9cm, inner sep=0pt},
+  freccia/.style={-{Stealth[length=2mm]}, thick}]
+  \node[nodo] (x1) at (0,1.2)  {$x_1$};
+  \node[nodo] (x2) at (0,-1.2) {$x_2$};
+  \node[nodo] (h1) at (3.5,1.2)  {$h_1$};
+  \node[nodo] (h2) at (3.5,-1.2) {$h_2$};
+  \node[nodo] (y)  at (7,0) {$y$};
+  \draw[freccia] (x1) -- node[above] {$1$} (h1);
+  \draw[freccia] (x2) -- node[above, pos=0.2] {$1$} (h2);
+  \draw[freccia] (x1) -- node[pos=0.25, left] {$-1$} (h2);
+  \draw[freccia] (x2) -- node[pos=0.25, left] {$-1$} (h1);
+  \draw[freccia] (h1) -- node[above right] {$1$} (y);
+  \draw[freccia] (h2) -- node[below right] {$1$} (y);
+  \node[above=2pt of h1, font=\small] {$b=-0.5$};
+  \node[below=2pt of h2, font=\small] {$b=-0.5$};
+  \node[above=2pt of y, font=\small] {$b=-0.5$};
+  \draw[freccia] (y) -- ++(1.3,0) node[right] {$y$};
+\end{tikzpicture}
+\end{center}
+Il primo neurone calcola $x_1 \wedge \neg x_2$, il secondo $\neg x_1 \wedge x_2$, l'output è il loro $\vee$: esattamente lo XOR.
+\begin{center}
+\fbox{\textbf{I perceptron multi-livello sono logicamente completi!}}
+\end{center}
+
+\subsubsection{Punti importanti}
+\begin{itemize}
+\item le reti \hl{poco profonde} (\textit{shallow}) sono già complete.\\
+\textbf{Perché allora usare reti profonde?} Con le reti profonde la stessa funzione può essere calcolata con \hl{meno unità neurali} (Cohen et al.);
+\item le \hl{funzioni di attivazione} hanno un ruolo essenziale: sono l'\textbf{unica fonte di non linearità}, e quindi di espressività, delle NN.\\
+Comporre livelli lineari non separati da attivazioni non lineari \textcolor{red}{non ha senso}!
+\end{itemize}
+
+\subsubsection{Oltre la soglia binaria}
+La soglia binaria non è adatta all'apprendimento basato sul gradiente, perché la sua derivata è $0$ \hl{quasi ovunque}.\\
+\vspace{1px}\\
+Si possono usare molte attivazioni alternative: tipicamente varianti della funzione \textit{Rectified Linear Unit} (ReLU).
+
+\subsubsection{La funzione risultante}
+Un \textit{multilayer perceptron} (MLP) con attivazioni ReLU calcola una funzione \hl{continua affine a tratti} (\textit{piecewise-affine}).\\
+\vspace{1px}\\
+Lo spazio di input viene partizionato in \textbf{regioni} e, all'interno di ciascuna, la rete calcola una mappa affine. Il numero di regioni dipende dall'architettura della rete.
+\imgfig[0.6]{mlp_relu_superficie.png}
+
+\subsubsection{Alcuni risultati}
+Il numero di regioni $R$ cresce approssimativamente come
+\[ R = O(n^{dL}) \]
+dove:
+\begin{itemize}
+\item $n$ è il numero di neuroni in ogni livello (uniforme, per semplicità);
+\item $d$ è la dimensione dell'input;
+\item $L$ è il numero di livelli della rete.
+\end{itemize}
+Di conseguenza:
+\begin{itemize}
+\item una rete \textbf{poco profonda} con un numero sufficientemente alto di neuroni può approssimare \hl{qualsiasi funzione continua} con precisione arbitraria;
+\item il numero di neuroni richiesti per l'approssimazione può \hl{diminuire esponenzialmente} con la profondità.
+\end{itemize}
+
+\subsection{Addestramento (Training)}
+\subsubsection{Loss corrente}
+Supponiamo di avere una rete neurale con una certa configurazione dei parametri $\theta$.\\
+\vspace{1px}\\
+Possiamo prendere un \textit{batch} di dati, passarli (in parallelo) attraverso la rete, calcolare l'output e valutare la \hl{loss corrente} rispetto a $\theta$.\\
+\vspace{1px}\\
+Questo è un \textbf{forward pass} attraverso la rete.
+\imgfig[0.75]{nn_forward.png}
+
+\subsubsection{Aggiornamento dei parametri}
+Vogliamo ora aggiustare i parametri in modo da \hl{diminuire} la loss corrente. Ogni parametro merita un aggiustamento diverso: alcuni positivi, altri negativi.\\
+\vspace{1px}\\
+Lo strumento matematico che stabilisce in che direzione aggiornare i parametri è il \hl{gradiente}: un vettore di derivate parziali.
+
+\subsubsection{Backpropagation}
+Il gradiente viene calcolato \textit{all'indietro}, propagando la loss a tutti i neuroni e alle loro connessioni.\\
+\vspace{1px}\\
+Questo è un \textbf{backward pass} attraverso la rete. L'algoritmo che calcola gli aggiornamenti dei parametri si chiama \hl{algoritmo di backpropagation}.
+\imgfig[0.75]{nn_backprop.png}
+
+\subsection{L'algoritmo di Backpropagation (e i suoi problemi)}
+\subsubsection{Calcolo del gradiente}
+Una rete neurale calcola una funzione complessa, composizione di molti livelli. Come calcoliamo il gradiente rispetto a uno specifico parametro (peso) della rete?\\
+\vspace{1px}\\
+Serve la \hl{regola della catena} (\textit{chain rule}) per le derivate.
+
+\subsubsection{La regola della catena}
+Date due funzioni derivabili $f, g$ con derivate $f', g'$, la derivata della funzione composta $h(x) = f(g(x))$ è
+\[ h'(x) = f'(g(x)) \cdot g'(x) \]
+Equivalentemente, posto $y = g(x)$,
+\[ h'(x) = f'(y) \cdot g'(x) \]
+La derivata di una composizione di funzioni è il \hl{prodotto delle derivate} delle singole funzioni.\\
+\vspace{1px}\\
+\textbf{Domanda:} perché la soglia binaria non è una buona funzione di attivazione per la backpropagation?\\
+\textit{Perché la sua derivata è $0$ quasi ovunque}: il prodotto della catena si annulla e non arriva nessun segnale ai livelli precedenti.
+
+\subsubsection{La funzione calcolata dalla rete}
+Il neurone artificiale al livello $\ell$ calcola
+\[ a^\ell = \sigma(b^\ell + w^\ell \cdot x^\ell) \]
+\begin{itemize}
+\item $a^\ell$ è il vettore di attivazione al livello $\ell$;
+\item $z^\ell = b^\ell + w^\ell \cdot x^\ell$ è l'\hl{input pesato} al livello $\ell$;
+\item $x^{\ell+1} = a^\ell$, $\quad x^1 = x$.
+\end{itemize}
+La funzione calcolata dalla rete è
+\[ \sigma\big(b^L + w^L \cdot \ldots \sigma(b^2 + w^2 \cdot \sigma(b^1 + w^1 \cdot x^1))\big) \]
+Le dimensioni di $w^\ell$ e $b^\ell$ dipendono dal numero di neuroni al livello $\ell$ (e $\ell-1$). Tutti sono \textbf{parametri} del modello.
+
+\subsubsection{Regole di backpropagation in notazione vettoriale}
+Data una funzione di errore $E$ (ad esempio la distanza euclidea), definiamo l'\hl{derivata dell'errore} al livello $\ell$ come il vettore di derivate parziali
+\[ \delta^\ell = \frac{\partial E}{\partial z^\ell} \]
+Valgono le seguenti equazioni:
+\begin{align*}
+\text{(BP1)}\quad & \delta^L = \nabla_{a^L} E \odot \sigma'(z^L) \\
+\text{(BP2)}\quad & \delta^\ell = \big((W^{\ell+1})^T \delta^{\ell+1}\big) \odot \sigma'(z^\ell) \\
+\text{(BP3)}\quad & \frac{\partial E}{\partial b^\ell_j} = \delta^\ell_j \\
+\text{(BP4)}\quad & \frac{\partial E}{\partial w^\ell_{jk}} = a^{\ell-1}_k \, \delta^\ell_j
+\end{align*}
+dove $\odot$ è il \textbf{prodotto di Hadamard} (componente per componente).
+\imgfig[0.5]{nn_neurone_bp.png}
+\begin{itemize}
+\item BP1: errore sull'ultimo livello;
+\item BP2: l'errore viene propagato \textit{all'indietro} da $\ell+1$ a $\ell$;
+\item BP3, BP4: gradiente rispetto a bias e pesi.
+\end{itemize}
+
+\subsubsection{Il problema del vanishing gradient}
+\[ \text{(BP2)}\quad \delta^\ell = (W^{\ell+1})^T \delta^{\ell+1} \odot \sigma'(z^\ell) \]
+Per la regola della catena la derivata è una lunga sequenza di fattori che sono, alternativamente:
+\begin{itemize}
+\item \textbf{derivate delle funzioni di attivazione};
+\item derivate di funzioni lineari, che sono costanti (in effetti, la matrice trasposta dei coefficienti lineari).
+\end{itemize}
+Osserviamo le derivate di un paio di funzioni di attivazione.
+
+\subsubsection{Derivate di funzioni di attivazione comuni}
+\begin{center}
+\begin{minipage}[t]{0.48\linewidth}\centering
+\textbf{Sigmoid}\\
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle, width=\linewidth, height=3.4cm, xmin=-6, xmax=6, ymin=-0.1, ymax=1.1, ytick={0,0.25,1}, xtick=\empty, ticklabel style={font=\scriptsize}]
+\addplot[blue, thick, domain=-6:6, samples=60] {1/(1+exp(-x))};
+\addplot[green!60!black, thick, domain=-6:6, samples=60] {exp(-x)/(1+exp(-x))^2};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\linewidth}\centering
+\textbf{ReLU}\\
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle, width=\linewidth, height=3.4cm, xmin=-3, xmax=3, ymin=-0.3, ymax=3, ytick={0,1}, xtick=\empty, ticklabel style={font=\scriptsize}]
+\addplot[blue, thick, domain=-3:3, samples=2] {max(0,x)};
+\addplot[green!60!black, thick, domain=-3:0, samples=2] {0};
+\addplot[green!60!black, thick, domain=0:3, samples=2] {1};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\end{center}
+{\small \textcolor{blue}{blu}: funzione; \textcolor{green!60!black}{verde}: derivata.}\\
+Osserviamo la forma \hl{piatta} di $\sigma'(x)$, sempre \textbf{sotto $0.25$}. La derivata della ReLU invece vale $1$ per $x>0$.
+
+\subsubsection{Il problema del vanishing gradient (conseguenze)}
+Se si usa sistematicamente la sigmoid come funzione di attivazione in tutti i livelli di una rete profonda, il gradiente conterrà molti fattori inferiori a $0.25$, risultando in un valore \hl{molto piccolo}.\\
+\vspace{1px}\\
+Se il gradiente è vicino a zero, \textcolor{red}{l'apprendimento è impossibile}.\\
+\vspace{1px}\\
+Questo è noto come \textbf{vanishing gradient problem}.
+
+\subsubsection{Un po' di storia}
+Il vanishing gradient ha bloccato il progresso sulle reti neurali per quasi \hl{15 anni} (1990-2005).\\
+\vspace{1px}\\
+È stato aggirato dapprima con il \textbf{pre-training} della rete (ad esempio con le Boltzmann Machines) e poi con l'introduzione di nuove funzioni di attivazione, come le \textbf{ReLU}, che hanno reso obsoleto il pre-training.\\
+\vspace{1px}\\
+Anche le \textit{skip-connection} e la \textit{residualità} migliorano la propagazione all'indietro dei gradienti (ne parleremo nelle prossime lezioni).
+
+\section{Testo e Immagini}
+\subsection{Perché servono livelli diversi?}
+Una rete \textbf{fully connected} può, in linea di principio, elaborare immagini appiattite o sequenze di lunghezza fissa. Però l'\hl{appiattimento} ignora le strutture utili presenti nei dati.
+\begin{itemize}
+\item \textbf{Immagini}: struttura spaziale, continuità, pattern locali, invarianza a traslazione e scala, gerarchia di feature.
+\item \textbf{Testo}: ordine degli elementi, lunghezza variabile, contesto, dipendenze a lungo raggio.
+\end{itemize}
+\imgfig[0.45]{s3_inductive_parrot.png}
+
+\subsubsection{Architettura e inductive bias}
+L'architettura di una rete non determina solo \textit{come} si calcola, ma \hl{guida anche l'apprendimento}. Scegliendo un'architettura si incorporano ipotesi sulla struttura dei dati (relazioni spaziali nelle immagini, ordine temporale nelle sequenze). Queste ipotesi si chiamano \textbf{inductive bias}: influenzano quali pattern la rete impara facilmente.\\
+Un bias adatto rende l'apprendimento più \hl{efficiente nei dati} e migliora la generalizzazione.
+
+\subsubsection{Esempi di inductive bias}
+\begin{itemize}
+\item \textbf{CNN}: pixel vicini sono correlati; si cercano pattern e si capisce \textit{dove} si trovano.
+\item \textbf{RNN/LSTM}: l'ordine conta; il passato viene memorizzato in uno stato che influenza l'elaborazione successiva.
+\item \textbf{Transformer}: le relazioni tra elementi si apprendono con l'\textbf{attenzione}, anche tra elementi distanti. Visione completa del passato.
+\end{itemize}
+
+\subsection{Alcuni task sulle immagini}
+\imgfig[0.75]{s3_task_immagini.png}
+\begin{itemize}
+\item \textbf{Classificazione}: immagine $\to$ categoria.
+\item \textbf{Object detection}: immagine $\to$ oggetti e bounding box.
+\item \textbf{Segmentazione}: immagine $\to$ etichetta per ogni pixel.
+\item \textbf{Generazione}: rappresentazione o prompt $\to$ immagine.
+\end{itemize}
+
+\subsection{Dataset di riferimento}
+\begin{itemize}
+\item \textbf{ImageNet} (Stanford Vision Lab): circa 15M immagini ad alta risoluzione, 22K classi di oggetti; ground truth per classificazione, segmentazione e bordi.
+\item \textbf{COCO}: oltre 200K immagini etichettate, 80 categorie, per detection, segmentazione e captioning.
+\end{itemize}
+
+\subsection{Due approcci: CNN e ViT}
+\begin{itemize}
+\item \textbf{CNN} (1989): LeCun et al., \textit{Backpropagation Applied to Handwritten Zip Code Recognition}.
+\item \textbf{ViT} (2021): Dosovitskiy et al., \textit{An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale}.
+\end{itemize}
+\imgfig[0.9]{s3_cnn_vs_vit.png}
+
+\subsubsection{Layer convoluzionale}
+Ogni neurone del livello $k-1$ è connesso, tramite un \textbf{kernel} parametrico, a un sottoinsieme fisso di neuroni del livello $k$. Lo stesso kernel viene convoluto su tutto il livello precedente.
+\begin{enumerate}
+\item si sposta il kernel $K$ su una porzione $M$ dell'input di uguale dimensione;
+\item si calcola il prodotto scalare $M \cdot K$ ed eventualmente si aggiunge un bias;
+\item si sposta il kernel e si ripete.
+\end{enumerate}
+\imgfig[0.6]{s3_kernel_convoluzione.png}
+
+\subsubsection{Kernel e feature map}
+\begin{itemize}
+\item \textbf{Kernel (filtro)}: insieme di pesi appresi che rappresenta un pattern locale (un bordo, una texture).
+\item \textbf{Convoluzione}: il kernel scorre sull'input misurando quanto ogni regione locale corrisponde al pattern.
+\item \textbf{Feature map}: risultato dell'applicazione di un kernel su tutto l'input; indica \hl{dove} il pattern è presente.
+\item \textbf{Output}: le feature map dei vari kernel sono impilate lungo la dimensione dei canali e passate al livello successivo.
+\end{itemize}
+Forma: input $H \times W \times C_{in}$, con $N$ kernel si ottiene output $H' \times W' \times N$.
+
+\subsubsection{Vision Transformer (ViT)}
+Alternativa alle convoluzioni: l'immagine è trattata come una \hl{sequenza di patch}.
+\begin{itemize}
+\item \textbf{Patch}: l'immagine è divisa in regioni di dimensione fissa, non sovrapposte.
+\item \textbf{Token}: ogni patch è trasformata in un vettore (embedding).
+\item \textbf{Transformer}: la sequenza di embedding è elaborata con \textbf{self-attention}, così le regioni scambiano informazione.
+\item \textbf{Output}: rappresentazioni contestualizzate delle patch, usate per i task successivi.
+\end{itemize}
+La differenza chiave: le CNN sfruttano esplicitamente la \textbf{località spaziale} tramite convoluzione; i ViT imparano le relazioni tra regioni con l'attenzione, con \hl{meno assunzioni spaziali} integrate.
+
+\subsection{Sequenze}
+$X = (x_1, x_2, \dots, x_T)$, con $x_t \in \mathbb{R}^d$. Molti dati sono naturalmente sequenze: testo (parole o token), serie temporali (temperature, prezzi), audio, video.
+\begin{itemize}
+\item \textbf{L'ordine conta}: cambiare l'ordine può cambiare il significato.
+\item \textbf{Lunghezza variabile}: le sequenze possono avere numero di elementi diverso.
+\item \textbf{Dipendenze}: un elemento può dipendere da elementi precedenti o distanti.
+\end{itemize}
+\imgfig[0.5]{s3_testo_sequenza.png}
+
+\subsection{Problemi tipici}
+\begin{itemize}
+\item \textbf{Sequence-to-result}: dalla sequenza si predice un output (sentiment, riconoscimento di attività, robotica).
+\item \textbf{Sequence-to-sequence}: sequenza in ingresso, sequenza in uscita di lunghezza o modalità diversa (traduzione automatica, riconoscimento vocale).
+\item \textbf{Next-step prediction}: si predice l'elemento successivo (language modeling, previsione di serie temporali). Permette l'\hl{apprendimento auto-supervisionato}.
+\end{itemize}
+
+\subsection{Componenti neurali per le sequenze}
+Come si scambia informazione tra elementi di una sequenza?
+\begin{itemize}
+\item \textbf{Reti ricorrenti (LSTM)}: elaborano gli elementi in sequenza, mantenendo una memoria interna che porta informazione dai passi precedenti.
+\item \textbf{Transformer}: usano la \textbf{self-attention} perché gli elementi interagiscano direttamente, anche se distanti.
+\end{itemize}
+Differenza chiave: le LSTM propagano l'informazione tramite uno \hl{stato ricorrente}; i Transformer modellano le dipendenze tramite \hl{attenzione}.
+
+\subsection{Reti ricorrenti e LSTM}
+\subsubsection{RNN srotolata nel tempo}
+Una RNN (Recurrent Neural Network) è una rete con \hl{connessioni di feedback} (cicli). Per controllare la propagazione si usano \hl{passi temporali} (aggiornamenti come un orologio): una connessione ricorrente diventa una connessione in avanti dal passo $t$ al passo $t+1$. Di solito le RNN si rappresentano \textbf{srotolate}, così l'applicazione alle sequenze è chiara: la rete prende in ingresso una sequenza e restituisce una sequenza.
+\imgfig[0.8]{s3_rnn_unrolled.png}
+
+\subsubsection{LSTM}
+La \textbf{Long Short-Term Memory} (LSTM) è un tipo particolare di RNN, pensata per modificare uno \hl{stato interno} (la memoria) con modifiche controllate.
+\begin{itemize}
+\item La \textbf{C-line} è un flusso diretto dallo stato di cella al tempo $t-1$ allo stato al tempo $t$, regolato da \textbf{gate}.
+\item Un \textbf{gate} lascia passare l'informazione in modo opzionale: il prodotto con uno strato sigmoide simula una \hl{maschera booleana}.
+\end{itemize}
+\imgfig[0.6]{s3_lstm_cstato.png}
+
+\subsubsection{Dalla ricorrenza all'attenzione}
+RNN e LSTM propagano l'informazione attraverso uno stato ricorrente, con tre limiti:
+\begin{itemize}
+\item \textbf{Calcolo sequenziale}: il passo $t$ dipende dal passo $t-1$, quindi non si parallelizza.
+\item \textbf{Dipendenze a lungo raggio}: l'informazione da elementi distanti deve attraversare molti stati intermedi.
+\item \textbf{Collo di bottiglia}: lo stato ricorrente deve riassumere tutta la storia rilevante.
+\end{itemize}
+L'idea è far accedere ogni elemento \hl{direttamente} alle informazioni degli altri elementi, con un meccanismo di \textbf{attenzione}.
+
+\subsection{Attenzione e Transformer}
+\subsubsection{Idea chiave dell'attenzione}
+Ogni elemento della sequenza ha tre rappresentazioni:
+\begin{itemize}
+\item \textbf{Query (Q)}: cosa sto cercando?
+\item \textbf{Key (K)}: a cosa sono rilevante?
+\item \textbf{Value (V)}: quale informazione fornisco?
+\end{itemize}
+L'attenzione confronta una query con le chiavi per determinare la \hl{rilevanza}, poi calcola una \hl{combinazione pesata} dei valori corrispondenti. Il risultato è una nuova rappresentazione di ogni elemento che incorpora informazione dagli altri.
+
+\subsubsection{Il blocco Transformer}
+Un blocco Transformer è un'alternanza di uno strato di \textbf{self-attention} e di uno strato \textbf{feed-forward} denso.
+\begin{itemize}
+\item La self-attention permette ai token di scambiarsi informazione.
+\item Il feed-forward trasforma ogni token \hl{indipendentemente}, con la stessa funzione per tutti i token.
+\end{itemize}
+Ogni sotto-strato (self-attention, FFNN) ha una \textbf{connessione residua} intorno a sé ed è seguito da una \textbf{layer normalization}.
+\imgfig[0.6]{s3_transformer_block.png}
+
+\subsection{Ruoli nel sistema}
+CNN, ViT, LSTM e Transformer descrivono \hl{componenti}; encoder e decoder descrivono \hl{ruoli} all'interno di un sistema.
+\begin{itemize}
+\item \textbf{Encoder}: trasforma i dati in ingresso in una rappresentazione utile (latente).
+\item \textbf{Decoder}: produce un output, eventualmente condizionato dalla rappresentazione codificata.
+\end{itemize}
+\imgfig[0.6]{s3_encoder_decoder.png}
+
+\subsection{Pattern architetturali}
+\begin{center}
+\begin{tabular}{p{3.4cm} p{4.6cm} p{6.4cm}}
+\textbf{Pattern} & \textbf{Esempio} & \textbf{Idea principale}\\
+\hline
+Encoder + testa di predizione & classificazione di immagini, sentiment analysis & estrarre feature, predire un'etichetta\\
+Decoder-only & language modeling autoregressivo & generare una sequenza dal contesto precedente\\
+Encoder-decoder & traduzione, image captioning & codificare l'input, generare un output condizionato\\
+\end{tabular}
+\end{center}
+Encoder e decoder non devono avere la stessa architettura. Esempi:
+\begin{itemize}
+\item \textbf{Image captioning}: encoder CNN o ViT per l'immagine, decoder Transformer per il testo.
+\item \textbf{Traduzione automatica}: encoder Transformer e decoder Transformer.
+\end{itemize}
+
+\subsection{Tassonomia di task e modalità}
+\begin{center}
+\small
+\begin{tabular}{p{3.4cm} p{4.0cm} p{4.0cm} p{4.6cm}}
+\textbf{Input $\downarrow$ / Output $\rightarrow$} & \textbf{Testo} & \textbf{Immagine} & \textbf{Etichette / output strutturati}\\
+\hline
+Testo & traduzione, riassunto, chat & text-to-image generation & sentiment, NER\\
+Immagine & captioning, visual question answering & image editing, restauro & classificazione, detection, segmentazione\\
+Testo + immagine & multimodal question answering & instruction-guided image editing & visual grounding\\
+\end{tabular}
+\end{center}
+La maggior parte delle applicazioni si può capire come combinazione di \hl{elaborazione specifica per modalità} e \hl{output specifico per il task}.
+
+\subsection{Esempio: image captioning}
+Task: produrre una didascalia per un'immagine in ingresso. Un \textbf{encoder visivo} (CNN o ViT) è collegato a un \textbf{decoder testuale} (Transformer). Poiché i due componenti lavorano su rappresentazioni diverse, serve un \hl{meccanismo appreso} che le colleghi.
+\imgfig[0.5]{s3_captioning_cane.png}
+Output d'esempio: \textit{``A dog jumps over a log''}.
+
+\subsection{Takeaways}
+\begin{itemize}
+\item \textbf{La modalità conta}: immagini e sequenze hanno strutture diverse e richiedono \hl{layer specializzati} con inductive bias adatti.
+\item \textbf{Layer specializzati si combinano} per costruire modelli, come le CNN o i Transformer.
+\item \textbf{I modelli si compongono} per task complessi, anche multimodali. L'architettura determina come i layer sono organizzati e come l'informazione fluisce tra di essi.
+\end{itemize}
+
 \end{document}

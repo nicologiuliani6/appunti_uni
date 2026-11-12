@@ -1,0 +1,1914 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\\leq}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\\geq}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{2194}{\ensuremath{\\leftrightarrow}}
+\DeclareUnicodeCharacter{230A}{\ensuremath{\\lfloor}}
+\DeclareUnicodeCharacter{230B}{\ensuremath{\\rfloor}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\\to}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\\neq}}
+
+\usepackage[italian]{babel}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}
+\title{Ingegneria del Software: soluzioni}
+\author{Nicolò Giuliani}
+\date{}
+\begin{document}
+\maketitle
+\textbf{X} (come nelle domande) = argomento non ancora visto, oppure la risposta non risulta scritta nei tuoi appunti (controllo automatico: può sbagliare, nel dubbio meglio una X in più).
+\bigskip
+\tableofcontents
+\newpage
+\section{Ciclo di vita, costi, manutenzione, produttività, Brooks}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 1 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Cascata (waterfall): requisiti → progetto → codifica → test → manutenzione, una fase dopo l'altra. Spirale, incrementale e agile sono iterativi.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 2 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+I client dipendono solo dall'interfaccia: l'implementazione può cambiare senza toccarli (information hiding, basso accoppiamento).
+
+
+
+\section{Processo, requisiti, agile, Scrum, PM}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 3 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: a}\par
+MoSCoW: \textbf{Must} (essenziali, d), \textbf{Should} (importanti ma rinviabili, a), \textbf{Could} (opzionali "se c'è tempo", b/c), \textbf{Won't} (esclusi per questa release).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 4 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+Tempo, costo e scopo (ambito): cambiarne uno impatta gli altri, la qualità sta "al centro". (c) sono i ruoli Scrum, (d) le aree di interesse di Essence.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 5 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+In agile lo scopo (ambito) del progetto è ciò che c'è da fare: il product backlog, che evolve nel tempo.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 6 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Scrum prevede solo Product Owner, Scrum Master e Team (auto-organizzato). Le responsabilità del PM sono distribuite tra questi ruoli.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 7 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: a}\par
+MVP = la versione minima che dà già valore ai clienti e permette di imparare dal mercato col massimo ritorno rispetto al rischio; non è legato a uno sprint specifico.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 8 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: a}\par
+Velocità = media degli story point completati (Done) per sprint: si misura in punti, non in numero di storie, e su più sprint.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 9 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: d}\par
+Sforzo (effort, es. in persona-mese) = somma del tempo effettivamente speso da ciascuno. (c) sovrastima se non tutti lavorano a tempo pieno per tutta la durata.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 10 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: d}\par
+Il PM governa il triangolo tempi–costi–ambito. La gestione dei requisiti con gli stakeholder (b) è compito del product owner / analista.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 11 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: a}\par
+Agile = iterativo e incrementale (sprint), feedback continuo. (b) e (c) descrivono un approccio a cascata (big design up front).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 12 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+Analisi = \textit{cosa} deve fare il sistema; il \textit{come} (architettura, a) è progettazione.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 13 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: d}\par
+Serve come riferimento comune (e contrattuale) su cosa va costruito, e come base per validazione e test.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 14 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+Lista ordinata per priorità (dal PO) di tutto ciò che serve al prodotto (US, epiche, bug, miglioramenti); evolve continuamente (backlog refinement).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 15 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Il PO rappresenta gli stakeholder, possiede e ordina il product backlog: è responsabile del valore prodotto.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 16 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Review = riflessione sul \textit{prodotto} (demo agli stakeholder); retrospective = riflessione sul \textit{processo} del team.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 17 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Stand-up di max 15 minuti, in piedi, senza problem solving: cosa ho fatto ieri, cosa farò oggi, quali impedimenti ho.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 18 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: a}\par
+Cosa implementare (e in che ordine) lo decide il Product Owner. Lo SM è un facilitatore / servant leader del processo.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 19 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Sprint time-boxed di durata fissa, da 1 a 4 settimane (≤ 1 mese).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 20 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+A ogni sprint review si mostra un incremento funzionante e si raccoglie feedback, quindi si può correggere la rotta presto.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 21 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+Retrospective = sul processo (cosa è andato bene/male, cosa cambiare). (a) è lo sprint planning, (c) la sprint review.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 22 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: d}\par
+Pianificazione di gruppo (PO, SM, Team): il PO porta le priorità, il team sceglie quanto può fare e lo scompone in task.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 23 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+Un requisito deve essere non ambiguo e testabile (vedi anche la T di INVEST per le user story).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 24 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Un prototipo (spesso usa e getta) serve a chiarire requisiti e validare idee con gli utenti prima di costruire il sistema vero.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 25 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+"Come \textless{}ruolo\textgreater{} voglio \textless{}funzionalità\textgreater{} per \textless{}beneficio\textgreater{}": breve, informale, promemoria di una conversazione (non un requisito formale).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 26 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+UML è un linguaggio grafico standard: tutti leggono gli stessi diagrammi, quindi è uno strumento di comunicazione (e di documentazione).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 27 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Use case = scenario d'uso del sistema da parte di un attore che produce un risultato di valore per l'attore stesso.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 28 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Funzionali = \textit{cosa} fa il sistema (servizi, comportamento). Non funzionali = \textit{come bene} lo fa: prestazioni, sicurezza, usabilità, affidabilità, vincoli.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 29 \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\textbf{Risposta: c}\par
+Use case = sequenza di interazioni che porta un risultato di valore a un attore.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 30 X \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+\textbf{Risposta: d}\par
+Il PM governa il "triangolo" tempi–costi–ambito (qualità/requisiti). La gestione dei requisiti con gli stakeholder (b) è compito del product owner / analista.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 31 X \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+\textbf{Risposta: c}\par
+Funzionali = \textit{cosa} fa il sistema (servizi, comportamento). Non funzionali = \textit{come bene} lo fa: prestazioni, sicurezza, usabilità, affidabilità, vincoli.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 32 X \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+\textbf{Risposta: a}\par
+Agile = iterativo e incrementale (sprint), feedback continuo. (b) e (c) descrivono un approccio a cascata (big design up front).
+
+
+
+\section{User story / epiche}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 33 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+1. \textbf{Come} scolaro \textbf{voglio} un suggerimento della parola d'apertura quando la pagina del tema è bianca \textbf{così da} riuscire a iniziare il tema.
+
+   \textit{Accettazione}: con il tema vuoto da più di N minuti compaiono 3 possibili incipit.
+
+2. \textbf{Come} scolaro \textbf{voglio} che il testo mi segnali la punteggiatura mancante \textbf{così da} non dimenticare i segni d'interpunzione.
+
+   \textit{Accettazione}: le frasi senza punto finale vengono evidenziate.
+
+3. \textbf{Come} scolaro \textbf{voglio} contattare uno scolaro di un altro pianeta \textbf{così da} poterci ridere insieme quando lo incontrerò.
+
+Ogni storia: un solo ruolo, una sola funzionalità di valore, verificabile (INVEST).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 34 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+1. \textbf{Come} studente \textbf{voglio} far ricrescere una matita consumata con lo stemperino \textbf{così da} non doverne comprare una nuova.
+
+   \textit{Accettazione}: dopo l'uso la matita torna alla lunghezza iniziale. \textit{Stima}: 3 punti.
+
+2. \textbf{Come} cittadino \textbf{voglio} staccare un cappotto dallo staccapanni d'inverno \textbf{così da} coprirmi senza comprarlo.
+
+   \textit{Accettazione}: lo staccapanni restituisce un cappotto della taglia e del genere richiesti. \textit{Stima}: 5 punti.
+
+3. \textbf{Come} viaggiatore \textbf{voglio} chiedere a un cittadino che paese è \textbf{così da} orientarmi.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 35 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+1. \textbf{Come} visitatore \textbf{voglio} sapere quanto dura il giro dell'isola in canotto \textbf{così da} pianificare l'escursione.
+
+   \textit{Accettazione}: per l'isolotto viene mostrato "circa 30 minuti". \textit{Stima}: 2 punti.
+
+2. \textbf{Come} passeggero \textbf{voglio} riconoscere i suoni dell'isola (fruscii, versi d'uccelli, frullo d'ali) \textbf{così da} distinguerne il silenzio da quello del mare.
+
+   \textit{Accettazione}: ogni suono registrato è etichettato con la sua fonte. \textit{Stima}: 8 punti.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 36 \hfill {\small \textcolor{gray}{(Scritto 15/01/2015)}}}
+1. Come imprenditore voglio associare fino a 3 veicoli aziendali al terminale così da usarlo per tutta la flotta. \textit{(3 pt)}
+
+2. Come imprenditore voglio ricevere fattura intestata all'azienda così da scaricare i costi. \textit{(5 pt)}
+
+3. Come imprenditore voglio consultare online lo storico dei transiti per veicolo così da controllare le spese. \textit{(5 pt)}
+
+4. Come imprenditore voglio pagare il parcheggio dell'aeroporto con il Telepass così da non perdere tempo. \textit{(2 pt)}
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 37 \hfill {\small \textcolor{gray}{(Scritto 16/01/2020)}}}
+1. \textbf{Come giocatore} voglio registrarmi con un nome così da poter partecipare alle partite. \textit{Stima}: 2. \textit{Verifica}: un nome già esistente viene rifiutato.
+
+2. \textbf{Come giocatore} voglio afferrare un mostro in fuga così da catturarlo. \textit{Stima}: 5. \textit{Verifica}: se energia \textless{} 5 il mostro diventa mio; altrimenti si nasconde con energia − 1.
+
+3. \textbf{Come giocatore} voglio inserire un mostro catturato nella mia squadra così da usarlo in combattimento. \textit{Stima}: 3. \textit{Verifica}: con 6 mostri in squadra l'inserimento è rifiutato.
+
+4. \textbf{Come amministratore/sistema di gioco} voglio terminare la partita dopo 60 minuti così da proclamare il vincitore. \textit{Stima}: 3. \textit{Verifica}: a 60' vince il proprietario del mostro con energia effettiva massima (fattore leggendario applicato).
+
+Stime in story point relativi (es. Fibonacci 1,2,3,5,8).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 38 \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+User story nel formato \textit{Come \textless{}ruolo\textgreater{} voglio \textless{}obiettivo\textgreater{} così da \textless{}beneficio\textgreater{}}, con criterio di accettazione:
+
+1. \textbf{Come} volpe \textbf{voglio} fingermi morta in mezzo al sentiero \textbf{così da} attirare le galline.
+
+   \textit{Accettazione}: quando una gallina vede la volpe immobile con occhi chiusi, la classifica come "morta".
+
+2. \textbf{Come} gallina \textbf{voglio} organizzare un funerale per l'animale morto \textbf{così da} onorarlo.
+
+   \textit{Accettazione}: il funerale prevede campane, vestiti neri e fossa scavata dal gallo.
+
+3. \textbf{Come} media (radio/TV) \textbf{voglio} diffondere la notizia \textbf{così da} informare gli altri pollai.
+
+Atomica = una sola funzionalità, che dà valore a un attore, stimabile e verificabile.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 39 \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+1. \textbf{Come} vecchietta \textbf{voglio} chiedere una poltrona con braccioli \textbf{così da} potermi sedere tra la folla. \textit{Accettazione}: un pompiere consegna una poltrona alla vecchietta. Stima: 2 punti.
+
+2. \textbf{Come} guardia \textbf{voglio} accorgermi che una parte del palazzo si scioglie \textbf{così da} far intervenire i cittadini. \textit{Accettazione}: quando un componente si scioglie viene emesso l'allarme "Presto!". Stima: 3 punti.
+
+3. \textbf{Come} bambino \textbf{voglio} leccare il palazzo di gelato \textbf{così da} gustarlo.
+
+
+
+\section{Testing, TDD, qualità e metriche}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 40 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+White-box (strutturale): i test sono scritti guardando il codice (copertura di istruzioni, rami…). Black-box usa solo la specifica.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 41 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: d}\par
+Rieseguibili a ogni modifica (anche in CI), segnalano subito se qualcosa che funzionava si è rotto (regressione). Non eliminano il debugging: dicono \textit{che} c'è un errore, non \textit{dove}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 42 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Un mock sostituisce una dipendenza (DB, rete, servizio) con un oggetto finto dal comportamento controllato, per testare l'unità in isolamento.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 43 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+È il diagramma strutturale (statico) centrale dei modelli OO: classi, attributi, operazioni e relazioni (associazione, aggregazione, generalizzazione, dipendenza).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 44 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: b}\par
+TDD (pratica XP): prima si scrive un test che fallisce, poi il codice minimo per farlo passare, poi si fa refactoring (red–green–refactor).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 45 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: d}\par
+Il testing confronta il comportamento reale con quello atteso (dalla specifica) per scoprire difetti.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 46 \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+La gestione della qualità definisce standard e metriche (complessità, copertura, difettosità…) e verifica che vengano rispettati.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 47 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+LangChain: componenti per costruire catene (prompt, modelli, tool, memory, retrieval). CrewAI: squadre di agenti con ruoli che collaborano su task.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 48 \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Con lo streaming i token arrivano appena generati: la latenza percepita (tempo al primo token) cala, il costo resta uguale.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 49 \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+\textbf{Risposta: b}\par
+Use case = funzionalità che fornisce un risultato di valore a un attore.
+
+
+
+\section{UML e concetti OO (oggetti, classi)}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 50 \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Virtuale = la sottoclasse può ridefinirla (overriding) e la chiamata si risolve a runtime sul tipo dinamico. (a) descrive l'ereditarietà \textit{virtuale}, che è un'altra cosa.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 51 \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+La classe descrive struttura e comportamento; l'oggetto è un suo esemplare concreto, con identità e stato propri.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 52 \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+\textit{Unified}: nasce dall'unificazione dei metodi di Booch, Rumbaugh (OMT) e Jacobson (OOSE), standardizzato da OMG.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 53 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+La scrittura del tema:
+
+\begin{verbatim}
+flowchart TD
+  S((start)) --> A[Sedersi al banco]
+  A --> B[Cercare la parola per iniziare]
+  B --> D{Parola trovata?}
+  D -- no --> B
+  D -- sì --> C[Intingere il pennino nel calamaio]
+  C --> W[Scrivere il tema]
+  W --> P{Punteggiatura messa?}
+  P -- no --> X[Segni rimasti nel calamaio]
+  P -- sì --> F[Tema completo]
+  X --> F
+  F --> G{Libro di storia aperto?}
+  G -- sì --> H[Disegnare un pupazzetto]
+  G -- no --> E((fine))
+  H --> E
+\end{verbatim}
+Elementi attesi: nodo iniziale/finale, azioni, decisioni con guardie, un ciclo (la ricerca della parola); eventuale fork/join se si modellano in parallelo i due scolari su pianeti diversi.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 54 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+Procurarsi un capo allo staccapanni:
+
+\begin{verbatim}
+flowchart TD
+  S((start)) --> A[Cittadino ha bisogno di un capo]
+  A --> St{Stagione?}
+  St -- estate --> E1[Andare allo staccapanni d'estate]
+  St -- inverno --> E2[Andare allo staccapanni d'inverno]
+  E1 --> G{Uomo o signora?}
+  E2 --> G
+  G -- uomo --> U[Scegliere sul lato uomo]
+  G -- signora --> D[Scegliere sul lato signora]
+  U --> T[Staccare il capo]
+  D --> T
+  T --> R[Soldi risparmiati]
+  R --> F((fine))
+\end{verbatim}
+Elementi attesi: nodo iniziale/finale, decisioni con guardie e relativi merge.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 55 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+L'avvicinamento all'isola, con le due persone in parallelo (fork/join, eventualmente swimlane Uomo / Donna):
+
+\begin{verbatim}
+flowchart TD
+  S((start)) --> FK[ fork ]
+  FK --> U1[Uomo: pagaiare tranquillo]
+  FK --> D1[Donna: prendere il sole]
+  U1 --> J[ join ]
+  D1 --> J
+  J --> V{Vicini all'isola?}
+  V -- no --> FK
+  V -- sì --> A[Uomo: tendere l'orecchio]
+  A --> Q[Donna: chiedere cosa ha sentito]
+  Q --> R[Uomo: rispondere 'Silenzio']
+  R --> F((fine))
+\end{verbatim}
+
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 56 \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\textbf{Risposta: b}\par
+Unified: nasce dall'unificazione dei metodi di Booch, Rumbaugh (OMT) e Jacobson (OOSE).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 57 \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\textbf{Risposta: b}\par
+La classe è il modello/stampo, l'oggetto ne è un'istanza con identità e stato propri.
+
+
+
+\section{Use case}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 58 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: c}\par
+Include = una parte del comportamento (sempre eseguita) estratta in un use case a sé, tipicamente perché condivisa da più use case. Extend = comportamento opzionale aggiunto (a).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 59 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: a}\par
+Extend aggiunge funzionalità opzionali (eseguite solo in certe condizioni) a un use case base, che resta completo anche da solo.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 60 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Use case = scenario d'uso visto dall'esterno: attore, sistema e la sequenza di interazioni che porta a un risultato di valore. Non descrive l'implementazione.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 61 \hfill {\small \textcolor{gray}{(Scritto 15/01/2015)}}}
+Attori: \textbf{Cliente}, \textbf{Terminale Telepass} (dispositivo), \textbf{Casello/Barriera} e \textbf{Parcheggio} (sistemi esterni), \textbf{Banca/Ente pagamento}, \textbf{Operatore Autostrade}.
+
+Use case:
+
+- \textit{Stipulare contratto} (Cliente, Operatore) — \texttt{\textless{}\textless{}include\textgreater{}\textgreater{}} \textit{Scegliere forma di pagamento}
+
+- \textit{Registrare targhe} (Cliente; max 3)
+
+- \textit{Transitare in ingresso} / \textit{Transitare in uscita} (Terminale, Casello) — \texttt{\textless{}\textless{}include\textgreater{}\textgreater{}} \textit{Identificare terminale}
+
+- \textit{Pagare parcheggio} (Terminale, Parcheggio)
+
+- \textit{Addebitare pedaggio} (Banca) — \texttt{\textless{}\textless{}extend\textgreater{}\textgreater{}} \textit{Applicare sanzione} [transito irregolare]
+
+- \textit{Emettere addebito periodico} (Banca, timer)
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 62 \hfill {\small \textcolor{gray}{(Scritto 16/01/2020)}}}
+Attori: \textbf{Giocatore} (primario), \textbf{Timer/Sistema di gioco} (attore temporale, scadenza 60'), eventualmente \textbf{CapsuleMonster (AI)}.
+
+\begin{verbatim}
+flowchart LR
+  G([Giocatore])
+  T([Timer])
+  G --- R((Registrarsi))
+  G --- P((Partecipare a partita))
+  G --- M((Muoversi sulla mappa))
+  G --- C((Cercare mostri))
+  G --- A((Catturare mostro))
+  G --- O((Dare ordini al mostro))
+  O -.include.-> S((Selezionare mostro))
+  O -.-> O1((Inserire in squadra))
+  O -.-> O2((Combattere))
+  O -.-> O3((Liberare))
+  T --- F((Terminare partita / proclamare vincitore))
+\end{verbatim}
+O1–O3 come \texttt{\textless{}\textless{}extend\textgreater{}\textgreater{}} o specializzazioni di \textit{Dare ordini}. Possibile \texttt{\textless{}\textless{}include\textgreater{}\textgreater{}} \textit{Autenticarsi} in \textit{Partecipare a partita}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 63 \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\textbf{Risposta: a}\par
+\texttt{\textless{}\textless{}extend\textgreater{}\textgreater{}}: comportamento opzionale/condizionale che si inserisce in un \textit{extension point} dello use case base. La specializzazione (b, d) è la \textit{generalizzazione} tra use case, cosa diversa.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 64 \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+Attori: \textbf{Bambino}, \textbf{Gente}.
+
+- \textit{Dire una frase} (Bambino) — con \texttt{\textless{}\textless{}extend\textgreater{}\textgreater{}} \textit{Mostrare palla di fuoco} se la frase è una bugia.
+
+- \textit{Osservare il bambino} (Gente): vedere cuore e pensieri.
+
+- \textit{Cadere} (Bambino) → mostra bernoccolo trasparente.
+
+\begin{verbatim}
+flowchart LR
+  B([Bambino]) --- U1((Dire una frase))
+  U1 -. extend: se bugia .-> U2((Mostrare palla di fuoco))
+  G([Gente]) --- U3((Osservare pensieri))
+  B --- U4((Cadere))
+\end{verbatim}
+
+
+
+
+\section{Diagramma di attività}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 65 \hfill {\small \textcolor{gray}{(Scritto 15/01/2015)}}}
+Swimlane: \textbf{Sistema casello | Terminale | Telecamera}.
+
+\begin{verbatim}
+flowchart TD
+  S((start)) --> A[Veicolo si avvicina]
+  A --> B[Sistema: invia segnale richiesta id]
+  B --> C[Terminale: trasmette codice univoco]
+  C --> D[Sistema: alza la sbarra]
+  D --> E[Telecamera: rileva targa]
+  E --> K{codice valido AND targa abilitata?}
+  K -- sì --> R[Registra transito regolare]
+  R --> F1[Fatturazione normale]
+  K -- no --> I[Registra transito irregolare]
+  I --> F2[Fatturazione con sanzione]
+  F1 --> M[merge]
+  F2 --> M
+  M --> X((end))
+\end{verbatim}
+Elementi: segnali send/receive per richiesta/risposta, decisione con guardie complementari, merge.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 66 \hfill {\small \textcolor{gray}{(Scritto 16/01/2020)}}}
+
+
+\begin{verbatim}
+flowchart TD
+  S((start)) --> W{≥ 3 giocatori attivi?}
+  W -- no --> W
+  W -- sì --> FK1[fork]
+  FK1 --> I1[Inizializza mostri]
+  FK1 --> I2[Inizializza giocatori]
+  I1 & I2 --> J1[join]
+  J1 --> FK2[fork]
+  FK2 --> AI[Gestisci mostri con AI]
+  FK2 --> IN[Gestisci input giocatori]
+  FK2 --> AN[Analisi: aggiorna statistiche]
+  AI --> T{tempo < 60'?}
+  IN --> T
+  AN --> T
+  T -- sì --> FK2
+  T -- no --> J2[join]
+  J2 --> V[Visualizza statistiche]
+  V --> X[Calcola e visualizza vincitore]
+  X --> E((end))
+\end{verbatim}
+Elementi chiave: fork/join per le attività concorrenti (AI, input, analisi), \textbf{evento temporale} (clessidra 60') che interrompe la partita (interruptible region), sottoattività con simbolo rastrello.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 67 \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+
+
+\begin{verbatim}
+flowchart TD
+  S((start)) --> P[Il bambino parla]
+  P --> D{È una bugia?}
+  D -- no --> E((fine))
+  D -- sì --> F[Appare la palla di fuoco sulla fronte]
+  F --> V[La gente la vede]
+  V --> R[Il bambino ridice la verità]
+  R --> X[La palla di fuoco si dissolve]
+  X --> E
+\end{verbatim}
+
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 68 \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+Il funerale (prima parte):
+
+\begin{verbatim}
+flowchart TD
+  S((start)) --> A[Galline trovano la volpe]
+  A --> D{Volpe immobile e occhi chiusi?}
+  D -- no --> E((fine))
+  D -- sì --> F[Gridano: è morta!]
+  F --> FK[ ]
+  FK --> C1[Suonare le campane]
+  FK --> C2[Vestirsi di nero]
+  FK --> C3[Gallo scava la fossa]
+  C1 & C2 & C3 --> J[ ]
+  J --> P[Corteo con pulcini e fiori]
+  P --> B[Arrivo alla buca]
+  B --> V[Volpe salta fuori e mangia le galline]
+  V --> N[Notizia diffusa da radio/TV]
+  N --> E
+\end{verbatim}
+Elementi attesi: nodo iniziale/finale, decisione con guardie, \textbf{fork/join} per le azioni parallele (campane, vestiti, fossa), eventualmente swimlane Galline / Gallo / Volpe.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 69 \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+La finestra che si scioglie:
+
+\begin{verbatim}
+flowchart TD
+  S((start)) --> G[Guardia sorveglia il palazzo]
+  G --> D{Una parte si scioglie?}
+  D -- no --> G
+  D -- sì --> A[Guardia grida: presto!]
+  A --> F[ ]
+  F --> L1[Bambini leccano più in fretta]
+  F --> L2[Adulti leccano più in fretta]
+  L1 & L2 --> J[ ]
+  J --> E((fine))
+\end{verbatim}
+Alternativa: richiesta poltrona → [anziana] pompiere porta poltrona → vecchietta lecca braccioli. Servono nodo iniziale/finale, decisioni con guardie, fork/join se ci sono azioni parallele.
+
+
+
+\section{Diagramma delle classi / estrazione metodi}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 70 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+
+
+\begin{verbatim}
+classDiagram
+  class CorpoCeleste { <<abstract>> +nome }
+  class Pianeta
+  class Costellazione
+  class Galassia
+  class Scolaro { +nome +cercaParola() +scriviTema(Tema) +dimenticaPunteggiatura() +disegnaPupazzetto(Libro) +incontra(Scolaro) +ridi() }
+  class Banco
+  class Scuola
+  class Tema { +testo +inizia() }
+  class Pagina { +bianca: bool }
+  class Pennino { +scrivi() +scricchiola() }
+  class Calamaio
+  class Libro { +materia }
+  CorpoCeleste <|-- Pianeta
+  CorpoCeleste <|-- Costellazione
+  CorpoCeleste <|-- Galassia
+  Galassia "1" o-- "*" Pianeta
+  Pianeta "1" o-- "*" Scuola
+  Scuola "1" *-- "*" Banco
+  Scolaro "1" --> "1" Banco : siede a
+  Scolaro "1" --> "*" Tema : scrive
+  Tema "1" *-- "*" Pagina
+  Scolaro --> Pennino : usa
+  Pennino ..> Calamaio : intinge
+  Scolaro --> Libro : possiede
+  Scolaro "*" -- "*" Scolaro : amico
+\end{verbatim}
+Oggetti: il narratore e lo scolaretto lontano sono \textbf{due istanze della stessa classe} \texttt{Scolaro} (il senso della poesia è proprio che si somigliano); Marte, Mercurio, Nettuno istanze di \texttt{Pianeta}, Orione/Gemelli/Leone di \texttt{Costellazione}, Via Lattea di \texttt{Galassia}. I metodi vengono dai verbi: cercare la parola, dimenticare la punteggiatura, disegnare, ridere, incontrare.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 71 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+
+
+\begin{verbatim}
+classDiagram
+  class Persona { +nome }
+  class Viaggiatore { +viaggia() +domanda(Cittadino) }
+  class Cittadino { +mostra(Oggetto) +spiega(Oggetto) }
+  class Paese { +prefisso = "s" }
+  class Oggetto { <<abstract>> }
+  class Temperino { +tempera(Matita) }
+  class Stemperino { +faiRicrescere(Matita) }
+  class Matita { +lunghezza }
+  class Staccapanni { +stagione +genere +stacca(tipo): Capo }
+  class Capo { <<abstract>> }
+  class Cappotto
+  class Giacca
+  Persona <|-- Viaggiatore
+  Persona <|-- Cittadino
+  Paese "1" o-- "*" Cittadino : abitanti
+  Viaggiatore --> Paese : visita
+  Oggetto <|-- Temperino
+  Oggetto <|-- Stemperino
+  Oggetto <|-- Staccapanni
+  Stemperino ..> Matita
+  Temperino ..> Matita
+  Staccapanni "1" o-- "*" Capo
+  Capo <|-- Cappotto
+  Capo <|-- Giacca
+  Cittadino --> Oggetto : possiede
+\end{verbatim}
+Oggetti: Giovannino Perdigiorno (\texttt{Viaggiatore}), il cittadino sotto l'albero (\texttt{Cittadino}), il paese con l'esse davanti (\texttt{Paese}), uno stemperino, quattro staccapanni (estate/inverno × uomo/signora → attributi \texttt{stagione} e \texttt{genere}, non sottoclassi). Spunto da discutere: ogni oggetto "con la s" ha l'operazione \textbf{inversa} dell'originale (tempera ↔ faiRicrescere, attacca ↔ stacca).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 72 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+
+
+\begin{verbatim}
+classDiagram
+  class Luogo { <<abstract>> +nome }
+  class Isola { +deserta: bool +incolta: bool +tempoGiro = 30min +silenzio(): Silenzio }
+  class Mare { +calmo: bool +silenzio(): Silenzio }
+  class Costa
+  class Riva { +materiale = roccia +altezza }
+  class Vegetazione { +tipo = macchia +fruscia() }
+  class Imbarcazione { <<abstract>> +naviga() }
+  class Barca
+  class Canotto { +materiale = gomma }
+  class Persona { +chiedi(domanda) +rispondi() }
+  class Uomo { +pagaia() +ascolta() }
+  class Donna { +prendiIlSole() }
+  class Uccello { +vola() +emettiVerso() }
+  class Gabbiano
+  class Silenzio { +rumori: List~Rumore~ }
+  class Rumore { +fonte }
+  Luogo <|-- Isola
+  Luogo <|-- Mare
+  Luogo <|-- Costa
+  Isola "1" *-- "*" Riva
+  Isola "1" o-- "*" Vegetazione
+  Isola "1" o-- "*" Uccello
+  Imbarcazione <|-- Barca
+  Imbarcazione <|-- Canotto
+  Persona <|-- Uomo
+  Persona <|-- Donna
+  Canotto "1" o-- "2" Persona : equipaggio
+  Uccello <|-- Gabbiano
+  Silenzio "1" *-- "*" Rumore
+  Vegetazione ..> Rumore : produce
+  Uccello ..> Rumore : produce
+\end{verbatim}
+Oggetti: l'isolotto, il mare, la costa, il canotto di gomma, l'uomo, la donna, i gabbiani. Il \textbf{silenzio} è modellato come composizione di rumori minuti (come dice il testo): quello dell'isola e quello del mare sono istanze diverse con rumori diversi.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 73 \hfill {\small \textcolor{gray}{(Scritto 15/01/2015)}}}
+
+
+\begin{verbatim}
+classDiagram
+  class Cliente { +nome +cf }
+  class Contratto { +data +attiva() }
+  class FormaPagamento { <<abstract>> +addebita(importo) }
+  class ContoCorrente
+  class BancoPosta
+  class CartaCredito
+  class Terminale { +codice: String «unique» +identifica(): String }
+  class Veicolo { +targa: String }
+  class Transito { +ingresso: Casello +uscita: Casello +ora +regolare: bool +importo() }
+  class Addebito { +importo }
+  class Sanzione
+  class Casello { +richiediId() +alzaSbarra() }
+  class PuntoPagamento { <<abstract>> }
+  class Parcheggio
+  Cliente "1" -- "*" Contratto
+  Contratto "1" -- "1" Terminale
+  Contratto "*" --> "1" FormaPagamento
+  FormaPagamento <|-- ContoCorrente
+  FormaPagamento <|-- BancoPosta
+  FormaPagamento <|-- CartaCredito
+  Terminale "1" -- "1..3" Veicolo
+  Terminale "1" -- "*" Transito
+  Transito "1" --> "1" Addebito
+  Addebito <|-- Sanzione
+  PuntoPagamento <|-- Casello
+  PuntoPagamento <|-- Parcheggio
+  Casello "1" -- "*" Transito
+\end{verbatim}
+Commenti: molteplicità 1..3 per i veicoli; FormaPagamento astratta permette nuovi metodi di pagamento; Sanzione specializza Addebito.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 74 \hfill {\small \textcolor{gray}{(Scritto 16/01/2020)}}}
+
+
+\begin{verbatim}
+classDiagram
+  class Partita { -inizio: DateTime -durataMax = 60 +avvia() +termina() +vincitore(): Giocatore }
+  class Mappa { -lato: int +posizione(e) +visibili(g): List }
+  class Giocatore { -nome: String +muovi(dir) +cerca() +afferra(m) +ordina(m, cmd) }
+  class Squadra { +aggiungi(m) +rimuovi(m) }
+  class CapsuleMonster { -energia: int -attacco: int -difesa: int -potere: String -stato: Stato +energiaEffettiva(): double +fuggi() +nasconditi() +combatti(m) +tentaFuga() }
+  class Leggendario { -fattore: double +energiaEffettiva(): double }
+  class Stato { <<enumeration>> NASCOSTO IN_FUGA CATTURATO IN_SQUADRA }
+  Partita "1" *-- "1" Mappa
+  Partita "1" o-- "2..*" Giocatore
+  Giocatore "1" *-- "1" Squadra
+  Squadra "1" o-- "0..6" CapsuleMonster
+  Giocatore "0..1" --> "*" CapsuleMonster : possiede
+  Mappa "1" o-- "*" CapsuleMonster
+  CapsuleMonster <|-- Leggendario
+  CapsuleMonster --> Stato
+\end{verbatim}
+Commenti: \texttt{Leggendario} fa override di \texttt{energiaEffettiva()} (= energia × fattore, vincolo \texttt{\{1 ≤ fattore ≤ 2\}}); il vincitore si calcola su \texttt{energiaEffettiva} dei mostri posseduti; vincolo \texttt{\{giocatori ≥ 3 per avviare\}} su Partita.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 75 \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+
+
+\begin{verbatim}
+classDiagram
+  class Citta
+  class Persona { +nome +parla(frase) }
+  class Bambino { +trasparente: bool +cadi() +diciBugia() +diciVerita() }
+  class Gente { +osserva(Bambino) }
+  class Corpo { +trasparenza }
+  class Cuore { +batti() }
+  class Pensiero { +colore +guizza() }
+  class Fronte { +mostraBernoccolo() +mostraPallaDiFuoco() }
+  class PallaDiFuoco { +appari() +dissolviti() }
+  Citta "1" o-- "*" Persona
+  Persona <|-- Bambino
+  Persona <|-- Gente
+  Bambino "1" *-- "1" Corpo
+  Corpo "1" *-- "1" Cuore
+  Corpo "1" *-- "1" Fronte
+  Bambino "1" *-- "*" Pensiero
+  Fronte "1" o-- "0..1" PallaDiFuoco
+  Gente ..> Bambino : osserva
+\end{verbatim}
+
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 76 \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+
+
+\begin{verbatim}
+classDiagram
+  class Animale { <<abstract>> +nome }
+  class Volpe { -fingeMorta: bool +fingiMorte() +mangia(Gallina) +cambiaPaese(Paese) }
+  class Gallina { +grida() +vestiDiNero() }
+  class Gallo { +scavaFossa(luogo) }
+  class Pulcino { +portaFiori() +canta() }
+  class Funerale { +luogo +inizia() }
+  class Paese
+  class Pollaio
+  class Media { <<abstract>> +diffondiNotizia(Notizia) }
+  class Radio
+  class Televisione
+  class Notizia { +testo }
+  Animale <|-- Volpe
+  Animale <|-- Gallina
+  Gallina <|-- Gallo
+  Gallina <|-- Pulcino
+  Pollaio "1" o-- "*" Gallina
+  Paese "1" o-- "*" Pollaio
+  Funerale "1" --> "1" Volpe : defunto
+  Funerale "1" o-- "*" Gallina : corteo
+  Media <|-- Radio
+  Media <|-- Televisione
+  Media ..> Notizia
+  Volpe --> Paese : vive in
+\end{verbatim}
+Punti chiave: gerarchia Animale (Gallo e Pulcino come specializzazioni/ruoli del pollame), Funerale come classe-evento che associa la volpe (finta defunta) e il corteo, Media con Radio/Televisione come specializzazioni, Paese/Pollaio come aggregazioni.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 77 \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+- \textbf{Volpe}: \texttt{fingiMorte()}, \texttt{saltaFuori()}, \texttt{mangia(galline)}, \texttt{cambiaPaese(p)}
+
+- \textbf{Gallina}: \texttt{grida(msg)}, \texttt{vestiDiNero()}, \texttt{organizzaFunerale(volpe)}, \texttt{piangi()}, \texttt{dimentica()} (poca memoria)
+
+- \textbf{Gallo}: \texttt{scavaFossa(luogo)}
+
+- \textbf{Pulcino}: \texttt{portaFiori()}, \texttt{canta()}
+
+- \textbf{Campana}: \texttt{suonaAMorto()}
+
+- \textbf{Funerale}: \texttt{inizia()}, \texttt{raggiungiBuca()}
+
+- \textbf{Radio / Televisione} (Media): \texttt{diffondi(notizia)}
+
+Ogni metodo deriva da un verbo della storia, attribuito alla classe che compie l'azione.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 78 \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+
+
+\begin{verbatim}
+classDiagram
+  class Citta { +nome }
+  class Piazza
+  class Palazzo
+  class Componente { <<abstract>> +gusto +sciogliti() }
+  class Tetto
+  class Comignolo
+  class Porta
+  class Muro
+  class Finestra
+  class Mobile
+  class Tavolo
+  class Poltrona { +braccioli: bool }
+  class Piatto
+  class Persona { <<abstract>> +lecca(Componente) }
+  class Bambino { +chiediGelato() }
+  class Vecchietta { +implora(oggetto) }
+  class Guardia { +sorveglia() +ordina() }
+  class Pompiere { +porta(Poltrona, Persona) }
+  class Dottore { +ordina() }
+  class Genitore { +sospira() }
+  Citta "1" *-- "*" Piazza
+  Piazza "1" *-- "0..1" Palazzo
+  Palazzo "1" *-- "*" Componente
+  Componente <|-- Tetto
+  Componente <|-- Comignolo
+  Componente <|-- Porta
+  Componente <|-- Muro
+  Componente <|-- Finestra
+  Componente <|-- Mobile
+  Mobile <|-- Tavolo
+  Mobile <|-- Poltrona
+  Tavolo "1" o-- "*" Piatto
+  Persona <|-- Bambino
+  Persona <|-- Vecchietta
+  Persona <|-- Guardia
+  Persona <|-- Pompiere
+  Persona <|-- Dottore
+  Persona <|-- Genitore
+  Genitore "*" -- "*" Bambino
+\end{verbatim}
+Idea centrale: \textbf{composizione} Palazzo → componenti di gelato con superclasse comune (che ha \texttt{gusto} e \texttt{sciogliti()}), gerarchia Persona per i personaggi.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 79 \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+- \texttt{Componente.sciogliti()}, \texttt{Componente.crolla()} (tavolo)
+
+- \texttt{Persona.lecca(c: Componente)}
+
+- \texttt{Guardia.accorgersi(f: Finestra)}, \texttt{Guardia.grida(msg)}
+
+- \texttt{Vecchietta.implora(oggetto)}
+
+- \texttt{Pompiere.portaPoltrona(p: Poltrona, a: Persona)}
+
+- \texttt{Dottore.ordina(prescrizione)} (nessuno ha mal di pancia)
+
+- \texttt{Bambino.chiediGelato()}, \texttt{Genitore.sospira()}
+
+
+
+\section{Design pattern (singleton, prototype…)}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 80 \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{@d} sopra \texttt{def f} equivale a \texttt{f = d(f)}: un decorator è una funzione che prende una funzione e ne restituisce un'altra (ordine superiore). Somiglia al pattern Decorator ma non lo implementa (quello avvolge oggetti a runtime).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 81 \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+La metaclasse ridefinisce \texttt{\_\_call\_\_} e tiene un dizionario classe → istanza: ogni classe con \texttt{metaclass=Singleton} diventa singleton senza riscrivere la logica.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 82 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\textbf{Factory Method} (GoF, creazionale): definisce un'interfaccia per creare un oggetto ma lascia alle \textbf{sottoclassi} decidere quale classe concreta istanziare. Il codice che usa il prodotto dipende solo dall'astrazione \texttt{Prodotto}, non dalle classi concrete.
+
+Partecipanti: \texttt{Product} (interfaccia), \texttt{ConcreteProduct}, \texttt{Creator} (dichiara \texttt{factoryMethod()} e la usa nelle sue operazioni), \texttt{ConcreteCreator} (ridefinisce \texttt{factoryMethod()} restituendo il prodotto concreto).
+
+\begin{verbatim}
+from abc import ABC, abstractmethod
+
+class Documento(ABC):                 # Product
+    @abstractmethod
+    def apri(self): ...
+
+class Pdf(Documento):                 # ConcreteProduct
+    def apri(self): print("apro PDF")
+
+class Editor(ABC):                    # Creator
+    @abstractmethod
+    def crea_documento(self) -> Documento: ...   # factory method
+    def nuovo(self):
+        d = self.crea_documento()     # non sa quale classe concreta
+        d.apri()
+        return d
+
+class EditorPdf(Editor):              # ConcreteCreator
+    def crea_documento(self): return Pdf()
+
+EditorPdf().nuovo()
+\end{verbatim}
+Vantaggi: rispetta open/closed (nuovo prodotto = nuova sottoclasse, senza toccare \texttt{Editor}), basso accoppiamento. Svantaggio: una gerarchia di creator parallela a quella dei prodotti.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 83 \hfill {\small \textcolor{gray}{(Esempi ufficiali: aperte)}}}
+\textbf{Prototype} (GoF, creazionale): si creano nuovi oggetti \textbf{clonando un'istanza prototipo} invece di invocare un costruttore. Utile quando la creazione è costosa o la classe concreta è nota solo a runtime.
+
+Partecipanti: \texttt{Prototype} (dichiara \texttt{clone()}), \texttt{ConcretePrototype} (implementa la copia), \texttt{Client} (chiede al prototipo di clonarsi).
+
+In Java si implementa \texttt{Cloneable} e si ridefinisce \texttt{Object.clone()} (che fa una copia \textbf{superficiale}; i campi mutabili vanno copiati a mano per una copia profonda):
+
+\begin{verbatim}
+public class Forma implements Cloneable {
+    private String colore;
+    private List<Punto> punti = new ArrayList<>();
+
+    @Override
+    public Forma clone() {
+        try {
+            Forma f = (Forma) super.clone();       // copia campo a campo
+            f.punti = new ArrayList<>(this.punti); // deep copy della parte mutabile
+            return f;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
+    }
+}
+
+Forma prototipo = new Forma();
+Forma copia = prototipo.clone();
+\end{verbatim}
+Senza \texttt{implements Cloneable}, \texttt{super.clone()} lancia \texttt{CloneNotSupportedException}. Alternativa idiomatica: copy constructor \texttt{new Forma(altra)}. Spesso i prototipi stanno in un registro (mappa nome → prototipo).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 84 \hfill {\small \textcolor{gray}{(Scritto 15/01/2015)}}}
+- \textbf{Strategy} per \texttt{FormaPagamento}: il Contratto usa un'interfaccia \texttt{StrategiaPagamento} intercambiabile (CC, BancoPosta, Carta) — si aggiungono metodi senza toccare Contratto.
+
+- \textbf{Observer}: \texttt{Casello} (subject) notifica gli osservatori \texttt{Fatturazione} e \texttt{Statistiche} a ogni transito registrato.
+
+- Alternative: \textbf{State} per il Transito (in corso / regolare / irregolare); \textbf{Factory Method} per creare Addebito vs Sanzione; \textbf{Singleton} per il registro centrale dei terminali.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 85 \hfill {\small \textcolor{gray}{(Scritto 16/01/2020)}}}
+Scelte naturali:
+
+- \textbf{State}: il comportamento del CapsuleMonster dipende dallo stato (Nascosto, InFuga, Catturato). Interfaccia \texttt{StatoMostro} con \texttt{afferrato(m)}, \texttt{visto(m)}, \texttt{tick(m)}; classi concrete per ogni stato; \texttt{CapsuleMonster} delega allo stato corrente. Elimina gli \texttt{if/switch} sullo stato.
+
+- \textbf{Command}: gli ordini del giocatore (\texttt{EntraInSquadra}, \texttt{Combatti}, \texttt{Libera}) come oggetti \texttt{Comando.esegui()}.
+
+- \textbf{Observer}: la Partita osserva il Timer; l'Analisi osserva gli eventi per le statistiche.
+
+- \textbf{Singleton} per la Partita / Mappa.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 86 \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+Singleton: una sola istanza + accesso globale. Costruttore privato, istanza statica, metodo statico di accesso con creazione lazy.
+
+\begin{verbatim}
+public final class Registro {
+    private static volatile Registro instance;
+    private Registro() { }                     // nessuno può fare new
+    public static Registro getInstance() {
+        if (instance == null) {
+            synchronized (Registro.class) {    // double-checked locking
+                if (instance == null) instance = new Registro();
+            }
+        }
+        return instance;
+    }
+}
+\end{verbatim}
+In C++ moderno: \texttt{static Registro\& get() \{ static Registro r; return r; \}} (thread-safe da C++11), con costruttore privato e copy constructor \texttt{= delete}.
+
+Pro: controllo accesso a risorsa unica. Contro: stato globale, testabilità ridotta, accoppiamento.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 87 \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+\textbf{Singleton} (GoF, creazionale): garantisce che una classe abbia \textbf{una sola istanza} e fornisce un \textbf{punto di accesso globale} ad essa. Struttura: costruttore non accessibile dall'esterno, attributo statico con l'istanza, metodo statico \texttt{getInstance()} che la crea alla prima chiamata (lazy).
+
+In Python non esistono costruttori privati: si interviene su \texttt{\_\_new\_\_} (o con una metaclasse / decorator, o semplicemente col modulo, che è già un singleton).
+
+\begin{verbatim}
+class Singleton:
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+a = Singleton(); b = Singleton()
+assert a is b
+\end{verbatim}
+Variante con metaclasse:
+
+\begin{verbatim}
+class SingletonMeta(type):
+    _instances = {}
+    def __call__(cls, *a, **k):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*a, **k)
+        return cls._instances[cls]
+
+class Config(metaclass=SingletonMeta): pass
+\end{verbatim}
+Attenzione: \texttt{\_\_init\_\_} viene richiamato a ogni \texttt{Singleton()} anche se l'istanza è la stessa; la metaclasse evita il problema. Thread-safety: proteggere la creazione con un \texttt{threading.Lock}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 88 \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+\textbf{Prototype} (GoF, creazionale): si creano nuovi oggetti \textbf{copiando un'istanza prototipo} invece di istanziarli da zero. Utile se la creazione è costosa o se il tipo concreto è noto solo a runtime. Struttura: interfaccia \texttt{Prototype} con \texttt{clone()}; ogni \texttt{ConcretePrototype} implementa \texttt{clone()}; il \texttt{Client} chiede al prototipo di clonarsi. Punto critico: \textbf{copia superficiale vs profonda}.
+
+\begin{verbatim}
+import copy
+
+class Forma:
+    def __init__(self, colore, punti):
+        self.colore, self.punti = colore, punti
+    def clone(self):
+        return copy.deepcopy(self)
+
+base = Forma("rosso", [(0, 0), (1, 1)])
+c = base.clone()
+c.punti.append((2, 2))   # non tocca base.punti grazie a deepcopy
+\end{verbatim}
+In Java: \texttt{implements Cloneable} e override di \texttt{clone()} (che di default fa copia superficiale); in C++: metodo virtuale \texttt{virtual Forma* clone() const \{ return new Forma(*this); \}}.
+
+
+
+\section{Schede CRC [X] non ancora visto}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 89 X \hfill {\small \textcolor{gray}{(Scritto 15/01/2015)}}}
+| Classe | Responsabilità | Collaboratori |
+
+|---|---|---|
+
+| Cliente | dati anagrafici, stipulare contratti | Contratto |
+
+| Contratto | associare terminale e cliente, forma di pagamento | Cliente, Terminale, FormaPagamento |
+
+| FormaPagamento (CC, BancoPosta, Carta) | eseguire addebito periodico | Contratto, Conto |
+
+| Terminale | codice univoco, rispondere a richiesta di identificazione, max 3 targhe | Veicolo, Contratto |
+
+| Veicolo | targa | Terminale |
+
+| Transito | registrare ingresso/uscita, calcolare importo, regolare/irregolare | Terminale, Casello, Addebito |
+
+| Casello | richiedere identificazione, alzare sbarra, rilevare targa | Transito, Telecamera |
+
+| Addebito / Sanzione | importo da imputare sul conto | Transito, FormaPagamento |
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 90 X \hfill {\small \textcolor{gray}{(Scritto 16/01/2020)}}}
+| Classe | Responsabilità | Collaboratori |
+
+|---|---|---|
+
+| \textbf{Partita} | avviare con ≥3 giocatori, gestire tempo max 60', determinare vincitore | Giocatore, Mappa, Timer |
+
+| \textbf{Giocatore} | nome registrato, muoversi, cercare, afferrare, dare ordini | Squadra, Mappa, CapsuleMonster |
+
+| \textbf{Squadra} | contenere max 6 mostri, aggiungere/rimuovere | CapsuleMonster |
+
+| \textbf{Mappa} | griglia quadrata, posizioni di giocatori e mostri, visibilità | Giocatore, CapsuleMonster |
+
+| \textbf{CapsuleMonster} | energia, attacco, difesa, potere; stati nascosto/in fuga/catturato; muoversi, scappare, combattere | Giocatore, Mappa |
+
+| \textbf{Leggendario} | applicare fattore moltiplicativo [1,2] all'energia | CapsuleMonster |
+
+| \textbf{Combattimento} | risolvere scontro tra due mostri | CapsuleMonster |
+
+
+
+\section{Principi di design (coesione, SOLID, interfacce) [X] non ancora visto}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 91 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: a}\par
+Riusabile = con interfaccia chiara e poche dipendenze, così da poterlo inserire in sistemi diversi senza modificarlo.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 92 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: processo)}}}
+\textbf{Risposta: d}\par
+Coesione alta = ogni modulo fa una cosa sola; accoppiamento basso = i moduli dipendono poco l'uno dall'altro (tramite interfacce).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 93 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Interfaccia = insieme di firme di operazioni senza implementazione; chi la implementa si impegna a fornirle (\texttt{interface} in Java, ABC in Python, classi puramente virtuali in C++).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 94 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: d}\par
+La D di SOLID: i moduli di alto livello non dipendono da quelli di basso livello, entrambi dipendono da astrazioni (interfacce).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 95 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+La S di SOLID: una classe = una responsabilità, quindi un solo motivo per modificarla (alta coesione, modifiche localizzate).
+
+
+
+\section{Linguaggi OO (overloading, binding, C++/Java/Python) [X] non ancora visto}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 96 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: d}\par
+Il compilatore genera una copia del codice per ogni tipo con cui il template è istanziato (\texttt{vector\textless{}int\textgreater{}}, \texttt{vector\textless{}double\textgreater{}}…): code bloat. I \texttt{void*} (b) sono il trucco del C.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 97 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Istanziazione/specializzazione avviene a compile time, una versione per tipo. Java invece ha un solo codice con type erasure (b descrive Java, non C++).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 98 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+Una macro \texttt{\#define MAX(a,b) ((a)\textgreater{}(b)?(a):(b))} funziona con qualunque tipo: il preprocessore la espande come un "template" testuale (anche \texttt{\_Generic}/\texttt{void*} aiutano, ma la risposta attesa sono le macro).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 99 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+In C++ \texttt{class B : virtual public A}: nel diamante (D eredita da B e C, entrambe da A) D contiene una sola copia di A invece di due.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 100 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: d}\par
+Late (dynamic) binding: quale implementazione eseguire si decide a runtime in base al tipo dinamico dell'oggetto (metodi \texttt{virtual} in C++). (a) = template/generics, (b) = overloading.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 101 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: d}\par
+Python non ha overloading nativo: ridefinire una funzione sovrascrive la precedente. Si simula con decorator come \texttt{functools.singledispatch}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 102 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Un template con segnaposto (\texttt{"Traduci \{testo\} in \{lingua\}"}) che si riempie con le variabili a ogni chiamata.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 103 X \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+\textbf{Risposta: c}\par
+In C++ \texttt{virtual} nell'ereditarietà evita che, nel diamante, la classe base comune compaia più volte nell'oggetto derivato. (b) descrive le classi astratte.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 104 X \hfill {\small \textcolor{gray}{(Simulazione 21/11/2023)}}}
+- \textbf{Overloading}: più metodi con \textbf{stesso nome e firme diverse} (numero/tipo parametri) nella stessa classe (o scope). Risolto \textbf{a compile time} (binding statico) in base ai tipi statici degli argomenti. Es. \texttt{print(int)}, \texttt{print(String)}.
+
+- \textbf{Overriding}: una sottoclasse \textbf{ridefinisce} un metodo ereditato con \textbf{la stessa firma}. Risolto \textbf{a runtime} (late binding) in base al tipo dinamico dell'oggetto; è la base del polimorfismo per sottotipo. In C++ richiede \texttt{virtual}; in Java è di default (annotazione \texttt{@Override}).
+
+\begin{verbatim}
+class A { void f(int x){} void f(String s){} }   // overloading
+class B extends A { @Override void f(int x){} }  // overriding
+\end{verbatim}
+
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 105 X \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+\textbf{Risposta: d}\par
+Late (dynamic) binding: quale implementazione eseguire si decide a runtime in base al tipo dinamico dell'oggetto (es. metodi \texttt{virtual} in C++). (a) = template/generics, (b) = overloading (risolto staticamente). Attenzione: sulla scansione lo studente ha crociato (c), che è sbagliata.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 106 X \hfill {\small \textcolor{gray}{(Scritto 10/01/2025)}}}
+\textbf{Risposta: d}\par
+Python non ha overloading nativo: definire due volte la stessa funzione sovrascrive la prima (nessun errore). Si simula con decorator come \texttt{functools.singledispatch} / \texttt{singledispatchmethod} (o \texttt{typing.overload} per i soli type hint).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 107 X \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+\textbf{Risposta: c}\par
+\texttt{class B : virtual public A} risolve il \textbf{problema del diamante}: con D che eredita da B e C (entrambe da A), senza \texttt{virtual} D conterrebbe due sottooggetti A. Il late binding (a) è dato dalle \textit{funzioni} virtuali, non dall'ereditarietà virtuale.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 108 X \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+- \textbf{Java}: \texttt{B} è una \textbf{inner class} (non statica): ogni istanza di B contiene un riferimento implicito all'istanza di A che l'ha creata (\texttt{A.this}) e può accedere direttamente a \texttt{x}. Si crea con \texttt{a.new B()}.
+
+- \textbf{C++}: \texttt{B} è solo una \textbf{nested class}: A fa da namespace (equivale a una \texttt{static class} Java). Non c'è legame con un'istanza di A, quindi B non può accedere a \texttt{x} se non le viene passato esplicitamente un oggetto \texttt{A}. (Da C++11 una classe annidata ha comunque i diritti d'accesso ai membri privati di A, ma serve sempre un oggetto.)
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 109 X \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+\textbf{Risposta: a}\par
+Java ha la reflection (\texttt{Class\textless{}?\textgreater{}}) ma non metaclassi programmabili come Python (\texttt{type}) o Smalltalk. Il polimorfismo parametrico in Java sono i generics.
+
+
+
+\section{Python (linguaggio, collezioni, interprete, GIL) [X] non ancora visto}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 110 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{import this}: "Explicit is better than implicit". L'originale dice "Complex is better than complicated" (b è invertita).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 111 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Python è multiparadigma (imperativo, OO, funzionale, scripting) ma non logico come Prolog.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 112 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: d}\par
+L'indentazione delimita i blocchi: dopo \texttt{if ...:} serve un blocco indentato, altrimenti \texttt{IndentationError: expected an indented block} (sottoclasse di SyntaxError).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 113 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: d}\par
+Dinamico: i tipi stanno sui valori e si controllano a runtime. Forte: niente conversioni implicite tra tipi incompatibili (\texttt{"1" + 1} → TypeError).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 114 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+\texttt{//} è la divisione intera (floor): ⌊9/4⌋ = ⌊2.25⌋ = 2. \texttt{9/4} darebbe 2.25.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 115 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{str} è immutabile: ogni "modifica" (\texttt{replace}, \texttt{+}, slicing) crea una nuova stringa.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 116 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Gli indici vanno da 0 a 19: \texttt{s[20]} → \texttt{IndexError: string index out of range}. L'ultimo è \texttt{s[19]} o \texttt{s[-1]}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 117 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+Tuple immutabili; list, set e dict sono mutabili (l'equivalente immutabile del set è \texttt{frozenset}).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 118 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{range(start, stop, step)} produce una sequenza lazy di interi, \texttt{stop} escluso.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 119 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+\texttt{l.pop(i)} toglie e restituisce l'elemento in posizione i (default l'ultimo); \texttt{l.remove(x)} toglie la prima occorrenza del valore x (ValueError se manca).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 120 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Parte da 2, passo 3: 2, 5, 8; 11 supererebbe lo stop 10 (escluso).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 121 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+\texttt{\_\_next\_\_()} solleva StopIteration quando non ci sono più elementi; il \texttt{for} la intercetta e termina il ciclo. Un oggetto non iterabile dà TypeError (d).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 122 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{lambda x: x * 2} è una funzione anonima limitata a una singola espressione.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 123 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Un metodo statico non riceve né l'istanza (\texttt{self}) né la classe (\texttt{cls}, quello è \texttt{@classmethod}): è una funzione normale nel namespace della classe, chiamabile da classe o istanza.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 124 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Un nome si cerca nell'ordine: Locale → funzioni Enclosing (chiusure) → Globale (modulo) → Built-in.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 125 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{global x} dentro una funzione fa sì che gli assegnamenti a \texttt{x} agiscano sulla variabile del modulo invece di crearne una locale (per le funzioni annidate c'è \texttt{nonlocal}).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 126 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Il default è valutato una sola volta, alla definizione: \texttt{def f(l=[]): l.append(1)} accumula elementi chiamata dopo chiamata. Idioma: \texttt{l=None} e \texttt{if l is None: l = []}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 127 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Una funzione definita con \texttt{def} (o \texttt{lambda}) ha tipo \texttt{\textless{}class 'function'\textgreater{}}. \texttt{builtin\_function\_or\_method} è per quelle in C come \texttt{len}; \texttt{method} per metodi legati a un'istanza.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 128 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: d}\par
+Un generatore è un iteratore monouso: una seconda iterazione non produce nulla. Per riusarlo bisogna richiamare la funzione generatrice.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 129 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{a + b} chiama \texttt{a.\_\_add\_\_(b)} (e se non gestito \texttt{b.\_\_radd\_\_(a)}).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 130 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: d}\par
+Divisione intera: ⌊7/3⌋ = ⌊2.33⌋ = 2.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 131 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+\texttt{s[0] = "x"} → \texttt{TypeError: 'str' object does not support item assignment}, perché le stringhe sono immutabili.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 132 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+\texttt{"a" + "b"} == \texttt{"ab"}; \texttt{\textit{} ripete (\texttt{"a" } 3}), \texttt{\&} e \texttt{//} non sono definiti sulle stringhe.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 133 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Le triple virgolette permettono di andare a capo dentro il letterale. Anche \texttt{\textbackslash n} (a) produce più righe, ma la sintassi della stringa multilinea è quella con le triple virgolette.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 134 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Start e stop omessi, step −1: si scorre dal fondo all'inizio. \texttt{"abc"[::-1]} == \texttt{"cba"}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 135 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Indice fuori range su sequenze → IndexError; KeyError è per chiavi mancanti nei dict. Lo slicing invece non dà mai errore.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 136 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+\texttt{"ab" + "c"} == \texttt{"abc"}, \texttt{"ab" * 3} == \texttt{"ababab"}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 137 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Letterali stringa adiacenti vengono concatenati dal compilatore: \texttt{'Hello' ' ' 'World'} == \texttt{'Hello World'} (lo spazio è il letterale in mezzo).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 138 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+Prende gli indici start, start+step, … fino a end escluso. \texttt{"abcdef"[0:5:2]} == \texttt{"ace"}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 139 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Entrambe sono sequenze, ma \texttt{str} è immutabile e contiene solo caratteri; \texttt{list} è mutabile e può contenere oggetti di qualunque tipo.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 140 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Ordinate = mantengono l'ordine di inserimento e si accede per indice; mutabili; ammettono duplicati.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 141 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{b = a} copia il riferimento, non la lista: \texttt{b.append(1)} si vede anche da \texttt{a}. Per copiare: \texttt{a.copy()} / \texttt{a[:]} (superficiale) o \texttt{copy.deepcopy(a)}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 142 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{append(x)} aggiunge x in fondo; \texttt{insert(i, x)} in posizione i; \texttt{extend(it)} aggiunge \textit{tutti} gli elementi di un iterabile; \texttt{add} è dei set.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 143 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+La tupla è immutabile nei \textit{riferimenti} che contiene: \texttt{t = ([1],); t[0].append(2)} funziona, \texttt{t[0] = [3]} no.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 144 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Set = insieme matematico: niente ordine, niente duplicati, elementi hashable. Si combinano con \texttt{|}, \texttt{\&}, \texttt{-}, non con \texttt{+}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 145 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Gli elementi di un set devono essere hashable (immutabili): \texttt{s.add([1])} → \texttt{TypeError: unhashable type: 'list'}. Si può aggiungere \texttt{tuple([1])}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 146 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+\texttt{list.copy()} è superficiale: le sottoliste restano condivise. \texttt{copy.deepcopy} copia ricorsivamente.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 147 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+\texttt{pop} lavora per indice: rimuove e restituisce \texttt{aList[2]} cioè 3; la lista diventa \texttt{[1, 2, 4]}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 148 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Tuple \texttt{( )} immutabili (e quindi hashable se lo sono gli elementi), liste \texttt{[ ]} mutabili.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 149 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+\texttt{(1, 2) + 3} → \texttt{TypeError: can only concatenate tuple (not "int") to tuple}. Si scrive \texttt{(1, 2) + (3,)}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 150 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+CPython: inizializza l'interprete, compila il sorgente in bytecode (eventualmente salvato in \texttt{.pyc}), poi la VM lo interpreta.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 151 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+All'avvio CPython prepara runtime e allocatori, crea il GIL e lo stato dell'interprete, carica \texttt{builtins} e \texttt{sys}. I \texttt{.pyc} nascono nella fase di compilazione.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 152 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Ogni chiamata crea un frame con: code object, variabili locali/globali/builtin, value stack, puntatore all'istruzione corrente e al frame chiamante.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 153 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+Pila LIFO di frame: chiamata = push, return = pop. Troppa ricorsione → \texttt{RecursionError}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 154 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+\texttt{import dis; dis.dis(f)} stampa le istruzioni bytecode di \texttt{f} (\texttt{LOAD\_FAST}, \texttt{BINARY\_OP}, \texttt{RETURN\_VALUE}…).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 155 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Ogni oggetto ha un contatore di riferimenti: a 0 viene liberato subito. I cicli (a→b→a) li raccoglie un GC generazionale aggiuntivo (modulo \texttt{gc}).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 156 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Un solo thread alla volta esegue bytecode: così i reference count e le strutture interne non hanno bisogno di lock fini. Prezzo: niente parallelismo CPU tra thread Python.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 157 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Durante i calcoli in C che non toccano oggetti Python rilasciano il GIL (\texttt{Py\_BEGIN\_ALLOW\_THREADS}), quindi altri thread possono girare in parallelo.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 158 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+Le istruzioni prendono gli operandi dal value stack e ci rimettono il risultato (\texttt{LOAD\_FAST a; LOAD\_FAST b; BINARY\_OP +}).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 159 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Ogni frame ha il suo value stack su cui le istruzioni fanno push/pop di operandi e risultati intermedi.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 160 X \hfill {\small \textcolor{gray}{(Preappello 24/11/2025)}}}
+
+
+\begin{verbatim}
+import functools
+
+def traccia(func):
+    @functools.wraps(func)          # preserva __name__, __doc__
+    def wrapper(*args, **kwargs):
+        print(f"Inizio {func.__name__}")
+        try:
+            return func(*args, **kwargs)
+        finally:
+            print(f"Fine {func.__name__}")
+    return wrapper
+
+@traccia
+def somma(a, b):
+    return a + b
+\end{verbatim}
+Un decorator è una funzione che prende una funzione e ne restituisce una nuova che la "avvolge". \texttt{\textit{args, }*kwargs} per accettare qualunque firma; restituire il valore di ritorno; \texttt{functools.wraps} (nota: è \texttt{functools}, non \texttt{functool}).
+
+
+
+\section{API LLM e framework ad agenti (OpenAI, LangChain, CrewAI) [X] non ancora visto}
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 161 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Il messaggio \texttt{system} dà le istruzioni generali (persona, regole); \texttt{user} sono le richieste, \texttt{assistant} le risposte del modello.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 162 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+\texttt{usage} riporta \texttt{prompt\_tokens}, \texttt{completion\_tokens} e \texttt{total\_tokens} (base della fatturazione). Il modello è nel campo \texttt{model}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 163 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Il modello è senza stato: la Memory conserva lo storico (o un suo riassunto) e lo reinserisce nel prompt.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 164 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+Agent (con role, goal, backstory) esegue Task; una Crew è l'insieme coordinato di agenti e task.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 165 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Valori tipici: \texttt{stop} (fine naturale), \texttt{length} (limite di token), \texttt{tool\_calls}, \texttt{content\_filter}.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 166 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+La catena base: PromptTemplate + LLM (+ parser dell'output), richiamabile con le variabili del template.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 167 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+In una chain i passi sono fissi; un agente usa l'LLM per decidere a ogni passo quale tool chiamare (e quando fermarsi).
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 168 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+Un tool è una funzione con nome e descrizione (ricerca web, calcolatrice, query DB…) che l'agente può chiamare.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 169 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: b}\par
+Ogni agente ha \texttt{role}, \texttt{goal} (cosa deve ottenere) e \texttt{backstory}; i tool sono un parametro separato.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 170 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: a}\par
+Il processo della crew può essere sequenziale o gerarchico (con un manager), e i task possono essere marcati come asincroni per girare in parallelo.
+
+
+
+\needspace{4\baselineskip}
+\subsection*{Domanda 171 X \hfill {\small \textcolor{gray}{(Esempi ufficiali: prodotto)}}}
+\textbf{Risposta: c}\par
+La Crew raggruppa agenti e task e ne definisce il processo di esecuzione (\texttt{crew.kickoff()}).
+
+
+
+\end{document}

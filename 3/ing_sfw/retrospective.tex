@@ -1,0 +1,147 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}
+\title{Ingegneria del Software: la Sprint Retrospective}
+\author{Nicolò Giuliani}
+\date{}
+\begin{document}
+\maketitle
+
+\textbf{Fonte}: \emph{Retrospective Workshop} (esercitazioni, prof.\ Missiroli, AA 2026-27).
+Il metodo Essence per la retrospettiva è un piccolo contributo del prof.\ Missiroli.
+
+\section{Cos'è la retrospettiva}
+La \textbf{Sprint Retrospective} è la riunione in cui il team analizza lo Sprint appena
+concluso per \emph{migliorare il processo e l'esecuzione}, tenendo conto del feedback di
+ciascun membro. Anche il feedback di utenti e stakeholder può entrare nella discussione.
+È la riflessione sul \emph{processo}; la sprint review (demo del prodotto) è la riflessione
+sul \emph{prodotto}. Vanno tenute distinte.
+
+\subsection*{Quando e quanto}
+\begin{itemize}[nosep]
+  \item Si svolge al termine di ogni Sprint, di solito dopo la sprint review.
+  \item Sprint di due settimane: circa un'ora e mezza. Mini-sprint (meno di una settimana):
+        anche meno di mezz'ora.
+  \item Va fissato un limite di tempo prima di iniziare.
+\end{itemize}
+
+\subsection*{Chi partecipa}
+Tutto il team. Si possono invitare stakeholder ed esperti. Il Product Owner può essere
+presente o assente: alcune versioni lo escludono per parlare più liberamente, altre lo
+prevedono per avere il quadro completo dei problemi.
+
+\subsection*{Temi da discutere}
+I temi vanno decisi in anticipo, tipicamente dallo Scrum Master. Esempi:
+\begin{itemize}[nosep]
+  \item produttività (siamo lenti?);
+  \item processo (scadenze in ritardo?);
+  \item risultati (il codice è scadente?);
+  \item team (litighiamo troppo?);
+  \item strumenti di lavoro (lo strumento X è adatto?);
+  \item ambiente di lavoro (c'è troppa confusione?).
+\end{itemize}
+
+\section{Obiettivo: produrre azioni}
+Parlare dei problemi fa sempre bene, ma lo scopo vero è \textbf{migliorare}: aumentare la
+produttività e la soddisfazione per gli obiettivi raggiunti. La riunione deve quindi
+produrre soluzioni, sotto forma di \textbf{Action Point} da attuare nello Sprint successivo.
+
+\subsection*{Il metodo base in tre fasi}
+\begin{enumerate}[nosep]
+  \item \textbf{Analisi} dell'andamento dell'ultimo Sprint;
+  \item \textbf{Identificazione e valutazione} degli elementi positivi e negativi;
+  \item \textbf{Soluzioni} proposte dal team: almeno una per ogni elemento negativo.
+\end{enumerate}
+Il team sceglie uno o più temi (team, prodotto, processo\ldots) e si chiede:
+\begin{enumerate}[nosep]
+  \item Cosa ha funzionato?
+  \item Cosa non ha funzionato e può essere migliorato?
+  \item Che cosa possiamo fare nella prossima iterazione per migliorare?
+\end{enumerate}
+Il risultato va \textbf{documentato} (testo o grafico), per esempio con una board a tre
+colonne.
+
+\subsection*{Azioni precise}
+Il punto più importante sono le azioni. Non servono buoni propositi del tipo «lavoreremo
+meglio»: un'azione deve essere precisa e, idealmente, avere un responsabile o un controllore.
+\begin{center}
+\begin{tabular}{|p{5.2cm}|p{10cm}|}
+\hline
+\textbf{Vago (da evitare)} & \textbf{Preciso (da scrivere)} \\
+\hline
+«dobbiamo usare meglio Git» & «ogni membro fa almeno un commit all'ora; Franco monitora» \\
+\hline
+«miglioriamo l'UML» & «entro giovedì si ristruttura l'UML separando le classi in elementi
+indipendenti e aggiungendo le funzionalità presenti nel codice [Giorgio]» \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Retrospettiva con Essence}
+Essence è un linguaggio grafico per descrivere metodi e pratiche dell'ingegneria del
+software; le sue \emph{carte} guidano il team a riflettere sul proprio lavoro e a
+preparare cambiamenti. Usarlo rende la retrospettiva più strutturata: propone argomenti
+(alcuni possono essere saltati) e indica dei \emph{punti} per capire lo stato di ciascun
+elemento.
+
+\subsection*{La tabella}
+Si costruisce una tabella con:
+\begin{itemize}[nosep]
+  \item in ascissa tre stati dell'elemento: \textbf{Bene}, \textbf{OK}, \textbf{Non bene};
+  \item in ordinata due o più righe, cioè l'importanza dell'elemento da considerare;
+  \item a destra una colonna per gli \textbf{Action Point}.
+\end{itemize}
+
+\subsection*{Procedura}
+\begin{enumerate}[nosep]
+  \item \textbf{Prima parte}: il team (tipicamente lo SM) prende una carta dal mazzo e la
+        piazza nella posizione che ritiene corretta.
+  \item \textbf{Seconda parte}: partendo dalle carte più importanti che non sono «Buone»,
+        si indicano le cause (senza accusare nessuno) e si propone una soluzione.
+  \item \textbf{Finale}: si documenta la riunione.
+\end{enumerate}
+
+\subsection*{Quali carte}
+Essence ha moltissime carte, e all'inizio possono disperdere. Per una retrospettiva
+standard basta un sottoinsieme delle carte «Scrum Essentials» o «Agile Essentials».
+Le \emph{entity card} descrivono un concetto e i suoi stati (di solito lo stato
+desiderabile è l'ultimo in basso). Le \emph{checklist card} aiutano a capire in quale stato
+si trova un'entità e si possono usare anche per un planning poker. Gli \emph{Alpha} stessi
+sono un buon punto di discussione.
+
+\section{Suggerimenti e rischi}
+\subsection*{Suggerimenti}
+\begin{itemize}[nosep]
+  \item pre-selezionare un numero limitato di carte o elementi, possibilmente con checklist;
+  \item considerare solo gli elementi importanti;
+  \item limitare il tempo per ogni carta;
+  \item arrivare a 3 o 4 Action Point condivisi da tutti;
+  \item evitare lo scambio di accuse: pensare a come risolvere, non a chi ha causato;
+  \item \textbf{documentare tutto}.
+\end{itemize}
+
+\subsection*{Problemi tipici}
+\begin{itemize}[nosep]
+  \item \textbf{apatia};
+  \item \textbf{emozioni}: il rischio è che diventi un incrocio di accuse;
+  \item \textbf{assenza di conversazione}: ci si limita a esporre, senza discutere.
+\end{itemize}
+
+\section{Sintesi per l'esame}
+\begin{itemize}[nosep]
+  \item La retrospettiva riguarda il \emph{processo}; la review riguarda il \emph{prodotto}.
+  \item Si fa a fine Sprint, con tempo limitato e con tutto il team.
+  \item Il risultato sono \emph{azioni precise} con responsabile, da attuare nello Sprint successivo.
+  \item Metodo base: \emph{cosa ha funzionato / cosa no / cosa facciamo}; formato rapido:
+        \textbf{Start / Stop / Continue}.
+  \item Essence: carte, tabella Bene / OK / Non bene, Action Point a destra.
+\end{itemize}
+
+\end{document}
