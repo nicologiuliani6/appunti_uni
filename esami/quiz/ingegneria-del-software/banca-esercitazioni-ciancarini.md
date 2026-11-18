@@ -474,3 +474,77 @@ Il contesto di scrittura porta con sé le assunzioni di chi ha scritto: la revie
 
 ### Soluzione
 SEMAT (Software Engineering Method and Theory) nasce nel 2009; il Kernel viene specificato nel 2012; nel 2014 Essence diventa standard OMG. Jacobson è considerato il padre del framework.
+
+## [mcq 1] Le forme dei requisiti (Ciancarini 2026): quale definizione di requisito dà lo standard IEEE 610.12?
+- [x] Una condizione o capacità che serve a un utente per risolvere un problema o raggiungere un obiettivo, o che un sistema deve possedere per soddisfare un contratto, uno standard o una specifica.
+- [ ] Una descrizione di come il sistema verrà implementato, scelta dal team di sviluppo.
+- [ ] Una user story stimata in story point e accettata dal Product Owner.
+- [ ] Un caso di test che il sistema deve superare prima del rilascio.
+
+### Soluzione
+IEEE 610.12 definisce il requisito come condizione o capacità, vista dal lato dell'utente (risolvere un problema) e dal lato contrattuale (rispettare contratto, standard, specifica). Dice *cosa*, non *come*.
+
+## [mcq 1] Che cosa esprime la legge di Humphrey (e l'acronimo IKIWISI) citata nella lezione sulle forme dei requisiti?
+- [ ] Il costo di correggere un requisito cresce di dieci volte a ogni fase.
+- [x] Gli utenti non sanno cosa vogliono finché non vedono il sistema: «I'll Know It When I See It».
+- [ ] Ogni requisito deve essere indipendente, negoziabile e testabile.
+- [ ] Aggiungere persone a un progetto in ritardo lo ritarda ancora di più.
+
+### Soluzione
+Humphrey: per un nuovo sistema software i requisiti non saranno completamente noti finché gli utenti non lo usano. Da qui IKIWISI e il valore di prototipi, iterazioni brevi e feedback. La terza opzione è INVEST, la quarta è la legge di Brooks.
+
+## [mcq 1] Nella classificazione delle slide, «Il sistema deve essere scritto in Python e girare su Linux» è un requisito:
+- [ ] funzionale
+- [ ] di qualità
+- [x] di vincolo
+- [ ] di business
+
+### Soluzione
+Tre tipi di requisiti: funzionali (cosa fa il sistema), di qualità (quanto bene lo fa, ISO/IEC 25010) e vincoli (limiti imposti alla soluzione: linguaggio, piattaforma, norme, budget). Linguaggio e sistema operativo sono vincoli tecnici.
+
+## [mcq 1] Quale formulazione rende misurabile il requisito di qualità «il sistema deve essere veloce»?
+- [ ] Il sistema deve essere molto veloce e reattivo.
+- [ ] Il sistema deve usare una cache per essere veloce.
+- [x] Il 95% delle ricerche nel catalogo deve rispondere entro 1 secondo con 500 utenti concorrenti.
+- [ ] Il sistema deve essere più veloce del sistema precedente.
+
+### Soluzione
+Un requisito di qualità è utile solo se verificabile: serve una metrica, una soglia e le condizioni di misura. «Usare una cache» è una scelta di progetto (un *come*), non un requisito; «più veloce del precedente» manca di soglia.
+
+## [mcq 1] Nella notazione EARS (Easy Approach to Requirements Syntax), quale schema corrisponde a un requisito guidato da un evento?
+- [ ] The <system> shall <response>.
+- [x] When <trigger>, the <system> shall <response>.
+- [ ] While <state>, the <system> shall <response>.
+- [ ] If <unwanted condition>, then the <system> shall <response>.
+
+### Soluzione
+EARS ha cinque schemi: ubiquo (sempre valido), event-driven (*When*), state-driven (*While*), unwanted behaviour (*If… then*), optional feature (*Where*). Riducono l'ambiguità del linguaggio naturale e sono adatti sia alle persone sia agli assistenti di programmazione.
+
+## [mcq 1] Nello spec-driven development (es. GitHub Spec Kit, Kiro) che ruolo ha la specifica?
+- [ ] È documentazione scritta a fine progetto per il cliente.
+- [x] È l'artefatto primario: da essa derivano piano, task e codice generato dall'assistente, e la si aggiorna prima del codice.
+- [ ] Sostituisce i test, che diventano superflui.
+- [ ] È una user story in formato Connextra senza criteri di accettazione.
+
+### Soluzione
+Nello spec-driven development la specifica (requisiti, spesso in EARS, più design e task) guida la generazione: un modello linguistico prende il testo alla lettera, quindi una specifica vaga produce codice sbagliato. Test e review umana restano necessari.
+
+## [mcq 1] Che differenza c'è tra una user story in formato Connextra e una job story?
+- [ ] Nessuna, sono sinonimi.
+- [x] La Connextra parte dal ruolo («Come <ruolo> voglio… così che…»), la job story dalla situazione («Quando <situazione>, voglio… così da…»).
+- [ ] La job story è scritta in Gherkin.
+- [ ] La Connextra non ha un beneficio esplicito.
+
+### Soluzione
+Connextra: *As a <role> I want <goal> so that <benefit>*. Job story (Jobs To Be Done): *When <situation>, I want to <motivation>, so I can <outcome>*; mette al centro il contesto invece della persona. I criteri di accettazione si scrivono poi in Gherkin (Given/When/Then).
+
+## [aperta 4] Confronta specifica funzionale (SRS), casi d'uso e user story come forme dei requisiti: per ognuna indica a chi serve e un punto di forza e uno debole.
+
+### Soluzione
+SRS (elenco «il sistema deve…»): completa e contrattuale, adatta a committenti e verifica formale; debole su contesto e priorità, invecchia e si legge male. Casi d'uso: scenari attore-sistema con flusso principale e alternativi; buoni per capire l'interazione e derivare test; più costosi da scrivere e mantenere. User story: brevi, centrate sul valore per l'utente, negoziabili (3C: card, conversation, confirmation, INVEST); ottime per backlog agili, ma da sole sono incomplete e richiedono criteri di accettazione (Gherkin) e conversazione. Le forme si combinano: nessuna basta da sola.
+
+### Griglia
+- 1 | SRS: destinatari e pro/contro
+- 1 | casi d'uso: destinatari e pro/contro
+- 1 | user story: destinatari e pro/contro (3C/INVEST, criteri di accettazione)
+- 1 | conclusione: le forme sono complementari e vanno scelte per lettore

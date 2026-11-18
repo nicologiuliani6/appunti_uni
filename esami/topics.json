@@ -1,5 +1,5 @@
 {
-  "_nota": "Argomenti per materia. 'studiato' = default dedotto dagli appunti in 3/<materia>/*.tex (BD 9/10/2026: completi; IngSW e AA aggiornati il 28/10/2026); nella pagina puoi cambiarli con le checkbox. Una domanda entra nell'allenamento mirato solo se TUTTI i suoi argomenti sono studiati. Regex cercate nel testo della domanda (e nelle opzioni se la domanda da sola non basta).",
+  "_nota": "Argomenti per materia. 'studiato' = default dedotto dagli appunti in 3/<materia>/*.tex (BD 9/10/2026: completi; AA aggiornato il 28/10/2026, IngSW il 18/11/2026); nella pagina puoi cambiarli con le checkbox. Una domanda entra nell'allenamento mirato solo se TUTTI i suoi argomenti sono studiati. Regex cercate nel testo della domanda (e nelle opzioni se la domanda da sola non basta).",
   "ingegneria-del-software": [
     {
       "id": "uml-base",
@@ -89,7 +89,7 @@
       "id": "python-avanzato",
       "nome": "Python avanzato (decoratori, property, ABC, metaclassi, type hint, dataclass, Pydantic, DI)",
       "studiato": true,
-      "re": "decorat|@property|@dataclass|dataclass|Pydantic|dependency injection|inversion of control|\\bIoC\\b|\\bDI\\b|type hint|mypy|metaclass|abstractmethod|\\bABC\\b|\\*args|\\*\\*kwargs|TypeVar|Generic\\[|__new__|__call__|__class__|__base__|singleton"
+      "re": "decorat|@property|@dataclass|dataclass|Pydantic|dependency injection|inversion of control|\\bIoC\\b|(?-i:\\bDI\\b)|type hint|mypy|metaclass|abstractmethod|(?-i:\\bABC\\b)|\\*args|\\*\\*kwargs|TypeVar|Generic\\[|__new__|__call__|__class__|__base__|singleton"
     },
     {
       "id": "llm",
@@ -174,6 +174,18 @@
       "nome": "Sprint retrospective (Start/Stop/Continue, action point)",
       "studiato": true,
       "re": "retrospective|retrospettiva|Start.Stop|action point"
+    },
+    {
+      "id": "requisiti",
+      "nome": "Forme dei requisiti: definizione IEEE, funzionali/qualità/vincoli, livelli, SRS, EARS, Gherkin, spec-driven",
+      "studiato": true,
+      "re": "forme dei requisiti|requisit\\w* (di qualità|di vincolo|utente|di business|software)|vincol\\w* (di progetto|tecnic)|\\bSRS\\b|\\bEARS\\b|Gherkin|Given.When.Then|spec.driven|IKIWISI|Humphrey|job stor|Connextra|IEEE 610|misurabil"
+    },
+    {
+      "id": "prolog",
+      "nome": "Prolog e programmazione logica (Succi, L05 bis)",
+      "studiato": true,
+      "re": "Prolog|programmazione logica|unificano|unificazione (di|dei|tra) termin|\\bmgu\\b|backtracking|clausol\\w* di Horn|modus (ponens|tollens)|backward chaining|occurs check"
     }
   ],
   "basi-di-dati": [

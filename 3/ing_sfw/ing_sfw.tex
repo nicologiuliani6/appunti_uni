@@ -77,6 +77,8 @@
 \tableofcontents   % <-- genera automaticamente la pagina dell'indice
 \newpage
 
+% NOTA: tutto il Modulo 1 (lezioni, incluse "Le forme dei requisiti") è del prof. Ciancarini.
+% Modulo 2 (Python L05, Prolog L05 bis) è di Succi; esercitazioni di Missiroli.
 \section{Modulo 1 - Lezioni}
 \subsection{Introduzione al corso}
 
@@ -1013,6 +1015,332 @@ assistente IA: goal ``valutare l'effetto dell'assistente sulla qualità, per il 
 metriche da pipeline (difetti post-rilascio per KLOC, nuove vulnerabilità per PR,
 \% duplicazione, complessità media, debito stimato, lead time, tasso di rilasci falliti);
 da evitare ``righe generate dall'IA'' come metrica di successo (Goodhart).
+
+\subsection{Le forme dei requisiti}
+% Fonte: 6_requisiti_2026_v3, prof. Ciancarini (Modulo 1).
+
+\subsubsection{Che cos'è un requisito}
+Nel vocabolario: ``ciascuna delle qualità necessarie e richieste per uno scopo determinato''.
+Lo standard IEEE 610.12-1990 dà due definizioni:
+\begin{itemize}
+  \item \textbf{il bisogno}: condizione o capacità \emph{necessaria a un utente} per risolvere
+        un problema o raggiungere un obiettivo;
+  \item \textbf{l'impegno}: condizione o capacità che un \emph{sistema deve possedere} per
+        soddisfare un contratto, uno standard o una specifica.
+\end{itemize}
+
+\paragraph{La ``legge'' di Humphrey.} I requisiti di un nuovo prodotto software non saranno
+chiari finché gli utenti non inizieranno a usarlo. È il principio \textbf{IKIWISI}
+(\emph{I'll Know It When I See It}, ``lo riconoscerò quando lo vedrò''): un problema non è
+ben compreso finché non se ne sviluppa una soluzione. Conseguenza: sviluppare software è
+\emph{imparare}, i requisiti emergono per iterazioni, con prototipi e rilasci frequenti.
+
+\subsubsection{Tre tipi di requisiti}
+Esempio su una sola funzione (acquisto di un biglietto del treno):
+\begin{itemize}
+  \item \textbf{funzionale}: \emph{cosa} deve fare il sistema (``il sistema permette di
+        comprare un biglietto'');
+  \item \textbf{di qualità}: \emph{quanto bene} lo fa, in modo misurabile (``l'acquisto
+        richiede non più di un minuto'');
+  \item \textbf{vincolo}: limite su \emph{come o dove} si realizza (``l'acquisto avviene su
+        smartphone Android'').
+\end{itemize}
+
+\paragraph{ISO/IEC 25010:2023 come checklist.} Nove caratteristiche: idoneità funzionale,
+efficienza prestazionale, compatibilità, capacità di interazione (\emph{ex usabilità}),
+affidabilità, sicurezza (\emph{security}, protezione da attacchi), manutenibilità,
+flessibilità (\emph{ex portabilità}), \emph{safety} (nuova nel 2023). Come si usa: per ogni
+caratteristica ci si chiede se è rilevante per il prodotto e, se sì, quali requisiti servono;
+ogni requisito di qualità va reso \textbf{misurabile}; le sottocaratteristiche guidano la
+metrica (es.\ efficienza $\to$ tempo di risposta, capacità).
+
+\paragraph{Dal vago al misurabile.} \textbf{Metrica + soglia + condizioni di misura =
+requisito verificabile}. Esempi sulla biblioteca:
+\begin{center}
+\small
+\begin{tabular}{|p{2.8cm}|p{3.6cm}|p{8.2cm}|}
+\hline
+\textbf{Caratteristica} & \textbf{Vago} & \textbf{Misurabile}\\
+\hline
+Efficienza prestazionale & ``la ricerca deve essere veloce'' & con 100.000 volumi e 200
+utenti contemporanei, il 95\% delle ricerche risponde in meno di 1~s\\
+\hline
+Capacità di interazione & ``l'app deve essere facile'' & un nuovo iscritto completa il primo
+prestito senza aiuto in meno di 3 minuti (test con 10 utenti: almeno 9 ci riescono)\\
+\hline
+Affidabilità & ``il sistema deve funzionare sempre'' & disponibilità $\ge 99{,}5\%$
+nell'orario di apertura, misurata su base mensile\\
+\hline
+Sicurezza & ``i dati devono essere protetti'' & le operazioni del bibliotecario richiedono
+autenticazione a due fattori; ogni accesso ai dati personali è registrato\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{Livelli dei requisiti}
+\begin{center}
+\small
+\begin{tabular}{|l|p{3.6cm}|p{3.4cm}|p{6cm}|}
+\hline
+\textbf{Livello} & \textbf{Domanda} & \textbf{Documento} & \textbf{Esempio (biglietteria)}\\
+\hline
+Business & perché serve il prodotto? & visione & ridurre le code: entro un anno almeno
+metà dei biglietti venduti online\\
+\hline
+Utente & chi lo userà e cosa ci farà? & casi d'uso, user story & come viaggiatore voglio
+comprare un biglietto Bologna--Milano dal telefono\\
+\hline
+Software & cosa dovrà fare il sistema? & specifica (SRS), criteri di accettazione & per ogni
+acquisto confermato il sistema emette un biglietto con tratta, data, passeggero e codice
+univoco\\
+\hline
+\end{tabular}
+\end{center}
+Trasversali a tutti i livelli: requisiti di qualità, interfacce esterne, vincoli.
+
+\paragraph{Cosa, non come.} Un requisito descrive lo \emph{scopo}, non la \emph{soluzione}:
+``l'iscritto prenota un volume già in prestito'' è un requisito, ``una tabella Prenotazioni
+con chiave ISBN'' è una scelta di progetto; così ``l'iscritto viene avvisato quando il volume
+rientra'' vs ``notifiche push tramite Firebase'', ``la ricerca risponde in meno di 1~s'' vs
+``un indice full-text Elasticsearch''. Una scelta tecnica entra nei requisiti \emph{solo come
+vincolo motivato}: dal cliente, da norme, da sistemi esistenti.
+
+\subsubsection{Le forme classiche}
+Uno stesso bisogno (``Paolo deve arrivare puntuale a un appuntamento'') si può scrivere come
+\emph{requisito funzionale} (``R-12: il sistema permetterà di prenotare un taxi e di
+ottenere una stima del tempo di attesa''), come \emph{scenario} (``Ho bisogno di un taxi in
+via Zamboni 33'' -- ``Fragola 33 arriverà tra 3 minuti'') o come \emph{user story} (``Come
+Paolo voglio chiamare un taxi dall'app e sapere quando arriverà, per capire se sarò puntuale
+all'appuntamento'').
+
+\paragraph{Perché tante forme? Lettori diversi.}
+\begin{itemize}[nosep]
+  \item cliente e utenti $\to$ user story, job story, personae;
+  \item chi progetta l'interazione $\to$ casi d'uso, scenari, storyboard;
+  \item contratto e certificazione $\to$ documento SRS, frasi ``il sistema deve\dots'';
+  \item sviluppatori e tester $\to$ criteri di accettazione, Gherkin, modelli;
+  \item LLM che genera codice $\to$ specifiche strutturate: EARS, Gherkin, modelli di dominio.
+\end{itemize}
+
+\paragraph{Caso di studio: la biblioteca.} 100.000 volumi, 5.000 iscritti; volumi con
+metadati bibliografici, identificati da ISBN e numero di copia; due tipi di utente
+(\emph{bibliotecario} aggiorna la base di dati, \emph{iscritto} consulta); interfaccia web;
+operazioni: nuove acquisizioni, iscrizione utenti, prestiti, rientro, consultazione per
+metadati. Nel testo si sottolineano \emph{attori}, \emph{dati} e \emph{operazioni}.
+\textbf{Cosa manca?} Quanti prestiti e per quanto tempo, prenotazioni e ritardi, chi approva
+un prestito, quali dati personali si conservano (GDPR), nessun requisito di qualità. Un testo
+ambiguo viene interpretato male da chi lo legge e ``arricchito'' da un LLM creativo (la
+vignetta dell'altalena).
+
+\paragraph{Forma funzionale.} R1 il sistema gestirà due tipi di utenti; R2 permetterà
+all'iscritto di ottenere un libro in prestito; R3 di restituirlo; R4 al bibliotecario di
+inserire un libro nel catalogo; R5 di dismetterlo; R6 di iscrivere un utente; R7 di
+sollecitare una restituzione; R8 di elaborare statistiche. Note del revisore: R2 perché, per
+quanto tempo, quanti volumi?; R7 quando e con quale mezzo?; R8 quali statistiche, per chi?;
+per tutti \emph{nessun criterio di accettazione}: come li collaudo? R5, R7, R8 non sono nel
+testo del cliente: sono emersi dal colloquio e vanno confermati.
+
+\paragraph{Casi d'uso e scenari.} Diagramma UML: l'\emph{iscritto} cerca, chiede un prestito,
+prenota, restituisce; il \emph{bibliotecario} cataloga, iscrive, sollecita, elabora
+statistiche. Lo \textbf{scenario} ``prestito di un volume'' è una conversazione tra attore e
+sistema: (1) l'iscritto accede, (2) cerca per autore, titolo o ISBN, (3) il sistema mostra i
+risultati, (4) verifica una copia disponibile, (5) l'iscritto conferma, (6) il sistema
+registra prestito e scadenza. Flussi alternativi: \emph{4a} nessuna copia $\to$ propone la
+prenotazione; \emph{5a} limite di 5 prestiti $\to$ richiesta rifiutata. Precondizione:
+account attivo. Regole concordate: massimo 5 prestiti attivi, durata 30 giorni.
+
+\paragraph{Confronto tra le forme.}
+\begin{center}
+\small
+\begin{tabular}{|l|p{3.5cm}|p{3.8cm}|p{3.4cm}|}
+\hline
+\textbf{Forma} & \textbf{Punti di forza} & \textbf{Limiti} & \textbf{Quando}\\
+\hline
+SRS & completo, contrattuale, tracciabile & costoso da mantenere, invecchia in fretta &
+appalti, sistemi critici\\
+\hline
+Casi d'uso e scenari & flussi ed eccezioni espliciti & verbosi, poco centrati sul valore &
+interazioni complesse\\
+\hline
+User story & valore e utente al centro, leggere & ambigue senza conversazione & backlog
+agile\\
+\hline
+Prototipi e mockup & mostrano invece di descrivere & non dicono regole e dati & interfacce,
+validazione precoce\\
+\hline
+Gherkin / EARS & strutturati, verificabili, testabili & richiedono disciplina, non eliminano
+ogni ambiguità & criteri di accettazione, input per l'IA\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{User story}
+Dalla \emph{visione} (app della biblioteca) alle \textbf{epiche} (Prestiti, Catalogo,
+Iscritti: troppo grandi per uno Sprint) alle \textbf{user story} (realizzabili in uno Sprint:
+chiedere/rinnovare un prestito, prenotare, promemoria di scadenza, cercare per autore o
+titolo, catalogare un acquisto, iscriversi online\dots). Approfondimento in
+\emph{Processi-esercitazioni $\to$ User stories}.
+
+\paragraph{Connextra vs job story.}
+\begin{itemize}
+  \item \textbf{Connextra} (Cohn), centrata sul \emph{ruolo}: ``Come \textless ruolo\textgreater{}
+        voglio \textless funzione\textgreater{} per \textless beneficio\textgreater''. Es.\
+        ``Come iscritto voglio prenotare un volume in prestito per averlo appena rientra''.
+  \item \textbf{Job story} (Kalbach), centrata sulla \emph{situazione}: ``Quando
+        \textless situazione\textgreater{} voglio poter \textless azione\textgreater{} così da
+        \textless risultato\textgreater''. Es.\ ``Quando ho bisogno di un libro già in
+        prestito, voglio poterlo prenotare, così da averlo appena rientra''.
+\end{itemize}
+
+\paragraph{Personae.} Utente fittizio ma realistico, ricavato da interviste e dati $\to$
+schemi ricorrenti $\to$ persona $\to$ user story. Es.\ \emph{Giulia, 21 anni}, pendolare da
+Imola, usa solo lo smartphone, viene in biblioteca due volte a settimana, i testi d'esame
+sono spesso in prestito; obiettivo: avere i libri nei giorni in cui è a Bologna, senza viaggi
+a vuoto. Storia: ``Come Giulia voglio prenotare un testo in prestito ed essere avvisata quando
+rientra, per venire a Bologna solo se posso ritirarlo''. Errori tipici: aggettivi non
+verificabili (``veloce e intuitiva''), scelte di progetto (``salvate in MongoDB''), storie
+troppo grandi (``gestire prestiti, prenotazioni e rinnovi'' è un'epica).
+
+\paragraph{Le 3C} (Jeffries, 2001). \textbf{Card}: la frase sul fronte del cartoncino;
+\textbf{Conversation}: il dialogo che chiarisce i dettagli (``quanti volumi?'' ``cinque, per
+30 giorni''; ``e se non c'è?'' ``si prenota''); \textbf{Confirmation}: i criteri di
+accettazione sul retro (prestito registrato con scadenza a 30 giorni; con 5 prestiti attivi
+rifiutato; volume assente $\to$ proposta di prenotazione). \emph{Una user story da sola è solo
+la Card}: senza Conversation e Confirmation è incompleta, per un collega come per un LLM.
+
+\paragraph{Dai criteri ai test: Gherkin.} Lo scenario in \texttt{prestito.feature} è
+leggibile dal cliente; ogni passo corrisponde a una \emph{step definition} (es.\ con
+\texttt{pytest-bdd}) e lo scenario diventa un test eseguibile:
+\begin{verbatim}
+Scenario: limite di prestiti raggiunto
+  Given un iscritto con 5 prestiti attivi
+  When chiede il prestito di un altro volume
+  Then la richiesta è rifiutata
+  And vede «Limite di 5 prestiti raggiunto»
+\end{verbatim}
+
+\paragraph{INVEST} (Wake, 2003) applicato. Storia debole: ``il sistema gestisce i prestiti
+in modo efficiente'': non indipendente (tocca tutto), negoziabile solo perché vaga, senza
+valore esplicito (per chi? perché?), non stimabile (``efficiente''), troppo grande, non
+testabile. Migliorata: ``Come iscritto voglio rinnovare online un prestito non prenotato da
+altri, per tenere il libro altri 30 giorni'': negoziabile, di valore (evita una visita),
+testabile (rinnovo rifiutato se prenotato); dipendenza da prestito e prenotazione, stima e
+dimensione restano da discutere col team (stimano gli Sviluppatori).
+
+\paragraph{Essence: Alpha Requirements} (area \emph{Solution}). Descrive la maturità
+dell'\emph{insieme} dei requisiti: \textbf{Conceived} (c'è un bisogno condiviso di un nuovo
+sistema) $\to$ \textbf{Bounded} (scopo e confini chiari) $\to$ \textbf{Coherent} (requisiti
+consistenti, conflitti risolti) $\to$ \textbf{Acceptable} (accettati dagli stakeholder)
+$\to$ \textbf{Addressed} (realizzati quanto basta per un sistema utile) $\to$
+\textbf{Fulfilled} (pienamente realizzati e verificati). Gli stati 1--4 riguardano
+comprensione e accordo, 5--6 la realizzazione. Si avanza quando è soddisfatta la
+\emph{checklist dello stato}, non quando si scrive una storia.
+
+\subsubsection{Requisiti nell'era degli LLM}
+L'LLM è un lettore \emph{molto letterale}: ``trattiamo gli agenti di programmazione come
+motori di ricerca, quando dovremmo trattarli come programmatori in coppia molto letterali'';
+si passa da ``il codice è la fonte di verità'' a ``l'intento è la fonte di verità'' (GitHub,
+2025). Spettro: \emph{vibe coding} (``fai un'app per la biblioteca'') $\to$ \emph{prompt con
+user story} (chi, cosa, perché, nessun criterio) $\to$ \emph{spec-driven} (storie + criteri
++ modello + vincoli).
+
+\paragraph{Spec-driven development.} \textbf{GitHub Spec Kit} (open source, 2025): Specify
+(cosa e perché: percorsi utente, criteri di successo) $\to$ Plan (come: architettura,
+tecnologie, vincoli) $\to$ Tasks (compiti piccoli e verificabili) $\to$ Implement (l'agente
+realizza, l'umano revisiona). \textbf{Kiro} (AWS, 2025): tre file per ogni funzione in
+\texttt{.kiro/specs/<funzione>/}: \texttt{requirements.md} (user story + criteri in EARS),
+\texttt{design.md} (architettura, diagrammi di sequenza), \texttt{tasks.md} (piano di
+implementazione in compiti).
+
+\paragraph{EARS} (\emph{Easy Approach to Requirements Syntax}, Mavin et al., 2009):
+linguaggio naturale con una sintassi a parole chiave.
+\begin{center}
+\small
+\begin{tabular}{|l|p{4.4cm}|p{8.4cm}|}
+\hline
+\textbf{Schema} & \textbf{Forma} & \textbf{Esempio (biblioteca)}\\
+\hline
+Ubiquo & Il \textless sistema\textgreater{} deve \textless risposta\textgreater & il sistema deve
+identificare ogni copia con ISBN e numero di copia\\
+\hline
+Evento & \textbf{Quando} \textless evento\textgreater, il sistema deve\dots & quando un volume
+rientra, il sistema deve avvisare il primo iscritto in prenotazione\\
+\hline
+Stato & \textbf{Mentre} \textless stato\textgreater, il sistema deve\dots & mentre un iscritto
+ha un prestito scaduto, il sistema deve impedirgli nuovi prestiti\\
+\hline
+Indesiderato & \textbf{Se} \textless condizione\textgreater, \textbf{allora} il sistema
+deve\dots & se un iscritto con 5 prestiti attivi chiede un altro prestito, allora il sistema
+deve rifiutarlo\\
+\hline
+Opzione & \textbf{Dove} \textless funzione presente\textgreater, il sistema deve\dots & dove è
+attivo il prestito digitale, il sistema deve fornire il link all'e-book\\
+\hline
+\end{tabular}
+\end{center}
+
+\paragraph{Cosa dicono gli studi.}
+\begin{itemize}
+  \item \textbf{Rathnayake et al.\ (2026)}, generazione di scenari BDD con GPT-4o, Claude 3
+        Opus, Gemini 1.5 Flash su 500 storie aziendali (valutatore LLM DeepSeek-R1, il più
+        correlato agli esperti): riferimento \emph{user story + descrizione}; \emph{solo
+        descrizione} perde dal 2,4\% al 6\%; \emph{solo user story} perde dal 19\% al 28\%.
+  \item \textbf{Feng et al., FSE 2026} (studio pilota, 3 sistemi, 5 LLM): specifiche
+        strutturate (Gherkin, modelli di dominio, firme) migliorano il codice generato
+        rispetto al solo testo.
+  \item \textbf{Krishna et al., IEEE RE 2024}: SRS generati da LLM paragonabili a quelli di un
+        ingegnere junior ma più generici; GPT-4 utile per trovare e correggere requisiti
+        difettosi.
+\end{itemize}
+
+\paragraph{La pila di forme per un LLM.} Dall'alto:
+\begin{enumerate}[nosep]
+  \item \textbf{Perché} (dà lo scopo): user story o job story;
+  \item \textbf{Comportamento verificabile} (riduce le interpretazioni): criteri di
+        accettazione in Gherkin o EARS;
+  \item \textbf{Struttura} (riduce le API inventate): modello di dominio, firme, API, dati;
+  \item \textbf{Qualità e vincoli} (rende esplicito l'implicito): requisiti misurabili
+        ISO/IEC 25010, piattaforme, leggi;
+  \item \textbf{Esempi} (ancorano il significato): casi concreti, contro-esempi, dati di prova.
+\end{enumerate}
+\emph{La sola user story è il vertice della pila, non la pila intera.} Esempio di specifica
+per un agente:
+\begin{verbatim}
+## Storia
+Come iscritto voglio un volume in prestito per studiare a casa
+## Criteri (EARS)
+Quando l'iscritto conferma e una copia è disponibile, il sistema
+deve registrare il prestito con scadenza a 30 giorni.
+Se l'iscritto ha già 5 prestiti attivi, allora il sistema deve
+rifiutare la richiesta.
+## Modello di dominio
+Iscritto(id, nome) · Copia(isbn, n, disponibile)
+Prestito(iscritto, copia, inizio, scadenza)
+## Qualità e vincoli
+Ricerca: 95% < 1 s con 100.000 volumi e 200 utenti
+Dati personali (GDPR): quali e per quanto? -> chiedere al PO
+## Istruzioni
+Prima del codice, elenca ambiguità e domande per il PO.
+Non aggiungere funzioni non richieste.
+\end{verbatim}
+
+\paragraph{L'LLM come assistente dell'analista.} \emph{Usi efficaci}: trasformare note e
+interviste in bozze di storie; segnalare ambiguità e domande per il cliente; proporre casi
+limite e scenari d'errore in Gherkin; riscrivere frasi vaghe in EARS e in forma misurabile;
+controllare le storie con INVEST. \emph{Rischi}: requisiti plausibili ma mai richiesti
+(allucinazioni); dati riservati del cliente in servizi pubblici; storie lunghe, generiche e
+poco negoziabili; fiducia eccessiva (``sembra completo''); perdita del dialogo con gli utenti
+reali. Prompt tipo: ``Ecco la descrizione informale di un sistema: [testo]. Elenca prima le
+ambiguità. Poi genera 5 user story Come/voglio/per con criteri Given/When/Then. Non inventare
+requisiti.'' Con un agente l'input più efficace è \textbf{user story + criteri verificabili
+(Gherkin o EARS) + modello di dominio}: la sola storia è un promemoria per una conversazione,
+l'LLM può fare domande ma le risposte spettano agli stakeholder; la verifica resta necessaria.
+
+\paragraph{Tre idee da portare a casa.} (1) \emph{I requisiti emergono}: si capiscono
+costruendo, con forme leggere raffinate iterazione dopo iterazione. (2) \emph{La qualità si
+misura}: metrica, soglia, condizioni, con ISO/IEC 25010 come checklist. (3) \emph{Con gli LLM
+le forme si impilano}: storia + criteri verificabili + modello + vincoli + esempi riducono le
+ambiguità; verifica e validazione restano necessarie.
 
 \newpage
 \section{Essence}
@@ -2842,6 +3170,101 @@ funzione, vale solo l'ultima. Alternative: parametri di default (anche \texttt{N
 il decoratore \texttt{@dispatch} della libreria \texttt{multipledispatch}, oppure le
 classi (vedi oltre).
 
+\subsubsection{Lambda: Java vs Python}
+La parola \emph{lambda} c'è in entrambi i linguaggi, ma indica cose diverse. Nel lambda calcolo
+una lambda è un \emph{valore}: una funzione senza nome e senza classe, che si passa, si
+restituisce e si applica.
+\begin{itemize}[nosep]
+  \item \textbf{Python}: \texttt{lambda} crea proprio questo, un \emph{oggetto funzione},
+        dello stesso tipo di quello creato da \texttt{def};
+  \item \textbf{Java} (da Java 8): una lambda è \emph{zucchero sintattico} per un oggetto
+        che implementa un'\emph{interfaccia funzionale}; in Java non esiste un tipo funzione.
+\end{itemize}
+
+\paragraph{Interfaccia funzionale (Java)} Un'interfaccia ordinaria con \textbf{un solo metodo
+astratto} (JLS §9.8); i metodi \texttt{default} e \texttt{static} non contano.
+\texttt{Runnable}, \texttt{Comparator}, \texttt{Callable} lo erano già da Java 1.0--1.5, prima che
+il nome esistesse. L'annotazione \texttt{@FunctionalInterface} non aggiunge nulla a runtime:
+chiede solo al compilatore di verificare la regola del metodo unico (come \texttt{@Override});
+un'interfaccia con due metodi astratti annotata così non compila.
+
+\paragraph{Dalla classe alla lambda} Un'interfaccia con un metodo si usa prima di tutto come
+interfaccia, con classi che la implementano (pattern Strategy di L04):
+\begin{verbatim}
+interface Adder<T> { T add(T a, T b); }
+class IntAdder implements Adder<Integer> {
+    public Integer add(Integer a, Integer b) { return a + b; } }
+static <T> T sum(List<T> xs, T zero, Adder<T> adder) {
+    T acc = zero;
+    for (T x : xs) acc = adder.add(acc, x);    // chiamata polimorfa
+    return acc; }
+sum(List.of(1,2,3), 0, new IntAdder());       // 6
+\end{verbatim}
+Tre forme equivalenti dello stesso oggetto:
+\begin{itemize}[nosep]
+  \item \textbf{classe con nome} (Java 1.0): riusabile per nome;
+  \item \textbf{classe anonima} (Java 1.1): \texttt{new Adder<Integer>() \{ public Integer
+        add(...) \{ return a + b; \} \}}, classe generata da \texttt{javac} come
+        \texttt{Adders\$1}; verbosa, ripete nome del metodo e tipi dall'interfaccia;
+  \item \textbf{lambda} (Java 8): \texttt{Adder<Integer> la = (a, b) -> a + b;}; con un solo
+        metodo astratto non c'è ambiguità, e il compilatore deduce classe, nome del metodo e
+        tipi dei parametri dal \emph{target type}. Anche i \emph{method reference}
+        (\texttt{Integer::sum}).
+\end{itemize}
+Il modello a oggetti è identico nelle tre colonne (interfaccia, classe che la implementa,
+istanza): lo zucchero toglie testo e cambia solo il significato di \texttt{this}, che in una
+lambda è l'oggetto \emph{che la racchiude}, in una classe anonima l'oggetto anonimo.
+\texttt{java.util.function} offre interfacce già pronte: \texttt{Function<T,R>} (\texttt{apply},
+più i default \texttt{andThen}, \texttt{compose}), \texttt{BiFunction}, \texttt{Predicate}
+(\texttt{test}), \texttt{Consumer} (\texttt{accept}), \texttt{Supplier} (\texttt{get}).
+
+\paragraph{Lettura di \texttt{IntFunc inc = x -> x + 1;}} (1) parametri, freccia, corpo (espressione
+o blocco); (2) \texttt{x} non ha tipo dichiarato: lo prende dal target type \texttt{IntFunc}, il cui
+unico metodo è \texttt{int apply(int x)}; (3) la lambda non ha un tipo proprio; (4)
+\texttt{inc} contiene un oggetto che implementa \texttt{IntFunc}; (5) si chiama come metodo,
+\texttt{inc.apply(3)}: in Java \texttt{inc(3)} non esiste.
+
+\paragraph{Conseguenze dell'essere zucchero} \texttt{var f = x -> x + 1;} e
+\texttt{Object o = x -> x + 1;} non compilano: senza interfaccia funzionale come target la lambda
+non può esistere. Lo stesso testo può diventare un \texttt{IntFunc}, un
+\texttt{IntUnaryOperator} o una \texttt{Function<Integer,Integer>}: oggetti diversi e non
+correlati. Togliendo anche l'interfaccia (una classe \texttt{Squarer} con un metodo) si perde
+qualcosa di vero: chi vuole «una qualsiasi funzione int$\to$int» deve nominare
+\texttt{Squarer}. È l'interfaccia a dare il polimorfismo, la lambda fa solo risparmiare testo.
+
+\paragraph{Sotto il cofano} \texttt{javac} compila il corpo in un metodo privato statico
+nascosto (\texttt{lambda\$main\$0}) ed emette \texttt{invokedynamic}; a runtime
+\texttt{LambdaMetafactory} genera una classe che implementa l'interfaccia (\texttt{Lam\$\$Lambda/0x\dots})
+e ne restituisce un'istanza. In Python \texttt{dis} mostra solo \texttt{LOAD\_CONST <code
+object>} + \texttt{MAKE\_FUNCTION}: le stesse due istruzioni di un \texttt{def}. Limite di
+Python: il corpo di una lambda è una sola \emph{espressione} (\texttt{lambda x: y = x} è
+\texttt{SyntaxError}); per altro si usa \texttt{def}.
+\begin{verbatim}
+inc = lambda x: x + 1
+def inc2(x): return x + 1
+type(inc) is type(inc2)          # True: entrambe 'function'
+inc.__name__                     # '<lambda>'
+def make_adder(n): return lambda x: x + n   # closure
+make_adder(10)(5)                # 15
+\end{verbatim}
+\begin{center}
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+ & \textbf{Java} & \textbf{Python} \\
+\hline
+cos'è una lambda & oggetto di un'interfaccia funzionale & oggetto \texttt{function} \\
+tipo & l'interfaccia target, dedotta & sempre \texttt{function} \\
+senza target type & errore di compilazione & nessun problema \\
+chiamata & \texttt{f.apply(3)} & \texttt{f(3)} \\
+uguale a \texttt{def}? & no: una classe con un metodo & sì, stesso oggetto \\
+\hline
+\end{tabular}
+\end{center}
+Java ha aggiunto la \emph{sintassi} delle lambda a un modello fatto solo di classi e
+interfacce; Python ha le funzioni come valori fin dall'inizio, e \texttt{lambda} è solo un
+modo breve di scriverne una.
+
 \subsubsection{Moduli, pacchetti e import}
 Ogni file \texttt{.py} è un modulo, il cui nome è il nome del file; il modulo è anch'esso
 un oggetto. Il runtime cerca i moduli nelle directory di \texttt{sys.path}, che include
@@ -3085,6 +3508,228 @@ class DatabaseSingleton(Database, metaclass=Singleton):
     pass
 \end{verbatim}
 
+\subsubsection{Creazione e inizializzazione: Java vs Python}
+In ogni linguaggio a oggetti ci sono tre cose da creare e inizializzare, in quest'ordine: la
+\textbf{classe} come entità nota al runtime, lo \textbf{stato di classe} (campi
+\texttt{static} in Java, attributi di classe in Python), ogni \textbf{istanza} con il suo stato.
+
+\paragraph{Java: ciclo di vita di una classe nella JVM} (JVMS §5.3--5.5)
+\begin{enumerate}[nosep]
+  \item \textbf{loading}: il class loader legge il \texttt{.class} e costruisce un oggetto
+        \texttt{Class};
+  \item \textbf{linking}: verifica del bytecode, allocazione dei campi statici con i valori di
+        default (\texttt{0}, \texttt{false}, \texttt{null}), risoluzione dei riferimenti;
+  \item \textbf{initialization}: esecuzione degli inizializzatori statici e dei blocchi
+        \texttt{static \{\dots\}} in ordine testuale. È l'unica fase con codice utente: il
+        «costruttore statico».
+\end{enumerate}
+Una classe Java ha quattro inizializzatori: campo statico, blocco statico (eseguiti
+\emph{una volta}, per la classe); campo di istanza, blocco di istanza (eseguiti a \emph{ogni}
+\texttt{new}, prima del corpo del costruttore). Con \texttt{Dog extends Animal} e due
+\texttt{new Dog(...)}: prima \texttt{Animal} statico, poi \texttt{Dog} statico (una sola
+volta); poi per ogni istanza la parte di \texttt{Animal} (campo, blocco, costruttore) e poi
+quella di \texttt{Dog}. Classi inizializzate superclasse prima e una volta sola; istanze
+inizializzate parte della superclasse prima, a ogni \texttt{new}.
+
+\paragraph{Java: inizializzazione pigra} Il costruttore statico non gira all'avvio né al
+caricamento, ma al \textbf{primo uso attivo} (JLS §12.4.1): primo \texttt{new}, prima chiamata di
+metodo statico, primo accesso a un campo statico non costante, prima inizializzazione di una
+sottoclasse. Una costante \texttt{static final int MAX = 10} viene inlineata dal compilatore,
+quindi leggerla non inizializza la classe.
+
+\paragraph{Java: cosa produce il compilatore} Gli inizializzatori statici diventano un metodo
+sintetico \texttt{<clinit>}, chiamato dalla JVM al più una volta e sotto lock (anche usi
+concorrenti vedono una classe completamente inizializzata); costruttori e inizializzatori di
+istanza diventano metodi \texttt{<init>}. \texttt{new Dog("Rex")} sono \emph{due} bytecode:
+\texttt{new} alloca con valori di default (e innesca l'inizializzazione della classe se serve),
+\texttt{invokespecial <init>} inizializza. L'allocazione è della VM e non è ridefinibile.
+
+\paragraph{Trappola classica} Un costruttore della base che chiama un metodo sovrascrivibile:
+\begin{verbatim}
+class Base { Base() { describe(); }  void describe() {...} }
+class Derived extends Base {
+    int size = 42; String label = "ok";
+    void describe() { System.out.println("size=" + size + " label=" + label); } }
+new Derived();    // stampa: size=0 label=null
+\end{verbatim}
+\texttt{Base()} gira prima degli inizializzatori di \texttt{Derived}: l'override è già attivo
+(dispatch dinamico) ma vede i valori di default scritti da \texttt{new}.
+
+\paragraph{Python: la classe è un'istruzione} Non c'è caricamento di classi: \texttt{class} è
+un'istruzione eseguibile del modulo, e il suo \textbf{corpo viene eseguito subito, una volta}:
+è il corrispondente del costruttore statico, e può contenere qualunque codice (cicli,
+chiamate, \texttt{if}). Per \texttt{class Dog(Base): <corpo>} il manuale (§3.3.3) prescrive:
+\begin{enumerate}[nosep]
+  \item si determina la \textbf{metaclasse} (quella delle basi, \texttt{type} di default);
+  \item si crea il \textbf{namespace}: \texttt{ns = Meta.\_\_prepare\_\_(name, bases)};
+  \item si esegue il \textbf{corpo} con \texttt{ns} come scope locale;
+  \item si costruisce la classe: \texttt{Dog = Meta(name, bases, ns)}, cioè
+        \texttt{Meta.\_\_new\_\_} e poi \texttt{Meta.\_\_init\_\_};
+  \item dentro \texttt{type.\_\_new\_\_}: \texttt{\_\_set\_name\_\_} sui descrittori, poi
+        \texttt{Base.\_\_init\_subclass\_\_(Dog)}.
+\end{enumerate}
+Ordine osservato con una metaclasse che stampa tutto: \texttt{\_\_prepare\_\_}, corpo,
+\texttt{Meta.\_\_new\_\_}, \texttt{\_\_init\_subclass\_\_}, \texttt{Meta.\_\_init\_\_} (all'import,
+una volta); poi a ogni \texttt{Dog("Rex")}: \texttt{Meta.\_\_call\_\_}, \texttt{Dog.\_\_new\_\_},
+\texttt{Dog.\_\_init\_\_}.
+
+\paragraph{Python: eager, non lazy} Java inizializza la classe al primo uso attivo; Python
+esegue il corpo all'\texttt{import}, che la classe venga usata o no. Il modulo è eseguito una
+volta sola e messo in \texttt{sys.modules}; gli import successivi restituiscono quell'oggetto. Il
+bytecode in \texttt{\_\_pycache\_\_/*.pyc} è l'analogo del \texttt{.class}, ma per l'intero modulo.
+
+\paragraph{Python: tutto è una chiamata} \texttt{dis} mostra che \texttt{d = Dog("Rex")} è solo
+\texttt{LOAD\_NAME Dog}, \texttt{CALL}: non c'è un'istruzione \texttt{new}; chiamare la classe
+esegue \texttt{type.\_\_call\_\_}, che fa \texttt{\_\_new\_\_} + \texttt{\_\_init\_\_}. Anche
+\texttt{class} è una chiamata: \texttt{LOAD\_BUILD\_CLASS}, corpo compilato come funzione, poi
+\texttt{\_\_build\_class\_\_(corpo, 'Dog', Animal)}. Per questo Python può ridefinire l'allocazione
+(\texttt{\_\_new\_\_}, singleton) e Java no: un metodo contro un'istruzione.
+
+\paragraph{Stato di istanza} In Java un campo esiste dal \texttt{new}, con valore di default; in
+Python un attributo di istanza esiste solo dopo un'assegnazione a \texttt{self.nome}. Python
+\emph{non} chiama automaticamente l'\texttt{\_\_init\_\_} del padre (Java inserisce
+\texttt{super()} in ogni costruttore): se \texttt{B(A)} dimentica \texttt{super().\_\_init\_\_()},
+\texttt{B().name} dà \texttt{AttributeError}. La stessa trappola del costruttore che chiama un
+metodo sovrascritto in Python dà \texttt{AttributeError: 'Derived' object has no attribute
+'size'}: Java sbaglia in silenzio (\texttt{size=0}), Python solleva un'eccezione. Stessa causa:
+dispatch dinamico attivo prima che la sottoclasse abbia inizializzato il suo stato.
+\begin{center}
+\small
+\begin{tabular}{|l|p{5.5cm}|p{5.5cm}|}
+\hline
+ & \textbf{Java / JVM} & \textbf{Python / CPython} \\
+\hline
+unità di caricamento & una classe, da \texttt{.class} & un modulo, da \texttt{.py}/\texttt{.pyc} \\
+nascita della classe & loading, linking, initialization & esecuzione dell'istruzione \texttt{class} \\
+costruttore statico & \texttt{<clinit>} & il corpo della classe, eseguito come funzione \\
+quando & pigro, al primo uso attivo & eager, all'import \\
+stato di classe & campi static, valori di default & attributi di classe, nessun default \\
+chi costruisce la classe & la JVM (non programmabile) & la metaclasse \\
+allocazione istanza & bytecode \texttt{new} (non programmabile) & \texttt{\_\_new\_\_} via \texttt{type.\_\_call\_\_} \\
+init istanza & \texttt{<init>} & \texttt{\_\_init\_\_} \\
+costruttore padre & implicito (\texttt{super()}) & solo se scritto \\
+campi di istanza & dichiarati, con default & creati per assegnazione \\
+\hline
+\end{tabular}
+\end{center}
+In Java il protocollo sta nella \textbf{macchina virtuale}; in Python in \textbf{oggetti
+ordinari} (\texttt{type}, metaclassi), quindi è personalizzabile.
+
+\subsubsection{Distruzione degli oggetti}
+Lo specchio della creazione è il distruttore \texttt{\_\_del\_\_}, chiamato dall'interprete
+\emph{subito prima} che la memoria venga recuperata. In CPython un oggetto è recuperato quando
+il suo \textbf{reference count} scende a zero.
+
+\paragraph{\texttt{del} non è \texttt{\_\_del\_\_}} \texttt{del x} \emph{toglie il nome}
+\texttt{x} e decrementa il contatore di uno; il distruttore gira solo se il contatore arriva a
+zero. Lo stesso vale per \texttt{x = None}, la riassegnazione o l'uscita dallo scope. Con
+\texttt{y = x}, \texttt{del x} non distrugge nulla, \texttt{del y} sì.
+\texttt{sys.getrefcount(obj)} restituisce il contatore, sempre \emph{uno in più} del previsto
+(l'argomento stesso è un riferimento durante la chiamata); è un aiuto al debug solo di CPython
+(senza senso su PyPy; da 3.12 per gli oggetti \emph{immortali} come \texttt{None} e piccoli interi
+restituisce un valore enorme fisso).
+
+\paragraph{Garanzie} Il \emph{linguaggio} garantisce pochissimo: \texttt{\_\_del\_\_} è chiamato
+«quando l'istanza sta per essere distrutta», non è garantito per gli oggetti ancora vivi
+all'uscita dell'interprete, e il \emph{quando} è lasciato all'implementazione. CPython aggiunge
+il reference counting, quindi per oggetti fuori da cicli la distruzione è immediata e
+deterministica. Tre casi, in ordine crescente di sorpresa:
+\begin{enumerate}[nosep]
+  \item \textbf{cicli di riferimenti}: se \texttt{a} punta a \texttt{b} e \texttt{b} ad
+        \texttt{a}, dopo \texttt{del a, b} i contatori restano a 1; solo il \textbf{garbage
+        collector ciclico} li trova, quando le allocazioni superano una soglia
+        (\texttt{gc.get\_threshold()}, 2000 di default in 3.13) o con \texttt{gc.collect()},
+        che restituisce il numero di oggetti irraggiungibili trovati. Un'autoreferenza
+        (\texttt{a.me = a}) o un traceback salvato creano cicli per caso. Prima di Python 3.4
+        (PEP 442) gli oggetti in un ciclo con \texttt{\_\_del\_\_} non venivano mai raccolti
+        (finivano in \texttt{gc.garbage}). \texttt{gc.disable()} spegne solo le esecuzioni
+        automatiche, non il reference counting;
+  \item \textbf{uscita dall'interprete}: CPython \emph{prova} a distruggere ciò che resta, ma
+        l'ordine è indefinito (un oggetto può essere finalizzato dopo moduli e builtin che gli
+        servono, es.\ \texttt{NameError: name 'open' is not defined} dentro \texttt{\_\_del\_\_}),
+        alcuni oggetti non vengono mai distrutti, e \texttt{os.\_exit()}, un crash o
+        \texttt{kill -9} saltano tutto. Ciò che \emph{deve} avvenire all'uscita va in
+        \texttt{atexit} o in un context manager;
+  \item \textbf{altre implementazioni} (PyPy, Jython, IronPython, GraalPy): niente reference
+        counting ma un \textbf{tracing GC} (come JVM e .NET), che recupera a lotti: il
+        distruttore gira secondi o minuti dopo, all'uscita o mai. Per saperlo:
+        \texttt{platform.python\_implementation()} o \texttt{sys.implementation.name}
+        (da testare al posto di sottostringhe di \texttt{sys.version}; da shell
+        \texttt{python -VV}).
+\end{enumerate}
+\begin{center}
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{situazione} & \textbf{CPython} & \textbf{PyPy e altri} \\
+\hline
+ultimo riferimento rimosso & immediato & alla prossima raccolta \\
+ciclo di riferimenti & al prossimo giro del \texttt{gc} & alla prossima raccolta \\
+uscita dell'interprete & best effort, ordine indefinito & best effort o mai \\
+\hline
+\end{tabular}
+\end{center}
+
+\paragraph{Eccezioni e resurrezione} Un'eccezione sollevata in \texttt{\_\_del\_\_} viene
+\textbf{inghiottita}: non si propaga, viene solo stampata su \texttt{stderr} («Exception ignored
+in\dots») e l'esecuzione prosegue. Il motivo: il distruttore lo chiama l'interprete in un punto
+arbitrario, quindi non c'è un chiamante né un \texttt{try} a cui consegnarla (un \texttt{except}
+attorno a \texttt{Bad()} non la cattura). Un errore in \texttt{close()} diventa invisibile;
+\texttt{sys.unraisablehook} può registrarlo, non recuperarlo. Il distruttore può anche salvare
+\texttt{self} da qualche parte (\textbf{resurrezione}): l'oggetto torna vivo; quando muore
+davvero, in CPython \texttt{\_\_del\_\_} non viene richiamato (il manuale lascia la scelta
+all'implementazione).
+
+\paragraph{Metaclassi e distruzione} La creazione passa da \texttt{type.\_\_call\_\_},
+ridefinibile; la distruzione \emph{non} è una chiamata alla metaclasse: l'interprete cerca il
+finalizzatore sulla \emph{classe} dell'oggetto (slot C \texttt{tp\_finalize} di
+\texttt{PyTypeObject}, riempito definendo \texttt{\_\_del\_\_}). Una metaclasse non può quindi
+intercettare il momento, ma può decidere \emph{quale} \texttt{\_\_del\_\_} avrà la classe:
+\begin{enumerate}[nosep]
+  \item avvolgere o iniettare \texttt{\_\_del\_\_} in \texttt{Meta.\_\_new\_\_} modificando il
+        namespace (ancora template method), con gli stessi limiti di \texttt{\_\_del\_\_};
+  \item registrare in \texttt{Meta.\_\_call\_\_} un \texttt{weakref.finalize} su ogni istanza.
+\end{enumerate}
+\begin{verbatim}
+import weakref
+class LoggedType(type):
+    def __call__(cls, *args, **kw):
+        obj = super().__call__(*args, **kw)          # __new__ + __init__
+        weakref.finalize(obj, print, "finalizer", cls.__name__)
+        return obj
+\end{verbatim}
+Un \textbf{riferimento debole} (\texttt{weakref.ref(obj)}) punta a un oggetto \emph{senza contare}
+come riferimento: non lo tiene in vita, e chiamato restituisce l'oggetto o \texttt{None} se è
+sparito (usi: cache e registri, \texttt{WeakValueDictionary}, \texttt{WeakSet}).
+\texttt{weakref.finalize(obj, func, *args)} esegue \texttt{func(*args)} \emph{una sola volta},
+alla distruzione o all'uscita dell'interprete (garantito, \texttt{atexit=True}); è l'alternativa
+raccomandata a \texttt{\_\_del\_\_}, purché gli argomenti non riferiscano \texttt{obj}
+(altrimenti non muore mai).
+
+\paragraph{Perché non chiudere file in \texttt{\_\_del\_\_}} Il file si chiude quando gira il
+distruttore, e non si sa quando: con un ciclo anche accidentale (\texttt{w.friend = w}) il buffer
+non viene scritto su disco finché non passa il \texttt{gc}; con molti oggetti si esauriscono i
+file descriptor; se \texttt{\_\_init\_\_} fallisce prima di creare \texttt{self.f},
+\texttt{\_\_del\_\_} gira comunque e dà \texttt{AttributeError}; all'uscita le ultime scritture
+si perdono; gli errori di \texttt{close()} non arrivano mai al chiamante. Il modo Python è
+rilasciare le risorse in modo \textbf{esplicito e deterministico}, legato a uno scope, con un
+context manager:
+\begin{verbatim}
+class Writer:
+    def __init__(self, path): self.f = open(path, "w")
+    def write(self, s):       self.f.write(s)
+    def close(self):          self.f.close()
+    def __enter__(self):      return self
+    def __exit__(self, exc_type, exc, tb):
+        self.close(); return False      # chiuso anche in caso di eccezione
+with Writer("out.txt") as w:
+    w.write("hello")
+# qui il file è chiuso, scritto, e gli errori di close() si propagano
+\end{verbatim}
+In sintesi: \texttt{\_\_del\_\_} gira in un momento ignoto, inghiotte le eccezioni e può vedere
+un \texttt{self} costruito a metà; per le risorse \texttt{with}/\texttt{\_\_exit\_\_}, con
+\texttt{weakref.finalize} come rete di sicurezza.
+
 \subsubsection{Type hint e generici}
 Python è dinamico: variabili, parametri e valori di ritorno possono cambiare tipo a runtime.
 Gli \emph{type hint} aggiungono tipi opzionali per intercettare errori prima. L'interprete
@@ -3242,6 +3887,91 @@ class Cat(Animal):
 # Animal() e Dog() danno TypeError; Cat().sound() funziona
 \end{verbatim}
 
+\subsubsection{Come fa un decoratore a cambiare il linguaggio: descrittori e ABCMeta}
+Python non ha parole chiave per metodi statici, metodi di classe, proprietà o classi astratte
+(Java ha \texttt{static} e \texttt{abstract}, C\# le proprietà). Sono tutti decoratori, cioè
+codice Python ordinario: \texttt{staticmethod}, \texttt{classmethod} e \texttt{property} sono
+\emph{classi}, \texttt{abstractmethod} è una funzione di tre righe. La spiegazione sta nel modo
+in cui Python cerca un attributo.
+
+\paragraph{Come funziona una chiamata di metodo} La classe memorizza una \emph{funzione}
+semplice (\texttt{C.\_\_dict\_\_['f']}), ma \texttt{c.f} restituisce un \emph{bound method}, con
+\texttt{self} già fissato. Regola del lookup: se \texttt{obj.name} trova nella classe un oggetto
+\texttt{d} che ha un metodo \texttt{\_\_get\_\_}, Python non restituisce \texttt{d} ma
+\texttt{d.\_\_get\_\_(obj, type(obj))}. Un oggetto così è un \textbf{descrittore}; le funzioni
+sono descrittori, e il loro \texttt{\_\_get\_\_} costruisce il bound method
+(\texttt{f.\_\_get\_\_(None, C)}, cioè \texttt{C.f}, restituisce la funzione senza binding).
+
+\paragraph{I built-in rifatti da zero}
+\begin{verbatim}
+class my_staticmethod:
+    def __init__(self, func): self.func = func
+    def __get__(self, obj, owner=None):
+        return self.func                      # ignora obj: niente self
+
+class my_classmethod:
+    def __init__(self, func): self.func = func
+    def __get__(self, obj, owner=None):
+        if owner is None: owner = type(obj)
+        def bound(*args, **kwargs):           # inserisce la classe
+            return self.func(owner, *args, **kwargs)
+        return bound
+
+class my_property:
+    def __init__(self, fget, fset=None): self.fget, self.fset = fget, fset
+    def __get__(self, obj, owner=None):
+        return self.fget(obj)                 # chiama il getter
+    def __set__(self, obj, value):            # usato per obj.name = value
+        if self.fset is None: raise AttributeError("read-only")
+        self.fset(obj, value)
+\end{verbatim}
+\begin{center}
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{scriviamo} & \textbf{memorizzato nella classe} & \textbf{\texttt{obj.name} restituisce} \\
+\hline
+\texttt{def f(self)} & una funzione & bound method (\texttt{self} inserito) \\
+\texttt{@staticmethod} & uno \texttt{staticmethod} & la funzione semplice \\
+\texttt{@classmethod} & un \texttt{classmethod} & funzione con \texttt{cls} inserito \\
+\texttt{@property} & una \texttt{property} & il valore calcolato dal getter \\
+\hline
+\end{tabular}
+\end{center}
+La grammatica non conosce metodi statici, di classe o proprietà: sono classi ordinarie che
+sfruttano \emph{una} regola del lookup (\texttt{\_\_get\_\_}).
+
+\paragraph{\texttt{abstractmethod} e \texttt{ABCMeta}} Il codice reale di \texttt{abstractmethod}
+(CPython 3.13) è:
+\begin{verbatim}
+def abstractmethod(funcobj):
+    funcobj.__isabstractmethod__ = True
+    return funcobj
+\end{verbatim}
+Non avvolge: mette un \textbf{flag} e restituisce la stessa funzione. Da solo non fa nulla (una
+classe \texttt{Plain} senza \texttt{ABCMeta} con un metodo così si istanzia senza problemi).
+Il flag lo legge la \textbf{metaclasse} \texttt{ABCMeta}, una volta, quando costruisce la classe
+(nel suo \texttt{\_\_new\_\_}): raccoglie i nomi marcati in questa classe più quelli astratti
+ereditati e non ancora sovrascritti, e li mette in \texttt{cls.\_\_abstractmethods\_\_}
+(\texttt{frozenset}; vuoto significa concreta). Sovrascrivere \texttt{sound} in \texttt{Dog}
+memorizza una funzione senza flag, quindi il nome esce dall'insieme. Il \texttt{TypeError} «Can't
+instantiate abstract class \dots\ without an implementation for abstract method(s) sound»
+arriva alla creazione dell'istanza: in CPython il controllo sta in \texttt{object.\_\_new\_\_}
+(C); in Python puro lo si fa nel \texttt{\_\_call\_\_} della metaclasse, come per il singleton.
+
+Le due forme \texttt{class MyABC(metaclass=ABCMeta)} e \texttt{class MyABC2(ABC)} sono
+equivalenti: \texttt{ABC} è una classe di libreria il cui sorgente è solo
+\texttt{class ABC(metaclass=ABCMeta): \_\_slots\_\_ = ()}, e la metaclasse si eredita
+(\texttt{Animal.\_\_class\_\_} è \texttt{ABCMeta}).
+
+\paragraph{Lo schema generale} «Classe astratta» non è nella grammatica: è costruita da un
+decoratore che \emph{marca} (\texttt{abstractmethod}), una metaclasse che \emph{raccoglie} i marchi
+alla costruzione della classe e li \emph{fa rispettare} all'istanziazione (\texttt{ABCMeta}), una
+classe di comodo che nasconde la metaclasse (\texttt{ABC}). La sintassi è minima, la semantica
+viene da codice ordinario agganciato al modello a oggetti (\texttt{\_\_get\_\_},
+\texttt{\_\_new\_\_}, \texttt{\_\_call\_\_}). «Il decoratore marca, altro codice agisce» si
+ritrova ovunque: \texttt{@dataclass}, Pydantic, pytest, Flask.
+
 \subsubsection{Dataclass}
 Dalla versione 3.7, \texttt{@dataclass} genera per una classe che serve solo a contenere dati
 \texttt{\_\_init\_\_}, \texttt{\_\_repr\_\_} e \texttt{\_\_eq\_\_} (confronto di valore, non di
@@ -3262,6 +3992,64 @@ class Color:
     g: int
     b: int
 \end{verbatim}
+
+\paragraph{Attributi di classe e di istanza} In una classe normale una variabile assegnata nel
+corpo è un \emph{attributo di classe}, condiviso: con \texttt{class P: x: int = 0}, un'istanza
+ha \texttt{p.\_\_dict\_\_ == \{\}} e \texttt{p.x} si trova nella classe; \texttt{p.x = 5} crea un
+attributo di istanza che la nasconde. Con \texttt{@dataclass} le stesse righe diventano
+\textbf{campi}, e l'\texttt{\_\_init\_\_} generato (firma \texttt{(self, x: int, y: int = 0)}) le
+trasforma in attributi \emph{di istanza}: \texttt{Point(1).\_\_dict\_\_ == \{'x': 1, 'y': 0\}}.
+Il quadro è duale: la classe conserva la \emph{descrizione} dei campi
+(\texttt{\_\_dataclass\_fields\_\_}, \texttt{fields(Point)}) e i default
+(\texttt{Point.\_\_dict\_\_['y'] == 0}; un campo senza default non resta nella classe), mentre ogni
+istanza ha la propria copia, che nasconde sempre il default di classe.
+
+A guidare la conversione è l'\textbf{annotazione}, non l'assegnazione:
+\begin{center}
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{nel corpo} & \textbf{classe normale} & \textbf{con \texttt{@dataclass}} \\
+\hline
+\texttt{x: int} & niente (solo annotazione) & campo: attributo di istanza \\
+\texttt{x: int = 0} & attributo di classe & campo: istanza (+ default di classe) \\
+\texttt{z = 7} & attributo di classe & attributo di classe, invariato \\
+\texttt{c: ClassVar[int] = 0} & attributo di classe & attributo di classe, non è un campo \\
+\texttt{def m(self): ...} & attributo di classe & attributo di classe, invariato \\
+\texttt{\_\_init\_\_}, \texttt{\_\_repr\_\_}, \dots & solo se scritti & \emph{generati} nella classe \\
+\hline
+\end{tabular}
+\end{center}
+\texttt{ClassVar} serve per tenere un attributo annotato a livello di classe (es.\ un contatore
+condiviso). I metodi non sono annotazioni: restano nella classe e sono legati all'istanza al
+lookup, come sempre. L'unica cosa che «si sposta» dalla classe all'istanza sono gli attributi
+di dati annotati, ed è l'\texttt{\_\_init\_\_} generato a spostarli, un'istanza alla volta.
+
+\paragraph{Default mutabili} Un default mutabile sarebbe condiviso attraverso l'attributo di
+classe, quindi il decoratore lo rifiuta: \texttt{items: list = []} dà \texttt{ValueError: mutable
+default <class 'list'> for field items is not allowed: use default\_factory}. Si scrive
+\texttt{items: list = field(default\_factory=list)}: la factory è chiamata \emph{dentro}
+\texttt{\_\_init\_\_}, quindi ogni istanza ha un oggetto nuovo.
+
+\paragraph{Come lo fa} Il codice è in \texttt{Lib/dataclasses.py}: \texttt{dataclass(cls=None,
+/, *, init=True, repr=True, eq=True, order=False, unsafe\_hash=False, frozen=False, ...)}
+definisce \texttt{wrap(cls)}; se \texttt{cls is None} (uso come \texttt{@dataclass(frozen=True)})
+restituisce il decoratore, altrimenti decora subito (uso come \texttt{@dataclass}). Il lavoro è
+in \texttt{\_process\_class}, che \textbf{modifica la classe sul posto} e restituisce lo stesso
+oggetto:
+\begin{enumerate}[nosep]
+  \item raccoglie i campi ereditati dalle basi dataclass percorrendo \texttt{\_\_mro\_\_};
+  \item crea un \texttt{Field} per ogni annotazione della classe (\texttt{ClassVar} non è un
+        vero campo); senza default rimuove l'attributo, altrimenti lascia il default nella
+        classe; salva \texttt{\_\_dataclass\_fields\_\_};
+  \item genera i metodi e li attacca alla classe: \texttt{\_init\_fn} costruisce il
+        \emph{sorgente} di \texttt{\_\_init\_\_} come stringa, una riga
+        \texttt{self.x = x} per campo, e lo compila con \texttt{exec}; poi \texttt{\_\_repr\_\_},
+        \texttt{\_\_eq\_\_} e, con \texttt{frozen}, un \texttt{\_\_setattr\_\_} che solleva
+        \texttt{FrozenInstanceError}.
+\end{enumerate}
+\texttt{@dataclass} è un decoratore che \emph{non avvolge, modifica}: lo stesso schema «il
+decoratore marca, il codice agisce» di \texttt{abstractmethod}.
 
 \subsubsection{Inversion of Control e Dependency Injection}
 \textbf{Inversion of Control} (IoC): la creazione e la gestione degli oggetti sono delegate a
@@ -3376,6 +4164,400 @@ sottoclasse futura.
 \paragraph{Avvertenza} Il materiale contiene esempi di codice che usano versioni recenti di
 Python e librerie in evoluzione (in particolare Pydantic v2): prima di fidarsi di una firma o
 di un comportamento conviene verificare la documentazione ufficiale.
+
+\subsection{Introduzione a Prolog (L05 bis)}
+
+\subsubsection{Il quarto paradigma}
+L05 ha guardato Python come linguaggio imperativo, a oggetti e funzionale. C'è un quarto
+paradigma che nessuno di questi copre: la \textbf{programmazione logica}. Un programma non è una
+sequenza di istruzioni, né un insieme di oggetti, né una composizione di funzioni: è un insieme
+di \textbf{fatti e regole}, ed eseguirlo significa \textbf{porre domande}. La lezione è un giro
+«soft», dalle due regole di inferenza della logica classica a un programma funzionante, lasciando
+fuori le parti metalogiche ed extralogiche (cut, negazione per fallimento, \texttt{assert},
+input/output, \texttt{findall}).
+
+\paragraph{Il linguaggio} \textbf{Prolog} = \emph{PROgrammation en LOGique}. Nato nel 1972 a
+Marsiglia (Alain Colmerauer, Philippe Roussel) per l'elaborazione del linguaggio naturale, con
+la fondazione teorica di Robert Kowalski a Edimburgo. Standard ISO/IEC 13211-1 (1995).
+Implementazioni: SWI-Prolog (gratuita, quella usata nel corso), SICStus, GNU Prolog, Scryer,
+Trealla, Tau Prolog (JavaScript). Usato in sistemi esperti, NLP, dimostrazione di teoremi,
+risoluzione di vincoli, dentro IBM Watson (2011) e in molti analizzatori statici.
+
+\paragraph{Principi}
+\begin{itemize}[nosep]
+  \item \textbf{dichiarativo}: il programma dice \emph{cosa} è vero, non \emph{come} calcolarlo;
+  \item \textbf{una sola struttura dati}: il \emph{termine}; programmi e dati sono termini;
+  \item \textbf{una sola operazione}: l'\emph{unificazione}, un pattern matching bidirezionale
+        che assegna anche;
+  \item \textbf{una sola strategia di controllo}: \emph{backward chaining} con
+        \emph{backtracking}: per dimostrare un goal si cerca una regola che lo conclude e se ne
+        dimostrano le premesse; se ci si blocca si torna indietro e si prova un'altra regola;
+  \item niente assegnazione, cicli o \texttt{return}: tutto è ricorsione e ricerca;
+  \item lo stesso predicato si usa in \textbf{più direzioni}: per verificare, calcolare,
+        enumerare.
+\end{itemize}
+
+\subsubsection{Due regole di inferenza}
+La logica studia le \textbf{inferenze valide}: modi di passare dalle premesse a una conclusione
+che non portano mai dal vero al falso. Ne servono due, entrambe sull'implicazione $A \to B$
+(«se $A$ allora $B$»), con $A$, $B$ \emph{proposizioni} (vere o false), ad esempio
+$A$ = «piove», $B$ = «la strada è bagnata». L'implicazione non dice nulla su cosa accade quando
+non piove: la strada può essere bagnata per altri motivi.
+\begin{itemize}
+  \item \textbf{Modus ponens} («il modo che afferma»): $\dfrac{A \to B \quad A}{B}$. Se piove,
+        la strada è bagnata. È la regola che \emph{usa} una legge generale su un caso
+        particolare: ogni «quindi» in un programma è un modus ponens.
+  \item \textbf{Modus tollens} («il modo che nega»): $\dfrac{A \to B \quad \neg B}{\neg A}$. Se
+        la strada non è bagnata, non piove. È la regola della \emph{confutazione}: una teoria la
+        cui previsione fallisce è falsa (il falsificazionismo di Popper è un modus tollens).
+\end{itemize}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{nome} & \textbf{schema} & \textbf{stato} \\
+\hline
+modus ponens & $A \to B,\ A \vdash B$ & valido \\
+modus tollens & $A \to B,\ \neg B \vdash \neg A$ & valido \\
+affermazione del conseguente & $A \to B,\ B \vdash A$ & \textbf{non valido} \\
+negazione dell'antecedente & $A \to B,\ \neg A \vdash \neg B$ & \textbf{non valido} \\
+\hline
+\end{tabular}
+\end{center}
+«La strada è bagnata, quindi piove»: no, potrebbe essersi rotto un tubo. «Non piove, quindi la
+strada non è bagnata»: no, stesso motivo. Le risposte di Prolog vanno lette senza cadere in
+queste due fallacie.
+
+\paragraph{Perché sono valide} Tavola di verità di $A \to B$: è falsa in un solo caso,
+antecedente vero e conseguente falso (V,F). Modus ponens: se $A \to B$ e $A$ sono veri si è nella
+riga (V,V), quindi $B$ è vero. Modus tollens: se $A \to B$ è vero e $B$ falso si è nella riga
+(F,F), quindi $A$ è falso.
+
+\paragraph{Concatenazione} Le conclusioni diventano premesse dei passi successivi: da $A$,
+$A \to B$, $B \to C$ si deriva $B$ e poi $C$. Una \textbf{dimostrazione} è una catena di passi
+dagli \emph{assiomi} al \emph{teorema}. Due direzioni: \textbf{forward} (dagli assiomi, si
+applicano le regole e si vede cosa esce) e \textbf{backward} (dal goal $C$ si cerca una regola
+che lo conclude, $B \to C$, e $B$ diventa il nuovo goal, fino ad arrivare ad assiomi). Prolog
+usa la direzione \textbf{backward}: non chiede mai «cosa segue?», sempre «come potrebbe
+seguire questo?».
+
+\paragraph{Dai predicati alle clausole di Horn} Un \textbf{predicato} è una proposizione con
+dei buchi: $parent(x, y)$ è vero o falso una volta fissati $x$ e $y$. Una regola con variabili
+vale per tutte le sue istanze:
+$\forall x\,\forall y\,\forall z\ (parent(x,y) \land parent(y,z) \to grandparent(x,z))$. Il modus
+ponens si applica dopo aver scelto i valori (da $parent(tom,bob)$, $parent(bob,ann)$ con
+$x=tom, y=bob, z=ann$ si inferisce $grandparent(tom,ann)$); sceglierli è compito
+dell'unificazione. Prolog non gestisce formule arbitrarie ma solo \textbf{clausole di Horn}
+(Alfred Horn, 1951): $B_1 \land B_2 \land \dots \land B_n \to H$, con \emph{una} conclusione
+positiva. Casi speciali: $n = 0$ è un \textbf{fatto}; senza $H$ è un \textbf{goal}. La
+restrizione rende meccanica la ricerca all'indietro (il goal si unifica con la \emph{testa}, il
+\emph{corpo} dà i nuovi goal). Prezzo: niente conclusioni disgiuntive («$x$ è maschio o
+femmina») e niente vera negazione: Prolog sa solo \textbf{dimostrare}, non confutare; il modus
+tollens non ha un corrispondente diretto.
+
+\subsubsection{Fatti, regole e interrogazioni}
+\begin{verbatim}
+parent(tom, bob).            % un fatto: tom è genitore di bob
+parent(tom, liz).  parent(bob, ann).  parent(bob, pat).  parent(pat, jim).
+female(liz).  female(ann).  female(pat).
+male(tom).    male(bob).    male(jim).
+
+mother(X, Y)      :- parent(X, Y), female(X).
+grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
+\end{verbatim}
+Ogni riga è una \textbf{clausola} chiusa dal punto. \texttt{parent(tom, bob)} è il predicato
+\texttt{parent} applicato a due argomenti, con il significato che decidiamo noi. I nomi minuscoli
+(\texttt{tom}, \texttt{parent}) sono \textbf{atomi} (costanti); i nomi maiuscoli (\texttt{X},
+\texttt{Y}) sono \textbf{variabili}, e tutte le occorrenze nella stessa clausola indicano la
+stessa cosa. \texttt{\%} inizia un commento. \texttt{:-} è l'implicazione scritta \emph{al
+contrario}, $H \leftarrow B$, «H \textbf{se} B»; la virgola è la congiunzione. Una regola è
+esattamente una clausola di Horn; un fatto è una regola con corpo vuoto.
+
+\paragraph{Interrogazioni} Il programma da solo non fa nulla: lo si interroga al prompt
+\texttt{?-}. Una query è un goal da dimostrare.
+\begin{verbatim}
+?- parent(tom, bob).       true.
+?- parent(tom, ann).       false.
+?- mother(pat, jim).       true.
+?- parent(tom, X).         X = bob ;  X = liz.
+?- parent(X, ann).         X = bob.
+?- grandparent(tom, X).    X = ann ;  X = pat.
+?- parent(tom, X), parent(X, Y).    X = bob, Y = ann ;  X = bob, Y = pat.
+\end{verbatim}
+\texttt{true} significa che è stata trovata una dimostrazione; \texttt{false} significa
+\textbf{nessuna dimostrazione trovata}, che non è lo stesso di «è falso»: il programma non dice
+nulla su \texttt{parent(tom, ann)}, quindi Prolog non può dimostrarlo (\emph{non} va letto come un
+modus tollens). Una variabile chiede «\emph{per quale} X si dimostra?», e la risposta è un valore;
+\texttt{;} chiede un'altra soluzione, il punto chiude la ricerca. Lo stesso predicato risponde a
+«tom è genitore di bob?», «di chi è genitore tom?», «chi è genitore di ann?»: non c'è distinzione
+tra argomenti di input e di output. Una query può essere una congiunzione: una variabile
+condivisa deve avere lo stesso valore in entrambi i goal, e i goal si risolvono da
+\textbf{sinistra a destra}. La prima query congiuntiva è esattamente il corpo di
+\texttt{grandparent}: una regola è una \emph{query con nome}.
+
+\paragraph{Alternative e ricorsione} Due clausole con la stessa testa sono una
+\textbf{disgiunzione}:
+\begin{verbatim}
+ancestor(X, Y) :- parent(X, Y).
+ancestor(X, Y) :- parent(X, Z), ancestor(Z, Y).
+?- ancestor(tom, X).    X = bob ; X = liz ; X = ann ; X = pat ; X = jim.
+?- ancestor(X, jim).    X = pat ; X = tom ; X = bob.
+\end{verbatim}
+La seconda clausola è \textbf{ricorsiva}, su un caso «più piccolo»: è il modo Prolog di dire
+«ripeti» (niente cicli, ricorsione sulla struttura del problema). Le stesse due clausole
+scendono e risalgono l'albero; in Python servirebbero due funzioni diverse, ciascuna con il suo
+ciclo o la sua ricorsione scritti a mano.
+
+\paragraph{Il vocabolario dei termini}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{tipo} & \textbf{esempi} & \textbf{nota} \\
+\hline
+atomo & \texttt{tom}, \texttt{parent}, \texttt{'New York'} & iniziale minuscola, o tra apici \\
+numero & \texttt{42}, \texttt{3.14}, \texttt{-7} & \\
+variabile & \texttt{X}, \texttt{Who}, \texttt{\_Tmp}, \texttt{\_} & iniziale maiuscola o \texttt{\_} \\
+composto & \texttt{parent(tom, bob)}, \texttt{date(16, nov, 2026)} & funtore + argomenti \\
+lista & \texttt{[1, 2, 3]}, \texttt{[H|T]}, \texttt{[]} & zucchero per un termine composto \\
+\hline
+\end{tabular}
+\end{center}
+Tutto è un termine: dati, goal e clausole. Un termine composto è una \textbf{struttura}, non una
+chiamata di funzione: \texttt{date(16, nov, 2026)} non viene mai «valutato», è il record di tre
+cose. \texttt{\_} è la variabile anonima («qualcosa, non mi interessa cosa»). Un termine è un
+\textbf{albero}, identificato da \textbf{funtore} e \textbf{arità}: \texttt{point/2};
+\texttt{point(1,2)} e \texttt{point(1,2,3)} non hanno nulla in comune. \texttt{[1, 2, 3]} è in
+realtà \texttt{'[|]'(1, '[|]'(2, '[|]'(3, [])))}. I predicati sono termini composti il cui funtore
+ha ricevuto un significato dalle clausole: non c'è differenza sintattica tra
+\texttt{point(1,2)} (dato) e \texttt{parent(tom,bob)} (fatto). Questa uniformità fa sì che
+l'unificazione si applichi a tutto.
+
+\subsubsection{Unificazione}
+L'\textbf{unificazione} è l'operazione con cui Prolog confronta un goal con la testa di una
+clausola e lega le variabili. Due termini \textbf{unificano} se esiste un modo di dare valori
+alle loro variabili che li rende \textbf{identici}. L'operatore \texttt{=} chiede se unificano ed
+esegue i legami; \emph{non} è un'assegnazione: è simmetrico (\texttt{3 = X} funziona) e può legare
+variabili da entrambi i lati.
+\begin{verbatim}
+?- point(X, Y) = point(1, 2).                 X = 1, Y = 2.
+?- f(X, b) = f(a, Y).                         X = a, Y = b.
+?- foo(X) = bar(X).                           false.
+?- date(D, M, 2026) = date(16, november, Y).  D = 16, M = november, Y = 2026.
+\end{verbatim}
+\paragraph{Regole, caso per caso} (Robinson, 1965)
+\begin{enumerate}[nosep]
+  \item due \textbf{atomi} o \textbf{numeri} unificano se sono uguali (\texttt{tom = tom}, non
+        \texttt{tom = bob});
+  \item una \textbf{variabile} unifica con qualunque termine e vi resta legata
+        (\texttt{X = f(a)});
+  \item due termini \textbf{composti} unificano se hanno stesso funtore, stessa arità e argomenti
+        che unificano \emph{a coppie}, con i legami che si propagano da una coppia all'altra;
+  \item nient'altro unifica: \texttt{foo(X) = bar(X)} e \texttt{f(a) = f(a, b)} falliscono.
+\end{enumerate}
+
+\paragraph{I legami si propagano}
+\begin{verbatim}
+?- f(X, X) = f(a, b).            false.
+?- f(X, X) = f(a, Y).            X = a, Y = a.
+?- parent(X, Y) = parent(tom, Z).    X = tom, Y = Z.
+\end{verbatim}
+Nel primo caso \texttt{X = a} dalla prima coppia, poi la seconda diventa \texttt{a = b} e
+fallisce: la \emph{stessa} variabile non può valere due cose. Nel secondo, dopo \texttt{X = a} la
+seconda coppia è \texttt{a = Y}. Nel terzo \texttt{Y = Z} lega due variabili: diventano
+\textbf{alias}, entrambe ancora libere, e un successivo \texttt{Y = ann} rende anche
+\texttt{Z = ann}.
+
+\paragraph{Il risultato: una sostituzione} Un'unificazione riuscita produce una
+\textbf{sostituzione} $\theta$, insieme di legami variabile $\mapsto$ termine, ad esempio
+$\theta = \{X \mapsto a,\ Y \mapsto b\}$, e applicarla ai due termini dà lo stesso termine:
+$f(X,b)\theta = f(a,Y)\theta = f(a,b)$. Fra tutte quelle che funzionano, l'unificazione restituisce
+la \textbf{più generale} (\emph{mgu}, most general unifier), che lega solo ciò che deve:
+\texttt{f(X, Y) = f(Z, Z)} dà \texttt{X = Z, Y = Z} (tre alias, nessun valore scelto).
+$\{X \mapsto a, Y \mapsto a, Z \mapsto a\}$ renderebbe uguali i termini, ma si
+\emph{impegnerebbe} su \texttt{a} senza motivo; la mgu lascia la decisione ai goal successivi.
+
+\paragraph{Unificazione non è valutazione}
+\begin{verbatim}
+?- 2 + 3 = 5.        false.
+?- X = 2 + 3.        X = 2+3.
+?- X is 2 + 3.       X = 5.
+?- 2 + 3 =:= 5.      true.
+\end{verbatim}
+\texttt{2 + 3} è il termine composto \texttt{+(2, 3)}, un albero con funtore \texttt{+}, non il
+numero 5. L'aritmetica va chiesta esplicitamente: \texttt{is} valuta il lato destro e unifica il
+risultato con il sinistro; \texttt{=:=} confronta due espressioni valutate. È l'unico punto in
+cui Prolog non è dichiarativo: \texttt{X is Y + 1} richiede che \texttt{Y} sia già legata.
+
+\paragraph{Liste}
+\begin{verbatim}
+?- [H|T] = [1, 2, 3].            H = 1, T = [2, 3].
+?- [X, Y|Z] = [a, b, c, d].      X = a, Y = b, Z = [c, d].
+?- [H|T] = [].                   false.
+\end{verbatim}
+\texttt{[H|T]} è la lista con testa \texttt{H} e coda \texttt{T}; la lista vuota non ha né
+l'una né l'altra. Lo stesso pattern \emph{smonta} una lista o, dall'altro lato, la
+\emph{costruisce}: l'\texttt{h, *t = [1, 2, 3]} di Python funziona in una direzione sola,
+\texttt{[H|T] = L} in entrambe.
+
+\paragraph{Occurs check} \texttt{?- X = f(X).} in SWI-Prolog dà \texttt{X = f(X)}, un termine
+ciclico. Logicamente nessun termine finito \texttt{X} è uguale a \texttt{f(X)}: un unificatore
+corretto dovrebbe \emph{fallire}, dopo aver controllato che \texttt{X} non \emph{compare} in
+\texttt{f(X)}. Per velocità il Prolog standard \emph{omette} il controllo (renderebbe
+l'unificazione lineare invece che costante nel caso comune) e costruisce una struttura circolare;
+\texttt{unify\_with\_occurs\_check/2} lo fa quando serve (nei programmi del corso non capita).
+
+\paragraph{Tre tipi di «uguale»}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{operatore} & \textbf{domanda} & \textbf{esempio} \\
+\hline
+\texttt{=} & si possono rendere identici? (lega) & \texttt{X = 3} riesce \\
+\texttt{==} & sono identici \emph{ora}? (non lega) & \texttt{X == 3} fallisce, X libera \\
+\texttt{=:=} & valutano allo stesso numero? & \texttt{2+3 =:= 5} riesce \\
+\texttt{is} & valuta a destra, unifica a sinistra & \texttt{X is 2+3} dà 5 \\
+\hline
+\end{tabular}
+\end{center}
+Chi viene da Python legge \texttt{=} come assegnazione e \texttt{==} come confronto: in Prolog
+\texttt{=} è unificazione, che non è né l'una né l'altro. Esistono anche le negazioni:
+\texttt{\textbackslash=} (non unificano), \texttt{\textbackslash==}, \texttt{=\textbackslash=}.
+
+\paragraph{L'unificazione è tutto il passaggio di parametri} Con
+\texttt{mother(X, Y) :- parent(X, Y), female(X).} e \texttt{?- mother(Who, jim).}, Prolog unifica
+il goal con la testa: $\theta = \{X \mapsto Who,\ Y \mapsto jim\}$; il corpo con $\theta$ applicata
+diventa i nuovi goal \texttt{parent(Who, jim), female(Who)}. Nessun argomento viene copiato,
+nessun valore restituito: i \textbf{legami} fatti dimostrando il corpo sono la risposta. È il
+modus ponens con le variabili: «per dimostrare la testa, dimostra il corpo, sotto la
+sostituzione che li unifica».
+
+\subsubsection{Come funziona Prolog}
+\paragraph{La procedura} Prolog tiene una lista di \textbf{goal} da dimostrare, inizialmente la
+query, e ripete finché la lista è vuota (successo) o nessuna clausola si applica (fallimento):
+\begin{enumerate}[nosep]
+  \item prende il \textbf{primo} goal;
+  \item scorre le clausole del suo predicato \textbf{dall'alto in basso} e prende la prima la cui
+        testa \textbf{unifica} con il goal;
+  \item sostituisce il goal con il \textbf{corpo} di quella clausola, applicando l'unificatore a
+        tutti i goal.
+\end{enumerate}
+Se al passo 2 nessuna clausola unifica: \textbf{backtracking}, si torna alla scelta più recente
+che ha ancora clausole non provate, si annullano i legami fatti da allora e si prova la
+clausola successiva.
+
+\paragraph{Traccia a mano di \texttt{?- grandparent(tom, W).}}
+\begin{verbatim}
+goals: grandparent(tom, W)
+  clause: grandparent(X, Z) :- parent(X, Y), parent(Y, Z).   unify: X = tom, Z = W
+goals: parent(tom, Y), parent(Y, W)
+  clause: parent(tom, bob).          unify: Y = bob
+goals: parent(bob, W)
+  clause: parent(bob, ann).          unify: W = ann
+goals: (empty)                       % successo: W = ann
+W = ann ;   undo W = ann, retry parent(bob, W): parent(bob, pat).   W = pat
+W = pat ;   nessun'altra parent(bob, _); undo Y = bob, retry parent(tom, Y):
+            parent(tom, liz), Y = liz; goals: parent(liz, W)   % nessuna clausola
+            undo Y = liz; nessun'altra parent(tom, _)
+false.
+\end{verbatim}
+Ogni riga «clause» è un'applicazione del modus ponens all'indietro. Il backtracking è
+\textbf{sistematico}: ogni punto di scelta viene rivisitato, il più recente per primo (ricerca in
+profondità).
+
+\paragraph{L'albero di ricerca} Ogni nodo è una lista di goal, ogni arco una scelta di clausola
+con il suo unificatore, $\square$ è la lista vuota (successo). Per l'esempio: dalla radice
+\texttt{grandparent(tom, W)} si scende a \texttt{parent(tom, Y), parent(Y, W)}; con
+\texttt{Y = bob} si arriva a \texttt{parent(bob, W)} che ha due foglie di successo
+(\texttt{W = ann}, \texttt{W = pat}); con \texttt{Y = liz} a \texttt{parent(liz, W)}, che fallisce.
+Prolog visita l'albero \textbf{in profondità, da sinistra a destra}: le risposte escono
+nell'ordine delle foglie.
+
+\paragraph{L'ordine conta (1): ordine delle clausole} Con il caso base per primo,
+\texttt{ancestor(tom, X)} dà \texttt{bob, liz, ann, pat, jim}. Scambiando le due clausole si
+ottiene lo \emph{stesso insieme} in ordine diverso: \texttt{jim, ann, pat, bob, liz} (in
+profondità, la clausola ricorsiva viene esplorata prima del caso base). Logicamente nulla cambia,
+un insieme di clausole non ha ordine; \emph{proceduralmente} l'ordine decide quale dimostrazione
+si trova per prima.
+
+\paragraph{L'ordine conta (2): ordine dei goal}
+\begin{verbatim}
+ancestor2(X, Y) :- parent(X, Y).
+ancestor2(X, Y) :- ancestor2(Z, Y), parent(X, Z).   % ricorsione per prima
+?- ancestor2(tom, X).
+X = bob ; X = liz ; X = ann ; X = pat ; X = jim ;
+... stack overflow
+\end{verbatim}
+Dopo le cinque risposte, chiedendone altre Prolog chiama \texttt{ancestor2(Z, Y)} con
+\textbf{entrambi gli argomenti liberi}, che richiama sé stesso prima che un fatto
+\texttt{parent} possa fermarlo: discesa infinita. Stesso significato logico di
+\texttt{ancestor}, comportamento diverso: la lettura \textbf{dichiarativa} non basta, bisogna
+tenere presente quella \textbf{procedurale} (sinistra a destra, in profondità). Regola pratica:
+caso base per primo, e la chiamata ricorsiva \emph{dopo} un goal che restringe la ricerca.
+
+\paragraph{Ricorsione su liste}
+\begin{verbatim}
+member_(X, [X|_]).                    % X è la testa
+member_(X, [_|T]) :- member_(X, T).   % oppure X è nella coda
+?- member_(b, [a, b, c]).     true.
+?- member_(X, [a, b]).        X = a ;  X = b.
+
+app([], L, L).
+app([H|T], L, [H|R]) :- app(T, L, R).
+?- app([1], [2, 3], L).       L = [1, 2, 3].
+?- app(X, Y, [1, 2]).         X = [], Y = [1, 2] ;  X = [1], Y = [2] ;  X = [1, 2], Y = [].
+\end{verbatim}
+\texttt{member\_} ha due clausole, una per forma della lista; la lista vuota non unifica con
+nessuna, quindi \texttt{member\_(X, [])} fallisce. Con la variabile libera il predicato diventa un
+\textbf{generatore}: il backtracking enumera gli elementi. Le stesse due clausole di
+\texttt{app} \textbf{concatenano} e \textbf{spezzano} una lista in tutti i modi possibili: in Python
+sarebbero due funzioni, qui sono due \emph{usi} di una sola relazione, perché l'unificazione
+funziona in entrambe le direzioni.
+
+\paragraph{Ricorsione con aritmetica}
+\begin{verbatim}
+len([], 0).
+len([_|T], N) :- len(T, M), N is M + 1.
+fact(0, 1).
+fact(N, F) :- N > 0, M is N - 1, fact(M, G), F is N * G.
+?- len([a, b, c], N).    N = 3.
+?- fact(5, F).           F = 120.
+\end{verbatim}
+\texttt{is} impone un ordine: \texttt{M} deve essere noto prima di \texttt{N is M + 1}, quindi in
+\texttt{len} la chiamata ricorsiva viene \emph{prima}. La guardia \texttt{N > 0} impedisce a
+\texttt{fact} di provare la seconda clausola con \texttt{N} negativo dopo che la prima è riuscita.
+
+\paragraph{Le due letture dello stesso programma}
+\begin{verbatim}
+max(X, Y, X) :- X >= Y.
+max(X, Y, Y) :- X < Y.
+\end{verbatim}
+\textbf{Lettura dichiarativa}: «il massimo di X e Y è X se X $\geq$ Y, ed è Y se X $<$ Y», due
+affermazioni vere sui numeri. \textbf{Lettura procedurale}: «per calcolare
+\texttt{max(X, Y, M)}, prima prova a unificare M con X e verifica \texttt{X >= Y}; se fallisce,
+unifica M con Y e verifica \texttt{X < Y}». Un programma Prolog corretto è uno la cui lettura
+dichiarativa è vera \textbf{e} la cui lettura procedurale termina con le risposte volute:
+scrivere Prolog significa tenerle presenti entrambe (Bratko).
+
+\subsubsection{Riepilogo}
+\begin{itemize}[nosep]
+  \item \textbf{Logica}: due regole valide, modus ponens ($A \to B, A \vdash B$) e modus tollens
+        ($A \to B, \neg B \vdash \neg A$), e due sosia non validi.
+  \item \textbf{Prolog usa solo il modus ponens}, all'indietro, su clausole di Horn: fatti,
+        regole \texttt{H :- B}, query.
+  \item \texttt{false} significa «non dimostrabile dal programma», mai «falso nel mondo»: non va
+        letto come un modus tollens.
+  \item L'\textbf{unificazione} è l'unico meccanismo per confronto, legame e passaggio dei
+        parametri; \texttt{=} non è assegnazione, \texttt{is} è l'unica valutazione.
+  \item \textbf{Esecuzione}: goal da sinistra a destra, clausole dall'alto in basso, in profondità
+        con backtracking; l'ordine non cambia la logica ma cambia terminazione e ordine delle
+        risposte.
+  \item Una relazione, molti usi: \texttt{app/3} concatena, spezza, verifica;
+        \texttt{ancestor/2} scende e risale l'albero.
+  \item Lasciato fuori di proposito: \emph{extralogico} (cut \texttt{!}, input/output,
+        \texttt{assert}/\texttt{retract}, cioè modificare il programma mentre gira) e
+        \emph{metalogico} (negazione per fallimento \texttt{\textbackslash+}, \texttt{var/1},
+        \texttt{findall/3}, \texttt{call/1}). Con questi Prolog diventa un linguaggio completo;
+        senza, è un piccolo motore logico pulito.
+\end{itemize}
 
 \section{Git e UML}
 \subsection{Controllo di versione e Git}
