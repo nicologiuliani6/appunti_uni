@@ -2221,4 +2221,220 @@ Output d'esempio: \textit{``A dog jumps over a log''}.
 \item \textbf{I modelli si compongono} per task complessi, anche multimodali. L'architettura determina come i layer sono organizzati e come l'informazione fluisce tra di essi.
 \end{itemize}
 
+% =============================================================================
+\section{Convoluzioni}
+% =============================================================================
+\subsection{Filtri e convoluzioni}
+Il \textbf{kernel} (filtro) viene centrato su un pixel dell'input (\textit{source pixel}); il pixel viene sostituito con la somma pesata di sé stesso e dei pixel vicini, usando come pesi i valori del kernel. Il risultato è il \textit{destination pixel} della mappa di output.
+\imgfig[0.6]{s4_convoluzione_emboss.png}
+
+\subsubsection{Esempio passo-passo}
+Input $4\times5$, kernel $3\times3$ (il laplaciano discreto), stride 1, nessun padding. Il kernel scorre sull'input da sinistra a destra e dall'alto in basso; a ogni posizione si moltiplicano elemento per elemento i valori sovrapposti e si sommano.
+\[
+\text{input}=\begin{bmatrix}
+6&2&3&1&0\\
+9&5&1&1&3\\
+2&6&5&8&7\\
+3&4&4&8&3
+\end{bmatrix}
+\qquad
+\text{filtro}=\begin{bmatrix}
+0&1&0\\
+1&-4&1\\
+0&1&0
+\end{bmatrix}
+\qquad
+\text{output}=\begin{bmatrix}
+-2&10&9\\
+-8&-1&-11
+\end{bmatrix}
+\]
+Ad esempio, il primo valore (finestra in alto a sinistra, centro $=5$):
+\[
+2 + 9 + 1 + 6 - 4\cdot5 = 18 - 20 = -2
+\]
+Il secondo (centro $=1$): $3+5+1+5-4\cdot1 = 10$. E così via.\\
+\vspace{1px}\\
+Nota: l'output $4\times5 \to 2\times3$ è più piccolo dell'input, perché senza padding il kernel non può essere centrato sui pixel del bordo.
+
+\subsubsection{Intuizione}
+\begin{itemize}
+\item Il kernel definisce un \hl{pattern} che vogliamo trovare nell'immagine di input.
+\item La convoluzione fa passare il pattern sull'input come una \hl{sliding window}, cercando le posizioni che lo riproducono.
+\item Il risultato è una \hl{feature map}: indica le posizioni dell'input con \textbf{maggiore somiglianza} con il pattern (valori alti = match).
+\end{itemize}
+
+\subsection{Parametri di un layer convoluzionale}
+Un layer convoluzionale è definito da:
+\begin{itemize}
+\item \textbf{Kernel size}: la dimensione del filtro lineare (es. $3\times3$).
+\item \textbf{Stride}: di quanto si sposta il filtro a ogni passo. Con stride basso (es. 1) i campi recettivi si sovrappongono molto; con stride più alto c'è meno sovrapposizione e l'output diventa più piccolo (sampling rate più basso).
+\item \textbf{Padding}: allargamento artificiale dell'input (tipicamente con zeri) per poter applicare il filtro anche sui bordi.
+\item \textbf{Depth}: numero di kernel diversi che vogliamo sintetizzare. Ogni kernel produce una feature map diversa, tutte con la stessa dimensione spaziale.
+\end{itemize}
+
+\subsubsection{Dimensione dell'output}
+Lungo ogni asse spaziale, la dimensione dell'output è
+\[
+\boxed{\;\frac{W + P - K}{S} + 1\;}
+\]
+dove $W$ = dimensione dell'input, $P$ = padding (totale, sommando i due lati), $K$ = dimensione del kernel, $S$ = stride. Se la divisione non è intera si arrotonda per difetto.\\
+\vspace{1px}\\
+\textbf{Verifica sull'esempio precedente}: righe $(4+0-3)/1+1 = 2$, colonne $(5+0-3)/1+1 = 3$ $\Rightarrow$ output $2\times3$. \checkmark
+
+\subsubsection{Esempio unidimensionale}
+Input di larghezza $W=7$, kernel $K=3$ con pesi fissi $[1,0,-1]$, padding nullo.
+\imgfig[0.75]{s4_conv1d.png}
+\begin{itemize}
+\item Stride $S=1$: $(7-3)/1+1 = 5$ valori di output (sinistra).
+\item Stride $S=2$: $(7-3)/2+1 = 3$ valori di output (destra).
+\end{itemize}
+
+\subsubsection{Esempio 2D}
+\begin{itemize}
+\item \textbf{INPUT} $[32\times32\times3]$: immagine a colori $32\times32$; i tre canali R, G, B definiscono la \textbf{profondità} dell'input.
+\item \textbf{CONV}: 12 filtri con kernel $6\times6$, stride 2 in entrambe le direzioni, padding nullo. Poiché $(32-6)/2+1 = 14$, l'output è $[14\times14\times12]$.
+\item \textbf{RELU}: aggiungere uno strato di attivazione non cambia la dimensione dell'output.
+\end{itemize}
+
+\subsubsection{Modalità di padding}
+Di solito ci sono due ``modalità'':
+\begin{itemize}
+\item \textbf{valid}: nessun padding (l'output si restringe).
+\item \textbf{same}: si aggiunge il padding minimo che permette di applicare il kernel un numero intero di volte (con stride 1 l'output ha la \textit{stessa} dimensione dell'input).
+\end{itemize}
+
+\subsection{Osservazione importante: la profondità del filtro}
+\itemimg[0.95]{%
+Salvo indicazione diversa (es. nelle \textit{separable convolutions}), un filtro opera su \hl{tutti} i canali dell'input \hl{in parallelo}.\\
+\vspace{1px}\\
+Quindi, se l'input ha profondità $D$ e il kernel ha dimensione $N\times M$, la dimensione effettiva del filtro è
+\[
+N \times M \times D
+\]
+Il kernel deve quindi catturare \textbf{contemporaneamente} le correlazioni \hl{tra canali} (cross-channel) e quelle \hl{spaziali}.%
+}{s4_filtro_profondita.png}
+
+\subsection{Sinossi del layer Conv1D}
+\begin{center}
+\begin{tabular}{|l|c|}
+\hline
+input dim & $(W, C)$\\
+spec & \texttt{Conv1D(N, K, padding=d, stride=s)}\\
+output dim & $(W', N)$\\
+parametri & $C\cdot K\cdot N + N$\\
+\hline
+\end{tabular}
+\end{center}
+dove $W' = (W - K + d)/s + 1$, $N$ = numero di kernel, $C$ = canali dell'input.
+\begin{itemize}
+\item Ogni kernel ha $C\cdot K$ pesi (si estende su tutti i $C$ canali) più \textbf{un bias}; con $N$ kernel si ottiene $C\cdot K\cdot N + N$.
+\item Il numero di parametri non dipende da $W$: lo stesso kernel è condiviso su tutte le posizioni (\textit{weight sharing}).
+\item Per \textbf{Conv2D} si ha una dimensione spaziale in più, e lo stesso vale per il kernel: parametri $= C\cdot K_h\cdot K_w\cdot N + N$.
+\item Padding e stride possono essere diversi lungo i diversi assi. Di default padding $=0$ e stride $=1$.
+\end{itemize}
+\textbf{Esempio}: nell'esempio 2D sopra (input con 3 canali, 12 kernel $6\times6$) i parametri sono $3\cdot6\cdot6\cdot12 + 12 = 1308$.
+
+\subsection{Parentesi: filtri nell'image processing}
+Un'immagine è codificata come una \textbf{matrice numerica}: in scala di grigi ogni pixel è un valore $0$--$255$, in RGB è una tripla di valori $0$--$255$.\\
+\vspace{1px}\\
+Si può vedere un'immagine come una \textbf{superficie}: l'altezza in ogni punto è proporzionale al valore di grigio (scuro = basso, chiaro = alto).
+\imgfig[0.55]{s4_superficie.png}
+
+\subsubsection{Punti interessanti}
+Bordi, angoli, \dots: sono punti in cui c'è una discontinuità, cioè una variazione rapida dell'intensità (sulla superficie: un ``gradino'' o un ``solco'').
+\figura{\includegraphics[width=0.46\linewidth]{s4_bordo_gradino.png}\hfill\includegraphics[width=0.46\linewidth]{s4_bordo_solco.png}}
+\vspace{1px}\\
+Più in generale vogliamo identificare \hl{pattern} nell'immagine. L'idea chiave è che \textbf{il kernel della convoluzione esprime il pattern che stiamo cercando}.
+
+\subsubsection{Esempio: derivata finita}
+Vogliamo trovare le posizioni dell'immagine dove c'è un passaggio orizzontale improvviso da una regione scura a una chiara. Il pattern è
+\[
+\begin{bmatrix} -1 & 1 \end{bmatrix}
+\qquad\text{oppure, variando la distanza tra i pixel:}\qquad
+\begin{bmatrix} -1 & 0 & 1 \end{bmatrix}
+\]
+Il kernel orizzontale evidenzia i bordi \textbf{verticali}; il suo trasposto (colonna) evidenzia quelli \textbf{orizzontali}.
+\imgfig[0.6]{s4_derivata_finita.png}
+
+\subsubsection{Riconoscere i pattern}
+Ogni neurone di un layer convoluzionale si attiva su pattern specifici dell'input. Con il pattern $[-1\ 0\ 1]$ la feature map ha:
+\begin{itemize}
+\item valori \textbf{alti} (chiari) dove il pattern è presente (scuro $\to$ chiaro);
+\item valori \textbf{nulli} (grigio) dove non c'è il pattern (zone uniformi);
+\item valori \textbf{negativi} (scuri) dove c'è il pattern \textbf{opposto} (chiaro $\to$ scuro).
+\end{itemize}
+
+\subsubsection{Esempio: laplaciano finito}
+\[
+\begin{bmatrix}
+0&-1&0\\
+-1&4&-1\\
+0&-1&0
+\end{bmatrix}
+\]
+Nelle zone uniformi la risposta è circa 0 (i pesi sommano a 0), mentre è forte dove il pixel centrale differisce dai vicini: evidenzia i contorni in tutte le direzioni.
+\imgfig[0.75]{s4_laplaciano.png}
+
+\subsection{Tornando alle CNN: scoprire i pattern}
+Finora abbiamo usato kernel \textbf{progettati a mano}. Ma come trovare dei buoni pattern?\\
+\vspace{1px}\\
+\textbf{Idea}: invece di usare pattern predefiniti da un umano, si lascia che sia la rete a \hl{impararli} (i pesi del kernel sono parametri appresi con la backpropagation).\\
+\vspace{1px}\\
+Questo è particolarmente importante nelle architetture \textbf{profonde}, perché:
+\begin{itemize}
+\item impilando kernel se ne \textbf{allarga il campo recettivo};
+\item aggiungendo attivazioni non lineari si sintetizzano kernel complessi e \textbf{non lineari}.
+\end{itemize}
+
+\subsubsection{Campo recettivo}
+\itemimg[0.95]{%
+Il \textbf{campo recettivo} (receptive field) di un neurone (profondo, nascosto) è la dimensione della \hl{regione dell'input che lo influenza}.\\
+\vspace{1px}\\
+È uguale alla dimensione di un'immagine di input che produce (senza padding) un output di dimensione 1.\\
+\vspace{1px}\\
+\textbf{Un neurone non può vedere nulla al di fuori del suo campo recettivo!}%
+}{s4_campo_recettivo.png}
+\vspace{1px}\\
+Esempio (figura): due convoluzioni $3\times3$ con stride 1 in cascata danno un campo recettivo $5\times5$ (input $5\times5 \to 3\times3 \to 1\times1$). In generale, con $L$ convoluzioni $k\times k$ e stride 1 il campo recettivo è $L(k-1)+1$.\\
+\vspace{1px}\\
+Si può allargare \textbf{rapidamente} il campo recettivo con layer di downsampling: pooling o convoluzioni con stride maggiore di 1.
+
+\subsubsection{Filtri profondi}
+Per vedere che tipo di filtri sintetizzano le CNN e come ``vedono'' il mondo: blog \textit{An exploration of convnet filters with Keras}.
+
+\subsection{Alcune CNN rilevanti}
+\subsubsection{AlexNet}
+Architettura di Krizhevsky, Sutskever e Hinton, vincitrice della competizione ImageNet nel 2012 (pubblicata a NIPS).
+\imgfig[0.85]{s4_alexnet.png}
+Input $224\times224\times3$; prima convoluzione $11\times11$ con \textbf{stride 4} ($\to 55\times55\times96$), poi convoluzioni $5\times5$ e $3\times3$ alternate a \textbf{max pooling}, infine tre layer \textbf{densi} (4096, 4096, 1000 classi).
+
+\subsubsection{VGG}
+VGG16 (Simonyan e Zisserman): 92.7\% di accuratezza \textit{top-5} su ImageNet (14 milioni di immagini, 1000 categorie).
+\imgfig[0.7]{s4_vgg.png}
+Struttura molto regolare: blocchi di convoluzioni $3\times3$ + ReLU seguiti da max pooling, che dimezza la dimensione spaziale mentre il numero di canali raddoppia ($224\times224\times64 \to 112\times112\times128 \to \dots \to 7\times7\times512$), poi layer fully connected e softmax.
+
+\subsubsection{Pooling}
+Nelle CNN profonde è pratica comune \textbf{alternare} layer convoluzionali con layer di \textbf{pooling}, in cui ogni neurone prende semplicemente il valore \textbf{massimo} (max pooling) o la \textbf{media} (average pooling) nel suo campo recettivo. Il pooling non ha parametri da apprendere.\\
+\vspace{1px}\\
+\textbf{Esempio}: max pooling con filtri $2\times2$ e stride 2 (su una singola fetta di profondità):
+\imgfig[0.6]{s4_maxpooling.png}
+Doppio vantaggio:
+\begin{itemize}
+\item \textbf{riduce la dimensione} dell'output (e quindi il costo dei layer successivi, allargando il campo recettivo);
+\item dà una certa \textbf{tolleranza alle traslazioni}: se il pattern si sposta di poco dentro la finestra, il massimo non cambia.
+\end{itemize}
+
+\subsubsection{ResNet e residualità}
+Invece di apprendere una funzione $\mathcal{F}(x)$, si cerca di apprendere $\mathcal{F}(x) + x$: l'input viene sommato all'output del blocco tramite una \textbf{shortcut} (skip connection, identità).
+\imgfig[0.45]{s4_residual_block.png}
+Tipicamente si aggiunge una connessione residua ogni \textbf{2--3 layer}. \textbf{ResNet} è un esempio di architettura di questo tipo. Nella figura: VGG-19, una rete ``plain'' a 34 layer e la ResNet a 34 layer, identica alla plain ma con le shortcut (le frecce curve; tratteggiate dove cambia la dimensione).
+\imgfig[0.4]{s4_resnet_confronto.png}
+
+\paragraph{Perché la residualità funziona?}
+\begin{itemize}
+\item Vede il calcolo come un \hl{raffinamento progressivo} verso la soluzione: ogni blocco residuo migliora il segnale $x$ con una correzione $\Delta(x)$ (se non serve correggere, basta imparare $\Delta \approx 0$, cioè l'identità).
+\item Le skip connection permettono una \hl{migliore backpropagation dei gradienti}: il gradiente scorre direttamente lungo la shortcut, quindi sono una tecnica efficace contro il \textbf{vanishing gradient problem}.
+\end{itemize}
+
 \end{document}
