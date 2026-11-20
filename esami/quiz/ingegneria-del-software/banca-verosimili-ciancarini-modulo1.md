@@ -5,19 +5,19 @@ fonte: Domande scritte da Claude sugli appunti del Modulo 1 (3/ing_sfw/ing_sfw.t
 ---
 
 ## [mcq 3] Il software libero
-- [ ] è software distribuito gratuitamente, anche senza codice sorgente
-- [ ] è software di pubblico dominio, non protetto dal diritto d'autore
-- [x] garantisce le libertà di eseguirlo, studiarlo e modificarlo, ridistribuirlo e ridistribuirne i miglioramenti
-- [ ] è software che si può usare liberamente solo per scopi non commerciali
+- [ ] è software distribuito gratuitamente, anche senza fornire il codice sorgente
+- [ ] è software di pubblico dominio, su cui l'autore ha rinunciato a ogni diritto
+- [x] garantisce le libertà di eseguirlo, studiarlo e modificarlo, ridistribuirlo e migliorarlo
+- [ ] è software modificabile e ridistribuibile, ma solo per scopi non commerciali
 
 ### Soluzione
 «Libero» non significa «gratis»: il software libero garantisce le quattro libertà (0: eseguire per qualsiasi scopo; 1: studiare e modificare; 2: ridistribuire; 3: migliorare e distribuire i miglioramenti). Il pubblico dominio (b) è un'altra forma di licenza. Una restrizione «solo non commerciale» (d) viola la libertà 0.
 
 ## [mcq 3] In Europa il software
 - [x] è protetto dal diritto d'autore come opera dell'ingegno, ma non è brevettabile
-- [ ] è brevettabile come qualunque invenzione industriale
-- [ ] non è protetto se è distribuito in rete
-- [ ] è protetto solo se distribuito con licenza proprietaria
+- [ ] è brevettabile come invenzione industriale, ma non è protetto dal diritto d'autore
+- [ ] non è né protetto né brevettabile, se viene distribuito liberamente in rete
+- [ ] è protetto dal diritto d'autore solo se distribuito con licenza proprietaria
 
 ### Soluzione
 Il software è un'opera dell'ingegno: è tutelato dal diritto d'autore (in Italia la L. 248/2000 punisce la duplicazione abusiva), ma in Europa non è brevettabile. Anche il software open source è protetto: la licenza è proprio l'esercizio di quel diritto.
@@ -42,7 +42,7 @@ Il software commerciale si acquisisce su licenza e di solito viene venduto *as i
 
 ## [mcq 3] Il portale web dell'Università, sviluppato apposta da un fornitore per l'Ateneo, è un esempio di
 - [ ] prodotto generico (off the shelf)
-- [x] sistema commissionato (customizzato)
+- [x] sistema commissionato
 - [ ] servizio in perpetuo sviluppo
 - [ ] ecosistema software
 
@@ -60,9 +60,9 @@ L'agente prende decisioni ed esegue un compito specifico (lavora «in verticale�
 
 ## [mcq 3] Qual è la differenza tra requisito e feature di un prodotto software?
 - [x] Il requisito è una funzione o qualità verificabile che interessa al cliente; la feature è un insieme di funzioni che interessa al fornitore
-- [ ] Il requisito descrive l'interfaccia grafica, la feature il comportamento interno
-- [ ] Sono sinonimi: entrambi indicano una funzione del sistema
-- [ ] Il requisito è scritto dal team di sviluppo, la feature dal cliente
+- [ ] Il requisito descrive cosa deve fare il sistema; la feature descrive come il team lo realizza tecnicamente
+- [ ] Il requisito è scritto dal cliente nel contratto; la feature è scritta dal team come user story nel backlog
+- [ ] Il requisito riguarda il comportamento interno; la feature riguarda solo l'interfaccia grafica del prodotto
 
 ### Soluzione
 Requisito: funzione o qualità *controllabile (testabile)* che l'implementazione deve possedere, importante per il cliente. Feature: insieme di funzioni che permettono di usare il prodotto in un servizio, importante per il fornitore. Es. requisiti: registrarsi, gestire il carrello, pagare; feature: il carrello per negozio elettronico.
@@ -95,10 +95,10 @@ Mantenere costa più che sviluppare: nella distribuzione storica citata da Boehm
 Correttiva: corregge errori trovati dopo la consegna. Adattiva: risponde a cambiamenti dell'ambiente (nuovo SO, nuove norme). Perfettiva (o preventiva): migliora un prodotto già corretto, per esempio le prestazioni; è la quota più grande.
 
 ## [mcq 3] Al crescere delle dimensioni di un sistema software, il costo di sviluppo
-- [ ] cresce in modo lineare, perché ogni riga costa uguale
-- [x] cresce più che linearmente (circa col quadrato), perché crescono le interazioni tra le parti
-- [ ] diminuisce grazie al riuso dei componenti
-- [ ] diventa indipendente dalle dimensioni se si usano assistenti AI
+- [ ] cresce linearmente, perché ogni riga di codice ha lo stesso costo
+- [x] cresce più che linearmente, circa col quadrato delle dimensioni
+- [ ] cresce in modo logaritmico, grazie al riuso dei componenti
+- [ ] diventa quasi indipendente dalle dimensioni con gli assistenti AI
 
 ### Soluzione
 Con le dimensioni crescono il costo per riga e la durata e cala la produttività. Gli assistenti AI abbassano il costo della singola riga, non quello di capire, integrare e mantenere un sistema: la curva quadratica dipende dalle interazioni tra le parti.
@@ -122,10 +122,10 @@ Attributi esterni (visibili all'utente): costo e tipo di licenza, prestazioni, g
 Ruoli (stakeholder, progettista, sviluppatore, tester, manutentore), attività (programmare, testare, documentare…) e documenti (sorgente, eseguibile, specifica, risultati dei test). Il Gantt (b) è uno strumento per gestire le attività, non il processo.
 
 ## [mcq 3] Gli LLM sono il nuovo «silver bullet»?
-- [ ] Sì, perché eliminano il costo della codifica e quindi del software
-- [x] No: generano codice, test e documentazione, ma non risolvono i problemi di fondo (requisiti, architettura, qualità) e la verifica umana resta obbligatoria
+- [ ] Sì: eliminano il costo della codifica, che è la parte più costosa del software
+- [x] No: aiutano a scrivere codice, test e documentazione, ma non risolvono requisiti, architettura e qualità
 - [ ] Sì, purché il codice generato superi i test generati dallo stesso modello
-- [ ] No, perché non sono in grado di generare codice compilabile
+- [ ] No: il codice che generano non è ancora abbastanza corretto da compilare
 
 ### Soluzione
 Brooks: nessuna tecnica rende facile costruire software, perché la difficoltà essenziale sta nel capire il problema. Gli LLM aggiungono rischi propri: codice plausibile ma errato, debito tecnico nascosto, dipendenza dal fornitore, proprietà intellettuale. (c) è un errore classico: codice e test dalla stessa fonte condividono le stesse assunzioni.
@@ -185,19 +185,19 @@ Integrazione continua: ogni modifica è integrata spesso (almeno ogni giorno) e 
 Hannay et al. (2009), 18 studi: qualità migliore (effetto piccolo), durata minore (effetto medio), sforzo totale maggiore (effetto medio). Conviene dove il beneficio giustifica il costo, per esempio sui compiti complessi.
 
 ## [mcq 3] Quale affermazione su XP e Scrum è corretta?
-- [ ] XP e Scrum sono alternativi e non possono essere usati insieme
-- [ ] Scrum impone TDD e pair programming, XP no
-- [x] XP è orientato alla qualità del codice (TDD, refactoring), Scrum al project management; spesso coesistono
-- [ ] In XP i requisiti si possono modificare solo a fine iterazione, in Scrum sempre
+- [ ] XP e Scrum sono alternativi e non possono essere usati nello stesso team
+- [ ] Scrum impone TDD e pair programming, XP lascia libera la scelta delle pratiche
+- [x] XP è orientato alla qualità del codice, Scrum alla gestione del progetto; spesso coesistono
+- [ ] In XP i requisiti si modificano solo a fine iterazione, in Scrum in ogni momento
 
 ### Soluzione
 Scrum non impone pratiche di sviluppo: molti team usano quelle di XP. In XP i requisiti sono sempre modificabili e il cliente ordina le storie; in Scrum si cambiano a fine sprint (d è invertita).
 
 ## [mcq 3] Secondo lo Scrum Guide Expansion Pack, in un team che usa l'IA
-- [ ] tutti i ruoli possono essere ricoperti da agenti automatici
-- [x] Product Owner e Scrum Master devono essere umani; i Product Developers possono essere anche automatizzati, ma almeno uno deve essere umano
-- [ ] lo Scrum Master può essere un LLM, il Product Owner no
-- [ ] l'IA può decidere l'ordine del Product Backlog se il PO è assente
+- [ ] tutti i ruoli possono essere ricoperti da agenti automatici, purché supervisionati
+- [x] Product Owner e Scrum Master devono essere umani; tra i Developers almeno uno umano
+- [ ] lo Scrum Master può essere un LLM, mentre il Product Owner deve essere umano
+- [ ] il Product Owner può essere un LLM, mentre lo Scrum Master deve essere umano
 
 ### Soluzione
 Principio di responsabilità umana (*human in the loop*): l'IA è un partner decisionale supervisionato. Un LLM può aiutare il PO (bozze di storie, sintesi del feedback) e l'SM (sintesi del Daily, metriche), ma non sostituirne responsabilità, negoziazione, empatia.
@@ -212,10 +212,10 @@ Principio di responsabilità umana (*human in the loop*): l'IA è un partner dec
 Catena IEEE 610.12: errore (azione umana, a) → difetto/fault, il «bug» (b) → guasto/failure (c). Mars Climate Orbiter: libbre invece di newton (errore), modulo che calcola nell'unità sbagliata (difetto), sonda persa (guasto).
 
 ## [mcq 3] La qualità interna di un prodotto software
-- [x] si misura senza eseguire il sistema, per esempio con ispezioni e analisi statica
-- [ ] si misura eseguendo il sistema con i test
-- [ ] si misura osservando utenti reali
-- [ ] coincide con la qualità del processo di sviluppo
+- [x] si misura senza eseguire il sistema, per esempio con l'analisi statica
+- [ ] si misura eseguendo il sistema, per esempio con i test di sistema
+- [ ] si misura con utenti reali, per esempio con test di usabilità
+- [ ] si misura sul processo, per esempio con la percentuale di codice revisionato
 
 ### Soluzione
 Processo → interna (senza eseguire: complessità, duplicazione) → esterna (eseguendo: tempi di risposta, guasti) → in uso (utenti reali). Ognuna influenza la successiva.
@@ -244,19 +244,19 @@ E archi, N nodi: V(G) = E − N + 2, cioè il numero di cammini linearmente indi
 Ogni if aggiunge una decisione: V(G) = numero di decisioni + 1 = 4. Sul grafo: per ogni if un nodo di decisione e un nodo «then», più un nodo iniziale e uno finale: N = 3·2 + 2 = 8; archi: 1 (start→if₁) + 3·3 (if→then, if→prossimo, then→prossimo) = 10; V(G) = 10 − 8 + 2 = 4.
 
 ## [mcq 3] Nel metodo Goal-Question-Metric (Basili)
-- [ ] si parte dalle metriche disponibili e si deduce l'obiettivo
-- [x] un goal concettuale si raffina in domande operative, a ciascuna delle quali rispondono metriche quantitative
-- [ ] ogni metrica deve corrispondere a un solo goal di progetto
-- [ ] le domande sono quelle poste dal cliente durante la sprint review
+- [ ] si parte dalle metriche già disponibili e si ricavano gli obiettivi che possono misurare
+- [x] un goal si raffina in domande, a ciascuna delle quali rispondono una o più metriche
+- [ ] ogni metrica si collega a un solo goal, senza passare per domande intermedie
+- [ ] le domande sono quelle poste dal cliente alla sprint review, le metriche le risposte
 
 ### Soluzione
 Top-down: goal (es. valutare l'affidabilità) → question (qual è la distribuzione dei guasti?) → metric (guasti per modulo). Partire dalle metriche disponibili (a) è proprio l'errore che GQM evita.
 
 ## [mcq 3] La copertura delle decisioni richiede che
-- [ ] ogni comando sia eseguito almeno una volta
-- [x] ogni decisione sia valutata almeno una volta vera e una volta falsa
-- [ ] ogni cammino del grafo di flusso sia percorso
-- [ ] ogni classe di equivalenza dell'input sia rappresentata
+- [ ] ogni comando sia eseguito almeno una volta, comprese le decisioni
+- [x] ogni decisione sia valutata almeno una volta vera e almeno una volta falsa
+- [ ] ogni cammino del grafo di flusso, attraverso tutte le decisioni, sia percorso
+- [ ] ogni decisione sia valutata almeno una volta vera
 
 ### Soluzione
 Copertura dei comandi (a) < decisioni (b) < cammini (c). (d) è un criterio black-box. Per il teorema di Weyuker è indecidibile, in generale, se esista un input che copre un dato comando, decisione o cammino.
@@ -298,10 +298,10 @@ Cunningham (1992): il capitale è la correzione rinviata, gli interessi il sovra
 Chi tocca il codice lo lascia pulito. Il gate «Sonar way» mette condizioni sul codice nuovo (nessun nuovo problema, hotspot rivisti, copertura ≥ 80%, duplicazioni ≤ 3%), ma non garantisce la correttezza funzionale.
 
 ## [mcq 3] Un LLM genera la funzione prezzo(mesi) e, nella stessa risposta, i test che la verificano. Tutti i test passano. Che cosa si può concludere?
-- [ ] La funzione è corretta, perché i test passano
-- [ ] La funzione è corretta se la copertura supera l'80%
-- [x] Poco: codice e test possono condividere la stessa assunzione sbagliata; il risultato atteso deve venire da una fonte indipendente, come il criterio di accettazione
-- [ ] Basta chiedere allo stesso modello di rivedere il codice
+- [ ] La funzione è corretta, perché codice e test sono coerenti tra loro
+- [ ] La funzione è corretta se la copertura dei test supera l'80%
+- [x] Nulla di certo: il risultato atteso deve venire da una fonte indipendente dal codice
+- [ ] La funzione è corretta se lo stesso modello, rileggendola, non trova errori
 
 ### Soluzione
 Esempio della lezione: prezzo(mesi) = 30·mesi·0,9 con test prezzo(2) == 54 passa, ma il criterio concordato vuole 60. Né un'alta copertura né l'autorevisione dello stesso modello rimediano.
@@ -316,10 +316,10 @@ Esempio della lezione: prezzo(mesi) = 30·mesi·0,9 con test prezzo(2) == 54 pas
 Gli LLM suggeriscono pacchetti inesistenti (*package hallucination*); se un attaccante registra quel nome, chi installa il suggerimento esegue codice malevolo. Per questo il codice generato è codice non fidato e la DoD include la verifica delle dipendenze.
 
 ## [mcq 3] Lo standard IEEE 610.12 definisce un requisito come
-- [ ] la descrizione dell'interfaccia grafica concordata con il cliente
-- [x] una condizione o capacità necessaria a un utente per risolvere un problema, o che un sistema deve possedere per soddisfare un contratto, uno standard o una specifica
-- [ ] una funzione del sistema scritta nel formato «Come… voglio… per…»
-- [ ] un vincolo tecnologico imposto dal committente
+- [ ] la descrizione dell'interfaccia e del comportamento concordata con il cliente
+- [x] una condizione o capacità necessaria a un utente, o che un sistema deve possedere per un contratto o una specifica
+- [ ] una funzione del sistema scritta come user story e accettata dal Product Owner
+- [ ] un vincolo tecnologico imposto dal committente e riportato nel contratto
 
 ### Soluzione
 Due facce: il *bisogno* dell'utente e l'*impegno* del sistema (verso contratto, standard, specifica).
@@ -370,19 +370,19 @@ Ubiquo: «Il sistema deve…». Evento: «Quando…». Stato: «Mentre…». Ind
 Card (la frase sul cartoncino), Conversation (il dialogo che chiarisce i dettagli), Confirmation (i criteri sul retro, es. in Gherkin). Una storia senza Conversation e Confirmation è solo la Card: incompleta per un collega come per un LLM.
 
 ## [mcq 3] Nello spec-driven development (es. GitHub Spec Kit)
-- [ ] si chiede all'agente di generare l'intera applicazione da una frase
-- [x] la specifica (cosa e perché) guida piano, task e implementazione, e l'umano revisiona
-- [ ] il codice è la fonte di verità e la specifica si genera dal codice
-- [ ] la specifica serve solo come documentazione finale per il cliente
+- [ ] si chiede all'agente di generare l'intera applicazione a partire da una frase
+- [x] la specifica guida piano, task e implementazione, e l'umano revisiona il risultato
+- [ ] il codice è la fonte di verità e la specifica si ricava dal codice generato
+- [ ] la specifica si scrive alla fine, come documentazione per il cliente
 
 ### Soluzione
 Specify → Plan → Tasks → Implement: «l'intento è la fonte di verità». (a) è il *vibe coding*, all'altro estremo dello spettro.
 
 ## [mcq 3] In Essence un Alpha è
-- [ ] una versione preliminare del software da mostrare al cliente
-- [ ] un ruolo del team, come il Product Owner
-- [x] un elemento essenziale del progetto, con una sequenza di stati e checkpoint, per valutare avanzamento e salute
-- [ ] un work product, come il documento dei requisiti
+- [ ] una versione preliminare del software, da mostrare agli stakeholder per avere feedback
+- [ ] un ruolo del team con responsabilità definite, come il Product Owner in Scrum
+- [x] un elemento essenziale del progetto, con stati e checkpoint per valutarne l'avanzamento
+- [ ] un work product del progetto, come il documento dei requisiti o il piano di rilascio
 
 ### Soluzione
 Alpha = Abstract-Level Progress Health Attribute. Il kernel ne ha sette, ognuno con stati e checklist, rappresentati da carte. Un Alpha non è un documento (d) né uno strumento.
@@ -415,28 +415,28 @@ Customer: Stakeholders, Opportunity. Solution: Requirements, Software System. En
 Gli Stakeholders forniscono l'Opportunity e usano il Software System, che soddisfa i Requirements; i Requirements delimitano il Work; il Team produce il Software System ed esegue il Work, guidato dal Way of Working.
 
 ## [mcq 3] Constructor Fabric
-- [ ] è un modello linguistico specializzato nella generazione di codice
-- [ ] è un IDE alternativo a Cursor e Copilot
-- [x] è uno strato di processo (template, skill, controlli deterministici, identificatori di tracciabilità) che gira dentro un tool di AI coding, il quale porta il modello
-- [ ] è un servizio cloud che ospita modelli open-weight
+- [ ] un modello linguistico open source specializzato nella generazione di codice tracciabile
+- [ ] un IDE per l'AI coding, alternativo a Cursor e Copilot, con il comando cfs
+- [x] uno strato di processo che gira dentro un tool di AI coding, il quale porta il modello
+- [ ] un servizio cloud che ospita modelli open-weight per gli agenti di programmazione
 
 ### Soluzione
 «Il tool host porta il modello, Constructor Fabric porta il processo»: non ha chiave API né modello proprio. I quattro pezzi: `cfs` (terminale), le skill `cf-*` (chat), i kit (SDLC di default), i CPT ID.
 
 ## [mcq 3] In Constructor Fabric un `cfs validate` senza errori garantisce che
-- [ ] il software funziona correttamente
-- [x] gli artefatti hanno la forma giusta (struttura, sezioni, riferimenti, ID), non che il software sia corretto
-- [ ] tutti i requisiti sono stati implementati e testati
-- [ ] la review del codice è stata fatta da un umano
+- [ ] il software si comporta come richiesto dai criteri di accettazione
+- [x] gli artefatti hanno struttura, sezioni, riferimenti e ID corretti
+- [ ] tutti i requisiti del PRD sono stati implementati e coperti da test
+- [ ] la review del codice è stata fatta da un revisore umano
 
 ### Soluzione
 Il controllo è deterministico ma formale: un check verde o un lungo giro di fix non provano la correttezza. Resta necessaria la review umana finale.
 
 ## [mcq 3] Un Architecture Decision Record (ADR)
-- [ ] elenca i requisiti funzionali con la loro priorità
-- [x] registra una decisione architetturale con contesto, opzioni considerate, esito e conseguenze
-- [ ] descrive l'algoritmo di una singola feature
-- [ ] è il report automatico di un'analisi statica
+- [ ] elenca i requisiti funzionali e non funzionali del prodotto, ciascuno con la sua priorità
+- [x] registra una scelta architetturale con contesto, opzioni considerate, esito e conseguenze
+- [ ] descrive flussi, stati e algoritmi di una singola feature prima della sua implementazione
+- [ ] raccoglie i risultati dell'analisi statica e le soglie del quality gate di ogni rilascio
 
 ### Soluzione
 Una decisione, un record. Nella pipeline (PRD → ADR → DESIGN → DECOMPOSE → FEATURE → codice → test) si scrive prima del design, che così ha su cosa poggiare; tra sei mesi risponde a «perché l'abbiamo fatto così?». (a) è il PRD, (c) la FEATURE spec.

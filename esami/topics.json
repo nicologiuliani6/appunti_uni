@@ -95,7 +95,7 @@
       "id": "llm",
       "nome": "API LLM e framework ad agenti (OpenAI, LangChain, CrewAI)",
       "studiato": false,
-      "re": "OpenAI|LangChain|CrewAI|\\bLLM\\b"
+      "re": "OpenAI|LangChain|CrewAI|LLMChain|streaming delle risposte"
     },
     {
       "id": "componenti",
@@ -155,7 +155,7 @@
       "id": "iso-gqm",
       "nome": "ISO/IEC 25010, GQM, complessità ciclomatica, quality gate",
       "studiato": true,
-      "re": "25010|\\bGQM\\b|Goal.Question|ciclomatic|quality gate|SonarQube|Clean as you code|Goodhart"
+      "re": "25010|qualità interna|\\bGQM\\b|Goal.Question|ciclomatic|quality gate|SonarQube|Clean as you code|Goodhart"
     },
     {
       "id": "test-design",
@@ -167,7 +167,7 @@
       "id": "llm-codice",
       "nome": "Codice generato da LLM: correttezza, sicurezza, manutenibilità",
       "studiato": true,
-      "re": "codice generat|slopsquatting|allucin|GitClear|Copilot|assistente (IA|AI)"
+      "re": "codice generat|slopsquatting|allucin|GitClear|Copilot|assistente (IA|AI)|\\bLLM\\b|\\bMETR\\b|rispetto a senza IA"
     },
     {
       "id": "constructor-fabric",

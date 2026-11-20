@@ -6,9 +6,9 @@ fonte: Domande scritte da Claude sugli appunti e sulle slide 2026 di Ciancarini 
 
 ## [mcq 1] Quali fasi compongono il ciclo di vita del software secondo le slide di Ciancarini (L2)?
 - [x] Requisiti, progettazione, codifica e debugging, testing e verifica, deployment, manutenzione.
-- [ ] Analisi, codifica, collaudo, ritiro del prodotto.
-- [ ] Pianificazione, sprint, review, retrospettiva.
-- [ ] Requisiti, codifica, test, release, marketing.
+- [ ] Requisiti, progettazione, codifica, integrazione continua, rilascio, ritiro del prodotto.
+- [ ] Studio di fattibilità, analisi, progettazione, codifica, collaudo, dismissione.
+- [ ] Pianificazione, sprint planning, sviluppo, sprint review, retrospettiva, rilascio.
 
 ### Soluzione
 Le sei fasi delle slide di L2: requisiti (analisi e specifica), progettazione (architettura e componenti), codifica e debugging, testing e verifica, deployment (messa in opera), manutenzione. Le altre opzioni mescolano nomi di Scrum o fasi non previste.
@@ -32,10 +32,10 @@ Storicamente la manutenzione assorbe circa il 67% del costo totale; le slide mos
 Dall'analisi di 13.522 progetti: 66% falliscono (non producono un risultato utile), 82% superano i tempi, 48% producono sistemi senza tutte le funzioni richieste. Il dato sullo spreco è separato: 55 miliardi di dollari nei soli progetti USA.
 
 ## [mcq 1] Come definisce le slide la produttività dello sviluppo software?
-- [ ] Numero di sprint completati per team.
-- [ ] Numero di bug chiusi per giorno.
-- [x] Rapporto tra software prodotto (LoC) e sforzo (giorni/persona).
-- [ ] Ore di lavoro per ogni release.
+- [ ] Numero medio di story point completati in uno sprint.
+- [ ] Numero di difetti corretti per giorno/persona.
+- [x] Rapporto tra software prodotto in LoC e sforzo in giorni/persona.
+- [ ] Rapporto tra costo di sviluppo e numero di funzioni consegnate.
 
 ### Soluzione
 Output/input: LoC per persona-giorno (es. 50 LoC per giorno/persona). Le slide ricordano che LoC è una misura discutibile: va letta con giudizio, come ogni metrica (vedi la legge di Goodhart a L14).
@@ -58,10 +58,10 @@ Il grafico storico dice che un cambiamento costa tanto più quanto più tardi av
 - 1 | cita un esempio o un meccanismo concreto (test, refactoring, architettura modulare)
 
 ## [mcq 1] Che cosa intende la slide «Il nuovo silver bullet? Gli LLM» in continuità con Brooks?
-- [x] Nessuno strumento singolo garantisce, da solo, un salto di produttività: resta la complessità essenziale del problema.
-- [ ] Gli LLM eliminano la complessità essenziale del software.
-- [ ] Gli LLM sostituiscono completamente la fase di progettazione.
-- [ ] Brooks prevedeva già che gli LLM avrebbero fatto il lavoro di manutenzione.
+- [x] Nessuno strumento da solo garantisce un salto di produttività: la complessità essenziale del problema resta.
+- [ ] Gli LLM sono il primo strumento che elimina la complessità essenziale, come Brooks aveva previsto.
+- [ ] Gli LLM rendono superflua la progettazione, perché il codice si può rigenerare a ogni modifica.
+- [ ] Gli LLM eliminano la complessità accidentale, quindi i progetti software non sono più in ritardo.
 
 ### Soluzione
 «No Silver Bullet» (Brooks): la complessità essenziale (capire e specificare il problema) non si elimina con uno strumento. Gli LLM riducono la complessità accidentale, ma non quella essenziale: il tema della lezione è distinguere le due cose.
@@ -76,28 +76,28 @@ Il grafico storico dice che un cambiamento costa tanto più quanto più tardi av
 I sette Alpha sono Opportunità e Stakeholder (area Customer), Requisiti e Sistema software (area Solution), Lavoro, Team e Modo di lavorare (area Endeavor). Gli Alpha sono elementi da far progredire, non fasi.
 
 ## [mcq 1] In quale area di interesse di Essence rientrano gli Alpha «Opportunità» e «Stakeholder»?
-- [x] Customer (il valore per utenti e stakeholder)
-- [ ] Solution (lo sviluppo e la specifica del sistema)
-- [ ] Endeavor (la gestione del team)
-- [ ] Nessuna: sono Alpha a parte
+- [x] Customer
+- [ ] Solution
+- [ ] Endeavor
+- [ ] Nessuna: sono Alpha trasversali alle tre aree
 
 ### Soluzione
 Customer: valore per utenti e stakeholder, focus sui bisogni reali. Solution: requisiti e sistema software. Endeavor: lavoro, team e modo di lavorare.
 
 ## [mcq 1] Essence va inteso come…
-- [ ] un metodo agile alternativo a Scrum, da adottare in alternativa
-- [x] un metamodello standard (OMG, 2014) che descrive la struttura di qualsiasi metodo, integrabile con Scrum e Kanban
-- [ ] un linguaggio di modellazione UML per il codice
-- [ ] un tool per il deployment continuo
+- [ ] un metodo agile completo, da adottare in alternativa a Scrum e Kanban
+- [x] un metamodello standard OMG che descrive la struttura di qualsiasi metodo e si integra con Scrum e Kanban
+- [ ] un linguaggio di modellazione standard OMG che estende UML con i diagrammi degli Alpha
+- [ ] un framework di scaling che coordina più team Scrum che lavorano sullo stesso prodotto
 
 ### Soluzione
 Essence non impone un processo: fornisce un kernel comune di concetti e un linguaggio per descrivere, confrontare e integrare pratiche. Scrum e Kanban restano, e Essence aiuta a vedere cosa manca.
 
 ## [mcq 1] Come si svolge il «Progress Poker» con le carte Alpha?
-- [ ] Il facilitatore assegna lo stato a ciascun Alpha.
-- [x] Ognuno sceglie in privato lo stato supportato dalle evidenze; le scelte si rivelano insieme; le differenze maggiori guidano la discussione.
-- [ ] Si vota per alzata di mano lo stato desiderato.
-- [ ] Si sommano i punti di ogni carta e si sceglie la media.
+- [ ] Il facilitatore propone lo stato di ogni Alpha e il team lo approva o lo corregge a voce.
+- [x] Ognuno sceglie in privato lo stato supportato dalle evidenze, le carte si rivelano insieme e le differenze guidano la discussione.
+- [ ] Ognuno vota a turno lo stato che desidera e si adotta quello che ottiene la maggioranza.
+- [ ] Ognuno stima in privato i punti di ogni carta e si adotta la media delle stime.
 
 ### Soluzione
 Scelta indipendente e rivelazione simultanea evitano che il primo a parlare orienti gli altri; le differenze (dove sta il disaccordo) sono l'input della discussione, e l'accordo raggiunto va registrato insieme ai dubbi residui.
@@ -114,28 +114,28 @@ L'anomalia è il disallineamento tra una soluzione dimostrabile e requisiti non 
 - 1 | distingue stato corrente e stato successivo, e cita le evidenze
 
 ## [mcq 1] Nel linguaggio di Essence, cos'è un checkpoint?
-- [x] Un'affermazione verificabile, che si può sostenere con evidenze o con un accordo informato.
-- [ ] Una scadenza del progetto.
-- [ ] Un test automatico di integrazione.
-- [ ] La riunione di fine sprint.
+- [x] Un'affermazione verificabile, sostenuta da evidenze o da un accordo informato, che dice se uno stato è raggiunto.
+- [ ] Una scadenza intermedia del progetto, fissata dal Product Owner nel piano di rilascio.
+- [ ] Un test automatico eseguito a ogni integrazione per verificare lo stato del sistema.
+- [ ] La riunione di fine sprint in cui il team aggiorna le carte degli Alpha.
 
 ### Soluzione
 Un checkpoint trasforma un giudizio in una conversazione basata su evidenze. Una aspirazione vaga («il team è maturo») non può stabilire uno stato. Lo stato corrente è l'ultimo che il team riesce a sostenere, non quello in cui il piano dice di trovarsi.
 
 ## [mcq 1] Essence sostituisce Scrum?
-- [ ] Sì, Scrum è obsoleto e Essence lo rimpiazza.
-- [x] No: Essence non sostituisce Scrum, Kanban o SAFe, ma le integra e aiuta a individuare lacune.
-- [ ] Sì, ma solo nei progetti con più di 10 sviluppatori.
-- [ ] No, perché Essence è solo una notazione grafica senza utilità pratica.
+- [ ] Sì: Essence definisce già ruoli ed eventi, quindi Scrum diventa superfluo.
+- [x] No: Essence non sostituisce Scrum, Kanban o SAFe, ma li integra e aiuta a individuarne le lacune.
+- [ ] Sì, ma solo nei progetti grandi, dove Scrum da solo non scala.
+- [ ] No: Essence si usa solo prima del progetto, Scrum durante lo sviluppo.
 
 ### Soluzione
 Le slide insistono su integrazione, non sostituzione: Essence fornisce un linguaggio comune per dire cosa fa uno Scrum, cosa manca e come combinarlo con altre pratiche.
 
 ## [mcq 1] Nella slide su Dropbox, cosa illustra il caso di MVP citato a L3?
-- [ ] Una piattaforma completa lanciata senza test.
-- [x] Una dimostrazione (video) del prodotto prima di costruire il sistema completo, per verificare l'interesse.
-- [ ] Un refactoring che elimina il debito tecnico.
-- [ ] Un piano GQM per la qualità.
+- [ ] Il lancio di una versione con poche funzioni ma completa, per acquisire i primi clienti paganti.
+- [x] Un video dimostrativo del prodotto, girato prima di costruire il sistema, per verificare l'interesse degli utenti.
+- [ ] Una versione beta distribuita a pochi utenti per trovare i difetti prima del rilascio pubblico.
+- [ ] Un prototipo usa-e-getta costruito per scegliere l'architettura del sistema di sincronizzazione.
 
 ### Soluzione
 MVP: apprendere con il minimo sforzo. Dropbox ha mostrato il prodotto prima che fosse completo, per misurare l'interesse. Un MVP dà valore e permette di imparare dal mercato con il minimo rischio.
@@ -150,28 +150,28 @@ MVP: apprendere con il minimo sforzo. Dropbox ha mostrato il prodotto prima che 
 YAGNI: si costruisce solo ciò che serve alla user story corrente. Un'astrazione prematura è un costo, non un investimento, e si aggiunge quando serve (con il refactoring).
 
 ## [mcq 1] La pratica XP di «integrazione continua» prevede:
-- [ ] integrare il codice una volta al mese, dopo il collaudo
-- [x] integrare spesso (più volte al giorno), con test automatici che girano a ogni integrazione
-- [ ] sviluppare ogni funzionalità in un branch separato per sei mesi
-- [ ] nessun test, perché l'integrazione è automatica
+- [ ] integrare ogni modifica nella linea principale al termine dello sprint, dopo la review
+- [x] integrare spesso, più volte al giorno, con test automatici eseguiti a ogni integrazione
+- [ ] sviluppare ogni funzionalità su un ramo dedicato e unirla alla linea principale quando è completa
+- [ ] rilasciare automaticamente agli utenti ogni modifica che compila senza errori
 
 ### Soluzione
 Integrazione frequente riduce i conflitti e rileva i problemi subito, con build e test automatici. È una pratica distinta dal deploy continuo, anche se si sostengono a vicenda.
 
 ## [mcq 1] Nella programmazione in coppia, cosa fa il «navigatore»?
-- [ ] scrive il codice mentre il pilota fa solo da osservatore
-- [x] guarda la strategia, rivede ciò che il pilota scrive e pensa ai prossimi passi
-- [ ] gestisce la pianificazione dello sprint
-- [ ] esegue i test di accettazione con il cliente
+- [ ] scrive il codice mentre il pilota lo rivede e pensa alla strategia
+- [x] rivede ciò che il pilota scrive e pensa alla strategia e ai prossimi passi
+- [ ] scrive i test mentre il pilota scrive il codice che li deve superare
+- [ ] cerca documentazione ed esempi mentre il pilota scrive il codice
 
 ### Soluzione
 Pilota e navigatore si alternano: chi scrive è concentrato sul dettaglio, chi guarda pensa alla direzione e alle possibili falle. Le slide mostrano che la coppia riduce i difetti, ma con costi di tempo da valutare.
 
 ## [mcq 1] Che cosa indica la «proprietà collettiva del codice» in XP?
-- [ ] Ogni file ha un solo proprietario che decide le modifiche.
+- [ ] Ogni modulo ha un responsabile, che deve approvare le modifiche fatte dagli altri.
 - [x] Chiunque nel team può modificare qualsiasi parte del codice, purché i test restino verdi.
-- [ ] Il codice appartiene all'azienda, non ai programmatori.
-- [ ] Solo il Product Owner può modificare il codice.
+- [ ] Il codice appartiene all'organizzazione e non ai singoli programmatori che lo scrivono.
+- [ ] Il codice è condiviso con il cliente, che può proporre modifiche direttamente nel repository.
 
 ### Soluzione
 Nessun collo di bottiglia su singole persone; la sicurezza viene dai test e dall'integrazione continua. È il contrario del «codice mio, non lo tocchi».
@@ -188,19 +188,19 @@ La scheda è il promemoria breve (chi, cosa, perché); la conversazione è il di
 - 1 | esempio coerente con il caso del parcheggio
 
 ## [mcq 1] Nella slide «LLM come Scrum Master», quale compito può ragionevolmente essere delegato a un LLM?
-- [x] sintetizzare il Daily, proporre agende per la Retrospective, analizzare metriche come lead time e WIP
-- [ ] decidere lo Sprint Goal al posto del Product Owner
-- [ ] gestire i conflitti interni al team
-- [ ] assumere la responsabilità della qualità del prodotto
+- [x] sintetizzare il Daily e proporre l'agenda della Retrospective
+- [ ] decidere lo Sprint Goal e l'ordine del Product Backlog
+- [ ] gestire i conflitti e la sicurezza psicologica nel team
+- [ ] rimuovere gli impedimenti organizzativi e politici del team
 
 ### Soluzione
 L'LLM supporta con sintesi e analisi. Le decisioni, le dinamiche di gruppo, i conflitti e la responsabilità restano alle persone: empatia, sicurezza psicologica e leadership non si delegano.
 
 ## [mcq 1] Quale limite è indicato per un LLM usato come Scrum Master?
-- [ ] non sa leggere le metriche
-- [x] non gestisce empatia, dinamiche di gruppo, conflitti e ostacoli politici
-- [ ] non può scrivere un'agenda
-- [ ] non può sintetizzare un Daily
+- [ ] non sa analizzare metriche come lead time, WIP e burndown
+- [x] non sa gestire empatia, dinamiche di gruppo e conflitti
+- [ ] non sa preparare un'agenda per la Retrospective
+- [ ] non sa riassumere quanto emerso nel Daily Scrum
 
 ### Soluzione
 Il ruolo dello SM ha una parte tecnica (automatizzabile in parte) e una parte relazionale, che non si delega.
@@ -209,7 +209,7 @@ Il ruolo dello SM ha una parte tecnica (automatizzabile in parte) e una parte re
 - [ ] un errore (error)
 - [x] un guasto (failure)
 - [ ] un difetto (fault)
-- [ ] un vincolo non rispettato
+- [ ] una violazione (violation)
 
 ### Soluzione
 Errore: l'interpretazione sbagliata (unità imperiali o metriche). Difetto: il codice che usa l'unità sbagliata. Guasto: il comportamento osservabile non previsto, cioè la perdita della sonda (IEEE 610.12).
@@ -224,10 +224,10 @@ Errore: l'interpretazione sbagliata (unità imperiali o metriche). Difetto: il c
 Errore (azione umana), difetto (imperfezione nel prodotto, detto anche fault o bug), guasto (failure osservabile). Un difetto latente può restare silente finché non causa un guasto.
 
 ## [mcq 1] Qualità interna, esterna e in uso: quale si misura senza eseguire il sistema?
-- [x] la qualità interna (ispezioni, analisi statica, complessità)
-- [ ] la qualità esterna (test in esecuzione)
-- [ ] la qualità in uso (utenti reali)
-- [ ] nessuna: la qualità si misura sempre eseguendo
+- [x] la qualità interna
+- [ ] la qualità esterna
+- [ ] la qualità in uso
+- [ ] nessuna: ogni qualità richiede di eseguire il sistema
 
 ### Soluzione
 Interna: si misura sul prodotto non eseguito. Esterna: si misura eseguendo (test). In uso: nel contesto reale con gli utenti, con la norma ISO/IEC 25019.
@@ -235,7 +235,7 @@ Interna: si misura sul prodotto non eseguito. Esterna: si misura eseguendo (test
 ## [mcq 1] Quale caratteristica è stata aggiunta nel modello di qualità ISO/IEC 25010:2023 rispetto alla versione precedente?
 - [ ] Usabilità
 - [ ] Portabilità
-- [x] Safety (sicurezza fisica e del sistema verso danni)
+- [x] Safety
 - [ ] Manutenibilità
 
 ### Soluzione
@@ -291,19 +291,19 @@ Valori limite: appena sotto il minimo (−1), il minimo (0), il massimo (5), app
 Per i comandi basta 1 test (es. P = 60, Q = 0). Per le decisioni, ciascuna condizione deve essere vera e falsa almeno una volta: servono almeno 2 test, per esempio (60, 0) e (0, 0). Per i cammini ne servono 4.
 
 ## [mcq 1] Il «test esaustivo» di un sistema con 10 parametri e 5 valori ciascuno quanto costa, in casi?
-- [ ] 50 casi
-- [ ] 1.000 casi
-- [x] circa 9,8 milioni (5 alla decima)
-- [ ] 10 casi, un test per parametro
+- [ ] 50 casi (10 × 5)
+- [ ] circa 100.000 casi (10 alla quinta)
+- [x] circa 9,8 milioni di casi (5 alla decima)
+- [ ] 1.024 casi (2 alla decima)
 
 ### Soluzione
 5^10 ≈ 9,8 milioni: impossibile da eseguire in pratica. Per questo si scelgono classi di equivalenza e valori limite.
 
 ## [mcq 1] Qual è la forma della piramide dei test presentata a L14?
-- [ ] molti test end-to-end, pochi test di unità
-- [x] molti test di unità veloci e economici, meno di integrazione, pochi end-to-end
-- [ ] tutti i test a mano, nessuna automazione
-- [ ] solo test di accettazione del cliente
+- [ ] molti test end-to-end, meno di integrazione, pochi di unità
+- [x] molti test di unità, meno di integrazione, pochi end-to-end
+- [ ] molti test di integrazione, meno di unità, pochi end-to-end
+- [ ] lo stesso numero di test di unità, di integrazione ed end-to-end
 
 ### Soluzione
 Più si sale verso E2E, più i test sono lenti, fragili e costosi. L'anti-pattern «cono gelato» (molti E2E manuali, pochi unitari) è il contrario della piramide.
@@ -312,25 +312,25 @@ Più si sale verso E2E, più i test sono lenti, fragili e costosi. L'anti-patter
 - [ ] «Non abbiamo tempo per il progetto»
 - [x] «Rilasciamo ora e ne gestiamo le conseguenze»
 - [ ] «Che cos'è la stratificazione?»
-- [ ] «Ora sappiamo come avremmo dovuto farlo» (involontario)
+- [ ] «Ora sappiamo come avremmo dovuto farlo»
 
 ### Soluzione
 Il debito tecnico (Cunningham, Fowler) ha capitale (la correzione rinviata) e interessi (le modifiche future costano di più). È prudente se consapevole: lo si decide e lo si ripaga con il refactoring protetto dai test.
 
 ## [mcq 1] Nel quality gate predefinito «Sonar way» presentato a L14, quali sono le condizioni sul codice nuovo?
 - [ ] 0 bug totali, copertura 100%, duplicazione 0%, rating B
-- [x] 0 nuovi problemi, almeno 80% di copertura, al più 3% di righe duplicate, rating A e revisione dei security hotspot
-- [ ] nessuna condizione: il gate è solo informativo
-- [ ] 50% di copertura, 10% di duplicazione, rating C
+- [x] 0 nuovi problemi, copertura ≥ 80%, duplicazione ≤ 3%, security hotspot tutti rivisti
+- [ ] 0 nuovi problemi, copertura ≥ 50%, duplicazione ≤ 10%, security hotspot facoltativi
+- [ ] 0 vulnerabilità totali, copertura ≥ 80%, duplicazione ≤ 5%, rating C
 
 ### Soluzione
 Il gate giudica il codice nuovo o modificato (Clean as You Code). Le soglie sono un esempio: vanno decise dal team, meglio con GQM.
 
 ## [mcq 1] Il principio «Clean as You Code» significa che:
-- [ ] il codice vecchio va riscritto tutto prima di ogni rilascio
-- [x] chi tocca il codice lo lascia pulito; il debito pregresso si ripaga gradualmente
-- [ ] ogni commit deve avere almeno 100 righe di test
-- [ ] l'analisi statica va disattivata sul codice esistente
+- [ ] prima di ogni rilascio si elimina tutto il debito tecnico del codice esistente
+- [x] chi tocca il codice lo lascia pulito e il debito pregresso si ripaga gradualmente
+- [ ] l'analisi statica si applica solo al codice scritto da zero, mai a quello esistente
+- [ ] ogni sviluppatore ripulisce il codice degli altri prima di aggiungere il proprio
 
 ### Soluzione
 Il quality gate valuta il codice nuovo: così il miglioramento avviene a ogni modifica senza bloccare il progetto con un intervento massiccio.
@@ -347,28 +347,28 @@ Se la copertura diventa l'obiettivo, si scrivono test che eseguono il codice sen
 - 1 | indica come limitarlo (metriche multiple, GQM, lettura umana)
 
 ## [mcq 1] Il motto «il testing illumina, non dimostra» (Dijkstra) significa che:
-- [x] un test che passa non prova l'assenza di errori; i test possono solo mostrarne la presenza
-- [ ] i test non servono a nulla
-- [ ] la copertura del 100% garantisce la correttezza
-- [ ] i test si fanno solo alla fine del progetto
+- [x] un test che passa non prova l'assenza di errori: i test possono solo mostrarne la presenza
+- [ ] i test illuminano il comportamento del codice, ma solo la revisione dimostra la presenza di errori
+- [ ] con una copertura del 100% i test dimostrano anche l'assenza di errori
+- [ ] i test servono a documentare il comportamento del codice più che a trovare errori
 
 ### Soluzione
 Il testing non dimostra la correttezza: serve a trovare errori. Per questo servono più filtri (unità, integrazione, analisi statica, quality gate) e test scritti con criterio.
 
 ## [mcq 1] Secondo lo studio Liu et al. (NeurIPS 2023), con test più rigorosi quante soluzioni «corrette» di codice generato da LLM risultano sbagliate?
-- [ ] 1–3%
+- [ ] circa 1–3%
 - [x] circa 19–29%
-- [ ] 50–60%
-- [ ] nessuna: il benchmark originale è sufficiente
+- [ ] circa 50–60%
+- [ ] circa 80–90%
 
 ### Soluzione
 Con HumanEval+ (circa 80 volte più test) le soluzioni che passavano il benchmark originale falliscono in una quota significativa. Test deboli sovrastimano la correttezza.
 
 ## [mcq 1] Nello studio GitClear 2025 sul codice assistito dall'IA, che cosa segna un cambiamento importante nel 2024?
-- [ ] le righe spostate superano quelle copiate
+- [ ] per la prima volta le righe spostate superano quelle copiate e incollate
 - [x] per la prima volta le righe copiate e incollate superano quelle spostate
-- [ ] nessun blocco duplicato
-- [ ] il refactoring cresce del 40%
+- [ ] per la prima volta i blocchi duplicati diminuiscono rispetto all'anno precedente
+- [ ] per la prima volta le righe rifattorizzate superano quelle aggiunte
 
 ### Soluzione
 Righe spostate = indicatore di refactoring e riuso; righe copiate = duplicazione e debito. Il dato è un rapporto industriale, correlazione e non esperimento controllato: va letto con cautela.
@@ -376,17 +376,17 @@ Righe spostate = indicatore di refactoring e riuso; righe copiate = duplicazione
 ## [mcq 1] Nello studio METR 2025 su sviluppatori esperti, la velocità reale con l'IA rispetto a senza IA era:
 - [ ] +24%
 - [ ] +20%
-- [x] −19% (più lenta)
+- [x] −19%
 - [ ] +55,8%
 
 ### Soluzione
 Gli sviluppatori prevedevano un guadagno e percepivano un vantaggio, ma la misura mostrava un rallentamento: percezione e misura divergono. Il +55,8% riguarda un compito isolato (studio Peng et al.), non il lavoro esperto reale.
 
 ## [mcq 1] Un assistente IA propone di importare un pacchetto «fastjsonx» che nessuno conosce. Qual è il rischio principale?
-- [ ] licenza incompatibile
-- [ ] prestazioni peggiori della libreria standard
-- [x] pacchetto inventato dal modello, che un attaccante può registrare con quel nome (slopsquatting)
-- [ ] nessun rischio se i test passano
+- [ ] la licenza del pacchetto potrebbe essere incompatibile con quella del progetto
+- [ ] il pacchetto potrebbe essere più lento della libreria standard
+- [x] il pacchetto potrebbe essere inventato dal modello e registrato da un attaccante
+- [ ] il pacchetto potrebbe non essere più mantenuto dai suoi autori
 
 ### Soluzione
 Gli LLM allucinano nomi di pacchetti (Spracklen et al.). Verificare sempre le dipendenze: esistenza, autore, popolarità, licenza.
@@ -412,46 +412,46 @@ Rischi: correttezza non verificata (test deboli), sicurezza (vulnerabilità rico
 - 1 | almeno due domande di revisione (chi ha letto, test indipendenti, dipendenze, responsabilità)
 
 ## [mcq 1] Constructor Fabric, secondo le slide CF01, è:
-- [ ] un IDE per scrivere codice Java
-- [x] una piattaforma open source AI-native che collega plan, build e run in un flusso tracciabile, con il comando cfs
-- [ ] un servizio cloud per il deployment di container
-- [ ] un linguaggio di programmazione per agenti
+- [ ] un IDE AI-native open source, alternativo a Cursor, con il comando cfs
+- [x] una piattaforma open source AI-native che collega plan, build e run in un flusso tracciabile
+- [ ] un modello linguistico open-weight specializzato nella generazione di codice tracciabile
+- [ ] un servizio cloud che esegue build, test e deploy del codice generato dagli agenti
 
 ### Soluzione
 Constructor Fabric (con Constructor Studio, comando cfs) mette un processo ingegneristico attorno agli strumenti di AI coding: dai requisiti alla produzione, con artefatti collegati e verificati.
 
 ## [mcq 1] Nella pipeline di Constructor Fabric, a che cosa serve il PRD?
-- [ ] a eseguire i test automatici
-- [x] a definire lo scopo e i requisiti, dove ogni requisito ha un ID CPT e una priorità
-- [ ] a pubblicare il codice in produzione
-- [ ] a registrare le ore di lavoro dei membri
+- [ ] a registrare le decisioni architetturali con contesto, opzioni e conseguenze
+- [x] a definire scopo e requisiti, ciascuno con un ID CPT e una priorità
+- [ ] a descrivere architettura, componenti e data model del sistema
+- [ ] a specificare flussi, stati e algoritmi di una singola feature
 
 ### Soluzione
 Il PRD (scopo, attori, scope, requisiti funzionali e non, criteri di accettazione, rischi). Gli ID CPT permettono di seguire il requisito fino al codice.
 
 ## [mcq 1] Nella pipeline di Constructor Fabric, come deve comportarsi la skill DESIGN?
-- [ ] inventare l'architettura partendo da una sola riga di richiesta
-- [x] trasformare documenti già approvati (PRD e ADR) in architettura, componenti e data model
-- [ ] scrivere direttamente il codice senza documenti
-- [ ] sostituire la review umana
+- [ ] proporre un'architettura a partire da una richiesta di una riga, senza documenti di input
+- [x] trasformare documenti già approvati, PRD e ADR, in architettura, componenti e data model
+- [ ] scrivere prima il codice e poi ricavarne l'architettura con il reverse engineering
+- [ ] scegliere da sola, tra le opzioni dell'ADR, quella con meno rischi
 
 ### Soluzione
 Gli input devono essere nominati e approvati: la skill trasforma, non inventa. Ogni driver porta il CPT ID del requisito a cui risponde.
 
 ## [mcq 1] Che cosa garantisce `cfs validate` (CF01/CF02)?
-- [ ] che il software funziona correttamente
-- [x] che la struttura dei documenti è corretta (sezioni, riferimenti, forma degli ID): un risultato deterministico, non una prova di correttezza
-- [ ] che il codice è sicuro
-- [ ] che il team ha rispettato i tempi
+- [ ] che il software si comporta come richiesto dai criteri di accettazione
+- [x] che i documenti hanno struttura, sezioni, riferimenti e ID corretti
+- [ ] che il codice non contiene vulnerabilità note né dipendenze inventate
+- [ ] che ogni requisito del PRD ha almeno un test che lo verifica
 
 ### Soluzione
 Validate controlla forma e consistenza, in modo deterministico. Un validate verde non dice che il software funziona: resta necessaria la review umana.
 
 ## [mcq 1] Nella fase di Decompose di Constructor Fabric, quale regola di copertura vale?
-- [ ] ogni componente può comparire in più feature
+- [ ] ogni componente, sequenza ed elemento dati può comparire in più feature
 - [x] ogni componente, sequenza ed elemento dati appartiene a esattamente una feature
-- [ ] le feature non devono avere dipendenze
-- [ ] basta una feature per l'intero design
+- [ ] ogni feature deve contenere almeno un componente, una sequenza e un elemento dati
+- [ ] ogni componente appartiene a una sola feature, mentre sequenze e dati restano condivisi
 
 ### Soluzione
 Esattamente una feature per elemento: niente sovrapposizioni né buchi. La lista è ordinata per dipendenze, così un lavoro grande diventa pezzi rivedibili.
@@ -467,19 +467,19 @@ Il contesto di scrittura porta con sé le assunzioni di chi ha scritto: la revie
 - 2 | ricorda la necessità della review umana finale e la differenza tra chi scrive e chi revisiona
 
 ## [mcq 1] Il progetto SEMAT e l'Essence: quali date e fondatori sono citati nelle slide «Il futuro dell'ingegneria del software»?
-- [x] 2009, SEMAT fondata da Jacobson, Meyer e Soley; 2012 prima specifica del Kernel; 2014 standard OMG
-- [ ] 1968, nascita della disciplina alla conferenza NATO
-- [ ] 2001, Manifesto Agile firmato da 17 autori
-- [ ] 2020, pubblicazione di Essence come libro
+- [x] 2009 nasce SEMAT con Jacobson, Meyer e Soley; 2014 Essence diventa standard OMG
+- [ ] 2001 nasce SEMAT con gli autori del Manifesto agile; 2009 Essence diventa standard OMG
+- [ ] 1968 nasce SEMAT alla conferenza NATO; 2012 Essence diventa standard IEEE
+- [ ] 2009 nasce SEMAT con Beck, Fowler e Cunningham; 2014 Essence diventa standard ISO
 
 ### Soluzione
 SEMAT (Software Engineering Method and Theory) nasce nel 2009; il Kernel viene specificato nel 2012; nel 2014 Essence diventa standard OMG. Jacobson è considerato il padre del framework.
 
 ## [mcq 1] Le forme dei requisiti (Ciancarini 2026): quale definizione di requisito dà lo standard IEEE 610.12?
-- [x] Una condizione o capacità che serve a un utente per risolvere un problema o raggiungere un obiettivo, o che un sistema deve possedere per soddisfare un contratto, uno standard o una specifica.
-- [ ] Una descrizione di come il sistema verrà implementato, scelta dal team di sviluppo.
-- [ ] Una user story stimata in story point e accettata dal Product Owner.
-- [ ] Un caso di test che il sistema deve superare prima del rilascio.
+- [x] Una condizione o capacità necessaria a un utente, o che un sistema deve possedere per soddisfare un contratto o una specifica.
+- [ ] Una descrizione di come il sistema sarà realizzato, concordata tra il cliente e il team di sviluppo.
+- [ ] Una funzionalità richiesta dal cliente, scritta come user story e accettata dal Product Owner.
+- [ ] Un comportamento atteso del sistema, espresso come caso di test da superare prima del rilascio.
 
 ### Soluzione
 IEEE 610.12 definisce il requisito come condizione o capacità, vista dal lato dell'utente (risolvere un problema) e dal lato contrattuale (rispettare contratto, standard, specifica). Dice *cosa*, non *come*.
@@ -503,10 +503,10 @@ Humphrey: per un nuovo sistema software i requisiti non saranno completamente no
 Tre tipi di requisiti: funzionali (cosa fa il sistema), di qualità (quanto bene lo fa, ISO/IEC 25010) e vincoli (limiti imposti alla soluzione: linguaggio, piattaforma, norme, budget). Linguaggio e sistema operativo sono vincoli tecnici.
 
 ## [mcq 1] Quale formulazione rende misurabile il requisito di qualità «il sistema deve essere veloce»?
-- [ ] Il sistema deve essere molto veloce e reattivo.
-- [ ] Il sistema deve usare una cache per essere veloce.
-- [x] Il 95% delle ricerche nel catalogo deve rispondere entro 1 secondo con 500 utenti concorrenti.
-- [ ] Il sistema deve essere più veloce del sistema precedente.
+- [ ] Il sistema deve essere molto veloce e reattivo in ogni situazione d'uso.
+- [ ] Il sistema deve usare una cache e un indice per rispondere velocemente.
+- [x] Il 95% delle ricerche deve rispondere entro 1 secondo con 500 utenti concorrenti.
+- [ ] Il sistema deve rispondere più velocemente del sistema che sostituisce.
 
 ### Soluzione
 Un requisito di qualità è utile solo se verificabile: serve una metrica, una soglia e le condizioni di misura. «Usare una cache» è una scelta di progetto (un *come*), non un requisito; «più veloce del precedente» manca di soglia.
@@ -521,19 +521,19 @@ Un requisito di qualità è utile solo se verificabile: serve una metrica, una s
 EARS ha cinque schemi: ubiquo (sempre valido), event-driven (*When*), state-driven (*While*), unwanted behaviour (*If… then*), optional feature (*Where*). Riducono l'ambiguità del linguaggio naturale e sono adatti sia alle persone sia agli assistenti di programmazione.
 
 ## [mcq 1] Nello spec-driven development (es. GitHub Spec Kit, Kiro) che ruolo ha la specifica?
-- [ ] È documentazione scritta a fine progetto per il cliente.
-- [x] È l'artefatto primario: da essa derivano piano, task e codice generato dall'assistente, e la si aggiorna prima del codice.
-- [ ] Sostituisce i test, che diventano superflui.
-- [ ] È una user story in formato Connextra senza criteri di accettazione.
+- [ ] È la documentazione scritta a fine progetto per descrivere al cliente il codice consegnato.
+- [x] È l'artefatto primario: da essa derivano piano, task e codice, e si aggiorna prima del codice.
+- [ ] È il prompt iniziale per l'agente, che viene scartato quando il codice è stato generato.
+- [ ] È l'insieme dei test generati dall'agente, che prende il posto della user story.
 
 ### Soluzione
 Nello spec-driven development la specifica (requisiti, spesso in EARS, più design e task) guida la generazione: un modello linguistico prende il testo alla lettera, quindi una specifica vaga produce codice sbagliato. Test e review umana restano necessari.
 
 ## [mcq 1] Che differenza c'è tra una user story in formato Connextra e una job story?
-- [ ] Nessuna, sono sinonimi.
-- [x] La Connextra parte dal ruolo («Come <ruolo> voglio… così che…»), la job story dalla situazione («Quando <situazione>, voglio… così da…»).
-- [ ] La job story è scritta in Gherkin.
-- [ ] La Connextra non ha un beneficio esplicito.
+- [ ] Nessuna: sono due nomi diversi per lo stesso formato «Come… voglio… per…».
+- [x] La Connextra parte dal ruolo dell'utente, la job story dalla situazione in cui si trova.
+- [ ] La Connextra parte dalla situazione dell'utente, la job story dal ruolo che ricopre.
+- [ ] La job story si scrive in Gherkin, la Connextra in linguaggio naturale.
 
 ### Soluzione
 Connextra: *As a <role> I want <goal> so that <benefit>*. Job story (Jobs To Be Done): *When <situation>, I want to <motivation>, so I can <outcome>*; mette al centro il contesto invece della persona. I criteri di accettazione si scrivono poi in Gherkin (Given/When/Then).
