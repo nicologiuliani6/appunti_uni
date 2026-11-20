@@ -23,12 +23,13 @@ Le domande aggiunte stanno in `banca-esercitazioni-ciancarini.md` (tag argomento
 | Debito tecnico | L14 | parziale (1 riferimento) | sì (1) |
 | Codice generato da LLM: correttezza, sicurezza, manutenibilità, produttività | L14 | no | sì (5 + aperta) |
 | Constructor Fabric (PRD, ADR, DESIGN, DECOMPOSE, cfs validate) | CF01, CF02 | no | sì (5 + aperta) |
-| Produzione del software: aspetti economici, licenze, garanzie, rischi | L1 | parziale (licenze 1 riferimento) | **no, da fare** |
-| Agenti e orchestratori, AI e produttività (2025) | L1 | parziale (agenti LangChain nei 2025, non questo tema) | **no, da fare** |
+| Produzione del software: aspetti economici, licenze, garanzie, rischi | L1 | parziale (licenze 1 riferimento) | sì (in `banca-verosimili-ciancarini-modulo1.md`, argomento `produzione`) |
+| Agenti e orchestratori, AI e produttività (2025) | L1 | parziale (agenti LangChain nei 2025, non questo tema) | sì (1, orchestratore) |
 | Forme dei requisiti: definizione IEEE 610.12, Humphrey/IKIWISI, funzionali/qualità/vincoli misurabili, livelli business/utente/software, SRS vs casi d'uso vs user story, job story, Gherkin, EARS, spec-driven development (Spec Kit, Kiro) | 6_requisiti_2026_v3 (Modulo 1, quindi Ciancarini: confermato dall'utente) | parziale (funzionali/non funzionali e INVEST già presenti; IEEE, vincoli, livelli, EARS, Gherkin, spec-driven no) | sì (7 + aperta), argomento `requisiti` |
 
 Non sono di Ciancarini (quindi fuori da questa lista): Scrum intro, user story, testing/TDD/pair programming, Git, Retrospective (Missiroli; la retrospettiva era già nei quiz passati). Le user story compaiono però anche nella lezione di Ciancarini sulle forme dei requisiti (Connextra, job story, 3C, INVEST, Gherkin).
 
 Non sono di Ciancarini nemmeno L05 Python (aggiornata: lambda Java vs Python, creazione/distruzione, descrittori, dataclass) e L05 bis Prolog: sono di Succi (Modulo 2). Python era già nei topic; Prolog è nuovo: argomento `prolog`, domande in `banca-succi-prolog.md`.
 
-Lacune note: L1 (economia, licenze, agenti) non è ancora coperto da domande nuove; le slide di L1 sono state lette solo per titoli.
+Domande in stile esame: `banca-verosimili-ciancarini-modulo1.md` (66 domande su tutto il Modulo 1, nella forma degli scritti 2023-2025: crocette da 3 punti, aperte da 3 punti con griglia 1/1/1, un contesto «bike sharing» con 4 aperte su requisiti, EARS, Gherkin e Alpha Requirements).
+Lacune note: le slide di L1 sono state lette solo per titoli; le domande su L1 sono basate sugli appunti.

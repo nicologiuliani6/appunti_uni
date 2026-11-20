@@ -128,6 +128,12 @@
       "re": "coesione|accoppiamento|Single Responsibility|Dependency Inversion|\\binterfaccia\\b|componente riusabile"
     },
     {
+      "id": "produzione",
+      "nome": "Produzione del software (licenze, garanzie, prodotti, agenti e orchestratori)",
+      "studiato": true,
+      "re": "software libero|diritto d.autore|brevettabil|\\bas is\\b|software di consumo|orchestrator|off the shelf|sistema commissionat|feature di un prodotto|verifica, validazione e certificazione|attributo interno|processo software è|legge di Brooks|costo di sviluppo"
+    },
+    {
       "id": "ciclo-vita",
       "nome": "Ciclo di vita, costi, manutenzione, produttività, Brooks",
       "studiato": true,
